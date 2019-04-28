@@ -456,11 +456,11 @@ int OpenRecoveryScript::run_script_file(void) {
 					std::vector<string> args = TWFunc::Split_String(tmp, " ");
 
 					string pass = args[0];
-					/*string userid = "0";
+					string userid = "0";
 					if (args.size() > 1)
-						userid = args[1];*/
+						userid = args[1];
 
-					ret_val = PartitionManager.Decrypt_Device(pass);//, atoi(userid.c_str()));
+					ret_val = PartitionManager.Decrypt_Device(pass, atoi(userid.c_str()));
 					if (ret_val != 0)
 						ret_val = 1;  // failure
 				} else {
@@ -485,17 +485,22 @@ int OpenRecoveryScript::run_script_file(void) {
 		  }
 		//** DJ9
 	} else {
-		gui_msg(Msg(msg::kError, "error_opening_strerr=Error opening: '{1}' ({2})")(SCRIPT_FILE_TMP)(strerror(errno)));
+		gui_msg(Msg(msg::kError, "error_opening_strerr=Error opening: '{1}' ({2})")(SCRIPT_FILE_TMP)(
+			strerror(errno)));
 		return 1;
 	}
 
-	if (install_cmd && DataManager::GetIntValue(TW_HAS_INJECTTWRP) == 1 && DataManager::GetIntValue(TW_INJECT_AFTER_ZIP) == 1) {
+	if (install_cmd && DataManager::GetIntValue(TW_HAS_INJECTTWRP) == 1 &&
+	DataManager::GetIntValue(TW_INJECT_AFTER_ZIP) == 1) {
 		gui_msg("injecttwrp=Injecting TWRP into boot image...");
 		TWPartition* Boot = PartitionManager.Find_Partition_By_Path("/boot");
 		if (Boot == NULL || Boot->Current_File_System != "emmc")
-			TWFunc::Exec_Cmd("injecttwrp --dump /tmp/backup_recovery_ramdisk.img /tmp/injected_boot.img --flash");
+			TWFunc::Exec_Cmd(
+			"injecttwrp --dump /tmp/backup_recovery_ramdisk.img /tmp/injected_boot.img --flash");
 		else {
-			string injectcmd = "injecttwrp --dump /tmp/backup_recovery_ramdisk.img /tmp/injected_boot.img --flash bd=" + Boot->Actual_Block_Device;
+			string injectcmd =
+			"injecttwrp --dump /tmp/backup_recovery_ramdisk.img /tmp/injected_boot.img --flash bd=" +
+			Boot->Actual_Block_Device;
 			TWFunc::Exec_Cmd(injectcmd.c_str());
 		}
 		gui_msg("done=Done.");
@@ -507,7 +512,7 @@ int OpenRecoveryScript::run_script_file(void) {
 	// DJ9
 	
 	if (sideload)
-		ret_val = 1; // Forces booting to the home page after sideload
+		ret_val = 1;  // Forces booting to the home page after sideload
 	return ret_val;
 }
 
@@ -765,13 +770,12 @@ void OpenRecoveryScript::Run_CLI_Command(const char* command) {
 			gui_err("no_pwd=No password provided.");
 		} else {
 			string pass = parts[1];
-			/*string userid = "0";
+			string userid = "0";
 			if (parts.size() > 2)
-				userid = parts[2];*/
+				userid = parts[2];
 
 			gui_msg("decrypt_cmd=Attempting to decrypt data partition or user data via command line.");
-			//if (PartitionManager.Decrypt_Device(pass, atoi(userid.c_str())) == 0) {
-			if (PartitionManager.Decrypt_Device(pass) == 0) {
+			if (PartitionManager.Decrypt_Device(pass, atoi(userid.c_str())) == 0) {
 				// set_page_done = 1;  // done by singleaction_page anyway
 				std::string orsFile = TWFunc::get_log_dir() + "/openrecoveryscript";
 				if (TWFunc::Path_Exists(orsFile)) {
