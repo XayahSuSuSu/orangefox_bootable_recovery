@@ -10,7 +10,7 @@
 			<image>
 				<image resource="nav_files"/>
 				<condition var1="nav_panel_id" var2="0"/>
-				<placement x="%nav_item_1%" y="%nav_icon_a_y%" placement="4"/>
+				<placement x="%nav_item_1%" y="%nav_icon_y%" placement="4"/>
 			</image>
 			
 			<text style="nav_panel">
@@ -25,6 +25,12 @@
 				<placement x="%nav_item_1%" y="%nav_icon_y%" placement="4"/>
 			</image>
 			
+			<text style="nav_panel_d">
+				<condition var1="nav_panel_id" op="!=" var2="0"/>
+				<placement x="%nav_item_1%" y="%nav_text_y%" placement="4"/>
+				<text>{@file_manager_btn}</text>
+			</text>
+			
 			<button>
 				<condition var1="nav_panel_id" op="!=" var2="0"/>
 				<placement x="%nav_item_1%" y="%nav_item_y%" placement="4"/>
@@ -38,10 +44,16 @@
 				<placement x="%nav_item_2%" y="%nav_icon_y%" placement="4"/>
 			</image>
 			
+			<text style="nav_panel_d">
+				<condition var1="nav_panel_id" op="!=" var2="1"/>
+				<placement x="%nav_item_2%" y="%nav_text_y%" placement="4"/>
+				<text>{@backup_btn}</text>
+			</text>
+			
 			<image>
 				<image resource="nav_backup"/>
 				<condition var1="nav_panel_id" var2="1"/>
-				<placement x="%nav_item_2%" y="%nav_icon_a_y%" placement="4"/>
+				<placement x="%nav_item_2%" y="%nav_icon_y%" placement="4"/>
 			</image>
 			
 			<text style="nav_panel">
@@ -63,10 +75,16 @@
 				<placement x="%nav_item_3%" y="%nav_icon_y%" placement="4"/>
 			</image>
 			
+			<text style="nav_panel_d">
+				<condition var1="nav_panel_id" op="!=" var2="2"/>
+				<placement x="%nav_item_3%" y="%nav_text_y%" placement="4"/>
+				<text>{@wipe_btn}</text>
+			</text>
+			
 			<image>
 				<image resource="nav_wipe"/>
 				<condition var1="nav_panel_id" var2="2"/>
-				<placement x="%nav_item_3%" y="%nav_icon_a_y%" placement="4"/>
+				<placement x="%nav_item_3%" y="%nav_icon_y%" placement="4"/>
 			</image>
 			
 			<text style="nav_panel">
@@ -88,10 +106,16 @@
 				<placement x="%nav_item_4%" y="%nav_icon_y%" placement="4"/>
 			</image>
 			
+			<text style="nav_panel_d">
+				<condition var1="nav_panel_id" op="!=" var2="3"/>
+				<placement x="%nav_item_4%" y="%nav_text_y%" placement="4"/>
+				<text>{@menu_btn}</text>
+			</text>
+			
 			<image>
 				<image resource="nav_menu"/>
 				<condition var1="nav_panel_id" var2="3"/>
-				<placement x="%nav_item_4%" y="%nav_icon_a_y%" placement="4"/>
+				<placement x="%nav_item_4%" y="%nav_icon_y%" placement="4"/>
 			</image>
 			
 			<text style="nav_panel">
