@@ -122,7 +122,8 @@
 		<variable name="nav_panel_id" value="0"/>
 		<variable name="nav_panel_y" value="%screen_h%-312"/>
 		<variable name="ee_y" value="%screen_h%-486"/>
-		<variable name="nav_icon_y" value="%screen_h%-256"/>
+		<variable name="nav_icon_y" value="%screen_h%-234"/>
+		<variable name="nav_icon_a_y" value="%screen_h%-256"/>
 		<variable name="nav_text_y" value="%screen_h%-193"/>
 		<variable name="nav_item_y" value="%screen_h%-228"/>
 		<variable name="nav_item_1" value="135"/>
