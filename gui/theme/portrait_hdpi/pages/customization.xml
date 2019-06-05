@@ -583,6 +583,10 @@
 					<data variable="ota_new_screen"/>
 					<condition var1="general_back" op="!=" var2="terminal"/>
 				</listitem>
+				<listitem name="New navigation panel design">
+					<data variable="new_nav_panel_des"/>
+					<condition var1="general_back" op="!=" var2="terminal"/>
+				</listitem>
 			</listbox>
 
 			<action>

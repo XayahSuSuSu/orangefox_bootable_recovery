@@ -22,11 +22,20 @@
 			<image>
 				<image resource="nav_files_d"/>
 				<condition var1="nav_panel_id" op="!=" var2="0"/>
+				<condition var1="new_nav_panel_des" var2="0"/>
 				<placement x="%nav_item_1%" y="%nav_icon_y%" placement="4"/>
+			</image>
+
+			<image>
+				<image resource="nav_files_d"/>
+				<condition var1="nav_panel_id" op="!=" var2="0"/>
+				<condition var1="new_nav_panel_des" var2="1"/>
+				<placement x="%nav_item_1%" y="%nav_icon_a_y%" placement="4"/>
 			</image>
 			
 			<text style="nav_panel_d">
 				<condition var1="nav_panel_id" op="!=" var2="0"/>
+				<condition var1="new_nav_panel_des" var2="0"/>
 				<placement x="%nav_item_1%" y="%nav_text_y%" placement="4"/>
 				<text>{@file_manager_btn}</text>
 			</text>
@@ -41,11 +50,20 @@
 			<image>
 				<image resource="nav_backup_d"/>
 				<condition var1="nav_panel_id" op="!=" var2="1"/>
+				<condition var1="new_nav_panel_des" var2="0"/>
 				<placement x="%nav_item_2%" y="%nav_icon_y%" placement="4"/>
+			</image>
+
+			<image>
+				<image resource="nav_backup_d"/>
+				<condition var1="nav_panel_id" op="!=" var2="1"/>
+				<condition var1="new_nav_panel_des" var2="1"/>
+				<placement x="%nav_item_2%" y="%nav_icon_a_y%" placement="4"/>
 			</image>
 			
 			<text style="nav_panel_d">
 				<condition var1="nav_panel_id" op="!=" var2="1"/>
+				<condition var1="new_nav_panel_des" var2="0"/>
 				<placement x="%nav_item_2%" y="%nav_text_y%" placement="4"/>
 				<text>{@backup_btn}</text>
 			</text>
@@ -72,11 +90,20 @@
 			<image>
 				<image resource="nav_wipe_d"/>
 				<condition var1="nav_panel_id" op="!=" var2="2"/>
+				<condition var1="new_nav_panel_des" var2="0"/>
 				<placement x="%nav_item_3%" y="%nav_icon_y%" placement="4"/>
+			</image>
+
+			<image>
+				<image resource="nav_wipe_d"/>
+				<condition var1="nav_panel_id" op="!=" var2="2"/>
+				<condition var1="new_nav_panel_des" var2="1"/>
+				<placement x="%nav_item_3%" y="%nav_icon_a_y%" placement="4"/>
 			</image>
 			
 			<text style="nav_panel_d">
 				<condition var1="nav_panel_id" op="!=" var2="2"/>
+				<condition var1="new_nav_panel_des" var2="0"/>
 				<placement x="%nav_item_3%" y="%nav_text_y%" placement="4"/>
 				<text>{@wipe_btn}</text>
 			</text>
@@ -103,11 +130,20 @@
 			<image>
 				<image resource="nav_menu_d"/>
 				<condition var1="nav_panel_id" op="!=" var2="3"/>
+				<condition var1="new_nav_panel_des" var2="0"/>
 				<placement x="%nav_item_4%" y="%nav_icon_y%" placement="4"/>
+			</image>
+
+			<image>
+				<image resource="nav_menu_d"/>
+				<condition var1="nav_panel_id" op="!=" var2="3"/>
+				<condition var1="new_nav_panel_des" var2="1"/>
+				<placement x="%nav_item_4%" y="%nav_icon_a_y%" placement="4"/>
 			</image>
 			
 			<text style="nav_panel_d">
 				<condition var1="nav_panel_id" op="!=" var2="3"/>
+				<condition var1="new_nav_panel_des" var2="0"/>
 				<placement x="%nav_item_4%" y="%nav_text_y%" placement="4"/>
 				<text>{@menu_btn}</text>
 			</text>
