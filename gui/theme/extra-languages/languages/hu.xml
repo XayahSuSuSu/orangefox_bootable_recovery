@@ -205,7 +205,7 @@
 		<string name="rename_backup_complete">A mentés átnevezve</string>
 		<string name="swipe_to_rename">Húzza el alul a csúszkát az átnevezéshez</string>
 		<string name="mount_hdr">Felcsatolás</string>
-		<string name="mount_sys_ro_chk">A rendszerpartíciót csak olvashatóként csatolja fel</string>
+		<string name="mount_sys_ro_chk">Gyártói / Rendszer felcsatolása csak olvashatóként</string>
 		<string name="decrypt_data_btn">Adat-partíció titkosításának feloldása</string>
 		<string name="disable_mtp_btn">MTP-kikapcsolás</string>
 		<string name="enable_mtp_btn">MTP-bekapcsolás</string>
@@ -1025,5 +1025,8 @@
 		<string name="fox_forced_encryption_chk">Erőltetett titkosítás kikapcsolása</string>
 		<string name="FOX_DISABLE_OTA_AUTO_REBOOT_chk">OTA-frissítés utáni automatikus újraindulás megakadályozása</string>
 		<string name="of_ota_reboot_disabled">Az OTA-frissítés sikerült. Letiltotta az automatikus újraindítást. Az irányítás visszatér Önhöz.</string>
+
+		<string name="wipe_format_moved_info1">Megjegyzés: a /data formázás átkerült</string>
+   		<string name="wipe_format_moved_info2">a 'Partíciók kezelése' oldalra.</string>
 	</resources>
 </language>

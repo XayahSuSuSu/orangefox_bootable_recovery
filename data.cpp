@@ -871,7 +871,7 @@ void DataManager::SetDefaultValues()
 
   // { MIUI
   string miui_switch = "1";
-  #if defined(OF_DISABLE_MIUI_SPECIFIC_FEATURES) || defined(OF_TWRP_COMPATIBILITY_MODE)
+  #if defined(OF_DISABLE_MIUI_SPECIFIC_FEATURES) || defined(OF_TWRP_COMPATIBILITY_MODE) || defined(OF_KEEP_DM_VERITY_FORCED_ENCRYPTION)
   miui_switch = "0";
   #endif  
   mPersist.SetValue("fox_verify_incremental_ota_signature", miui_switch); // set to 1 [support miui ota]
@@ -1348,6 +1348,9 @@ void DataManager::Vibrate(const string & varName)
 
 void DataManager::Leds(bool enable)
 {
+#ifdef OF_SKIP_LEDS_FUNCTION
+return;
+#endif
   std::string leds, bs, bsmax, time, blink, bsm, leds1, bs1, bsmax1, time1, blink1, bsm1, max_brt, install_vibrate_value;
   struct stat st;
   int ledcolor;

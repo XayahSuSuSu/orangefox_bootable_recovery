@@ -162,6 +162,7 @@ enum TW_FSTAB_FLAGS {
 	TWFLAG_FORMATTABLE,
 	TWFLAG_RESIZE,
 	TWFLAG_KEYDIRECTORY,
+	TWFLAG_WRAPPEDKEY,
 };
 
 /* Flags without a trailing '=' are considered dual format flags and can be
@@ -206,6 +207,7 @@ const struct flag_list tw_flags[] = {
 	{ "formattable",            TWFLAG_FORMATTABLE },
 	{ "resize",                 TWFLAG_RESIZE },
 	{ "keydirectory=",          TWFLAG_KEYDIRECTORY },
+	{ "wrappedkey",             TWFLAG_WRAPPEDKEY },
 	{ 0,                        0 },
 };
 
@@ -980,6 +982,13 @@ void TWPartition::Apply_TW_Flag(const unsigned flag, const char* str, const bool
 				LOGINFO("FBE contents '%s', filenames '%s'\n", FBE_contents.c_str(), FBE_filenames.c_str());
 			}
 			break;
+		case TWFLAG_WRAPPEDKEY:
+			// Set fbe.data.wrappedkey to true
+			{
+				property_set("fbe.data.wrappedkey", "true");
+				LOGINFO("FBE wrapped key enabled\n");
+			}
+			break;
 		case TWFLAG_FLASHIMG:
 			Can_Flash_Img = val;
 			break;
@@ -1687,7 +1696,7 @@ bool TWPartition::Mount(bool Display_Error)
 			 "fail_mount=Failed to mount '{1}' ({2})")
 			(Mount_Point) (strerror(errno)));
 				if (Mount_Point == "/cust")
-					gui_print_color("warning", "Please keep in mind, in most cases error mounting cust don't affect on installation and system.\n");
+					gui_print_color("warning", "Please note that, in most cases, errors mounting cust do not affect installation and system.\n");
 	      else
 		LOGINFO("Failed to mount '%s' (MTD)\n", Mount_Point.c_str());
 	      return false;

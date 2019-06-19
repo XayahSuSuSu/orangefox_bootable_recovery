@@ -177,7 +177,7 @@
 		<string name="rename_backup_complete">Backup rename completed</string>
 		<string name="swipe_to_rename">Swipe to Rename</string>
 		<string name="mount_hdr">Mount</string>
-		<string name="mount_sys_ro_chk">Mount system partition read-only</string>
+		<string name="mount_sys_ro_chk">Mount system and vendor read-only</string>
 		<string name="decrypt_data_btn">Decrypt Data</string>
 		<string name="disable_mtp_btn">Disable MTP</string>
 		<string name="enable_mtp_btn">Enable MTP</string>
@@ -997,5 +997,10 @@
 		<string name="fox_forced_encryption_chk">Disable Forced Encryption</string>
 		<string name="FOX_DISABLE_OTA_AUTO_REBOOT_chk">Prevent auto reboot after installing OTA</string>
 		<string name="of_ota_reboot_disabled">OTA update succeeded. You disabled auto-reboot. Returning control to you.</string>
+
+		<!-- Wipe format moved -->
+		<string name="wipe_format_moved_info1">Note: format data moved to</string>
+		<string name="wipe_format_moved_info2">Manage Partitions' page.</string>
+		
 	</resources>
 </language>

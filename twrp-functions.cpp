@@ -59,6 +59,7 @@
 #endif
 #include "set_metadata.h"
 #include "twinstall.h"
+#include "gui/pages.hpp"
 
 extern "C"
 {
@@ -290,8 +291,12 @@ bool TWFunc::Rerun_Startup(void)
    //LOGINFO("OrangeFox: Reading settings file - again...\n");
    DataManager::ReadSettingsFile();
    
+   //LOGINFO("OrangeFox: Reloading theme to apply generated theme on sdcard - again...\n");
+   PageManager::RequestReload();
+
    //LOGINFO("OrangeFox: Executing OrangeFox_Startup() again...\n");
    OrangeFox_Startup(); 
+
    LOGINFO("OrangeFox: Finished rerun.\n");
    
    return true;
@@ -2206,6 +2211,10 @@ void TWFunc::OrangeFox_Startup(void)
     }
 
   TWFunc::Fresh_Fox_Install();
+  
+  // start mtp manually, if enabled
+  if (DataManager::GetIntValue("tw_mtp_enabled") == 1)
+     PartitionManager.Enable_MTP();
 }
 
 void TWFunc::copy_kernel_log(string curr_storage)
@@ -4000,5 +4009,24 @@ int res=0, wipe_cache=0;
    DataManager::SetValue(FOX_INSTALL_PREBUILT_ZIP, "0");
  
    return res;
+}
+
+void TWFunc::Run_Pre_Flash_Protocol(void)
+{
+#ifdef OF_SUPPORT_PRE_FLASH_SCRIPT
+  // don't run this for ROMs
+  if (DataManager::GetIntValue(FOX_ZIP_INSTALLER_CODE) == 0)
+    {
+      // don't run this for built-in zips
+      if (DataManager::GetIntValue(FOX_INSTALL_PREBUILT_ZIP) != 1)
+        {
+          string pre_runner = "/sbin/fox_pre_flash";
+          if (TWFunc::Path_Exists(pre_runner))
+	   {
+	      TWFunc::check_and_run_script(pre_runner.c_str(), "system_mount");
+	   }
+       }
+    }
+#endif
 }
 //
