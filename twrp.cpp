@@ -74,8 +74,14 @@ static void Print_Prop(const char *key, const char *name, void *cookie)
 
 int main(int argc, char **argv)
 {
-   //[f/d] Disable LED as early as possible
-   DataManager::Leds(false);
+  //[f/d] Disable LED as early as possible
+  DataManager::Leds(false);
+
+	//Also disable adbd
+	#ifdef FOX_ADVANCED_SECURITY
+  property_set("ctl.stop", "adbd");
+  property_set("orangefox.adb.status", "0");
+	#endif
 
   // Recovery needs to install world-readable files, so clear umask
   // set by init
@@ -286,6 +292,10 @@ int main(int argc, char **argv)
 		OpenRecoveryScript::Run_OpenRecoveryScript();
 	}
 
+#ifdef FOX_ADVANCED_SECURITY
+	LOGINFO("ADB & MTP disabled by maintainer\n");
+	DataManager::SetValue("fox_advanced_security", "1");
+#else
 #ifdef TW_HAS_MTP
   char mtp_crash_check[PROPERTY_VALUE_MAX];
   property_get("mtp.crash_check", mtp_crash_check, "0");
@@ -294,13 +304,13 @@ int main(int argc, char **argv)
       && (!DataManager::GetIntValue(TW_IS_ENCRYPTED)
 	  || DataManager::GetIntValue(TW_IS_DECRYPTED)))
     {
-      /*property_set("mtp.crash_check", "1");
+      property_set("mtp.crash_check", "1");
       LOGINFO("Starting MTP\n");
       if (!PartitionManager.Enable_MTP())
-	PartitionManager.Disable_MTP();
+				PartitionManager.Disable_MTP();
       else
-	gui_msg("mtp_enabled=MTP Enabled");
-      property_set("mtp.crash_check", "0");*/
+				gui_msg("mtp_enabled=MTP Enabled");
+      property_set("mtp.crash_check", "0");
     }
   else if (strcmp(mtp_crash_check, "0"))
     {
@@ -313,6 +323,7 @@ int main(int argc, char **argv)
       LOGINFO("TWRP crashed; disabling MTP as a precaution.\n");
       PartitionManager.Disable_MTP();
     }
+#endif
 #endif
 
   // call OrangeFox startup code

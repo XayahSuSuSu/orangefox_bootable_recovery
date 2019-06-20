@@ -106,7 +106,15 @@
 			<action>
 				<condition var1="pass_enter" op="=" var2="%pass_true%"/>
 				<condition var1="tw_has_mtp" var2="1"/>
+				<condition var1="adb_startup" var2="1"/>
+				<condition var1="tw_mtp_enabled" op="!=" var2="1"/>
 				<action function="startmtp"/>
+			</action>
+			<action>
+				<condition var1="pass_enter" op="=" var2="%pass_true%"/>
+				<condition var1="use_pass" var2="0"/>
+				<condition var1="adb_startup" var2="1"/>
+				<action function="adb">enable</action>
 			</action>
 			
 			<action>

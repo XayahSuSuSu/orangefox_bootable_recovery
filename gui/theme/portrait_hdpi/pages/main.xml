@@ -2,11 +2,13 @@
 <recovery>
 	<pages>
 		<page name="main">
+			<!-- Show welcome page after installing OF -->
 			<action>
 				<condition var1="first_start" var2="1"/>
 				<action function="page">welcome</action>
 			</action>
 
+			<!-- Stop MTP when using pass -->
 			<action>
 				<condition var1="first_start" op="!=" var2="1"/>
 				<condition var1="use_pass" var2="1"/>
@@ -16,6 +18,7 @@
 				<action function="stopmtp"/>
 			</action>
 			
+			<!-- Go to pass page -->
 			<action>
 				<condition var1="first_start" op="!=" var2="1"/>
 				<condition var1="use_pass" var2="1"/>
@@ -26,15 +29,27 @@
 				<action function="page">password_enter</action>
 			</action>
 
+			<!-- Enable ADB & MTP -->
 			<action>
 				<condition var1="first_start" op="!=" var2="1"/>
 				<condition var1="use_pass" var2="0"/>
 				<condition var1="adb_startup" var2="1"/>
 				<condition var1="adb_started" op="!=" var2="1"/>
+				<condition var1="fox_advanced_security" var2="1"/>
+				<condition var1="tw_has_mtp" var2="1"/>
+				<action function="startmtp"/>
+			</action>
+			<action>
+				<condition var1="first_start" op="!=" var2="1"/>
+				<condition var1="use_pass" var2="0"/>
+				<condition var1="adb_startup" var2="1"/>
+				<condition var1="adb_started" op="!=" var2="1"/>
+				<condition var1="fox_advanced_security" var2="1"/>
 				<action function="adb">enable</action>
 				<action function="set">adb_started=1</action>
 			</action>
 
+			<!-- Go to FM -->
 			<action>
 				<condition var1="first_start" op="!=" var2="1"/>
 				<condition var1="use_pass" var2="0"/>
