@@ -55,7 +55,7 @@
 				<condition var1="use_pass" var2="0"/>
 				<actions>
 					<action function="overlay"/>
-					<action function="set">tw_clear_destination=filemanagerlist</action>
+					<action function="set">tw_clear_destination=navbar</action>
 					<action function="page">clear_vars</action>
 				</actions>
 			</action>
@@ -66,12 +66,30 @@
 				<condition var1="pass_open" var2="1"/>
 				<actions>
 					<action function="overlay"/>
-					<action function="set">tw_clear_destination=filemanagerlist</action>
+					<action function="set">tw_clear_destination=navbar</action>
 					<action function="page">clear_vars</action>
 				</actions>
 			</action>
 		</page>
 
+		<page name="navbar">
+			<action>
+				<condition var1="nav_panel_id" var2="0"/>
+				<action function="page">filemanagerlist</action>
+			</action>
+			<action>
+				<condition var1="nav_panel_id" var2="1"/>
+				<action function="page">restore</action>
+			</action>
+			<action>
+				<condition var1="nav_panel_id" var2="2"/>
+				<action function="page">wipe</action>
+			</action>
+			<action>
+				<condition var1="nav_panel_id" var2="3"/>
+				<action function="page">advanced</action>
+			</action>
+		</page>
 		<page name="welcome">
 			<background color="%background%"/>
 			<template name="background_image"/>
