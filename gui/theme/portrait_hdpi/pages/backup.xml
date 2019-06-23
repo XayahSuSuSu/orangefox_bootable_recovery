@@ -468,23 +468,21 @@
 
 			<text style="text_ab_title">
 				<placement x="%col1_x_indent%" y="%ab_bc_y%"/>
-				<text>{@backup_hdr}</text>
+				<text>{@backing}</text>
 			</text>
 
 			<text style="text_ab_title">
 				<placement x="%col1_x_indent%" y="%row1_2_y%" placement="2"/>
-				<text>{@backing}</text>
+				<text>%tw_partition%</text>
 			</text>
 
 			<text style="text_ab_subtitle">
-				<condition var1="tw_partition"/>
 				<condition var1="tw_file_progress"/>
 				<placement x="%col1_x_indent%" y="%row1_2_y%"/>
-				<text>%tw_partition%: %tw_file_progress%</text>
+				<text>%tw_file_progress%%tw_size_progress%</text>
 			</text>
 
 			<text style="text_ab_subtitle">
-				<condition var1="tw_partition" op="!="/>
 				<condition var1="tw_file_progress" op="!="/>
 				<placement x="%col1_x_indent%" y="%row1_2_y%"/>
 				<text>{@lang_wait}</text>
@@ -504,16 +502,6 @@
 				<placement x="%ab_back_x%" y="%ab_y%"/>
 				<image resource="actionbar_cancel"/>
 			</image>
-
-			<text style="caption">
-				<placement x="%col1_x%" y="%row7_1a_y%"/>
-				<text>{@progress}</text>
-			</text>
-
-			<text style="text_body2">
-				<placement x="%col1_x%" y="%row7_2a_y%"/>
-				<text>%tw_size_progress%</text>
-			</text>
 
 			<action>
 				<action function="nandroid">backup</action>

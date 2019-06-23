@@ -708,32 +708,22 @@
 
 			<text style="text_ab_title">
 				<placement x="%col1_x_indent%" y="%ab_bc_y%"/>
-				<text>{@restore_hdr}</text>
+				<text>{@restoring_hdr}</text>
 			</text>
 
 			<text style="text_ab_title">
 				<placement x="%col1_x_indent%" y="%row1_2_y%" placement="2"/>
-				<text>{@restoring_hdr}</text>
+				<text>%tw_partition%</text>
 			</text>
 
 			<text style="text_ab_subtitle">
 				<placement x="%col1_x_indent%" y="%row1_2_y%"/>
-				<text>%tw_partition%</text>
+				<text>%tw_size_progress%</text>
 			</text>
 
 			<template name="action_page_console"/>
 			
 			<template name="cant_cancel" />
-
-			<text style="caption">
-				<placement x="%col1_x%" y="%row7_1a_y%"/>
-				<text>{@progress}</text>
-			</text>
-
-			<text style="text_body2">
-				<placement x="%col1_x%" y="%row7_2a_y%"/>
-				<text>%tw_size_progress%</text>
-			</text>
 
 			<action>
 				<conditions>
