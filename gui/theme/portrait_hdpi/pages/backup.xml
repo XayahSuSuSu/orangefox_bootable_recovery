@@ -539,6 +539,70 @@
 				</actions>
 			</action>
 		</page>
+		
+		<page name="backup_digest">
+			<template name="body"/>
+
+			<template name="progress_bar"/>
+
+			<template name="ab_ex"/>
+
+			<template name="statusbarinfo"/>
+
+			<text style="text_ab_title">
+				<placement x="%col1_x_indent%" y="%ab_bc_y%"/>
+				<text>{@backup_hdr}</text>
+			</text>
+
+			<text style="text_ab_title">
+				<placement x="%col1_x_indent%" y="%row1_2_y%" placement="2"/>
+				<text>{@backing}</text>
+			</text>
+
+			<text style="text_ab_subtitle">
+				<placement x="%col1_x_indent%" y="%row1_2_y%"/>
+				<text>{@digest_btn}</text>
+			</text>
+
+			<template name="action_page_console"/>
+			
+			<button>
+				<condition var1="tw_busy" var2="1"/>
+				<placement x="%ab_back_x%" y="%ab_y%"/>
+				<image resource="actionbar_btn" highlightresource="actionbar_btn_hl"/>
+				<action function="canceldigest"/>
+			</button>
+
+			<image>
+				<condition var1="tw_busy" var2="1"/>
+				<placement x="%ab_back_x%" y="%ab_y%"/>
+				<image resource="actionbar_cancel"/>
+			</image>
+
+			<action>
+				<action function="generatedigests"/>
+			</action>
+
+			<action>
+				<condition var1="tw_operation_state" var2="1"/>
+				<condition var1="tw_cancel_backup" var2="0"/>
+				<actions>
+					<action function="set">tw_complete_text1={@backup_complete}</action>
+					<action function="set">tw_show_reboot=1</action>
+					<action function="page">backup_action_complete</action>
+				</actions>
+			</action>
+
+			<action>
+				<condition var1="tw_operation_state" var2="1"/>
+				<condition var1="tw_cancel_backup" var2="1"/>
+				<actions>
+					<action function="set">tw_complete_text1={@backup_cancel}</action>
+					<action function="set">tw_show_reboot=1</action>
+					<action function="page">backup_action_complete</action>
+				</actions>
+			</action>
+		</page>
 
 		<page name="backup_action_complete">
 			<template name="body"/>
@@ -572,12 +636,20 @@
 			<template name="action_page_console"/>
 
 			<button style="btn_raised">
+				<condition var1="fox_show_digest_btn" op="!=" var2="1"/>
 				<placement x="%btn_raised_left_x%" y="%row_btn1_y%"/>
 				<text>{@back_btn}</text>
 				<actions>
 					<action function="set">tw_clear_destination=backup_device</action>
 					<action function="page">clear_vars</action>
 				</actions>
+			</button>
+
+			<button style="btn_raised">
+				<condition var1="fox_show_digest_btn" var2="1"/>
+				<placement x="%btn_raised_left_x%" y="%row_btn1_y%"/>
+				<text>{@digest_btn}</text>
+				<action function="page">backup_digest</action>
 			</button>
 
 			<button style="btn_raised_hl">

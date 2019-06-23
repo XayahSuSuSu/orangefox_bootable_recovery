@@ -42,6 +42,7 @@
 #include "../partitions.hpp"
 #include "../twrp-functions.hpp"
 #include "../openrecoveryscript.hpp"
+#include "../twrpDigestDriver.hpp"
 
 #include "../adb_install.h"
 #include "../fuse_sideload.h"
@@ -269,6 +270,8 @@ GUIAction::GUIAction(xml_node <> *node):GUIObject(node)
       ADD_ACTION(calldeactivateprocess);
 
       //[f/d] Threaded actions
+      ADD_ACTION(generatedigests);
+      ADD_ACTION(canceldigest);
       ADD_ACTION(ftls); //ftls (foxtools) - silent cmd
    }
 
@@ -1640,6 +1643,23 @@ int GUIAction::cancelbackup(std::string arg __unused)
 	op_status = 1;		// failure
     }
 
+  return 0;
+}
+
+int GUIAction::generatedigests(std::string arg __unused)
+{
+  int op_status = 0;
+
+  //Generate digests for latest backup
+  operation_start("Generate digests");
+  op_status = twrpDigestDriver::Run_Digest();
+  operation_end(op_status);
+
+  return 0;
+}
+int GUIAction::canceldigest(std::string arg __unused)
+{
+  twrpDigestDriver::Cancel_Digest();
   return 0;
 }
 

@@ -32,6 +32,8 @@
 #include "twrpDigest/twrpMD5.hpp"
 #include "twrpDigest/twrpSHA.hpp"
 
+std::vector<string> PartFilenames; 
+bool cancelDigest; 
 
 bool twrpDigestDriver::Check_Restore_File_Digest(const string& Filename) {
 	twrpDigest *digest;
@@ -174,6 +176,64 @@ bool twrpDigestDriver::Write_Digest(string Full_Filename) {
 	return true;
 }
 
+void twrpDigestDriver::Add_Digest(string Full_Filename) {
+	LOGINFO("Pushing to list: %s\n", Full_Filename.c_str());
+	PartFilenames.push_back(Full_Filename);
+}
+
+void twrpDigestDriver::Cancel_Digest() {
+	LOGINFO("Cancel digest!\n");
+	cancelDigest = true;
+}
+
+void twrpDigestDriver::CleanList() {
+	DataManager::SetValue("fox_show_digest_btn", "1");
+	PartFilenames.clear();
+}
+
+int twrpDigestDriver::Run_Digest() { //translate
+	gui_msg("con_digest_start=[DIGEST CREATION STARTED]");
+
+	if (PartFilenames.empty()) {
+		gui_msg(Msg(msg::kError, "con_digest_error=Partition list is empty!"));
+		return 1;	
+	}
+
+	DataManager::SetValue(TW_ACTION_BUSY, "1");
+	bool ret_val = 0;
+	int vector_size = PartFilenames.size();
+  	time_t seconds, total_start, total_stop;
+
+    DataManager::SetValue("ui_progress", 0);
+
+  	time(&total_start);
+
+	for (int i = 0; i < vector_size; i++) {\
+		if (cancelDigest) {
+			cancelDigest = false;
+			gui_msg(Msg("con_digest_cancel=Cancelling..."));
+			break;
+		}
+		gui_print("%s\n", basename(PartFilenames[i].c_str()));
+        if (!twrpDigestDriver::Make_Digest(PartFilenames[i])) {
+			ret_val = 1;
+			break;
+		}
+
+		int progress = (int) (((float) (vector_size - i) / (float) vector_size) * 100.0);
+    	DataManager::SetValue("ui_progress", progress);
+    }
+	PartFilenames.clear();
+	DataManager::SetValue("fox_show_digest_btn", "0");
+	DataManager::SetValue(TW_ACTION_BUSY, "0");
+
+  	time(&total_stop);
+  	int total_time = (int) difftime(total_stop, total_start);
+	gui_msg(Msg(msg::kHighlight, "con_digest_complete=[DIGEST CREATION COMPLETED IN {1} SECONDS]") (total_time));
+
+	return ret_val;
+}
+
 bool twrpDigestDriver::Make_Digest(string Full_Filename) {
 	string command, result;
 
@@ -189,7 +249,7 @@ bool twrpDigestDriver::Make_Digest(string Full_Filename) {
 		while (index < 1000) {
 			string digest_src(filename);
 			if (TWFunc::Path_Exists(filename)) {
-				if (!Write_Digest(filename))
+				if (!Write_Digest(filename) || cancelDigest)
 					return false;
 				}
 				else

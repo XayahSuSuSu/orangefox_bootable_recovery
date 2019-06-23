@@ -1002,5 +1002,11 @@
 		<string name="wipe_format_moved_info1">Note: Format Data moved to</string>
 		<string name="wipe_format_moved_info2">Manage Partitions page.</string>
 		
+		<!-- R11 -->
+		<string name="con_digest_start">[DIGEST CREATION STARTED]</string>
+		<string name="con_digest_error">Partition list is empty!</string>
+		<string name="con_digest_cancel">Cancelling...</string>
+		<string name="con_digest_complete">[DIGEST CREATION COMPLETED IN {1} SECONDS]</string>
+		<string name="digest_btn">Create Digest</string>
 	</resources>
 </language>

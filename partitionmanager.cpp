@@ -761,10 +761,14 @@ bool TWPartitionManager::Backup_Partition(PartitionSettings * part_settings)
       string Full_Filename =
 	part_settings->Backup_Folder + "/" +
 	part_settings->Part->Backup_FileName;
-      if (!part_settings->adbbackup && part_settings->generate_digest)
+      if (!part_settings->adbbackup)
 	{
-	  if (!twrpDigestDriver::Make_Digest(Full_Filename))
-	    goto backup_error;
+		if (part_settings->generate_digest){
+			if (!twrpDigestDriver::Make_Digest(Full_Filename))
+				goto backup_error;
+		} else {
+			twrpDigestDriver::Add_Digest(Full_Filename);
+		}
 	}
 
       if (part_settings->Part->Has_SubPartition)
@@ -785,13 +789,14 @@ bool TWPartitionManager::Backup_Partition(PartitionSettings * part_settings)
 		    }
 		  sync();
 		  sync();
-		  if (!part_settings->adbbackup
-		      && part_settings->generate_digest)
+		  if (!part_settings->adbbackup)
 		    {
-		      if (!twrpDigestDriver::Make_Digest(Full_Filename))
-			{
-			  goto backup_error;
-			}
+		      if (part_settings->generate_digest) {
+						if (!twrpDigestDriver::Make_Digest(Full_Filename))
+							goto backup_error;
+					} else {
+						twrpDigestDriver::Add_Digest(Full_Filename);
+					}
 		    }
 		}
 	    }
@@ -914,6 +919,7 @@ int TWPartitionManager::Run_Backup(bool adbbackup)
   stop_backup.set_value(0);
   seconds = time(0);
   t = localtime(&seconds);
+	twrpDigestDriver::CleanList();
 
   part_settings.img_bytes_remaining = 0;
   part_settings.file_bytes_remaining = 0;

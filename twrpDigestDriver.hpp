@@ -28,6 +28,10 @@ public:
 	static bool Check_Digest(string Full_Filename);				//Check to make sure the digest is correct
 	static bool Write_Digest(string Full_Filename);				//Write the digest to a file
 	static bool Make_Digest(string Full_Filename);				//Create the digest for a partition backup
+	static void Add_Digest(string Full_Filename);				//[f/d] add filename to list; after finishing backup digest will be generated
+	static void Cancel_Digest();
+	static void CleanList();
+	static int Run_Digest();				                //[f/d] generate digest for all added partitions
 	static bool stream_file_to_digest(string filename, twrpDigest* digest); //Stream the file to twrpDigest
 };
 #endif //__TWRP_DIGEST_DRIVER

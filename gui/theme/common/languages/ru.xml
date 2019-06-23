@@ -1106,5 +1106,11 @@
 		<!-- Wipe format moved -->
 		<string name="wipe_format_moved_info1">Функция форматирования data</string>
 		<string name="wipe_format_moved_info2">перемещена в "Управление разделами".</string>
+		<!-- R11 -->
+		<string name="con_digest_start">[СОЗДАНИЕ КОНТРОЛЬНЫХ СУММ НАЧАТО]</string>
+		<string name="con_digest_error">Список разделов пуст!</string>
+		<string name="con_digest_cancel">Отмана...</string>
+		<string name="con_digest_complete">[СОЗДАНИЕ КОНТРОЛЬНЫХ СУММ ЗАВЕРШЕНО ЗА {1} СЕКУНД]</string>
+		<string name="digest_btn">Создать контр. суммы</string>
 	</resources>
 </language>
