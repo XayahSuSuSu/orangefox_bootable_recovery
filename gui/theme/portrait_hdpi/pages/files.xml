@@ -1567,8 +1567,7 @@
 				<text>{@fm_hdr}</text>
 			</text>
 
-
-			<template name="action_page_console"/>
+			<template name="action_page_console_big"/>
 			<template name="cant_cancel" />
 			
 			<action>
@@ -1762,7 +1761,7 @@
 				<text>%tw_filename1%</text>
 			</text>
 
-			<template name="action_page_console"/>
+			<template name="action_page_console_big"/>
 			<template name="cant_cancel" />
 			
 			<action>
@@ -1909,23 +1908,14 @@
 			</text>
 
 			<console>
-				<placement x="%col1_x%" y="%row2_1_y%" w="%console_width%" h="1260"/> 
+				<placement x="%col1_x%" y="%ab_ex_h%" w="%console_width%" h="%console_action_height_fm%"/> 
 				<condition var1="use_fixed_font" var2="0"/>
 			</console>
 			<console>
-				<placement x="%col1_x%" y="%row2_1_y%" w="%console_width%" h="1260"/> 
+				<placement x="%col1_x%" y="%ab_ex_h%" w="%console_width%" h="%console_action_height_fm%"/> 
 				<condition var1="use_fixed_font" var2="1"/>
 				<font resource="fixed"/>
 			</console>
-
-			<fill color="%linecolor%">
-				<placement x="%col1_x%" y="%row2_1_y%" w="%content_w%" h="%fileselector_separatorheight%"/>
-			</fill>
-
-			<fill color="%linecolor%">
-				<placement x="%col1_x%" y="%row9_1_y%" w="%content_w%" h="%fileselector_separatorheight%"/>
-			</fill>
-
 
 			<action>
 				<touch key="home"/>

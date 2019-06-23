@@ -633,7 +633,7 @@
 				<text>%tw_file%</text>
 			</text>
 
-			<template name="action_page_console"/>
+			<template name="action_page_console_big"/>
 
 			<action>
 				<condition var1="tw_operation_state" var2="1"/>
@@ -665,7 +665,7 @@
 				<text>%tw_action_text2%</text>
 			</text>
 
-			<template name="action_page_console"/>
+			<template name="action_page_console_big"/>
 			
 			<template name="cant_cancel" />
 
@@ -817,7 +817,7 @@
 				<text>{@install_reboot}</text>
 			</text>
 
-			<template name="action_page_console"/>
+			<template name="action_page_console_big"/>
 
 			<button>
 				<condition var1="tw_busy" var2="1"/>

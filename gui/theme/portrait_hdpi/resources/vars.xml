@@ -172,7 +172,7 @@
 		<variable name="ws_cards_y4" value="%cutout_w%+1230"/>
 		
 		<!-- Splash -->
-		<variable name="spl_custom_btn" value="%screen_original_h%-30"/>
+		<variable name="spl_custom_btn" value="%ext_custom_nav%-30"/>
 		<variable name="spl_custom_2_btn" value="%screen_original_h%-200"/>
 		
 		<!-- Favorites -->
@@ -382,10 +382,14 @@
 		<variable name="input_cursor_width" value="2"/>
 		
 		<!-- Terminal / Console -->
+		<variable name="btn_bg" value="%screen_h%-348"/>
 		<variable name="console_width" value="984"/>
-		<variable name="console_height" value="%screen_min_cut%-312"/>
-		<variable name="console_action_height" value="900"/>
-		<variable name="console_action_height_big" value="1330"/>
+		<variable name="console_height" value="%screen_min_cut%-216"/>
+		<variable name="console_action_height" value="%screen_min_cut%-813"/>
+		<variable name="prep" value="%screen_original_h%-%cutout_w%"/>
+		<variable name="console_action_height_big" value="%prep%-513"/>
+		<variable name="console_action_height_fm" value="%screen_min_cut%-600"/>
+		<variable name="console_y" value="465+%cutout_w%"/>
 		<variable name="terminal_y" value="280+%cutout_w%"/>
 		<variable name="terminal_width" value="1032"/>
 		<variable name="terminal_height" value="%screen_min_cut%-1210"/>

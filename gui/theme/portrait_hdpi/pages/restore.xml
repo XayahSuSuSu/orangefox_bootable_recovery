@@ -424,7 +424,7 @@
 				<text>%tw_restore_name%</text>
 			</text>
 
-			<template name="action_page_console"/>
+			<template name="action_page_console_big"/>
 			
 			<template name="cant_cancel" />
 
@@ -721,7 +721,7 @@
 				<text>%tw_size_progress%</text>
 			</text>
 
-			<template name="action_page_console"/>
+			<template name="action_page_console_big"/>
 			
 			<template name="cant_cancel" />
 
@@ -829,7 +829,7 @@
 				<text>%tw_action_text2%</text>
 			</text>
 
-			<template name="action_page_console"/>
+			<template name="action_page_console_big"/>
 			
 			<template name="cant_cancel" />
 

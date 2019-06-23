@@ -86,12 +86,12 @@
 			<template name="navbar_console_hide"/>
 
 			<console>
-				<placement x="%col1_x%" y="%ab_bc_y%" w="%console_width%" h="%console_height%"/> 
+				<placement x="%col1_x%" y="%status_h%" w="%console_width%" h="%console_height%"/> 
 				<condition var1="use_fixed_font" var2="0"/>
 			</console>
 			
 			<console>
-				<placement x="%col1_x%" y="%ab_bc_y%" w="%console_width%" h="%console_height%"/> 
+				<placement x="%col1_x%" y="%status_h%" w="%console_width%" h="%console_height%"/> 
 				<condition var1="use_fixed_font" var2="1"/>
 				<font resource="fixed"/>
 			</console>

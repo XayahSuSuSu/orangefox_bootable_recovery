@@ -451,7 +451,7 @@
 					<text>%ft_mm_name%</text>
 				</text>
 
-				<template name="action_page_console"/>
+				<template name="action_page_console_big"/>
 				<template name="cant_cancel" />
 				
 				<action>

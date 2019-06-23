@@ -648,35 +648,34 @@
 			</animation>
 		</template>
 
+		<!-- Used when action completed -->
 		<template name="action_page_console">
 			<console>
-				<placement x="%col1_x%" y="%row2_1_y%" w="%console_width%" h="%console_action_height%"/> 
+				<placement x="%col1_x%" y="%console_y%" w="%console_width%" h="%console_action_height%"/> 
 				<condition var1="use_fixed_font" var2="0"/>
 			</console>
 			
 			<console>
-				<placement x="%col1_x%" y="%row2_1_y%" w="%console_width%" h="%console_action_height%"/> 
+				<placement x="%col1_x%" y="%console_y%" w="%console_width%" h="%console_action_height%"/> 
 				<condition var1="use_fixed_font" var2="1"/>
 				<font resource="fixed"/>
 			</console>
 
-			<fill color="%linecolor%">
-				<placement x="%col1_x%" y="%row2_1_y%" w="%content_w%" h="%fileselector_separatorheight%"/>
-			</fill>
-
-			<fill color="%linecolor%">
-				<placement x="%col1_x%" y="%row7_1_y%" w="%content_w%" h="%fileselector_separatorheight%"/>
+			<fill color="%title_solid_bg%">
+				<condition var1="darker_ui" var2="1"/>
+				<placement x="0" y="%btn_bg%" w="%screen_w%" h="204"/>
 			</fill>
 		</template>
 
+		<!-- Used when action in progress -->
 		<template name="action_page_console_big">
 			<console>
-				<placement x="%col1_x%" y="%row2_1_y%" w="%console_width%" h="%console_action_height_big%"/> 
+				<placement x="%col1_x%" y="%console_y%" w="%console_width%" h="%console_action_height_big%"/> 
 				<condition var1="use_fixed_font" var2="0"/>
 			</console>
 			
 			<console>
-				<placement x="%col1_x%" y="%row2_1_y%" w="%console_width%" h="%console_action_height_big%"/> 
+				<placement x="%col1_x%" y="%console_y%" w="%console_width%" h="%console_action_height_big%"/> 
 				<condition var1="use_fixed_font" var2="1"/>
 				<font resource="fixed"/>
 			</console>

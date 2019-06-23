@@ -488,7 +488,7 @@
 				<text>{@lang_wait}</text>
 			</text>
 
-			<template name="action_page_console"/>
+			<template name="action_page_console_big"/>
 			
 			<button>
 				<condition var1="tw_busy" var2="1"/>
@@ -552,7 +552,7 @@
 				<text>{@digest_btn}</text>
 			</text>
 
-			<template name="action_page_console"/>
+			<template name="action_page_console_big"/>
 			
 			<button>
 				<condition var1="tw_busy" var2="1"/>

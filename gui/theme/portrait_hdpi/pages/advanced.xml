@@ -1031,7 +1031,7 @@
 			
 			<page name="amgr_action_console">
 				<template name="body"/>
-
+				
 				<template name="progress_bar"/>
 
 				<template name="ab_ex"/>
@@ -1053,7 +1053,7 @@
 					<text>%amgr_select%</text>
 				</text>
 
-				<template name="action_page_console"/>
+				<template name="action_page_console_big"/>
 				<template name="cant_cancel" />
 				
 				<action>
