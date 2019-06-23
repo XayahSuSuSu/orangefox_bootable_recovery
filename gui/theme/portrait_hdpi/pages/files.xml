@@ -1908,11 +1908,11 @@
 			</text>
 
 			<console>
-				<placement x="%col1_x%" y="%ab_ex_h%" w="%console_width%" h="%console_action_height_fm%"/> 
+				<placement x="%col1_x%" y="%console_y%" w="%console_width%" h="%console_action_height_fm%"/> 
 				<condition var1="use_fixed_font" var2="0"/>
 			</console>
 			<console>
-				<placement x="%col1_x%" y="%ab_ex_h%" w="%console_width%" h="%console_action_height_fm%"/> 
+				<placement x="%col1_x%" y="%console_y%" w="%console_width%" h="%console_action_height_fm%"/> 
 				<condition var1="use_fixed_font" var2="1"/>
 				<font resource="fixed"/>
 			</console>

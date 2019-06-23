@@ -384,12 +384,12 @@
 		<!-- Terminal / Console -->
 		<variable name="btn_bg" value="%screen_h%-348"/>
 		<variable name="console_width" value="984"/>
-		<variable name="console_height" value="%screen_min_cut%-216"/>
-		<variable name="console_action_height" value="%screen_min_cut%-813"/>
+		<variable name="console_height" value="%screen_min_cut%-312"/>
+		<variable name="console_action_height" value="%screen_min_cut%-900"/>
 		<variable name="prep" value="%screen_original_h%-%cutout_w%"/>
-		<variable name="console_action_height_big" value="%prep%-513"/>
-		<variable name="console_action_height_fm" value="%screen_min_cut%-600"/>
-		<variable name="console_y" value="465+%cutout_w%"/>
+		<variable name="console_action_height_big" value="%prep%-552"/>
+		<variable name="console_action_height_fm" value="%screen_min_cut%-696"/>
+		<variable name="console_y" value="504+%cutout_w%"/>
 		<variable name="terminal_y" value="280+%cutout_w%"/>
 		<variable name="terminal_width" value="1032"/>
 		<variable name="terminal_height" value="%screen_min_cut%-1210"/>
