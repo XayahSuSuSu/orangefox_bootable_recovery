@@ -293,6 +293,8 @@ int GUIFileSelector::GetFileList(const std::string folder)
 		}
 		return -1;
 	}
+
+	DataManager::GetValue("list_font", doubleLine);
 	
 	string showHiddenFiles, reloadfm, searchString;
 	DataManager::GetValue("tw_hidden_files", showHiddenFiles);
@@ -435,7 +437,16 @@ void GUIFileSelector::RenderItem(size_t itemindex, int yPos, bool selected)
 		}
 	}
 
-	RenderStdItem(yPos, selected, icon, text.c_str());
+ 	// TODO: add useful info like: 15:44 25.06.2019 23MB (755)
+	// mFileList.at(fileindex).fileSize
+	// mFileList.at(fileindex).lastAccess
+	// mFileList.at(fileindex).lastModified
+	// mFileList.at(fileindex).lastStatChange
+
+	if (doubleLine == 1)
+		RenderStdItem(yPos, selected, icon, text.c_str(), ext.c_str());
+	else
+		RenderStdItem(yPos, selected, icon, text.c_str());
 }
 
 void GUIFileSelector::NotifySelect(size_t item_selected)

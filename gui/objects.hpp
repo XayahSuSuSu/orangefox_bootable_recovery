@@ -497,7 +497,7 @@ protected:
 	virtual void NotifySelect(size_t item_selected __unused) {}
 
 	// render a standard-layout list item with optional icon and text
-	void RenderStdItem(int yPos, bool selected, ImageResource* icon, const char* text, int iconAndTextH = 0);
+	void RenderStdItem(int yPos, bool selected, ImageResource* icon, const char* text, const char* addtext = NULL);
 
 	enum { NO_ITEM = (size_t)-1 };
 	// returns item index at coordinates or NO_ITEM if there is no item there
@@ -638,6 +638,7 @@ protected:
 	ImageResource* mExLinkIcon;
 	ImageResource* mExBlockIcon;
 	bool updateFileList;
+	int doubleLine = 0;
 	std::string mFileFilterVar;
 };
 
