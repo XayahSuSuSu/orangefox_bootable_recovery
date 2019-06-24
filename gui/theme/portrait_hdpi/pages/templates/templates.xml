@@ -660,11 +660,6 @@
 				<condition var1="use_fixed_font" var2="1"/>
 				<font resource="fixed"/>
 			</console>
-
-			<fill color="%title_solid_bg%">
-				<condition var1="darker_ui" var2="1"/>
-				<placement x="0" y="%btn_bg%" w="%screen_w%" h="204"/>
-			</fill>
 		</template>
 
 		<!-- Used when action in progress -->

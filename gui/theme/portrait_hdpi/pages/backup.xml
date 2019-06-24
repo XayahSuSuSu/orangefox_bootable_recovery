@@ -484,8 +484,15 @@
 			
 			<text style="text_ab_subtitle">
 				<condition var1="tw_size_progress"/>
+				<condition var1="tw_file_progress" op="!="/>
 				<placement x="%col1_x_indent%" y="%row1_2_y%"/>
-				<text>%tw_file_progress%%tw_size_progress%</text>
+				<text>%tw_size_progress%</text>
+			</text>
+			<text style="text_ab_subtitle">
+				<condition var1="tw_size_progress"/>
+				<condition var1="tw_file_progress"/>
+				<placement x="%col1_x_indent%" y="%row1_2_y%"/>
+				<text>%tw_file_progress% %tw_size_progress%</text>
 			</text>
 
 			<text style="text_ab_subtitle">

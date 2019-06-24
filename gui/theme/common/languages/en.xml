@@ -1010,7 +1010,10 @@
 		<string name="digest_btn">Create Digest</string>
 		
 		<!-- 124/14354 files, 20/5412MB (5%)  -->
-		<string name="file_progress_v2">%llu/%llu files, </string>
+		<string name="file_progress_v2">%llu/%llu files,</string>
 		<string name="size_progress_v2">%llu/%llu MB (%i%%)</string>
+
+		<string name="navpan_new_design">New navigation panel design</string>
+		<string name="full_partition_list">Show addition partitions to backup</string>
 	</resources>
 </language>

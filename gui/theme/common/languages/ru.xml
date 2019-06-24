@@ -1114,7 +1114,10 @@
 		<string name="digest_btn">Создать контр. суммы</string>
 		
 		<!-- 124/14354 files, 20/5412MB (5%)  -->
-		<string name="file_progress_v2">%llu/%llu файлов, </string>
+		<string name="file_progress_v2">%llu/%llu файлов,</string>
 		<string name="size_progress_v2">%llu/%llu MБ (%i%%)</string>
+
+		<string name="navpan_new_design">Новый дизайн панели переходов</string>
+		<string name="full_partition_list">Показать больше разделов для р.к.</string>
 	</resources>
 </language>
