@@ -2208,10 +2208,6 @@ void TWFunc::OrangeFox_Startup(void)
     }
 
   TWFunc::Fresh_Fox_Install();
-  
-  // start mtp manually, if enabled
-  if (DataManager::GetIntValue("tw_mtp_enabled") == 1)
-     PartitionManager.Enable_MTP();
 }
 
 void TWFunc::copy_kernel_log(string curr_storage)

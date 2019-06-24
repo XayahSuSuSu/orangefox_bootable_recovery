@@ -300,6 +300,7 @@ int main(int argc, char **argv)
 #ifdef FOX_ADVANCED_SECURITY
 	LOGINFO("ADB & MTP disabled by maintainer\n");
 	DataManager::SetValue("fox_advanced_security", "1");
+  DataManager::SetValue("tw_mtp_enabled", 0);
 #else
 #ifdef TW_HAS_MTP
   char mtp_crash_check[PROPERTY_VALUE_MAX];
