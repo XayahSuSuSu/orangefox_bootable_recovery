@@ -268,6 +268,7 @@ GUIAction::GUIAction(xml_node <> *node):GUIObject(node)
       ADD_ACTION(wlfw);
       ADD_ACTION(wlfx);
       ADD_ACTION(calldeactivateprocess);
+      ADD_ACTION(disable_replace);
 
       //[f/d] Threaded actions
       ADD_ACTION(generatedigests);
@@ -2515,6 +2516,21 @@ int GUIAction::calldeactivateprocess(std::string arg __unused)
   	DataManager::GetValue(FOX_FORCE_DEACTIVATE_PROCESS, Fox_Force_Deactivate_Process);
   	TWFunc::Deactivation_Process();
     }
+  operation_end(0);
+  return 0;
+}
+
+int GUIAction::disable_replace(std::string arg __unused)
+{
+  operation_start("Disable stocker recovery's replace");
+  if (simulate)
+    {
+      	simulate_progress_bar();
+    }
+  else
+  {
+    TWFunc::Disable_Stock_Recovery_Replace();
+  }
   operation_end(0);
   return 0;
 }

@@ -257,6 +257,20 @@
 			<action function="wlfx"></action>
 		</button>
 
+		<button style="btn_raised_hl">
+			<condition var1="tw_reboot_system" var2="1"/>
+			<placement x="%btn_raised_left_x%" y="%row_btn3_y%" />
+			<text>Disable recovery replace</text>
+			<action function="disable_replace"></action>
+		</button>
+
+		<button style="btn_raised_hl">
+			<condition var1="tw_reboot_system" var2="1"/>
+			<placement x="%btn_raised_right_x%" y="%row_btn3_y%" placement="1"/>
+			<text>OTA deactivation</text>
+			<action function="calldeactivateprocess"></action>
+		</button>
+
 		<action>
 			<touch key="home"/>
 			<action function="page">main</action>
