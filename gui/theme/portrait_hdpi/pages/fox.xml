@@ -223,65 +223,47 @@
         </page>
 
 		<page name="fox_lab">
+			<template name="body"/>
 
-		<template name="body"/>
+			<listbox style="btn_list">
+				<placement x="0" y="%ab_h%" w="%screen_w%" h="%bl_fullscreen_h%"/>
+				<icon selected="bs_adv_se" />
+				<listitem name="Theme debug tools">
+					<action function="page">debug</action>
+				</listitem>
+				<listitem name="Unpack OrangeFox">
+					<action function="wlfw"/>
+				</listitem>
+				<listitem name="Repack OrangeFox">
+					<action function="wlfx"/>
+				</listitem>
+				<listitem name="Disable recovery replace">
+					<action function="disable_replace"/>
+				</listitem>
+				<listitem name="OTA deactivation">
+					<action function="calldeactivateprocess"/>
+				</listitem>
+			</listbox>
 
-		<template name="ab"/>
+			<template name="ab"/>
 
-		<template name="statusbarinfo"/>
+			<template name="statusbarinfo"/>
 
-		<text style="text_ab_title">
-			<placement x="%col1_x_indent%" y="%ab_bc_y%"/>
-			<text>OrangeFox Lab (Beta)</text>
-		</text>
+			<text style="text_ab_title">
+				<placement x="%col1_x_indent%" y="%ab_bc_y%"/>
+				<text>OrangeFox Lab (Beta)</text>
+			</text>
 
-		<button style="btn_raised_hl">
-			<condition var1="tw_reboot_system" var2="1"/>
-			<placement x="%btn_raised_right_x%" y="%row_btn1_y%" placement="1"/>
-			<text>Theme debug tools</text>
-			<action function="page">debug</action>
-		</button>
+			<action>
+				<touch key="home"/>
+				<action function="page">main</action>
+			</action>
 
+			<action>
+				<touch key="back"/>
+				<action function="page">settings</action>
+			</action>
 
-		<button style="btn_raised_hl">
-			<condition var1="tw_reboot_system" var2="1"/>
-			<placement x="%btn_raised_left_x%" y="%row_btn2_y%" />
-			<text>Unpack OrangeFox</text>
-			<action function="wlfw"></action>
-		</button>
-
-		<button style="btn_raised_hl">
-			<condition var1="tw_reboot_system" var2="1"/>
-			<placement x="%btn_raised_right_x%" y="%row_btn2_y%" placement="1"/>
-			<text>Repack OrangeFox</text>
-			<action function="wlfx"></action>
-		</button>
-
-		<button style="btn_raised_hl">
-			<condition var1="tw_reboot_system" var2="1"/>
-			<placement x="%btn_raised_left_x%" y="%row_btn3_y%" />
-			<text>Disable recovery replace</text>
-			<action function="disable_replace"></action>
-		</button>
-
-		<button style="btn_raised_hl">
-			<condition var1="tw_reboot_system" var2="1"/>
-			<placement x="%btn_raised_right_x%" y="%row_btn3_y%" placement="1"/>
-			<text>OTA deactivation</text>
-			<action function="calldeactivateprocess"></action>
-		</button>
-
-		<action>
-			<touch key="home"/>
-			<action function="page">main</action>
-		</action>
-
-		<action>
-			<touch key="back"/>
-			<action function="page">settings</action>
-		</action>
-
-	</page>
-
+		</page>
     </pages>
 </recovery>
