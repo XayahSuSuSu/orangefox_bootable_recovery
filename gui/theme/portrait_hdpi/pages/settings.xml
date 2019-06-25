@@ -66,9 +66,9 @@
 					<icon res="bs_btn_set_regional"/>
 					<action function="page">ext_time</action>
 				</listitem>
-				<listitem name="{@dbg}">
-					<condition var1="debug_mode" var2="1"/>
-					<action function="page">debug</action>
+				<listitem name="OrangeFox Lab">
+					<condition var1="fox_lab" var2="1"/>
+					<action function="page">fox_lab</action>
 				</listitem>
 				<listitem name="{@about_hdr}">
 					<icon res="bs_btn_set_about"/>
@@ -1241,8 +1241,6 @@
 				<listitem name="{@dbg_page}">page</listitem>
 				<listitem name="{@dbg_set}">set</listitem>
 				<listitem name="{@dbg_overlay}">overlay</listitem>
-				<listitem name="{@unpack} OrangeFox">wlfw</listitem>
-				<listitem name="{@repack} OrangeFox">wlfx</listitem>
 			</listbox>
 			
 			<text style="caption">

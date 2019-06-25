@@ -653,6 +653,13 @@ void DataManager::SetDefaultValues()
   mConst.SetValue(OF_CLOCK_POS_S, OF_CLOCK_POS);
   mConst.SetValue(OF_ALLOW_DISABLE_NAVBAR_S, OF_ALLOW_DISABLE_NAVBAR);
   mConst.SetValue(OF_FLASHLIGHT_ENABLE_STR, OF_FLASHLIGHT_ENABLE);
+
+  #ifdef FOX_ENABLE_LAB
+    mConst.SetValue("fox_lab", "1");
+  #else
+    mConst.SetValue("fox_lab", "0");
+  #endif
+
   #ifdef OF_FLASHLIGHT_ENABLE 
     if (OF_FLASHLIGHT_ENABLE == "1") {
       mConst.SetValue("of_fl_path_1", OF_FL_PATH1);
