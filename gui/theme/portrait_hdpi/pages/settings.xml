@@ -624,7 +624,7 @@
 			</text>
 
 			<listbox style="settingslist">
-				<placement x="0" y="%row6_1a_y%" w="%screen_w%" h="%lb_l6%"/>		
+				<placement x="0" y="%row6_1a_y%" w="%screen_w%" h="%lb_l5%"/>		
 				<listitem name="{@enable_backup_comp_chk}">
 					<data variable="tw_use_compression"/>
 				</listitem>
@@ -641,9 +641,6 @@
 				<listitem name="{@sha2_chk}">
 					<condition var1="tw_no_sha2" var2="0"/>
 					<data variable="tw_use_sha2"/>
-				</listitem>
-				<listitem name="Show addition partition to backup">
-					<data variable="fox_adv_backup"/>
 				</listitem>
 			</listbox>
 

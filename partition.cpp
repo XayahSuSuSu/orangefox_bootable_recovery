@@ -129,7 +129,6 @@ enum TW_FSTAB_FLAGS {
 	TWFLAG_ANDSEC,
 	TWFLAG_BACKUP,
 	TWFLAG_BACKUPNAME,
-	TWFLAG_ADVBACKUP,
 	TWFLAG_BLOCKSIZE,
 	TWFLAG_CANBEWIPED,
 	TWFLAG_CANENCRYPTBACKUP,
@@ -173,7 +172,6 @@ enum TW_FSTAB_FLAGS {
 const struct flag_list tw_flags[] = {
 	{ "andsec",                 TWFLAG_ANDSEC },
 	{ "backup",                 TWFLAG_BACKUP },
-	{ "advbackup",              TWFLAG_ADVBACKUP },
 	{ "backupname=",            TWFLAG_BACKUPNAME },
 	{ "blocksize=",             TWFLAG_BLOCKSIZE },
 	{ "canbewiped",             TWFLAG_CANBEWIPED },
@@ -217,7 +215,6 @@ TWPartition::TWPartition() {
 	Can_Be_Mounted = false;
 	Can_Be_Wiped = false;
 	Can_Be_Backed_Up = false;
-	Can_Be_Adv_Backed_Up = false;
 	Use_Rm_Rf = false;
 	Wipe_During_Factory_Reset = false;
 	Wipe_Available_in_GUI = false;
@@ -939,9 +936,6 @@ void TWPartition::Apply_TW_Flag(const unsigned flag, const char* str, const bool
 			break;
 		case TWFLAG_BACKUPNAME:
 			Backup_Display_Name = str;
-			break;
-		case TWFLAG_ADVBACKUP:
-			Can_Be_Adv_Backed_Up = val;
 			break;
 		case TWFLAG_BLOCKSIZE:
 			Format_Block_Size = (unsigned long)(atol(str));
