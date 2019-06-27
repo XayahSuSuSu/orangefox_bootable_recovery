@@ -432,6 +432,8 @@ void TWPartitionManager::Output_Partition(TWPartition * Part)
 		printf("Use_Rm_Rf ");
 	if (Part->Can_Be_Backed_Up)
 		printf("Can_Be_Backed_Up ");
+	if (Part->Can_Be_Adv_Backed_Up)
+		printf("Can_Be_Adv_Backed_Up ");
 	if (Part->Wipe_During_Factory_Reset)
 		printf("Wipe_During_Factory_Reset ");
 	if (Part->Wipe_Available_in_GUI)
@@ -777,8 +779,8 @@ bool TWPartitionManager::Backup_Partition(PartitionSettings * part_settings)
 	  for (subpart = Partitions.begin(); subpart != Partitions.end();
 	       subpart++)
 	    {
-	      if ((*subpart)->Can_Be_Backed_Up && (*subpart)->Is_SubPartition
-		  && (*subpart)->SubPartition_Of == parentPart->Mount_Point)
+	      if ((*subpart)->Can_Be_Backed_Up || (((*subpart)->Can_Be_Adv_Backed_Up && DataManager::GetIntValue("fox_adv_backup") != 0) && (*subpart)->Is_SubPartition
+		  && (*subpart)->SubPartition_Of == parentPart->Mount_Point))
 		{
 		  part_settings->Part = *subpart;
 		  if (!(*subpart)->Backup(part_settings, &tar_fork_pid))
@@ -2717,7 +2719,7 @@ void TWPartitionManager::Get_Partition_List(string ListType,
       unsigned long long Backup_Size;
       for (iter = Partitions.begin(); iter != Partitions.end(); iter++)
 	{
-	  if ((*iter)->Can_Be_Backed_Up && !(*iter)->Is_SubPartition
+	  if (((*iter)->Can_Be_Backed_Up || (((*iter)->Can_Be_Adv_Backed_Up) && (DataManager::GetIntValue("fox_adv_backup") != 0 ))) && !(*iter)->Is_SubPartition
 	      && (*iter)->Is_Present)
 	    {
 	      struct PartitionList part;
@@ -2727,7 +2729,7 @@ void TWPartitionManager::Get_Partition_List(string ListType,
 		  std::vector < TWPartition * >::iterator subpart;
 
 					for (subpart = Partitions.begin(); subpart != Partitions.end(); subpart++) {
-						if ((*subpart)->Is_SubPartition && (*subpart)->Can_Be_Backed_Up && (*subpart)->Is_Present && (*subpart)->SubPartition_Of == (*iter)->Mount_Point)
+						if ((*subpart)->Is_SubPartition && ((*subpart)->Can_Be_Backed_Up || ((*subpart)->Can_Be_Adv_Backed_Up && DataManager::GetIntValue("fox_adv_backup") != 0 )) && (*subpart)->Is_Present && (*subpart)->SubPartition_Of == (*iter)->Mount_Point)
 							Backup_Size += (*subpart)->Backup_Size;
 					}
 				}
