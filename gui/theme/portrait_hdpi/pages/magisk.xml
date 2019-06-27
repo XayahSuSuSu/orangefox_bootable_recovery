@@ -463,7 +463,7 @@
 							else
 								dest="/magisk";
 							fi
-							if [ -f "$dest/%mmgui_select%" ]; then
+							if [ -d "$dest/%mmgui_select%" ]; then
 								rm -rf "$dest/%mmgui_select%"
 								[[ "%ft_mm_isnew%" == "1" ]] || mmgui unmnt
 							else
@@ -518,8 +518,9 @@
 					<placement x="%btn_raised_left_x%" y="%row_btn1_y%"/>
 					<text>{@back_btn}</text>
 					<actions>
-						<action function="set">tw_clear_destination=magisk_mount</action>
-						<action function="page">clear_vars</action>
+						<action function="set">ftls_running=1</action>
+						<action function="set">ft_mm_found=0</action>
+						<action function="page">magisk_mount</action>
 					</actions>
 				</button>
 
@@ -546,8 +547,9 @@
 				<action>
 					<touch key="back"/>
 					<actions>
-						<action function="set">tw_clear_destination=magisk_mount</action>
-						<action function="page">clear_vars</action>
+						<action function="set">ftls_running=1</action>
+						<action function="set">ft_mm_found=0</action>
+						<action function="page">magisk_mount</action>
 					</actions>
 				</action>
 			</page>
