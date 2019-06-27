@@ -779,8 +779,8 @@ bool TWPartitionManager::Backup_Partition(PartitionSettings * part_settings)
 	  for (subpart = Partitions.begin(); subpart != Partitions.end();
 	       subpart++)
 	    {
-	      if ((*subpart)->Can_Be_Backed_Up || (((*subpart)->Can_Be_Adv_Backed_Up && DataManager::GetIntValue("fox_adv_backup") != 0) && (*subpart)->Is_SubPartition
-		  && (*subpart)->SubPartition_Of == parentPart->Mount_Point))
+	      if ((*subpart)->Can_Be_Backed_Up && (*subpart)->Is_SubPartition
+		  && (*subpart)->SubPartition_Of == parentPart->Mount_Point)
 		{
 		  part_settings->Part = *subpart;
 		  if (!(*subpart)->Backup(part_settings, &tar_fork_pid))
