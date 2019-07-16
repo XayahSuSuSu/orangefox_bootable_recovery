@@ -202,12 +202,12 @@ ifeq ($(OF_USE_TWFUNC_REBOOT_FUNCTION),1)
     LOCAL_CFLAGS += -DOF_USE_TWFUNC_REBOOT_FUNCTION='"1"'
 endif
 
-ifeq ($(FOX_ENABLE_LAB),1)
-    LOCAL_CFLAGS += -DFOX_ENABLE_LAB='"1"'
-endif
-
 ifeq ($(OF_OTA_RES_DECRYPT),1)
     LOCAL_CFLAGS += -DOF_OTA_RES_DECRYPT='"1"'
+endif
+
+ifeq ($(FOX_ENABLE_LAB),1)
+    LOCAL_CFLAGS += -DFOX_ENABLE_LAB='"1"'
 endif
 
 ifeq ($(TW_USE_TOOLBOX), true)
