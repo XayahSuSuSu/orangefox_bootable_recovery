@@ -529,7 +529,11 @@ int GUIInput::NotifyCharInput(int key)
 		} else if (key >= 32) {
 			// Regular key
 			if (HasAllowed && AllowedList.find((char)key) == string::npos) {
-				return 0;
+				//[f/d] UX: Replace space with '_' when space isn't allowed (e.g. backup name)
+				if (key == 32 && AllowedList.find('_') != string::npos)
+					key = (int)'_';
+				else
+					return 0;
 			}
 			if (HasDisabled && DisabledList.find((char)key) != string::npos) {
 				return 0;
