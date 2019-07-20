@@ -288,6 +288,7 @@ bool TWFunc::Rerun_Startup(void)
    if (i == true || tprop == "1")
      return false;
 
+   DataManager::SetValue("data_decrypted", "1");
    // LOGINFO("OrangeFox: Reading settings file - again...\n");
    DataManager::ReadSettingsFile();
 

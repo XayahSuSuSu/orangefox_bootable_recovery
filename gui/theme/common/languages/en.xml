@@ -1016,5 +1016,7 @@
 
 		<string name="navpan_new_design">New navigation panel design</string>
 		<string name="full_partition_list">Show addition partitions to backup</string>
+
+		<string name="data_decrypted_reload">Successfully decrypted!</string>
 	</resources>
 </language>

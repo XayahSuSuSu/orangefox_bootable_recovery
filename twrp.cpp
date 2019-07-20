@@ -257,6 +257,7 @@ int main(int argc, char **argv)
 	LOGINFO("Backup of TWRP ramdisk done.\n");
 #endif
 
+	DataManager::SetValue("data_decrypted", "0");
 	// Offer to decrypt if the device is encrypted
 	if (DataManager::GetIntValue(TW_IS_ENCRYPTED) != 0) {
 		if (SkipDecryption) {
@@ -401,13 +402,17 @@ int main(int argc, char **argv)
 
   // check for fresh OrangeFox installation (again)
   //TWFunc::Fresh_Fox_Install();
-
+  
   // LOGINFO("OrangeFox: Reloading theme to apply generated theme on sdcard - again...\n");
-  if (DataManager::GetStrValue("used_custom_encryption") == "1")
-    PageManager::RequestReload();
-
-  // Launch the main GUI
-  gui_start();
+  if (DataManager::GetStrValue("data_decrypted") == "1")
+  {
+	//[f/d] Start UI using reapply_settings page
+  	DataManager::SetValue("of_reload_back", "main");
+	PageManager::RequestReload();
+    gui_startPage("reapply_settings", 1, 0);
+  }
+  else
+	gui_start(); // Launch the main GUI
 
 #ifndef TW_OEM_BUILD
 

@@ -480,31 +480,37 @@
 		</page>
 
 		<page name="trydecrypt">
-			<template name="body"/>
+			<background color="%background%"/>
+			<template name="keys"/>
 
 			<template name="progress_bar"/>
 
-			<template name="ab_ex"/>
+			<fill color="%title_solid_bg%">
+				<placement x="0" y="0" w="%screen_w%" h="%ab_ex_h%"/>
+			</fill>
 
 			<template name="statusbarinfo"/>
 
-			<text style="text_ab_title">
+			<!--text style="text_ab_title">
 				<placement x="%col1_x_indent%" y="%ab_bc_y%"/>
 				<text>{@mount_hdr}</text>
-			</text>
+			</text-->
 
-			<text style="text_ab_title">
-				<placement x="%col1_x_indent%" y="%row1_2_y%" placement="2"/>
+			<image>
+				<image resource="actionbar_encr_ena"/>
+				<placement x="%center_x%" y="%row0_y%" placement="4"/>
+			</image>
+
+			<text style="text_ab_subtitle">
+				<placement x="%center_x%" y="%row1_1a_y%" placement="4"/>
 				<text>{@decrypt_data_trying}</text>
 			</text>
-			<text style="text_ab_subtitle">
+			<!--text style="text_ab_subtitle">
 				<placement x="%col1_x_indent%" y="%row1_2_y%"/>
 				<text>{@lang_wait}</text>
-			</text>
+			</text-->
 
 			<template name="action_page_console_big"/>
-			
-			<template name="cant_cancel" />
 
 			<action>
 				<action function="decrypt"/>
@@ -526,14 +532,34 @@
 					<condition var1="tw_operation_state" var2="1"/>
 					<condition var1="tw_operation_status" op="=" var2="0"/>
 				</conditions>
-				<!-- Crutch to load settings if data encrypted -->
-				<actions>
-					<action function="set">tw_back=main</action>
-					<action function="set">tw_action_param=bootloader</action>
-					<action function="set">tw_reboot_param=bootloader</action>
-					<action function="page">rebootcheck</action>
-				</actions>
+				<action function="set">tw_page_done=1</action>
+				<action function="set">of_reload_back=main</action>
+				<action function="reload"/>
+				<action function="page">reapply_settings</action>
 			</action>
+		</page>
+
+		<page name="reapply_settings">
+			<background color="%background%"/>
+			<template name="keys"/>
+
+			<fill color="%title_solid_bg%">
+				<placement x="0" y="0" w="%screen_w%" h="%ab_ex_h%"/>
+			</fill>
+
+			<template name="statusbarinfo"/>
+
+			<image>
+				<image resource="actionbar_encr_dis"/>
+				<placement x="%center_x%" y="%row0_y%" placement="4"/>
+			</image>
+
+			<text style="text_ab_subtitle">
+				<placement x="%center_x%" y="%row1_1a_y%" placement="4"/>
+				<text>{@data_decrypted_reload}</text>
+			</text>
+
+			<template name="action_page_console_big"/>
 		</page>
 	</pages>
 </recovery>

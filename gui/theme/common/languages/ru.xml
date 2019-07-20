@@ -504,7 +504,7 @@
 		<string name="unable_to_mount_storage">Не удается смонтировать накопитель</string>
 		<string name="fail_decrypt">Не удается расшифровать Data.</string>
 		<string name="no_crypto_support">Шифрование не добавлено в эту сборки, пинайте разработчика.</string>
-		<string name="decrypt_success_dev">Data успешно расшифрован, новое блочное устройство: '{1}'</string>
+		<string name="decrypt_success_dev">Data успешно расшифрована, новое блочное устройство: '{1}'</string>
 		<string name="done">Готово</string>
 		<string name="start_partition_sd">Разметка SD-карты...</string>
 		<string name="partition_sd_locate">Не удалось найти устройство для разметки.</string>
@@ -1120,5 +1120,7 @@
 
 		<string name="navpan_new_design">Новый дизайн панели переходов</string>
 		<string name="full_partition_list">Показать больше разделов для р.к.</string>
+
+		<string name="data_decrypted_reload">Успешно расшифровано!</string>
 	</resources>
 </language>
