@@ -1111,7 +1111,8 @@
 		<string name="con_digest_error">Список разделов пуст!</string>
 		<string name="con_digest_cancel">Отмана...</string>
 		<string name="con_digest_complete">[СОЗДАНИЕ КОНТРОЛЬНЫХ СУММ ЗАВЕРШЕНО ЗА {1} СЕКУНД]</string>
-		<string name="digest_btn">Создать контр. суммы</string>
+		<string name="digest_btn">Создать суммы</string>
+		<string name="digest_creating">Создание контрольных сумм...</string>
 		
 		<!-- 124/14354 files, 20/5412MB (5%)  -->
 		<string name="file_progress_v2">%llu/%llu файлов,</string>

@@ -1008,6 +1008,7 @@
 		<string name="con_digest_cancel">Cancelling...</string>
 		<string name="con_digest_complete">[DIGEST CREATION COMPLETED IN {1} SECONDS]</string>
 		<string name="digest_btn">Create Digest</string>
+		<string name="digest_creating">Creating Digest...</string>
 		
 		<!-- 124/14354 files, 20/5412MB (5%)  -->
 		<string name="file_progress_v2">%llu/%llu files,</string>

@@ -562,7 +562,7 @@
 
 			<text style="text_ab_subtitle">
 				<placement x="%col1_x_indent%" y="%row1_2_y%"/>
-				<text>{@digest_btn}</text>
+				<text>{@digest_creating}</text>
 			</text>
 
 			<template name="action_page_console_big"/>
@@ -650,6 +650,7 @@
 				<condition var1="fox_show_digest_btn" var2="1"/>
 				<placement x="%btn_raised_left_x%" y="%row_btn1_y%"/>
 				<text>{@digest_btn}</text>
+				<action function="disableled"/>
 				<action function="page">backup_digest</action>
 			</button>
 
