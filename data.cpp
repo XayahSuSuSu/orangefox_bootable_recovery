@@ -593,6 +593,7 @@ void DataManager::SetBackupFolder()
       if (zip_path.size() < storage_path.size())
 	{
 	  SetValue(TW_ZIP_LOCATION_VAR, storage_path);
+	  SetValue("tw_zip_location_tmp", storage_path);
 	}
       else
 	{
@@ -603,6 +604,7 @@ void DataManager::SetBackupFolder()
 		("DataManager::SetBackupFolder zip path was %s changing to %s, %s\n",
 		 zip_path.c_str(), storage_path.c_str(), zip_root.c_str());
 	      SetValue(TW_ZIP_LOCATION_VAR, storage_path);
+	      SetValue("tw_zip_location_tmp", storage_path);
 	    }
 	}
     }
@@ -716,6 +718,7 @@ void DataManager::SetDefaultValues()
 
   str = GetCurrentStoragePath();
   mPersist.SetValue(TW_ZIP_LOCATION_VAR, str);
+	mPersist.SetValue("tw_zip_location_tmp", str);
   str += "/Fox/BACKUPS/";
 
   string dev_id;

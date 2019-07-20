@@ -499,9 +499,9 @@
 				<sort name="tw_gui_sort_order"/>
 				<icon folder="folder_icon" file="file_icon" />
 				<filter extn=".zip" folders="1" files="1"/>
-				<path name="tw_zip_location" default="/sdcard"/>
-				<data name="tw_filename"/>
-				<selection name="tw_file"/>
+				<path name="tw_zip_location_tmp" default="/sdcard"/>
+				<data name="tw_filename_tmp"/>
+				<selection name="tw_file_tmp"/>
 			</fileselector>
 
 			<fileselector style="fileselector_s">
@@ -510,9 +510,9 @@
 				<sort name="tw_gui_sort_order"/>
 				<icon folder="folder_icon_small" file="file_icon_small" />
 				<filter extn=".zip" folders="1" files="1"/>
-				<path name="tw_zip_location" default="/sdcard"/>
-				<data name="tw_filename"/>
-				<selection name="tw_file"/>
+				<path name="tw_zip_location_tmp" default="/sdcard"/>
+				<data name="tw_filename_tmp"/>
+				<selection name="tw_file_tmp"/>
 			</fileselector>
 
 			<template name="ab_ex"/>
@@ -535,17 +535,35 @@
 
 			<text style="text_ab_subtitle">
 				<placement x="%col1_x_indent%" y="%row1_2_y%"/>
-				<text>%tw_zip_location%</text>
+				<text>%tw_zip_location_tmp%</text>
 			</text>
 
 			<action>
-				<condition var1="tw_filename" op="modified"/>
+				<condition var1="tw_filename_tmp" op="modified"/>
+				<action function="set">tw_filename=%tw_filename_tmp%</action>
+				<action function="set">tw_file=%tw_file_tmp%</action>
+				<action function="set">tw_zip_location=%tw_zip_location_tmp%</action>
 				<action function="queuezip"/>
+				<action function="page">queue_zip</action>
 			</action>
 
 			<action>
+				<touch key="back"/>
+				<action function="page">flash_confirm</action>
+			</action>
+
+			<action>
+				<touch key="home"/>
+				<action function="page">main</action>
+			</action>
+		</page>
+
+		<!-- [f/d] Prevent showing somenthing like "File: .."
+			 when selecting dir in add_zip page and tapping back -->
+		<page name="queue_zip">
+			<action>
 				<condition var1="tw_zip_queue_count" var2="2"/>
-				<action function="set">tw_q_2=%tw_file%</action>
+				<action function="set">tw_q_2=%tw_file_tmp%</action>
 			</action>
 
 			<action>
@@ -589,18 +607,7 @@
 			</action>
 
 			<action>
-				<condition var1="tw_filename" op="modified"/>
 				<action function="page">flash_confirm</action>
-			</action>
-
-			<action>
-				<touch key="back"/>
-				<action function="page">flash_confirm</action>
-			</action>
-
-			<action>
-				<touch key="home"/>
-				<action function="page">main</action>
 			</action>
 		</page>
 
