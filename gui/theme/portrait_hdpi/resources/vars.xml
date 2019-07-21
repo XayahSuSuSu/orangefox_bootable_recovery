@@ -459,6 +459,10 @@
 		<variable name="text_raisedbtn" value="#FFFFFF"/>
 		<variable name="highlight" value="%accent%"/>
 		
+		<!-- Centered title with icon (for decryption and setup wizard) -->
+		<variable name="centered_title_1" value="222+%cutout_w%"/>
+		<variable name="centered_title_2" value="312+%cutout_w%"/>
+		
 		<!-- Rows -->
 		<variable name="row0_y" value="240+%cutout_w%"/>
 		<variable name="row0_a_y" value="270+%cutout_w%"/>
