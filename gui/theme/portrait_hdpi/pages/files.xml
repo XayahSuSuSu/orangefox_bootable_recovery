@@ -1504,12 +1504,6 @@
 				<text>%tw_filename1%</text>
 			</text>
 
-			
-			<text style="caption_hl">
-				<placement x="%col1_x%" y="%row2_1a_y%"/>
-				<text>{@fm_perms}</text>
-			</text>
-
 			<button>
 				<placement x="%ab_btn1_x%" y="%ab_y%"/>
 				<image resource="actionbar_btn" highlightresource="actionbar_btn_hl"/>
@@ -1531,7 +1525,7 @@
 				<placement x="%col1_x%" y="%input_rename_y%" w="%input_width%" h="%input_height%"/>
 				<text>%tw_filemanager_rename%</text>
 				<data name="tw_filemanager_rename"/>
-				<restrict minlen="4" maxlen="4" allow="01234567"/>
+				<restrict minlen="3" maxlen="4" allow="01234567"/>
 				<actions>
 					<action function="set">tw_filemanager_command=chmod %tw_filemanager_rename%</action>
 					<action function="set">tw_fm_text1=chmod %tw_filemanager_rename%</action>
