@@ -779,7 +779,9 @@
 					<action function="set">tw_fm_text3=</action>
 					<action function="set">tw_include_text3=0</action>
 					<action function="set">tw_back=filemanageroptions</action>
-					<action function="ftls">twrp xset tw_filemanager_rename=$(stat -c '%%a' "%tw_filename1%")</action>
+					<!--action function="ftls">twrp xset tw_filemanager_rename=$(stat -c '%%a' "%tw_filename1%")</action-->
+					<action function="get_chmod"/>
+					<action function="set_chmod"/>
 					<action function="page">filemanagerchmod</action>
 				</listitem>
 				<listitem name="{@fm_delete_btn}">
@@ -1327,6 +1329,156 @@
 		</page>
 
 		<page name="filemanagerchmod">
+			<template name="body"/>
+
+			<template name="ab_ex"/>
+
+			<template name="statusbarinfo"/>
+
+			<text style="text_ab_title">
+				<placement x="%col1_x_indent%" y="%ab_bc_y%"/>
+				<text>{@fm_hdr}</text>
+			</text>
+
+			<text style="text_ab_title">
+				<placement x="%col1_x_indent%" y="%row1_2_y%" placement="2"/>
+				<text>{@fm_set_perms_hdr}</text>
+			</text>
+
+			<text style="text_ab_subtitle">
+				<placement x="%col1_x_indent%" y="%row1_2_y%"/>
+				<text>%tw_filename1%</text>
+			</text>			
+
+			<button>
+				<placement x="%ab_btn1_x%" y="%ab_y%"/>
+				<image resource="actionbar_btn" highlightresource="actionbar_btn_hl"/>
+				<action function="calculate_chmod"/>
+				<action function="page">filemanagerchmod_key</action>
+			</button>
+
+			<image>
+				<placement x="%ab_btn1_x%" y="%ab_y%"/>
+				<image resource="actionbar_settings"/>
+			</image>
+
+			<checkbox>
+				<placement x="%ch_r_x%" y="%ch_own_y%"/>
+				<data variable="chmod_id4" default="0"/>
+			</checkbox>
+			<checkbox>
+				<placement x="%ch_w_x%" y="%ch_own_y%"/>
+				<data variable="chmod_id5" default="0"/>
+			</checkbox>
+			<checkbox>
+				<placement x="%ch_x_x%" y="%ch_own_y%"/>
+				<data variable="chmod_id6" default="0"/>
+			</checkbox>
+			<checkbox>
+				<placement x="%ch_r_x%" y="%ch_grp_y%"/>
+				<data variable="chmod_id7" default="0"/>
+			</checkbox>
+			<checkbox>
+				<placement x="%ch_w_x%" y="%ch_grp_y%"/>
+				<data variable="chmod_id8" default="0"/>
+			</checkbox>
+			<checkbox>
+				<placement x="%ch_x_x%" y="%ch_grp_y%"/>
+				<data variable="chmod_id9" default="0"/>
+			</checkbox>
+			<checkbox>
+				<placement x="%ch_r_x%" y="%ch_oth_y%"/>
+				<data variable="chmod_id10" default="0"/>
+			</checkbox>
+			<checkbox>
+				<placement x="%ch_w_x%" y="%ch_oth_y%"/>
+				<data variable="chmod_id11" default="0"/>
+			</checkbox>
+			<checkbox>
+				<placement x="%ch_x_x%" y="%ch_oth_y%"/>
+				<data variable="chmod_id12" default="0"/>
+			</checkbox>
+			<checkbox>
+				<placement x="%ch_r_x%" y="%ch_sph_y%"/>
+				<data variable="chmod_id1" default="0"/>
+			</checkbox>
+			<checkbox>
+				<placement x="%ch_w_x%" y="%ch_sph_y%"/>
+				<data variable="chmod_id2" default="0"/>
+			</checkbox>
+			<checkbox>
+				<placement x="%ch_x_x%" y="%ch_sph_y%"/>
+				<data variable="chmod_id3" default="0"/>
+			</checkbox>
+
+			<text style="text_body2">
+				<placement x="%chtxt_r_x%" y="%chtxt_y%" placement="4"/>
+				<text>Read</text>
+			</text>
+			<text style="text_body2">
+				<placement x="%chtxt_w_x%" y="%chtxt_y%" placement="4"/>
+				<text>Write</text>
+			</text>
+			<text style="text_body2">
+				<placement x="%chtxt_x_x%" y="%chtxt_y%" placement="4"/>
+				<text>Execute</text>
+			</text>
+			<text style="text_body2">
+				<placement x="%chtxt_r_x%" y="%chtxt_sph_y%" placement="4"/>
+				<text>Set UID</text>
+			</text>
+			<text style="text_body2">
+				<placement x="%chtxt_w_x%" y="%chtxt_sph_y%" placement="4"/>
+				<text>Set GID</text>
+			</text>
+			<text style="text_body2">
+				<placement x="%chtxt_x_x%" y="%chtxt_sph_y%" placement="4"/>
+				<text>Sticky</text>
+			</text>
+			<text style="text_body2">
+				<placement x="%ch_r_x%" y="%chtxt_own_y%" placement="1"/>
+				<text>Owner</text>
+			</text>
+			<text style="text_body2">
+				<placement x="%ch_r_x%" y="%chtxt_grp_y%" placement="1"/>
+				<text>Group</text>
+			</text>
+			<text style="text_body2">
+				<placement x="%ch_r_x%" y="%chtxt_oth_y%" placement="1"/>
+				<text>Other</text>
+			</text>
+			
+			<!--text style="text_body2">
+				<placement x="%center_x%" y="%row7_1_y%" placement="4"/>
+				<text>%tw_filemanager_rename%</text>
+			</text>-->
+			
+			<button style="floating_btn">
+				<placement x="%btn_float_x%" y="%btn_float_y%"/>
+				<action function="calculate_chmod"/>
+				<action function="set">tw_filemanager_command=chmod %tw_filemanager_rename%</action>
+				<action function="set">tw_fm_text1=chmod %tw_filemanager_rename%</action>
+				<action function="set">tw_back=filemanageroptions</action>
+				<action function="page">filemanagerconfirm</action>
+			</button>
+
+			<image>
+				<placement x="%btn_float_x%" y="%btn_float_y%"/>
+				<image resource="fab_accept"/>
+			</image>
+			
+			<action>
+				<touch key="home"/>
+				<action function="page">main</action>
+			</action>
+
+			<action>
+				<touch key="back"/>
+				<action function="page">filemanageroptions</action>
+			</action>
+		</page>
+
+		<page name="filemanagerchmod_key">
 			<template name="body_num"/>
 
 			<template name="ab_ex"/>
@@ -1352,6 +1504,24 @@
 				<text>%tw_filename1%</text>
 			</text>
 
+			
+			<text style="caption_hl">
+				<placement x="%col1_x%" y="%row2_1a_y%"/>
+				<text>{@fm_perms}</text>
+			</text>
+
+			<button>
+				<placement x="%ab_btn1_x%" y="%ab_y%"/>
+				<image resource="actionbar_btn" highlightresource="actionbar_btn_hl"/>
+				<action function="set_chmod"/>
+				<action function="page">filemanagerchmod</action>
+			</button>
+
+			<image>
+				<placement x="%ab_btn1_x%" y="%ab_y%"/>
+				<image resource="actionbar_settings"/>
+			</image>
+
 			<text style="caption_hl">
 				<placement x="%col1_x%" y="%row2_1a_y%"/>
 				<text>{@fm_perms}</text>
@@ -1361,7 +1531,7 @@
 				<placement x="%col1_x%" y="%input_rename_y%" w="%input_width%" h="%input_height%"/>
 				<text>%tw_filemanager_rename%</text>
 				<data name="tw_filemanager_rename"/>
-				<restrict minlen="3" maxlen="4" allow="0123456789"/>
+				<restrict minlen="4" maxlen="4" allow="01234567"/>
 				<actions>
 					<action function="set">tw_filemanager_command=chmod %tw_filemanager_rename%</action>
 					<action function="set">tw_fm_text1=chmod %tw_filemanager_rename%</action>

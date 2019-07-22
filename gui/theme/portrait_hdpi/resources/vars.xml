@@ -217,6 +217,26 @@
 		<variable name="bl_files_h" value="%screen_min_cut%-600"/>
 		<variable name="input_btn_list_y" value="674+%cutout_w%"/>
 		
+		<!-- chmod -->
+		<variable name="ch_r_x" value="259"/>
+		<variable name="ch_w_x" value="457"/>
+		<variable name="ch_x_x" value="655"/>
+		<variable name="ch_own_y" value="%cutout_w%+753"/>
+		<variable name="ch_grp_y" value="%cutout_w%+863"/>
+		<variable name="ch_oth_y" value="%cutout_w%+973"/>
+		<variable name="ch_sph_y" value="%cutout_w%+1191"/>
+
+		<variable name="chtxt_own_y" value="%cutout_w%+766"/>
+		<variable name="chtxt_grp_y" value="%cutout_w%+876"/>
+		<variable name="chtxt_oth_y" value="%cutout_w%+986"/>
+
+		<variable name="chtxt_r_x" value="332"/>
+		<variable name="chtxt_w_x" value="540"/>
+		<variable name="chtxt_x_x" value="738"/>
+		<variable name="chtxt_y" value="%cutout_w%+697"/>
+		<variable name="chtxt_sph_y" value="%cutout_w%+1135"/>
+		<!-- row6_1_y -->
+
 		<!-- About -->
 		<variable name="about_title_h" value="576+%cutout_w%"/>
 		<variable name="tab_title_h" value="360+%cutout_w%"/>

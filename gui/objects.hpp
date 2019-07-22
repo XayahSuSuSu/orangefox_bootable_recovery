@@ -307,6 +307,9 @@ protected:
 	int page(std::string arg);
 	int reload(std::string arg);
 	int readBackup(std::string arg);
+	int calculate_chmod(std::string arg);
+	int get_chmod(std::string arg);
+	int set_chmod(std::string arg);
 	int set(std::string arg);
 	int clear(std::string arg);
 	int mount(std::string arg);

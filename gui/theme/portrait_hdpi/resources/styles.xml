@@ -178,6 +178,11 @@
 			<font resource="body1" spacing="%fileselector_spacing%" color="%text%" />
 		</style>
 
+		<style name="checkbox">
+			<image checked="checkbox_true" unchecked="checkbox_false"/>
+			<font resource="body1" spacing="%fileselector_spacing%" color="%text%" />
+		</style>
+
 		<style name="settingslist_dialog">
 			<highlight color="%highlight_color_full%"/>
 			<background color="%background%"/>

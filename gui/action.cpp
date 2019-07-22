@@ -229,6 +229,9 @@ GUIAction::GUIAction(xml_node <> *node):GUIObject(node)
       ADD_ACTION(fileextension);
       ADD_ACTION(up_a_level);
       ADD_ACTION(checkbackupfolder);
+      ADD_ACTION(calculate_chmod);
+      ADD_ACTION(get_chmod);
+      ADD_ACTION(set_chmod);
  
       // remember actions that run in the caller thread
       for (mapFunc::const_iterator it = mf.begin(); it != mf.end(); ++it)
@@ -696,6 +699,60 @@ int GUIAction::readBackup(std::string arg __unused)
   string Restore_Name;
   DataManager::GetValue("tw_restore", Restore_Name);
   PartitionManager.Set_Restore_Files(Restore_Name);
+  return 0;
+}
+
+// Convert user's chmod number (e.g 0755) to checkboxes
+int GUIAction::set_chmod(std::string arg __unused)
+{
+    int checkId = 1;
+    string renamevar = DataManager::GetStrValue("tw_filemanager_rename");
+
+    for(char& c : std::string(4 - renamevar.length(), '0') + renamevar) {
+        int num = c - '0';
+        for(int val : { 4, 2, 1 }) {
+          DataManager::SetValue("chmod_id" + std::to_string(checkId), num >= val ? 1 : 0);
+          if (num >= val)
+            num -= val;
+          checkId++;
+        }
+    }
+    return 0;
+}
+
+// Get perms of tw_filename1
+int GUIAction::get_chmod(std::string arg __unused)
+{
+    struct stat st;
+    if(stat(DataManager::GetStrValue("tw_filename1").c_str(), &st) == 0) {
+      mode_t perm = st.st_mode;
+      int statchmod = 0;
+      #define sch(c,n) statchmod += (perm & c) ? n : 0
+      sch(S_IRUSR,400); sch(S_IRGRP,40); sch(S_IROTH,4);
+      sch(S_IWUSR,200); sch(S_IWGRP,20); sch(S_IWOTH,2);
+      sch(S_IXUSR,100); sch(S_IXGRP,10); sch(S_IXOTH,1);
+      sch(S_ISUID,4000); sch(S_ISGID,2000); sch(S_ISVTX,1000);
+      
+      DataManager::SetValue("tw_filemanager_rename", statchmod);
+    } else {
+      LOGINFO("Error while reading file perms; skipping");
+    }
+    return 0;
+}
+
+// Convert checkboxes to checkboxes chmod number
+int GUIAction::calculate_chmod(std::string arg __unused)
+{
+  int mult = 1, checkId = 12, chmodval = 0;
+  while (mult <= 1000) {
+    for(int val : { 1, 2, 4 }) {
+      chmodval += DataManager::GetIntValue("chmod_id" + std::to_string(checkId)) * val * mult;
+      checkId--;
+    }
+    mult *= 10;
+  }
+  
+  DataManager::SetValue("tw_filemanager_rename", std::string(4 - std::to_string(chmodval).length(), '0') + std::to_string(chmodval));
   return 0;
 }
 
