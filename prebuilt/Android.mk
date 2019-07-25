@@ -53,6 +53,9 @@ ifeq ($(shell test $(PLATFORM_SDK_VERSION) -ge 27; echo $$?),0)
     RELINK_SOURCE_FILES += $(TARGET_OUT_EXECUTABLES)/adbd
 endif
 RELINK_SOURCE_FILES += $(TARGET_OUT_EXECUTABLES)/e2fsck
+ifeq ($(shell test $(PLATFORM_SDK_VERSION) -ge 28; echo $$?),0)
+    RELINK_SOURCE_FILES += $(TARGET_OUT_EXECUTABLES)/e2fsdroid
+endif
 RELINK_SOURCE_FILES += $(TARGET_OUT_EXECUTABLES)/mke2fs
 RELINK_SOURCE_FILES += $(TARGET_OUT_EXECUTABLES)/tune2fs
 RELINK_SOURCE_FILES += $(TARGET_OUT_EXECUTABLES)/resize2fs
@@ -235,6 +238,10 @@ ifeq ($(TW_INCLUDE_CRYPTO), true)
             ifneq ($(wildcard hardware/interfaces/weaver/1.0/Android.bp),)
                 RELINK_SOURCE_FILES += $(TARGET_OUT_SHARED_LIBRARIES)/android.hardware.weaver@1.0.so
             endif
+            ifneq ($(wildcard hardware/interfaces/confirmationui/1.0/Android.bp),)
+                RELINK_SOURCE_FILES += $(TARGET_OUT_SHARED_LIBRARIES)/android.hardware.confirmationui@1.0.so
+            endif
+
             RELINK_SOURCE_FILES += $(TARGET_OUT_SHARED_LIBRARIES)/libhardware_legacy.so
         else
             RELINK_SOURCE_FILES += $(TARGET_OUT_SHARED_LIBRARIES)/libkeymaster1.so
@@ -318,7 +325,11 @@ ifeq ($(shell test $(PLATFORM_SDK_VERSION) -gt 22; echo $$?),0)
     RELINK_SOURCE_FILES += $(TARGET_OUT_EXECUTABLES)/fsck.ntfs
     RELINK_SOURCE_FILES += $(TARGET_OUT_EXECUTABLES)/mkfs.ntfs
     RELINK_SOURCE_FILES += $(TARGET_OUT_SHARED_LIBRARIES)/libntfs-3g.so
-    RELINK_SOURCE_FILES += $(TARGET_OUT_SHARED_LIBRARIES)/libfuse.so
+    ifeq ($(shell test $(PLATFORM_SDK_VERSION) -ge 28; echo $$?),0)
+        RELINK_SOURCE_FILES += $(TARGET_OUT_SHARED_LIBRARIES)/libfuse-lite.so
+    else
+        RELINK_SOURCE_FILES += $(TARGET_OUT_SHARED_LIBRARIES)/libfuse.so
+    endif
 else
     RELINK_SOURCE_FILES += $(TARGET_OUT_EXECUTABLES)/ntfs-3g
     RELINK_SOURCE_FILES += $(TARGET_OUT_EXECUTABLES)/ntfsfix
