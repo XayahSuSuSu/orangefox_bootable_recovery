@@ -97,7 +97,7 @@ std::string PersonalizedHashSP800(const char* label, const char* context, const 
 	unsigned int finalValue = 256;
 	endianswap(&finalValue);
 	HMAC_Update(&ctx, (const unsigned char*)&finalValue, 4);
-
+	
 	unsigned char output[SHA256_DIGEST_LENGTH];
 	unsigned int out_size = 0;
 	HMAC_Final(&ctx, output, &out_size);
