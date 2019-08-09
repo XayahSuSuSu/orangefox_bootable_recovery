@@ -1606,10 +1606,9 @@ bool TWPartition::Is_File_System_Writable(void)
   return (access(test_path.c_str(), W_OK) == 0);
 }
 
-bool TWPartition::Mount(bool Display_Error)
-{
-  int exfat_mounted = 0;
-  unsigned long flags = Mount_Flags;
+bool TWPartition::Mount(bool Display_Error) {
+	int exfat_mounted = 0;
+	unsigned int flags = Mount_Flags;
 
   if (Is_Mounted())
     {
