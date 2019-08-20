@@ -1030,7 +1030,7 @@
 		<string name="abt_maintainer">Сопровождающий</string>
 		<string name="abt_fd">Дизайнер и создатель темы</string>
 		<string name="abt_bork">CEO, сайт и UI</string>
-		<string name="abt_dj">Сборка системы, C++</string>
+		<string name="abt_dj">C++, золотой сопровождающий</string>
 		<string name="abt_device">Устройство</string>
 		<string name="abt_front">Frontend разработчик</string>
 		<string name="abt_back">Backend разработчик</string>
