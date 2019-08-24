@@ -570,7 +570,7 @@
 				<text>{@ok_btn}</text>
 				<actions>
 					<action function="overlay"/>
-					<action function="page">fox_modules</action>
+					<action function="page">mod_magisk</action>
 				</actions>
 			</button>
 

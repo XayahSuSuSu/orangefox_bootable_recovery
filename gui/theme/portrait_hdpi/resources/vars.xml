@@ -13,7 +13,7 @@
 		<variable name="update_accent" value="0"/>
 		<variable name="update_style" value="0"/>
 		
-		<variable name="mmgui_path" value="/tmp/mmgui"/>
+		<variable name="mmgui_path" value="/data/adb/modules"/>
 
 		<!-- Lockscreen -->
 		<variable name="clock_style" value="0" persist="1"/>
