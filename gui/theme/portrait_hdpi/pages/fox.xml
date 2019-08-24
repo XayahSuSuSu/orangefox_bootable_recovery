@@ -232,6 +232,9 @@
 				<listitem name="Theme debug tools">
 					<action function="page">debug</action>
 				</listitem>
+				<listitem name="Alt pages">
+					<action function="page">debug_pages</action>
+				</listitem>
 				<listitem name="Unpack OrangeFox">
 					<action function="wlfw"/>
 				</listitem>
@@ -244,6 +247,24 @@
 				<listitem name="OTA deactivation">
 					<action function="calldeactivateprocess"/>
 				</listitem>
+				<listitem name="Set screen size to 1920">
+					<condition var1="screen_original_h" op="!=" var2="1920"/>
+					<action function="ftls">
+						[ ! -d "/sdcard/Fox/.navbar" ] &amp;&amp; mkdir -p "/sdcard/Fox/.navbar"
+						cat "/twres/themes/sed/navbar.xml" | sed -e "s/#NAVBAR_DISABLE#/0/g;
+						s/#SCREEN_H#/1920/g" > /sdcard/Fox/.navbar/navbar.xml;
+					</action>
+					<action function="reload"/>
+				</listitem>
+				<listitem name="Set screen size to %screen_original_h%">
+					<condition var1="screen_original_h" op="!=" var2="1920"/>
+					<action function="ftls">
+						[ ! -d "/sdcard/Fox/.navbar" ] &amp;&amp; mkdir -p "/sdcard/Fox/.navbar"
+						cat "/twres/themes/sed/navbar.xml" | sed -e "s/#NAVBAR_DISABLE#/0/g;
+						s/#SCREEN_H#/%screen_original_h%/g" > /sdcard/Fox/.navbar/navbar.xml;
+					</action>
+					<action function="reload"/>
+				</listitem>
 			</listbox>
 
 			<template name="ab"/>
@@ -254,7 +275,7 @@
 				<placement x="%col1_x_indent%" y="%ab_bc_y%"/>
 				<text>OrangeFox Lab (Beta)</text>
 			</text>
-
+			
 			<action>
 				<touch key="home"/>
 				<action function="page">main</action>
@@ -264,7 +285,55 @@
 				<touch key="back"/>
 				<action function="page">settings</action>
 			</action>
+		</page>
 
+		<page name="debug_pages">
+			<template name="body"/>
+
+			<template name="ab"/>
+
+			<template name="statusbarinfo"/>
+
+			<text style="text_ab_title">
+				<placement x="%col1_x_indent%" y="%ab_bc_y%"/>
+				<text>Alt pages</text>
+			</text>
+			
+			<text style="caption">
+				<placement x="%col1_x%" y="%row1_1_y%"/>
+				<text>Pages</text>
+			</text>
+
+			<listbox>
+				<placement x="0" y="%row1_2_y%" w="%screen_w%" h="%lb_l10%"/>
+				<data name="dbg_page"/>
+				<listitem name="fox_ota_lite">fox_ota_lite</listitem>
+				<listitem name="fox_ota">fox_ota</listitem>
+				<listitem name="ext_custom_nav_no_switch">ext_custom_nav_no_switch</listitem>
+				<listitem name="ext_custom_nav">ext_custom_nav</listitem>
+				<listitem name="ext_custom_fonts_cn">ext_custom_fonts_cn</listitem>
+				<listitem name="ext_custom_fonts">ext_custom_fonts</listitem>
+			</listbox>
+
+			<button style="floating_btn">
+				<placement x="%btn_float_x%" y="%btn_float_y%"/>
+				<action function="page">%dbg_page%</action>
+			</button>
+			
+			<image>
+				<placement x="%btn_float_x%" y="%btn_float_y%"/>
+				<image resource="fab_accept"/>
+			</image>
+
+			<action>
+				<touch key="home"/>
+				<action function="page">main</action>
+			</action>
+
+			<action>
+				<touch key="back"/>
+				<action function="page">fox_lab</action>
+			</action>
 		</page>
     </pages>
 </recovery>

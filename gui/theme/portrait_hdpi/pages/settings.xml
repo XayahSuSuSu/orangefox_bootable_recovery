@@ -1267,7 +1267,7 @@
 
 			<action>
 				<touch key="back"/>
-				<action function="page">settings</action>
+				<action function="page">fox_lab</action>
 			</action>
 		</page>
 
