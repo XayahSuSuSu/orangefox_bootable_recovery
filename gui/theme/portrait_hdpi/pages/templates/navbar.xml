@@ -8,12 +8,15 @@
 		</template>
 
 		<template name="navbar_bkg">
+			<template name="navbar_bkg_nobg"/>
 			<fill color="%background%">
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_bkg" var2="0"/>
 				<placement x="0" y="%row_nav_y%" w="%screen_w%" h="%nav_h%"/>
 			</fill>
+		</template>
 
+		<template name="navbar_bkg_nobg">
 			<fill color="%accent%">
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_bkg" var2="3"/>
@@ -30,6 +33,12 @@
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_bkg" var2="1"/>
 				<placement x="0" y="%row_nav_y%" w="%screen_w%" h="%nav_h%"/>
+			</fill>
+
+			<fill color="%status_solid_bg%">
+				<condition var1="tw_busy" var2="0"/>
+				<condition var1="navbar_bkg" var2="4"/>
+				<placement x="0" y="%row_nav_y%" w="%screen_w%" h="6"/>
 			</fill>
 		</template>
 

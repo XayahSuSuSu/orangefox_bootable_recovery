@@ -473,24 +473,25 @@
 			</text>
 
 			<listbox>
-				<placement x="0" y="%row4_2_y%" w="%screen_w%" h="%lb_l4%"/>
+				<placement x="0" y="%row4_2_y%" w="%screen_w%" h="%lb_l5%"/>
 				<condition var1="navbar_disable_tmp" op="!=" var2="1"/>
 				<data name="navbar_bkg"/>
 				<listitem name="{@fm_none}">0</listitem>
 				<listitem name="{@dark_nav}">1</listitem>
+				<listitem name="{@navbar_style_line}">4</listitem>
 				<listitem name="{@cust_navbar_accent}">3</listitem>
 				<listitem name="{@cust_navbar_black}">2<condition var1="theme_style_tmp" op="!=" var2="Black"/>
 				</listitem>
 			</listbox>
 
 			<text style="caption">
-				<placement x="%col1_x%" y="%row6_3_y%"/>
+				<placement x="%col1_x%" y="%row7_1a_y%"/>
 				<condition var1="navbar_disable_tmp" op="!=" var2="1"/>
 				<text>{@cust_oth}</text>
 			</text>
 
 			<listbox style="settingslist">
-				<placement x="0" y="%row7_1_y%" w="%screen_w%" h="%lb_l3%"/>
+				<placement x="0" y="%row7_2a_y%" w="%screen_w%" h="%lb_l3%"/>
 				<listitem name="{@cust_navbar_white}">
 					<condition var1="navbar_bkg" op="!=" var2="3"/>
 					<condition var1="theme_style" op="!=" var2="Light"/>
@@ -631,22 +632,23 @@
 			</text>
 
 			<listbox>
-				<placement x="0" y="%row3_2a_y%" w="%screen_w%" h="%lb_l4%"/>
+				<placement x="0" y="%row3_2a_y%" w="%screen_w%" h="%lb_l5%"/>
 				<data name="navbar_bkg"/>
 				<listitem name="{@fm_none}">0</listitem>
 				<listitem name="{@dark_nav}">1</listitem>
+				<listitem name="{@navbar_style_line}">4</listitem>
 				<listitem name="{@cust_navbar_accent}">3</listitem>
 				<listitem name="{@cust_navbar_black}">2<condition var1="theme_style_tmp" op="!=" var2="Black"/>
 				</listitem>
 			</listbox>
 
 			<text style="caption">
-				<placement x="%col1_x%" y="%row5_3a_y%"/>
+				<placement x="%col1_x%" y="%row6_2_y%"/>
 				<text>{@cust_oth}</text>
 			</text>
 
 			<listbox style="settingslist">
-				<placement x="0" y="%row6_1a_y%" w="%screen_w%" h="%lb_l3%"/>
+				<placement x="0" y="%row6_3_y%" w="%screen_w%" h="%lb_l3%"/>
 				<listitem name="{@cust_navbar_white}">
 					<condition var1="navbar_bkg" op="!=" var2="3"/>
 					<condition var1="theme_style" op="!=" var2="Light"/>

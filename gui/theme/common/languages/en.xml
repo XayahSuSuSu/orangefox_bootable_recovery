@@ -1024,5 +1024,7 @@
 		<string name="data_decrypted_reload">Successfully decrypted!</string>
 
 		<string name="install_queue_magisk_btn">Add Magisk</string>
+
+		<string name="navbar_style_line">Line</string>
 	</resources>
 </language>
