@@ -1022,5 +1022,7 @@
 		<string name="full_partition_list">Show addition partitions to backup</string>
 
 		<string name="data_decrypted_reload">Successfully decrypted!</string>
+
+		<string name="install_queue_magisk_btn">Add Magisk</string>
 	</resources>
 </language>

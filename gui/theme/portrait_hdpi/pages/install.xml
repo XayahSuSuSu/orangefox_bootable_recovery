@@ -64,6 +64,36 @@
 			</listbox>
 
 			<button style="btn_raised">
+				<condition var1="fileexists" var2="/sdcard/Fox/FoxFiles/Magisk.zip"/>
+				<condition var1="tw_zip_queue_count" op="&lt;" var2="10"/>
+				<placement x="%btn_raised_left_x%" y="%row_btn2_y%"/>
+				<text>{@install_queue_magisk_btn}</text>
+				<action function="set">tw_file=Magisk.zip</action>
+				<action function="set">tw_filename=/sdcard/Fox/FoxFiles/Magisk.zip</action>
+				<action function="set">tw_zip_location=/sdcard/Fox/FoxFiles</action>
+				<action function="queuezip"/>
+				<action function="page">queue_zip</action>
+			</button>
+
+			<button style="btn_raised">
+				<condition var1="fileexists" var2="/sdcard/Fox/FoxFiles/Magisk.zip"/>
+				<condition var1="tw_zip_queue_count" op="&gt;=" var2="10"/>
+				<placement x="%btn_raised_left_x%" y="%row_btn2_y%"/>
+				<text>{@raised_viewqueue_btn}</text>
+				<action function="page">queueview</action>
+			</button>
+
+			<button style="btn_raised">
+				<condition var1="fileexists" var2="/sdcard/Fox/FoxFiles/Magisk.zip"/>
+				<condition var1="tw_zip_queue_count" op="&gt;" var2="1"/>
+				<condition var1="tw_zip_queue_count" op="&lt;" var2="10"/>
+				<placement x="%btn_raised_left_x%" y="%row_btn3_y%"/>
+				<text>{@raised_viewqueue_btn}</text>
+				<action function="page">queueview</action>
+			</button>
+
+			<button style="btn_raised">
+				<condition var1="fileexists" op="!=" var2="/sdcard/Fox/FoxFiles/Magisk.zip"/>
 				<condition var1="tw_zip_queue_count" op="&gt;" var2="1"/>
 				<placement x="%btn_raised_left_x%" y="%row_btn2_y%"/>
 				<text>{@raised_viewqueue_btn}</text>

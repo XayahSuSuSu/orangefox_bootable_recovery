@@ -1126,5 +1126,7 @@
 		<string name="full_partition_list">Показать больше разделов для р.к.</string>
 
 		<string name="data_decrypted_reload">Успешно расшифровано!</string>
+
+		<string name="install_queue_magisk_btn">Добавить Magisk</string>
 	</resources>
 </language>

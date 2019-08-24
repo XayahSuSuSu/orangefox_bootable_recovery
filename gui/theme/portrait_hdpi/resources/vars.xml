@@ -375,7 +375,7 @@
 		<variable name="row_btn_y" value="%screen_h%-471"/>
 		<variable name="row_btn1_y" value="%screen_h%-321"/>
 		<variable name="row_btn2_y" value="%screen_h%-600"/>
-		<variable name="row_btn3_y" value="%screen_h%-879"/>
+		<variable name="row_btn3_y" value="%screen_h%-750"/>
 		<variable name="btn_raised_left_x" value="27"/>
 		<variable name="btn_raised_right_x" value="1053"/>
 		
