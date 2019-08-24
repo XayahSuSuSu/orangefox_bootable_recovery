@@ -25,7 +25,7 @@
 
 			<fill color="#000000">
 				<condition var1="tw_busy" var2="0"/>
-				<condition var1="navbar_bkg" var2="2"/>
+				<condition var1="navbar_bkg" var2="4"/>
 				<placement x="0" y="%row_nav_y%" w="%screen_w%" h="%nav_h%"/>
 			</fill>
 
@@ -35,9 +35,15 @@
 				<placement x="0" y="%row_nav_y%" w="%screen_w%" h="%nav_h%"/>
 			</fill>
 
+			<fill color="%background%">
+				<condition var1="tw_busy" var2="0"/>
+				<condition var1="navbar_bkg" var2="2"/>
+				<placement x="0" y="%row_nav_y%" w="%screen_w%" h="%nav_h%"/>
+			</fill>
+
 			<fill color="%status_solid_bg%">
 				<condition var1="tw_busy" var2="0"/>
-				<condition var1="navbar_bkg" var2="4"/>
+				<condition var1="navbar_bkg" var2="2"/>
 				<placement x="0" y="%row_nav_y%" w="%screen_w%" h="6"/>
 			</fill>
 		</template>
@@ -62,7 +68,7 @@
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_accent" var2="1"/>
 				<condition var1="nougat" var2="1"/>
-				<condition var1="navbar_bkg" op="&gt;=" var2="2"/>
+				<condition var1="navbar_bkg" op="&gt;=" var2="3"/>
 				<condition var1="theme_style" var2="Light"/>
 				<placement x="%center_x%" y="%row_navbtn_y%" placement="4"/>
 				<image resource="home_white_ng"/>
@@ -81,7 +87,7 @@
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_accent" var2="1"/>
 				<condition var1="nougat" var2="1"/>
-				<condition var1="navbar_bkg" op="&lt;=" var2="1"/>
+				<condition var1="navbar_bkg" op="&lt;=" var2="2"/>
 				<condition var1="theme_style" var2="Light"/>
 				<placement x="%center_x%" y="%row_navbtn_y%" placement="4"/>
 				<image resource="home_dark_ng"/>
@@ -99,7 +105,7 @@
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_accent" var2="1"/>
 				<condition var1="nougat" var2="0"/>
-				<condition var1="navbar_bkg" op="&gt;=" var2="2"/>
+				<condition var1="navbar_bkg" op="&gt;=" var2="3"/>
 				<condition var1="theme_style" var2="Light"/>
 				<placement x="%center_x%" y="%row_navbtn_y%" placement="4"/>
 				<image resource="home_white"/>
@@ -118,7 +124,7 @@
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_accent" var2="1"/>
 				<condition var1="nougat" var2="0"/>
-				<condition var1="navbar_bkg" op="&lt;=" var2="1"/>
+				<condition var1="navbar_bkg" op="&lt;=" var2="2"/>
 				<condition var1="theme_style" var2="Light"/>
 				<placement x="%center_x%" y="%row_navbtn_y%" placement="4"/>
 				<image resource="home_dark"/>
@@ -129,7 +135,7 @@
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="nougat" var2="3"/>
 				<condition var1="navbar_accent" var2="1"/>
-				<condition var1="navbar_bkg" op="&gt;=" var2="2"/>
+				<condition var1="navbar_bkg" op="&gt;=" var2="3"/>
 				<condition var1="theme_style" var2="Light"/>
                 <placement x="%center_x%" y="%row_navbtn_y%" placement="4"/>
 				<image resource="home_white_pie"/>
@@ -148,7 +154,7 @@
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="nougat" var2="3"/>
 				<condition var1="navbar_accent" var2="1"/>
-				<condition var1="navbar_bkg" op="&lt;=" var2="1"/>
+				<condition var1="navbar_bkg" op="&lt;=" var2="2"/>
 				<condition var1="theme_style" var2="Light"/>
 				<placement x="%center_x%" y="%row_navbtn_y%" placement="4"/>
 				<image resource="home_dark_pie"/>
@@ -198,7 +204,7 @@
 				<condition var1="navbar_accent" var2="1"/>
 				<condition var1="nougat" var2="1"/>
 				<condition var1="show_slideout" var2="1"/>
-				<condition var1="navbar_bkg" op="&gt;=" var2="2"/>
+				<condition var1="navbar_bkg" op="&gt;=" var2="3"/>
 				<condition var1="theme_style" var2="Light"/>
 				<placement x="%slideout_button_x%" y="%row_navbtn_y%" placement="4"/>
 				<image resource="slideout_white_ng"/>
@@ -221,7 +227,7 @@
 				<condition var1="navbar_accent" var2="1"/>
 				<condition var1="nougat" var2="1"/>
 				<condition var1="show_slideout" var2="1"/>
-				<condition var1="navbar_bkg" op="&lt;=" var2="1"/>
+				<condition var1="navbar_bkg" op="&lt;=" var2="2"/>
 				<condition var1="theme_style" var2="Light"/>
 				<placement x="%slideout_button_x%" y="%row_navbtn_y%" placement="4"/>
 				<image resource="slideout_dark_ng"/>
@@ -243,7 +249,7 @@
 				<condition var1="navbar_accent" var2="1"/>
 				<condition var1="nougat" var2="1"/>
 				<condition var1="show_slideout" var2="1"/>
-				<condition var1="navbar_bkg" op="&gt;=" var2="2"/>
+				<condition var1="navbar_bkg" op="&gt;=" var2="3"/>
 				<condition var1="theme_style" var2="Light"/>
 				<placement x="%back_button_x%" y="%row_navbtn_y%" placement="4"/>
 				<image resource="slideout_white_ng"/>
@@ -263,7 +269,7 @@
 				<condition var1="navbar_sams" var2="1"/>
 				<condition var1="navbar_accent" var2="1"/>
 				<condition var1="nougat" var2="1"/>
-				<condition var1="navbar_bkg" op="&lt;=" var2="1"/>
+				<condition var1="navbar_bkg" op="&lt;=" var2="2"/>
 				<condition var1="theme_style" var2="Light"/>
 				<condition var1="show_slideout" var2="1"/>
 				<placement x="%back_button_x%" y="%row_navbtn_y%" placement="4"/>
@@ -286,7 +292,7 @@
 				<condition var1="nougat" var2="0"/>
 				<condition var1="show_slideout" var2="1"/>
 				<condition var1="navbar_accent" var2="1"/>
-				<condition var1="navbar_bkg" op="&gt;=" var2="2"/>
+				<condition var1="navbar_bkg" op="&gt;=" var2="3"/>
 				<condition var1="theme_style" var2="Light"/>
 				<placement x="%slideout_button_x%" y="%row_navbtn_y%" placement="4"/>
 				<image resource="slideout_white"/>
@@ -307,7 +313,7 @@
 				<condition var1="nougat" var2="0"/>
 				<condition var1="show_slideout" var2="1"/>
 				<condition var1="navbar_accent" var2="1"/>
-				<condition var1="navbar_bkg" op="&lt;=" var2="1"/>
+				<condition var1="navbar_bkg" op="&lt;=" var2="2"/>
 				<condition var1="theme_style" var2="Light"/>
 				<placement x="%slideout_button_x%" y="%row_navbtn_y%" placement="4"/>
 				<image resource="slideout_dark"/>
@@ -329,7 +335,7 @@
 				<condition var1="navbar_accent" var2="1"/>
 				<condition var1="nougat" var2="0"/>
 				<condition var1="show_slideout" var2="1"/>
-				<condition var1="navbar_bkg" op="&gt;=" var2="2"/>
+				<condition var1="navbar_bkg" op="&gt;=" var2="3"/>
 				<condition var1="theme_style" var2="Light"/>
 				<placement x="%back_button_x%" y="%row_navbtn_y%" placement="4"/>
 				<image resource="slideout_white"/>
@@ -350,7 +356,7 @@
 				<condition var1="navbar_accent" var2="1"/>
 				<condition var1="nougat" var2="0"/>
 				<condition var1="show_slideout" var2="1"/>
-				<condition var1="navbar_bkg" op="&lt;=" var2="1"/>
+				<condition var1="navbar_bkg" op="&lt;=" var2="2"/>
 				<condition var1="theme_style" var2="Light"/>
 				<placement x="%back_button_x%" y="%row_navbtn_y%" placement="4"/>
 				<image resource="slideout_dark"/>
@@ -363,7 +369,7 @@
 				<condition var1="navbar_accent" var2="1"/>
 				<condition var1="nougat" var2="3"/>
 				<condition var1="show_slideout" var2="1"/>
-				<condition var1="navbar_bkg" op="&gt;=" var2="2"/>
+				<condition var1="navbar_bkg" op="&gt;=" var2="3"/>
 				<condition var1="theme_style" var2="Light"/>
 				<placement x="%slideout_button_x%" y="%row_navbtn_y%" placement="4"/>
 				<image resource="slideout_white_key_pie"/>
@@ -384,7 +390,7 @@
 				<condition var1="navbar_accent" var2="1"/>
 				<condition var1="nougat" var2="3"/>
 				<condition var1="show_slideout" var2="1"/>
-				<condition var1="navbar_bkg" op="&lt;=" var2="1"/>
+				<condition var1="navbar_bkg" op="&lt;=" var2="2"/>
 				<condition var1="theme_style" var2="Light"/>
 				<placement x="%slideout_button_x%" y="%row_navbtn_y%" placement="4"/>
 				<image resource="slideout_dark_key_pie"/>
@@ -396,7 +402,7 @@
 				<condition var1="navbar_accent" var2="1"/>
 				<condition var1="nougat" var2="3"/>
 				<condition var1="show_slideout" var2="1"/>
-				<condition var1="navbar_bkg" op="&gt;=" var2="2"/>
+				<condition var1="navbar_bkg" op="&gt;=" var2="3"/>
 				<condition var1="theme_style" var2="Light"/>
 				<placement x="%back_button_x%" y="%row_navbtn_y%" placement="4"/>
 				<image resource="slideout_white_key_pie"/>
@@ -417,7 +423,7 @@
 				<condition var1="navbar_accent" var2="1"/>
 				<condition var1="nougat" var2="3"/>
 				<condition var1="show_slideout" var2="1"/>
-				<condition var1="navbar_bkg" op="&lt;=" var2="1"/>
+				<condition var1="navbar_bkg" op="&lt;=" var2="2"/>
 				<condition var1="theme_style" var2="Light"/>
 				<placement x="%back_button_x%" y="%row_navbtn_y%" placement="4"/>
 				<image resource="slideout_dark_key_pie"/>
@@ -466,7 +472,7 @@
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_accent" var2="1"/>
 				<condition var1="nougat" var2="0"/>
-				<condition var1="navbar_bkg" op="&gt;=" var2="2"/>
+				<condition var1="navbar_bkg" op="&gt;=" var2="3"/>
 				<condition var1="theme_style" var2="Light"/>
 				<placement x="%center_x%" y="%row_navbtn_y%" placement="4"/>
 				<image resource="keyboard_hide_white"/>
@@ -483,7 +489,7 @@
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_accent" var2="1"/>
 				<condition var1="nougat" var2="0"/>
-				<condition var1="navbar_bkg" op="&lt;=" var2="1"/>
+				<condition var1="navbar_bkg" op="&lt;=" var2="2"/>
 				<condition var1="theme_style" var2="Light"/>
 				<placement x="%center_x%" y="%row_navbtn_y%" placement="4"/>
 				<image resource="keyboard_hide_dark"/>
@@ -501,7 +507,7 @@
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_accent" var2="1"/>
 				<condition var1="nougat" var2="1"/>
-				<condition var1="navbar_bkg" op="&gt;=" var2="2"/>
+				<condition var1="navbar_bkg" op="&gt;=" var2="3"/>
 				<condition var1="theme_style" var2="Light"/>
 				<placement x="%center_x%" y="%row_navbtn_y%" placement="4"/>
 				<image resource="keyboard_hide_white_ng"/>
@@ -518,7 +524,7 @@
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_accent" var2="1"/>
 				<condition var1="nougat" var2="1"/>
-				<condition var1="navbar_bkg" op="&lt;=" var2="1"/>
+				<condition var1="navbar_bkg" op="&lt;=" var2="2"/>
 				<condition var1="theme_style" var2="Light"/>
 				<placement x="%center_x%" y="%row_navbtn_y%" placement="4"/>
 				<image resource="keyboard_hide_dark_ng"/>
@@ -529,7 +535,7 @@
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="nougat" var2="3"/>
 				<condition var1="navbar_accent" var2="1"/>
-				<condition var1="navbar_bkg" op="&gt;=" var2="2"/>
+				<condition var1="navbar_bkg" op="&gt;=" var2="3"/>
 				<condition var1="theme_style" var2="Light"/>
 				<placement x="%center_x%" y="%row_navbtn_y%" placement="4"/>
 				<image resource="back_white_key_pie"/>
@@ -546,7 +552,7 @@
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="nougat" var2="3"/>
 				<condition var1="navbar_accent" var2="1"/>
-				<condition var1="navbar_bkg" op="&lt;=" var2="1"/>
+				<condition var1="navbar_bkg" op="&lt;=" var2="2"/>
 				<condition var1="theme_style" var2="Light"/>
 				<placement x="%center_x%" y="%row_navbtn_y%" placement="4"/>
 				<image resource="back_dark_key_pie"/>
@@ -599,7 +605,7 @@
 				<condition var1="navbar_sams" var2="0"/>
 				<condition var1="navbar_accent" var2="1"/>
 				<condition var1="nougat" var2="1"/>
-				<condition var1="navbar_bkg" op="&gt;=" var2="2"/>
+				<condition var1="navbar_bkg" op="&gt;=" var2="3"/>
 				<condition var1="theme_style" var2="Light"/>
 				<placement x="%back_button_x%" y="%row_navbtn_y%" placement="4"/>
 				<image resource="back_white_ng"/>
@@ -618,7 +624,7 @@
 				<condition var1="navbar_sams" var2="0"/>
 				<condition var1="navbar_accent" var2="1"/>
 				<condition var1="nougat" var2="1"/>
-				<condition var1="navbar_bkg" op="&lt;=" var2="1"/>
+				<condition var1="navbar_bkg" op="&lt;=" var2="2"/>
 				<condition var1="theme_style" var2="Light"/>
 				<placement x="%back_button_x%" y="%row_navbtn_y%" placement="4"/>
 				<image resource="back_dark_ng"/>
@@ -638,7 +644,7 @@
 				<condition var1="navbar_sams" var2="1"/>
 				<condition var1="navbar_accent" var2="1"/>
 				<condition var1="nougat" var2="1"/>
-				<condition var1="navbar_bkg" op="&gt;=" var2="2"/>
+				<condition var1="navbar_bkg" op="&gt;=" var2="3"/>
 				<condition var1="theme_style" var2="Light"/>
 				<placement x="%slideout_button_x%" y="%row_navbtn_y%" placement="4"/>
 				<image resource="back_white_ng"/>
@@ -657,7 +663,7 @@
 				<condition var1="navbar_sams" var2="1"/>
 				<condition var1="navbar_accent" var2="1"/>
 				<condition var1="nougat" var2="1"/>
-				<condition var1="navbar_bkg" op="&lt;=" var2="1"/>
+				<condition var1="navbar_bkg" op="&lt;=" var2="2"/>
 				<condition var1="theme_style" var2="Light"/>
 				<placement x="%slideout_button_x%" y="%row_navbtn_y%" placement="4"/>
 				<image resource="back_dark_ng"/>
@@ -677,7 +683,7 @@
 				<condition var1="navbar_sams" var2="0"/>
 				<condition var1="navbar_accent" var2="1"/>
 				<condition var1="nougat" var2="0"/>
-				<condition var1="navbar_bkg" op="&gt;=" var2="2"/>
+				<condition var1="navbar_bkg" op="&gt;=" var2="3"/>
 				<condition var1="theme_style" var2="Light"/>
 				<placement x="%back_button_x%" y="%row_navbtn_y%" placement="4"/>
 				<image resource="back_white"/>
@@ -696,7 +702,7 @@
 				<condition var1="navbar_sams" var2="0"/>
 				<condition var1="navbar_accent" var2="1"/>
 				<condition var1="nougat" var2="0"/>
-				<condition var1="navbar_bkg" op="&lt;=" var2="1"/>
+				<condition var1="navbar_bkg" op="&lt;=" var2="2"/>
 				<condition var1="theme_style" var2="Light"/>
 				<placement x="%back_button_x%" y="%row_navbtn_y%" placement="4"/>
 				<image resource="back_dark"/>
@@ -716,7 +722,7 @@
 				<condition var1="navbar_sams" var2="1"/>
 				<condition var1="nougat" var2="0"/>
 				<condition var1="navbar_accent" var2="1"/>
-				<condition var1="navbar_bkg" op="&gt;=" var2="2"/>
+				<condition var1="navbar_bkg" op="&gt;=" var2="3"/>
 				<condition var1="theme_style" var2="Light"/>
 				<placement x="%slideout_button_x%" y="%row_navbtn_y%" placement="4"/>
 				<image resource="back_white"/>
@@ -735,7 +741,7 @@
 				<condition var1="navbar_sams" var2="1"/>
 				<condition var1="nougat" var2="0"/>
 				<condition var1="navbar_accent" var2="1"/>
-				<condition var1="navbar_bkg" op="&lt;=" var2="1"/>
+				<condition var1="navbar_bkg" op="&lt;=" var2="2"/>
 				<condition var1="theme_style" var2="Light"/>
 				<placement x="%slideout_button_x%" y="%row_navbtn_y%" placement="4"/>
 				<image resource="back_dark"/>
@@ -766,7 +772,7 @@
 				<condition var1="navbar_sams" var2="0"/>
 				<condition var1="nougat" var2="3"/>
 				<condition var1="navbar_accent" var2="1"/>
-				<condition var1="navbar_bkg" op="&gt;=" var2="2"/>
+				<condition var1="navbar_bkg" op="&gt;=" var2="3"/>
 				<condition var1="theme_style" var2="Light"/>
 				<placement x="%back_button_x%" y="%row_navbtn_y%" placement="4"/>
 				<image resource="back_white_pie"/>
@@ -785,7 +791,7 @@
 				<condition var1="navbar_sams" var2="0"/>
 				<condition var1="nougat" var2="3"/>
 				<condition var1="navbar_accent" var2="1"/>
-				<condition var1="navbar_bkg" op="&lt;=" var2="1"/>
+				<condition var1="navbar_bkg" op="&lt;=" var2="2"/>
 				<condition var1="theme_style" var2="Light"/>
 				<placement x="%back_button_x%" y="%row_navbtn_y%" placement="4"/>
 				<image resource="back_dark_pie"/>
@@ -796,7 +802,7 @@
 				<condition var1="navbar_sams" var2="1"/>
 				<condition var1="nougat" var2="3"/>
 				<condition var1="navbar_accent" var2="1"/>
-				<condition var1="navbar_bkg" op="&gt;=" var2="2"/>
+				<condition var1="navbar_bkg" op="&gt;=" var2="3"/>
 				<condition var1="theme_style" var2="Light"/>
 				<placement x="%slideout_button_x%" y="%row_navbtn_y%" placement="4"/>
 				<image resource="back_white_pie"/>
@@ -815,7 +821,7 @@
 				<condition var1="navbar_sams" var2="1"/>
 				<condition var1="nougat" var2="3"/>
 				<condition var1="navbar_accent" var2="1"/>
-				<condition var1="navbar_bkg" op="&lt;=" var2="1"/>
+				<condition var1="navbar_bkg" op="&lt;=" var2="2"/>
 				<condition var1="theme_style" var2="Light"/>
 				<placement x="%slideout_button_x%" y="%row_navbtn_y%" placement="4"/>
 				<image resource="back_dark_pie"/>
@@ -866,7 +872,7 @@
 				<condition var1="navbar_sams" var2="0"/>
 				<condition var1="nougat" var2="3"/>
 				<condition var1="navbar_accent" var2="1"/>
-				<condition var1="navbar_bkg" op="&gt;=" var2="2"/>
+				<condition var1="navbar_bkg" op="&gt;=" var2="3"/>
 				<condition var1="theme_style" var2="Light"/>
 				<condition var1="tw_file_location1" op="!=" var2="/"/>
 				<placement x="%back_button_x%" y="%row_navbtn_y%" placement="4"/>
@@ -887,7 +893,7 @@
 				<condition var1="navbar_sams" var2="0"/>
 				<condition var1="nougat" var2="3"/>
 				<condition var1="navbar_accent" var2="1"/>
-				<condition var1="navbar_bkg" op="&lt;=" var2="1"/>
+				<condition var1="navbar_bkg" op="&lt;=" var2="2"/>
 				<condition var1="theme_style" var2="Light"/>
 				<condition var1="tw_file_location1" op="!=" var2="/"/>
 				<placement x="%back_button_x%" y="%row_navbtn_y%" placement="4"/>
@@ -899,7 +905,7 @@
 				<condition var1="navbar_sams" var2="1"/>
 				<condition var1="nougat" var2="3"/>
 				<condition var1="navbar_accent" var2="1"/>
-				<condition var1="navbar_bkg" op="&gt;=" var2="2"/>
+				<condition var1="navbar_bkg" op="&gt;=" var2="3"/>
 				<condition var1="theme_style" var2="Light"/>
 				<condition var1="tw_file_location1" op="!=" var2="/"/>
 				<placement x="%slideout_button_x%" y="%row_navbtn_y%" placement="4"/>
@@ -920,7 +926,7 @@
 				<condition var1="navbar_sams" var2="1"/>
 				<condition var1="nougat" var2="3"/>
 				<condition var1="navbar_accent" var2="1"/>
-				<condition var1="navbar_bkg" op="&lt;=" var2="1"/>
+				<condition var1="navbar_bkg" op="&lt;=" var2="2"/>
 				<condition var1="theme_style" var2="Light"/>
 				<condition var1="tw_file_location1" op="!=" var2="/"/>
 				<placement x="%slideout_button_x%" y="%row_navbtn_y%" placement="4"/>
@@ -1001,7 +1007,7 @@
 				<condition var1="navbar_accent" var2="1"/>
 				<condition var1="nougat" var2="1"/>
 				<condition var1="tw_hide_kb" var2="1"/>
-				<condition var1="navbar_bkg" op="&gt;=" var2="2"/>
+				<condition var1="navbar_bkg" op="&gt;=" var2="3"/>
 				<condition var1="theme_style" var2="Light"/>
 				<placement x="%back_button_x%" y="%row_navbtn_y%" placement="4"/>
 				<image resource="back_white_ng"/>
@@ -1022,7 +1028,7 @@
 				<condition var1="navbar_accent" var2="1"/>
 				<condition var1="nougat" var2="1"/>
 				<condition var1="tw_hide_kb" var2="1"/>
-				<condition var1="navbar_bkg" op="&lt;=" var2="1"/>
+				<condition var1="navbar_bkg" op="&lt;=" var2="2"/>
 				<condition var1="theme_style" var2="Light"/>
 				<placement x="%back_button_x%" y="%row_navbtn_y%" placement="4"/>
 				<image resource="back_dark_ng"/>
@@ -1044,7 +1050,7 @@
 				<condition var1="navbar_accent" var2="1"/>
 				<condition var1="nougat" var2="1"/>
 				<condition var1="tw_hide_kb" var2="1"/>
-				<condition var1="navbar_bkg" op="&gt;=" var2="2"/>
+				<condition var1="navbar_bkg" op="&gt;=" var2="3"/>
 				<condition var1="theme_style" var2="Light"/>
 				<placement x="%slideout_button_x%" y="%row_navbtn_y%" placement="4"/>
 				<image resource="back_white_ng"/>
@@ -1065,7 +1071,7 @@
 				<condition var1="navbar_accent" var2="1"/>
 				<condition var1="nougat" var2="1"/>
 				<condition var1="tw_hide_kb" var2="1"/>
-				<condition var1="navbar_bkg" op="&lt;=" var2="1"/>
+				<condition var1="navbar_bkg" op="&lt;=" var2="2"/>
 				<condition var1="theme_style" var2="Light"/>
 				<placement x="%slideout_button_x%" y="%row_navbtn_y%" placement="4"/>
 				<image resource="back_dark_ng"/>
@@ -1087,7 +1093,7 @@
 				<condition var1="navbar_accent" var2="1"/>
 				<condition var1="nougat" var2="0"/>
 				<condition var1="tw_hide_kb" var2="1"/>
-				<condition var1="navbar_bkg" op="&gt;=" var2="2"/>
+				<condition var1="navbar_bkg" op="&gt;=" var2="3"/>
 				<condition var1="theme_style" var2="Light"/>
 				<placement x="%back_button_x%" y="%row_navbtn_y%" placement="4"/>
 				<image resource="back_white"/>
@@ -1108,7 +1114,7 @@
 				<condition var1="navbar_accent" var2="1"/>
 				<condition var1="nougat" var2="0"/>
 				<condition var1="tw_hide_kb" var2="1"/>
-				<condition var1="navbar_bkg" op="&lt;=" var2="1"/>
+				<condition var1="navbar_bkg" op="&lt;=" var2="2"/>
 				<condition var1="theme_style" var2="Light"/>
 				<placement x="%back_button_x%" y="%row_navbtn_y%" placement="4"/>
 				<image resource="back_dark"/>
@@ -1130,7 +1136,7 @@
 				<condition var1="nougat" var2="0"/>
 				<condition var1="navbar_accent" var2="1"/>
 				<condition var1="tw_hide_kb" var2="1"/>
-				<condition var1="navbar_bkg" op="&gt;=" var2="2"/>
+				<condition var1="navbar_bkg" op="&gt;=" var2="3"/>
 				<condition var1="theme_style" var2="Light"/>
 				<placement x="%slideout_button_x%" y="%row_navbtn_y%" placement="4"/>
 				<image resource="back_white"/>
@@ -1151,7 +1157,7 @@
 				<condition var1="nougat" var2="0"/>
 				<condition var1="navbar_accent" var2="1"/>
 				<condition var1="tw_hide_kb" var2="1"/>
-				<condition var1="navbar_bkg" op="&lt;=" var2="1"/>
+				<condition var1="navbar_bkg" op="&lt;=" var2="2"/>
 				<condition var1="theme_style" var2="Light"/>
 				<placement x="%slideout_button_x%" y="%row_navbtn_y%" placement="4"/>
 				<image resource="back_dark"/>
@@ -1173,7 +1179,7 @@
 				<condition var1="navbar_accent" var2="1"/>
 				<condition var1="nougat" var2="1"/>
 				<condition var1="tw_hide_kb" var2="0"/>
-				<condition var1="navbar_bkg" op="&gt;=" var2="2"/>
+				<condition var1="navbar_bkg" op="&gt;=" var2="3"/>
 				<condition var1="theme_style" var2="Light"/>
 				<placement x="%back_button_x%" y="%row_navbtn_y%" placement="4"/>
 				<image resource="keyboard_hide_white_ng"/>
@@ -1194,7 +1200,7 @@
 				<condition var1="navbar_accent" var2="1"/>
 				<condition var1="nougat" var2="1"/>
 				<condition var1="tw_hide_kb" var2="0"/>
-				<condition var1="navbar_bkg" op="&lt;=" var2="1"/>
+				<condition var1="navbar_bkg" op="&lt;=" var2="2"/>
 				<condition var1="theme_style" var2="Light"/>
 				<placement x="%back_button_x%" y="%row_navbtn_y%" placement="4"/>
 				<image resource="keyboard_hide_dark_ng"/>
@@ -1216,7 +1222,7 @@
 				<condition var1="navbar_accent" var2="1"/>
 				<condition var1="nougat" var2="1"/>
 				<condition var1="tw_hide_kb" var2="0"/>
-				<condition var1="navbar_bkg" op="&gt;=" var2="2"/>
+				<condition var1="navbar_bkg" op="&gt;=" var2="3"/>
 				<condition var1="theme_style" var2="Light"/>
 				<placement x="%slideout_button_x%" y="%row_navbtn_y%" placement="4"/>
 				<image resource="keyboard_hide_white_ng"/>
@@ -1237,7 +1243,7 @@
 				<condition var1="navbar_accent" var2="1"/>
 				<condition var1="nougat" var2="1"/>
 				<condition var1="tw_hide_kb" var2="0"/>
-				<condition var1="navbar_bkg" op="&lt;=" var2="1"/>
+				<condition var1="navbar_bkg" op="&lt;=" var2="2"/>
 				<condition var1="theme_style" var2="Light"/>
 				<placement x="%slideout_button_x%" y="%row_navbtn_y%" placement="4"/>
 				<image resource="keyboard_hide_dark_ng"/>
@@ -1259,7 +1265,7 @@
 				<condition var1="navbar_accent" var2="1"/>
 				<condition var1="nougat" var2="0"/>
 				<condition var1="tw_hide_kb" var2="0"/>
-				<condition var1="navbar_bkg" op="&gt;=" var2="2"/>
+				<condition var1="navbar_bkg" op="&gt;=" var2="3"/>
 				<condition var1="theme_style" var2="Light"/>
 				<placement x="%back_button_x%" y="%row_navbtn_y%" placement="4"/>
 				<image resource="keyboard_hide_white"/>
@@ -1280,7 +1286,7 @@
 				<condition var1="navbar_accent" var2="1"/>
 				<condition var1="nougat" var2="0"/>
 				<condition var1="tw_hide_kb" var2="0"/>
-				<condition var1="navbar_bkg" op="&lt;=" var2="1"/>
+				<condition var1="navbar_bkg" op="&lt;=" var2="2"/>
 				<condition var1="theme_style" var2="Light"/>
 				<placement x="%back_button_x%" y="%row_navbtn_y%" placement="4"/>
 				<image resource="keyboard_hide_dark"/>
@@ -1302,7 +1308,7 @@
 				<condition var1="navbar_accent" var2="1"/>
 				<condition var1="nougat" var2="0"/>
 				<condition var1="tw_hide_kb" var2="0"/>
-				<condition var1="navbar_bkg" op="&gt;=" var2="2"/>
+				<condition var1="navbar_bkg" op="&gt;=" var2="3"/>
 				<condition var1="theme_style" var2="Light"/>
 				<placement x="%slideout_button_x%" y="%row_navbtn_y%" placement="4"/>
 				<image resource="keyboard_hide_white"/>
@@ -1323,7 +1329,7 @@
 				<condition var1="navbar_accent" var2="1"/>
 				<condition var1="nougat" var2="0"/>
 				<condition var1="tw_hide_kb" var2="0"/>
-				<condition var1="navbar_bkg" op="&lt;=" var2="1"/>
+				<condition var1="navbar_bkg" op="&lt;=" var2="2"/>
 				<condition var1="theme_style" var2="Light"/>
 				<placement x="%slideout_button_x%" y="%row_navbtn_y%" placement="4"/>
 				<image resource="keyboard_hide_dark"/>
@@ -1356,7 +1362,7 @@
 				<condition var1="navbar_accent" var2="1"/>
 				<condition var1="nougat" var2="3"/>
 				<condition var1="tw_hide_kb" var2="0"/>
-				<condition var1="navbar_bkg" op="&gt;=" var2="2"/>
+				<condition var1="navbar_bkg" op="&gt;=" var2="3"/>
 				<condition var1="theme_style" var2="Light"/>
 				<placement x="%back_button_x%" y="%row_navbtn_y%" placement="4"/>
 				<image resource="back_white_key_pie"/>
@@ -1377,7 +1383,7 @@
 				<condition var1="navbar_accent" var2="1"/>
 				<condition var1="nougat" var2="3"/>
 				<condition var1="tw_hide_kb" var2="0"/>
-				<condition var1="navbar_bkg" op="&lt;=" var2="1"/>
+				<condition var1="navbar_bkg" op="&lt;=" var2="2"/>
 				<condition var1="theme_style" var2="Light"/>
 				<placement x="%back_button_x%" y="%row_navbtn_y%" placement="4"/>
 				<image resource="back_dark_key_pie"/>
@@ -1389,7 +1395,7 @@
 				<condition var1="nougat" var2="3"/>
 				<condition var1="navbar_accent" var2="1"/>
 				<condition var1="tw_hide_kb" var2="0"/>
-				<condition var1="navbar_bkg" op="&gt;=" var2="2"/>
+				<condition var1="navbar_bkg" op="&gt;=" var2="3"/>
 				<condition var1="theme_style" var2="Light"/>
 				<placement x="%slideout_button_x%" y="%row_navbtn_y%" placement="4"/>
 				<image resource="back_white_key_pie"/>
@@ -1410,7 +1416,7 @@
 				<condition var1="nougat" var2="3"/>
 				<condition var1="navbar_accent" var2="1"/>
 				<condition var1="tw_hide_kb" var2="0"/>
-				<condition var1="navbar_bkg" op="&lt;=" var2="1"/>
+				<condition var1="navbar_bkg" op="&lt;=" var2="2"/>
 				<condition var1="theme_style" var2="Light"/>
 				<placement x="%slideout_button_x%" y="%row_navbtn_y%" placement="4"/>
 				<image resource="back_dark_key_pie"/>
@@ -1442,7 +1448,7 @@
 				<condition var1="navbar_accent" var2="1"/>
 				<condition var1="nougat" var2="3"/>
 				<condition var1="tw_hide_kb" var2="1"/>
-				<condition var1="navbar_bkg" op="&gt;=" var2="2"/>
+				<condition var1="navbar_bkg" op="&gt;=" var2="3"/>
 				<condition var1="theme_style" var2="Light"/>
 				<placement x="%back_button_x%" y="%row_navbtn_y%" placement="4"/>
 				<image resource="back_white_pie"/>
@@ -1463,7 +1469,7 @@
 				<condition var1="navbar_accent" var2="1"/>
 				<condition var1="nougat" var2="3"/>
 				<condition var1="tw_hide_kb" var2="1"/>
-				<condition var1="navbar_bkg" op="&lt;=" var2="1"/>
+				<condition var1="navbar_bkg" op="&lt;=" var2="2"/>
 				<condition var1="theme_style" var2="Light"/>
 				<placement x="%back_button_x%" y="%row_navbtn_y%" placement="4"/>
 				<image resource="back_dark_pie"/>
@@ -1475,7 +1481,7 @@
 				<condition var1="nougat" var2="3"/>
 				<condition var1="navbar_accent" var2="1"/>
 				<condition var1="tw_hide_kb" var2="1"/>
-				<condition var1="navbar_bkg" op="&gt;=" var2="2"/>
+				<condition var1="navbar_bkg" op="&gt;=" var2="3"/>
 				<condition var1="theme_style" var2="Light"/>
 				<placement x="%slideout_button_x%" y="%row_navbtn_y%" placement="4"/>
 				<image resource="back_white_pie"/>
@@ -1496,7 +1502,7 @@
 				<condition var1="nougat" var2="3"/>
 				<condition var1="navbar_accent" var2="1"/>
 				<condition var1="tw_hide_kb" var2="1"/>
-				<condition var1="navbar_bkg" op="&lt;=" var2="1"/>
+				<condition var1="navbar_bkg" op="&lt;=" var2="2"/>
 				<condition var1="theme_style" var2="Light"/>
 				<placement x="%slideout_button_x%" y="%row_navbtn_y%" placement="4"/>
 				<image resource="back_dark_pie"/>
@@ -1534,7 +1540,7 @@
 				<condition var1="navbar_sams" var2="0"/>
 				<condition var1="navbar_accent" var2="1"/>
 				<condition var1="nougat" var2="0"/>
-				<condition var1="navbar_bkg" op="&gt;=" var2="2"/>
+				<condition var1="navbar_bkg" op="&gt;=" var2="3"/>
 				<condition var1="theme_style" var2="Light"/>
 				<placement x="%back_button_x%" y="%row_navbtn_y%" placement="4"/>
 				<image resource="keyboard_hide_white"/>
@@ -1553,7 +1559,7 @@
 				<condition var1="navbar_sams" var2="0"/>
 				<condition var1="navbar_accent" var2="1"/>
 				<condition var1="nougat" var2="0"/>
-				<condition var1="navbar_bkg" op="&lt;=" var2="1"/>
+				<condition var1="navbar_bkg" op="&lt;=" var2="2"/>
 				<condition var1="theme_style" var2="Light"/>
 				<placement x="%back_button_x%" y="%row_navbtn_y%" placement="4"/>
 				<image resource="keyboard_hide_dark"/>
@@ -1573,7 +1579,7 @@
 				<condition var1="navbar_sams" var2="1"/>
 				<condition var1="navbar_accent" var2="1"/>
 				<condition var1="nougat" var2="0"/>
-				<condition var1="navbar_bkg" op="&gt;=" var2="2"/>
+				<condition var1="navbar_bkg" op="&gt;=" var2="3"/>
 				<condition var1="theme_style" var2="Light"/>
 				<placement x="%slideout_button_x%" y="%row_navbtn_y%" placement="4"/>
 				<image resource="keyboard_hide_white"/>
@@ -1592,7 +1598,7 @@
 				<condition var1="navbar_sams" var2="1"/>
 				<condition var1="navbar_accent" var2="1"/>
 				<condition var1="nougat" var2="0"/>
-				<condition var1="navbar_bkg" op="&lt;=" var2="1"/>
+				<condition var1="navbar_bkg" op="&lt;=" var2="2"/>
 				<condition var1="theme_style" var2="Light"/>
 				<placement x="%slideout_button_x%" y="%row_navbtn_y%" placement="4"/>
 				<image resource="keyboard_hide_dark"/>
@@ -1612,7 +1618,7 @@
 				<condition var1="navbar_sams" var2="0"/>
 				<condition var1="navbar_accent" var2="1"/>
 				<condition var1="nougat" var2="1"/>
-				<condition var1="navbar_bkg" op="&gt;=" var2="2"/>
+				<condition var1="navbar_bkg" op="&gt;=" var2="3"/>
 				<condition var1="theme_style" var2="Light"/>
 				<placement x="%back_button_x%" y="%row_navbtn_y%" placement="4"/>
 				<image resource="keyboard_hide_white_ng"/>
@@ -1631,7 +1637,7 @@
 				<condition var1="navbar_sams" var2="0"/>
 				<condition var1="navbar_accent" var2="1"/>
 				<condition var1="nougat" var2="1"/>
-				<condition var1="navbar_bkg" op="&lt;=" var2="1"/>
+				<condition var1="navbar_bkg" op="&lt;=" var2="2"/>
 				<condition var1="theme_style" var2="Light"/>
 				<placement x="%back_button_x%" y="%row_navbtn_y%" placement="4"/>
 				<image resource="keyboard_hide_dark_ng"/>
@@ -1651,7 +1657,7 @@
 				<condition var1="navbar_sams" var2="1"/>
 				<condition var1="navbar_accent" var2="1"/>
 				<condition var1="nougat" var2="1"/>
-				<condition var1="navbar_bkg" op="&gt;=" var2="2"/>
+				<condition var1="navbar_bkg" op="&gt;=" var2="3"/>
 				<condition var1="theme_style" var2="Light"/>
 				<placement x="%slideout_button_x%" y="%row_navbtn_y%" placement="4"/>
 				<image resource="keyboard_hide_white_ng"/>
@@ -1670,7 +1676,7 @@
 				<condition var1="navbar_sams" var2="1"/>
 				<condition var1="navbar_accent" var2="1"/>
 				<condition var1="nougat" var2="1"/>
-				<condition var1="navbar_bkg" op="&lt;=" var2="1"/>
+				<condition var1="navbar_bkg" op="&lt;=" var2="2"/>
 				<condition var1="theme_style" var2="Light"/>
 				<placement x="%slideout_button_x%" y="%row_navbtn_y%" placement="4"/>
 				<image resource="keyboard_hide_dark_ng"/>
@@ -1682,7 +1688,7 @@
 				<condition var1="navbar_sams" var2="0"/>
 				<condition var1="nougat" var2="3"/>
 				<condition var1="navbar_accent" var2="1"/>
-				<condition var1="navbar_bkg" op="&gt;=" var2="2"/>
+				<condition var1="navbar_bkg" op="&gt;=" var2="3"/>
 				<condition var1="theme_style" var2="Light"/>
 				<placement x="%back_button_x%" y="%row_navbtn_y%" placement="4"/>
 				<image resource="back_white_key_pie"/>
@@ -1701,7 +1707,7 @@
 				<condition var1="navbar_sams" var2="0"/>
 				<condition var1="nougat" var2="3"/>
 				<condition var1="navbar_accent" var2="1"/>
-				<condition var1="navbar_bkg" op="&lt;=" var2="1"/>
+				<condition var1="navbar_bkg" op="&lt;=" var2="2"/>
 				<condition var1="theme_style" var2="Light"/>
 				<placement x="%back_button_x%" y="%row_navbtn_y%" placement="4"/>
 				<image resource="back_dark_key_pie"/>
@@ -1712,7 +1718,7 @@
 				<condition var1="navbar_sams" var2="1"/>
 				<condition var1="nougat" var2="3"/>
 				<condition var1="navbar_accent" var2="1"/>
-				<condition var1="navbar_bkg" op="&gt;=" var2="2"/>
+				<condition var1="navbar_bkg" op="&gt;=" var2="3"/>
 				<condition var1="theme_style" var2="Light"/>
 				<placement x="%slideout_button_x%" y="%row_navbtn_y%" placement="4"/>
 				<image resource="back_white_key_pie"/>
@@ -1731,7 +1737,7 @@
 				<condition var1="navbar_sams" var2="1"/>
 				<condition var1="nougat" var2="3"/>
 				<condition var1="navbar_accent" var2="1"/>
-				<condition var1="navbar_bkg" op="&lt;=" var2="1"/>
+				<condition var1="navbar_bkg" op="&lt;=" var2="2"/>
 				<condition var1="theme_style" var2="Light"/>
 				<placement x="%slideout_button_x%" y="%row_navbtn_y%" placement="4"/>
 				<image resource="back_dark_key_pie"/>

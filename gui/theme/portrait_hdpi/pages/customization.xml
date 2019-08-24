@@ -478,9 +478,9 @@
 				<data name="navbar_bkg"/>
 				<listitem name="{@fm_none}">0</listitem>
 				<listitem name="{@dark_nav}">1</listitem>
-				<listitem name="{@navbar_style_line}">4</listitem>
+				<listitem name="{@navbar_style_line}">2</listitem>
 				<listitem name="{@cust_navbar_accent}">3</listitem>
-				<listitem name="{@cust_navbar_black}">2<condition var1="theme_style_tmp" op="!=" var2="Black"/>
+				<listitem name="{@cust_navbar_black}">4<condition var1="theme_style_tmp" op="!=" var2="Black"/>
 				</listitem>
 			</listbox>
 
@@ -636,9 +636,9 @@
 				<data name="navbar_bkg"/>
 				<listitem name="{@fm_none}">0</listitem>
 				<listitem name="{@dark_nav}">1</listitem>
-				<listitem name="{@navbar_style_line}">4</listitem>
+				<listitem name="{@navbar_style_line}">2</listitem>
 				<listitem name="{@cust_navbar_accent}">3</listitem>
-				<listitem name="{@cust_navbar_black}">2<condition var1="theme_style_tmp" op="!=" var2="Black"/>
+				<listitem name="{@cust_navbar_black}">4<condition var1="theme_style_tmp" op="!=" var2="Black"/>
 				</listitem>
 			</listbox>
 
