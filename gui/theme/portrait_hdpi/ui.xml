@@ -14,6 +14,7 @@
 		<xml name="/sdcard/Fox/.theme/font.xml"   default="/twres/themes/font.xml"/>
 		<xml name="/sdcard/Fox/.theme/style.xml"  default="/twres/themes/style.xml"/>
 		<xml name="/sdcard/Fox/.theme/accent.xml" default="/twres/themes/accent.xml"/>
+		<xml name="/sdcard/Fox/.theme/action.xml" default="/twres/themes/action.xml"/>
 
 		<xml name="/twres/resources/images.xml"/>
 		<xml name="/twres/resources/vars.xml"/>

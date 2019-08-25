@@ -531,6 +531,7 @@
 				<action function="set">update_navbar=0</action>
 				<action function="set">update_accent=0</action>
 				<action function="set">update_style=0</action>
+				<action function="set">update_action=0</action>
 				
 				<action function="set">navbar_disable_tmp=%navbar_disable%</action>
 				<action function="set">navbar_disable_add_tmp=%navbar_disable_add%</action>
@@ -538,6 +539,8 @@
 				<action function="set">theme_font_tmp=%theme_font%</action>
 				<action function="set">theme_sec_font_tmp=%theme_sec_font%</action>
 				<action function="set">theme_font_size_tmp=%theme_font_size%</action>
+				<action function="set">theme_pie_tmp=%theme_pie%</action>
+				<action function="set">theme_style_act_tmp=%theme_style_act%</action>
 				
 				<action function="set">theme_accent_tmp=%theme_accent%</action>
 				<action function="set">theme_accent_c_tmp=%accent%</action>
@@ -555,6 +558,13 @@
 			
 			<fill color="%title_solid_bg%">
 				<condition var1="darker_ui" var2="1"/>
+				<placement x="0" y="0" w="%screen_w%" h="%ab_h%"/>
+			</fill>
+			
+			<fill color="%accent%">
+				<condition var1="darker_ui" var2="0"/>
+				<condition var1="theme_pie" var2="0"/>
+				<condition var1="accent_title" var2="1"/>
 				<placement x="0" y="0" w="%screen_w%" h="%ab_h%"/>
 			</fill>
 
@@ -575,6 +585,13 @@
 				<placement x="0" y="0" w="%screen_w%" h="%ab_h%"/>
 			</fill>
 			
+			<fill color="%accent%">
+				<condition var1="darker_ui" var2="0"/>
+				<condition var1="theme_pie" var2="0"/>
+				<condition var1="accent_title" var2="1"/>
+				<placement x="0" y="0" w="%screen_w%" h="%ab_h%"/>
+			</fill>
+			
 			<template name="status_bg"/>
 		</template>
 		
@@ -587,6 +604,13 @@
 			
 			<fill color="%title_solid_bg%">
 				<condition var1="darker_ui" var2="1"/>
+				<placement x="0" y="0" w="%screen_w%" h="%ab_ex_h%"/>
+			</fill>
+			
+			<fill color="%accent%">
+				<condition var1="darker_ui" var2="0"/>
+				<condition var1="theme_pie" var2="0"/>
+				<condition var1="accent_title" var2="1"/>
 				<placement x="0" y="0" w="%screen_w%" h="%ab_ex_h%"/>
 			</fill>
 			
@@ -761,6 +785,12 @@
 			<fill color="%title_solid_bg%">
 				<placement x="0" y="0" w="%screen_w%" h="%ab_ex_h%"/>
 			</fill>
+			<fill color="%accent%">
+				<condition var1="darker_ui" var2="0"/>
+				<condition var1="theme_pie" var2="0"/>
+				<condition var1="accent_title" var2="1"/>
+				<placement x="0" y="0" w="%screen_w%" h="%ab_ex_h%"/>
+			</fill>
 			<template name="statusbarinfo"/>
 		</template>
 			
@@ -878,6 +908,13 @@
 		<template name="status_bg">
 			<fill color="%status_solid_bg%">
 				<condition var1="separate_status" var2="1"/>
+				<placement x="0" y="0" w="%screen_w%" h="%status_h%"/>
+			</fill>
+
+			<fill color="#00000011">
+				<condition var1="separate_status" var2="0"/>
+				<condition var1="theme_pie" var2="0"/>
+				<condition var1="accent_title" var2="1"/>
 				<placement x="0" y="0" w="%screen_w%" h="%status_h%"/>
 			</fill>
 			

@@ -13,7 +13,7 @@
 		</style>
 		
 		<style name="text_ab_title">
-			<font resource="Secondary-title" color="%accent%"/>
+			<font resource="Secondary-title" color="%actbar_color%"/>
 		</style>
 		
 		<style name="text_ab_title_ota">
@@ -24,7 +24,7 @@
 		</style>
 		
 		<style name="text_ab_subtitle">
-			<font resource="Secondary" color="%accent%"/>
+			<font resource="Secondary" color="%actbar_color%"/>
 		</style>
 		
 		<style name="about_name">
@@ -87,16 +87,8 @@
 			<font resource="caption" color="%accent%"/>
 		</style>
 
-		<style name="icon_mb_solid">
-			<fill color="%accent%"/>
-		</style>
-
 		<style name="menu_text">
 			<font resource="menu" color="%text%"/>
-		</style>
-
-		<style name="menu_text_hl">
-			<font resource="menu" color="%accent%"/>
 		</style>
 
 		<style name="menu_btn">

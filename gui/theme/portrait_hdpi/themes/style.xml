@@ -58,6 +58,7 @@
 		<variable name="highlight_color" value="#1e1f2266"/>
 		<variable name="highlight_color_full" value="#11111144"/>
 		<variable name="text" value="#FFFFFF"/>
+		<variable name="text_action" value="#FFFFFF"/>
 		<variable name="text_status" value="#FFFFFF"/>
 		<variable name="text_menu" value="#FFFFFF"/>
 		<variable name="text_light" value="#666666"/>

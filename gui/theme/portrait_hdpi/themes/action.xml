@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<recovery>
+	<resources>
+		<image name="actionbar_back" filename="Orange/ActionBar/back" retainaspect="1"/>
+		<image name="actionbar_cancel" filename="Orange/ActionBar/cancel" retainaspect="1"/>
+		<image name="actionbar_cancel_no" filename="Orange/ActionBar/cancel_no" retainaspect="1"/>
+		<image name="actionbar_delete" filename="Orange/ActionBar/delete" retainaspect="1"/>
+		<image name="actionbar_edit" filename="Orange/ActionBar/edit" retainaspect="1"/>
+		<image name="actionbar_encr_dis" filename="Orange/ActionBar/encr_dis" retainaspect="1"/>
+		<image name="actionbar_encr_ena" filename="Orange/ActionBar/encr_ena" retainaspect="1"/>
+		<image name="actionbar_flash" filename="Orange/ActionBar/flash" retainaspect="1"/>
+		<image name="actionbar_flash_on" filename="Orange/ActionBar/flash_on" retainaspect="1"/>
+		<image name="actionbar_reset" filename="Orange/ActionBar/reset" retainaspect="1"/>
+		<image name="actionbar_settings" filename="Orange/ActionBar/settings" retainaspect="1"/>
+		<image name="actionbar_sort" filename="Orange/ActionBar/sort" retainaspect="1"/>
+		<image name="actionbar_power_off" filename="Orange/ActionBar/power_off" retainaspect="1"/>
+		<image name="actionbar_storage" filename="Orange/ActionBar/storage" retainaspect="1"/>
+		<image name="actionbar_search" filename="Orange/ActionBar/search" retainaspect="1"/>
+	</resources>
+	<variables>
+		<variable name="actbar_color" value="%accent%"/>
+		<variable name="theme_pie" value="1"/>
+	</variables>
+</recovery>

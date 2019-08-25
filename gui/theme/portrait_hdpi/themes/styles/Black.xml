@@ -59,6 +59,7 @@
 		<variable name="highlight_color" value="#00000066"/>
 		<variable name="highlight_color_full" value="#33333344"/>
 		<variable name="text" value="#FFFFFF"/>
+		<variable name="text_action" value="#FFFFFF"/>
 		<variable name="text_status" value="#FFFFFF"/>
 		<variable name="text_menu" value="#FFFFFF"/>
 		<variable name="text_light" value="#666666"/>
@@ -67,6 +68,7 @@
 		<variable name="linecolor" value="#666666"/>
 		<variable name="darktransparent" value="#000000BB"/>
 		<variable name="theme_style" value="Black"/>
+		<variable name="theme_style_act" value="Gray"/>
 		
 		<variable name="status_solid_bg" value="#050505"/>
 		<variable name="title_solid_bg" value="#0A0A0A"/>

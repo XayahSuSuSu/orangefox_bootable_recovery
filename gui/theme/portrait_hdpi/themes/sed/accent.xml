@@ -13,23 +13,6 @@
 		<image name="btn_raised_hl" filename="#ACCENT#/Controls/btn_raised_hl"/>
 		<image name="tab_hl" filename="#ACCENT#/Controls/tab"/>
 
-		<!-- Action Bar -->
-		<image name="actionbar_back" filename="#ACCENT#/ActionBar/back" retainaspect="1"/>
-		<image name="actionbar_cancel" filename="#ACCENT#/ActionBar/cancel" retainaspect="1"/>
-		<image name="actionbar_cancel_no" filename="#ACCENT#/ActionBar/cancel_no" retainaspect="1"/>
-		<image name="actionbar_delete" filename="#ACCENT#/ActionBar/delete" retainaspect="1"/>
-		<image name="actionbar_edit" filename="#ACCENT#/ActionBar/edit" retainaspect="1"/>
-		<image name="actionbar_encr_dis" filename="#ACCENT#/ActionBar/encr_dis" retainaspect="1"/>
-		<image name="actionbar_encr_ena" filename="#ACCENT#/ActionBar/encr_ena" retainaspect="1"/>
-		<image name="actionbar_flash" filename="#ACCENT#/ActionBar/flash" retainaspect="1"/>
-		<image name="actionbar_flash_on" filename="#ACCENT#/ActionBar/flash_on" retainaspect="1"/>
-		<image name="actionbar_reset" filename="#ACCENT#/ActionBar/reset" retainaspect="1"/>
-		<image name="actionbar_settings" filename="#ACCENT#/ActionBar/settings" retainaspect="1"/>
-		<image name="actionbar_sort" filename="#ACCENT#/ActionBar/sort" retainaspect="1"/>
-		<image name="actionbar_power_off" filename="#ACCENT#/ActionBar/power_off" retainaspect="1"/>
-		<image name="actionbar_storage" filename="#ACCENT#/ActionBar/storage" retainaspect="1"/>
-		<image name="actionbar_search" filename="#ACCENT#/ActionBar/search" retainaspect="1"/>
-
 		<!-- Nav panel -->
 		<image name="nav_menu" filename="#ACCENT#/NavPanel/menu" retainaspect="1"/>
 		<image name="nav_wipe" filename="#ACCENT#/NavPanel/wipe" retainaspect="1"/>

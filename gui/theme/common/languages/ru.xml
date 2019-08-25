@@ -1130,5 +1130,6 @@
 		<string name="install_queue_magisk_btn">Добавить Magisk</string>
 
 		<string name="navbar_style_line">Линия</string>
+		<string name="accent_in_titles">Акцент в заголовке</string>
 	</resources>
 </language>

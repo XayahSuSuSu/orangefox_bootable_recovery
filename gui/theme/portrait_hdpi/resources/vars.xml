@@ -12,6 +12,7 @@
 		<variable name="update_navbar" value="0"/>
 		<variable name="update_accent" value="0"/>
 		<variable name="update_style" value="0"/>
+		<variable name="update_action" value="0"/>
 		
 		<variable name="mmgui_path" value="/data/adb/modules"/>
 
@@ -74,6 +75,7 @@
 		<variable name="key_allow_swipe" value="0" persist="1"/> 
 		<variable name="ota_new_screen" value="1" persist="1"/> 
 		<variable name="new_nav_panel_des" value="1" persist="1"/> 
+		<variable name="accent_title" value="0" persist="1"/> 
 		
 		<!-- Other... -->
 		<variable name="disable_no_os" value="0" persist="1"/>
@@ -170,6 +172,7 @@
 		<variable name="ws_cards_y2" value="%cutout_w%+720"/>
 		<variable name="ws_cards_y3" value="%cutout_w%+975"/>
 		<variable name="ws_cards_y4" value="%cutout_w%+1230"/>
+		<variable name="ws_cards_y5" value="%cutout_w%+1500"/>
 		
 		<!-- Splash -->
 		<variable name="spl_custom_btn" value="%screen_original_h%-30"/>

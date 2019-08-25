@@ -51,7 +51,7 @@
 				<condition var1="darker_ui" op="!=" var2="1"/>
 				<placement x="%col1_x%" y="%ab_bc_double_d_y%" w="552" h="64"/>
 				<cursor color="%transparent%" hasfocus="0" width="0"/>
-				<font resource="Secondary" color="%accent%"/>
+				<font resource="Secondary" color="%actbar_color%"/>
 				<background color="%background%"/>
 				<data name="tw_file_location1"/>
 				<restrict disable="1"/>
@@ -62,7 +62,7 @@
 				<condition var1="darker_ui" var2="1"/>
 				<placement x="%col1_x%" y="%ab_bc_double_d_y%" w="552" h="64"/>
 				<cursor color="%transparent%" hasfocus="0" width="0"/>
-				<font resource="Secondary" color="%accent%"/>
+				<font resource="Secondary" color="%actbar_color%"/>
 				<background color="%title_solid_bg%"/>
 				<data name="tw_file_location1"/>
 				<restrict disable="1"/>

@@ -47,7 +47,7 @@
 				<condition var1="of_backup_empty" var2="0"/>
 				<placement x="%col1_x%" y="%ab_bc_double_d_y%" w="552" h="64"/>
 				<cursor color="%transparent%" hasfocus="0" width="0"/>
-				<font resource="Secondary" color="%accent%"/>
+				<font resource="Secondary" color="%actbar_color%"/>
 				<background color="%title_solid_bg%"/>
 				<data name="tw_backups_folder_fm"/>
 				<restrict disable="1"/>
@@ -59,7 +59,7 @@
 				<condition var1="of_backup_empty" var2="1"/>
 				<placement x="%col1_x%" y="%ab_bc_double_d_y%" w="984" h="64"/>
 				<cursor color="%transparent%" hasfocus="0" width="0"/>
-				<font resource="Secondary" color="%accent%"/>
+				<font resource="Secondary" color="%actbar_color%"/>
 				<background color="%title_solid_bg%"/>
 				<data name="tw_backups_folder_fm"/>
 				<restrict disable="1"/>
@@ -71,7 +71,7 @@
 				<condition var1="of_backup_empty" var2="0"/>
 				<placement x="%col1_x%" y="%ab_bc_double_d_y%" w="552" h="64"/>
 				<cursor color="%transparent%" hasfocus="0" width="0"/>
-				<font resource="Secondary" color="%accent%"/>
+				<font resource="Secondary" color="%actbar_color%"/>
 				<background color="%background%"/>
 				<data name="tw_backups_folder_fm"/>
 				<restrict disable="1"/>
@@ -83,7 +83,7 @@
 				<condition var1="of_backup_empty" var2="1"/>
 				<placement x="%col1_x%" y="%ab_bc_double_d_y%" w="984" h="64"/>
 				<cursor color="%transparent%" hasfocus="0" width="0"/>
-				<font resource="Secondary" color="%accent%"/>
+				<font resource="Secondary" color="%actbar_color%"/>
 				<background color="%background%"/>
 				<data name="tw_backups_folder_fm"/>
 				<restrict disable="1"/>

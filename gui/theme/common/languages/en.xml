@@ -1026,5 +1026,7 @@
 		<string name="install_queue_magisk_btn">Add Magisk</string>
 
 		<string name="navbar_style_line">Line</string>
+		<string name="accent_in_titles">Accent text color in title</string>
+		<string name="accentbg_in_titles">Accent background in title</string>
 	</resources>
 </language>
