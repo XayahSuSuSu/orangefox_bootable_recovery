@@ -1750,7 +1750,7 @@
 					fi;
 
 					#ActBar
-					if [[ '%update_action%' = '1' ]] || [[ '%update_style%' = '1' ]]; then
+					if [[ '%update_action%' = '1' ]] || [[ '%update_style%' = '1' ]] || [[ '%update_accent%' = '1' ]]; then
 						if [[ '%theme_pie_tmp%' = '1' ]]; then
 							cat "/twres/themes/sed/action.xml" | sed -e "
 							s/#ACCENT#/%theme_accent_tmp%/g;
