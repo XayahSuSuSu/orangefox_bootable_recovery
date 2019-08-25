@@ -449,10 +449,10 @@
 		<variable name="dlg_input_line" value="690"/>
 		
 		<!-- Fast scroll -->
-		<variable name="fastscroll_w" value="48"/>
-		<variable name="fastscroll_linew" value="2"/>
-		<variable name="fastscroll_rectw" value="24"/>
-		<variable name="fastscroll_recth" value="120"/>
+		<variable name="fastscroll_w" value="16"/>
+		<variable name="fastscroll_linew" value="0"/>
+		<variable name="fastscroll_rectw" value="16"/>
+		<variable name="fastscroll_recth" value="48"/>
 		
 		<!-- Sliders -->
 		<variable name="slider_x" value="48"/>
