@@ -22,7 +22,6 @@
 					<action function="page">part_options</action>
 				</listitem>
 				<listitem name="Magisk Manager">
-					<condition var1="fileexists" var2="/sbin/mmgui"/>
 					<icon res="magisk"/>
 					<action function="set">ftls_running=1</action>
 					<action function="set">ft_mm_found=0</action>
