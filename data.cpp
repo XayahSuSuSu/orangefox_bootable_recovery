@@ -1180,7 +1180,7 @@ int DataManager::GetMagicValue(const string & varName, string & value)
       value = TWFunc::to_string(convert_temp);
       return 0;
     }
-  else if (varName == "tw_battery")
+  else if (varName == "tw_battery" || varName == "tw_battery_charge")
     {
       char tmp[16];
       static char charging = ' ';
@@ -1232,8 +1232,10 @@ int DataManager::GetMagicValue(const string & varName, string & value)
 	    }
 	  nextSecCheck = curTime.tv_sec + 1;
 	}
-
-      sprintf(tmp, "%i%%%c", lastVal, charging);
+      if (varName == "tw_battery_charge")
+        sprintf(tmp, "%i%%%c", lastVal, charging);
+      else
+        sprintf(tmp, "%i%%", lastVal);
       value = tmp;
       return 0;
     }
