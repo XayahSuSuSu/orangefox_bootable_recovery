@@ -161,6 +161,7 @@
 		<image name="pass_classic" filename="Default/Icons/pass_classic" retainaspect="1"/>
 		<image name="pass_gesture" filename="Default/Icons/pass_gesture" retainaspect="1"/>
 		<image name="bs_btn_link" filename="Default/Icons/link" retainaspect="1"/>
+		<image name="help" filename="Default/Icons/help" retainaspect="1"/>
 		
 		<!-- Info -->
 		<image name="icon_warning" filename="Default/Info/icon_warning" retainaspect="1"/>

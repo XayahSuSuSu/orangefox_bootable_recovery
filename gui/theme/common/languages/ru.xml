@@ -1129,6 +1129,14 @@
 
 		<string name="install_queue_magisk_btn">Добавить Magisk</string>
 
+		<string name="hint_ffiles_missing">Что-то потеряли?</string>
+		<string name="hint_ffiles_missing1">Файлы недоступны</string>
+		<string name="hint_ffiles_missing2">Файлы OrangeFox недоступны</string>
+		<string name="hint_ffiles_missing3">Попробуйте смонтировать /data</string>
+		<string name="hint_ffiles_missing4">или переустановить OrangeFox,</string>
+		<string name="hint_ffiles_missing5">если вы форматировали /data.</string>
+		<string name="hide_btn">Скрыть</string>
+
 		<string name="navbar_style_line">Линия</string>
 		<string name="accent_in_titles">Акцент в заголовке</string>
 	</resources>

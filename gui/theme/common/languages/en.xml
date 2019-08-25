@@ -1024,6 +1024,13 @@
 		<string name="data_decrypted_reload">Successfully decrypted!</string>
 
 		<string name="install_queue_magisk_btn">Add Magisk</string>
+		<string name="hint_ffiles_missing">Have you lost something?</string>
+		<string name="hint_ffiles_missing1">Fox Addons unavaible</string>
+		<string name="hint_ffiles_missing2">OrangeFox can't access it's</string>
+		<string name="hint_ffiles_missing3">files. Try mount /data or reinstall</string>
+		<string name="hint_ffiles_missing4">OrangeFox if /data was wiped.</string>
+		<string name="hint_ffiles_missing5"><!-- Use this line if this hint is too big in your language --></string>
+		<string name="hide_btn">Hide hint</string>
 
 		<string name="navbar_style_line">Line</string>
 		<string name="accent_in_titles">Accent text color in title</string>
