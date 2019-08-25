@@ -127,7 +127,7 @@
 		<variable name="nav_panel_h" value="312"/> <!-- 168+navbar -->
 		<variable name="nav_panel_id" value="0"/>
 		<variable name="nav_panel_y" value="%screen_h%-312"/>
-		<variable name="nav_icon_a_y" value="%screen_h%-234"/>
+		<variable name="nav_icon_a_y" value="%screen_h%-228"/>
 		<variable name="ee_y" value="%screen_h%-486"/>
 		<variable name="nav_icon_y" value="%screen_h%-256"/>
 		<variable name="nav_text_y" value="%screen_h%-193"/>
@@ -331,8 +331,8 @@
 		<variable name="fileselector_spacing" value="0"/>
 		
 		<!-- Title / Title buttons -->
-		<variable name="ab_bc_double_u_y" value="168+%cutout_w%"/>
-		<variable name="ab_bc_double_d_y" value="160+%cutout_w%"/>
+		<variable name="ab_bc_double_u_y" value="165+%cutout_w%"/>
+		<variable name="ab_bc_double_d_y" value="155+%cutout_w%"/>
 		<variable name="ab_y" value="84+%cutout_w%"/>
 		<variable name="ab2_y" value="252+%cutout_w%"/>
 		<variable name="ab3_y" value="468+%cutout_w%"/>
@@ -340,7 +340,7 @@
 		<variable name="ab_btn2_x" value="780"/>
 		<variable name="ab_btn3_x" value="636"/>
 		<variable name="ab_back_x" value="12"/>
-		<variable name="ab_bc_y" value="108+%cutout_w%"/>
+		<variable name="ab_bc_y" value="115+%cutout_w%"/>
 		<variable name="ab_bc_search_y" value="128+%cutout_w%"/>
 		<variable name="ab_bc2_y" value="276+%cutout_w%"/>
 		<variable name="ab_bc3_y" value="492+%cutout_w%"/>

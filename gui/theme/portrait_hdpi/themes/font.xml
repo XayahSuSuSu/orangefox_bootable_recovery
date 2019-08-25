@@ -25,7 +25,7 @@
 		<font name="keylabel-longpress" filename="Roboto-Regular.ttf" size="32"/>
 		
 		<font name="Secondary" filename="GoogleSans-Medium.ttf" size="42"/>
-		<font name="Secondary-title" filename="GoogleSans-Medium.ttf" size="64"/>
+		<font name="Secondary-title" filename="GoogleSans-Medium.ttf" size="58"/>
 		<font name="caption" filename="GoogleSans-Medium.ttf" size="36"/>
 		
 		<font name="clock" filename="GoogleSans-Medium.ttf" size="210"/>

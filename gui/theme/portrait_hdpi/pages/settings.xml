@@ -7,6 +7,7 @@
 
 			<listbox style="btn_list">
 				<placement x="0" y="%ab_h%" w="%screen_w%" h="%bl_fullscreen_h%"/>
+				<iconsize w="216" h="168" padding="24"/>
 				<listitem name="{@settings_general}">
 					<icon res="bs_btn_set_global"/>
 					<action function="set">general_back=settings</action>
@@ -66,10 +67,6 @@
 					<icon res="bs_btn_set_regional"/>
 					<action function="page">ext_time</action>
 				</listitem>
-				<listitem name="OrangeFox Lab">
-					<condition var1="fox_lab" var2="1"/>
-					<action function="page">fox_lab</action>
-				</listitem>
 				<listitem name="{@about_hdr}">
 					<icon res="bs_btn_set_about"/>
 					<action function="page">about</action>
@@ -108,6 +105,19 @@
 			<image>
 				<placement x="%ab_btn1_x%" y="%ab_y%"/>
 				<image resource="actionbar_reset"/>
+			</image>
+
+			<button>
+				<placement x="%ab_btn2_x%" y="%ab_y%"/>
+				<image resource="actionbar_btn" highlightresource="actionbar_btn_hl"/>
+				<condition var1="fox_lab" var2="1"/>
+				<action function="page">fox_lab</action>
+			</button>
+
+			<image>
+				<placement x="%ab_btn2_x%" y="%ab_y%"/>
+				<condition var1="fox_lab" var2="1"/>
+				<image resource="actionbar_settings"/>
 			</image>
 
 			<action>
