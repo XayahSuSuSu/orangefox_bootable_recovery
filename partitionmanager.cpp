@@ -947,6 +947,8 @@ int TWPartitionManager::Run_Backup(bool adbbackup)
   else
     part_settings.generate_digest = false;
 
+  DataManager::SetValue("fox_show_digest_btn", skip_digest);
+
   DataManager::GetValue(TW_BACKUPS_FOLDER_VAR, part_settings.Backup_Folder);
   DataManager::GetValue(TW_BACKUP_NAME, Backup_Name);
   if (Backup_Name == gui_lookup("curr_date", "(Current Date)"))

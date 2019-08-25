@@ -349,7 +349,7 @@
 				<condition var1="lock_info" var2="1"/>
 				<font resource="info"/>
 				<placement x="%center_x%" y="%row2_3a_y%" placement="4"/>
-				<text>{@cpu_temp} | %tw_battery%</text>
+				<text>{@cpu_temp} | %tw_battery_charge%</text>
 			</text>
 			<!-- -->
 

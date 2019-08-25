@@ -38,7 +38,7 @@
 		<string name="sort_by_size_desc">Размер</string>
 		<string name="install_btn">Установка</string>
 		<string name="wipe_btn">Очистка</string>
-		<string name="backup_btn">Копия</string>
+		<string name="backup_btn">Копии</string>
 		<string name="restore_btn">Восстановление</string>
 		<string name="mount_btn">Монтирование</string>
 		<string name="settings_btn">Настройки</string>

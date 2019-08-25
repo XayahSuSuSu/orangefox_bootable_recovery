@@ -376,7 +376,7 @@
 					<condition var1="tw_no_battery_percent" var2="0"/>
 					<condition var1="tw_battery" op="&gt;" var2="14"/>
 				</conditions>
-				<text>%tw_battery%</text>
+				<text>%tw_battery_charge%</text>
 			</text>
 
 			<text color="#FFA244">
@@ -389,7 +389,7 @@
 					<condition var1="tw_military_time" var2="0"/>
 					<condition var1="tw_battery" op="&lt;" var2="15"/>
 				</conditions>
-				<text>%tw_battery%</text>
+				<text>%tw_battery_charge%</text>
 			</text>
 			<!-- end -->
 
@@ -723,7 +723,7 @@
 					<condition var1="tw_no_battery_percent" var2="0"/>
 					<condition var1="tw_battery" op="&gt;" var2="14"/>
 				</conditions>
-				<text>%tw_battery%</text>
+				<text>%tw_battery_charge%</text>
 			</text>
 
 			<text color="#FFA244">
@@ -736,7 +736,7 @@
 					<condition var1="tw_military_time" var2="1"/>
 					<condition var1="tw_battery" op="&lt;" var2="15"/>
 				</conditions>
-				<text>%tw_battery%</text>
+				<text>%tw_battery_charge%</text>
 			</text>
 			<!-- end -->
 
@@ -1046,7 +1046,7 @@
 					<condition var1="tw_no_battery_percent" var2="0"/>
 					<condition var1="tw_battery" op="&gt;" var2="14"/>
 				</conditions>
-				<text>%tw_battery%</text>
+				<text>%tw_battery_charge%</text>
 			</text>
 
 			<text color="#FFA244">
@@ -1058,7 +1058,7 @@
 					<condition var1="enable_battery" var2="0"/>
 					<condition var1="tw_battery" op="&lt;" var2="15"/>
 				</conditions>
-				<text>%tw_battery%</text>
+				<text>%tw_battery_charge%</text>
 			</text>
 			<!-- end -->
 		</template>

@@ -272,7 +272,7 @@
 
 			<text style="text_ab_title">
 				<placement x="%col1_x_indent%" y="%ab_bc_y%"/>
-				<text>{@backup_hdr}</text>
+				<text>{@backup_short_hdr}</text>
 			</text>
 
 			<text style="text_ab_title">
@@ -362,7 +362,7 @@
 
 			<text style="text_ab_title">
 				<placement x="%col1_x_indent%" y="%ab_bc_y%"/>
-				<text>{@backup_hdr}</text>
+				<text>{@backup_short_hdr}</text>
 			</text>
 
 			<text style="text_ab_title">
@@ -468,7 +468,7 @@
 
 			<text style="text_ab_title">
 				<placement x="%col1_x_indent%" y="%ab_bc_y%"/>
-				<text>{@backup_hdr}</text>
+				<text>{@backup_short_hdr}</text>
 			</text>
 
 			<text style="text_ab_title">
@@ -552,7 +552,7 @@
 
 			<text style="text_ab_title">
 				<placement x="%col1_x_indent%" y="%ab_bc_y%"/>
-				<text>{@backup_hdr}</text>
+				<text>{@backup_short_hdr}</text>
 			</text>
 
 			<text style="text_ab_title">
@@ -614,7 +614,7 @@
 
 			<text style="text_ab_title">
 				<placement x="%col1_x_indent%" y="%ab_bc_y%"/>
-				<text>{@backup_hdr}</text>
+				<text>{@backup_short_hdr}</text>
 			</text>
 
 			<text style="text_ab_title">
@@ -641,7 +641,7 @@
 				<placement x="%btn_raised_left_x%" y="%row_btn1_y%"/>
 				<text>{@back_btn}</text>
 				<actions>
-					<action function="set">tw_clear_destination=backup_device</action>
+					<action function="set">tw_clear_destination=restore</action>
 					<action function="page">clear_vars</action>
 				</actions>
 			</button>
@@ -680,7 +680,7 @@
 			<action>
 				<touch key="back"/>
 				<actions>
-					<action function="set">tw_clear_destination=backup_device</action>
+					<action function="set">tw_clear_destination=restore</action>
 					<action function="page">clear_vars</action>
 				</actions>
 			</action>

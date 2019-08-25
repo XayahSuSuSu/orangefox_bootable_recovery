@@ -187,7 +187,6 @@ void twrpDigestDriver::Cancel_Digest() {
 }
 
 void twrpDigestDriver::CleanList() {
-	DataManager::SetValue("fox_show_digest_btn", "1");
 	PartFilenames.clear();
 }
 
