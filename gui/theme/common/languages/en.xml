@@ -1032,6 +1032,9 @@
 		<string name="hint_ffiles_missing5"><!-- Use this line if this hint is too big in your language --></string>
 		<string name="hide_btn">Hide hint</string>
 
+		<string name="info_dir_empty">Folder is empty</string>
+		<string name="info_dir_empty_hidden">Some files are hidden</string>
+
 		<string name="navbar_style_line">Line</string>
 		<string name="accent_in_titles">Accent text color in title</string>
 		<string name="accentbg_in_titles">Accent background in title</string>

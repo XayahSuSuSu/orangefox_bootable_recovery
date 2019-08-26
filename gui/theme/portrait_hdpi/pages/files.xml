@@ -123,6 +123,25 @@
 				<placement x="%ab_btn2_x%" y="%ab_y%"/>
 				<image resource="actionbar_storage"/>
 			</image>
+			
+			<image>
+				<condition var1="of_empty_dir" op="&gt;=" var2="1"/>
+				<placement x="%center_x%" y="%center_y%" placement="4"/>
+				<image resource="empty_box"/>
+			</image>
+
+			<text>
+				<condition var1="of_empty_dir" var2="1"/>
+				<font resource="Secondary" color="#666666"/>
+				<placement x="%center_x%" y="%empty_text_y%" placement="4"/>
+				<text>{@info_dir_empty}</text>
+			</text>
+			<text>
+				<condition var1="of_empty_dir" var2="2"/>
+				<font resource="Secondary" color="#666666"/>
+				<placement x="%center_x%" y="%empty_text_y%" placement="4"/>
+				<text>{@info_dir_empty_hidden}</text>
+			</text>
 
 			<action>
 				<condition var1="tw_filename1" op="modified"/>

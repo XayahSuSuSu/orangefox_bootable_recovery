@@ -45,6 +45,7 @@ GUIFileSelector::GUIFileSelector(xml_node<>* node) : GUIScrollList(node)
 	mPathVar = "cwd";
 	mFileFilterVar = "";
 	ignoreHideVar = updateFileList = false;
+	isDirEmpty = 1;
 
 	// Load filter for filtering files (e.g. *.zip for only zips)
 	child = FindNode(node, "filter");
@@ -276,6 +277,8 @@ int GUIFileSelector::GetFileList(const std::string folder)
 	struct dirent* de;
 	struct stat st;
 
+	isDirEmpty = 1;
+
 	// Clear all data
 	mFolderList.clear();
 	mFileList.clear();
@@ -336,11 +339,16 @@ int GUIFileSelector::GetFileList(const std::string folder)
 		
 		// [f/d] Remove hidden files/folders when tw_hidden_files = 0
 		if (showHiddenFiles == "0") {
-			if (data.fileName != ".." && data.fileName.substr(0, 1) == ".")
+			if ( (folder == "/" && (data.fileName == "twres" || data.fileName == "tmp"))
+			||   (data.fileName != ".." && data.fileName.substr(0, 1) == ".")
+			||    data.fileName == "lost+found" ) {
+				isDirEmpty = 2;
 				continue;
-			if ((folder == "/" && (data.fileName == "twres" || data.fileName == "tmp")) || data.fileName == "lost+found")
-				continue;
+			}
 		}
+		
+		if (data.fileName != "..")
+			isDirEmpty = 0;
 		
 		data.fileType = de->d_type;
 
@@ -376,6 +384,8 @@ int GUIFileSelector::GetFileList(const std::string folder)
 
 	std::sort(mFolderList.begin(), mFolderList.end(), fileSort);
 	std::sort(mFileList.begin(), mFileList.end(), fileSort);
+
+	DataManager::SetValue("of_empty_dir", isDirEmpty);
 
 	return 0;
 }

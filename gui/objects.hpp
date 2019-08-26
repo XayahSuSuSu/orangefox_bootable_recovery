@@ -643,6 +643,7 @@ protected:
 	ImageResource* mExLinkIcon;
 	ImageResource* mExBlockIcon;
 	bool updateFileList;
+	int isDirEmpty;
 	int doubleLine = 0;
 	std::string mFileFilterVar;
 };

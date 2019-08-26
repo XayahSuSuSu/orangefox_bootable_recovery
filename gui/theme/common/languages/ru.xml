@@ -1137,6 +1137,9 @@
 		<string name="hint_ffiles_missing5">если вы форматировали /data.</string>
 		<string name="hide_btn">Скрыть</string>
 
+		<string name="info_dir_empty">Папка пуста</string>
+		<string name="info_dir_empty_hidden">Некоторые файлы скрыты</string>
+
 		<string name="navbar_style_line">Линия</string>
 		<string name="accent_in_titles">Акцент в заголовке</string>
 	</resources>
