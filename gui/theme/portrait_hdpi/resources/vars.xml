@@ -162,7 +162,7 @@
 		<variable name="magisk_list_h" value="%screen_min_cut%-882"/>
 		<variable name="fullscreen_list_h" value="%screen_min_cut%-552"/>
 		<variable name="part_list_btns_h" value="%screen_min_cut%-1380"/> <!-- Backup parts -->
-		<variable name="part_list_btns_9_h" value="%screen_min_cut%-696"/> <!-- Mount parts -->
+		<variable name="part_list_btns_9_h" value="%screen_min_cut%-1200"/> <!-- Mount parts -->
 		<variable name="part_list_btns_np_h" value="%screen_min_cut%-1008"/> <!-- Wipe parts -->
 		
 		<!--variable name="flash_img_part_expanded" value="%screen_min_cut%-1122"/-->
@@ -338,13 +338,13 @@
 		<!-- Title / Title buttons -->
 		<variable name="ab_bc_double_u_y" value="165+%cutout_w%"/>
 		<variable name="ab_bc_double_d_y" value="155+%cutout_w%"/>
-		<variable name="ab_y" value="84+%cutout_w%"/>
-		<variable name="ab2_y" value="252+%cutout_w%"/>
-		<variable name="ab3_y" value="468+%cutout_w%"/>
-		<variable name="ab_btn1_x" value="924"/>
-		<variable name="ab_btn2_x" value="780"/>
-		<variable name="ab_btn3_x" value="636"/>
-		<variable name="ab_back_x" value="12"/>
+		<variable name="ab_y" value="156+%cutout_w%"/>
+		<variable name="ab2_y" value="324+%cutout_w%"/>
+		<variable name="ab3_y" value="540+%cutout_w%"/>
+		<variable name="ab_btn1_x" value="996"/>
+		<variable name="ab_btn2_x" value="852"/>
+		<variable name="ab_btn3_x" value="708"/>
+		<variable name="ab_back_x" value="84"/>
 		<variable name="ab_bc_y" value="115+%cutout_w%"/>
 		<variable name="ab_bc_search_y" value="128+%cutout_w%"/>
 		<variable name="ab_bc2_y" value="276+%cutout_w%"/>

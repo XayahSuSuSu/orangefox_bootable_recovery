@@ -1142,5 +1142,14 @@
 
 		<string name="navbar_style_line">Линия</string>
 		<string name="accent_in_titles">Акцент в заголовке</string>
+
+		<string name="mbyte">МБ</string>
+
+		<!-- Updated slot selection -->
+		<string name="slot_show">Переключить слот</string>
+		<string name="slot_switch_a">Переключить на слот A</string>
+		<string name="slot_switch_b">Переключить на слот B</string>
+		<string name="slot_active_a">Слот A активен</string>
+		<string name="slot_active_b">Слот B активен</string>
 	</resources>
 </language>

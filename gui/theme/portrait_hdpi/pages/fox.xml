@@ -5,20 +5,21 @@
 			<fill color="%unactive_title%">
 				<placement x="0" y="%ab_h%" w="%screen_w%" h="%ab_btn_h%"/>
 			</fill>
-			<image>
-				<placement x="%ab_btn1_x%" y="%ab2_y%"/>
-				<image resource="switch_off"/>
+
+			<image style="switch_off">
+				<placement x="%ab_btn1_x%" y="%ab2_y%" placement="4"/>
 			</image>
+
 			<fill color="%accent%">
 				<condition var1="fox_support_miui_ota" var2="1"/>
 				<condition var1="fox_include_system_survival" var2="1"/>
 				<placement x="0" y="%ab_h%" w="%screen_w%" h="%ab_btn_h%"/>
 			</fill>
-			<image>
+
+			<image style="switch_on">
 				<condition var1="fox_support_miui_ota" var2="1"/>
 				<condition var1="fox_include_system_survival" var2="1"/>
-				<placement x="%ab_btn1_x%" y="%ab2_y%"/>
-				<image resource="switch_on"/>
+				<placement x="%ab_btn1_x%" y="%ab2_y%" placement="4"/>
 			</image>
 			
 			<text style="text_ab_switch">
@@ -28,27 +29,19 @@
 
 			<button style="bs_btn">
 				<placement x="0" y="%ab_h%" w="%screen_w%" h="%ab_btn_h%"/>
-				<actions>
-					<action function="set">fox_support_miui_ota=1</action>
-					<action function="set">fox_include_system_survival=1</action>
-				</actions>
+				<action function="set">fox_support_miui_ota=1</action>
+				<action function="set">fox_include_system_survival=1</action>
 			</button>
 
 			<button style="bs_btn">
 				<condition var1="fox_support_miui_ota" var2="1"/>
 				<condition var1="fox_include_system_survival" var2="1"/>
 				<placement x="0" y="%ab_h%" w="%screen_w%" h="%ab_btn_h%"/>
-				<actions>
-					<action function="set">fox_support_miui_ota=0</action>
-					<action function="set">fox_include_system_survival=0</action>
-				</actions>
+				<action function="set">fox_support_miui_ota=0</action>
+				<action function="set">fox_include_system_survival=0</action>
 			</button>
 		
-            <template name="body"/>
-
-			<template name="ab"/>
-
-			<template name="statusbarinfo"/>
+            <template name="base"/>
 
             <text style="text_ab_title">
 				<placement x="%col1_x_indent%" y="%ab_bc_y%"/>
@@ -64,18 +57,14 @@
 			</action>
 
 			<action>
-				<conditions>
-					<condition var1="tw_operation_state" var2="1"/>
-					<condition var1="tw_operation_status" var2="0"/>
-				</conditions>
+				<condition var1="tw_operation_state" var2="1"/>
+				<condition var1="tw_operation_status" var2="0"/>
 				<action function="set">ota_back_file=1</action>
 			</action>
 
 			<action>
-				<conditions>
-					<condition var1="tw_operation_state" var2="1"/>
-					<condition var1="tw_operation_status" var2="1"/>
-				</conditions>
+				<condition var1="tw_operation_state" var2="1"/>
+				<condition var1="tw_operation_status" var2="1"/>
 				<action function="set">ota_back_file=0</action>
 			</action>
 			<!-- -->
@@ -86,12 +75,14 @@
 				<placement x="%col1_x%" y="%row1_3a_y%"/>
 				<image resource="icon_warning"/>
 			</image>
+
 			<image>
 				<condition var1="ota_back_file" var2="1"/>
 				<condition var1="fox_support_miui_ota" var2="1"/>
 				<placement x="%col1_x%" y="%row1_3a_y%"/>
 				<image resource="icon_info"/>
 			</image>
+
 			<image>
 				<condition var1="fox_support_miui_ota" var2="0"/>
 				<placement x="%col1_x%" y="%row1_3a_y%"/>
@@ -166,15 +157,10 @@
 				<touch key="back"/>
 				<action function="page">settings</action>
 			</action>
-
         </page>
+
         <page name="fox_ota_lite">
-		
-            <template name="body"/>
-
-			<template name="ab"/>
-
-			<template name="statusbarinfo"/>
+			<template name="base"/>
 
             <text style="text_ab_title">
 				<placement x="%col1_x_indent%" y="%ab_bc_y%"/>
@@ -187,7 +173,7 @@
 			</text>
 
             <listbox style="settingslist">
-				<placement x="0" y="%row1_2_y%" w="%screen_w%" h="%lb_l4%"/>
+				<placement x="0" y="%row1_2_y%" w="%screen_w%" h="%lb_l1%"/>
 				<listitem name="{@FOX_DISABLE_OTA_AUTO_REBOOT_chk}">
 					<data variable="fox_disable_ota_auto_reboot_check"/>
 				</listitem>
@@ -199,7 +185,7 @@
 			</text>
 
             <listbox style="settingslist">
-				<placement x="0" y="%row2_2a_y%" w="%screen_w%" h="%lb_l4%"/>
+				<placement x="0" y="%row2_2a_y%" w="%screen_w%" h="%lb_l3%"/>
 				<listitem name="{@fox_dmverity_chk}">
 					<data variable="fox_reboot_dm_verity_check"/>
 				</listitem>
@@ -220,15 +206,12 @@
 				<touch key="back"/>
 				<action function="page">settings</action>
 			</action>
-
         </page>
 
 		<page name="fox_lab">
-			<template name="body"/>
-
 			<listbox style="btn_list">
 				<placement x="0" y="%ab_h%" w="%screen_w%" h="%bl_fullscreen_h%"/>
-				<icon selected="bs_adv_se" />
+				<icon selected="bs_adv_se" unselected="bs_adv_se" />
 				<listitem name="Theme debug tools">
 					<action function="page">debug</action>
 				</listitem>
@@ -267,9 +250,7 @@
 				</listitem>
 			</listbox>
 
-			<template name="ab"/>
-
-			<template name="statusbarinfo"/>
+			<template name="base"/>
 
 			<text style="text_ab_title">
 				<placement x="%col1_x_indent%" y="%ab_bc_y%"/>
@@ -288,11 +269,7 @@
 		</page>
 
 		<page name="debug_pages">
-			<template name="body"/>
-
-			<template name="ab"/>
-
-			<template name="statusbarinfo"/>
+			<template name="base"/>
 
 			<text style="text_ab_title">
 				<placement x="%col1_x_indent%" y="%ab_bc_y%"/>
@@ -333,6 +310,129 @@
 			<action>
 				<touch key="back"/>
 				<action function="page">fox_lab</action>
+			</action>
+		</page>
+		
+		<!-- Debug -->
+		<page name="debug">
+			<template name="base_key"/>
+			
+			<button style="actionbar">
+				<placement x="%ab_btn1_x%" y="%ab_y%" placement="4"/>
+				<action function="reload"/>
+			</button>
+
+			<image>
+				<placement x="%ab_btn1_x%" y="%ab_y%" placement="4"/>
+				<image resource="actionbar_reset"/>
+			</image>
+			
+			<button style="actionbar">
+				<placement x="%ab_btn2_x%" y="%ab_y%" placement="4"/>
+				<action function="page">debug_plus</action>
+			</button>
+
+			<image>
+				<placement x="%ab_btn2_x%" y="%ab_y%" placement="4"/>
+				<image resource="actionbar_settings"/>
+			</image>
+
+			<text style="text_ab_title">
+				<placement x="%col1_x_indent%" y="%ab_bc_y%"/>
+				<text>{@dbg}</text>
+			</text>
+
+			<text style="caption">
+				<placement x="%col1_x%" y="%row2_1_y%"/>
+				<text>{@dbg_func}</text>
+			</text>
+
+			<listbox>
+				<placement x="0" y="%row2_2_y%" w="%screen_w%" h="%lb_l3%"/>
+				<data name="dbg"/>
+				<listitem name="{@dbg_page}">page</listitem>
+				<listitem name="{@dbg_set}">set</listitem>
+				<listitem name="{@dbg_overlay}">overlay</listitem>
+			</listbox>
+			
+			<text style="caption">
+				<placement x="%col1_x%" y="%row4_1a_y%"/>
+				<text>{@cust_oth}</text>
+			</text>
+
+			<listbox style="settingslist">
+				<placement x="0" y="%row4_2a_y%" w="%screen_w%" h="%lb_l2%"/>
+				<listitem name="{@simact_chk}">
+					<data variable="tw_simulate_actions"/>
+				</listitem>
+				<listitem name="{@simfail_chk}">
+					<condition var1="tw_simulate_actions" var2="1"/>
+					<data variable="tw_simulate_fail"/>
+				</listitem>
+			</listbox>
+
+			<text style="caption_hl">
+				<placement x="%col1_x%" y="%row1_1_y%"/>
+				<text>{@dbg_act}</text>
+			</text>
+
+			<input>
+				<placement x="%col1_x%" y="%row1_2_y%" w="%input_width%" h="%input_height%"/>
+				<text>%dbg_b%</text>
+				<data name="dbg_b"/>
+				<restrict minlen="0" maxlen="512"/>
+				<action function="set">tw_back=debug</action>
+				<action function="%dbg%">%dbg_b%</action>
+			</input>
+
+			<fill color="%accent%">
+				<placement x="%col1_x%" y="%row1_3_y%" w="%content_w%" h="%input_line_height%" placement="1"/>
+			</fill>
+
+			<action>
+				<touch key="home"/>
+				<action function="page">main</action>
+			</action>
+
+			<action>
+				<touch key="back"/>
+				<action function="page">fox_lab</action>
+			</action>
+		</page>
+
+		<page name="debug_plus">
+			<template name="base_key"/>
+
+			<text style="text_ab_title">
+				<placement x="%col1_x_indent%" y="%ab_bc_y%"/>
+				<text>{@dbg}</text>
+			</text>
+
+			<text style="caption_hl">
+				<placement x="%col1_x%" y="%row1_1_y%"/>
+				<text>{@dbg_func}</text>
+			</text>
+
+			<input>
+				<placement x="%col1_x%" y="%row1_2_y%" w="%input_width%" h="%input_height%"/>
+				<text>%dbg%</text>
+				<data name="dbg"/>
+				<restrict minlen="1" maxlen="32" allow="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890_="/>
+				<action function="page">debug</action>
+			</input>
+
+			<fill color="%accent%">
+				<placement x="%col1_x%" y="%row1_3_y%" w="%content_w%" h="%input_line_height%" placement="1"/>
+			</fill>
+
+			<action>
+				<touch key="home"/>
+				<action function="page">main</action>
+			</action>
+
+			<action>
+				<touch key="back"/>
+				<action function="page">debug</action>
 			</action>
 		</page>
     </pages>

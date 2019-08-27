@@ -237,6 +237,10 @@
 		<image name="apps" filename="Default/Icons/apps" retainaspect="1"/>
 		<image name="chip" filename="Default/Icons/chip" retainaspect="1"/>
 		<image name="plus" filename="Default/Icons/plus" retainaspect="1"/>
+		<image name="b_off" filename="Default/Icons/b_off" retainaspect="1"/>
+		<image name="a_off" filename="Default/Icons/a_off" retainaspect="1"/>
+		<image name="b_on" filename="Default/Icons/b_on" retainaspect="1"/>
+		<image name="a_on" filename="Default/Icons/a_on" retainaspect="1"/>
 		
 		<!-- Other -->
 		<image name="actionbar_clear" filename="Default/Other/actionbar_clear" retainaspect="1"/>

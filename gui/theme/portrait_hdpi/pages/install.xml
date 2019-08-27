@@ -2,11 +2,7 @@
 <recovery>
 	<pages>
 		<page name="flash_confirm">
-			<template name="body"/>
-
-			<template name="ab_ex"/>
-
-			<template name="statusbarinfo"/>
+			<template name="base_ex"/>
 
 			<text style="text_ab_title">
 				<placement x="%col1_x_indent%" y="%ab_bc_y%"/>
@@ -127,25 +123,19 @@
 
 			<action>
 				<touch key="back"/>
-				<!--action function="cancelzip"/-->
 				<action function="queueclear"/>
 				<action function="page">%install_back%</action>
 			</action>
 
 			<action>
 				<touch key="home"/>
-				<!--action function="cancelzip"/-->
 				<action function="queueclear"/>
 				<action function="page">main</action>
 			</action>
 		</page>
 		
 		<page name="fox_modules_confirm">
-			<template name="body"/>
-
-			<template name="ab_ex"/>
-
-			<template name="statusbarinfo"/>
+			<template name="base_ex"/>
 
 			<text style="text_ab_title">
 				<placement x="%col1_x_indent%" y="%ab_bc_y%"/>
@@ -246,11 +236,7 @@
 		</page>
 
 		<page name="queueview">
-			<template name="body"/>
-
-			<template name="ab_ex"/>
-
-			<template name="statusbarinfo"/>
+			<template name="base_ex"/>
 
 			<text style="text_ab_title">
 				<placement x="%col1_x_indent%" y="%ab_bc_y%"/>
@@ -430,11 +416,7 @@
 		</page>
 
 		<page name="flash_image_confirm">
-			<template name="body"/>
-
-			<template name="ab_ex"/>
-
-			<template name="statusbarinfo"/>
+			<template name="base_ex"/>
 
 			<text style="text_ab_title">
 				<placement x="%col1_x_indent%" y="%ab_bc_y%"/>
@@ -482,13 +464,6 @@
 				<listtype name="flashimg"/>
 			</partitionlist>
 
-			<!--partitionlist style="partitionlist_radio">
-				<condition var1="tw_flash_partition" op="!="/>
-				<placement x="0" y="%row4_2a_y%" w="%screen_w%" h="%flash_img_part_expanded%"/>
-				<data name="tw_flash_partition"/>
-				<listtype name="flashimg"/>
-			</partitionlist-->
-
 			<text style="caption">
 				<placement x="%center_x%" y="%slider_text_y%" placement="5"/>
 				<text>{@swipe_to_install_img}</text>
@@ -496,16 +471,7 @@
 
 			<slider style="slider_action">
 				<placement x="%center_x%" y="%slider_y%" placement="5"/>
-				<actions>
-					<action function="set">tw_action=flashimage</action>
-					<action function="set">tw_has_action2=0</action>
-					<action function="set">tw_action2_param=</action>
-					<action function="set">tw_action2=</action>
-					<action function="set">tw_action_text1={@flashing_image}</action>
-					<action function="set">tw_action_text2=%tw_file%</action>
-					<action function="set">tw_complete_text1={@image_flashed}</action>
-					<action function="page">flash_image</action>
-				</actions>
+				<action function="page">flash_image</action>
 			</slider>
 
 			<action>
@@ -515,14 +481,11 @@
 
 			<action>
 				<touch key="home"/>
-				<action function="set">splash_includezip=0</action>
 				<action function="page">main</action>
 			</action>
 		</page>
 
 		<page name="add_zip">
-			<template name="body"/>
-
 			<fileselector style="fileselector_b">
 				<condition var1="list_font" var2="1"/>
 				<placement x="0" y="%row_ab_ex_y%" w="%fileselector_width%" h="%fileselector_terminal_height%"/>
@@ -545,9 +508,7 @@
 				<selection name="tw_file_tmp"/>
 			</fileselector>
 
-			<template name="ab_ex"/>
-
-			<template name="statusbarinfo"/>
+			<template name="base_ex"/>
 
 			<text style="text_ab_title">
 				<placement x="%col1_x_indent%" y="%ab_bc_y%"/>
@@ -555,7 +516,6 @@
 			</text>
 
 			<template name="actionbar_sort"/>
-			
 			<template name="actionbar_storage"/>
 
 			<text style="text_ab_title">
@@ -646,14 +606,7 @@
 				<action function="set">qcount_temp=%tw_zip_queue_count%</action>
 			</action>
 
-			<template name="body"/>
-
-			<template name="progress_bar"/>
-
-			<template name="ab_ex"/>
-
-			<template name="statusbarinfo"/>
-			<template name="cant_cancel" />
+			<template name="base_console_cancel"/>
 
 			<text style="text_ab_title">
 				<placement x="%col1_x_indent%" y="%ab_bc_y%"/>
@@ -670,8 +623,6 @@
 				<text>%tw_file%</text>
 			</text>
 
-			<template name="action_page_console_big"/>
-
 			<action>
 				<condition var1="tw_operation_state" var2="1"/>
 				<action function="page">flash_done</action>
@@ -679,13 +630,11 @@
 		</page>
 
 		<page name="flash_image">
-			<template name="body"/>
+			<action>
+				<action function="flashimage"/>
+			</action>
 
-			<template name="progress_bar"/>
-
-			<template name="ab_ex"/>
-
-			<template name="statusbarinfo"/>
+			<template name="base_console_cancel"/>
 
 			<text style="text_ab_title">
 				<placement x="%col1_x_indent%" y="%ab_bc_y%"/>
@@ -694,76 +643,26 @@
 
 			<text style="text_ab_title">
 				<placement x="%col1_x_indent%" y="%row1_2_y%" placement="2"/>
-				<text>%tw_action_text1%</text>
+				<text>{@flashing_image}</text>
 			</text>
 
 			<text style="text_ab_subtitle">
 				<placement x="%col1_x_indent%" y="%row1_2_y%"/>
-				<text>%tw_action_text2%</text>
+				<text>%tw_file%</text>
 			</text>
 
-			<template name="action_page_console_big"/>
-			
-			<template name="cant_cancel" />
-
 			<action>
-				<conditions>
-					<condition var1="tw_operation_state" var2="1"/>
-					<condition var1="tw_operation_status" var2="0"/>
-				</conditions>
-				<actions>
-					<action function="page">flash_image_done</action>
-				</actions>
-			</action>
-
-			<action>
-				<conditions>
-					<condition var1="tw_operation_state" var2="1"/>
-					<condition var1="tw_operation_status" op="!=" var2="0"/>
-				</conditions>
-				<actions>
-					<action function="page">flash_image_done</action>
-				</actions>
-			</action>
-
-			<action>
-				<condition var1="tw_has_action2" var2="0"/>
-				<actions>
-					<action function="%tw_action%">%tw_action_param%</action>
-				</actions>
-			</action>
-
-			<action>
-				<condition var1="tw_has_action2" var2="1"/>
-				<actions>
-					<action function="%tw_action%">%tw_action_param%</action>
-					<action function="%tw_action2%">%tw_action2_param%</action>
-				</actions>
+				<condition var1="tw_operation_state" var2="1"/>
+				<action function="page">flash_image_done</action>
 			</action>
 		</page>
 
 		<page name="flash_done">
-			<template name="body"/>
-
-			<template name="ab_ex"/>
-
-			<template name="statusbarinfo"/>
+			<template name="base_done"/>
 
 			<text style="text_ab_title">
 				<placement x="%col1_x_indent%" y="%ab_bc_y%"/>
 				<text>{@install_zip_hdr}</text>
-			</text>
-
-			<text style="text_ab_title">
-				<condition var1="tw_operation_status" op="!=" var2="0"/>
-				<placement x="%col1_x_indent%" y="%row1_2_y%" placement="2"/>
-				<text>{@failed}</text>
-			</text>
-
-			<text style="text_ab_title">
-				<condition var1="tw_operation_status" var2="0"/>
-				<placement x="%col1_x_indent%" y="%row1_2_y%" placement="2"/>
-				<text>{@successful}</text>
 			</text>
 
 			<text style="text_ab_subtitle">
@@ -771,57 +670,35 @@
 				<text>%tw_zip_index% {@of} %qcount_temp%</text>
 			</text>
 
-			<template name="action_page_console"/>
-
 			<button style="btn_raised">
 				<placement x="%btn_raised_left_x%" y="%row_btn1_y%"/>
 				<text>{@wipe_cache_btn}</text>
-				<actions>
-					<action function="disableled"/>
-					<action function="set">tw_back=flash_done</action>
-					<action function="set">tw_action=wipe</action>
-					<action function="set">tw_action_param=/cache</action>
-					<action function="set">tw_has_action2=1</action>
-					<action function="set">tw_action2=wipe</action>
-					<action function="set">tw_action2_param=dalvik</action>
-					<action function="set">tw_text1={@wipe_cache_dalvik_confirm}</action>
-					<action function="set">tw_action_text1={@wiping_cache_dalvik}</action>
-					<action function="set">tw_complete_text1={@wipe_cache_dalvik_complete}</action>
-					<action function="set">tw_slider_text={@swipe_wipe}</action>
-					<action function="page">confirm_action</action>
-				</actions>
-			</button>
-
-			<button style="btn_raised_hl">
-				<condition var1="tw_reboot_system" var2="1"/>
-				<placement x="%btn_raised_right_x%" y="%row_btn1_y%" placement="1"/>
-				<text>{@reboot_system_btn}</text>
-				<actions>
-					<action function="set">tw_back=main</action>
-					<action function="set">tw_action_param=system</action>
-					<action function="set">tw_reboot_param=system</action>
-					<action function="page">rebootcheck</action>
-				</actions>
+				<action function="disableled"/>
+				<action function="set">tw_back=flash_done</action>
+				<action function="set">tw_action=wipe</action>
+				<action function="set">tw_action_param=/cache</action>
+				<action function="set">tw_has_action2=1</action>
+				<action function="set">tw_action2=wipe</action>
+				<action function="set">tw_action2_param=dalvik</action>
+				<action function="set">tw_text1={@wipe_cache_dalvik_confirm}</action>
+				<action function="set">tw_action_text1={@wiping_cache_dalvik}</action>
+				<action function="set">tw_complete_text1={@wipe_cache_dalvik_complete}</action>
+				<action function="set">tw_slider_text={@swipe_wipe}</action>
+				<action function="page">confirm_action</action>
 			</button>
 
 			<action>
-				<conditions>
-					<condition var1="tw_install_reboot" var2="1"/>
-					<condition var1="tw_operation_status" var2="0"/>
-					<condition var1="tw_reboot_system" var2="1"/>
-				</conditions>
-				<actions>
-					<action function="set">tw_sleep=%tw_sleep_total%</action>
-					<action function="page">flash_sleep_and_reboot</action>
-				</actions>
+				<condition var1="tw_install_reboot" var2="1"/>
+				<condition var1="tw_operation_status" var2="0"/>
+				<condition var1="tw_reboot_system" var2="1"/>
+				<action function="set">tw_sleep=%tw_sleep_total%</action>
+				<action function="page">flash_sleep_and_reboot</action>
 			</action>
 
 			<action>
 				<touch key="back"/>
-				<actions>
-					<action function="set">tw_clear_destination=%install_back%</action>
-					<action function="page">clear_vars</action>
-				</actions>
+				<action function="set">tw_clear_destination=%install_back%</action>
+				<action function="page">clear_vars</action>
 			</action>
 
 			<action>
@@ -831,13 +708,7 @@
 		</page>
 
 		<page name="flash_sleep_and_reboot">
-			<template name="body"/>
-
-			<template name="progress_bar"/>
-
-			<template name="ab_ex"/>
-
-			<template name="statusbarinfo"/>
+			<template name="base_console"/>
 
 			<text style="text_ab_title">
 				<placement x="%col1_x_indent%" y="%ab_bc_y%"/>
@@ -854,12 +725,9 @@
 				<text>{@install_reboot}</text>
 			</text>
 
-			<template name="action_page_console_big"/>
-
-			<button>
+			<button style="actionbar">
 				<condition var1="tw_busy" var2="1"/>
-				<placement x="%ab_back_x%" y="%ab_y%"/>
-				<image resource="actionbar_btn" highlightresource="actionbar_btn_hl"/>
+				<placement x="%ab_back_x%" y="%ab_y%" placement="4"/>
 				<action function="set">tw_install_reboot=0</action>
 				<action function="set">tw_busy=0</action>
 				<action function="page">flash_done</action>
@@ -867,84 +735,46 @@
 
 			<image>
 				<condition var1="tw_busy" var2="1"/>
-				<placement x="%ab_back_x%" y="%ab_y%"/>
+				<placement x="%ab_back_x%" y="%ab_y%" placement="4"/>
 				<image resource="actionbar_cancel"/>
 			</image>
 
 			<action>
-				<conditions>
-					<condition var1="tw_sleep" var2="tw_sleep_total"/>
-					<condition var1="tw_install_reboot" var2="1"/>
-				</conditions>
+				<condition var1="tw_sleep" var2="tw_sleep_total"/>
+				<condition var1="tw_install_reboot" var2="1"/>
 				<action function="sleepcounter">%tw_sleep_total%</action>
 			</action>
 
 			<action>
-				<conditions>
-					<condition var1="tw_sleep" var2="0"/>
-					<condition var1="tw_install_reboot" var2="1"/>
-				</conditions>
-				<actions>
-					<action function="sleep">50000</action>
-					<action function="set">tw_back=flash_done</action>
-					<action function="page">reboot_system_routine</action>
-				</actions>
+				<condition var1="tw_sleep" var2="0"/>
+				<condition var1="tw_install_reboot" var2="1"/>
+				<action function="sleep">50000</action>
+				<action function="set">tw_back=flash_done</action>
+				<action function="set">tw_action_param=system</action>
+				<action function="page">rebootcheck</action>
 			</action>
 		</page>
 
 		<page name="flash_image_done">
-			<template name="body"/>
-
-			<template name="ab_ex"/>
-
-			<template name="statusbarinfo"/>
+			<template name="base_done"/>
 
 			<text style="text_ab_title">
 				<placement x="%col1_x_indent%" y="%ab_bc_y%"/>
 				<text>{@install_image_hdr}</text>
 			</text>
 
-			<text style="text_ab_title">
-				<condition var1="tw_operation_status" op="!=" var2="0"/>
-				<placement x="%col1_x_indent%" y="%row1_2_y%" placement="2"/>
-				<text>{@failed}</text>
-			</text>
-
-			<text style="text_ab_title">
-				<condition var1="tw_operation_status" var2="0"/>
-				<placement x="%col1_x_indent%" y="%row1_2_y%" placement="2"/>
-				<text>{@successful}</text>
-			</text>
-
 			<text style="text_ab_subtitle">
 				<placement x="%col1_x_indent%" y="%row1_2_y%"/>
-				<text>%tw_complete_text1%</text>
+				<text>{@image_flashed}</text>
 			</text>
-
-			<template name="action_page_console"/>
 
 			<button style="btn_raised">
 				<condition var1="tw_reboot_recovery" var2="1"/>
 				<placement x="%btn_raised_left_x%" y="%row_btn1_y%"/>
 				<text>{@reboot_recovery_btn}</text>
-				<actions>
-					<action function="set">tw_back=main</action>
-					<action function="set">tw_action_param=recovery</action>
-					<action function="set">tw_reboot_param=recovery</action>
-					<action function="page">rebootcheck</action>
-				</actions>
-			</button>
-
-			<button style="btn_raised_hl">
-				<condition var1="tw_reboot_system" var2="1"/>
-				<placement x="%btn_raised_right_x%" y="%row_btn1_y%" placement="1"/>
-				<text>{@reboot_system_btn}</text>
-				<actions>
-					<action function="set">tw_back=main</action>
-					<action function="set">tw_action_param=system</action>
-					<action function="set">tw_reboot_param=system</action>
-					<action function="page">rebootcheck</action>
-				</actions>
+				<action function="set">tw_back=main</action>
+				<action function="set">tw_action_param=recovery</action>
+				<action function="page">rebootcheck</action>
 			</button>
 
 			<action>
@@ -954,10 +784,8 @@
 
 			<action>
 				<touch key="back"/>
-				<actions>
-					<action function="set">tw_clear_destination=%install_back%</action>
-					<action function="page">clear_vars</action>
-				</actions>
+				<action function="set">tw_clear_destination=%install_back%</action>
+				<action function="page">clear_vars</action>
 			</action>
 		</page>
 	</pages>

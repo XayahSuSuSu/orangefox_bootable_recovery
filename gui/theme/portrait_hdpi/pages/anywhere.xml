@@ -3,7 +3,6 @@
 	<pages>
 		<page name="lock">
 			<background color="%background%"/>
-
 			<template name="status_bg"/>
 			<template name="statusbarinfo"/>
 			<template name="keys"/>
@@ -78,13 +77,11 @@
 
 		<page name="console">
 			<background color="%background%"/>
-			
-			<template name="background_image"/>
-			
 			<template name="keys"/>
-
 			<template name="navbar_console_hide"/>
-
+			<template name="status_bg"/>
+			<template name="statusbarinfo"/>
+			
 			<console>
 				<placement x="%col1_x%" y="%ab_bc_y%" w="%console_width%" h="%console_height%"/> 
 				<condition var1="use_fixed_font" var2="0"/>
@@ -95,10 +92,6 @@
 				<condition var1="use_fixed_font" var2="1"/>
 				<font resource="fixed"/>
 			</console>
-
-			<template name="status_bg"/>
-
-			<template name="statusbarinfo"/>
 
 			<action>
 				<touch key="home"/>

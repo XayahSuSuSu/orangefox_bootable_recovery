@@ -1,9 +1,5 @@
 <?xml version="1.0"?>
-
 <recovery>
-	<variables>
-		<variable name="theme_background" value="off"/>
-	</variables>
 	<styles>
 		<style name="nav_panel">
 			<font resource="Secondary" color="%accent%"/>
@@ -47,20 +43,12 @@
 			<font resource="status" color="%text_status%"/>
 		</style>
 
-		<style name="text_status_fail">
-			<font resource="status" color="%text_fail%"/>
-		</style>
-
 		<style name="text_body1">
 			<font resource="body1" color="%text%"/>
 		</style>
 
 		<style name="text_body1_hl">
 			<font resource="body1" color="%actbar_color%"/>
-		</style>
-
-		<style name="text_body1_fail">
-			<font resource="body1" color="%text_fail%"/>
 		</style>
 
 		<style name="text_body2">
@@ -72,7 +60,7 @@
 		</style>
 
 		<style name="text_body2_hl">
-			<font resource="body2" color="%accent%"/> <!--accent-->
+			<font resource="body2" color="%accent%"/>
 		</style>
 
 		<style name="text_body2_fail">
@@ -98,16 +86,6 @@
 		
 		<style name="menu_btn_sort">
 			<highlight color="%highlight_color_full%" />
-			<fill color="%transparent%"/>
-		</style>
-
-		<style name="mb_btn_edit">
-			<highlight color="%highlight_color%"/>
-			<image resource="btn_empty"/>
-		</style>
-		
-		<style name="mb_btn">
-			<highlight color="%highlight_color%"/>
 			<fill color="%transparent%"/>
 		</style>
 
@@ -174,14 +152,6 @@
 			<image checked="checkbox_true" unchecked="checkbox_false"/>
 			<font resource="body1" spacing="%fileselector_spacing%" color="%text%" />
 		</style>
-
-		<style name="settingslist_dialog">
-			<highlight color="%highlight_color_full%"/>
-			<background color="%background%"/>
-			<fastscroll rectcolor="%accent%" w="%fastscroll_w%" rectw="%fastscroll_rectw%" recth="%fastscroll_recth%" />
-			<icon selected="checkbox_true_dialog" unselected="checkbox_false_dialog"/>
-			<font resource="body1" spacing="%fileselector_spacing%" color="%text%" />
-		</style>
 		
 		<style name="listbox">
 			<background color="%background%"/>
@@ -191,38 +161,17 @@
 			<font resource="body1" spacing="%fileselector_spacing%" color="%text%" />
 		</style>
 		
+		<style name="textbox">
+			<background color="%background%"/>
+			<font resource="fixed" spacing="1" color="%text%"/>
+		</style>
+		
 		<style name="btn_list">
 			<background color="%background%"/>
 			<highlight color="%highlight_color_full%"/>
 			<fastscroll rectcolor="%accent%" w="%fastscroll_w%" rectw="%fastscroll_rectw%" recth="%fastscroll_recth%" />
 			<iconsize w="216" h="144" padding="24"/>
 			<font resource="button" spacing="%fileselector_spacing%" color="%text_menu%"/>
-		</style>
-		
-		<style name="listbox_dialog">
-			<background color="%background%"/>
-			<highlight color="%highlight_color_full%"/>
-			<fastscroll rectcolor="%accent%" w="%fastscroll_w%" rectw="%fastscroll_rectw%" recth="%fastscroll_recth%" />
-			<icon selected="radio_true_dialog" unselected="radio_false_dialog" />
-			<font resource="body1" spacing="%fileselector_spacing%" color="%text%" />
-		</style>
-
-		<style name="textbox">
-			<background color="%background%"/>
-			<fastscroll rectcolor="%accent%" w="%fastscroll_w%" rectw="%fastscroll_rectw%" recth="%fastscroll_recth%" />
-			<font resource="body1" spacing="%textbox_spacing%" color="%text%" />
-		</style>
-
-		<style name="checkbox_big">
-				<highlight color="%highlight_color_full%"/>
-				<font resource="body1" color="%text%"/>
-				<image checked="checkbox_true" unchecked="checkbox_false"/>
-		</style>
-
-		<style name="checkbox_small">
-				<highlight color="%highlight_color_full%"/>
-				<font resource="body1" color="%text%"/>
-				<image checked="checkbox_true" unchecked="checkbox_false"/>
 		</style>
 
 		<style name="partitionlist">
@@ -294,9 +243,21 @@
 			<font resource="caption" color="%text%"/>
 			<colors line="%text_dark%" slider="%accent%"/>
 			<dimensions lineh="%slidervalue_lineh%" linepadding="%slidervalue_padding%" sliderw="%slidervalue_sliderw%" sliderh="%slidervalue_sliderh%"/>
-		</style>	
+		</style>
+
+		<style name="actionbar">
+			<image resource="actionbar_btn" highlightresource="actionbar_btn_hl"/>
+		</style>
+		<style name="switch_on">
+			<image resource="switch_on"/>
+		</style>
+		<style name="switch_off">
+			<image resource="switch_off"/>
+		</style>
+		<style name="patternpassword">
+			<dot color="%text_dark%" activecolor="%accent%" radius="%pattern_dot_dia%"/>
+			<line color="%accent%" width="%pattern_line_w%"/>
+			<size name="tw_gui_pattern_grid_size" default="3"/>
+		</style>
 	</styles>
-	<templates>
-		<template name="background_image"></template>
-	</templates>
 </recovery>

@@ -1,26 +1,23 @@
 <?xml version="1.0"?>
+<!-- OrangeFox theme by fordownloads and OrangeFox team -->
 <recovery>
 	<details>
-		<resolution width="1080" height="1920" /> 
-		<author>fordownloads and OrangeFox team</author>
-		<title>OrangeFox theme (Pie Door)</title>
-		<description/>
-		<preview/>
+		<resolution width="1080" height="1920" />
 		<themeversion>3</themeversion>
 	</details>
 	
 	<include>
 		<xml name="/sdcard/Fox/.navbar/navbar.xml" default="/twres/themes/navbar.xml"/>
-		<xml name="/sdcard/Fox/.theme/font.xml"   default="/twres/themes/font.xml"/>
-		<xml name="/sdcard/Fox/.theme/style.xml"  default="/twres/themes/style.xml"/>
-		<xml name="/sdcard/Fox/.theme/accent.xml" default="/twres/themes/accent.xml"/>
-		<xml name="/sdcard/Fox/.theme/action.xml" default="/twres/themes/action.xml"/>
+		<xml name="/sdcard/Fox/.theme/font.xml"    default="/twres/themes/font.xml"/>
+		<xml name="/sdcard/Fox/.theme/style.xml"   default="/twres/themes/style.xml"/>
+		<xml name="/sdcard/Fox/.theme/accent.xml"  default="/twres/themes/accent.xml"/>
+		<xml name="/sdcard/Fox/.theme/action.xml"  default="/twres/themes/action.xml"/>
 
 		<xml name="/twres/resources/images.xml"/>
 		<xml name="/twres/resources/vars.xml"/>
 		<xml name="/twres/resources/styles.xml"/>
-		<xmlfile name="pages/recovery.xml"/>
 	
+		<xml name="/twres/pages/templates/base.xml"/>
 		<xml name="/twres/pages/templates/keyboard.xml"/>
 		<xml name="/twres/pages/templates/navbar.xml"/>
 		<xml name="/twres/pages/templates/statusbar.xml"/>
@@ -44,8 +41,7 @@
 		<xml name="/twres/pages/customization.xml"/>
 
 		<xml name="/twres/pages/fox.xml"/>
+
+		<xmlfile name="pages/recovery.xml"/>
 	</include>
-	<variables>
-		<variable name="theme_version" value="A6 | Alpha"/>
-	</variables>
 </recovery>

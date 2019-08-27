@@ -33,8 +33,6 @@
 		</page>
 
 		<page name="magisk">
-			<template name="body"/>
-
 			<fill color="%accent%">
 				<condition var1="magisk_core" var2="1"/>
 				<placement x="0" y="%ab_h%" w="%screen_w%" h="%ab_btn_h%"/>
@@ -45,16 +43,14 @@
 				<placement x="0" y="%ab_h%" w="%screen_w%" h="%ab_btn_h%"/>
 			</fill>
 
-			<image>
+			<image style="switch_off">
 				<condition var1="magisk_core" op="!=" var2="1"/>
-				<placement x="%ab_btn1_x%" y="%ab2_y%"/>
-				<image resource="switch_off"/>
+				<placement x="%ab_btn1_x%" y="%ab2_y%" placement="4"/>
 			</image>
 
-			<image>
+			<image style="switch_on">
 				<condition var1="magisk_core" var2="1"/>
-				<placement x="%ab_btn1_x%" y="%ab2_y%"/>
-				<image resource="switch_on"/>
+				<placement x="%ab_btn1_x%" y="%ab2_y%" placement="4"/>
 			</image>
 
 			<text style="text_ab_switch">
@@ -77,26 +73,23 @@
 				<action function="page">magisk</action>
 			</button>
 
-			<template name="ab"/>
-
-			<template name="statusbarinfo"/>
+			<template name="base"/>
 
 			<text style="text_ab_title">
 				<placement x="%col1_x_indent%" y="%ab_bc_y%"/>
 				<text>Magisk Manager</text>
 			</text>
 
-			<button>
-				<placement x="%ab_btn1_x%" y="%ab_y%"/>
+			<button style="actionbar">
+				<placement x="%ab_btn1_x%" y="%ab_y%" placement="4"/>
 				<condition var1="fileexists" var2="/sdcard/Fox/FoxFiles/unrootmagisk.zip"/>
-				<image resource="actionbar_btn" highlightresource="actionbar_btn_hl"/>
 				<action function="set">install_back=magisk_mount</action>
 				<action function="page">mod_unmagisk</action>
 			</button>
 
 			<image>
 				<condition var1="fileexists" var2="/sdcard/Fox/FoxFiles/unrootmagisk.zip"/>
-				<placement x="%ab_btn1_x%" y="%ab_y%"/>
+				<placement x="%ab_btn1_x%" y="%ab_y%" placement="4"/>
 				<image resource="actionbar_delete"/>
 			</image>
 
@@ -171,8 +164,6 @@
 		</page>
 
 		<page name="magisk_actions">
-			<template name="body"/>
-
 			<fill color="%accent%">
 				<condition var1="mmodule_disable" op="!=" var2="1"/>
 				<placement x="0" y="%ab_ex_h%" w="%screen_w%" h="%ab_btn_h%"/>
@@ -183,16 +174,14 @@
 				<placement x="0" y="%ab_ex_h%" w="%screen_w%" h="%ab_btn_h%"/>
 			</fill>
 
-			<image>
+			<image style="switch_off">
 				<condition var1="mmodule_disable" var2="1"/>
-				<placement x="%ab_btn1_x%" y="%ab3_y%"/>
-				<image resource="switch_off"/>
+				<placement x="%ab_btn1_x%" y="%ab3_y%" placement="4"/>
 			</image>
 
-			<image>
+			<image style="switch_on">
 				<condition var1="mmodule_disable" op="!=" var2="1"/>
-				<placement x="%ab_btn1_x%" y="%ab3_y%"/>
-				<image resource="switch_on"/>
+				<placement x="%ab_btn1_x%" y="%ab3_y%" placement="4"/>
 			</image>
 
 			<text style="text_ab_switch">
@@ -212,9 +201,7 @@
 				<action function="page">magisk_actions</action>
 			</button>
 
-			<template name="ab_ex"/>
-
-			<template name="statusbarinfo"/>
+			<template name="base"/>
 
 			<text style="text_ab_title">
 				<placement x="%col1_x_indent%" y="%ab_bc_y%"/>

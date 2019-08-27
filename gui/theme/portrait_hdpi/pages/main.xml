@@ -2,6 +2,12 @@
 <recovery>
 	<pages>
 		<page name="main">
+			<!-- Reboot if failed last time  -->
+			<action>
+				<condition var1="need_reboot" var2="1"/>
+				<action function="need_reboot">%tw_reboot_param%</action>
+			</action>
+
 			<!-- Show welcome page after installing OF -->
 			<action>
 				<condition var1="first_start" var2="1"/>
@@ -53,22 +59,18 @@
 			<action>
 				<condition var1="first_start" op="!=" var2="1"/>
 				<condition var1="use_pass" var2="0"/>
-				<actions>
-					<action function="overlay"/>
-					<action function="set">tw_clear_destination=navbar</action>
-					<action function="page">clear_vars</action>
-				</actions>
+				<action function="overlay"/>
+				<action function="set">tw_clear_destination=navbar</action>
+				<action function="page">clear_vars</action>
 			</action>
 
 			<action>
 				<condition var1="first_start" op="!=" var2="1"/>
 				<condition var1="use_pass" var2="1"/>
 				<condition var1="pass_open" var2="1"/>
-				<actions>
-					<action function="overlay"/>
-					<action function="set">tw_clear_destination=navbar</action>
-					<action function="page">clear_vars</action>
-				</actions>
+				<action function="overlay"/>
+				<action function="set">tw_clear_destination=navbar</action>
+				<action function="page">clear_vars</action>
 			</action>
 		</page>
 
@@ -90,9 +92,9 @@
 				<action function="page">advanced</action>
 			</action>
 		</page>
+
 		<page name="welcome">
 			<background color="%background%"/>
-			<template name="background_image"/>
 			<template name="keys"/>
 
 			<image>
@@ -104,6 +106,7 @@
 				<placement x="%center_x%" y="%welcome_text%" placement="4"/>
 				<text>{@welcome_msg}</text>
 			</text>
+
 			<text style="text_ab_title">
 				<placement x="%center_x%" y="%welcome_text2%" placement="4"/>
 				<text>{@welcome_msg2}</text>
@@ -123,11 +126,7 @@
 
 		<page name="aroma_busy">
 			<background color="%background%"/>
-			
-			<template name="background_image"/>
-
 			<template name="status_bg"/>
-
 			<template name="statusbarinfo"/>
 
 			<image>

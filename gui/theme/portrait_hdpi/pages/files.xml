@@ -2,8 +2,6 @@
 <recovery>
 	<pages>
 		<page name="filemanagerlist">
-			<template name="body_nav"/>
-
 			<action>
 				<action function="set">nav_panel_id=0</action>
 				<action function="set">tw_hold=0</action>
@@ -18,7 +16,6 @@
 			</action>
 
 			<!-- All files -->
-			
 			<fileselector style="fileselector_b">
 				<condition var1="list_font" var2="1"/>
 				<placement x="0" y="%ab_h%" w="%fileselector_width%" h="%files_np_w%"/>
@@ -43,9 +40,7 @@
 				<holditem name="tw_hold"/>
 			</fileselector>
 			
-			<template name="ab_main"/>
-
-			<template name="statusbarinfo"/>
+			<template name="base_nav"/>
 
 			<input>
 				<condition var1="darker_ui" op="!=" var2="1"/>
@@ -74,53 +69,42 @@
 				<text>{@fm_hdr}</text>
 			</text>
 			
-			<button>
-				<placement x="%ab_btn1_x%" y="%ab_y%"/>
-				<image resource="actionbar_btn" highlightresource="actionbar_btn_hl"/>
+			<button style="actionbar">
+				<placement x="%ab_btn1_x%" y="%ab_y%" placement="4"/>
 				<action function="overlay">fm_sort</action>
 			</button>
 
 			<image>
-				<placement x="%ab_btn1_x%" y="%ab_y%"/>
+				<placement x="%ab_btn1_x%" y="%ab_y%" placement="4"/>
 				<image resource="actionbar_sort"/>
 			</image>
 			
-			<button>
-				<placement x="%ab_btn3_x%" y="%ab_y%"/>
+			<button style="actionbar">
+				<placement x="%ab_btn3_x%" y="%ab_y%" placement="4"/>
 				<condition var1="darker_ui" op="!=" var2="1"/>
-				<image resource="actionbar_btn" highlightresource="actionbar_btn_hl"/>
 				<action function="set">tw_name_filter=</action>
 				<action function="page">file_search</action>
 			</button>
 			
-			<button>
-				<placement x="%ab_btn3_x%" y="%ab_y%"/>
+			<button style="actionbar">
+				<placement x="%ab_btn3_x%" y="%ab_y%" placement="4"/>
 				<condition var1="darker_ui" var2="1"/>
-				<image resource="actionbar_btn" highlightresource="actionbar_btn_hl"/>
 				<action function="set">tw_name_filter=</action>
 				<action function="page">file_dark_search</action>
 			</button>
 
 			<image>
-				<placement x="%ab_btn3_x%" y="%ab_y%"/>
+				<placement x="%ab_btn3_x%" y="%ab_y%" placement="4"/>
 				<image resource="actionbar_search"/>
 			</image>
-			
-			<!--button>
-				<placement x="%ab_btn2_x%" y="%ab_y%"/>
-				<image resource="actionbar_btn" highlightresource="actionbar_btn_hl"/>
-				<action function="set">tw_file_location_temp=%tw_file_location1%</action>
-				<action function="overlay">dialog_path</action>
-			</button-->
 
-			<button>
-				<placement x="%ab_btn2_x%" y="%ab_y%"/>
-				<image resource="actionbar_btn" highlightresource="actionbar_btn_hl"/>
+			<button style="actionbar">
+				<placement x="%ab_btn2_x%" y="%ab_y%" placement="4"/>
 				<action function="overlay">dialog_storage</action>
 			</button>
 
 			<image>
-				<placement x="%ab_btn2_x%" y="%ab_y%"/>
+				<placement x="%ab_btn2_x%" y="%ab_y%" placement="4"/>
 				<image resource="actionbar_storage"/>
 			</image>
 			
@@ -146,37 +130,24 @@
 			<action>
 				<condition var1="tw_filename1" op="modified"/>
 				<condition var1="fm_auto_open" op="!=" var2="1"/>
-				
-				<actions>
-					<action function="page">filemanageroptions</action>
-				</actions>
+				<action function="page">filemanageroptions</action>
 			</action>
 
 			<action>
 				<condition var1="tw_hold" var2="1"/>
 				<condition var1="fm_auto_open" var2="1"/>
-				<actions>
-					<action function="page">filemanageroptions</action>
-				</actions>
+				<action function="page">filemanageroptions</action>
 			</action>
 			
 			<action>
 				<condition var1="tw_filename1" op="modified"/>
 				<condition var1="fm_auto_open" var2="1"/>
-				<actions>
-					<action function="set">tw_back=filemanagerlist</action>
-					<action function="set">tw_fm_isfolder=0</action>
-					<action function="set">tw_file_extension=</action>
-					<action function="set">fex_found=0</action>
-					<action function="fileextension">%tw_selection1%</action>
-					<action function="page">files_redirect</action>
-				</actions>
-			</action>
-
-			<!-- Reboot if failed last time  -->
-			<action>
-				<condition var1="need_reboot" var2="1"/>
-				<action function="need_reboot">%tw_reboot_param%</action>
+				<action function="set">tw_back=filemanagerlist</action>
+				<action function="set">tw_fm_isfolder=0</action>
+				<action function="set">tw_file_extension=</action>
+				<action function="set">fex_found=0</action>
+				<action function="fileextension">%tw_selection1%</action>
+				<action function="page">files_redirect</action>
 			</action>
 			
 			<!-- менюха внизу -->
@@ -190,8 +161,6 @@
 				<image resource="fab_add"/>
 			</image>
 			
-			<template name="nav_panel"/>
-			<template name="navbar_back_cls"/>
 			<template name="navbar_back_fm"/>
 
 			<action>
@@ -216,19 +185,19 @@
 				<action function="set">tw_reload_fm=1</action>
 				<action function="page">file_search</action>
 			</input>
+
 			<text>
 				<condition var1="tw_name_filter" op="!="/>
 				<placement x="%col1_x_indent%" y="%ab_bc_search_y%"/>
 				<font resource="body1" color="#66666666"/>
 				<text>{@search_help}</text>
 			</text>
+
 			<action>
 				<condition var1="tw_keyboard_press_key" var2="1"/>
-				<actions>
-					<action function="set">tw_reload_fm=1</action>
-					<action function="set">tw_keyboard_press_key=0</action>
-					<action function="page">file_search</action>
-				</actions>
+				<action function="set">tw_reload_fm=1</action>
+				<action function="set">tw_keyboard_press_key=0</action>
+				<action function="page">file_search</action>
 			</action>
 		</page>
 		
@@ -243,152 +212,148 @@
 				<action function="set">tw_reload_fm=1</action>
 				<action function="page">file_search</action>
 			</input>
+			
 			<text>
 				<condition var1="tw_name_filter" op="!="/>
 				<placement x="%col1_x_indent%" y="%ab_bc_search_y%"/>
 				<font resource="body1" color="#66666666"/>
 				<text>{@search_help}</text>
 			</text>
+
 			<action>
 				<condition var1="tw_keyboard_press_key" var2="1"/>
-				<actions>
-					<action function="set">tw_reload_fm=1</action>
-					<action function="set">tw_keyboard_press_key=0</action>
-					<action function="page">file_dark_search</action>
-				</actions>
+				<action function="set">tw_reload_fm=1</action>
+				<action function="set">tw_keyboard_press_key=0</action>
+				<action function="page">file_dark_search</action>
 			</action>
 		</page>
 		
 		<page name="files_redirect">
-		
 			<action>
 				<condition var1="tw_file_extension" var2="zip"/>
-				<actions>
-					<action function="set">fex_found=1</action>
-					<action function="queueclear"/>
-					<action function="set">tw_file=%tw_selection1%</action>
-					<action function="set">tw_filename=%tw_filename1%</action>
-					<action function="set">install_back=filemanagerlist</action>
-					<action function="set">tw_zip_location=%tw_file_location1%</action>
-					<action function="queuezip"/>
-					<action function="set">tw_q_1=%tw_file%</action>
-					<action function="page">flash_confirm</action>
-				</actions>
+				<action function="set">fex_found=1</action>
+				<action function="queueclear"/>
+				<action function="set">tw_file=%tw_selection1%</action>
+				<action function="set">tw_filename=%tw_filename1%</action>
+				<action function="set">install_back=filemanagerlist</action>
+				<action function="set">tw_zip_location=%tw_file_location1%</action>
+				<action function="queuezip"/>
+				<action function="page">flash_confirm</action>
 			</action>
+
 			<action>
 				<condition var1="tw_file_extension" var2="img"/>
-				<actions>
-					<action function="set">fex_found=1</action>
-					<action function="set">tw_file=%tw_selection1%</action>
-					<action function="set">install_back=filemanagerlist</action>
-					<action function="set">tw_filename=%tw_filename1%</action>
-					<action function="set">tw_zip_location=%tw_file_location1%</action>
-					<action function="set">tw_flash_partition=</action>
-					<action function="page">flash_image_confirm</action>
-				</actions>
+				<action function="set">fex_found=1</action>
+				<action function="set">tw_file=%tw_selection1%</action>
+				<action function="set">install_back=filemanagerlist</action>
+				<action function="set">tw_filename=%tw_filename1%</action>
+				<action function="set">tw_zip_location=%tw_file_location1%</action>
+				<action function="set">tw_flash_partition=</action>
+				<action function="page">flash_image_confirm</action>
 			</action>
 			
-			<action><condition var1="tw_file_extension" var2="txt"/><actions><action function="set">fex_found=1</action><action function="page">cat_file</action></actions></action>
-			<action><condition var1="tw_file_extension" var2="prop"/><actions><action function="set">fex_found=1</action><action function="page">cat_file</action></actions></action>
-			<action><condition var1="tw_file_extension" var2="log"/><condition var1="tw_filename1" op="!=" var2="/tmp/recovery.log"/><actions><action function="set">fex_found=1</action><action function="page">cat_file</action></actions></action>
+			<action>
+				<condition var1="tw_file_extension" var2="txt"/>
+				<action function="set">fex_found=1</action>
+				<action function="page">cat_file</action>
+			</action>
+
+			<action>
+				<condition var1="tw_file_extension" var2="prop"/>
+				<action function="set">fex_found=1</action>
+				<action function="page">cat_file</action>
+			</action>
+
+			<action>
+				<condition var1="tw_file_extension" var2="log"/>
+				<condition var1="tw_filename1" op="!=" var2="/tmp/recovery.log"/>
+				<action function="set">fex_found=1</action>
+				<action function="page">cat_file</action>
+			</action>
 
 			<action>
 				<condition var1="tw_file_extension" var2="apk"/>
-				<actions>
-					<action function="set">fex_found=1</action>
-					<action function="set">tw_artype=0</action>
-					<action function="set">tw_extract_action=0</action>
-					<action function="page">archive_confirm</action>
-				</actions>
+				<action function="set">fex_found=1</action>
+				<action function="set">tw_artype=0</action>
+				<action function="set">tw_extract_action=0</action>
+				<action function="page">archive_confirm</action>
 			</action>
+
 			<action>
 				<condition var1="tw_file_extension" var2="tar"/>
-				<actions>
-					<action function="set">fex_found=1</action>
-					<action function="set">tw_artype=1</action>
-					<action function="set">tw_extract_action=0</action>
-					<action function="page">archive_confirm</action>
-				</actions>
+				<action function="set">fex_found=1</action>
+				<action function="set">tw_artype=1</action>
+				<action function="set">tw_extract_action=0</action>
+				<action function="page">archive_confirm</action>
 			</action>
+
 			<action>
 				<condition var1="tw_file_extension" var2="gz"/>
-				<actions>
-					<action function="set">fex_found=1</action>
-					<action function="set">tw_artype=3</action>
-					<action function="set">tw_extract_action=0</action>
-					<action function="page">archive_confirm</action>
-				</actions>
+				<action function="set">fex_found=1</action>
+				<action function="set">tw_artype=3</action>
+				<action function="set">tw_extract_action=0</action>
+				<action function="page">archive_confirm</action>
 			</action>
+
 			<!--action>
 				<condition var1="tw_file_extension" var2="bz2"/>
-				<actions>
-					<action function="set">fex_found=1</action>
-					<action function="set">tw_artype=4</action>
-					<action function="set">tw_extract_action=0</action>
-					<action function="page">archive_confirm</action>
-				</actions>
+				<action function="set">fex_found=1</action>
+				<action function="set">tw_artype=4</action>
+				<action function="set">tw_extract_action=0</action>
+				<action function="page">archive_confirm</action>
 			</action>
 			<action>
 				<condition var1="tw_file_extension" var2="lzo"/>
-				<actions>
-					<action function="set">fex_found=1</action>
-					<action function="set">tw_artype=6</action>
-					<action function="set">tw_extract_action=0</action>
-					<action function="page">archive_confirm</action>
-				</actions>
+				<action function="set">fex_found=1</action>
+				<action function="set">tw_artype=6</action>
+				<action function="set">tw_extract_action=0</action>
+				<action function="page">archive_confirm</action>
 			</action-->
+
 			<action>
 				<condition var1="tw_file_extension" var2="zz"/>
-				<actions>
-					<action function="set">fex_found=1</action>
-					<action function="set">tw_artype=8</action>
-					<action function="set">tw_extract_action=0</action>
-					<action function="page">archive_confirm</action>
-				</actions>
+				<action function="set">fex_found=1</action>
+				<action function="set">tw_artype=8</action>
+				<action function="set">tw_extract_action=0</action>
+				<action function="page">archive_confirm</action>
 			</action>
+
 			<action>
 				<condition var1="tw_file_extension" var2="lzma"/>
-				<actions>
-					<action function="set">fex_found=1</action>
-					<action function="set">tw_artype=5</action>
-					<action function="set">tw_extract_action=0</action>
-					<action function="page">archive_confirm</action>
-				</actions>
+				<action function="set">fex_found=1</action>
+				<action function="set">tw_artype=5</action>
+				<action function="set">tw_extract_action=0</action>
+				<action function="page">archive_confirm</action>
 			</action>
+
 			<action>
 				<condition var1="tw_file_extension" var2="xz"/>
-				<actions>
-					<action function="set">fex_found=1</action>
-					<action function="set">tw_artype=7</action>
-					<action function="set">tw_extract_action=0</action>
-					<action function="page">archive_confirm</action>
-				</actions>
+				<action function="set">fex_found=1</action>
+				<action function="set">tw_artype=7</action>
+				<action function="set">tw_extract_action=0</action>
+				<action function="page">archive_confirm</action>
 			</action>
+
 			<!--action>
 				<condition var1="tw_file_extension" var2="z"/>
-				<actions>
-					<action function="set">fex_found=1</action>
-					<action function="set">tw_artype=9</action>
-					<action function="set">tw_extract_action=0</action>
-					<action function="page">archive_confirm</action>
-				</actions>
+				<action function="set">fex_found=1</action>
+				<action function="set">tw_artype=9</action>
+				<action function="set">tw_extract_action=0</action>
+				<action function="page">archive_confirm</action>
 			</action-->
+
 			<action>
 				<condition var1="tw_file_extension" var2="cpio"/>
-				<actions>
-					<action function="set">fex_found=1</action>
-					<action function="set">tw_artype=2</action>
-					<action function="set">tw_extract_action=0</action>
-					<action function="page">archive_confirm</action>
-				</actions>
+				<action function="set">fex_found=1</action>
+				<action function="set">tw_artype=2</action>
+				<action function="set">tw_extract_action=0</action>
+				<action function="page">archive_confirm</action>
 			</action>
+
 			<action>
 				<condition var1="fex_found" op="!=" var2="1"/>
-				<actions>
-					<action function="page">filemanageroptions</action>
-				</actions>
+				<action function="page">filemanageroptions</action>
 			</action>
-		
 		</page>
 		
 		<page name="files_ex_menu">
@@ -414,12 +379,10 @@
 				<condition var1="tw_file_location1" op="!=" var2="/"/>
 				<placement x="%btn_float_x%" y="%btn_sfloat_1_y%"/>
 				<image resource="float_fm_select" highlightresource="float_fm_select_hl"/>
-				<actions>
-					<action function="overlay"/>
-					<action function="set">tw_filename1=tw_file_location1</action>
-					<action function="set">tw_fm_isfolder=1</action>
-					<action function="page">filemanageroptions</action>
-				</actions>
+				<action function="overlay"/>
+				<action function="set">tw_filename1=tw_file_location1</action>
+				<action function="set">tw_fm_isfolder=1</action>
+				<action function="page">filemanageroptions</action>
 			</button>
 			
 			<button style="floating_btn">
@@ -434,7 +397,6 @@
 			
 			<action>
 				<touch key="home"/>
-				<action function="overlay"/>
 				<action function="page">main</action>
 			</action>
 
@@ -498,8 +460,6 @@
 		</page>
 		
 		<page name="files_bookmarks">
-			<template name="body"/>
-			
 			<listbox style="btn_list">
 				<placement x="0" y="%ab_ex_h%" w="%screen_w%" h="%bl_files_h%"/>
 				<data requireReload="1"/>
@@ -619,9 +579,7 @@
 				</listitem>
 			</listbox>
 			
-			<template name="ab_ex"/>
-
-			<template name="statusbarinfo"/>
+			<template name="base_ex"/>
 
 			<text style="text_ab_title">
 				<placement x="%col1_x_indent%" y="%ab_bc_y%"/>
@@ -665,6 +623,7 @@
 				<action function="set">tw_reload_fm=1</action>
 				<action function="page">filemanagerlist</action>
 			</action>
+
 			<action>
 				<condition var1="book_edit" var2="0"/>
 				<condition var1="book_hold" var2="1"/>
@@ -672,6 +631,7 @@
 				<action function="set">book_edit=1</action>
 				<action function="page">files_bookmarks_prepare</action>
 			</action>
+
 			<action>
 				<condition var1="book_edit" var2="1"/>
 				<condition var1="book_hold" var2="1"/>
@@ -679,6 +639,7 @@
 				<action function="set">book_%book_id%=notset</action>
 				<action function="page">files_bookmarks_prepare</action>
 			</action>
+
 			<action>
 				<condition var1="book_edit" var2="1"/>
 				<condition var1="book_hold" var2="0"/>
@@ -699,8 +660,6 @@
 		</page>
 		
 		<page name="filemanageroptions">
-			<template name="body"/>
-
 			<action>
 				<action function="set">opts_show=%auto_show_btns%</action>
 			</action>
@@ -798,7 +757,6 @@
 					<action function="set">tw_fm_text3=</action>
 					<action function="set">tw_include_text3=0</action>
 					<action function="set">tw_back=filemanageroptions</action>
-					<!--action function="ftls">twrp xset tw_filemanager_rename=$(stat -c '%%a' "%tw_filename1%")</action-->
 					<action function="get_chmod"/>
 					<action function="set_chmod"/>
 					<action function="page">filemanagerchmod</action>
@@ -877,9 +835,7 @@
 				</listitem>
 			</listbox>
 
-			<template name="ab_ex"/>
-
-			<template name="statusbarinfo"/>
+			<template name="base_ex"/>
 
 			<action>
 				<condition var1="tw_filename1" var2="/"/>
@@ -896,16 +852,19 @@
 				<placement x="%col1_x_indent%" y="%row1_2_y%" placement="2"/>
 				<text>{@symlink_dir_name}</text>
 			</text>
+
 			<text style="text_ab_title">
 				<condition var1="tw_rp_type" var2="0"/>
 				<placement x="%col1_x_indent%" y="%row1_2_y%" placement="2"/>
 				<text>{@symlink_file_name}</text>
 			</text>
+
 			<text style="text_ab_title">
 				<condition var1="tw_rp_type" var2="2"/>
 				<placement x="%col1_x_indent%" y="%row1_2_y%" placement="2"/>
 				<text>{@symlink_broken_name}</text>
 			</text>
+
 			<text style="text_ab_title">
 				<condition var1="tw_fm_isfolder" op="!=" var2="1"/>
 				<condition var1="tw_rp_type" op="!=" var2="2"/>
@@ -914,6 +873,7 @@
 				<placement x="%col1_x_indent%" y="%row1_2_y%" placement="2"/>
 				<text>{@fm_type_file}</text>
 			</text>
+
 			<text style="text_ab_title">
 				<condition var1="tw_fm_isfolder" var2="1"/>
 				<condition var1="tw_rp_type" op="!=" var2="2"/>
@@ -940,8 +900,6 @@
 		</page>
 		
 		<page name="openas">
-			<template name="body"/>
-		
 			<listbox style="btn_list">
 				<placement x="0" y="%ab_ex_h%" w="%screen_w%" h="%bl_files_h%"/>
 				<listitem name="{@fm_open_text}">
@@ -958,7 +916,6 @@
 					<action function="set">install_back=filemanagerlist</action>
 					<action function="set">tw_zip_location=%tw_file_location1%</action>
 					<action function="queuezip"/>
-					<action function="set">tw_q_1=%tw_file%</action>
 					<action function="page">flash_confirm</action>
 				</listitem>
 				<listitem name="{@fm_open_image}">
@@ -978,13 +935,11 @@
 					<action function="set">tw_restore=%tw_filename1%</action>
 					<action function="set">restore_back=filemanagerlist</action>
 					<action function="readBackup"/>
-					<action function="page">restore_read</action> 
+					<action function="page">restore_select</action> 
 				</listitem>
 			</listbox>
 		
-			<template name="ab_ex"/>
-
-			<template name="statusbarinfo"/>
+			<template name="base_ex"/>
 
 			<text style="text_ab_title">
 				<placement x="%col1_x_indent%" y="%ab_bc_y%"/>
@@ -1013,12 +968,8 @@
 		</page>
 		
 		<page name="checksum_confirm">
-			<template name="body"/>
-
-			<template name="ab_ex"/>
-
-			<template name="statusbarinfo"/>
-
+			<template name="base_ex"/>
+		
 			<text style="text_ab_title">
 				<placement x="%col1_x_indent%" y="%ab_bc_y%"/>
 				<text>{@fm_hdr}</text>
@@ -1046,6 +997,7 @@
 				<placement x="%col1_x%" y="%row2_1a_y%"/>
 				<text>{@name} ({@real})</text>
 			</text>
+
 			<text style="text_body2">
 				<condition var1="sum" op="!=" var2="1"/>
 				<placement x="%col1_x%" y="%row2_2a_y%"/>
@@ -1057,6 +1009,7 @@
 				<placement x="%col1_x%" y="%row3_1a_y%"/>
 				<text>{@part_size}</text>
 			</text>
+
 			<text style="text_body2">
 				<condition var1="sum" op="!=" var2="1"/>
 				<placement x="%col1_x%" y="%row3_2a_y%"/>
@@ -1068,6 +1021,7 @@
 				<placement x="%col1_x%" y="%row4_1a_y%"/>
 				<text>{@fm_perms}</text>
 			</text>
+
 			<text style="text_body2">
 				<condition var1="sum" op="!=" var2="1"/>
 				<placement x="%col1_x%" y="%row4_2a_y%"/>
@@ -1079,6 +1033,7 @@
 				<placement x="%col1_x%" y="%row5_1a_y%"/>
 				<text>{@access}</text>
 			</text>
+
 			<text style="text_body2">
 				<condition var1="sum" op="!=" var2="1"/>
 				<placement x="%col1_x%" y="%row5_2a_y%"/>
@@ -1090,6 +1045,7 @@
 				<placement x="%col1_x%" y="%row6_1a_y%"/>
 				<text>{@time_m}</text>
 			</text>
+
 			<text style="text_body2">
 				<condition var1="sum" op="!=" var2="1"/>
 				<placement x="%col1_x%" y="%row6_2a_y%"/>
@@ -1101,6 +1057,7 @@
 				<placement x="%col1_x%" y="%row7_1a_y%"/>
 				<text>{@time_c}</text>
 			</text>
+
 			<text style="text_body2">
 				<condition var1="sum" op="!=" var2="1"/>
 				<placement x="%col1_x%" y="%row7_2a_y%"/>
@@ -1112,6 +1069,7 @@
 				<placement x="%col1_x%" y="%row2_1a_y%"/>
 				<text>MD5</text>
 			</text>
+
 			<text style="text_body2">
 				<condition var1="sum" var2="1"/>
 				<placement x="%col1_x%" y="%row2_2a_y%"/>
@@ -1123,6 +1081,7 @@
 				<placement x="%col1_x%" y="%row3_1a_y%"/>
 				<text>SHA1</text>
 			</text>
+
 			<text style="text_body2">
 				<condition var1="sum" var2="1"/>
 				<placement x="%col1_x%" y="%row3_2a_y%"/>
@@ -1134,6 +1093,7 @@
 				<placement x="%col1_x%" y="%row4_1a_y%"/>
 				<text>SHA256</text>
 			</text>
+
 			<text style="text_body2">
 				<condition var1="sum" var2="1"/>
 				<placement x="%col1_x%" y="%row4_2a_y%"/>
@@ -1145,6 +1105,7 @@
 				<placement x="%col1_x%" y="%row5_1a_y%"/>
 				<text>SHA512</text>
 			</text>
+			
 			<text style="text_body2">
 				<condition var1="sum" var2="1"/>
 				<placement x="%col1_x%" y="%row5_2a_y%"/>
@@ -1163,8 +1124,6 @@
 		</page>
 
 		<page name="choosedestinationfolder">
-			<template name="body"/>
-			
 			<fileselector style="fileselector_b">
 				<condition var1="list_font" var2="1"/>
 				<placement x="0" y="%row_ab_ex_y%" w="%fileselector_width%" h="%fileselector_terminal_height%"/>
@@ -1187,10 +1146,7 @@
 				<selection name="tw_selection2"/>
 			</fileselector>
 
-			<template name="ab_ex"/>
-
-			<template name="statusbarinfo"/>
-
+			<template name="base_ex"/>
 			<template name="actionbar_sort"/>
 
 			<text style="text_ab_title">
@@ -1210,13 +1166,11 @@
 
 			<button style="floating_btn">
 				<placement x="%btn_float_x%" y="%btn_float_y%"/>
-				<actions>
-					<action function="set">tw_fm_text2={@fordowns_to}</action>
-					<action function="set">tw_fm_text3=%tw_file_location2%</action>
-					<action function="set">tw_include_text3=1</action>
-					<action function="set">tw_back=filemanageroptions</action>
-					<action function="page">filemanagerconfirm</action>
-				</actions>
+				<action function="set">tw_fm_text2={@fordowns_to}</action>
+				<action function="set">tw_fm_text3=%tw_file_location2%</action>
+				<action function="set">tw_include_text3=1</action>
+				<action function="set">tw_back=filemanageroptions</action>
+				<action function="page">filemanagerconfirm</action>
 			</button>
 			
 			<image>
@@ -1236,11 +1190,7 @@
 		</page>
 
 		<page name="filemanagerrenamefile">
-			<template name="body_key"/>
-
-			<template name="ab_ex"/>
-
-			<template name="statusbarinfo"/>
+			<template name="base_ex_key"/>
 
 			<text style="text_ab_title">
 				<placement x="%col1_x_indent%" y="%ab_bc_y%"/>
@@ -1267,13 +1217,11 @@
 				<text>%tw_filemanager_rename%</text>
 				<data name="tw_filemanager_rename"/>
 				<restrict minlen="1" maxlen="64"/>
-				<actions>
-					<action function="set">tw_fm_text2={@fordowns_to}</action>
-					<action function="set">tw_fm_text3="%tw_file_location1%/%tw_filemanager_rename%"</action>
-					<action function="set">tw_include_text3=1</action>
-					<action function="set">tw_back=filemanageroptions</action>
-					<action function="page">filemanagerconfirm</action>
-				</actions>
+				<action function="set">tw_fm_text2={@fordowns_to}</action>
+				<action function="set">tw_fm_text3="%tw_file_location1%/%tw_filemanager_rename%"</action>
+				<action function="set">tw_include_text3=1</action>
+				<action function="set">tw_back=filemanageroptions</action>
+				<action function="page">filemanagerconfirm</action>
 			</input>
 
 			<fill color="%accent%">
@@ -1292,11 +1240,7 @@
 		</page>
 
 		<page name="filemanagerrenamefolder">
-			<template name="body_key"/>
-
-			<template name="ab_ex"/>
-
-			<template name="statusbarinfo"/>
+			<template name="base_ex_key"/>
 
 			<text style="text_ab_title">
 				<placement x="%col1_x_indent%" y="%ab_bc_y%"/>
@@ -1323,13 +1267,11 @@
 				<text>%tw_filemanager_rename%</text>
 				<data name="tw_filemanager_rename"/>
 				<restrict minlen="1" maxlen="64"/>
-				<actions>
-					<action function="set">tw_fm_text2={@fordowns_to}</action>
-					<action function="set">tw_fm_text3=%tw_filemanager_rename%</action>
-					<action function="set">tw_include_text3=1</action>
-					<action function="set">tw_back=filemanageroptions</action>
-					<action function="page">filemanagerconfirm</action>
-				</actions>
+				<action function="set">tw_fm_text2={@fordowns_to}</action>
+				<action function="set">tw_fm_text3=%tw_filemanager_rename%</action>
+				<action function="set">tw_include_text3=1</action>
+				<action function="set">tw_back=filemanageroptions</action>
+				<action function="page">filemanagerconfirm</action>
 			</input>
 
 			<fill color="%accent%">
@@ -1348,11 +1290,7 @@
 		</page>
 
 		<page name="filemanagerchmod">
-			<template name="body"/>
-
-			<template name="ab_ex"/>
-
-			<template name="statusbarinfo"/>
+			<template name="base_ex"/>
 
 			<text style="text_ab_title">
 				<placement x="%col1_x_indent%" y="%ab_bc_y%"/>
@@ -1369,15 +1307,14 @@
 				<text>%tw_filename1%</text>
 			</text>			
 
-			<button>
-				<placement x="%ab_btn1_x%" y="%ab_y%"/>
-				<image resource="actionbar_btn" highlightresource="actionbar_btn_hl"/>
+			<button style="actionbar">
+				<placement x="%ab_btn1_x%" y="%ab_y%" placement="4"/>
 				<action function="calculate_chmod"/>
 				<action function="page">filemanagerchmod_key</action>
 			</button>
 
 			<image>
-				<placement x="%ab_btn1_x%" y="%ab_y%"/>
+				<placement x="%ab_btn1_x%" y="%ab_y%" placement="4"/>
 				<image resource="actionbar_settings"/>
 			</image>
 
@@ -1434,34 +1371,42 @@
 				<placement x="%chtxt_r_x%" y="%chtxt_y%" placement="4"/>
 				<text>Read</text>
 			</text>
+
 			<text style="text_body2">
 				<placement x="%chtxt_w_x%" y="%chtxt_y%" placement="4"/>
 				<text>Write</text>
 			</text>
+
 			<text style="text_body2">
 				<placement x="%chtxt_x_x%" y="%chtxt_y%" placement="4"/>
 				<text>Execute</text>
 			</text>
+
 			<text style="text_body2">
 				<placement x="%chtxt_r_x%" y="%chtxt_sph_y%" placement="4"/>
 				<text>Set UID</text>
 			</text>
+
 			<text style="text_body2">
 				<placement x="%chtxt_w_x%" y="%chtxt_sph_y%" placement="4"/>
 				<text>Set GID</text>
 			</text>
+
 			<text style="text_body2">
 				<placement x="%chtxt_x_x%" y="%chtxt_sph_y%" placement="4"/>
 				<text>Sticky</text>
 			</text>
+
 			<text style="text_body2">
 				<placement x="%ch_r_x%" y="%chtxt_own_y%" placement="1"/>
 				<text>Owner</text>
 			</text>
+
 			<text style="text_body2">
 				<placement x="%ch_r_x%" y="%chtxt_grp_y%" placement="1"/>
 				<text>Group</text>
 			</text>
+
 			<text style="text_body2">
 				<placement x="%ch_r_x%" y="%chtxt_oth_y%" placement="1"/>
 				<text>Other</text>
@@ -1499,9 +1444,7 @@
 
 		<page name="filemanagerchmod_key">
 			<template name="body_num"/>
-
 			<template name="ab_ex"/>
-
 			<template name="statusbarinfo"/>
 
 			<action>
@@ -1523,15 +1466,14 @@
 				<text>%tw_filename1%</text>
 			</text>
 
-			<button>
-				<placement x="%ab_btn1_x%" y="%ab_y%"/>
-				<image resource="actionbar_btn" highlightresource="actionbar_btn_hl"/>
+			<button style="actionbar">
+				<placement x="%ab_btn1_x%" y="%ab_y%" placement="4"/>
 				<action function="set_chmod"/>
 				<action function="page">filemanagerchmod</action>
 			</button>
 
 			<image>
-				<placement x="%ab_btn1_x%" y="%ab_y%"/>
+				<placement x="%ab_btn1_x%" y="%ab_y%" placement="4"/>
 				<image resource="actionbar_settings"/>
 			</image>
 
@@ -1545,12 +1487,10 @@
 				<text>%tw_filemanager_rename%</text>
 				<data name="tw_filemanager_rename"/>
 				<restrict minlen="3" maxlen="4" allow="01234567"/>
-				<actions>
-					<action function="set">tw_filemanager_command=chmod %tw_filemanager_rename%</action>
-					<action function="set">tw_fm_text1=chmod %tw_filemanager_rename%</action>
-					<action function="set">tw_back=filemanageroptions</action>
-					<action function="page">filemanagerconfirm</action>
-				</actions>
+				<action function="set">tw_filemanager_command=chmod %tw_filemanager_rename%</action>
+				<action function="set">tw_fm_text1=chmod %tw_filemanager_rename%</action>
+				<action function="set">tw_back=filemanageroptions</action>
+				<action function="page">filemanagerconfirm</action>
 			</input>
 
 			<fill color="%accent%">
@@ -1581,9 +1521,7 @@
 		</page>
 
 		<page name="filemanagerconfirm">
-			<template name="body"/>
-			<template name="ab_ex"/>
-			<template name="statusbarinfo"/>
+			<template name="base_ex"/>
 
 			<text style="text_ab_title">
 				<placement x="%col1_x_indent%" y="%ab_bc_y%"/>
@@ -1632,9 +1570,7 @@
 		</page>
 		
 		<page name="archive_confirm">
-			<template name="body"/>
-			<template name="ab_ex"/>
-			<template name="statusbarinfo"/>
+			<template name="base_ex"/>
 
 			<text style="text_ab_title">
 				<placement x="%col1_x_indent%" y="%ab_bc_y%"/>
@@ -1737,43 +1673,18 @@
 		</page>
 
 		<page name="archive_cmd">
-			<template name="body"/>
-
-			<template name="progress_bar"/>
-
-			<template name="ab_ex"/>
-
-			<template name="statusbarinfo"/>
+			<template name="base_console_cancel"/>
 
 			<text style="text_ab_title">
 				<placement x="%col1_x_indent%" y="%ab_bc_y%"/>
 				<text>{@fm_hdr}</text>
 			</text>
 
-			<template name="action_page_console_big"/>
-			<template name="cant_cancel" />
-			
 			<action>
-				<conditions>
-					<condition var1="tw_operation_state" var2="1"/>
-					<condition var1="tw_operation_status" var2="0"/>
-				</conditions>
-				<actions>
-					<action function="set">tw_back=filemanagerlist</action>
-					<action function="set">tw_complete_text1={@fm_complete}</action>
-					<action function="page">filemanagercomplete</action>
-				</actions>
-			</action>
-
-			<action>
-				<conditions>
-					<condition var1="tw_operation_state" var2="1"/>
-					<condition var1="tw_operation_status" op="!=" var2="0"/>
-				</conditions>
-				<actions>
-					<action function="set">tw_complete_text1={@fm_complete}</action>
-					<action function="page">filemanagercomplete</action>
-				</actions>
+				<condition var1="tw_operation_state" var2="1"/>
+				<action function="set">tw_back=filemanagerlist</action>
+				<action function="set">tw_complete_text1={@fm_complete}</action>
+				<action function="page">filemanagercomplete</action>
 			</action>
 			
 			<action>
@@ -1782,12 +1693,14 @@
 				<action function="terminalcommand">mkdir "%tw_file_location1%/%tw_selection1%_unpack"; unzip -o "%tw_filename1%" -d "%tw_file_location1%/%tw_selection1%_unpack";</action>
 				<action function="set">tw_extract_action=0</action>
 			</action>
+
 			<action>
 				<condition var1="tw_artype" var2="1"/>
 				<condition var1="tw_extract_action" op="!=" var2="1"/>
 				<action function="terminalcommand">mkdir "%tw_file_location1%/%tw_selection1%_unpack"; tar -xvf "%tw_filename1%" -C "%tw_file_location1%/%tw_selection1%_unpack";</action>
 				<action function="set">tw_extract_action=0</action>
 			</action>
+
 			<action>
 				<condition var1="tw_artype" var2="1"/>
 				<condition var1="tw_extract_action" var2="1"/>
@@ -1796,6 +1709,7 @@
 				<action function="terminalcommand">cd "%tw_file_location1%"; tar -cvf "%tw_file_location1%.tar" *;</action>
 				<action function="set">tw_extract_action=0</action>
 			</action>
+
 			<action>
 				<condition var1="tw_artype" var2="1"/>
 				<condition var1="tw_extract_action" var2="1"/>
@@ -1804,6 +1718,7 @@
 				<action function="terminalcommand">cd "%tw_filename1%"; tar -cvf "%tw_filename1%.tar" *;</action>
 				<action function="set">tw_extract_action=0</action>
 			</action>
+
 			<action>
 				<condition var1="tw_artype" var2="0"/>
 				<condition var1="tw_extract_action" var2="1"/>
@@ -1811,6 +1726,7 @@
 				<action function="terminalcommand">pigz -%tw_pack_lvl%vKf "%tw_filename1%";</action>
 				<action function="set">tw_extract_action=0</action>
 			</action>
+
 			<action>
 				<condition var1="tw_artype" var2="1"/>
 				<condition var1="tw_extract_action" var2="1"/>
@@ -1818,6 +1734,7 @@
 				<action function="terminalcommand">cd "%tw_file_location1%"; tar -cvf "%tw_filename1%.tar" "%tw_filename1%";</action>
 				<action function="set">tw_extract_action=0</action>
 			</action>
+
 			<action>
 				<condition var1="tw_artype" var2="2"/>
 				<condition var1="tw_extract_action" var2="1"/>
@@ -1825,6 +1742,7 @@
 				<action function="terminalcommand">cd "%tw_file_location1%"; find ./* | cpio -o &gt; "%tw_file_location1%.cpio";</action>
 				<action function="set">tw_extract_action=0</action>
 			</action>
+
 			<action>
 				<condition var1="tw_artype" var2="2"/>
 				<condition var1="tw_extract_action" var2="1"/>
@@ -1832,70 +1750,82 @@
 				<action function="terminalcommand">cd "%tw_filename1%"; find ./* | cpio -o &gt; "%tw_filename1%.cpio";</action>
 				<action function="set">tw_extract_action=0</action>
 			</action>
+
 			<action>
 				<condition var1="tw_artype" var2="2"/>
 				<condition var1="tw_extract_action" op="!=" var2="1"/>
 				<action function="terminalcommand">mkdir "%tw_file_location1%/%tw_selection1%_unpack"; cd "%tw_file_location1%/%tw_selection1%_unpack"; cpio -idv &lt; "../%tw_selection1%";</action>
 				<action function="set">tw_extract_action=0</action>
 			</action>
+
 			<action>
 				<condition var1="tw_artype" var2="3"/>
 				<condition var1="tw_extract_action" op="!=" var2="1"/>
 				<action function="terminalcommand">pigz -vdf "%tw_filename1%";</action>
 				<action function="set">tw_extract_action=0</action>
 			</action>
+
 			<action>
 				<condition var1="tw_artype" var2="4"/>
 				<condition var1="tw_extract_action" op="!=" var2="1"/>
 				<action function="terminalcommand">bzip2 -vdf "%tw_filename1%";</action>
 				<action function="set">tw_extract_action=0</action>
 			</action>
+
 			<action>
 				<condition var1="tw_artype" var2="6"/>
 				<condition var1="tw_extract_action" op="!=" var2="1"/>
 				<action function="terminalcommand">lzop -fvd "%tw_filename1%";</action>
 				<action function="set">tw_extract_action=0</action>
 			</action>
+
 			<action>
 				<condition var1="tw_artype" var2="8"/>
 				<condition var1="tw_extract_action" op="!=" var2="1"/>
 				<action function="terminalcommand">pigz -dzfv "%tw_filename1%";</action>
 				<action function="set">tw_extract_action=0</action>
 			</action>
+
 			<action>
 				<condition var1="tw_artype" var2="3"/>
 				<condition var1="tw_extract_action" var2="1"/>
 				<action function="terminalcommand">pigz -%tw_pack_lvl%fv "%tw_filename1%";</action>
 				<action function="set">tw_extract_action=0</action>
 			</action>
+
 			<action>
 				<condition var1="tw_artype" var2="4"/>
 				<condition var1="tw_extract_action" var2="1"/>
 				<action function="terminalcommand">bzip2 -%tw_pack_lvl%f "%tw_filename1%";</action>
 				<action function="set">tw_extract_action=0</action>
 			</action>
+
 			<action>
 				<condition var1="tw_artype" var2="6"/>
 				<condition var1="tw_extract_action" var2="1"/>
 				<action function="terminalcommand">lzop -fv%tw_pack_lvl% "%tw_filename1%";</action>
 				<action function="set">tw_extract_action=0</action>
 			</action>
+
 			<action>
 				<condition var1="tw_artype" var2="8"/>
 				<condition var1="tw_extract_action" var2="1"/>
 				<action function="terminalcommand">pigz -%tw_pack_lvl%zfv "%tw_filename1%";</action>
 				<action function="set">tw_extract_action=0</action>
 			</action>
+
 			<action>
 				<condition var1="tw_artype" var2="7"/>
 				<action function="terminalcommand">xz -df "%tw_filename1%";</action>
 				<action function="set">tw_extract_action=0</action>
 			</action>
+
 			<action>
 				<condition var1="tw_artype" var2="5"/>
 				<action function="terminalcommand">lzma -df "%tw_filename1%";</action>
 				<action function="set">tw_extract_action=0</action>
 			</action>
+
 			<action>
 				<condition var1="tw_artype" var2="9"/>
 				<action function="terminalcommand">uncompress -f "%tw_filename1%";</action>
@@ -1921,13 +1851,7 @@
 		</page>
 		
 		<page name="filemanageraction">
-			<template name="body"/>
-
-			<template name="progress_bar"/>
-
-			<template name="ab_ex"/>
-
-			<template name="statusbarinfo"/>
+			<template name="base_console_cancel"/>
 
 			<text style="text_ab_title">
 				<placement x="%col1_x_indent%" y="%ab_bc_y%"/>
@@ -1943,70 +1867,31 @@
 				<placement x="%col1_x_indent%" y="%row1_2_y%"/>
 				<text>%tw_filename1%</text>
 			</text>
-
-			<template name="action_page_console_big"/>
-			<template name="cant_cancel" />
 			
 			<action>
-				<conditions>
-					<condition var1="tw_operation_state" var2="1"/>
-					<condition var1="tw_operation_status" var2="0"/>
-				</conditions>
-				<actions>
-					<action function="set">tw_back=filemanagerlist</action>
-					<action function="set">tw_complete_text1={@fm_complete}</action>
-					<action function="page">filemanagercomplete</action>
-				</actions>
-			</action>
-
-			<action>
-				<conditions>
-					<condition var1="tw_operation_state" var2="1"/>
-					<condition var1="tw_operation_status" op="!=" var2="0"/>
-				</conditions>
-				<actions>
-					<action function="set">tw_complete_text1={@fm_complete}</action>
-					<action function="page">filemanagercomplete</action>
-				</actions>
+				<condition var1="tw_operation_state" var2="1"/>
+				<action function="set">tw_back=filemanagerlist</action>
+				<action function="set">tw_complete_text1={@fm_complete}</action>
+				<action function="page">filemanagercomplete</action>
 			</action>
 
 			<action>
 				<condition var1="tw_include_text3" var2="0"/>
-				<actions>
-					<action function="terminalcommand">%tw_filemanager_command% "%tw_filename1%"</action>
-				</actions>
+				<action function="terminalcommand">%tw_filemanager_command% "%tw_filename1%"</action>
 			</action>
 
 			<action>
 				<condition var1="tw_include_text3" var2="1"/>
-				<actions>
-					<action function="terminalcommand">%tw_filemanager_command% "%tw_filename1%" "%tw_fm_text3%"</action>
-				</actions>
+				<action function="terminalcommand">%tw_filemanager_command% "%tw_filename1%" "%tw_fm_text3%"</action>
 			</action>
 		</page>
 
 		<page name="filemanagercomplete">
-			<template name="body"/>
-
-			<template name="ab_ex"/>
-
-			<template name="statusbarinfo"/>
+			<template name="base_done"/>
 
 			<text style="text_ab_title">
 				<placement x="%col1_x_indent%" y="%ab_bc_y%"/>
 				<text>{@fm_hdr}</text>
-			</text>
-
-			<text style="text_ab_title">
-				<condition var1="tw_operation_status" op="!=" var2="0"/>
-				<placement x="%col1_x_indent%" y="%row1_2_y%" placement="2"/>
-				<text>{@failed}</text>
-			</text>
-
-			<text style="text_ab_title">
-				<condition var1="tw_operation_status" var2="0"/>
-				<placement x="%col1_x_indent%" y="%row1_2_y%" placement="2"/>
-				<text>{@successful}</text>
 			</text>
 
 			<text style="text_ab_subtitle">
@@ -2014,58 +1899,29 @@
 				<text>%tw_complete_text1%</text>
 			</text>
 
-			<template name="action_page_console"/>
-
-			<button style="btn_raised">
-				<placement x="%btn_raised_left_x%" y="%row_btn1_y%"/>
-				<text>{@back_btn}</text>
-				<actions>
-					<action function="set">tw_reload_fm=1</action>
-					<action function="set">tw_clear_destination=%tw_back%</action>
-					<action function="page">clear_vars</action>
-				</actions>
-			</button>
-
-			<button style="btn_raised_hl">
-				<condition var1="tw_reboot_system" var2="1"/>
-				<placement x="%btn_raised_right_x%" y="%row_btn1_y%" placement="1"/>
-				<text>{@reboot_system_btn}</text>
-				<actions>
-					<action function="set">tw_back=main</action>
-					<action function="set">tw_action_param=system</action>
-					<action function="set">tw_reboot_param=system</action>
-					<action function="page">rebootcheck</action>
-				</actions>
-			</button>
+			<template name="back_btn"/>
 
 			<action>
 				<touch key="home"/>
-				<actions>
-					<action function="set">tw_reload_fm=1</action>
-					<action function="set">tw_clear_destination=main</action>
-					<action function="page">clear_vars</action>
-				</actions>
+				<action function="set">tw_reload_fm=1</action>
+				<action function="set">tw_clear_destination=main</action>
+				<action function="page">clear_vars</action>
 			</action>
 
 			<action>
 				<touch key="back"/>
-				<actions>
-					<action function="set">tw_reload_fm=1</action>
-					<action function="set">tw_clear_destination=%tw_back%</action>
-					<action function="page">clear_vars</action>
-				</actions>
+				<action function="set">tw_reload_fm=1</action>
+				<action function="set">tw_clear_destination=%tw_back%</action>
+				<action function="page">clear_vars</action>
 			</action>
 		</page>
+
 		<page name="cat_file">
 			<action>
 				<action function="terminalcommand">cat "%tw_filename1%"</action>
 			</action>
 			
-			<template name="body"/>
-
-			<template name="ab_ex"/>
-
-			<template name="statusbarinfo"/>
+			<template name="base_ex"/>
 			
 			<animation>
 				<condition var1="tw_busy" var2="1"/>
@@ -2094,6 +1950,7 @@
 				<placement x="%col1_x%" y="%console_y%" w="%console_width%" h="%console_action_height_fm%"/> 
 				<condition var1="use_fixed_font" var2="0"/>
 			</console>
+
 			<console>
 				<placement x="%col1_x%" y="%console_y%" w="%console_width%" h="%console_action_height_fm%"/> 
 				<condition var1="use_fixed_font" var2="1"/>

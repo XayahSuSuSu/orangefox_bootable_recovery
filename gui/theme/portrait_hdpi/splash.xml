@@ -1,10 +1,8 @@
 <?xml version="1.0"?>
+<!-- OrangeFox Splash by KMP design and OrangeFox team -->
 <recovery>
 	<details>
 		<resolution width="1080" />
-		<author>OrangeFox dev team & KMP design</author>
-		<title>OrangeFox Original Splash</title>
-		<description>Design by KMP design</description>
 		<themeversion>3</themeversion>
 	</details>
 	
@@ -19,14 +17,14 @@
 			<fill color="#E47718FF">
 				<placement x="0" y="0" w="1080" h="%center_y%"/>
 			</fill>
-			<object type="image">
+			<image>
 				<image resource="splash_bg"/>
 				<placement x="540" y="%center_y%" placement="4"/>
-			</object>
-			<object type="image">
+			</image>
+			<image>
 				<image resource="splash_logo_w"/>
 				<placement x="540" y="%center_y%" placement="4"/>
-			</object>
+			</image>
 		</page>
 	</pages>
 </recovery>

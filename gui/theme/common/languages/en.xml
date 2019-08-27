@@ -1038,5 +1038,14 @@
 		<string name="navbar_style_line">Line</string>
 		<string name="accent_in_titles">Accent text color in title</string>
 		<string name="accentbg_in_titles">Accent background in title</string>
+
+		<string name="mbyte">MB</string>
+
+		<!-- Updated slot selection -->
+		<string name="slot_show">Switch slots</string>
+		<string name="slot_switch_a">Switch to slot A</string>
+		<string name="slot_switch_b">Switch to slot B</string>
+		<string name="slot_active_a">Slot A is active</string>
+		<string name="slot_active_b">Slot B is active</string>
 	</resources>
 </language>
