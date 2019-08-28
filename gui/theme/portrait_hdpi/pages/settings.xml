@@ -834,22 +834,23 @@
 				<placement x="%about_logo_x%" y="%about_logo_y%"/>
 			</image>
 			
-			<text style="text_ab_title">
+			<text>
+				<font resource="Secondary-title" color="#ed6f02"/>
 				<placement x="%about_txt_x%" y="%about_logo_y%" />
 				<text>OrangeFox</text>
 			</text>
 
-			<text style="text_ab_subtitle">
+			<text style="text_ab_subtitle_orange">
 				<placement x="%about_txt_x%" y="%about_txt2_y%"/>
 				<text>{@version}: %fox_actual_build%</text>
 			</text>
 
-			<text style="text_ab_subtitle">
+			<text style="text_ab_subtitle_orange">
 				<placement x="%about_txt_x%" y="%about_txt3_y%"/>
 				<text>{@build_type}: %fox_build_type1%</text>
 			</text>
 
-			<text style="text_ab_subtitle">
+			<text style="text_ab_subtitle_orange">
 				<placement x="%about_txt_x%" y="%about_txt4_y%"/>
 				<text>{@version_twrp}: %tw_version%</text>
 			</text>
@@ -1106,30 +1107,60 @@
 			</image>
 			
 			<button>
+				<condition var1="credits_page" op="!=" var2="0"/>
 				<highlight color="%highlight_color%"/>
 				<fill color="%transparent%"/>
-				<font resource="Secondary" color="%actbar_color%"/>
+				<font resource="Secondary" color="%color_disable%"/>
 				<placement x="0" y="%tab_btn_y%" w="360" h="84"/>
 				<text>{@abt_credits}</text>
 				<action function="set">credits_page=0</action>
 			</button>
 
 			<button>
+				<condition var1="credits_page" op="!=" var2="1"/>
 				<highlight color="%highlight_color%"/>
 				<fill color="%transparent%"/>
-				<font resource="Secondary" color="%actbar_color%"/>
+				<font resource="Secondary" color="%color_disable%"/>
 				<placement x="360" y="%tab_btn_y%" w="360" h="84"/>
 				<text>{@abt_trans}</text>
 				<action function="set">credits_page=1</action>
 			</button>
 
 			<button>
+				<condition var1="credits_page" op="!=" var2="2"/>
 				<highlight color="%highlight_color%"/>
 				<fill color="%transparent%"/>
-				<font resource="Secondary" color="%actbar_color%"/>
+				<font resource="Secondary" color="%color_disable%"/>
 				<placement x="720" y="%tab_btn_y%" w="360" h="84"/>
 				<text>{@abt_changes}</text>
 				<action function="set">credits_page=2</action>
+			</button>
+
+			<button>
+				<condition var1="credits_page" var2="0"/>
+				<highlight color="%highlight_color%"/>
+				<fill color="%transparent%"/>
+				<font resource="Secondary" color="%accent%"/>
+				<placement x="0" y="%tab_btn_y%" w="360" h="84"/>
+				<text>{@abt_credits}</text>
+			</button>
+
+			<button>
+				<condition var1="credits_page" var2="1"/>
+				<highlight color="%highlight_color%"/>
+				<fill color="%transparent%"/>
+				<font resource="Secondary" color="%accent%"/>
+				<placement x="360" y="%tab_btn_y%" w="360" h="84"/>
+				<text>{@abt_trans}</text>
+			</button>
+
+			<button>
+				<condition var1="credits_page" var2="2"/>
+				<highlight color="%highlight_color%"/>
+				<fill color="%transparent%"/>
+				<font resource="Secondary" color="%accent%"/>
+				<placement x="720" y="%tab_btn_y%" w="360" h="84"/>
+				<text>{@abt_changes}</text>
 			</button>
 			
 			<image>

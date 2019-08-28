@@ -102,21 +102,21 @@
 				<placement x="304" y="%row1_3_y%"/>
 			</image>
 
-			<text style="text_ab_title">
+			<text style="text_ab_subtitle_orange">
 				<condition var1="of_backup_empty" var2="1"/>
 				<condition var1="of_backup_rw" var2="1"/>
 				<placement x="%center_x%" y="%row5_1_y%" placement="4"/>
 				<text>{@backups_wat}</text>
 			</text>
 
-			<text style="text_ab_title">
+			<text style="text_ab_subtitle_orange">
 				<condition var1="of_backup_empty" var2="1"/>
 				<condition var1="of_backup_rw" op="!=" var2="1"/>
 				<placement x="%center_x%" y="%row5_2_y%" placement="4"/>
 				<text>{@backups_rw_error_1}</text>
 			</text>
 
-			<text style="text_ab_title">
+			<text style="text_ab_subtitle_orange">
 				<condition var1="of_backup_empty" var2="1"/>
 				<condition var1="of_backup_rw" op="!=" var2="1"/>
 				<placement x="%center_x%" y="%row5_3a_y%" placement="4"/>
@@ -438,11 +438,8 @@
 				<data name="tw_backup_rename"/>
 				<restrict minlen="1" maxlen="64" allow="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890-_.{}[]"/>
 				<action function="set">tw_action_param=cd %tw_backups_folder% &amp;&amp; mv "%tw_restore_name%" "%tw_backup_rename%"</action>
-				<action function="set">tw_text1={@rename_backup_confirm}</action>
-				<action function="set">tw_text2={@rename_backup_confirm2}</action>
 				<action function="set">tw_action_text1={@renaming_backup}</action>
 				<action function="set">tw_complete_text1={@rename_backup_complete}</action>
-				<action function="set">tw_slider_text={@swipe_to_rename}</action>
 				<action function="set">tw_filecheck=%tw_backups_folder%/%tw_backup_rename%</action>
 				<action function="set">tw_existpage=renamebackup</action>
 				<action function="set">tw_notexistpage=restore_confirm_action</action>
@@ -581,22 +578,17 @@
 
 			<text style="text_ab_title">
 				<placement x="%col1_x_indent%" y="%row1_2_y%" placement="2"/>
-				<text>%tw_text1%</text>
+				<text>{@rename_backup_confirm}</text>
 			</text>
 
-			<image>
-				<placement x="%col1_x%" y="%row2_2_y%"/>
-				<image resource="icon_warning"/>
-			</image>
-
-			<text style="text_body2_fail">
-				<placement x="%col1_x_indent%" y="%row2_2_y%"/>
-				<text>%tw_text2%</text>
+			<text style="text_ab_subtitle">
+				<placement x="%col1_x_indent%" y="%row1_2_y%"/>
+				<text>%tw_backup_rename%</text>
 			</text>
 
 			<text style="caption">
 				<placement x="%center_x%" y="%slider_text_y%" placement="5"/>
-				<text>%tw_slider_text%</text>
+				<text>{@swipe_to_rename}</text>
 			</text>
 
 			<slider style="slider_action">
@@ -635,7 +627,7 @@
 
 			<text style="text_ab_subtitle">
 				<placement x="%col1_x_indent%" y="%row1_2_y%"/>
-				<text>%tw_action_text2%</text>
+				<text>{@lang_wait}</text>
 			</text>
 
 			<action>
@@ -680,7 +672,7 @@
 
 			<action>
 				<touch key="back"/>
-				<action function="set">tw_clear_destination=%tw_back%</action>
+				<action function="set">tw_clear_destination=restore</action>
 				<action function="page">clear_vars</action>
 			</action>
 		</page>

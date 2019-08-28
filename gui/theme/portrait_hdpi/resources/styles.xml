@@ -22,13 +22,17 @@
 		<style name="text_ab_subtitle">
 			<font resource="Secondary" color="%actbar_color%"/>
 		</style>
+
+		<style name="text_ab_subtitle_orange">
+			<font resource="Secondary" color="#ed6f02"/>
+		</style>
 		
 		<style name="about_name">
 			<font resource="font_l" color="#222222"/>
 		</style>
 		
 		<style name="about_info">
-			<font resource="body1" color="#666666"/>
+			<font resource="body1" color="%color_disable%"/>
 		</style>
 
 		<style name="text_dlg_title">

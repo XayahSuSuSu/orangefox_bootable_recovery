@@ -116,13 +116,13 @@
 
 			<text>
 				<condition var1="of_empty_dir" var2="1"/>
-				<font resource="Secondary" color="#666666"/>
+				<font resource="Secondary" color="%color_disable%"/>
 				<placement x="%center_x%" y="%empty_text_y%" placement="4"/>
 				<text>{@info_dir_empty}</text>
 			</text>
 			<text>
 				<condition var1="of_empty_dir" var2="2"/>
-				<font resource="Secondary" color="#666666"/>
+				<font resource="Secondary" color="%color_disable%"/>
 				<placement x="%center_x%" y="%empty_text_y%" placement="4"/>
 				<text>{@info_dir_empty_hidden}</text>
 			</text>
