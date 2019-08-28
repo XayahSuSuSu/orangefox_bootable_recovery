@@ -832,6 +832,27 @@ int GUITerminal::NotifyTouch(TOUCH_STATE state, int x, int y)
 	if (!isConditionTrue())
 		return -1;
 
+	// [f/d] hide/show keyboard
+	switch (state) {
+		case TOUCH_START:
+			blockKeyboard = false; break;
+		case TOUCH_DRAG:
+			if (abs(y - lastY) < touchDebounce)
+				break;
+			blockKeyboard = true; break;
+		case TOUCH_RELEASE:
+			if (!blockKeyboard) {
+				DataManager::SetValue("tw_hide_kb",
+					DataManager::GetIntValue("tw_hide_kb") == 0 ? 1 : 0);
+				#ifndef TW_NO_HAPTICS
+					DataManager::Vibrate("tw_button_vibrate");
+				#endif
+			}
+		break;
+		default:
+  		break;
+	}
+
 	// TODO: grab focus correctly
 	// TODO: fix focus handling in PageManager and GUIInput
 	SetInputFocus(1);

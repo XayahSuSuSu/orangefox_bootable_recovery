@@ -577,13 +577,6 @@
 				<placement x="%col1_x%" y="%terminal_y%" w="%terminal_width%" h="%terminal_nokb_height%"/>
 			</terminal>
 
-			<button>
-				<fill color="%transparent%"/>
-				<condition var1="tw_hide_kb" var2="1"/>
-				<placement x="%col1_x%" y="%terminal_y%" w="%terminal_width%" h="%terminal_nokb_height%"/>
-				<action function="set">tw_hide_kb=0</action>
-			</button>
-
 			<button style="actionbar">
 				<placement x="%ab_btn1_x%" y="%ab_y%" placement="4"/>
 				<action function="set">general_back=terminal</action>

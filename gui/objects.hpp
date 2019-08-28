@@ -847,6 +847,7 @@ protected:
 	TerminalEngine* engine; // non-visual parts of the terminal (text buffer etc.), not owned
 	int updateCounter; // to track if anything changed in the back-end
 	bool lastCondition; // to track if the condition became true and we might need to resize the terminal engine
+	bool blockKeyboard;
 };
 
 // GUIAnimation - Used for animations
