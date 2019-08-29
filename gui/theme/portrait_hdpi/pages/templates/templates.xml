@@ -498,7 +498,7 @@
 				<placement x="0" y="%ab_h%" w="%fileselector_width%" h="%fm_search_h%"/>
 				<sort name="tw_gui_sort_order"/>
 				<icon folder="folder_icon" file="file_icon" />
-				<filter name="tw_name_filter" folders="1" files="1" extnvar="fm_type_sort"/>
+				<filter name="tw_name_filter" folders="1" files="1" nav="0" extnvar="fm_type_sort"/>
 				<path name="tw_file_location1" default="/sdcard"/>
 				<data name="tw_filename1"/>
 				<selection name="tw_selection1"/>
@@ -511,7 +511,7 @@
 				<placement x="0" y="%ab_h%" w="%fileselector_width%" h="%fm_search_h%"/>
 				<sort name="tw_gui_sort_order"/>
 				<icon folder="folder_icon_small" file="file_icon_small"/>
-				<filter name="tw_name_filter" folders="1" files="1" extnvar="fm_type_sort"/>
+				<filter name="tw_name_filter" folders="1" files="1" nav="0" extnvar="fm_type_sort"/>
 				<path name="tw_file_location1" default="/sdcard"/>
 				<data name="tw_filename1"/>
 				<selection name="tw_selection1"/>
@@ -524,7 +524,7 @@
 				<placement x="0" y="%ab_h%" w="%fileselector_width%" h="%fm_search_num_h%"/>
 				<sort name="tw_gui_sort_order"/>
 				<icon folder="folder_icon" file="file_icon" />
-				<filter name="tw_name_filter" folders="1" files="1" extnvar="fm_type_sort"/>
+				<filter name="tw_name_filter" folders="1" files="1" nav="0" extnvar="fm_type_sort"/>
 				<path name="tw_file_location1" default="/sdcard"/>
 				<data name="tw_filename1"/>
 				<selection name="tw_selection1"/>
@@ -537,7 +537,7 @@
 				<placement x="0" y="%ab_h%" w="%fileselector_width%" h="%fm_search_num_h%"/>
 				<sort name="tw_gui_sort_order"/>
 				<icon folder="folder_icon_small" file="file_icon_small"/>
-				<filter name="tw_name_filter" folders="1" files="1" extnvar="fm_type_sort"/>
+				<filter name="tw_name_filter" folders="1" files="1" nav="0" extnvar="fm_type_sort"/>
 				<path name="tw_file_location1" default="/sdcard"/>
 				<data name="tw_filename1"/>
 				<selection name="tw_selection1"/>
@@ -546,6 +546,11 @@
 			
 			<template name="base_key"/>
 			
+			<action>
+				<condition var1="tw_file_location1" op="modified"/>
+				<action function="page">filemanagerlist</action>
+			</action>
+
 			<action>
 				<condition var1="tw_filename1" op="modified"/>
 				<condition var1="fm_auto_open" op="!=" var2="1"/>
