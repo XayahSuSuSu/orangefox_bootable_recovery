@@ -417,6 +417,7 @@
 		<variable name="terminal_y" value="280+%cutout_w%"/>
 		<variable name="terminal_width" value="1032"/>
 		<variable name="terminal_height" value="%screen_min_cut%-1210"/>
+		<variable name="terminal_num_height" value="%screen_min_cut%-1322"/>
 		<variable name="terminal_nokb_height" value="%screen_min_cut%-460"/>
 		
 		<!-- Dialogs -->

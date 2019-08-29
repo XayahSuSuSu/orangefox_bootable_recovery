@@ -553,40 +553,20 @@
 
 			<terminal>
 				<condition var1="tw_hide_kb" var2="0"/>
-				<condition var1="use_fixed_font" var2="0"/>
+				<condition var1="key_numbar" op="!=" var2="1"/>
 				<placement x="%col1_x%" y="%terminal_y%" w="%terminal_width%" h="%terminal_height%"/>
 			</terminal>
 
 			<terminal>
 				<condition var1="tw_hide_kb" var2="1"/>
-				<condition var1="use_fixed_font" var2="0"/>
 				<placement x="%col1_x%" y="%terminal_y%" w="%terminal_width%" h="%terminal_nokb_height%"/>
 			</terminal>
 
 			<terminal>
 				<condition var1="tw_hide_kb" var2="0"/>
-				<condition var1="use_fixed_font" var2="1"/>
-				<font resource="fixed" spacing="3" color="%text%"/>
-				<placement x="%col1_x%" y="%terminal_y%" w="%terminal_width%" h="%terminal_height%"/>
+				<condition var1="key_numbar" var2="1"/>
+				<placement x="%col1_x%" y="%terminal_y%" w="%terminal_width%" h="%terminal_num_height%"/>
 			</terminal>
-
-			<terminal>
-				<condition var1="tw_hide_kb" var2="1"/>
-				<condition var1="use_fixed_font" var2="1"/>
-				<font resource="fixed" spacing="3" color="%text%"/>
-				<placement x="%col1_x%" y="%terminal_y%" w="%terminal_width%" h="%terminal_nokb_height%"/>
-			</terminal>
-
-			<button style="actionbar">
-				<placement x="%ab_btn1_x%" y="%ab_y%" placement="4"/>
-				<action function="set">general_back=terminal</action>
-				<action function="page">ext_custom_other</action>
-			</button>
-
-			<image>
-				<placement x="%ab_btn1_x%" y="%ab_y%" placement="4"/>
-				<image resource="actionbar_settings"/>
-			</image>
 
 			<template name="keyboardtemplate"/>
 			<template name="keyboardterminaltemplate"/>

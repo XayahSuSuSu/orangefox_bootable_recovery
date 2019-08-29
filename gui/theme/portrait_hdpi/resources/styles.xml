@@ -223,7 +223,7 @@
 		<style name="terminal">
 			<fastscroll rectcolor="%accent%" w="%fastscroll_w%" rectw="%fastscroll_rectw%" recth="%fastscroll_recth%"/>
 			<background color="%background%"/>
-			<font resource="body1" spacing="1" color="%text%"/>
+			<font resource="fixed" spacing="3" color="%text%"/>
 		</style>
 		
 		<style name="slider_action">
