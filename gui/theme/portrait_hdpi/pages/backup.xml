@@ -214,7 +214,7 @@
 		</page>
 
 		<page name="backupname">
-			<template name="base_ex"/>
+			<template name="base_ex_key"/>
 
 			<text style="text_ab_title">
 				<placement x="%col1_x_indent%" y="%ab_bc_y%"/>
