@@ -548,6 +548,7 @@
 			
 			<action>
 				<condition var1="tw_file_location1" op="modified"/>
+				<action function="set">tw_reload_fm=1</action>
 				<action function="page">filemanagerlist</action>
 			</action>
 
