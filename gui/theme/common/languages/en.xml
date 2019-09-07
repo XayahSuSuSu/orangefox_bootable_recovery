@@ -923,6 +923,8 @@
 		<string name="mm_ver">Magisk Version</string>
 		<string name="mm_mod_ver">Module Version</string>
 		<string name="mm_remove">Remove module next boot</string>
+		<string name="mm_remove_hint">Reboot to changes take effect</string>
+		<string name="mm_remove_reboot">Reboot</string>
 		<string name="magisk_not_found">Magisk not found!</string>
 		<string name="magisk_not_found_1">Do you wanna go to Fox Addons</string>
 		<string name="magisk_not_found_2">and install prebuilded Magisk?</string>

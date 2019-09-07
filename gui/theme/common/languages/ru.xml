@@ -914,6 +914,8 @@
 		<string name="mm_ver">Версия Magisk</string>
 		<string name="mm_mod_ver">Версия модуля</string>
 		<string name="mm_remove">Удалить модуль при следующей загрузке</string>
+		<string name="mm_remove_hint">Перезагрузитесь для удаления</string>
+		<string name="mm_remove_reboot">Продолжить</string>
 		<string name="magisk_not_found">Magisk не найден!</string>
 		<string name="magisk_not_found_1">Хотите ли вы перейти в</string>
 		<string name="magisk_not_found_2">"Дополнения OrangeFox" и</string>

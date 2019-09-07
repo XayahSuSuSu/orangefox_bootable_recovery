@@ -201,7 +201,7 @@
 				<action function="page">magisk_actions</action>
 			</button>
 
-			<template name="base"/>
+			<template name="base_ex"/>
 
 			<text style="text_ab_title">
 				<placement x="%col1_x_indent%" y="%ab_bc_y%"/>
@@ -270,9 +270,29 @@
 				<listitem name="{@mm_remove}">
 					<condition var1="mmodule_remove" var2="0"/>
 					<icon res="checkbox_false"/>
-					<action function="ftls">touch "%mmgui_file%/remove" && twrp xset mmodule_remove=1</action>
+					<action function="page">magisk_delete</action>
 				</listitem>
 			</listbox>
+
+			<image>
+				<image resource="snackbar"/>
+				<condition var1="mmodule_remove" op="!=" var2="0"/>
+				<placement x="0" y="%row_nav_y%" placement="2"/>
+			</image>
+			
+			<text style="text_body1">
+				<condition var1="mmodule_remove" op="!=" var2="0"/>
+				<placement x="%snackbar_text_x%" y="%snackbar_text_y%"/>
+				<text>{@mm_remove_hint}</text>
+			</text>
+
+			<button style="btn_dlg_hl">
+				<condition var1="mmodule_remove" op="!=" var2="0"/>
+				<condition var1="tw_reboot_system" var2="1"/>
+				<placement x="%snackbar_button_x%" y="%snackbar_button_y%"/>
+				<text>{@mm_remove_reboot}</text>
+				<action function="page">reboot</action>
+			</button>
 
 			<action>
 				<touch key="home"/>
@@ -284,5 +304,45 @@
 				<action function="page">magisk</action>
 			</action>
 		</page>
+
+		<page name="magisk_delete">
+				<template name="base_ex"/>
+
+				<text style="text_ab_title">
+					<placement x="%col1_x_indent%" y="%ab_bc_y%"/>
+					<text>Magisk Manager</text>
+				</text>
+
+				<text style="text_ab_title">
+					<placement x="%col1_x_indent%" y="%row1_2_y%" placement="2"/>
+					<text>{@fm_delete_btn}</text>
+				</text>
+
+				<text style="text_ab_subtitle">
+					<placement x="%col1_x_indent%" y="%row1_2_y%"/>
+					<text>%ft_mm_name%</text>
+				</text>
+
+				<text style="caption">
+					<placement x="%center_x%" y="%slider_text_y%" placement="5"/>
+					<text>{@swipe_delete}</text>
+				</text>
+
+				<slider style="slider_action">
+					<placement x="%center_x%" y="%slider_y%" placement="5"/>
+					<action function="ftls">touch "%mmgui_file%/remove" && twrp xset mmodule_remove=1</action>
+					<action function="page">magisk_actions</action>
+				</slider>
+			
+				<action>
+					<touch key="home"/>
+					<action function="page">main</action>
+				</action>
+
+				<action>
+					<touch key="back"/>
+					<action function="page">magisk_actions</action>
+				</action>
+			</page>
 	</pages>
 </recovery>
