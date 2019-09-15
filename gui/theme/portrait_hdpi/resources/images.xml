@@ -128,6 +128,22 @@
 		<image name="up_icon_small" filename="Default/FileManager/up_small" retainaspect="1"/>
 		<image name="module_icon_small" filename="Default/FileManager/module_small" retainaspect="1"/>
 		<image name="module_icon" filename="Default/FileManager/module" retainaspect="1"/>
+		<image name="file_icon_small" filename="Default/FileManager/file_small" retainaspect="1"/>
+		<image name="file_icon" filename="Default/FileManager/file" retainaspect="1"/>
+		<image name="bkp_icon_small" filename="Default/FileManager/file_bkp_small" retainaspect="1"/>
+		<image name="bkp_icon" filename="Default/FileManager/file_bkp" retainaspect="1"/>
+		<image name="zip_icon_small" filename="Default/FileManager/zip_small" retainaspect="1"/>
+		<image name="zip_icon" filename="Default/FileManager/zip" retainaspect="1"/>
+		<image name="img_icon_small" filename="Default/FileManager/img_small" retainaspect="1"/>
+		<image name="img_icon" filename="Default/FileManager/img" retainaspect="1"/>
+		<image name="txt_icon_small" filename="Default/FileManager/txt_small" retainaspect="1"/>
+		<image name="txt_icon" filename="Default/FileManager/txt" retainaspect="1"/>
+		<image name="png_icon_small" filename="Default/FileManager/png_small" retainaspect="1"/>
+		<image name="png_icon" filename="Default/FileManager/png" retainaspect="1"/>
+		<image name="block_icon_small" filename="Default/FileManager/block_small" retainaspect="1"/>
+		<image name="block_icon" filename="Default/FileManager/block" retainaspect="1"/>
+		<image name="link_icon_small" filename="Default/FileManager/link_small" retainaspect="1"/>
+		<image name="link_icon" filename="Default/FileManager/link" retainaspect="1"/>
 		
 		<!-- Icons -->
 		<image name="bs_btn_open" filename="Default/Icons/bs_btn_open" retainaspect="1"/>
