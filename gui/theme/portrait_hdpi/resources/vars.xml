@@ -119,9 +119,9 @@
 		<variable name="ota_update_log_y" value="%center_y%+600"/>
 		
 		<!-- FAB above NavPanel -->
-		<variable name="btn_float_x" value="852"/>
-		<variable name="btn_float_y" value="%screen_h%-390"/>
-		<variable name="btn_float_nav_y" value="%screen_h%-540"/>
+		<variable name="btn_float_x" value="948"/>
+		<variable name="btn_float_y" value="%screen_h%-294"/>
+		<variable name="btn_float_nav_y" value="%screen_h%-444"/>
 		<variable name="btn_sfloat_1_y" value="%screen_h%-1104"/>
 		<variable name="btn_sfloat_2_y" value="%screen_h%-924"/>
 		<variable name="btn_sfloat_3_y" value="%screen_h%-744"/>
@@ -148,11 +148,11 @@
 		
 		<!-- UI w/ NavPanel -->
 		<variable name="row_btn2_np_y" value="%screen_h%-768"/>
-		<variable name="slider_np_y" value="%screen_h%-514"/>
+		<variable name="slider_np_y" value="%screen_h%-486"/>
 		<variable name="slider_text_np_y" value="%screen_h%-594"/>
 		
 		<!-- NavPanel colors -->
-		<variable name="color_disable" value="#666666"/>
+		<variable name="color_disable" value="#5F6368"/>
 		
 		<!-- Wait screens -->
 		<variable name="busy_text" value="%screen_h%-288"/>
@@ -170,11 +170,15 @@
 		<variable name="restore_part" value="%screen_min_cut%-1426"/>
 
 		<!-- Workshop -->
-		<variable name="ws_cards_y1" value="%cutout_w%+360"/>
-		<variable name="ws_cards_y2" value="%cutout_w%+720"/>
-		<variable name="ws_cards_y3" value="%cutout_w%+975"/>
-		<variable name="ws_cards_y4" value="%cutout_w%+1230"/>
+		<variable name="ws_cards_y1" value="%cutout_w%+488"/>
+		<variable name="ws_cards_y2" value="%cutout_w%+848"/>
+		<variable name="ws_cards_y3" value="%cutout_w%+1104"/>
+		<variable name="ws_cards_y4" value="%cutout_w%+1360"/>
 		<variable name="ws_cards_y5" value="%cutout_w%+1500"/>
+		<variable name="ws_cards_x1" value="156"/>
+		<variable name="ws_cards_x2" value="412"/>
+		<variable name="ws_cards_x3" value="668"/>
+		<variable name="ws_cards_x4" value="924"/>
 		
 		<!-- Splash -->
 		<variable name="spl_custom_btn" value="%screen_original_h%-30"/>
@@ -376,13 +380,12 @@
 		<variable name="ab_menu_inst_6_text_y" value="%ab_menu_inst_6_y%+%ab_menu_text_offset%"/>
 		
 		<!-- Bottom buttons -->
-		<variable name="row_btn_0y" value="%screen_h%-621"/>
-		<variable name="row_btn_y" value="%screen_h%-471"/>
-		<variable name="row_btn1_y" value="%screen_h%-321"/>
-		<variable name="row_btn2_y" value="%screen_h%-600"/>
-		<variable name="row_btn3_y" value="%screen_h%-750"/>
-		<variable name="btn_raised_left_x" value="27"/>
-		<variable name="btn_raised_right_x" value="1053"/>
+		<variable name="row_btn_y" value="%screen_h%-450"/>
+		<variable name="row_btn1_y" value="%screen_h%-300"/>
+		<variable name="row_btn2_y" value="%screen_h%-579"/>
+		<variable name="row_btn3_y" value="%screen_h%-729"/>
+		<variable name="btn_raised_left_x" value="48"/>
+		<variable name="btn_raised_right_x" value="1032"/>
 		
 		<!-- Progress -->
 		<variable name="progressbar_x" value="0"/>
@@ -459,14 +462,14 @@
 		
 		<!-- Sliders -->
 		<variable name="slider_x" value="48"/>
-		<variable name="slider_y" value="%screen_h%-346"/>
+		<variable name="slider_y" value="%screen_h%-320"/>
 		<variable name="slider_text_y" value="%screen_h%-425"/>
 		<variable name="slidervalue_w" value="984"/>
 		<variable name="slidervalue_lineh" value="6"/>
-		<variable name="slidervalue_padding" value="72"/>
-		<variable name="slidervalue_sliderw" value="120"/>
-		<variable name="slidervalue_sliderh" value="180"/>
-		<variable name="slider_y_l" value="%screen_h%-202"/>
+		<variable name="slidervalue_padding" value="0"/>
+		<variable name="slidervalue_sliderw" value="96"/>
+		<variable name="slidervalue_sliderh" value="96"/>
+		<variable name="slider_y_l" value="%screen_h%-176"/>
 		<variable name="slider_text_y_l" value="%screen_h%-281"/>
 		
 		<!-- Decrypt (gesture key) -->
@@ -482,7 +485,6 @@
 		<variable name="warning" value="#FF6600"/>
 		<variable name="error" value="#FF0000"/>
 		<variable name="unactive_title" value="#80868B"/>
-		<variable name="text_raisedbtn" value="#FFFFFF"/>
 		<variable name="highlight" value="%accent%"/>
 		
 		<!-- Centered title with icon (for decryption and setup wizard) -->

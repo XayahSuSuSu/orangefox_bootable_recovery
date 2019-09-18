@@ -21,11 +21,7 @@
 		<image name="actionbar_btn" filename="Default/ActionBar/actionbar_btn" retainaspect="1"/>
 		<image name="actionbar_btn_hl" filename="Default/ActionBar/actionbar_btn_hl" retainaspect="1"/>
 		
-		<image name="fab_accept" filename="Default/FAB/accept" retainaspect="1"/>
-		<image name="fab_close" filename="Default/FAB/close" retainaspect="1"/>
-		<image name="fab_add" filename="Default/FAB/add" retainaspect="1"/>
-		<image name="fab_usb" filename="Default/FAB/usb" retainaspect="1"/>
-		<image name="fab_credits" filename="Default/FAB/credits" retainaspect="1"/>
+		<image name="fab_shadow" filename="Default/FAB/fab_shadow" retainaspect="1"/>
 		
 		<!-- Fonts Preview -->
 		<font name="font1" filename="Roboto-Regular.ttf" size="42"/>
@@ -50,21 +46,10 @@
 		<image name="style_black" filename="Default/Workshop/StyleBlack" retainaspect="1"/>
 		<image name="style_night" filename="Default/Workshop/StyleNight" retainaspect="1"/>
 		<image name="style_light" filename="Default/Workshop/StyleLight" retainaspect="1"/>
-		<image name="color_amber" filename="Default/Workshop/ColorAmber" retainaspect="1"/>
-		<image name="color_blue" filename="Default/Workshop/ColorBlue" retainaspect="1"/>
-		<image name="color_cyan" filename="Default/Workshop/ColorCyan" retainaspect="1"/>
-		<image name="color_gray" filename="Default/Workshop/ColorGray" retainaspect="1"/>
-		<image name="color_fox" filename="Default/Workshop/ColorFox" retainaspect="1"/>
-		<image name="color_green" filename="Default/Workshop/ColorGreen" retainaspect="1"/>
-		<image name="color_red" filename="Default/Workshop/ColorRed" retainaspect="1"/>
-		<image name="color_purple" filename="Default/Workshop/ColorPurple" retainaspect="1"/>
-		<image name="color_pink" filename="Default/Workshop/ColorPink" retainaspect="1"/>
-		<image name="color_brown" filename="Default/Workshop/ColorBrown" retainaspect="1"/>
-		<image name="color_indigo" filename="Default/Workshop/ColorIndigo" retainaspect="1"/>
-		<image name="color_bluegray" filename="Default/Workshop/ColorBlueGray" retainaspect="1"/>
 		
 		<image name="style_apply" filename="Default/Workshop/style_apply" retainaspect="1"/>
 		<image name="style_apply_black" filename="Default/Workshop/style_apply_black" retainaspect="1"/>
+		<image name="style_shadow" filename="Default/Workshop/style_shadow" retainaspect="1"/>
 		
 		<image name="color_apply_w" filename="Default/Workshop/color_apply_w" retainaspect="1"/>
 		<image name="color_apply_d" filename="Default/Workshop/color_apply_d" retainaspect="1"/>
@@ -106,8 +91,6 @@
 		<image name="btn_flat_qw" filename="Default/Controls/btn_flat_qw"/>
 		<image name="checkbox_false" filename="Default/Controls/checkbox_false_d" retainaspect="1"/>
 		<image name="radio_false" filename="Default/Controls/radio_false_d" retainaspect="1"/>
-		<image name="checkbox_false_dialog" filename="Default/Controls/checkbox_false_dialog" retainaspect="1"/>
-		<image name="radio_false_dialog" filename="Default/Controls/radio_false_dialog" retainaspect="1"/>
 		<image name="switch_off" filename="Default/Controls/switch_off" retainaspect="1"/>
 		<image name="switch_on" filename="Default/Controls/switch_on" retainaspect="1"/>
 		<image name="progress_empty_small" filename="Default/Progress/progress_empty_small"/>

@@ -2,51 +2,51 @@
 <recovery>
 	<resources>
 		<!-- Controls -->
-		<image name="radio_true_dialog" filename="Orange/Controls/radio_true_dialog" retainaspect="1"/>
-		<image name="checkbox_true_dialog" filename="Orange/Controls/checkbox_true_dialog" retainaspect="1"/>
-		<image name="radio_true" filename="Orange/Controls/radio_true_d" retainaspect="1"/>
-		<image name="checkbox_true" filename="Orange/Controls/checkbox_true_d" retainaspect="1"/>
-		<image name="slider_used" filename="Orange/Controls/slider_used"/>
-		<image name="handle" filename="Orange/Controls/handle" retainaspect="1"/>
-		<image name="handle_h" filename="Orange/Controls/handle_h" retainaspect="1"/>
-		<image name="handle_h_classic" filename="Orange/Controls/handle_h_classic" retainaspect="1"/>
-		<image name="btn_raised_hl" filename="Orange/Controls/btn_raised_hl"/>
-		<image name="tab_hl" filename="Orange/Controls/tab"/>
+		<image name="radio_true" filename="DFox/Controls/radio_true_d" retainaspect="1"/>
+		<image name="checkbox_true" filename="DFox/Controls/checkbox_true_d" retainaspect="1"/>
+		<image name="slider_used" filename="DFox/Controls/slider_used"/>
+		<image name="handle" filename="DFox/Controls/handle" retainaspect="1"/>
+		<image name="handle_h" filename="DFox/Controls/handle_h" retainaspect="1"/>
+		<image name="handle_h_classic" filename="DFox/Controls/handle_h_classic" retainaspect="1"/>
+		<image name="btn_raised_hl" filename="DFox/Controls/btn_raised_hl"/>
+		<image name="tab_hl" filename="DFox/Controls/tab"/>
 
 		<!-- Nav panel -->
-		<image name="nav_menu" filename="Orange/NavPanel/menu" retainaspect="1"/>
-		<image name="nav_wipe" filename="Orange/NavPanel/wipe" retainaspect="1"/>
-		<image name="nav_files" filename="Orange/NavPanel/files" retainaspect="1"/>
-		<image name="nav_backup" filename="Orange/NavPanel/backup" retainaspect="1"/>
+		<image name="nav_menu" filename="DFox/NavPanel/menu" retainaspect="1"/>
+		<image name="nav_wipe" filename="DFox/NavPanel/wipe" retainaspect="1"/>
+		<image name="nav_files" filename="DFox/NavPanel/files" retainaspect="1"/>
+		<image name="nav_backup" filename="DFox/NavPanel/backup" retainaspect="1"/>
 		
 		<!-- FAB -->
-		<image name="fab" filename="Orange/FAB/fab" retainaspect="1"/>
-		<image name="fab_hl" filename="Orange/FAB/fab_hl" retainaspect="1"/>
+		<image name="fab" filename="DFox/FAB/fab" retainaspect="1"/>
+		<image name="fab_hl" filename="DFox/FAB/fab_hl" retainaspect="1"/>
 		
 		<!-- Info -->
-		<image name="icon_info" filename="Orange/Info/icon_info" retainaspect="1"/>
+		<image name="icon_info" filename="DFox/Info/icon_info" retainaspect="1"/>
 		
 		<!-- Keyboard -->
-		<image name="enter" filename="Orange/Keyboard/enter" retainaspect="1"/>
-		<image name="enter_new" filename="Orange/Keyboard/enter_new" retainaspect="1"/>
-		<image name="enter_num_new" filename="Orange/Keyboard/enter_num_new" retainaspect="1"/>
+		<image name="enter" filename="DFox/Keyboard/enter" retainaspect="1"/>
+		<image name="enter_new" filename="DFox/Keyboard/enter_new" retainaspect="1"/>
+		<image name="enter_num_new" filename="DFox/Keyboard/enter_num_new" retainaspect="1"/>
 
 		<!-- Nav Bar -->
-		<image name="home" filename="Orange/NavBar/home" retainaspect="1"/>
-		<image name="back" filename="Orange/NavBar/back" retainaspect="1"/>
-		<image name="slideout" filename="Orange/NavBar/slideout" retainaspect="1"/>
-		<image name="keyboard_hide" filename="Orange/NavBar/keyboard_hide" retainaspect="1"/>
-		<image name="home_ng" filename="Orange/NavBar/home_ng" retainaspect="1"/>
-		<image name="back_ng" filename="Orange/NavBar/back_ng" retainaspect="1"/>
-		<image name="slideout_ng" filename="Orange/NavBar/slideout_ng" retainaspect="1"/>
-		<image name="keyboard_hide_ng" filename="Orange/NavBar/keyboard_hide_ng" retainaspect="1"/>
-		<image name="back_pie" filename="Orange/NavBar/back_pie" retainaspect="1"/>
-		<image name="back_key_pie" filename="Orange/NavBar/back_key_pie" retainaspect="1"/>
-		<image name="home_pie" filename="Orange/NavBar/home_pie" retainaspect="1"/>
-		<image name="slideout_key_pie" filename="Orange/NavBar/slideout_key_pie" retainaspect="1"/>
+		<image name="home" filename="DFox/NavBar/home" retainaspect="1"/>
+		<image name="back" filename="DFox/NavBar/back" retainaspect="1"/>
+		<image name="slideout" filename="DFox/NavBar/slideout" retainaspect="1"/>
+		<image name="keyboard_hide" filename="DFox/NavBar/keyboard_hide" retainaspect="1"/>
+		<image name="home_ng" filename="DFox/NavBar/home_ng" retainaspect="1"/>
+		<image name="back_ng" filename="DFox/NavBar/back_ng" retainaspect="1"/>
+		<image name="slideout_ng" filename="DFox/NavBar/slideout_ng" retainaspect="1"/>
+		<image name="keyboard_hide_ng" filename="DFox/NavBar/keyboard_hide_ng" retainaspect="1"/>
+		<image name="back_pie" filename="DFox/NavBar/back_pie" retainaspect="1"/>
+		<image name="back_key_pie" filename="DFox/NavBar/back_key_pie" retainaspect="1"/>
+		<image name="home_pie" filename="DFox/NavBar/home_pie" retainaspect="1"/>
+		<image name="slideout_key_pie" filename="DFox/NavBar/slideout_key_pie" retainaspect="1"/>
 	</resources>
 	<variables>
 		<variable name="accent" value="#ed6f02"/>
-		<variable name="theme_accent" value="Orange"/>
+		<variable name="theme_accent_light" value="#ed6f02"/>
+		<variable name="theme_accent_dark" value="#D86100"/>
+		<variable name="theme_accent" value="Fox"/>
 	</variables>
 </recovery>

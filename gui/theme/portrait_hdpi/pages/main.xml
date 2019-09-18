@@ -111,6 +111,11 @@
 				<placement x="%center_x%" y="%welcome_text2%" placement="4"/>
 				<text>{@welcome_msg2}</text>
 			</text>
+			
+			<image>
+				<placement x="%center_x%" y="%btn_float_center_y%" placement="4"/>
+				<image resource="fab_shadow"/>
+			</image>
 
 			<button style="floating_btn">
 				<placement x="%center_x%" y="%btn_float_center_y%" placement="4"/>

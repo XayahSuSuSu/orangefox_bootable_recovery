@@ -20,7 +20,8 @@
 				<action function="set">theme_font_size_tmp=%theme_font_size%</action>
 				
 				<action function="set">theme_accent_tmp=%theme_accent%</action>
-				<action function="set">theme_accent_c_tmp=%accent%</action>
+				<action function="set">theme_accent_light_tmp=%theme_accent_light%</action>
+				<action function="set">theme_accent_dark_tmp=%theme_accent_dark%</action>
 				<action function="set">theme_style_tmp=%theme_style%</action>
 				<action function="set">theme_style_act_tmp=%theme_style_act%</action>
 				<action function="set">theme_pie_tmp=%theme_pie%</action>
@@ -937,105 +938,81 @@
 			</text>
 
 			<!-- Themes -->
-			<!-- Gray -->
-			<button>
-				<placement x="285" y="%ws_cards_y1%"/>
-				<condition var1="theme_accent_tmp" op="!=" var2="Black"/>
-				<image resource="style_black"/>
-				<action function="set">theme_style_tmp=Black</action>
-				<action function="set">theme_style_act_tmp=Gray</action>
-			</button>
+			<!-- Night -->
+			<image>
+				<placement x="%ws_cards_x1%" y="%ws_cards_y1%" placement="4"/>
+				<image resource="style_shadow"/>
+			</image>
 			
 			<button>
-				<placement x="285" y="%ws_cards_y1%"/>
-				<condition var1="theme_accent_tmp" var2="Black"/>
-				<image resource="style_black"/>
-				<action function="set">theme_style_tmp=Black</action>
-				<action function="set">theme_accent_c_tmp=9e9e9e</action>
-				<action function="set">theme_accent_tmp=Gray</action>
-				<action function="set">theme_style_act_tmp=Gray</action>
+				<placement x="%ws_cards_x1%" y="%ws_cards_y1%" placement="4"/>
+				<image resource="style_night"/>
+				<action function="set">theme_style_tmp=Night</action>
+				<action function="set">theme_style_act_tmp=DBlack</action>
 			</button>
 
 			<image>
-				<placement x="285" y="%ws_cards_y1%"/>
-				<condition var1="theme_style_tmp" var2="Black"/>
+				<placement x="%ws_cards_x1%" y="%ws_cards_y1%" placement="4"/>
+				<condition var1="theme_style_tmp" var2="Night"/>
 				<image resource="style_apply"/>
 			</image>
 			<!-- -->
 
-			<!-- Night -->
-			<button>
-				<placement x="30" y="%ws_cards_y1%"/>
-				<condition var1="theme_accent_tmp" op="!=" var2="Black"/>
-				<image resource="style_night"/>
-				<action function="set">theme_style_tmp=Night</action>
-				<action function="set">theme_style_act_tmp=Gray</action>
-			</button>
+			<!-- Gray -->
+			<image>
+				<placement x="%ws_cards_x2%" y="%ws_cards_y1%" placement="4"/>
+				<image resource="style_shadow"/>
+			</image>
 			
 			<button>
-				<placement x="30" y="%ws_cards_y1%"/>
-				<condition var1="theme_accent_tmp" var2="Black"/>
-				<image resource="style_night"/>
-				<action function="set">theme_style_tmp=Night</action>
-				<action function="set">theme_accent_tmp=Gray</action>
-				<action function="set">theme_accent_c_tmp=9e9e9e</action>
-				<action function="set">theme_style_act_tmp=Gray</action>
+				<placement x="%ws_cards_x2%" y="%ws_cards_y1%" placement="4"/>
+				<image resource="style_black"/>
+				<action function="set">theme_style_tmp=Black</action>
+				<action function="set">theme_style_act_tmp=DBlack</action>
 			</button>
 
 			<image>
-				<placement x="30" y="%ws_cards_y1%"/>
-				<condition var1="theme_style_tmp" var2="Night"/>
+				<placement x="%ws_cards_x2%" y="%ws_cards_y1%" placement="4"/>
+				<condition var1="theme_style_tmp" var2="Black"/>
 				<image resource="style_apply"/>
 			</image>
 			<!-- -->
 			
 			<!-- Black -->
+			<image>
+				<placement x="%ws_cards_x3%" y="%ws_cards_y1%" placement="4"/>
+				<image resource="style_shadow"/>
+			</image>
+
 			<button>
-				<placement x="540" y="%ws_cards_y1%"/>
-				<condition var1="theme_accent_tmp" op="!=" var2="Black"/>
+				<placement x="%ws_cards_x3%" y="%ws_cards_y1%" placement="4"/>
 				<image resource="style_gray"/>
 				<action function="set">theme_style_tmp=Gray</action>
-				<action function="set">theme_style_act_tmp=Gray</action>
-			</button>
-			
-			<button>
-				<placement x="540" y="%ws_cards_y1%"/>
-				<condition var1="theme_accent_tmp" var2="Black"/>
-				<image resource="style_gray"/>
-				<action function="set">theme_style_tmp=Gray</action>
-				<action function="set">theme_accent_tmp=Gray</action>
-				<action function="set">theme_accent_c_tmp=9e9e9e</action>
-				<action function="set">theme_style_act_tmp=Gray</action>
+				<action function="set">theme_style_act_tmp=DBlack</action>
 			</button>
 
 			<image>
-				<placement x="540" y="%ws_cards_y1%"/>
+				<placement x="%ws_cards_x3%" y="%ws_cards_y1%" placement="4"/>
 				<condition var1="theme_style_tmp" var2="Gray"/>
 				<image resource="style_apply"/>
 			</image>
 			<!-- -->
 
 			<!-- Light -->
+			<image>
+				<placement x="%ws_cards_x4%" y="%ws_cards_y1%" placement="4"/>
+				<image resource="style_shadow"/>
+			</image>
+
 			<button>
-				<placement x="795" y="%ws_cards_y1%"/>
-				<condition var1="theme_accent_tmp" op="!=" var2="Gray"/>
+				<placement x="%ws_cards_x4%" y="%ws_cards_y1%" placement="4"/>
 				<image resource="style_light"/>
 				<action function="set">theme_style_tmp=Light</action>
-				<action function="set">theme_style_act_tmp=Black</action>
-			</button>
-			
-			<button>
-				<placement x="795" y="%ws_cards_y1%"/>
-				<condition var1="theme_accent_tmp" var2="Gray"/>
-				<image resource="style_light"/>
-				<action function="set">theme_style_tmp=Light</action>
-				<action function="set">theme_accent_tmp=Black</action>
-				<action function="set">theme_accent_c_tmp=000000</action>
 				<action function="set">theme_style_act_tmp=Black</action>
 			</button>
 			
 			<image>
-				<placement x="795" y="%ws_cards_y1%"/>
+				<placement x="%ws_cards_x4%" y="%ws_cards_y1%" placement="4"/>
 				<condition var1="theme_style_tmp" var2="Light"/>
 				<image resource="style_apply_black"/>
 			</image>
@@ -1047,202 +1024,258 @@
 				<text>{@theme_accent}</text>
 			</text>
 
-			<!-- Orange -->
-			<button>
-				<placement x="30" y="%ws_cards_y2%"/>
-				<image resource="color_fox"/>
-				<action function="set">theme_accent_tmp=Orange</action>
-				<action function="set">theme_accent_c_tmp=ed6f02</action>
-			</button>
-
+			<!-- Fox -->
 			<image>
-				<condition var1="theme_accent_tmp" var2="Orange"/>
-				<placement x="30" y="%ws_cards_y2%"/>
-				<image resource="style_apply"/>
+				<placement x="%ws_cards_x1%" y="%ws_cards_y2%" placement="4"/>
+				<image resource="style_shadow"/>
 			</image>
-			<!-- -->
 
-			<!-- Blue -->
 			<button>
-				<placement x="285" y="%ws_cards_y2%"/>
-				<image resource="color_blue"/>
-				<action function="set">theme_accent_tmp=Blue</action>
-				<action function="set">theme_accent_c_tmp=1A73E8</action>
+				<placement x="%ws_cards_x1%" y="%ws_cards_y2%" placement="4"/>
+				<image resource="accent_fox"/>
+				<action function="set">theme_accent_tmp=Fox</action>
+				<action function="set">theme_accent_light_tmp=#D86100</action>
+				<action function="set">theme_accent_dark_tmp=#ED6F02</action>
 			</button>
-
-			<image>
-				<condition var1="theme_accent_tmp" var2="Blue"/>
-				<placement x="285" y="%ws_cards_y2%"/>
-				<image resource="style_apply"/>
-			</image>
-			<!-- -->
 			
-			<!-- Teal -->
-			<button>
-				<placement x="540" y="%ws_cards_y2%"/>
-				<image resource="color_cyan"/>
-				<action function="set">theme_accent_tmp=Teal</action>
-				<action function="set">theme_accent_c_tmp=009788</action>
-			</button>
-
 			<image>
-				<condition var1="theme_accent_tmp" var2="Teal"/>
-				<placement x="540" y="%ws_cards_y2%"/>
-				<image resource="style_apply"/>
+				<placement x="%ws_cards_x1%" y="%ws_cards_y2%" placement="4"/>
+				<condition var1="theme_accent_tmp" var2="Fox"/>
+				<image resource="accent_apply"/>
 			</image>
 			<!-- -->
 
-			<!-- Black / Gray (based on selected theme) -->
-			<button>
-				<condition var1="theme_style_tmp" op="!=" var2="Light"/>
-				<placement x="795" y="%ws_cards_y2%"/>
-				<image resource="color_gray"/>
-				<action function="set">theme_accent_tmp=Gray</action>
-				<action function="set">theme_accent_c_tmp=9e9e9e</action>
-			</button>
-
-			<button>
-				<condition var1="theme_style_tmp" var2="Light"/>
-				<placement x="795" y="%ws_cards_y2%"/>
-				<image resource="style_black"/>
-				<action function="set">theme_accent_tmp=Black</action>
-				<action function="set">theme_accent_c_tmp=000000</action>
-			</button>
-
+			<!-- Google -->
 			<image>
-				<condition var1="theme_accent_tmp" var2="Gray"/>
-				<condition var1="theme_style_tmp" op="!=" var2="Light"/>
-				<placement x="795" y="%ws_cards_y2%"/>
-				<image resource="style_apply"/>
+				<placement x="%ws_cards_x2%" y="%ws_cards_y2%" placement="4"/>
+				<image resource="style_shadow"/>
 			</image>
 
+			<button>
+				<placement x="%ws_cards_x2%" y="%ws_cards_y2%" placement="4"/>
+				<image resource="accent_google"/>
+				<action function="set">theme_accent_tmp=Google</action>
+				<action function="set">theme_accent_light_tmp=#1A73E8</action>
+				<action function="set">theme_accent_dark_tmp=#8AB4F8</action>
+			</button>
+			
 			<image>
+				<placement x="%ws_cards_x2%" y="%ws_cards_y2%" placement="4"/>
+				<condition var1="theme_accent_tmp" var2="Google"/>
+				<image resource="accent_apply"/>
+			</image>
+			<!-- -->
+
+			<!-- Lollipop -->
+			<image>
+				<placement x="%ws_cards_x3%" y="%ws_cards_y2%" placement="4"/>
+				<image resource="style_shadow"/>
+			</image>
+
+			<button>
+				<placement x="%ws_cards_x3%" y="%ws_cards_y2%" placement="4"/>
+				<image resource="accent_lollipop"/>
+				<action function="set">theme_accent_tmp=Lollipop</action>
+				<action function="set">theme_accent_light_tmp=#009788</action>
+				<action function="set">theme_accent_dark_tmp=#93BBBA</action>
+			</button>
+			
+			<image>
+				<placement x="%ws_cards_x3%" y="%ws_cards_y2%" placement="4"/>
+				<condition var1="theme_accent_tmp" var2="Lollipop"/>
+				<image resource="accent_apply"/>
+			</image>
+			<!-- -->
+
+			<!-- Black -->
+			<image>
+				<placement x="%ws_cards_x4%" y="%ws_cards_y2%" placement="4"/>
+				<image resource="style_shadow"/>
+			</image>
+
+			<button>
+				<placement x="%ws_cards_x4%" y="%ws_cards_y2%" placement="4"/>
+				<image resource="accent_black"/>
+				<action function="set">theme_accent_tmp=Black</action>
+				<action function="set">theme_accent_light_tmp=#202020</action>
+				<action function="set">theme_accent_dark_tmp=#D7DEE6</action>
+			</button>
+			
+			<image>
+				<placement x="%ws_cards_x4%" y="%ws_cards_y2%" placement="4"/>
 				<condition var1="theme_accent_tmp" var2="Black"/>
-				<condition var1="theme_style_tmp" var2="Light"/>
-				<placement x="795" y="%ws_cards_y2%"/>
-				<image resource="style_apply"/>
+				<image resource="accent_apply"/>
 			</image>
 			<!-- -->
 
 			<!-- Red -->
-			<button>
-				<placement x="30" y="%ws_cards_y3%"/>
-				<image resource="color_red"/>
-				<action function="set">theme_accent_tmp=Red</action>
-				<action function="set">theme_accent_c_tmp=E53935</action>
-			</button>
-
 			<image>
+				<placement x="%ws_cards_x1%" y="%ws_cards_y3%" placement="4"/>
+				<image resource="style_shadow"/>
+			</image>
+
+			<button>
+				<placement x="%ws_cards_x1%" y="%ws_cards_y3%" placement="4"/>
+				<image resource="accent_red"/>
+				<action function="set">theme_accent_tmp=Red</action>
+				<action function="set">theme_accent_light_tmp=#E53935</action>
+				<action function="set">theme_accent_dark_tmp=#FF5252</action>
+			</button>
+			
+			<image>
+				<placement x="%ws_cards_x1%" y="%ws_cards_y3%" placement="4"/>
 				<condition var1="theme_accent_tmp" var2="Red"/>
-				<placement x="30" y="%ws_cards_y3%"/>
-				<image resource="style_apply"/>
+				<image resource="accent_apply"/>
 			</image>
 			<!-- -->
 
-			<!-- Indigo -->
-			<button>
-				<placement x="285" y="%ws_cards_y3%"/>
-				<image resource="color_indigo"/>
-				<action function="set">theme_accent_tmp=Indigo</action>
-				<action function="set">theme_accent_c_tmp=3F51B5</action>
-			</button>
-
+			<!-- Orchid -->
 			<image>
-				<condition var1="theme_accent_tmp" var2="Indigo"/>
-				<placement x="285" y="%ws_cards_y3%"/>
-				<image resource="style_apply"/>
+				<placement x="%ws_cards_x2%" y="%ws_cards_y3%" placement="4"/>
+				<image resource="style_shadow"/>
+			</image>
+
+			<button>
+				<placement x="%ws_cards_x2%" y="%ws_cards_y3%" placement="4"/>
+				<image resource="accent_orchid"/>
+				<action function="set">theme_accent_tmp=Orchid</action>
+				<action function="set">theme_accent_light_tmp=#C42CC9</action>
+				<action function="set">theme_accent_dark_tmp=#E68AED</action>
+			</button>
+			
+			<image>
+				<placement x="%ws_cards_x2%" y="%ws_cards_y3%" placement="4"/>
+				<condition var1="theme_accent_tmp" var2="Orchid"/>
+				<image resource="accent_apply"/>
 			</image>
 			<!-- -->
 
 			<!-- Green -->
+			<image>
+				<placement x="%ws_cards_x3%" y="%ws_cards_y3%" placement="4"/>
+				<image resource="style_shadow"/>
+			</image>
+
 			<button>
-				<placement x="540" y="%ws_cards_y3%"/>
-				<image resource="color_green"/>
+				<placement x="%ws_cards_x3%" y="%ws_cards_y3%" placement="4"/>
+				<image resource="accent_green"/>
 				<action function="set">theme_accent_tmp=Green</action>
-				<action function="set">theme_accent_c_tmp=4caf50</action>
+				<action function="set">theme_accent_light_tmp=#1B873B</action>
+				<action function="set">theme_accent_dark_tmp=#84C188</action>
 			</button>
-
+			
 			<image>
+				<placement x="%ws_cards_x3%" y="%ws_cards_y3%" placement="4"/>
 				<condition var1="theme_accent_tmp" var2="Green"/>
-				<placement x="540" y="%ws_cards_y3%"/>
-				<image resource="style_apply"/>
+				<image resource="accent_apply"/>
 			</image>
 			<!-- -->
 
-			<!-- BlueGray -->
-			<button>
-				<placement x="795" y="%ws_cards_y3%"/>
-				<image resource="color_bluegray"/>
-				<action function="set">theme_accent_tmp=BlueGray</action>
-				<action function="set">theme_accent_c_tmp=607D8B</action>
-			</button>
-
+			<!-- Space -->
 			<image>
-				<condition var1="theme_accent_tmp" var2="BlueGray"/>
-				<placement x="795" y="%ws_cards_y3%"/>
-				<image resource="style_apply"/>
+				<placement x="%ws_cards_x4%" y="%ws_cards_y3%" placement="4"/>
+				<image resource="style_shadow"/>
+			</image>
+
+			<button>
+				<placement x="%ws_cards_x4%" y="%ws_cards_y3%" placement="4"/>
+				<image resource="accent_space"/>
+				<action function="set">theme_accent_tmp=Space</action>
+				<action function="set">theme_accent_light_tmp=#47618A</action>
+				<action function="set">theme_accent_dark_tmp=#99ACCC</action>
+			</button>
+			
+			<image>
+				<placement x="%ws_cards_x4%" y="%ws_cards_y3%" placement="4"/>
+				<condition var1="theme_accent_tmp" var2="Space"/>
+				<image resource="accent_apply"/>
 			</image>
 			<!-- -->
 
-			<!-- Pink -->
-			<button>
-				<placement x="30" y="%ws_cards_y4%"/>
-				<image resource="color_pink"/>
-				<action function="set">theme_accent_tmp=Pink</action>
-				<action function="set">theme_accent_c_tmp=ff5252</action>
-			</button>
-
+			<!-- Ocean -->
 			<image>
-				<condition var1="theme_accent_tmp" var2="Pink"/>
-				<placement x="30" y="%ws_cards_y4%"/>
-				<image resource="style_apply"/>
+				<placement x="%ws_cards_x1%" y="%ws_cards_y4%" placement="4"/>
+				<image resource="style_shadow"/>
+			</image>
+
+			<button>
+				<placement x="%ws_cards_x1%" y="%ws_cards_y4%" placement="4"/>
+				<image resource="accent_ocean"/>
+				<action function="set">theme_accent_tmp=Ocean</action>
+				<action function="set">theme_accent_light_tmp=#0C80A7</action>
+				<action function="set">theme_accent_dark_tmp=#28BDD7</action>
+			</button>
+			
+			<image>
+				<placement x="%ws_cards_x1%" y="%ws_cards_y4%" placement="4"/>
+				<condition var1="theme_accent_tmp" var2="Ocean"/>
+				<image resource="accent_apply"/>
 			</image>
 			<!-- -->
 
 			<!-- Purple -->
+			<image>
+				<placement x="%ws_cards_x2%" y="%ws_cards_y4%" placement="4"/>
+				<image resource="style_shadow"/>
+			</image>
+
 			<button>
-				<placement x="285" y="%ws_cards_y4%"/>
-				<image resource="color_purple"/>
+				<placement x="%ws_cards_x2%" y="%ws_cards_y4%" placement="4"/>
+				<image resource="accent_purple"/>
 				<action function="set">theme_accent_tmp=Purple</action>
-				<action function="set">theme_accent_c_tmp=7750FB</action>
+				<action function="set">theme_accent_light_tmp=#725AFF</action>
+				<action function="set">theme_accent_dark_tmp=#B5A9FC</action>
 			</button>
-
+			
 			<image>
+				<placement x="%ws_cards_x2%" y="%ws_cards_y4%" placement="4"/>
 				<condition var1="theme_accent_tmp" var2="Purple"/>
-				<placement x="285" y="%ws_cards_y4%"/>
-				<image resource="style_apply"/>
+				<image resource="accent_apply"/>
 			</image>
 			<!-- -->
 
-			<!-- Amber -->
-			<button>
-				<placement x="540" y="%ws_cards_y4%"/>
-				<image resource="color_amber"/>
-				<action function="set">theme_accent_tmp=Amber</action>
-				<action function="set">theme_accent_c_tmp=CF9D06</action>
-			</button>
-
+			<!-- Yellow -->
 			<image>
-				<condition var1="theme_accent_tmp" var2="Amber"/>
-				<placement x="540" y="%ws_cards_y4%"/>
-				<image resource="style_apply"/>
+				<placement x="%ws_cards_x3%" y="%ws_cards_y4%" placement="4"/>
+				<image resource="style_shadow"/>
 			</image>
-			<!-- -->
 
-			<!-- Brown -->
 			<button>
-				<placement x="795" y="%ws_cards_y4%"/>
-				<image resource="color_brown"/>
-				<action function="set">theme_accent_tmp=Brown</action>
-				<action function="set">theme_accent_c_tmp=795548</action>
+				<placement x="%ws_cards_x3%" y="%ws_cards_y4%" placement="4"/>
+				<image resource="accent_yellow"/>
+				<action function="set">theme_accent_tmp=Yellow</action>
+				<action function="set">theme_accent_light_tmp=#E6AF05</action>
+				<action function="set">theme_accent_dark_tmp=#E6E68C</action>
 			</button>
-
+			
 			<image>
-				<condition var1="theme_accent_tmp" var2="Brown"/>
-				<placement x="795" y="%ws_cards_y4%"/>
-				<image resource="style_apply"/>
+				<placement x="%ws_cards_x3%" y="%ws_cards_y4%" placement="4"/>
+				<condition var1="theme_accent_tmp" var2="Yellow"/>
+				<image resource="accent_apply"/>
 			</image>
 			<!-- -->
+
+			<!-- Cinnamon -->
+			<image>
+				<placement x="%ws_cards_x4%" y="%ws_cards_y4%" placement="4"/>
+				<image resource="style_shadow"/>
+			</image>
+
+			<button>
+				<placement x="%ws_cards_x4%" y="%ws_cards_y4%" placement="4"/>
+				<image resource="accent_cinnamon"/>
+				<action function="set">theme_accent_tmp=Cinnamon</action>
+				<action function="set">theme_accent_light_tmp=#AF6050</action>
+				<action function="set">theme_accent_dark_tmp=#C3A6A2</action>
+			</button>
+			
+			<image>
+				<placement x="%ws_cards_x4%" y="%ws_cards_y4%" placement="4"/>
+				<condition var1="theme_accent_tmp" var2="Cinnamon"/>
+				<image resource="accent_apply"/>
+			</image>
+			<!-- -->
+
 			
 			<action>
 				<condition var1="theme_style_tmp" op="modified"/>
@@ -1668,21 +1701,42 @@
 					fi;
 				
 					#Accent
-					if [[ '%update_accent%' = '1' ]]; then
-						cat "/twres/themes/sed/accent.xml" | sed -e "
-						s/#ACCENT#/%theme_accent_tmp%/g;
-						s/#COLOR#/%theme_accent_c_tmp%/g
-						" > /sdcard/Fox/.theme/accent.xml;
+					if [[ '%update_accent%' = '1' ]] || [[ '%update_style%' = '1' ]]; then
+						if [[ '%theme_style_act_tmp%' = 'DBlack' ]]; then
+							cat "/twres/themes/sed/accent.xml" | sed -e "
+							s/#ACCENT#/D%theme_accent_tmp%/g;
+							s/#ACCENT_NAME#/%theme_accent_tmp%/g;
+							s/#COLOR#/%theme_accent_dark_tmp%/g;
+							s/#COLOR_LIGHT#/%theme_accent_light_tmp%/g;
+							s/#COLOR_DARK#/%theme_accent_dark_tmp%/g
+							" > /sdcard/Fox/.theme/accent.xml;
+						else
+							cat "/twres/themes/sed/accent.xml" | sed -e "
+							s/#ACCENT#/%theme_accent_tmp%/g;
+							s/#ACCENT_NAME#/%theme_accent_tmp%/g;
+							s/#COLOR#/%theme_accent_light_tmp%/g;
+							s/#COLOR_LIGHT#/%theme_accent_light_tmp%/g;
+							s/#COLOR_DARK#/%theme_accent_dark_tmp%/g
+							" > /sdcard/Fox/.theme/accent.xml;
+						fi;
 					fi;
 
 					#ActBar
 					if [[ '%update_action%' = '1' ]] || [[ '%update_style%' = '1' ]] || [[ '%update_accent%' = '1' ]]; then
 						if [[ '%theme_pie_tmp%' = '1' ]]; then
-							cat "/twres/themes/sed/action.xml" | sed -e "
-							s/#ACCENT#/%theme_accent_tmp%/g;
-							s/#A_COLOR#/accent/g;
-							s/#ENABLE#/1/g
-							" > /sdcard/Fox/.theme/action.xml;
+							if [[ '%theme_style_act_tmp%' = 'DBlack' ]]; then
+								cat "/twres/themes/sed/action.xml" | sed -e "
+								s/#ACCENT#/D%theme_accent_tmp%/g;
+								s/#A_COLOR#/accent/g;
+								s/#ENABLE#/1/g
+								" > /sdcard/Fox/.theme/action.xml;
+							else
+								cat "/twres/themes/sed/action.xml" | sed -e "
+								s/#ACCENT#/%theme_accent_tmp%/g;
+								s/#A_COLOR#/accent/g;
+								s/#ENABLE#/1/g
+								" > /sdcard/Fox/.theme/action.xml;
+							fi;
 						else
 							cat "/twres/themes/sed/action.xml" | sed -e "
 							s/#ACCENT#/%theme_style_act_tmp%/g;

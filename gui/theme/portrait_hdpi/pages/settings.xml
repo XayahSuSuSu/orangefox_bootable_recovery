@@ -441,7 +441,7 @@
 
 			<slidervalue>
 				<condition var1="tw_has_brightnesss_file" var2="1"/>
-				<placement x="%slider_x%" y="%row1_2a_y%" w="%slidervalue_w%"/>
+				<placement x="%slider_x%" y="%row1_3_y%" w="%slidervalue_w%"/>
 				<data variable="tw_brightness_pct" min="10" max="100" showrange="0" showcurr="0" changeondrag="1"/>
 				<action function="set">tw_brightness=%tw_brightness_max%</action>
 				<action function="compute">tw_brightness*%tw_brightness_pct%</action>
@@ -465,7 +465,7 @@
 
 			<slidervalue>
 				<condition var1="tw_no_screen_timeout" op="!=" var2="1"/>
-				<placement x="%slider_x%" y="%row3_1_y%" w="%slidervalue_w%"/>
+				<placement x="%slider_x%" y="%row3_1a_y%" w="%slidervalue_w%"/>
 				<data variable="tw_screen_timeout_secs" min="0" max="300" showrange="0" showcurr="0" changeondrag="1"/>
 			</slidervalue>
 
@@ -519,7 +519,7 @@
 			</text>
 
 			<slidervalue>
-				<placement x="%slider_x%" y="%row1_2a_y%" w="%slidervalue_w%"/>
+				<placement x="%slider_x%" y="%row1_3_y%" w="%slidervalue_w%"/>
 				<data variable="tw_button_vibrate" min="0" max="300" showrange="0" showcurr="0" changeondrag="1"/>
 			</slidervalue>
 
@@ -536,7 +536,7 @@
 			</text>
 
 			<slidervalue>
-				<placement x="%slider_x%" y="%row3_1_y%" w="%slidervalue_w%"/>
+				<placement x="%slider_x%" y="%row3_1a_y%" w="%slidervalue_w%"/>
 				<data variable="tw_keyboard_vibrate" min="0" max="300" showrange="0" showcurr="0" changeondrag="1"/>
 			</slidervalue>
 
@@ -553,7 +553,7 @@
 			</text>
 
 			<slidervalue>
-				<placement x="%slider_x%" y="%row4_2a_y%" w="%slidervalue_w%"/>
+				<placement x="%slider_x%" y="%row4_3_y%" w="%slidervalue_w%"/>
 				<data variable="tw_action_vibrate" min="0" max="500" showrange="0" showcurr="0" changeondrag="1"/>
 			</slidervalue>
 
@@ -1020,6 +1020,13 @@
 			<!-- Card -->
 			
 			<!-- Credits button when maintainer is OrangeFox developer -->
+			<image>
+				<condition var1="of_maintainer" op="&lt;=" var2="3"/>
+				<condition var1="of_maintainer" op="&gt;=" var2="1"/>
+				<placement x="%center_x%" y="%btn_float_center_y%" placement="4"/>
+				<image resource="fab_shadow"/>
+			</image>
+
 			<button style="floating_btn">
 				<condition var1="of_maintainer" op="&lt;=" var2="3"/>
 				<condition var1="of_maintainer" op="&gt;=" var2="1"/>
@@ -1166,19 +1173,19 @@
 			<image>
 				<condition var1="credits_page" var2="0"/>
 				<image resource="tab_hl"/>
-				<placement x="0" y="%tab_title_h%" placement="2"/>
+				<placement x="24" y="%tab_title_h%" placement="2"/>
 			</image>
 
 			<image>
 				<condition var1="credits_page" var2="1"/>
 				<image resource="tab_hl"/>
-				<placement x="360" y="%tab_title_h%" placement="2"/>
+				<placement x="384" y="%tab_title_h%" placement="2"/>
 			</image>
 
 			<image>
 				<condition var1="credits_page" var2="2"/>
 				<image resource="tab_hl"/>
-				<placement x="720" y="%tab_title_h%" placement="2"/>
+				<placement x="744" y="%tab_title_h%" placement="2"/>
 			</image>
 			
 			<action>

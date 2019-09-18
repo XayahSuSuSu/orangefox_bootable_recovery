@@ -47,20 +47,40 @@
 		<!-- ota -->
 		<image name="ota_icon" filename="Light/FullscreenIcons/ota_icon" retainaspect="1"/>
 		<image name="progress_fill_small" filename="Light/Progress/progress_fill_small"/>
+
+		<!-- Accents -->
+		<image name="accent_black" filename="Light/Workshop/accent_black" retainaspect="1"/>
+		<image name="accent_fox" filename="Light/Workshop/accent_fox" retainaspect="1"/>
+		<image name="accent_google" filename="Light/Workshop/accent_google" retainaspect="1"/>
+		<image name="accent_cinnamon" filename="Light/Workshop/accent_cinnamon" retainaspect="1"/>
+		<image name="accent_ocean" filename="Light/Workshop/accent_ocean" retainaspect="1"/>
+		<image name="accent_orchid" filename="Light/Workshop/accent_orchid" retainaspect="1"/>
+		<image name="accent_purple" filename="Light/Workshop/accent_purple" retainaspect="1"/>
+		<image name="accent_lollipop" filename="Light/Workshop/accent_lollipop" retainaspect="1"/>
+		<image name="accent_space" filename="Light/Workshop/accent_space" retainaspect="1"/>
+		<image name="accent_red" filename="Light/Workshop/accent_red" retainaspect="1"/>
+		<image name="accent_green" filename="Light/Workshop/accent_green" retainaspect="1"/>
+		<image name="accent_yellow" filename="Light/Workshop/accent_yellow" retainaspect="1"/>
+		<image name="accent_apply" filename="Default/Workshop/style_apply" retainaspect="1"/>
+		
+		<image name="fab_accept" filename="Light/FAB/accept" retainaspect="1"/>
+		<image name="fab_close" filename="Light/FAB/close" retainaspect="1"/>
+		<image name="fab_add" filename="Light/FAB/add" retainaspect="1"/>
+		<image name="fab_usb" filename="Light/FAB/usb" retainaspect="1"/>
+		<image name="fab_credits" filename="Light/FAB/credits" retainaspect="1"/>
 	</resources>
 	<variables>
 		<variable name="background" value="#ffffff"/>
 		
 		<variable name="highlight_color" value="#ffffff66"/>
 		<variable name="highlight_color_full" value="#E9E9E944"/>
-		<variable name="text" value="#666666"/>
-		<variable name="text_action" value="#0000000"/>
-		<variable name="text_status" value="#666666"/>
-		<variable name="text_menu" value="#666666"/>
-		<variable name="text_light" value="#666666"/>
-		<variable name="text_dark" value="#666666"/>
-		<variable name="console_foreground" value="#666666"/>
-		<variable name="linecolor" value="#66666644"/>
+		<variable name="text" value="#202124"/>
+		<variable name="text_action" value="#202124"/>
+		<variable name="text_status" value="#5F6368"/>
+		<variable name="text_menu" value="#202124"/>
+		<variable name="text_light" value="#202124"/>
+		<variable name="text_hl_btn" value="#FFFFFF"/>
+		<variable name="linecolor" value="#5F636844"/>
 		<variable name="darktransparent" value="#ffffffBB"/>
 		<variable name="theme_style" value="Light"/>
 		<variable name="theme_style_act" value="Black"/>

@@ -37,8 +37,7 @@
 				<text>{@cpu_temp} | %tw_battery_charge%</text>
 			</text>
 
-			<text color="%text_light%">
-				<font resource="caption"/>
+			<text style="caption">
 				<condition var1="lock_btn" var2="0"/>
 				<condition var1="navbar_disable" op="!=" var2="1"/>
 				<placement x="%center_x%" y="%slider_text_y_l%" placement="5"/>
@@ -52,8 +51,7 @@
 				<action function="overlay"/>
 			</slider>
 			
-			<text color="%text_light%">
-				<font resource="caption"/>
+			<text style="caption">
 				<condition var1="lock_btn" var2="0"/>
 				<condition var1="navbar_disable" var2="1"/>
 				<placement x="%center_x%" y="%slider_text_y%" placement="5"/>

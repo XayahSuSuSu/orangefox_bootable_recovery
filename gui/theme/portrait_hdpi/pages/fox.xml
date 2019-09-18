@@ -291,14 +291,19 @@
 				<listitem name="ext_custom_fonts_cn">ext_custom_fonts_cn</listitem>
 				<listitem name="ext_custom_fonts">ext_custom_fonts</listitem>
 			</listbox>
+			
+			<image>
+				<placement x="%btn_float_x%" y="%btn_float_y%" placement="4"/>
+				<image resource="fab_shadow"/>
+			</image>
 
 			<button style="floating_btn">
-				<placement x="%btn_float_x%" y="%btn_float_y%"/>
+				<placement x="%btn_float_x%" y="%btn_float_y%" placement="4"/>
 				<action function="page">%dbg_page%</action>
 			</button>
 			
 			<image>
-				<placement x="%btn_float_x%" y="%btn_float_y%"/>
+				<placement x="%btn_float_x%" y="%btn_float_y%" placement="4"/>
 				<image resource="fab_accept"/>
 			</image>
 

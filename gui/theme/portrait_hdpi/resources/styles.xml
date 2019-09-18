@@ -60,7 +60,7 @@
 		</style>
 
 		<style name="text_body2_dark">
-			<font resource="body2" color="%text_dark%"/>
+			<font resource="body2" color="%color_disable%"/>
 		</style>
 
 		<style name="text_body2_hl">
@@ -72,7 +72,7 @@
 		</style>
 
 		<style name="caption">
-			<font resource="caption" color="%text_light%"/>
+			<font resource="caption" color="%accent%"/>
 		</style>
 
 		<style name="caption_hl">
@@ -104,25 +104,25 @@
 
 		<style name="btn_raised">
 			<highlight color="%highlight_color%"/>
-			<font resource="Secondary" color="%text_raisedbtn%"/>
+			<font resource="Secondary" color="%accent%"/>
 			<image resource="btn_raised"/>
 		</style>
 
 		<style name="btn_raised_warn">
 			<highlight color="%highlight_color%"/>
-			<font resource="Secondary" color="%text_raisedbtn%"/>
+			<font resource="Secondary" color="#FFFFFF"/>
 			<image resource="btn_raised_warn"/>
 		</style>
 
 		<style name="btn_raised_hl">
 			<highlight color="%highlight_color%"/>
-			<font resource="Secondary" color="%text_raisedbtn%"/>
+			<font resource="Secondary" color="%text_hl_btn%"/>
 			<image resource="btn_raised_hl"/>
 		</style>
 
 		<style name="btn_flat_qw">
 			<highlight color="%highlight_color%"/>
-			<font resource="Secondary" color="%text_raisedbtn%"/>
+			<font resource="Secondary" color="%accent%"/>
 			<image resource="btn_flat_qw"/>
 		</style>
 
@@ -149,6 +149,7 @@
 			<background color="%background%"/>
 			<fastscroll rectcolor="%accent%" w="%fastscroll_w%" rectw="%fastscroll_rectw%" recth="%fastscroll_recth%" />
 			<icon selected="checkbox_true" unselected="checkbox_false"/>
+			<iconsize w="150" h="90" padding="-8"/>
 			<font resource="body1" spacing="%fileselector_spacing%" color="%text%" />
 		</style>
 
@@ -162,6 +163,7 @@
 			<highlight color="%highlight_color_full%"/>
 			<fastscroll rectcolor="%accent%" w="%fastscroll_w%" rectw="%fastscroll_rectw%" recth="%fastscroll_recth%" />
 			<icon selected="radio_true" unselected="radio_false" />
+			<iconsize w="150" h="90" padding="-8"/>
 			<font resource="body1" spacing="%fileselector_spacing%" color="%text%" />
 		</style>
 		
@@ -183,6 +185,7 @@
 			<highlight color="%highlight_color_full%"/>
 			<fastscroll rectcolor="%accent%" w="%fastscroll_w%" rectw="%fastscroll_rectw%" recth="%fastscroll_recth%" />
 			<icon selected="checkbox_true" unselected="checkbox_false" />
+			<iconsize w="150" h="90" padding="-8"/>
 			<font resource="body1" spacing="%fileselector_spacing%" color="%text%" />
 		</style>
 
@@ -190,7 +193,8 @@
 			<background color="%background%"/>
 			<highlight color="%highlight_color_full%"/>
 			<fastscroll rectcolor="%accent%" w="%fastscroll_w%" rectw="%fastscroll_rectw%" recth="%fastscroll_recth%" />
-			<icon selected="radio_true_dialog" unselected="radio_false_dialog" />
+			<icon selected="radio_true" unselected="radio_false" />
+			<iconsize w="171" h="90" padding="-16"/>
 			<font resource="body1" spacing="%fileselector_spacing%" color="%text%"/>
 		</style>
 
@@ -199,6 +203,7 @@
 			<highlight color="%highlight_color_full%"/>
 			<fastscroll rectcolor="%accent%" w="%fastscroll_w%" rectw="%fastscroll_rectw%" recth="%fastscroll_recth%" />
 			<icon selected="radio_true" unselected="radio_false" />
+			<iconsize w="150" h="90" padding="-8"/>
 			<font resource="body1" spacing="%fileselector_spacing%" color="%text%" />
 		</style>
 
@@ -231,7 +236,7 @@
 		</style>
 		
 		<style name="console">
-			<color foreground="%console_foreground%" background="%background%" scroll="%background%"/>
+			<color foreground="%text%" background="%background%" scroll="%background%"/>
 			<font resource="body1"/>
 		</style>	
 		<style name="floating_btn">
@@ -245,7 +250,7 @@
 		<style name="slidervalue">
 			<resource background="slider_used" handle="handle" handlehover="handle_h"/>
 			<font resource="caption" color="%text%"/>
-			<colors line="%text_dark%" slider="%accent%"/>
+			<colors line="%color_disable%" slider="%accent%"/>
 			<dimensions lineh="%slidervalue_lineh%" linepadding="%slidervalue_padding%" sliderw="%slidervalue_sliderw%" sliderh="%slidervalue_sliderh%"/>
 		</style>
 
@@ -259,7 +264,7 @@
 			<image resource="switch_off"/>
 		</style>
 		<style name="patternpassword">
-			<dot color="%text_dark%" activecolor="%accent%" radius="%pattern_dot_dia%"/>
+			<dot color="%color_disable%" activecolor="%accent%" radius="%pattern_dot_dia%"/>
 			<line color="%accent%" width="%pattern_line_w%"/>
 			<size name="tw_gui_pattern_grid_size" default="3"/>
 		</style>

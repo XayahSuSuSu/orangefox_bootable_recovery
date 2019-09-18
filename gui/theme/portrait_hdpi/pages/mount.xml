@@ -74,16 +74,22 @@
 				<listtype name="mount"/>
 			</partitionlist>
 			
+			<image>
+				<condition var1="tw_has_usb_storage" var2="1"/>
+				<placement x="%btn_float_x%" y="%btn_float_y%" placement="4"/>
+				<image resource="fab_shadow"/>
+			</image>
+			
 			<button style="floating_btn">
 				<condition var1="tw_has_usb_storage" var2="1"/>
-				<placement x="%btn_float_x%" y="%btn_float_y%"/>
+				<placement x="%btn_float_x%" y="%btn_float_y%" placement="4"/>
 				<action function="mount">usb</action>
 				<action function="page">usb_mount</action>
 			</button>
 			
 			<image>
 				<condition var1="tw_has_usb_storage" var2="1"/>
-				<placement x="%btn_float_x%" y="%btn_float_y%"/>
+				<placement x="%btn_float_x%" y="%btn_float_y%" placement="4"/>
 				<image resource="fab_usb"/>
 			</image>
 

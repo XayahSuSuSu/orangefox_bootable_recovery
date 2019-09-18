@@ -602,10 +602,16 @@
 					<data name="part_option"/>
 					<listtype name="part_option"/>
 				</partitionlist>
+			
+				<image>
+					<condition var1="part_option"/>
+					<placement x="%btn_float_x%" y="%btn_float_y%" placement="4"/>
+					<image resource="fab_shadow"/>
+				</image>
 
 				<button style="floating_btn">
 					<condition var1="part_option"/>
-					<placement x="%btn_float_x%" y="%btn_float_y%"/>
+					<placement x="%btn_float_x%" y="%btn_float_y%" placement="4"/>
 					<action function="set">part_option_c=%part_option%;</action>
 					<action function="checkpartitionlist">part_option_c</action>
 					<action function="page">checkpartitionlist</action>
@@ -613,7 +619,7 @@
 				
 				<image>
 					<condition var1="part_option"/>
-					<placement x="%btn_float_x%" y="%btn_float_y%"/>
+					<placement x="%btn_float_x%" y="%btn_float_y%" placement="4"/>
 					<image resource="fab_accept"/>
 				</image>
 

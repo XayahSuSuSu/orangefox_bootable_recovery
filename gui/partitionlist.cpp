@@ -59,16 +59,24 @@ GUIPartitionList::GUIPartitionList(xml_node<>* node) : GUIScrollList(node)
 	}
 
 	int iconWidth = 0, iconHeight = 0;
-	if (mIconSelected && mIconSelected->GetResource() && mIconUnselected && mIconUnselected->GetResource()) {
-		iconWidth = std::max(mIconSelected->GetWidth(), mIconUnselected->GetWidth());
-		iconHeight = std::max(mIconSelected->GetHeight(), mIconUnselected->GetHeight());
-	} else if (mIconSelected && mIconSelected->GetResource()) {
-		iconWidth = mIconSelected->GetWidth();
-		iconHeight = mIconSelected->GetHeight();
-	} else if (mIconUnselected && mIconUnselected->GetResource()) {
-		iconWidth = mIconUnselected->GetWidth();
-		iconHeight = mIconUnselected->GetHeight();
+
+	child = FindNode(node, "iconsize");
+	if (child) {
+		iconWidth = LoadAttrIntScaleX(child, "w", iconWidth);
+		iconHeight = LoadAttrIntScaleY(child, "h", iconHeight);
+	} else {
+		if (mIconSelected && mIconSelected->GetResource() && mIconUnselected && mIconUnselected->GetResource()) {
+			iconWidth = std::max(mIconSelected->GetWidth(), mIconUnselected->GetWidth());
+			iconHeight = std::max(mIconSelected->GetHeight(), mIconUnselected->GetHeight());
+		} else if (mIconSelected && mIconSelected->GetResource()) {
+			iconWidth = mIconSelected->GetWidth();
+			iconHeight = mIconSelected->GetHeight();
+		} else if (mIconUnselected && mIconUnselected->GetResource()) {
+			iconWidth = mIconUnselected->GetWidth();
+			iconHeight = mIconUnselected->GetHeight();
+		}
 	}
+	
 	SetMaxIconSize(iconWidth, iconHeight);
 
 	child = FindNode(node, "listtype");

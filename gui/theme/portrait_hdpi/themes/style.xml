@@ -51,6 +51,27 @@
 		<!-- ota -->
 		<image name="ota_icon" filename="Default/FullscreenIcons/ota_icon" retainaspect="1"/>
 		<image name="progress_fill_small" filename="Default/Progress/progress_fill_small"/>
+
+		<!-- Accents -->
+		<image name="accent_black" filename="Default/Workshop/accent_black" retainaspect="1"/>
+		<image name="accent_fox" filename="Default/Workshop/accent_fox" retainaspect="1"/>
+		<image name="accent_google" filename="Default/Workshop/accent_google" retainaspect="1"/>
+		<image name="accent_cinnamon" filename="Default/Workshop/accent_cinnamon" retainaspect="1"/>
+		<image name="accent_ocean" filename="Default/Workshop/accent_ocean" retainaspect="1"/>
+		<image name="accent_orchid" filename="Default/Workshop/accent_orchid" retainaspect="1"/>
+		<image name="accent_purple" filename="Default/Workshop/accent_purple" retainaspect="1"/>
+		<image name="accent_lollipop" filename="Default/Workshop/accent_lollipop" retainaspect="1"/>
+		<image name="accent_space" filename="Default/Workshop/accent_space" retainaspect="1"/>
+		<image name="accent_red" filename="Default/Workshop/accent_red" retainaspect="1"/>
+		<image name="accent_green" filename="Default/Workshop/accent_green" retainaspect="1"/>
+		<image name="accent_yellow" filename="Default/Workshop/accent_yellow" retainaspect="1"/>
+		<image name="accent_apply" filename="Default/Workshop/style_apply_black" retainaspect="1"/>
+		
+		<image name="fab_accept" filename="Default/FAB/accept" retainaspect="1"/>
+		<image name="fab_close" filename="Default/FAB/close" retainaspect="1"/>
+		<image name="fab_add" filename="Default/FAB/add" retainaspect="1"/>
+		<image name="fab_usb" filename="Default/FAB/usb" retainaspect="1"/>
+		<image name="fab_credits" filename="Default/FAB/credits" retainaspect="1"/>
 	</resources>
 	<variables>
 		<variable name="background" value="#1e1f22"/>
@@ -58,16 +79,15 @@
 		<variable name="highlight_color" value="#1e1f2266"/>
 		<variable name="highlight_color_full" value="#11111144"/>
 		<variable name="text" value="#FFFFFF"/>
-		<variable name="text_action" value="#FFFFFF"/>
+		<variable name="text_action" value="#D7DEE6"/>
 		<variable name="text_status" value="#FFFFFF"/>
 		<variable name="text_menu" value="#FFFFFF"/>
-		<variable name="text_light" value="#666666"/>
-		<variable name="text_dark" value="#666666"/>
-		<variable name="console_foreground" value="#FFFFFF"/>
-		<variable name="linecolor" value="#666666"/>
+		<variable name="text_light" value="#5F6368"/>
+		<variable name="text_hl_btn" value="#202124"/>
+		<variable name="linecolor" value="#5F6368"/>
 		<variable name="darktransparent" value="#000000BB"/>
 		<variable name="theme_style" value="Night"/>
-		<variable name="theme_style_act" value="Gray"/>
+		<variable name="theme_style_act" value="DBlack"/>
 		
 		<variable name="status_solid_bg" value="#18191B"/>
 		<variable name="title_solid_bg" value="#1C1D20"/>
