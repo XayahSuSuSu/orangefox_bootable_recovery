@@ -614,9 +614,9 @@
 					<condition var1="tw_no_sha2" var2="0"/>
 					<data variable="tw_use_sha2"/>
 				</listitem>
-				<!--listitem name="Show addition partition to backup">
+				<listitem name="Show addition partition to backup">
 					<data variable="fox_adv_backup"/>
-				</listitem-->
+				</listitem>
 			</listbox>
 
 			<text style="caption">
