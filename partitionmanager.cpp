@@ -310,10 +310,17 @@ int TWPartitionManager::Process_Fstab(string Fstab_Filename, bool Display_Error)
 					usleep(500);
 				if (Decrypt_Data->Mount(false)) {
 					if (!Decrypt_Data->Decrypt_FBE_DE()) {
-						LOGINFO("Trying wrapped key.\n");
-						property_set("fbe.data.wrappedkey", "true");
-						if (!Decrypt_Data->Decrypt_FBE_DE()) {
+						char wrappedvalue[PROPERTY_VALUE_MAX];
+						property_get("fbe.data.wrappedkey", wrappedvalue, "");
+						std::string wrappedkeyvalue(wrappedvalue);
+						if (wrappedkeyvalue == "true") {
 							LOGERR("Unable to decrypt FBE device\n");
+						} else {
+							LOGINFO("Trying wrapped key.\n");
+							property_set("fbe.data.wrappedkey", "true");
+							if (!Decrypt_Data->Decrypt_FBE_DE()) {
+								LOGERR("Unable to decrypt FBE device\n");
+							}
 						}
 					}
 
@@ -577,8 +584,9 @@ int TWPartitionManager::Mount_By_Path(string Path, bool Display_Error)
     }
   else
     {
-      LOGINFO("Mount: Unable to find partition for path '%s'\n",
-	      Local_Path.c_str());
+      if (Local_Path != "/etc") // don't spam us about "/etc", since it will always exist
+         LOGINFO("Mount: Unable to find partition for path '%s'\n",
+	        Local_Path.c_str());
     }
   return false;
 }
@@ -3954,6 +3962,7 @@ int TWPartitionManager::Run_OTA_Survival_Backup(bool adbbackup)
   part_settings.img_bytes = 0;
   part_settings.file_bytes = 0;
   part_settings.PM_Method = PM_BACKUP;
+  bool DoSystemOnOTA = (DataManager::GetIntValue(FOX_DO_SYSTEM_ON_OTA) != 0);
 
   TWPartition *orangefox = Get_Default_Storage_Partition();
   if (orangefox)
@@ -3984,14 +3993,27 @@ int TWPartitionManager::Run_OTA_Survival_Backup(bool adbbackup)
 
   part_settings.Backup_Folder =
     part_settings.Backup_Folder + "/" + Backup_Name;
+
   TWPartition *sys_image =
     PartitionManager.Find_Partition_By_Path("/system_image");
-  if (DataManager::GetIntValue(FOX_DO_SYSTEM_ON_OTA) != 0 && sys_image != NULL)
-    Backup_List += "/system_image;/boot;";
-  else if (DataManager::GetIntValue(FOX_DO_SYSTEM_ON_OTA) != 0)
-    Backup_List += "/system;/boot;";
+
+  #ifdef OF_NO_MIUI_OTA_VENDOR_BACKUP
+    // (old Xiaomi devices) - we are not going to backup vendor_image/vendor
+  #else
+  TWPartition *vend_image =
+    PartitionManager.Find_Partition_By_Path("/vendor_image");
+     if (vend_image != NULL)
+        Backup_List += "/vendor_image;";
+     else
+        Backup_List += "/vendor;";
+  #endif
+
+  if (DoSystemOnOTA && sys_image != NULL)
+       Backup_List += "/system_image;/boot;";
+  else if (DoSystemOnOTA)
+       Backup_List += "/system;/boot;";
   else
-    Backup_List += "/boot;";
+       Backup_List += "/boot;";
 
   if (!Backup_List.empty())
     {
@@ -4073,7 +4095,7 @@ int TWPartitionManager::Run_OTA_Survival_Backup(bool adbbackup)
   if (adbbackup)
     disable_free_space_check = true;
 
-  if (DataManager::GetIntValue(FOX_DO_SYSTEM_ON_OTA) != 0)
+  if (DoSystemOnOTA)
     {
       if (!disable_free_space_check)
 	{
@@ -4607,7 +4629,8 @@ bool TWPartitionManager::Prepare_Repack(const std::string& Source_Path, const st
 		if (TWFunc::copy_file(Source_Path, destination, 0644))
 			return false;
 	}
-	std::string command = "cd " + Temp_Folder_Destination + " && /sbin/magiskboot --unpack -h '" + Source_Path +"'";
+	std::string magiskboot = TWFunc::Get_MagiskBoot();
+	std::string command = "cd " + Temp_Folder_Destination + " && " + magiskboot + " --unpack -h '" + Source_Path +"'";
 	if (TWFunc::Exec_Cmd(command) != 0) {
 		LOGINFO("Error unpacking %s!\n", Source_Path.c_str());
 		gui_msg(Msg(msg::kError, "unpack_error=Error unpacking image."));
@@ -4659,7 +4682,8 @@ bool TWPartitionManager::Repack_Images(const std::string& Target_Image, const st
 		LOGERR("Disabling verity is not implemented yet\n");
 	if (Repack_Options.Disable_Force_Encrypt)
 		LOGERR("Disabling force encrypt is not implemented yet\n");
-	std::string command = "cd " + path + " && /sbin/magiskboot --repack " + path + "boot.img";
+	std::string magiskboot = TWFunc::Get_MagiskBoot();
+	std::string command = "cd " + path + " && " + magiskboot + " --repack " + path + "boot.img";
 	if (TWFunc::Exec_Cmd(command) != 0) {
 		gui_msg(Msg(msg::kError, "repack_error=Error repacking image."));
 		return false;
@@ -4676,3 +4700,14 @@ bool TWPartitionManager::Repack_Images(const std::string& Target_Image, const st
 	TWFunc::removeDir(REPACK_NEW_DIR, false);
 	return true;
 }
+
+#ifdef TW_HAS_MTP
+bool TWPartitionManager::is_MTP_Enabled(void) {
+  if (mtppid)
+     return true;
+  else
+     return false;
+}
+#endif
+
+//*

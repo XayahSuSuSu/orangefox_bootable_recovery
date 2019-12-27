@@ -318,8 +318,8 @@ static int Prepare_Update_Binary(const char *path, ZipWrap * Zip,
 	    {
 	      DataManager::SetValue(FOX_MIUI_ZIP_TMP, 1);
 	      DataManager::SetValue(FOX_CALL_DEACTIVATION, 1);
-	      DataManager::SetValue(FOX_DISABLE_DM_VERITY, 1);
-	      DataManager::SetValue(FOX_ZIP_INSTALLER_CODE, 2); // MIUI ROM
+	      DataManager::SetValue(FOX_ZIP_INSTALLER_CODE, 2); // MIUI ROM  
+	      //DataManager::SetValue(FOX_DISABLE_DM_VERITY, 1);
 	    }
 	  gui_msg ("fox_install_miui_detected=- Detected MIUI Update zip installer"); 
 	}
@@ -835,7 +835,7 @@ int TWinstall_zip(const char *path, int *wipe_cache)
   else   
     {
       gui_msg(Msg("installing_zip=Installing zip file '{1}'") (path));
-
+      
       if (strlen(path) < 9 || strncmp(path, "/sideload", 9) != 0)
 	{
 	  string digest_str;
@@ -1024,7 +1024,7 @@ int TWinstall_zip(const char *path, int *wipe_cache)
 
   time(&stop);
   int total_time = (int) difftime(stop, start);
-
+  
   if (ret_val == INSTALL_CORRUPT)
     {
         set_miui_install_status(OTA_CORRUPT, true);

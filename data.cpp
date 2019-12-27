@@ -672,7 +672,7 @@ void DataManager::SetDefaultValues()
 
   mConst.SetValue("fox_build_type1", BUILD_TYPE);
 
-  #ifdef OF_DISABLE_MIUI_SPECIFIC_FEATURES
+  #if defined(OF_DISABLE_MIUI_SPECIFIC_FEATURES) || defined(OF_TWRP_COMPATIBILITY_MODE)
     mData.SetValue("of_no_miui_features", "1");
   #else
     mData.SetValue("of_no_miui_features", "0");
@@ -883,15 +883,27 @@ void DataManager::SetDefaultValues()
   mPersist.SetValue(FOX_DISABLE_OTA_AUTO_REBOOT, "0");
 
   // { MIUI
-  string miui_switch = "1";
-  #if defined(OF_DISABLE_MIUI_SPECIFIC_FEATURES) || defined(OF_TWRP_COMPATIBILITY_MODE) || defined(OF_KEEP_DM_VERITY_FORCED_ENCRYPTION)
-  miui_switch = "0";
+  string miui_ota = "1";    // enable by default, unless turned off below
+  #if defined(OF_DISABLE_MIUI_SPECIFIC_FEATURES) || defined(OF_TWRP_COMPATIBILITY_MODE)
+  miui_ota = "0";
   #endif  
-  mPersist.SetValue("fox_verify_incremental_ota_signature", miui_switch); // set to 1 [support miui ota]
-  mPersist.SetValue(FOX_INCREMENTAL_PACKAGE, miui_switch); 		  // set to 1 [support miui ota]
-  mPersist.SetValue(FOX_DO_SYSTEM_ON_OTA, miui_switch);
+
+  mPersist.SetValue("fox_verify_incremental_ota_signature", miui_ota);  // set to 1 [support miui ota]
+  mPersist.SetValue(FOX_INCREMENTAL_PACKAGE, miui_ota); 		// set to 1 [support miui ota]
+  mPersist.SetValue(FOX_DO_SYSTEM_ON_OTA, miui_ota);
+
+  string miui_switch = "0"; // DJ9, 20191209 - turn it off by default until further notice, else there might be issues in new Xiaomi devices
+  #if defined(OF_KEEP_DM_VERITY) || defined(OF_KEEP_DM_VERITY_FORCED_ENCRYPTION)
+  mPersist.SetValue(FOX_DISABLE_DM_VERITY, "0");
+  #else
   mPersist.SetValue(FOX_DISABLE_DM_VERITY, miui_switch);
+  #endif
+  
+  #if defined(OF_KEEP_FORCED_ENCRYPTION) || defined(OF_KEEP_DM_VERITY_FORCED_ENCRYPTION)
+  mPersist.SetValue(FOX_DISABLE_FORCED_ENCRYPTION, "0");
+  #else
   mPersist.SetValue(FOX_DISABLE_FORCED_ENCRYPTION, miui_switch);
+  #endif
   //  MIUI }
 
   mPersist.SetValue(FOX_FORCE_DEACTIVATE_PROCESS, "0");
