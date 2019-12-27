@@ -13,6 +13,7 @@ LOCAL_SRC_FILES := \
     console.cpp \
     fill.cpp \
     button.cpp \
+    gesture.cpp \
     checkbox.cpp \
     fileselector.cpp \
     progressbar.cpp \

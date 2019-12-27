@@ -240,11 +240,18 @@
 					<action function="reload"/>
 				</listitem>
 				<listitem name="Set screen size to %screen_original_h%">
-					<condition var1="screen_original_h" op="!=" var2="1920"/>
 					<action function="ftls">
 						[ ! -d "/sdcard/Fox/.navbar" ] &amp;&amp; mkdir -p "/sdcard/Fox/.navbar"
 						cat "/twres/themes/sed/navbar.xml" | sed -e "s/#NAVBAR_DISABLE#/0/g;
 						s/#SCREEN_H#/%screen_original_h%/g" > /sdcard/Fox/.navbar/navbar.xml;
+					</action>
+					<action function="reload"/>
+				</listitem>
+				<listitem name="Set screen size to %screen_original_h% + 96">
+					<action function="ftls">
+						[ ! -d "/sdcard/Fox/.navbar" ] &amp;&amp; mkdir -p "/sdcard/Fox/.navbar"
+						cat "/twres/themes/sed/navbar.xml" | sed -e "s/#NAVBAR_DISABLE#/0/g;
+						s/#SCREEN_H#/$(expr %screen_original_h% + 96)/g" > /sdcard/Fox/.navbar/navbar.xml;
 					</action>
 					<action function="reload"/>
 				</listitem>

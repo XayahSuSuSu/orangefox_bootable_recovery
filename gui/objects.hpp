@@ -428,6 +428,34 @@ protected:
 	Placement TextPlacement;
 };
 
+class GUIGesture : public GUIObject, public RenderObject, public ActionObject
+{
+public:
+	GUIGesture(xml_node<>* node);
+	virtual ~GUIGesture();
+
+public:
+	virtual int Render(void);
+	virtual int Update(void);
+	virtual int SetRenderPos(int x, int y, int w = 0, int h = 0);
+	virtual int NotifyTouch(TOUCH_STATE state, int x, int y);
+
+protected:
+	GUIImage* mButtonImg;
+	ImageResource* mButtonIcon;
+	GUIText* mButtonLabel;
+	GUIAction* mAction;
+	int mTextX, mTextY, mTextW, mTextH;
+	int mIconX, mIconY, mIconW, mIconH;
+	bool mRendered;
+	bool hasHighlightColor;
+	bool renderHighlight;
+	bool hasFill;
+	COLOR mFillColor;
+	COLOR mHighlightColor;
+	Placement TextPlacement;
+};
+
 class GUICheckbox: public GUIObject, public RenderObject, public ActionObject
 {
 public:

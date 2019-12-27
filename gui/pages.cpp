@@ -352,6 +352,13 @@ bool Page::ProcessNode(xml_node<>* page, std::vector<xml_node<>*> *templates, in
 			mRenders.push_back(element);
 			mActions.push_back(element);
 		}
+		else if (type == "gesture")
+		{
+			GUIGesture* element = new GUIGesture(child);
+			mObjects.push_back(element);
+			mRenders.push_back(element);
+			mActions.push_back(element);
+		}
 		else if (type == "image")
 		{
 			GUIImage* element = new GUIImage(child);

@@ -2,9 +2,16 @@
 <recovery>
 	<templates>
 		<template name="navbar">
+			<gesture>
+				<placement x="0" y="%row_nav_y%" w="%screen_w%" h="%nav_h%"/>
+				<fill color="#00000000"/>
+				<highlight color="%accent%" />
+				<action function="key">home</action>
+			</gesture>
+		<!--
 			<template name="navbar_home"/>
 			<template name="navbar_console"/>
-			<template name="navbar_back"/>
+			<template name="navbar_back"/-->
 		</template>
 
 		<template name="navbar_bkg">
