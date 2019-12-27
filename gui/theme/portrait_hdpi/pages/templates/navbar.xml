@@ -4,9 +4,21 @@
 		<template name="navbar">
 			<gesture>
 				<placement x="0" y="%row_nav_y%" w="%screen_w%" h="%nav_h%"/>
-				<fill color="#00000000"/>
-				<highlight color="%accent%" />
+				<fill color="#7c7c7c7c"/>
+				<settings side="0" sense="300" />
 				<action function="key">home</action>
+			</gesture>
+			<gesture>
+				<placement x="0" y="0" w="48" h="%screen_h%"/>
+				<fill color="#7c7c7c7c"/>
+				<settings side="2" sense="200" />
+				<action function="key">back</action>
+			</gesture>
+			<gesture>
+				<placement x="1032" y="0" w="48" h="%screen_h%"/>
+				<fill color="#7c7c7c7c"/>
+				<settings side="1" sense="200" />
+				<action function="key">back</action>
 			</gesture>
 		<!--
 			<template name="navbar_home"/>

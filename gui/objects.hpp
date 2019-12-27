@@ -441,18 +441,12 @@ public:
 	virtual int NotifyTouch(TOUCH_STATE state, int x, int y);
 
 protected:
-	GUIImage* mButtonImg;
-	ImageResource* mButtonIcon;
-	GUIText* mButtonLabel;
 	GUIAction* mAction;
-	int mTextX, mTextY, mTextW, mTextH;
-	int mIconX, mIconY, mIconW, mIconH;
 	bool mRendered;
-	bool hasHighlightColor;
-	bool renderHighlight;
 	bool hasFill;
+	int mMode;
+	int mSensetivity;
 	COLOR mFillColor;
-	COLOR mHighlightColor;
 	Placement TextPlacement;
 };
 
