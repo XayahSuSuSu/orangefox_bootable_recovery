@@ -1444,17 +1444,17 @@
 			</text>
 
 			<text style="text_body2">
-				<placement x="%ch_r_x%" y="%chtxt_own_y%" placement="1"/>
+				<placement x="%txt_r_x%" y="%chtxt_own_y%" placement="1"/>
 				<text>Owner</text>
 			</text>
 
 			<text style="text_body2">
-				<placement x="%ch_r_x%" y="%chtxt_grp_y%" placement="1"/>
+				<placement x="%txt_r_x%" y="%chtxt_grp_y%" placement="1"/>
 				<text>Group</text>
 			</text>
 
 			<text style="text_body2">
-				<placement x="%ch_r_x%" y="%chtxt_oth_y%" placement="1"/>
+				<placement x="%txt_r_x%" y="%chtxt_oth_y%" placement="1"/>
 				<text>Other</text>
 			</text>
 			

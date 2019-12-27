@@ -227,13 +227,16 @@
 		<variable name="input_btn_list_y" value="674+%cutout_w%"/>
 		
 		<!-- chmod -->
-		<variable name="ch_r_x" value="259"/>
-		<variable name="ch_w_x" value="457"/>
-		<variable name="ch_x_x" value="655"/>
-		<variable name="ch_own_y" value="%cutout_w%+753"/>
-		<variable name="ch_grp_y" value="%cutout_w%+863"/>
-		<variable name="ch_oth_y" value="%cutout_w%+973"/>
-		<variable name="ch_sph_y" value="%cutout_w%+1191"/>
+		<variable name="ch_r_x" value="315"/>
+		<variable name="ch_w_x" value="513"/>
+		<variable name="ch_x_x" value="711"/>
+		<variable name="ch_own_y" value="%cutout_w%+771"/>
+		<variable name="ch_grp_y" value="%cutout_w%+881"/>
+		<variable name="ch_oth_y" value="%cutout_w%+991"/>
+		<variable name="ch_sph_y" value="%cutout_w%+1209"/>
+		<variable name="txt_r_x" value="259"/>
+		<variable name="txt_w_x" value="457"/>
+		<variable name="txt_x_x" value="655"/>
 
 		<variable name="chtxt_own_y" value="%cutout_w%+766"/>
 		<variable name="chtxt_grp_y" value="%cutout_w%+876"/>
