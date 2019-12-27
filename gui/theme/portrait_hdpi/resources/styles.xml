@@ -16,7 +16,7 @@
 			<font resource="Secondary-title" color="%text%"/>
 		</style>
 		<style name="text_ab_switch">
-			<font resource="title" color="#fafafa"/>
+			<font resource="Secondary-title" color="%text_hl_btn%"/>
 		</style>
 		
 		<style name="text_ab_subtitle">
@@ -149,7 +149,7 @@
 			<background color="%background%"/>
 			<fastscroll rectcolor="%accent%" w="%fastscroll_w%" rectw="%fastscroll_rectw%" recth="%fastscroll_recth%" />
 			<icon selected="checkbox_true" unselected="checkbox_false"/>
-			<iconsize w="150" h="90" padding="-8"/>
+			<iconsize w="%col1_x_indent%" h="90" padding="25"/>
 			<font resource="body1" spacing="%fileselector_spacing%" color="%text%" />
 		</style>
 
@@ -163,7 +163,7 @@
 			<highlight color="%highlight_color_full%"/>
 			<fastscroll rectcolor="%accent%" w="%fastscroll_w%" rectw="%fastscroll_rectw%" recth="%fastscroll_recth%" />
 			<icon selected="radio_true" unselected="radio_false" />
-			<iconsize w="150" h="90" padding="-8"/>
+			<iconsize w="%col1_x_indent%" h="90" padding="25"/>
 			<font resource="body1" spacing="%fileselector_spacing%" color="%text%" />
 		</style>
 		
@@ -185,7 +185,7 @@
 			<highlight color="%highlight_color_full%"/>
 			<fastscroll rectcolor="%accent%" w="%fastscroll_w%" rectw="%fastscroll_rectw%" recth="%fastscroll_recth%" />
 			<icon selected="checkbox_true" unselected="checkbox_false" />
-			<iconsize w="150" h="90" padding="-8"/>
+			<iconsize w="%col1_x_indent%" h="90" padding="25"/>
 			<font resource="body1" spacing="%fileselector_spacing%" color="%text%" />
 		</style>
 

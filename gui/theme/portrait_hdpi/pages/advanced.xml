@@ -265,7 +265,7 @@
 			<!-- fox_modules_confirm located in install.xml -->
 
 			<text style="caption">
-				<placement x="%col1_x%" y="%row1_1_y%"/>
+				<placement x="%col1_x_caption%" y="%row1_1_y%"/>
 				<text>Magisk</text>
 			</text>
 
@@ -282,7 +282,7 @@
 			</listbox>
 
 			<text style="caption">
-				<placement x="%col1_x%" y="%row3_1a_y%"/>
+				<placement x="%col1_x_caption%" y="%row3_1a_y%"/>
 				<text>Substratum</text>
 			</text>
 
@@ -319,7 +319,7 @@
 			</listbox>
 
 			<text style="caption">
-				<placement x="%col1_x%" y="%row5_2_y%"/>
+				<placement x="%col1_x_caption%" y="%row5_2_y%"/>
 				<text>{@cust_oth}</text>
 			</text>
 
@@ -660,7 +660,7 @@
 			</text>
 
 			<text style="caption">
-				<placement x="%col1_x%" y="%row2_2a_y%"/>
+				<placement x="%col1_x_caption%" y="%row2_2a_y%"/>
 				<text>{@adb_sideload_hdr}</text>
 			</text>
 
@@ -792,6 +792,7 @@
 				<condition var1="list_font" var2="1"/>
 				<placement x="0" y="%ab_h%" w="%screen_w%" h="%bl_fullscreen_h%"/>
 				<sort name="0"/>
+				<iconsize w="%col1_x_indent%" h="90" padding="25"/>
 				<icon folder="folder_icon" file="module_icon" />
 				<filter folders="0" files="1" nav="0"/>
 				<path name="amgr_path" default="/tmp/listapps/list"/>
@@ -803,6 +804,7 @@
 				<condition var1="list_font" op="!=" var2="1"/>
 				<placement x="0" y="%ab_h%" w="%screen_w%" h="%bl_fullscreen_h%"/>
 				<sort name="0"/>
+				<iconsize w="%col1_x_indent%" h="90" padding="25"/>
 				<icon folder="folder_icon_small" file="module_icon_small" />
 				<filter folders="0" files="1" nav="0"/>
 				<path name="amgr_path" default="/tmp/listapps/list"/>

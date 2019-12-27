@@ -44,7 +44,7 @@
 			<fill color="%status_solid_bg%">
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_bkg" var2="2"/>
-				<placement x="0" y="%row_nav_y%" w="%screen_w%" h="6"/>
+				<placement x="0" y="%row_nav_y%" w="%screen_w%" h="4"/>
 			</fill>
 		</template>
 

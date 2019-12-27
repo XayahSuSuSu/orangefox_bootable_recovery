@@ -94,25 +94,25 @@
 			</image>
 
 			<text style="caption">
-				<placement x="%col1_x%" y="%row1_3a_y%"/>
+				<placement x="%col1_x_caption%" y="%row1_3a_y%"/>
 				<text>{@mm_ver}</text>
 			</text>
 
 			<text style="text_body2">
-				<placement x="%col1_x%" y="%row2_1a_y%"/>
+				<placement x="%col1_x_caption%" y="%row2_1a_y%"/>
 				<text>%ft_mm_ver%</text>
 			</text>
 
 			<button style="menu_btn">
 				<condition var1="fileexists" var2="/sdcard/Fox/FoxFiles/Magisk.zip"/>
-				<placement x="%col1_x%" y="%row1_3a_y%" w="%content_w%" h="%mb_h_hide%"/>
+				<placement x="%col1_x_caption%" y="%row1_3a_y%" w="%input_w%" h="%mb_h_hide%"/>
 				<action function="set">install_back=magisk_mount</action>
 				<action function="page">mod_magisk</action>
 			</button>
 
 			<text style="caption">
 				<condition var1="magisk_core" op="!=" var2="1"/>
-				<placement x="%col1_x%" y="%row2_3a_y%"/>
+				<placement x="%col1_x_caption%" y="%row2_3a_y%"/>
 				<text>{@mm_modules}</text>
 			</text>
 
@@ -121,6 +121,7 @@
 				<condition var1="list_font" var2="1"/>
 				<placement x="0" y="%row3_1a_y%" w="%fileselector_width%" h="%magisk_list_h%"/>
 				<sort name="0"/>
+				<iconsize w="%col1_x_indent%" h="90" padding="25"/>
 				<icon folder="module_icon" file="module_icon" />
 				<filter folders="1" files="0" nav="0" hidden="1"/>
 				<path name="mmgui_path" default="/data/adb/modules"/>
@@ -133,6 +134,7 @@
 				<condition var1="list_font" op="!=" var2="1"/>
 				<placement x="0" y="%row3_1a_y%" w="%fileselector_width%" h="%magisk_list_h%"/>
 				<sort name="0"/>
+				<iconsize w="%col1_x_indent%" h="90" padding="25"/>
 				<icon folder="module_icon_small" file="module_icon_small" />
 				<filter folders="1" files="0" nav="0" hidden="1"/>
 				<path name="mmgui_path" default="/data/adb/modules"/>
@@ -219,34 +221,34 @@
 			</text>
 
 			<text style="caption">
-				<placement x="%col1_x%" y="%row3_1_y%"/>
+				<placement x="%col1_x_caption%" y="%row3_1_y%"/>
 				<text>{@mm_mod_ver}</text>
 			</text>
 
 			<text style="text_body2">
-				<placement x="%col1_x%" y="%row3_2_y%"/>
+				<placement x="%col1_x_caption%" y="%row3_2_y%"/>
 				<text>%ft_mm_version%</text>
 			</text>
 
 			<text style="caption">
-				<placement x="%col1_x%" y="%row4_1_y%"/>
+				<placement x="%col1_x_caption%" y="%row4_1_y%"/>
 				<text>{@fm_path2}</text>
 			</text>
 
 			<text style="text_body2">
-				<placement x="%col1_x%" y="%row4_2_y%"/>
+				<placement x="%col1_x_caption%" y="%row4_2_y%"/>
 				<text>%mmgui_file%</text>
 			</text>
 
 			<button style="menu_btn">
-				<placement x="%col1_x%" y="%row4_1_y%" w="%content_w%" h="%mb_h_hide%"/>
+				<placement x="%col1_x_caption%" y="%row4_1_y%" w="%input_w%" h="%mb_h_hide%"/>
 				<action function="set">tw_file_location1=%mmgui_file%</action>
 				<action function="set">tw_reload_fm=1</action>
 				<action function="page">filemanagerlist</action>
 			</button>
 
 			<text style="caption">
-				<placement x="%col1_x%" y="%row5_1_y%"/>
+				<placement x="%col1_x_caption%" y="%row5_1_y%"/>
 				<text>{@cust_oth}</text>
 			</text>
 

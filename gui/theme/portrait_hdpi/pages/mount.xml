@@ -65,7 +65,7 @@
 			</image>
 
 			<text style="caption">
-				<placement x="%col1_x%" y="%row1_3a_y%"/>
+				<placement x="%col1_x_caption%" y="%row1_3a_y%"/>
 				<text>{@partitions}</text>
 			</text>
 
@@ -240,12 +240,12 @@
 			</text>
 
 			<text style="caption_hl">
-				<placement x="%col1_x%" y="%row4_1_y%"/>
+				<placement x="%col1_x_caption%" y="%row4_1_y%"/>
 				<text>{@decrypt_data_enter_pass}</text>
 			</text>
 
 			<input>
-				<placement x="%col1_x%" y="%input_decr_y%" w="%input_width%" h="%input_height%"/>
+				<placement x="%col1_x_caption%" y="%input_decr_y%" w="%input_w%" h="%input_height%"/>
 				<text>%tw_crypto_display%</text>
 				<data name="tw_crypto_password" mask="*" maskvariable="tw_crypto_display"/>
 				<restrict minlen="1" maxlen="254"/>
@@ -254,17 +254,17 @@
 
 			<fill color="%accent%">
 				<condition var1="tw_password_fail" op="!=" var2="1"/>
-				<placement x="%col1_x%" y="%row4_3_y%" w="%content_w%" h="%input_line_height%" placement="1"/>
+				<placement x="%col1_x_caption%" y="%row4_3_y%" w="%input_w%" h="%input_line_height%" placement="1"/>
 			</fill>
 
 			<fill color="%text_fail%">
 				<condition var1="tw_password_fail" var2="1"/>
-				<placement x="%col1_x%" y="%row4_3_y%" w="%content_w%" h="%input_line_height%" placement="1"/>
+				<placement x="%col1_x_caption%" y="%row4_3_y%" w="%input_w%" h="%input_line_height%" placement="1"/>
 			</fill>
 
 			<text style="text_input_fail">
 				<condition var1="tw_password_fail" var2="1"/>
-				<placement x="%col1_x%" y="%row4_3_y%"/>
+				<placement x="%col1_x_caption%" y="%row4_3_y%"/>
 				<text>{@restore_dec_fail}</text>
 			</text>
 

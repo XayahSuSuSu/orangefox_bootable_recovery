@@ -233,12 +233,12 @@
 			</text>
 
 			<text style="caption_hl">
-				<placement x="%col1_x%" y="%row4_1_y%"/>
+				<placement x="%col1_x_caption%" y="%row4_1_y%"/>
 				<text>{@enter_password_restore}</text>
 			</text>
 
 			<input>
-				<placement x="%col1_x%" y="%input_decr_y%" w="%input_width%" h="%input_height%"/>
+				<placement x="%col1_x_caption%" y="%input_decr_y%" w="%input_w%" h="%input_height%"/>
 				<text>%tw_restore_display%</text>
 				<data name="tw_restore_password" mask="*" maskvariable="tw_restore_display"/>
 				<restrict minlen="1" maxlen="32" allow="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890_"/>
@@ -247,17 +247,17 @@
 
 			<fill color="%accent%">
 				<condition var1="tw_password_fail" op="!=" var2="1"/>
-				<placement x="%col1_x%" y="%row4_3_y%" w="%content_w%" h="%input_line_height%" placement="1"/>
+				<placement x="%col1_x_caption%" y="%row4_3_y%" w="%input_w%" h="%input_line_height%" placement="1"/>
 			</fill>
 
 			<fill color="%text_fail%">
 				<condition var1="tw_password_fail" var2="1"/>
-				<placement x="%col1_x%" y="%row4_3_y%" w="%content_w%" h="%input_line_height%" placement="1"/>
+				<placement x="%col1_x_caption%" y="%row4_3_y%" w="%input_w%" h="%input_line_height%" placement="1"/>
 			</fill>
 
 			<text style="text_input_fail">
 				<condition var1="tw_password_fail" var2="1"/>
-				<placement x="%col1_x%" y="%row4_3_y%"/>
+				<placement x="%col1_x_caption%" y="%row4_3_y%"/>
 				<text>{@restore_dec_fail}</text>
 			</text>
 
@@ -362,17 +362,17 @@
 			</image>
 
 			<text style="caption">
-				<placement x="%col1_x%" y="%row2_1a_y%"/>
+				<placement x="%col1_x_caption%" y="%row2_1a_y%"/>
 				<text>{@restore_backup_date}</text>
 			</text>
 
 			<text style="text_body2">
-				<placement x="%col1_x%" y="%row2_2a_y%"/>
+				<placement x="%col1_x_caption%" y="%row2_2a_y%"/>
 				<text>%tw_restore_file_date%</text>
 			</text>
 
 			<text style="caption">
-				<placement x="%col1_x%" y="%row3_1a_y%"/>
+				<placement x="%col1_x_caption%" y="%row3_1a_y%"/>
 				<text>{@options_hdr}</text>
 			</text>
 
@@ -384,7 +384,7 @@
 			</listbox>
 
 			<text style="caption">
-				<placement x="%col1_x%" y="%row4_2_y%"/>
+				<placement x="%col1_x_caption%" y="%row4_2_y%"/>
 				<text>{@partitions}</text>
 			</text>
 
@@ -434,12 +434,12 @@
 			</text>
 
 			<text style="caption_hl">
-				<placement x="%col1_x%" y="%row2_1a_y%"/>
+				<placement x="%col1_x_caption%" y="%row2_1a_y%"/>
 				<text>{@name}</text>
 			</text>
 
 			<input>
-				<placement x="%col1_x%" y="%input_rename_y%" w="%input_width%" h="%input_height%"/>
+				<placement x="%col1_x_caption%" y="%input_rename_y%" w="%input_w%" h="%input_height%"/>
 				<text>%tw_backup_rename%</text>
 				<data name="tw_backup_rename"/>
 				<restrict minlen="1" maxlen="64" allow="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890-_.{}[]"/>
@@ -454,17 +454,17 @@
 
 			<fill color="%accent%">
 				<condition var1="tw_fileexists" var2="0"/>
-				<placement x="%col1_x%" y="%row2_3a_y%" w="%content_w%" h="%input_line_height%" placement="1"/>
+				<placement x="%col1_x_caption%" y="%row2_3a_y%" w="%input_w%" h="%input_line_height%" placement="1"/>
 			</fill>
 
 			<fill color="%text_fail%">
 				<condition var1="tw_fileexists" var2="1"/>
-				<placement x="%col1_x%" y="%row2_3a_y%" w="%content_w%" h="%input_line_height%" placement="1"/>
+				<placement x="%col1_x_caption%" y="%row2_3a_y%" w="%input_w%" h="%input_line_height%" placement="1"/>
 			</fill>
 
 			<text style="text_input_fail">
 				<condition var1="tw_fileexists" var2="1"/>
-				<placement x="%col1_x%" y="%row3_1_y%"/>
+				<placement x="%col1_x_caption%" y="%row3_1_y%"/>
 				<text>{@backup_name_exists}</text>
 			</text>
 

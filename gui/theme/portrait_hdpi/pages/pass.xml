@@ -266,7 +266,7 @@
 			<template name="page_new_pass"/>
 			
 			<input>
-				<placement x="%col1_x%" y="%row3_1_y%" w="%input_width%" h="%input_height%"/>
+				<placement x="%col1_x_caption%" y="%row3_1_y%" w="%input_w%" h="%input_height%"/>
 				<text>%pass_new_1_mask%</text>
 				<data name="pass_new_1" mask="*" maskvariable="pass_new_1_mask"/>
 				<restrict minlen="0" maxlen="64" />
@@ -280,7 +280,7 @@
 			<template name="page_new_pass_2"/>
 			
 			<input>
-				<placement x="%col1_x%" y="%row3_1_y%" w="%input_width%" h="%input_height%"/>
+				<placement x="%col1_x_caption%" y="%row3_1_y%" w="%input_w%" h="%input_height%"/>
 				<text>%pass_new_2_mask%</text>
 				<data name="pass_new_2" mask="*" maskvariable="pass_new_2_mask"/>
 				<restrict minlen="0" maxlen="64"/>
@@ -295,7 +295,7 @@
 			<template name="page_new_pass"/>
 			
 			<input>
-				<placement x="%col1_x%" y="%row3_1_y%" w="%input_width%" h="%input_height%"/>
+				<placement x="%col1_x_caption%" y="%row3_1_y%" w="%input_w%" h="%input_height%"/>
 				<text>%pass_new_1_mask%</text>
 				<data name="pass_new_1" mask="*" maskvariable="pass_new_1_mask"/>
 				<restrict minlen="0" maxlen="64" />
@@ -309,7 +309,7 @@
 			<template name="page_new_pass_2"/>
 
 			<input>
-				<placement x="%col1_x%" y="%row3_1_y%" w="%input_width%" h="%input_height%"/>
+				<placement x="%col1_x_caption%" y="%row3_1_y%" w="%input_w%" h="%input_height%"/>
 				<text>%pass_new_2_mask%</text>
 				<data name="pass_new_2" mask="*" maskvariable="pass_new_2_mask"/>
 				<restrict minlen="0" maxlen="64"/>

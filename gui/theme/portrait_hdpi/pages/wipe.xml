@@ -15,7 +15,7 @@
 			</text>
 
 			<text style="caption">
-				<placement x="%col1_x%" y="%row2_1_y%"/>
+				<placement x="%col1_x_caption%" y="%row2_1_y%"/>
 				<text>{@partitions}</text>
 			</text>
 
@@ -129,12 +129,12 @@
 			</text>
 
 			<text style="caption_hl">
-				<placement x="%col1_x%" y="%row4_2_y%"/>
+				<placement x="%col1_x_caption%" y="%row4_2_y%"/>
 				<text>{@confirm_wipe_cptn}</text>
 			</text>
 
 			<input>
-				<placement x="%col1_x%" y="%input_format_y%" w="%input_width%" h="%input_height%"/>
+				<placement x="%col1_x_caption%" y="%input_format_y%" w="%input_w%" h="%input_height%"/>
 				<text>%tw_confirm_formatdata%</text>
 				<data name="tw_confirm_formatdata"/>
 				<restrict minlen="3" maxlen="3" allow="yes"/>
@@ -142,7 +142,7 @@
 			</input>
 
 			<fill color="%accent%">
-				<placement x="%col1_x%" y="%row5_1_y%" w="%content_w%" h="%input_line_height%" placement="1"/>
+				<placement x="%col1_x_caption%" y="%row5_1_y%" w="%content_w%" h="%input_w%" placement="1"/>
 			</fill>
 
 			<action>
@@ -312,12 +312,12 @@
 				</text>
 
 				<text style="caption">
-					<placement x="%col1_x%" y="%row2_1a_y%"/>
+					<placement x="%col1_x_caption%" y="%row2_1a_y%"/>
 					<text>{@part_mount_point}</text>
 				</text>
 
 				<text style="text_body2">
-					<placement x="%col1_x%" y="%row2_2a_y%"/>
+					<placement x="%col1_x_caption%" y="%row2_2a_y%"/>
 					<text>%tw_partition_mount_point%</text>
 				</text>
 
@@ -332,19 +332,19 @@
 				</text>
 
 				<text style="caption">
-					<placement x="%col1_x%" y="%row3_1a_y%"/>
+					<placement x="%col1_x_caption%" y="%row3_1a_y%"/>
 					<text>{@part_present}</text>
 				</text>
 
 				<text style="text_body2">
 					<condition var1="tw_partition_is_present" op="!=" var2="0"/>
-					<placement x="%col1_x%" y="%row3_2a_y%"/>
+					<placement x="%col1_x_caption%" y="%row3_2a_y%"/>
 					<text>{@part_yes}</text>
 				</text>
 
 				<text style="text_body2">
 					<condition var1="tw_partition_is_present" var2="0"/>
-					<placement x="%col1_x%" y="%row3_2a_y%"/>
+					<placement x="%col1_x_caption%" y="%row3_2a_y%"/>
 					<text>{@part_no}</text>
 				</text>
 
@@ -366,12 +366,12 @@
 				</text>
 
 				<text style="caption">
-					<placement x="%col1_x%" y="%row4_1a_y%"/>
+					<placement x="%col1_x_caption%" y="%row4_1a_y%"/>
 					<text>{@part_size}</text>
 				</text>
 
 				<text style="text_body2">
-					<placement x="%col1_x%" y="%row4_2a_y%"/>
+					<placement x="%col1_x_caption%" y="%row4_2a_y%"/>
 					<text>%tw_partition_size%{@mbyte}</text>
 				</text>
 
@@ -386,12 +386,12 @@
 				</text>
 
 				<text style="caption">
-					<placement x="%col1_x%" y="%row5_1a_y%"/>
+					<placement x="%col1_x_caption%" y="%row5_1a_y%"/>
 					<text>{@part_used}</text>
 				</text>
 
 				<text style="text_body2">
-					<placement x="%col1_x%" y="%row5_2a_y%"/>
+					<placement x="%col1_x_caption%" y="%row5_2a_y%"/>
 					<text>%tw_partition_used%{@mbyte}</text>
 				</text>
 
@@ -527,7 +527,7 @@
 				</text>
 
 				<text style="caption">
-					<placement x="%col1_x%" y="%row3_1a_y%"/>
+					<placement x="%col1_x_caption%" y="%row3_1a_y%"/>
 					<text>{@new_file_system}</text>
 				</text>
 
@@ -593,7 +593,7 @@
 				</text>
 
 				<text style="caption">
-					<placement x="%col1_x%" y="%row1_1_y%"/>
+					<placement x="%col1_x_caption%" y="%row1_1_y%"/>
 					<text>{@partitions}</text>
 				</text>
 

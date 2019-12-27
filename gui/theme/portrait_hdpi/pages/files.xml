@@ -228,12 +228,12 @@
 			</text>
 
 			<text style="caption_hl">
-				<placement x="%col1_x%" y="%row2_1a_y%"/>
+				<placement x="%col1_x_caption%" y="%row2_1a_y%"/>
 				<text>{@fm_mkdir_folder}</text>
 			</text>
 
 			<input>
-				<placement x="%col1_x%" y="%input_rename_y%" w="%input_width%" h="%input_height%"/>
+				<placement x="%col1_x_caption%" y="%input_rename_y%" w="%input_w%" h="%input_height%"/>
 				<text>%tw_filemanager_rename%</text>
 				<data name="mkdir_folder"/>
 				<restrict minlen="1" maxlen="32" />
@@ -246,7 +246,7 @@
 			</input>
 
 			<fill color="%accent%">
-				<placement x="%col1_x%" y="%row2_3a_y%" w="%content_w%" h="%input_line_height%" placement="1"/>
+				<placement x="%col1_x_caption%" y="%row2_3a_y%" w="%input_w%" h="%input_line_height%" placement="1"/>
 			</fill>
 
 			<action>
@@ -1036,121 +1036,121 @@
 
 			<text style="caption">
 				<condition var1="sum" op="!=" var2="1"/>
-				<placement x="%col1_x%" y="%row2_1a_y%"/>
+				<placement x="%col1_x_caption%" y="%row2_1a_y%"/>
 				<text>{@name} ({@real})</text>
 			</text>
 
 			<text style="text_body2">
 				<condition var1="sum" op="!=" var2="1"/>
-				<placement x="%col1_x%" y="%row2_2a_y%"/>
+				<placement x="%col1_x_caption%" y="%row2_2a_y%"/>
 				<text>%ft_inf_real%</text>
 			</text>
 
 			<text style="caption">
 				<condition var1="sum" op="!=" var2="1"/>
-				<placement x="%col1_x%" y="%row3_1a_y%"/>
+				<placement x="%col1_x_caption%" y="%row3_1a_y%"/>
 				<text>{@part_size}</text>
 			</text>
 
 			<text style="text_body2">
 				<condition var1="sum" op="!=" var2="1"/>
-				<placement x="%col1_x%" y="%row3_2a_y%"/>
+				<placement x="%col1_x_caption%" y="%row3_2a_y%"/>
 				<text>%ft_inf_size%</text>
 			</text>
 
 			<text style="caption">
 				<condition var1="sum" op="!=" var2="1"/>
-				<placement x="%col1_x%" y="%row4_1a_y%"/>
+				<placement x="%col1_x_caption%" y="%row4_1a_y%"/>
 				<text>{@fm_perms}</text>
 			</text>
 
 			<text style="text_body2">
 				<condition var1="sum" op="!=" var2="1"/>
-				<placement x="%col1_x%" y="%row4_2a_y%"/>
+				<placement x="%col1_x_caption%" y="%row4_2a_y%"/>
 				<text>%ft_inf_rights%</text>
 			</text>
 
 			<text style="caption">
 				<condition var1="sum" op="!=" var2="1"/>
-				<placement x="%col1_x%" y="%row5_1a_y%"/>
+				<placement x="%col1_x_caption%" y="%row5_1a_y%"/>
 				<text>{@access}</text>
 			</text>
 
 			<text style="text_body2">
 				<condition var1="sum" op="!=" var2="1"/>
-				<placement x="%col1_x%" y="%row5_2a_y%"/>
+				<placement x="%col1_x_caption%" y="%row5_2a_y%"/>
 				<text>%ft_inf_acc%</text>
 			</text>
 
 			<text style="caption">
 				<condition var1="sum" op="!=" var2="1"/>
-				<placement x="%col1_x%" y="%row6_1a_y%"/>
+				<placement x="%col1_x_caption%" y="%row6_1a_y%"/>
 				<text>{@time_m}</text>
 			</text>
 
 			<text style="text_body2">
 				<condition var1="sum" op="!=" var2="1"/>
-				<placement x="%col1_x%" y="%row6_2a_y%"/>
+				<placement x="%col1_x_caption%" y="%row6_2a_y%"/>
 				<text>%ft_inf_mod%</text>
 			</text>
 
 			<text style="caption">
 				<condition var1="sum" op="!=" var2="1"/>
-				<placement x="%col1_x%" y="%row7_1a_y%"/>
+				<placement x="%col1_x_caption%" y="%row7_1a_y%"/>
 				<text>{@time_c}</text>
 			</text>
 
 			<text style="text_body2">
 				<condition var1="sum" op="!=" var2="1"/>
-				<placement x="%col1_x%" y="%row7_2a_y%"/>
+				<placement x="%col1_x_caption%" y="%row7_2a_y%"/>
 				<text>%ft_inf_ch%</text>
 			</text>
 
 			<text style="caption">
 				<condition var1="sum" var2="1"/>
-				<placement x="%col1_x%" y="%row2_1a_y%"/>
+				<placement x="%col1_x_caption%" y="%row2_1a_y%"/>
 				<text>MD5</text>
 			</text>
 
 			<text style="text_body2">
 				<condition var1="sum" var2="1"/>
-				<placement x="%col1_x%" y="%row2_2a_y%"/>
+				<placement x="%col1_x_caption%" y="%row2_2a_y%"/>
 				<text>%ft_inf_md5%</text>
 			</text>
 
 			<text style="caption">
 				<condition var1="sum" var2="1"/>
-				<placement x="%col1_x%" y="%row3_1a_y%"/>
+				<placement x="%col1_x_caption%" y="%row3_1a_y%"/>
 				<text>SHA1</text>
 			</text>
 
 			<text style="text_body2">
 				<condition var1="sum" var2="1"/>
-				<placement x="%col1_x%" y="%row3_2a_y%"/>
+				<placement x="%col1_x_caption%" y="%row3_2a_y%"/>
 				<text>%ft_inf_sha1%</text>
 			</text>
 
 			<text style="caption">
 				<condition var1="sum" var2="1"/>
-				<placement x="%col1_x%" y="%row4_1a_y%"/>
+				<placement x="%col1_x_caption%" y="%row4_1a_y%"/>
 				<text>SHA256</text>
 			</text>
 
 			<text style="text_body2">
 				<condition var1="sum" var2="1"/>
-				<placement x="%col1_x%" y="%row4_2a_y%"/>
+				<placement x="%col1_x_caption%" y="%row4_2a_y%"/>
 				<text>%ft_inf_sha2%</text>
 			</text>
 
 			<text style="caption">
 				<condition var1="sum" var2="1"/>
-				<placement x="%col1_x%" y="%row5_1a_y%"/>
+				<placement x="%col1_x_caption%" y="%row5_1a_y%"/>
 				<text>SHA512</text>
 			</text>
 			
 			<text style="text_body2">
 				<condition var1="sum" var2="1"/>
-				<placement x="%col1_x%" y="%row5_2a_y%"/>
+				<placement x="%col1_x_caption%" y="%row5_2a_y%"/>
 				<text>%ft_inf_sha5%</text>
 			</text>
 			
@@ -1254,12 +1254,12 @@
 			</text>
 
 			<text style="caption_hl">
-				<placement x="%col1_x%" y="%row2_1a_y%"/>
+				<placement x="%col1_x_caption%" y="%row2_1a_y%"/>
 				<text>{@name}</text>
 			</text>
 
 			<input>
-				<placement x="%col1_x%" y="%input_rename_y%" w="%input_width%" h="%input_height%"/>
+				<placement x="%col1_x_caption%" y="%input_rename_y%" w="%input_w%" h="%input_height%"/>
 				<text>%tw_filemanager_rename%</text>
 				<data name="tw_filemanager_rename"/>
 				<restrict minlen="1" maxlen="64"/>
@@ -1271,7 +1271,7 @@
 			</input>
 
 			<fill color="%accent%">
-				<placement x="%col1_x%" y="%row2_3a_y%" w="%content_w%" h="%input_line_height%" placement="1"/>
+				<placement x="%col1_x_caption%" y="%row2_3a_y%" w="%input_w%" h="%input_line_height%" placement="1"/>
 			</fill>
 
 			<action>
@@ -1304,12 +1304,12 @@
 			</text>
 
 			<text style="caption_hl">
-				<placement x="%col1_x%" y="%row2_1a_y%"/>
+				<placement x="%col1_x_caption%" y="%row2_1a_y%"/>
 				<text>{@name}</text>
 			</text>
 
 			<input>
-				<placement x="%col1_x%" y="%input_rename_y%" w="%input_width%" h="%input_height%"/>
+				<placement x="%col1_x_caption%" y="%input_rename_y%" w="%input_w%" h="%input_height%"/>
 				<text>%tw_filemanager_rename%</text>
 				<data name="tw_filemanager_rename"/>
 				<restrict minlen="1" maxlen="64"/>
@@ -1321,7 +1321,7 @@
 			</input>
 
 			<fill color="%accent%">
-				<placement x="%col1_x%" y="%row2_3a_y%" w="%content_w%" h="%input_line_height%" placement="1"/>
+				<placement x="%col1_x_caption%" y="%row2_3a_y%" w="%input_w%" h="%input_line_height%" placement="1"/>
 			</fill>
 
 			<action>
@@ -1529,12 +1529,12 @@
 			</image>
 
 			<text style="caption_hl">
-				<placement x="%col1_x%" y="%row2_1a_y%"/>
+				<placement x="%col1_x_caption%" y="%row2_1a_y%"/>
 				<text>{@fm_perms}</text>
 			</text>
 			
 			<input>
-				<placement x="%col1_x%" y="%input_rename_y%" w="%input_width%" h="%input_height%"/>
+				<placement x="%col1_x_caption%" y="%input_rename_y%" w="%input_w%" h="%input_height%"/>
 				<text>%tw_filemanager_rename%</text>
 				<data name="tw_filemanager_rename"/>
 				<restrict minlen="3" maxlen="4" allow="01234567"/>
@@ -1545,7 +1545,7 @@
 			</input>
 
 			<fill color="%accent%">
-				<placement x="%col1_x%" y="%row2_3a_y%" w="%content_w%" h="%input_line_height%" placement="1"/>
+				<placement x="%col1_x_caption%" y="%row2_3a_y%" w="%input_w%" h="%input_line_height%" placement="1"/>
 			</fill>
 
 			<listbox style="btn_list">
@@ -1590,12 +1590,12 @@
 			</text>
 
 			<text style="text_body2">
-				<placement x="%col1_x%" y="%row2_1a_y%"/>
+				<placement x="%col1_x_indent%" y="%row2_1a_y%"/>
 				<text>%tw_fm_text2%</text>
 			</text>
 
 			<text style="text_body2_hl">
-				<placement x="%col1_x%" y="%row2_2a_y%"/>
+				<placement x="%col1_x_indent%" y="%row2_2a_y%"/>
 				<text>%tw_fm_text3%</text>
 			</text>
 
@@ -1646,7 +1646,7 @@
 			</text>
 
 				<text style="caption">
-				<placement x="%col1_x%" y="%row2_1a_y%"/>
+				<placement x="%col1_x_caption%" y="%row2_1a_y%"/>
 				<text>{@arc_type}</text>
 			</text>
 			
@@ -1668,7 +1668,7 @@
 			</listbox>
 			
 			<text style="caption">
-				<placement x="%col1_x%" y="%row5_3a_y%"/>
+				<placement x="%col1_x_caption%" y="%row5_3a_y%"/>
 				<condition var1="tw_extract_action" var2="1"/>
 				<condition var1="tw_artype" op="!=" var2="2"/>
 				<condition var1="tw_artype" op="!=" var2="1"/>
@@ -1692,7 +1692,7 @@
 				<condition var1="tw_extract_action" var2="1"/>
 				<condition var1="tw_artype" op="!=" var2="1"/>
 				<condition var1="tw_artype" op="!=" var2="2"/>
-				<placement x="%col1_x%" y="%row6_1a_y%"/>
+				<placement x="%col1_x_indent%" y="%row6_1a_y%"/>
 				<text>{@arc_lvl} %tw_pack_lvl%</text>
 			</text>
 			

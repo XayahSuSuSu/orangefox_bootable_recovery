@@ -89,12 +89,12 @@
 			</text>
 
 			<text style="caption_hl">
-				<placement x="%col1_x%" y="%row2_3_y%"/>
+				<placement x="%col1_x_caption%" y="%row2_3_y%"/>
 				<text>{@decrypt_data_enter_pass}</text>
 			</text>
 			
 			<fill color="%accent%">
-				<placement x="%col1_x%" y="%row3_2_y%" w="%content_w%" h="%input_line_height%" placement="1"/>
+				<placement x="%col1_x_caption%" y="%row3_2_y%" w="%input_w%" h="%input_line_height%" placement="1"/>
 			</fill>
 			
 			<action>
@@ -143,23 +143,23 @@
 			</text>
 
 			<text style="caption_hl">
-				<placement x="%col1_x%" y="%row2_3_y%"/>
+				<placement x="%col1_x_caption%" y="%row2_3_y%"/>
 				<text>{@decrypt_data_enter_pass}</text>
 			</text>
 			
 			<fill color="%accent%">
 				<condition var1="pass_notm" var2="0"/>
-				<placement x="%col1_x%" y="%row3_2_y%" w="%content_w%" h="%input_line_height%" placement="1"/>
+				<placement x="%col1_x_caption%" y="%row3_2_y%" w="%input_w%" h="%input_line_height%" placement="1"/>
 			</fill>
 
 			<fill color="%text_fail%">
 				<condition var1="pass_notm" var2="1"/>
-				<placement x="%col1_x%" y="%row3_2_y%" w="%content_w%" h="%input_line_height%" placement="1"/>
+				<placement x="%col1_x_caption%" y="%row3_2_y%" w="%input_w%" h="%input_line_height%" placement="1"/>
 			</fill>
 
 			<text style="text_input_fail">
 				<condition var1="pass_notm" var2="1"/>
-				<placement x="%col1_x%" y="%row3_2_y%"/>
+				<placement x="%col1_x_caption%" y="%row3_2_y%"/>
 				<text>{@pass_not_match}</text>
 			</text>
 
@@ -262,12 +262,12 @@
 			<template name="page_enter_pass"/>
 			
 			<text style="caption_hl">
-				<placement x="%col1_x%" y="%row2_3_y%"/>
+				<placement x="%col1_x_caption%" y="%row2_3_y%"/>
 				<text>{@decrypt_data_enter_pass}</text>
 			</text>
 
 			<input>
-				<placement x="%col1_x%" y="%row3_1_y%" w="%input_width%" h="%input_height%"/>
+				<placement x="%col1_x_caption%" y="%row3_1_y%" w="%input_w%" h="%input_height%"/>
 				<text>%pass_enter_mask%</text>
 				<data name="pass_enter" mask="*" maskvariable="pass_enter_mask"/>
 				<restrict minlen="0" maxlen="64" />
@@ -276,17 +276,17 @@
 
 			<fill color="%accent%">
 				<condition var1="pass_govno" var2="0"/>
-				<placement x="%col1_x%" y="%row3_2_y%" w="%content_w%" h="%input_line_height%" placement="1"/>
+				<placement x="%col1_x_caption%" y="%row3_2_y%" w="%input_w%" h="%input_line_height%" placement="1"/>
 			</fill>
 
 			<fill color="%text_fail%">
 				<condition var1="pass_govno" var2="1"/>
-				<placement x="%col1_x%" y="%row3_2_y%" w="%content_w%" h="%input_line_height%" placement="1"/>
+				<placement x="%col1_x_caption%" y="%row3_2_y%" w="%input_w%" h="%input_line_height%" placement="1"/>
 			</fill>
 
 			<text style="text_input_fail">
 				<condition var1="pass_govno" var2="1"/>
-				<placement x="%col1_x%" y="%row3_2_y%"/>
+				<placement x="%col1_x_caption%" y="%row3_2_y%"/>
 				<text>{@pass_not_match}</text>
 			</text>
 		</template>

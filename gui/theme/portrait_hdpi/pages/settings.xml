@@ -133,7 +133,7 @@
 			</text>
 
 			<text style="caption">
-				<placement x="%col1_x%" y="%row1_1_y%"/>
+				<placement x="%col1_x_caption%" y="%row1_1_y%"/>
 				<condition var1="general_back" op="!=" var2="reboot"/>
 				<text>{@options_hdr}</text>
 			</text>
@@ -192,7 +192,7 @@
 			</listbox>
 			
 			<text style="caption">
-				<placement x="%col1_x%" y="%row7_3a_y%"/>
+				<placement x="%col1_x_caption%" y="%row7_3a_y%"/>
 				<condition var1="general_back" var2="settings"/>
 				<text>{@perf_conf_mode}</text>
 			</text>
@@ -200,27 +200,27 @@
 			<text style="text_body2">
 				<condition var1="general_back" var2="settings"/>
 				<condition var1="fox_boot_performance_check" var2="1"/>
-				<placement x="%col1_x%" y="%row8_1a_y%"/>
+				<placement x="%col1_x_caption%" y="%row8_1a_y%"/>
 				<text>{@perf_conf_high}</text>
 			</text>
 			
 			<text style="text_body2">
 				<condition var1="general_back" var2="settings"/>
 				<condition var1="fox_boot_powersave_check" var2="1"/>
-				<placement x="%col1_x%" y="%row8_1a_y%"/>
+				<placement x="%col1_x_caption%" y="%row8_1a_y%"/>
 				<text>{@perf_conf_batt}</text>
 			</text>
 			
 			<text style="text_body2">
 				<condition var1="general_back" var2="settings"/>
 				<condition var1="fox_boot_balance_check" var2="1"/>
-				<placement x="%col1_x%" y="%row8_1a_y%"/>
+				<placement x="%col1_x_caption%" y="%row8_1a_y%"/>
 				<text>{@perf_conf_balance}</text>
 			</text>
 
 			<button style="menu_btn">
 				<condition var1="general_back" var2="settings"/>
-				<placement x="%col1_x%" y="%row7_3a_y%" w="%content_w%" h="%mb_h_hide%"/>
+				<placement x="%col1_x_caption%" y="%row7_3a_y%" w="%input_w%" h="%mb_h_hide%"/>
 				<action function="page">ext_gov</action>
 			</button>
 			
@@ -233,7 +233,7 @@
 			</action>
 
 			<text style="caption">
-				<placement x="%col1_x%" y="%row5_3_y%"/>
+				<placement x="%col1_x_caption%" y="%row5_3_y%"/>
 				<condition var1="general_back" var2="settings"/>
 				<text>{@areb_confirm}</text>
 			</text>
@@ -248,7 +248,7 @@
 			</listbox>
 
 			<text style="caption">
-				<placement x="%col1_x%" y="%row1_1_y%"/>
+				<placement x="%col1_x_caption%" y="%row1_1_y%"/>
 				<condition var1="general_back" var2="reboot"/>
 				<text>{@areb_confirm}</text>
 			</text>
@@ -354,7 +354,7 @@
 			</image>
 
 			<text style="caption">
-				<placement x="%col1_x%" y="%row4_2_y%"/>
+				<placement x="%col1_x_caption%" y="%row4_2_y%"/>
 				<text>ADB</text>
 			</text>
 
@@ -366,7 +366,7 @@
 			</listbox>
 
 			<text style="caption">
-				<placement x="%col1_x%" y="%row5_2a_y%"/>
+				<placement x="%col1_x_caption%" y="%row5_2a_y%"/>
 				<text>{@pass_page_select}</text>
 			</text>
 
@@ -429,13 +429,13 @@
 			</text>
 
 			<text style="caption">
-				<placement x="%col1_x%" y="%row1_1_y%"/>
+				<placement x="%col1_x_caption%" y="%row1_1_y%"/>
 				<text>{@settings_screen_cptn}</text>
 			</text>
 
 			<text style="text_body2">
 				<condition var1="tw_has_brightnesss_file" var2="1"/>
-				<placement x="%col1_x%" y="%row1_2_y%"/>
+				<placement x="%col1_x_caption%" y="%row1_2_y%"/>
 				<text>{@screen_bright_slider}</text>
 			</text>
 
@@ -452,14 +452,14 @@
 			<text style="text_body2">
 				<condition var1="tw_screen_timeout_secs" var2="0"/>
 				<condition var1="tw_no_screen_timeout" op="!=" var2="1"/>
-				<placement x="%col1_x%" y="%row2_3a_y%"/>
+				<placement x="%col1_x_caption%" y="%row2_3a_y%"/>
 				<text>{@settings_screen_timeout_cptn}</text>
 			</text>
 
 			<text style="text_body2">
 				<condition var1="tw_screen_timeout_secs" op="!=" var2="0"/>
 				<condition var1="tw_no_screen_timeout" op="!=" var2="1"/>
-				<placement x="%col1_x%" y="%row2_3a_y%"/>
+				<placement x="%col1_x_caption%" y="%row2_3a_y%"/>
 				<text>{@settings_screen_timeout_cptn2} %tw_screen_timeout_secs% {@timeout_unit}</text>
 			</text>
 
@@ -470,7 +470,7 @@
 			</slidervalue>
 
 			<text style="caption">
-				<placement x="%col1_x%" y="%row4_2a_y%"/>
+				<placement x="%col1_x_caption%" y="%row4_2a_y%"/>
 				<text>{@fox_led_title}</text>
 			</text>
 
@@ -502,19 +502,19 @@
 			</text>
 
 			<text style="caption">
-				<placement x="%col1_x%" y="%row1_1_y%"/>
+				<placement x="%col1_x_caption%" y="%row1_1_y%"/>
 				<text>{@vibration_hdr}</text>
 			</text>
 
 			<text style="text_body2">
-				<placement x="%col1_x%" y="%row1_2_y%"/>
+				<placement x="%col1_x_caption%" y="%row1_2_y%"/>
 				<condition var1="tw_button_vibrate" op="!=" var2="0"/>
 				<text>{@button_vibration} %tw_button_vibrate%</text>
 			</text>
 
 			<text style="text_body2">
 				<condition var1="tw_button_vibrate" var2="0"/>
-				<placement x="%col1_x%" y="%row1_2_y%"/>
+				<placement x="%col1_x_caption%" y="%row1_2_y%"/>
 				<text>{@button_vibration_hdr}</text>
 			</text>
 
@@ -525,13 +525,13 @@
 
 			<text style="text_body2">
 				<condition var1="tw_keyboard_vibrate" op="!=" var2="0"/>
-				<placement x="%col1_x%" y="%row2_3a_y%"/>
+				<placement x="%col1_x_caption%" y="%row2_3a_y%"/>
 				<text>{@kb_vibration} %tw_keyboard_vibrate%</text>
 			</text>
 
 			<text style="text_body2">
 				<condition var1="tw_keyboard_vibrate" var2="0"/>
-				<placement x="%col1_x%" y="%row2_3a_y%"/>
+				<placement x="%col1_x_caption%" y="%row2_3a_y%"/>
 				<text>{@kb_vibration_hdr}</text>
 			</text>
 
@@ -542,13 +542,13 @@
 
 			<text style="text_body2">
 				<condition var1="tw_action_vibrate" op="!=" var2="0"/>
-				<placement x="%col1_x%" y="%row4_2_y%"/>
+				<placement x="%col1_x_caption%" y="%row4_2_y%"/>
 				<text>{@act_vibration} %tw_action_vibrate%</text>
 			</text>
 
 			<text style="text_body2">
 				<condition var1="tw_action_vibrate" var2="0"/>
-				<placement x="%col1_x%" y="%row4_2_y%"/>
+				<placement x="%col1_x_caption%" y="%row4_2_y%"/>
 				<text>{@act_vibration_hdr}</text>
 			</text>
 
@@ -578,7 +578,7 @@
 			</text>
 
 			<text style="caption">
-				<placement x="%col1_x%" y="%row1_1_y%"/>
+				<placement x="%col1_x_caption%" y="%row1_1_y%"/>
 				<text>{@settings_backup_name}</text>
 			</text>
 
@@ -591,7 +591,7 @@
 			</listbox>
 
 			<text style="caption">
-				<placement x="%col1_x%" y="%row5_3a_y%"/>
+				<placement x="%col1_x_caption%" y="%row5_3a_y%"/>
 				<text>{@cust_oth}</text>
 			</text>
 
@@ -620,7 +620,7 @@
 			</listbox>
 
 			<text style="caption">
-				<placement x="%col1_x%" y="%row3_1a_y%"/>
+				<placement x="%col1_x_caption%" y="%row3_1a_y%"/>
 				<text>{@settings_backup_qbkp_custom}</text>
 			</text>
 
@@ -651,7 +651,7 @@
 			</text>
 
 			<text style="caption">
-				<placement x="%col1_x%" y="%row1_1_y%"/>
+				<placement x="%col1_x_caption%" y="%row1_1_y%"/>
 				<text>{@sel_tz_list}</text>
 			</text>
 
@@ -685,7 +685,7 @@
 			</listbox>
 
 			<text style="caption">
-				<placement x="%col1_x%" y="%row5_1a_y%"/>
+				<placement x="%col1_x_caption%" y="%row5_1a_y%"/>
 				<text>{@options_cptn}</text>
 			</text>
 
@@ -700,34 +700,34 @@
 			</listbox>
 
 			<text style="caption">
-				<placement x="%col1_x%" y="%row6_3a_y%"/>
+				<placement x="%col1_x_caption%" y="%row6_3a_y%"/>
 				<text>{@tz_offset}</text>
 			</text>
 
 			<text style="text_body2">
-				<placement x="%col1_x%" y="%row7_1a_y%"/>
+				<placement x="%col1_x_caption%" y="%row7_1a_y%"/>
 				<text>{@sel_tz_offset}</text>
 			</text>
 
 			<button style="menu_btn">
-				<placement x="%col1_x%" y="%row6_3a_y%" w="%content_w%" h="%mb_h_hide%"/>
+				<placement x="%col1_x_caption%" y="%row6_3a_y%" w="%input_w%" h="%mb_h_hide%"/>
 				<action function="set">zone_temp=%tw_time_zone_guioffset%</action>
 				<action function="set">zone_error=0</action>
 				<action function="overlay">dialog_offset</action>
 			</button>
 
 			<text style="caption">
-				<placement x="%col1_x%" y="%row7_3a_y%"/>
+				<placement x="%col1_x_caption%" y="%row7_3a_y%"/>
 				<text>{@language_cptn}</text>
 			</text>
 
 			<text style="text_body2">
-				<placement x="%col1_x%" y="%row8_1a_y%"/>
+				<placement x="%col1_x_caption%" y="%row8_1a_y%"/>
 				<text>%tw_language_display%</text>
 			</text>
 
 			<button style="menu_btn">
-				<placement x="%col1_x%" y="%row7_3a_y%" w="%content_w%" h="%mb_h_hide%"/>
+				<placement x="%col1_x_caption%" y="%row7_3a_y%" w="%input_w%" h="%mb_h_hide%"/>
 				<action function="page">ext_time_lang</action>
 			</button>
 
@@ -757,7 +757,7 @@
 			</text>
 
 			<text style="caption">
-				<placement x="%col1_x%" y="%row1_1_y%" />
+				<placement x="%col1_x_caption%" y="%row1_1_y%" />
 				<text>{@language_cptn}</text>
 			</text>
 
@@ -1219,7 +1219,7 @@
 			</text>
 
 			<text style="caption">
-				<placement x="%col1_x%" y="%row1_3_y%"/>
+				<placement x="%col1_x_caption%" y="%row1_3_y%"/>
 				<text>{@perf_conf_mode}</text>
 			</text>
 

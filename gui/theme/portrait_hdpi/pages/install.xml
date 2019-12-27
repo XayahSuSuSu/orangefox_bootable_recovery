@@ -20,27 +20,27 @@
 			</text>
 
 			<text style="caption">
-				<placement x="%col1_x%" y="%row2_1a_y%"/>
+				<placement x="%col1_x_caption%" y="%row2_1a_y%"/>
 				<text>{@file}</text>
 			</text>
 
 			<text style="text_body2">
-				<placement x="%col1_x%" y="%row2_2a_y%"/>
+				<placement x="%col1_x_caption%" y="%row2_2a_y%"/>
 				<text>%tw_file%</text>
 			</text>
 
 			<text style="caption">
-				<placement x="%col1_x%" y="%row3_1a_y%"/>
+				<placement x="%col1_x_caption%" y="%row3_1a_y%"/>
 				<text>{@folder}</text>
 			</text>
 
 			<text style="text_body2">
-				<placement x="%col1_x%" y="%row3_2a_y%"/>
+				<placement x="%col1_x_caption%" y="%row3_2a_y%"/>
 				<text>%tw_zip_location%</text>
 			</text>
 
 			<text style="caption">
-				<placement x="%col1_x%" y="%row4_1a_y%"/>
+				<placement x="%col1_x_caption%" y="%row4_1a_y%"/>
 				<text>{@options_hdr}</text>
 			</text>
 
@@ -178,19 +178,19 @@
 
 			<text style="caption">
 				<condition var1="tw_fileexists" var2="1"/>
-				<placement x="%col1_x%" y="%row2_1a_y%"/>
+				<placement x="%col1_x_caption%" y="%row2_1a_y%"/>
 				<text>{@author}</text>
 			</text>
 
 			<text style="text_body2">
 				<condition var1="tw_fileexists" var2="1"/>
-				<placement x="%col1_x%" y="%row2_2a_y%"/>
+				<placement x="%col1_x_caption%" y="%row2_2a_y%"/>
 				<text>%fox_m_author%</text>
 			</text>
 
 			<text style="caption">
 				<condition var1="tw_fileexists" var2="1"/>
-				<placement x="%col1_x%" y="%row3_1a_y%"/>
+				<placement x="%col1_x_caption%" y="%row3_1a_y%"/>
 				<text>{@options_hdr}</text>
 			</text>
 
@@ -434,27 +434,27 @@
 			</text>
 
 			<text style="caption">
-				<placement x="%col1_x%" y="%row2_1a_y%"/>
+				<placement x="%col1_x_caption%" y="%row2_1a_y%"/>
 				<text>{@file}</text>
 			</text>
 
 			<text style="text_body2">
-				<placement x="%col1_x%" y="%row2_2a_y%"/>
+				<placement x="%col1_x_caption%" y="%row2_2a_y%"/>
 				<text>%tw_file%</text>
 			</text>
 
 			<text style="caption">
-				<placement x="%col1_x%" y="%row3_1a_y%"/>
+				<placement x="%col1_x_caption%" y="%row3_1a_y%"/>
 				<text>{@folder}</text>
 			</text>
 
 			<text style="text_body2">
-				<placement x="%col1_x%" y="%row3_2a_y%"/>
+				<placement x="%col1_x_caption%" y="%row3_2a_y%"/>
 				<text>%tw_zip_location%</text>
 			</text>
 
 			<text style="caption">
-				<placement x="%col1_x%" y="%row4_1a_y%"/>
+				<placement x="%col1_x_caption%" y="%row4_1a_y%"/>
 				<text>{@flash_image_select}</text>
 			</text>
 

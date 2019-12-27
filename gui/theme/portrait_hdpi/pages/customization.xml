@@ -155,7 +155,7 @@
 			</text>
 
 			<text style="caption">
-				<placement x="%col1_x%" y="%row1_1_y%"/>
+				<placement x="%col1_x_caption%" y="%row1_1_y%"/>
 				<text>{@status_clock_pos}</text>
 			</text>
 
@@ -168,7 +168,7 @@
 			</listbox>
 
 			<text style="caption">
-				<placement x="%col1_x%" y="%row4_3a_y%"/>
+				<placement x="%col1_x_caption%" y="%row4_3a_y%"/>
 				<text>{@settings_ui_status}</text>
 			</text>
 
@@ -202,7 +202,7 @@
 			</listbox>
 
 			<text style="caption">
-				<placement x="%col1_x%" y="%row3_1a_y%"/>
+				<placement x="%col1_x_caption%" y="%row3_1a_y%"/>
 				<text>{@status_battery_style}</text>
 			</text>
 
@@ -348,7 +348,7 @@
 			</image>
 
 			<text style="caption">
-				<placement x="%col1_x%" y="%row4_2_y%"/>
+				<placement x="%col1_x_caption%" y="%row4_2_y%"/>
 				<text>{@lockscreen_style}</text>
 			</text>
 
@@ -360,7 +360,7 @@
 			</listbox>
 
 			<text style="caption">
-				<placement x="%col1_x%" y="%row6_1_y%"/>
+				<placement x="%col1_x_caption%" y="%row6_1_y%"/>
 				<text>{@cust_oth}</text>
 			</text>
 
@@ -446,7 +446,7 @@
 			</text>
 
 			<text style="caption">
-				<placement x="%col1_x%" y="%row1_3a_y%"/>
+				<placement x="%col1_x_caption%" y="%row1_3a_y%"/>
 				<condition var1="navbar_disable_tmp" op="!=" var2="1"/>
 				<text>{@settings_ui_style}</text>
 			</text>
@@ -461,7 +461,7 @@
 			</listbox>
 
 			<text style="caption">
-				<placement x="%col1_x%" y="%row4_1_y%"/>
+				<placement x="%col1_x_caption%" y="%row4_1_y%"/>
 				<condition var1="navbar_disable_tmp" op="!=" var2="1"/>
 				<text>{@settings_ui_color}</text>
 			</text>
@@ -479,7 +479,7 @@
 			</listbox>
 
 			<text style="caption">
-				<placement x="%col1_x%" y="%row7_1a_y%"/>
+				<placement x="%col1_x_caption%" y="%row7_1a_y%"/>
 				<condition var1="navbar_disable_tmp" op="!=" var2="1"/>
 				<text>{@cust_oth}</text>
 			</text>
@@ -542,7 +542,7 @@
 			</text>
 
 			<text style="caption">
-				<placement x="%col1_x%" y="%row1_1_y%"/>
+				<placement x="%col1_x_caption%" y="%row1_1_y%"/>
 				<text>{@options_hdr}</text>
 			</text>
 
@@ -588,7 +588,7 @@
 			</text>
 
 			<text style="caption">
-				<placement x="%col1_x%" y="%row1_1_y%"/>
+				<placement x="%col1_x_caption%" y="%row1_1_y%"/>
 				<text>{@settings_ui_style}</text>
 			</text>
 
@@ -601,7 +601,7 @@
 			</listbox>
 
 			<text style="caption">
-				<placement x="%col1_x%" y="%row3_1a_y%"/>
+				<placement x="%col1_x_caption%" y="%row3_1a_y%"/>
 				<text>{@settings_ui_color}</text>
 			</text>
 
@@ -617,7 +617,7 @@
 			</listbox>
 
 			<text style="caption">
-				<placement x="%col1_x%" y="%row6_2_y%"/>
+				<placement x="%col1_x_caption%" y="%row6_2_y%"/>
 				<text>{@cust_oth}</text>
 			</text>
 
@@ -695,7 +695,7 @@
 			</text>
 			
 			<text style="caption">
-				<placement x="%col1_x%" y="%row1_1_y%" />
+				<placement x="%col1_x_caption%" y="%row1_1_y%" />
 				<text>{@theme_font_sel}</text>
 			</text>
 			
@@ -844,7 +844,7 @@
 
 			<!-- Font Size -->
 			<text style="caption">
-				<placement x="%col1_x%" y="%row6_1a_y%" />
+				<placement x="%col1_x_caption%" y="%row6_1a_y%" />
 				<text>{@font_size}</text>
 			</text>
 
@@ -889,7 +889,7 @@
 
 			<!-- Font Size -->
 			<text style="caption">
-				<placement x="%col1_x%" y="%row1_1_y%" />
+				<placement x="%col1_x_caption%" y="%row1_1_y%" />
 				<text>{@font_size}</text>
 			</text>
 

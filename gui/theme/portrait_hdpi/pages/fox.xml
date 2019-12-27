@@ -110,7 +110,7 @@
 			</text>
 			
 			<text style="caption">
-				<placement x="%col1_x%" y="%row2_2a_y%"/>
+				<placement x="%col1_x_caption%" y="%row2_2a_y%"/>
 				<text>{@fox_ota_settings}</text>
 			</text>
 
@@ -131,7 +131,7 @@
 			</listbox>
 
 			<text style="caption">
-				<placement x="%col1_x%" y="%row5_1a_y%"/>
+				<placement x="%col1_x_caption%" y="%row5_1a_y%"/>
 				<text>{@fox_patch_rom}</text>
 			</text>
 
@@ -168,7 +168,7 @@
 			</text>
 			
 			<text style="caption">
-				<placement x="%col1_x%" y="%row1_1_y%"/>
+				<placement x="%col1_x_caption%" y="%row1_1_y%"/>
 				<text>{@fox_ota_settings}</text>
 			</text>
 
@@ -180,7 +180,7 @@
 			</listbox>
 
 			<text style="caption">
-				<placement x="%col1_x%" y="%row2_1a_y%"/>
+				<placement x="%col1_x_caption%" y="%row2_1a_y%"/>
 				<text>{@fox_patch_rom}</text>
 			</text>
 
@@ -277,7 +277,7 @@
 			</text>
 			
 			<text style="caption">
-				<placement x="%col1_x%" y="%row1_1_y%"/>
+				<placement x="%col1_x_caption%" y="%row1_1_y%"/>
 				<text>Pages</text>
 			</text>
 
@@ -348,7 +348,7 @@
 			</text>
 
 			<text style="caption">
-				<placement x="%col1_x%" y="%row2_1_y%"/>
+				<placement x="%col1_x_caption%" y="%row2_1_y%"/>
 				<text>{@dbg_func}</text>
 			</text>
 
@@ -361,7 +361,7 @@
 			</listbox>
 			
 			<text style="caption">
-				<placement x="%col1_x%" y="%row4_1a_y%"/>
+				<placement x="%col1_x_caption%" y="%row4_1a_y%"/>
 				<text>{@cust_oth}</text>
 			</text>
 
@@ -377,12 +377,12 @@
 			</listbox>
 
 			<text style="caption_hl">
-				<placement x="%col1_x%" y="%row1_1_y%"/>
+				<placement x="%col1_x_caption%" y="%row1_1_y%"/>
 				<text>{@dbg_act}</text>
 			</text>
 
 			<input>
-				<placement x="%col1_x%" y="%row1_2_y%" w="%input_width%" h="%input_height%"/>
+				<placement x="%col1_x_caption%" y="%row1_2_y%" w="%input_w%" h="%input_height%"/>
 				<text>%dbg_b%</text>
 				<data name="dbg_b"/>
 				<restrict minlen="0" maxlen="512"/>
@@ -391,7 +391,7 @@
 			</input>
 
 			<fill color="%accent%">
-				<placement x="%col1_x%" y="%row1_3_y%" w="%content_w%" h="%input_line_height%" placement="1"/>
+				<placement x="%col1_x_caption%" y="%row1_3_y%" w="%input_w%" h="%input_line_height%" placement="1"/>
 			</fill>
 
 			<action>
@@ -414,12 +414,12 @@
 			</text>
 
 			<text style="caption_hl">
-				<placement x="%col1_x%" y="%row1_1_y%"/>
+				<placement x="%col1_x_caption%" y="%row1_1_y%"/>
 				<text>{@dbg_func}</text>
 			</text>
 
 			<input>
-				<placement x="%col1_x%" y="%row1_2_y%" w="%input_width%" h="%input_height%"/>
+				<placement x="%col1_x_caption%" y="%row1_2_y%" w="%input_w%" h="%input_height%"/>
 				<text>%dbg%</text>
 				<data name="dbg"/>
 				<restrict minlen="1" maxlen="32" allow="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890_="/>
@@ -427,7 +427,7 @@
 			</input>
 
 			<fill color="%accent%">
-				<placement x="%col1_x%" y="%row1_3_y%" w="%content_w%" h="%input_line_height%" placement="1"/>
+				<placement x="%col1_x_caption%" y="%row1_3_y%" w="%input_w%" h="%input_line_height%" placement="1"/>
 			</fill>
 
 			<action>

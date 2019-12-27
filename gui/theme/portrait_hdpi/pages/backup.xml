@@ -111,12 +111,12 @@
 			<template name="actionbar_storage"/>
 
 			<text style="caption">
-				<placement x="%col1_x%" y="%row2_1a_y%"/>
+				<placement x="%col1_x_caption%" y="%row2_1a_y%"/>
 				<text>{@name}</text>
 			</text>
 
 			<input>
-				<placement x="%col1_x%" y="%row2_2a_y%" w="%content_w%" h="%input_height%"/>
+				<placement x="%col1_x_caption%" y="%row2_2a_y%" w="%input_w%" h="%input_height%"/>
 				<cursor color="%transparent%" hasfocus="0" width="0"/>
 				<data name="tw_backup_name"/>
 				<restrict disable="1"/>
@@ -126,41 +126,41 @@
 			<fill color="%linecolor%">
 				<condition var1="tw_fileexists" var2="0"/>
 				<condition var1="tw_backup_name" op="!=" var2="{@auto_gen}"/>
-				<placement x="%col1_x%" y="%row2_3a_y%" w="%content_w%" h="%input_line_height%" placement="1"/>
+				<placement x="%col1_x_caption%" y="%row2_3a_y%" w="%input_w%" h="%input_line_height%" placement="1"/>
 			</fill>
 
 			<fill color="%linecolor%">
 				<condition var1="tw_backup_name" var2="{@auto_gen}"/>
-				<placement x="%col1_x%" y="%row2_3a_y%" w="%content_w%" h="%input_line_height%" placement="1"/>
+				<placement x="%col1_x_caption%" y="%row2_3a_y%" w="%input_w%" h="%input_line_height%" placement="1"/>
 			</fill>
 
 			<fill color="%text_fail%">
 				<condition var1="tw_fileexists" var2="1"/>
 				<condition var1="tw_backup_name" op="!=" var2="{@auto_gen}"/>
-				<placement x="%col1_x%" y="%row2_3a_y%" w="%content_w%" h="%input_line_height%" placement="1"/>
+				<placement x="%col1_x_caption%" y="%row2_3a_y%" w="%input_w%" h="%input_line_height%" placement="1"/>
 			</fill>
 
 			<text style="text_input_fail">
 				<condition var1="tw_fileexists" var2="1"/>
 				<condition var1="tw_backup_name" op="!=" var2="{@auto_gen}"/>
-				<placement x="%col1_x%" y="%row2_3a_y%"/>
+				<placement x="%col1_x_caption%" y="%row2_3a_y%"/>
 				<text>{@backup_name_exists}</text>
 			</text>
 
 			<button style="menu_btn">
 				<condition var1="tw_backup_name" op="!=" var2="{@auto_gen}"/>
-				<placement x="%col1_x%" y="%row2_1a_y%" w="%content_w%" h="%mb_h_hide%"/>
+				<placement x="%col1_x_caption%" y="%row2_1a_y%" w="%input_w%" h="%mb_h_hide%"/>
 				<action function="page">backupname</action>
 			</button>
 
 			<button style="menu_btn">
 				<condition var1="tw_backup_name" var2="{@auto_gen}"/>
-				<placement x="%col1_x%" y="%row2_1a_y%" w="%content_w%" h="%mb_h_hide%"/>
+				<placement x="%col1_x_caption%" y="%row2_1a_y%" w="%input_w%" h="%mb_h_hide%"/>
 				<action function="page">backupname_auto</action>
 			</button>
 
 			<text style="caption">
-				<placement x="%col1_x%" y="%row3_1a_y%"/>
+				<placement x="%col1_x_caption%" y="%row3_1a_y%"/>
 				<text>{@partitions}</text>
 			</text>
 
@@ -232,12 +232,12 @@
 			</text>
 
 			<text style="caption_hl">
-				<placement x="%col1_x%" y="%row2_1a_y%"/>
+				<placement x="%col1_x_caption%" y="%row2_1a_y%"/>
 				<text>{@name}</text>
 			</text>
 
 			<input>
-				<placement x="%col1_x%" y="%row2_2a_y%"  w="%input_backup_width%" h="%input_height%"/>
+				<placement x="%col1_x_caption%" y="%row2_2a_y%"  w="%input_w%" h="%input_height%"/>
 				<text>%tw_backup_name%</text>
 				<data name="tw_backup_name"/>
 				<restrict minlen="0" maxlen="64" allow="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890-_.{}[]"/>
@@ -256,17 +256,17 @@
 
 			<fill color="%accent%">
 				<condition var1="tw_fileexists" var2="0"/>
-				<placement x="%col1_x%" y="%row2_3a_y%" w="%input_backup_width%" h="%input_line_height%" placement="1"/>
+				<placement x="%col1_x_caption%" y="%row2_3a_y%" w="%input_w%" h="%input_line_height%" placement="1"/>
 			</fill>
 
 			<fill color="%text_fail%">
 				<condition var1="tw_fileexists" var2="1"/>
-				<placement x="%col1_x%" y="%row2_3a_y%" w="%input_backup_width%" h="%input_line_height%" placement="1"/>
+				<placement x="%col1_x_caption%" y="%row2_3a_y%" w="%input_w%" h="%input_line_height%" placement="1"/>
 			</fill>
 
 			<text style="text_input_fail">
 				<condition var1="tw_fileexists" var2="1"/>
-				<placement x="%col1_x%" y="%row2_3a_y%"/>
+				<placement x="%col1_x_caption%" y="%row2_3a_y%"/>
 				<text>{@backup_name_exists}</text>
 			</text>
 
@@ -317,12 +317,12 @@
 			</text>
 
 			<text style="caption">
-				<placement x="%col1_x%" y="%row2_1a_y%"/>
+				<placement x="%col1_x_caption%" y="%row2_1a_y%"/>
 				<text>{@name}</text>
 			</text>
 
 			<input>
-				<placement x="%col1_x%" y="%row2_2a_y%" w="%content_w%" h="%input_height%"/>
+				<placement x="%col1_x_caption%" y="%row2_2a_y%" w="%input_w%" h="%input_height%"/>
 				<cursor color="%transparent%" hasfocus="0" width="0"/>
 				<data name="tw_backup_name"/>
 				<restrict minlen="0" maxlen="64" disable="1"/>
@@ -330,11 +330,11 @@
 			</input>
 
 			<fill color="%linecolor%">
-				<placement x="%col1_x%" y="%row2_3a_y%" w="%content_w%" h="%input_line_height%" placement="1"/>
+				<placement x="%col1_x_caption%" y="%row2_3a_y%" w="%input_w%" h="%input_line_height%" placement="1"/>
 			</fill>
 			
 			<button style="menu_btn">
-				<placement x="%col1_x%" y="%row2_1a_y%" w="%content_w%" h="%mb_h_hide%"/>
+				<placement x="%col1_x_caption%" y="%row2_1a_y%" w="%input_w%" h="%mb_h_hide%"/>
 				<action function="generatebackupname"/>
 				<action function="page">backupname</action>
 			</button>

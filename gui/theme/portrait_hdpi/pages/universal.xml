@@ -217,17 +217,17 @@
 
 			<text style="text_body2_hl">
 				<condition var1="tw_action" op="!=" var2="fixpermissions"/>
-				<placement x="%col1_x%" y="%row1_3_y%"/>
+				<placement x="%col1_x_caption%" y="%row1_3_y%"/>
 				<text>%tw_text2%</text>
 			</text>
 
 			<text style="text_body2">
-				<placement x="%col1_x%" y="%row2_3_y%"/>
+				<placement x="%col1_x_caption%" y="%row2_3_y%"/>
 				<text>%tw_text3%</text>
 			</text>
 
 			<text style="text_body2">
-				<placement x="%col1_x%" y="%row3_1_y%"/>
+				<placement x="%col1_x_caption%" y="%row3_1_y%"/>
 				<text>%tw_text4%</text>
 			</text>
 
@@ -238,7 +238,7 @@
 
 			<text style="caption">
 				<condition var1="tw_action" var2="copylog"/>
-				<placement x="%col1_x%" y="%row1_1_y%"/>
+				<placement x="%col1_x_caption%" y="%row1_1_y%"/>
 				<text>{@options_cptn}</text>
 			</text>
 
