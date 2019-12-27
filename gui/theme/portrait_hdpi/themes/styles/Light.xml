@@ -1,6 +1,11 @@
 <?xml version="1.0"?>
 <recovery>
-		<resources>	
+		<resources>
+		<image name="btn_raised" filename="Light/Controls/btn_raised"/>
+		<image name="btn_flat_qw" filename="Light/Controls/btn_flat_qw"/>
+		<image name="switch_off" filename="Light/Controls/switch_off" retainaspect="1"/>
+		<image name="switch_on" filename="Light/Controls/switch_on" retainaspect="1"/>
+
 		<!-- Battery -->
 		<image name="battery100" filename="Light/Battery/battery100" retainaspect="1"/>
 		<image name="battery75" filename="Light/Battery/battery75" retainaspect="1"/>

@@ -86,15 +86,10 @@
 		<image name="battery_power_p" filename="Default/Battery/powersave_p" retainaspect="1"/>
 		
 		<!-- Controls -->
-		<image name="btn_raised" filename="Default/Controls/btn_raised"/>
 		<image name="btn_raised_warn" filename="Default/Controls/btn_raised_warn"/>
-		<image name="btn_flat_qw" filename="Default/Controls/btn_flat_qw"/>
 		<image name="checkbox_false" filename="Default/Controls/checkbox_false_d" retainaspect="1"/>
 		<image name="radio_false" filename="Default/Controls/radio_false_d" retainaspect="1"/>
-		<image name="switch_off" filename="Default/Controls/switch_off" retainaspect="1"/>
-		<image name="switch_on" filename="Default/Controls/switch_on" retainaspect="1"/>
 		<image name="progress_empty_small" filename="Default/Progress/progress_empty_small"/>
-		<image name="continue_btn" filename="Default/Controls/continue" retainaspect="1"/>
 		
 		<!-- File Manager -->
 		<image name="folder_icon" filename="Default/FileManager/folder" retainaspect="1"/>

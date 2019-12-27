@@ -1,6 +1,11 @@
 <?xml version="1.0"?>
 <recovery>
-		<resources>	
+		<resources>
+		<image name="btn_raised" filename="Default/Controls/btn_raised"/>
+		<image name="btn_flat_qw" filename="Default/Controls/btn_flat_qw"/>
+		<image name="switch_off" filename="Default/Controls/switch_off" retainaspect="1"/>
+		<image name="switch_on" filename="Default/Controls/switch_on" retainaspect="1"/>
+		
 		<!-- Fullscreen Icons -->
 		<image name="unlock_icon" filename="Default/FullscreenIcons/unlock_icon" retainaspect="1"/>
 		
