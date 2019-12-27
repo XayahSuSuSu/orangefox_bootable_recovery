@@ -1113,6 +1113,7 @@
 		<string name="wipe_format_moved_info1">Функция форматирования data</string>
 		<string name="wipe_format_moved_info2">перемещена в "Управление разделами".</string>
 		<!-- R11 -->
+		<string name="in">в</string>
 		<string name="con_digest_start">[СОЗДАНИЕ КОНТРОЛЬНЫХ СУММ НАЧАТО]</string>
 		<string name="con_digest_error">Список разделов пуст!</string>
 		<string name="con_digest_cancel">Отмана...</string>

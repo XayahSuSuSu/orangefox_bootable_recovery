@@ -150,22 +150,28 @@
 				<action function="page">files_redirect</action>
 			</action>
 			
-			<!-- менюха внизу -->
+			<!-- Quick Actions menu -->
 			<image>
-				<placement x="%btn_float_x%" y="%btn_float_nav_y%" placement="4"/>
-				<image resource="fab_shadow"/>
+				<placement x="600" y="%ab_y%" placement="4"/>
+				<image resource="back_key_pie"/>
 			</image>
-
-			<button style="floating_btn">
-				<placement x="%btn_float_x%" y="%btn_float_nav_y%" placement="4"/>
-				<action function="overlay">files_ex_menu</action>
+			<button style="menu_btn">
+				<condition var1="darker_ui" op="!=" var2="1"/>
+				<placement x="0" y="%status_h%" w="636" h="168"/>
+				<action function="set">tw_filename1=tw_file_location1</action>
+				<action function="set">tw_file_location1_tmp=tw_file_location1</action>
+				<action function="set">tw_fm_isfolder=1</action>
+				<action function="page">file_quick_actions</action>
 			</button>
-			
-			<image>
-				<placement x="%btn_float_x%" y="%btn_float_nav_y%" placement="4"/>
-				<image resource="fab_add"/>
-			</image>
-			
+			<button style="menu_btn">
+				<condition var1="darker_ui" var2="1"/>
+				<placement x="0" y="%status_h%" w="636" h="168"/>
+				<action function="set">tw_filename1=tw_file_location1</action>
+				<action function="set">tw_file_location1_tmp=tw_file_location1</action>
+				<action function="set">tw_fm_isfolder=1</action>
+				<action function="page">file_quick_actions_dark</action>
+			</button>
+
 			<template name="navbar_back_fm"/>
 
 			<action>
@@ -176,6 +182,81 @@
 			<action>
 				<touch key="back"/>
 				<action function="up_a_level">tw_file_location1</action>
+			</action>
+		</page>
+
+		<page name="file_quick_actions">
+			<template name="files_qa_base"/>
+			<input>
+				<background color="%background%"/>
+				<placement x="%col1_x_indent%" y="%ab_bc_search_y%"  w="816" h="%input_height%"/>
+				<data name="tw_file_location1_tmp"/>
+				<text>%tw_file_location1_tmp%</text>
+				<action function="set">tw_file_location1=tw_file_location1_tmp</action>
+				<action function="page">filemanagerlist</action>
+			</input>
+		</page>
+
+		<page name="file_quick_actions_dark">
+			<template name="files_qa_base"/>
+			<input>
+				<background color="%title_solid_bg%"/>
+				<placement x="%col1_x_indent%" y="%ab_bc_search_y%"  w="816" h="%input_height%"/>
+				<data name="tw_file_location1_tmp"/>
+				<text>%tw_file_location1_tmp%</text>
+				<action function="set">tw_file_location1=tw_file_location1_tmp</action>
+				<action function="page">filemanagerlist</action>
+			</input>
+		</page>
+
+		<page name="files_mkdir">
+			<template name="base_ex_key"/>
+
+			<text style="text_ab_title">
+				<placement x="%col1_x_indent%" y="%ab_bc_y%"/>
+				<text>{@fm_hdr}</text>
+			</text>
+
+			<text style="text_ab_title">
+				<placement x="%col1_x_indent%" y="%row1_2_y%" placement="2"/>
+				<text>{@fm_mkdir}</text>
+			</text>
+
+			<text style="text_ab_subtitle">
+				<placement x="%col1_x_indent%" y="%row1_2_y%"/>
+				<text>{@in} %tw_file_location1%</text>
+			</text>
+
+			<text style="caption_hl">
+				<placement x="%col1_x%" y="%row2_1a_y%"/>
+				<text>{@fm_mkdir_folder}</text>
+			</text>
+
+			<input>
+				<placement x="%col1_x%" y="%input_rename_y%" w="%input_width%" h="%input_height%"/>
+				<text>%tw_filemanager_rename%</text>
+				<data name="mkdir_folder"/>
+				<restrict minlen="1" maxlen="32" />
+				<actions>
+					<action function="overlay"/>
+					<action function="terminalcommand">mkdir "%tw_file_location1%/%mkdir_folder%"</action>
+					<action function="set">mkdir_folder=</action>
+					<action function="page">filemanagerlist</action>
+				</actions>
+			</input>
+
+			<fill color="%accent%">
+				<placement x="%col1_x%" y="%row2_3a_y%" w="%content_w%" h="%input_line_height%" placement="1"/>
+			</fill>
+
+			<action>
+				<touch key="home"/>
+				<action function="page">main</action>
+			</action>
+
+			<action>
+				<touch key="back"/>
+				<action function="page">filemanagerlist</action>
 			</action>
 		</page>
 		
@@ -215,7 +296,7 @@
 				<text>%tw_name_filter%</text>
 				<data name="tw_name_filter"/>
 				<action function="set">tw_reload_fm=1</action>
-				<action function="page">file_search</action>
+				<action function="page">file_dark_search</action>
 			</input>
 			
 			<text>
@@ -358,61 +439,6 @@
 			<action>
 				<condition var1="fex_found" op="!=" var2="1"/>
 				<action function="page">filemanageroptions</action>
-			</action>
-		</page>
-		
-		<page name="files_ex_menu">
-			<template name="dialog_body"/>
-			
-			<button>
-				<placement x="%btn_float_x%" y="%btn_sfloat_3_y%"/>
-				<image resource="float_fm_books" highlightresource="float_fm_books_hl"/>
-				<action function="overlay"/>
-				<action function="set">book_edit=0</action>
-				<action function="page">files_bookmarks_prepare</action>
-			</button>
-			
-			<button>
-				<placement x="%btn_float_x%" y="%btn_sfloat_2_y%"/>
-				<image resource="float_fm_new" highlightresource="float_fm_new_hl"/>
-				<action function="overlay"/>
-				<action function="set">mkdir_folder=</action>
-				<action function="overlay">dialog_mkdir</action>
-			</button>
-			
-			<button>
-				<condition var1="tw_file_location1" op="!=" var2="/"/>
-				<placement x="%btn_float_x%" y="%btn_sfloat_1_y%"/>
-				<image resource="float_fm_select" highlightresource="float_fm_select_hl"/>
-				<action function="overlay"/>
-				<action function="set">tw_filename1=tw_file_location1</action>
-				<action function="set">tw_fm_isfolder=1</action>
-				<action function="page">filemanageroptions</action>
-			</button>
-			
-			<image>
-				<placement x="%btn_float_x%" y="%btn_float_nav_y%" placement="4"/>
-				<image resource="fab_shadow"/>
-			</image>
-			
-			<button style="floating_btn">
-				<placement x="%btn_float_x%" y="%btn_float_nav_y%" placement="4"/>
-				<action function="overlay"/>
-			</button>
-			
-			<image>
-				<placement x="%btn_float_x%" y="%btn_float_nav_y%" placement="4"/>
-				<image resource="fab_close"/>
-			</image>
-			
-			<action>
-				<touch key="home"/>
-				<action function="page">main</action>
-			</action>
-
-			<action>
-				<touch key="back"/>
-				<action function="overlay"/>
 			</action>
 		</page>
 		
@@ -1190,7 +1216,6 @@
 				<action function="set">tw_fm_text2={@fordowns_to}</action>
 				<action function="set">tw_fm_text3=%tw_file_location2%</action>
 				<action function="set">tw_include_text3=1</action>
-				<action function="set">tw_back=filemanageroptions</action>
 				<action function="page">filemanagerconfirm</action>
 			</button>
 			
@@ -1206,7 +1231,7 @@
 
 			<action>
 				<touch key="back"/>
-				<action function="page">filemanageroptions</action>
+				<action function="page">filemanagerlist</action>
 			</action>
 		</page>
 

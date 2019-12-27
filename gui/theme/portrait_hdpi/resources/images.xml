@@ -96,14 +96,6 @@
 		<image name="progress_empty_small" filename="Default/Progress/progress_empty_small"/>
 		<image name="continue_btn" filename="Default/Controls/continue" retainaspect="1"/>
 		
-		<!-- FAB -->
-		<image name="float_fm_books" filename="Default/FAB/float_fm_books" retainaspect="1"/>
-		<image name="float_fm_new" filename="Default/FAB/float_fm_new" retainaspect="1"/>
-		<image name="float_fm_select" filename="Default/FAB/float_fm_select" retainaspect="1"/>
-		<image name="float_fm_books_hl" filename="Default/FAB/float_fm_books_hl" retainaspect="1"/>
-		<image name="float_fm_new_hl" filename="Default/FAB/float_fm_new_hl" retainaspect="1"/>
-		<image name="float_fm_select_hl" filename="Default/FAB/float_fm_select_hl" retainaspect="1"/>
-		
 		<!-- File Manager -->
 		<image name="folder_icon" filename="Default/FileManager/folder" retainaspect="1"/>
 		<image name="folder_icon_small" filename="Default/FileManager/folder_small" retainaspect="1"/>
