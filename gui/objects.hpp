@@ -444,6 +444,7 @@ protected:
 	GUIAction* mAction;
 	bool mRendered;
 	bool hasFill;
+	bool vibrateLock;
 	int mMode;
 	int mSensetivity;
 	COLOR mFillColor;

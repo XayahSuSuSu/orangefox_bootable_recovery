@@ -115,14 +115,21 @@ int GUIGesture::SetRenderPos(int x, int y, int w, int h)
 
 int GUIGesture::NotifyTouch(TOUCH_STATE state, int x, int y)
 {
-	(void)state; // fix unised parameter error
 	if (!isConditionTrue())	 return -1;
 
-	if ((mMode != 1 && y < mRenderY - mSensetivity) || (mMode == 1 && x < mRenderX - mSensetivity) ||
-		(mMode == 2 && x > mRenderX + mSensetivity + mRenderW))  {
+	if (state == TOUCH_START)
+		vibrateLock = false;
+
+	if ((
+		(mMode == 0 && y < mRenderY - mSensetivity) ||
+		(mMode == 1 && x < mRenderX - mSensetivity) ||
+		(mMode == 2 && x > mRenderX + mSensetivity + mRenderW) ||
+		(mMode == 3 && y > mRenderY + mSensetivity + mRenderH)
+		) && !vibrateLock)  {
 		#ifndef TW_NO_HAPTICS
 			DataManager::Vibrate("tw_button_vibrate");
 		#endif
+		vibrateLock = true;
 		return (mAction ? mAction->NotifyTouch(TOUCH_RELEASE, x, y) : 1);
 	}
 	return 0;

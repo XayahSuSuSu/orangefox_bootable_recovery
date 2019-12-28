@@ -9,6 +9,12 @@
 				<action function="key">home</action>
 			</gesture>
 			<gesture>
+				<placement x="0" y="0" w="%screen_w%" h="%status_h%"/>
+				<fill color="#7c7c7c7c"/>
+				<settings side="3" sense="300" />
+				<action function="overlay">console</action>
+			</gesture>
+			<gesture>
 				<placement x="0" y="0" w="48" h="%screen_h%"/>
 				<fill color="#7c7c7c7c"/>
 				<settings side="2" sense="200" />
