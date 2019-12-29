@@ -203,7 +203,6 @@ bool retrieveAndInstallKey(bool create_if_absent, const KeyAuthentication& key_a
         if (!storeKeyAtomically(key_path, tmp_path, key_authentication, key)) return false;
     }
 
-	
     if (wrapped_key_supported) {
         KeyBuffer ephemeral_wrapped_key;
         if (!getEphemeralWrappedKey(KeyFormat::RAW, key, &ephemeral_wrapped_key)) {

@@ -329,7 +329,6 @@ protected:
 	int checkpartitionlist(std::string arg);
 	int getpartitiondetails(std::string arg);
 	int screenshot(std::string arg);
-	int screenshotexternal(std::string arg);
 	int setbrightness(std::string arg);
 
 	// (originally) threaded actions

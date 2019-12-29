@@ -209,7 +209,6 @@ GUIAction::GUIAction(xml_node <> *node):GUIObject(node)
       ADD_ACTION(getpartitiondetails);
       ADD_ACTION(screenshot);
       ADD_ACTION_EX("screenshotinternal", screenshot);
-      ADD_ACTION(screenshotexternal);
       ADD_ACTION(setbrightness);
       ADD_ACTION(fileexists);
       ADD_ACTION(killterminal);
@@ -1220,100 +1219,44 @@ int GUIAction::getpartitiondetails(std::string arg)
 
 int GUIAction::screenshot(std::string arg __unused)
 {
-  time_t tm;
-  char path[256];
-  int path_len;
-  uid_t uid = AID_MEDIA_RW;
-  gid_t gid = AID_MEDIA_RW;
+	time_t tm;
+	char path[256];
+	int path_len;
+	uid_t uid = AID_MEDIA_RW;
+	gid_t gid = AID_MEDIA_RW;
 
-  const std::string storage = "/sdcard";
-  if (PartitionManager.Is_Mounted_By_Path(storage))
-    {
-      snprintf(path, sizeof(path), "%s/Fox/screenshots/", storage.c_str());
-    }
-  else
-    {
-      strcpy(path, "/sdcard/Fox/screenshots/");
-    }
+	const std::string storage = DataManager::GetCurrentStoragePath();
+	if (PartitionManager.Is_Mounted_By_Path(storage)) {
+		snprintf(path, sizeof(path), "%s/Pictures/Screenshots/", storage.c_str());
+	} else {
+		strcpy(path, "/tmp/");
+	}
 
-  if (!TWFunc::Create_Dir_Recursive(path, 0775, uid, gid))
-    return 0;
+	if (!TWFunc::Create_Dir_Recursive(path, 0775, uid, gid))
+		return 0;
 
-  tm = time(NULL);
-  path_len = strlen(path);
+	tm = time(NULL);
+	path_len = strlen(path);
 
-  // Screenshot_2014-01-01-18-21-38.png
-  strftime(path + path_len, sizeof(path) - path_len,
-	   "Screenshot_%Y-%m-%d-%H-%M-%S.png", localtime(&tm));
+	// Screenshot_2014-01-01-18-21-38.png
+	strftime(path+path_len, sizeof(path)-path_len, "Screenshot_%Y-%m-%d-%H-%M-%S.png", localtime(&tm));
 
-  int res = gr_save_screenshot(path);
-  if (res == 0)
-    {
-      chmod(path, 0666);
-      chown(path, uid, gid);
+	int res = gr_save_screenshot(path);
+	if (res == 0) {
+		chmod(path, 0666);
+		chown(path, uid, gid);
 
-      gui_msg(Msg("screenshot_saved=Screenshot was saved to {1}") (path));
+		gui_msg(Msg("screenshot_saved=Screenshot was saved to {1}")(path));
 
-      // blink to notify that the screenshow was taken
-      gr_color(255, 255, 255, 255);
-      gr_fill(0, 0, gr_fb_width(), gr_fb_height());
-      gr_flip();
-      gui_forceRender();
-    }
-  else
-    {
-      gui_err("screenshot_err=Failed to take a screenshot!");
-    }
-  return 0;
-}
-
-int GUIAction::screenshotexternal(std::string arg __unused)
-{
-  time_t tm;
-  char path[256];
-  int path_len;
-  uid_t uid = AID_MEDIA_RW;
-  gid_t gid = AID_MEDIA_RW;
-
-  const std::string storage = "/sdcard1";
-  if (PartitionManager.Is_Mounted_By_Path(storage))
-    {
-      snprintf(path, sizeof(path), "%s/Fox/screenshots/", storage.c_str());
-    }
-  else
-    {
-      strcpy(path, "/sdcard/Fox/screenshots/");
-    }
-
-  if (!TWFunc::Create_Dir_Recursive(path, 0775, uid, gid))
-    return 0;
-
-  tm = time(NULL);
-  path_len = strlen(path);
-
-  // Screenshot_2014-01-01-18-21-38.png
-  strftime(path + path_len, sizeof(path) - path_len,
-	   "Screenshot_%Y-%m-%d-%H-%M-%S.png", localtime(&tm));
-
-  int res = gr_save_screenshot(path);
-  if (res == 0)
-    {
-      chmod(path, 0666);
-      chown(path, uid, gid);
-
-      gui_msg(Msg("screenshot_saved=Screenshot was saved to {1}") (path));
-
-      // blink to notify that the screenshot was taken
-      gr_color(255, 255, 255, 255);
-      gr_fill(0, 0, gr_fb_width(), gr_fb_height());
-      gr_flip();
-      gui_forceRender();
-    }
-  else
-    {
-      gui_err("screenshot_err=Failed to take a screenshot!");
-    }
-  return 0;
+		// blink to notify that the screenshot was taken
+		gr_color(255, 255, 255, 255);
+		gr_fill(0, 0, gr_fb_width(), gr_fb_height());
+		gr_flip();
+		gui_forceRender();
+	} else {
+		gui_err("screenshot_err=Failed to take a screenshot!");
+	}
+	return 0;
 }
 
 int GUIAction::setbrightness(std::string arg)
