@@ -688,7 +688,6 @@ void TWPartition::Setup_Data_Partition(bool Display_Error) {
 					LOGINFO("Device not encrypted/unable to decrypt FBE device\n");
 				}
 			}
-			
 		}
 	}
 	if (datamedia && (!Is_Encrypted || (Is_Encrypted && Is_Decrypted))) {

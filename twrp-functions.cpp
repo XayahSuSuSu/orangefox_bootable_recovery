@@ -569,8 +569,8 @@ bool TWFunc::Is_SymLink(string Path) {
 }
 
 bool TWFunc::Path_Exists(string Path) {
-   struct stat st;
-   return stat(Path.c_str(), &st) == 0;
+	struct stat st;
+	return stat(Path.c_str(), &st) == 0;
 }
 
 Archive_Type TWFunc::Get_File_Type(string fn)
@@ -1247,7 +1247,7 @@ int TWFunc::removeDir(const string path, bool skipParent)
 int TWFunc::copy_file(string src, string dst, int mode) {
 	PartitionManager.Mount_By_Path(src, false);
 	PartitionManager.Mount_By_Path(dst, false);
-	
+
 	if (!Path_Exists(src)) {
 		LOGINFO("Unable to find source file %s\n", src.c_str());
 		return -1;
