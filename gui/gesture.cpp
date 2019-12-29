@@ -69,7 +69,7 @@ GUIGesture::GUIGesture(xml_node<>* node)
 	int x = 0, y = 0, w = 0, h = 0;
 	if (hasFill)
 		LoadPlacement(FindNode(node, "placement"), &x, &y, &w, &h, &TextPlacement);
-		
+
 	SetRenderPos(x, y, w, h);
 }
 
@@ -97,7 +97,8 @@ int GUIGesture::Render(void)
 int GUIGesture::Update(void)
 {
 	if (!isConditionTrue())	return (mRendered ? 2 : 0);
-	return 2;
+	if (!mRendered)			return 2;
+	return 0;
 }
 
 int GUIGesture::SetRenderPos(int x, int y, int w, int h)
