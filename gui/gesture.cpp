@@ -32,6 +32,7 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include "../data.hpp"
+#include "pages.hpp"
 
 #include <string>
 
@@ -63,7 +64,7 @@ GUIGesture::GUIGesture(xml_node<>* node)
 
 	xml_node<>* child = FindNode(node, "settings");
 	mMode = LoadAttrInt(child, "side", mMode);
-	mSensetivity = LoadAttrInt(child, "sense", mSensetivity);
+	mSensetivity = LoadAttrIntScaleX(child, "sense", mSensetivity);
 
 	int x = 0, y = 0, w = 0, h = 0;
 	if (hasFill)
