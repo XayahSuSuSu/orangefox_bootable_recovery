@@ -194,6 +194,8 @@
 				<action function="set">pass_pattern_grid=6</action>
 			</button>
 
+			<template name="gestures"/>
+
 			<action>
 				<touch key="home"/>
 				<action function="page">main</action>
@@ -250,6 +252,8 @@
 				<action function="page">pass_check</action>
 			</patternpassword>
 
+			<template name="gestures"/>
+
 			<action>
 				<touch key="home"/>
 				<action function="page">main</action>
@@ -273,6 +277,8 @@
 				<action function="set">pass_new_2=</action>
 				<action function="page">pass_text_2</action>
 			</input>
+
+			<template name="gestures_key"/>
 		</page>
 
 		<page name="pass_text_2">
@@ -288,6 +294,8 @@
 				<action function="set">pass_type_tmp=0</action>
 				<action function="page">pass_check</action>
 			</input>
+
+			<template name="gestures_key"/>
 		</page>
 		
 		<page name="pass_pin">
@@ -302,6 +310,8 @@
 				<action function="set">pass_new_2=</action>
 				<action function="page">pass_pin_2</action>
 			</input>
+
+			<template name="gestures_key"/>
 		</page>
 
 		<page name="pass_pin_2">
@@ -317,6 +327,8 @@
 				<action function="set">pass_type_tmp=2</action>
 				<action function="page">pass_check</action>
 			</input>
+
+			<template name="gestures_key"/>
 		</page>
 
 		<page name="pass_check">

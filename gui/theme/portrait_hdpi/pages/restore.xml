@@ -156,6 +156,8 @@
 				<image resource="fab_add"/>
 			</image>
 
+			<template name="gestures_basic"/>
+
 			<action>
 				<touch key="back"/>
 				<action function="page">restore</action>
@@ -260,6 +262,8 @@
 				<placement x="%col1_x_caption%" y="%row4_3_y%"/>
 				<text>{@restore_dec_fail}</text>
 			</text>
+
+			<template name="gestures_key"/>
 
 			<action>
 				<touch key="home"/>
@@ -404,6 +408,8 @@
 				<action function="page">restore_run</action>
 			</slider>
 
+			<template name="gestures"/>
+
 			<action>
 				<touch key="home"/>
 				<action function="page">main</action>
@@ -468,6 +474,8 @@
 				<text>{@backup_name_exists}</text>
 			</text>
 
+			<template name="gestures_key"/>
+
 			<action>
 				<touch key="home"/>
 				<action function="page">main</action>
@@ -518,6 +526,8 @@
 				<action function="set">tw_complete_text1={@backup_deleted}</action>
 				<action function="page">restore_action_page</action>
 			</slider>
+
+			<template name="gestures"/>
 
 			<action>
 				<touch key="back"/>
@@ -602,6 +612,8 @@
 				<action function="page">restore_action_page</action>
 			</slider>
 
+			<template name="gestures"/>
+
 			<action>
 				<touch key="back"/>
 				<action function="set">tw_clear_destination=%tw_back%</action>
@@ -670,6 +682,8 @@
 				<action function="set">install_back=clear_vars</action>
 				<action function="page">mod_pass</action>
 			</button>
+
+			<template name="gestures"/>
 
 			<action>
 				<touch key="home"/>

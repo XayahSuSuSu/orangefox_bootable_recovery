@@ -202,6 +202,8 @@
 				<action function="page">backup_run</action>
 			</slider>
 
+			<template name="gestures"/>
+
 			<action>
 				<touch key="home"/>
 				<action function="page">main</action>
@@ -287,6 +289,8 @@
 				</listitem>
 			</listbox>
 
+			<template name="gestures_key"/>
+
 			<action>
 				<touch key="home"/>
 				<action function="page">main</action>
@@ -353,6 +357,8 @@
 					<action function="page">backupname</action>
 				</listitem>
 			</listbox>
+
+			<template name="gestures"/>
 
 			<action>
 				<touch key="home"/>
@@ -528,6 +534,8 @@
 				<action function="disableled"/>
 				<action function="page">backup_digest</action>
 			</button>
+
+			<template name="gestures"/>
 
 			<action>
 				<touch key="home"/>

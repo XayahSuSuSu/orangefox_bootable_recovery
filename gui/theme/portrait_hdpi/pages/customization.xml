@@ -137,6 +137,10 @@
 				</listitem>
 			</listbox>
 
+			<template name="snackbar_update"/>
+
+			<template name="gestures"/>
+
 			<action>
 				<touch key="home"/>
 				<action function="page">main</action>
@@ -161,18 +165,18 @@
 				</listitem>
 				<listitem name="{@navbar_title}">
 					<condition var1="allow_disable_nav" var2="1"/>
-					<condition var1="real_gestures_enable_tmp" op="!=" var2="1"/>
+					<condition var1="real_gestures_enable" op="!=" var2="1"/>
 					<icon res="nav"/>
 					<action function="page">ext_custom_nav</action>
 				</listitem>
 				<listitem name="{@navbar_title}">
-					<condition var1="real_gestures_enable_tmp" op="!=" var2="1"/>
+					<condition var1="real_gestures_enable" op="!=" var2="1"/>
 					<condition var1="allow_disable_nav" op="!=" var2="1"/>
 					<icon res="nav"/>
 					<action function="page">ext_custom_nav_no_switch</action>
 				</listitem>
 				<listitem name="{@navbar_title}">
-					<condition var1="real_gestures_enable_tmp" var2="1"/>
+					<condition var1="real_gestures_enable" var2="1"/>
 					<icon res="nav"/>
 					<action function="page">ext_custom_nav_error</action>
 				</listitem>
@@ -262,6 +266,8 @@
 			</image>
 			
 			<template name="snackbar_update"/>
+
+			<template name="gestures"/>
 			
 			<action>
 				<touch key="home"/>
@@ -342,6 +348,8 @@
 				<listitem name="{@status_battery_circle}">1</listitem>
 			</listbox>
 
+			<template name="gestures"/>
+
 			<action>
 				<touch key="home"/>
 				<action function="page">main</action>
@@ -408,6 +416,8 @@
 					<data variable="key_allow_swipe"/>
 				</listitem>
 			</listbox>
+
+			<template name="gestures_key"/>
 
 			<action>
 				<touch key="home"/>
@@ -507,6 +517,8 @@
 					<data variable="lock_btn"/>
 				</listitem>
 			</listbox>
+
+			<template name="gestures"/>
 
 			<action>
 				<touch key="home"/>
@@ -651,6 +663,8 @@
 
 			<template name="snackbar_update"/>
 
+			<template name="gestures"/>
+
 			<action>
 				<touch key="home"/>
 				<action function="page">main</action>
@@ -697,6 +711,8 @@
 				</listitem>
 			</listbox>
 
+			<template name="gestures"/>
+
 			<action>
 				<touch key="home"/>
 				<action function="page">main</action>
@@ -718,26 +734,56 @@
 
 			<image>
 				<placement x="%col1_x%" y="%row1_1_y%"/>
-				<image resource="icon_warning"/>
+				<image resource="icon_info"/>
 			</image>
 
-			<text style="text_body2_fail">
+			<text style="text_body2_hl">
 				<placement x="%col1_x_indent%" y="%row1_1_y%"/>
 				<text>{@gst_navbar_error}</text>
 			</text>
 
-			<text style="text_body2_fail">
+			<text style="text_body2_hl">
 				<placement x="%col1_x_indent%" y="%row1_2_y%"/>
 				<text>{@gst_navbar_error_2}</text>
 			</text>
 
-			<listbox style="btn_list">
-				<placement x="0" y="%row2_1_y%" w="%screen_w%" h="144"/>
-				<listitem name="{@gst_navbar_error_open}">
-					<icon res="gestures"/>
-					<action function="page">ext_custom_gest</action>
+			<text style="caption">
+				<placement x="%col1_x_caption%" y="%row2_1_y%"/>
+				<text>{@settings_ui_color}</text>
+			</text>
+
+			<listbox>
+				<placement x="0" y="%row2_2_y%" w="%screen_w%" h="%lb_l5%"/>
+				<data name="navbar_bkg"/>
+				<listitem name="{@fm_none}">0</listitem>
+				<listitem name="{@dark_nav}">1</listitem>
+				<listitem name="{@navbar_style_line}">2</listitem>
+				<listitem name="{@cust_navbar_accent}">3</listitem>
+				<listitem name="{@cust_navbar_black}">4<condition var1="theme_style_tmp" op="!=" var2="Black"/>
 				</listitem>
 			</listbox>
+
+			<text style="caption">
+				<condition var1="navbar_bkg" op="!=" var2="3"/>
+				<placement x="%col1_x_caption%" y="%row5_1a_y%"/>
+				<text>{@cust_oth}</text>
+			</text>
+
+			<listbox style="settingslist">
+				<placement x="0" y="%row5_2a_y%" w="%screen_w%" h="%lb_l1%"/>
+				<listitem name="{@cust_navbar_white}">
+					<condition var1="theme_style" op="!=" var2="Light"/>
+					<data variable="navbar_accent"/>
+					<condition var1="navbar_bkg" op="!=" var2="3"/>
+				</listitem>
+				<listitem name="{@cust_navbar_gray}">
+					<condition var1="theme_style" var2="Light"/>
+					<data variable="navbar_accent"/>
+					<condition var1="navbar_bkg" op="!=" var2="3"/>
+				</listitem>
+			</listbox>
+
+			<template name="gestures"/>
 
 			<action>
 				<touch key="home"/>
@@ -824,6 +870,8 @@
 				<condition var1="show_slideout" var2="0"/>
 				<action function="set">show_slideout=1</action>
 			</action>
+
+			<template name="gestures"/>
 
 			<action>
 				<touch key="home"/>
@@ -1035,6 +1083,8 @@
 
 			<template name="snackbar_update"/>
 
+			<template name="gestures"/>
+
 			<action>
 				<touch key="home"/>
 				<action function="page">main</action>
@@ -1079,6 +1129,8 @@
 			</action>
 
 			<template name="snackbar_update"/>
+
+			<template name="gestures"/>
 
 			<action>
 				<touch key="home"/>
@@ -1474,6 +1526,8 @@
 			</action>
 
 			<template name="snackbar_update"/>
+
+			<template name="gestures"/>
 			
 			<action>
 				<touch key="back"/>
@@ -1723,6 +1777,8 @@
 				<action function="set">spl_logo_type=w</action>
 				<action function="page">ext_custom_splash</action>
 			</action>
+
+			<template name="gestures"/>
 			
 			<action>
 				<touch key="home"/>
@@ -1743,6 +1799,8 @@
 				<placement x="0" y="0" w="%screen_w%" h="%screen_h%"/>
 				<action function="key">back</action>
 			</button>
+
+			<template name="gestures"/>
 			
 			<action>
 				<touch key="home"/>
@@ -1806,6 +1864,8 @@
 				<action function="set">spl_bg_on=1</action>
 				<action function="page">ext_custom_splash</action>
 			</action>
+
+			<template name="gestures"/>
 
 			<action>
 				<touch key="home"/>

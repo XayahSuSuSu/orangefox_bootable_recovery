@@ -93,6 +93,8 @@
 				<image resource="actionbar_settings"/>
 			</image>
 
+			<template name="gestures"/>
+
 			<action>
 				<touch key="home"/>
 				<action function="page">main</action>
@@ -262,6 +264,8 @@
 				<listitem name="{@areb_noos}">0</listitem>
 			</listbox>
 
+			<template name="gestures"/>
+
 			<action>
 				<touch key="home"/>
 				<action function="page">main</action>
@@ -407,6 +411,8 @@
 					<action function="page">pass_select</action>
 				</listitem>
 			</listbox>
+
+			<template name="gestures"/>
 			
 			<action>
 				<touch key="home"/>
@@ -480,6 +486,8 @@
 					<data variable="fox_led_color"/>
 				</listitem>
 			</listbox>
+
+			<template name="gestures"/>
 
 			<action>
 				<touch key="home"/>
@@ -557,6 +565,8 @@
 				<data variable="tw_action_vibrate" min="0" max="500" showrange="0" showcurr="0" changeondrag="1"/>
 			</slidervalue>
 
+			<template name="gestures"/>
+
 			<action>
 				<touch key="home"/>
 				<action function="page">main</action>
@@ -629,6 +639,8 @@
 				<data name="tw_backup_list_quick"/>
 				<listtype name="backup"/>
 			</partitionlist>
+
+			<template name="gestures"/>
 
 			<action>
 				<touch key="home"/>
@@ -737,6 +749,8 @@
 				<action function="setguitimezone"/>
 			</action>
 
+			<template name="gestures"/>
+
 			<action>
 				<touch key="home"/>
 				<action function="page">main</action>
@@ -772,6 +786,8 @@
 				<action function="overlay">ext_time_lang_busy</action>
 				<action function="setlanguage"/>
 			</action>
+
+			<template name="gestures"/>
 
 			<action>
 				<touch key="home"/>
@@ -1054,6 +1070,8 @@
 				<action function="page">about_credits</action>
 			</button>
 
+			<template name="gestures"/>
+
 			<action>
 				<touch key="home"/>
 				<action function="page">main</action>
@@ -1187,6 +1205,8 @@
 				<image resource="tab_hl"/>
 				<placement x="744" y="%tab_title_h%" placement="2"/>
 			</image>
+
+			<template name="gestures"/>
 			
 			<action>
 				<touch key="home"/>
@@ -1264,6 +1284,8 @@
 				<action function="set">fox_boot_performance_check=0</action>
 				<action function="set">fox_boot_powersave_check=0</action>
 			</action>
+
+			<template name="gestures"/>
 
 			<action>
 				<touch key="home"/>

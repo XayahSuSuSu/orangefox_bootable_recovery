@@ -154,6 +154,8 @@
 				<action function="page">magisk_actions</action>
 			</action>
 
+			<template name="gestures"/>
+
 			<action>
 				<touch key="home"/>
 				<action function="page">main</action>
@@ -296,6 +298,8 @@
 				<action function="page">reboot</action>
 			</button>
 
+			<template name="gestures"/>
+
 			<action>
 				<touch key="home"/>
 				<action function="page">main</action>
@@ -335,6 +339,8 @@
 					<action function="ftls">touch "%mmgui_file%/remove" && twrp xset mmodule_remove=1</action>
 					<action function="page">magisk_actions</action>
 				</slider>
+
+				<template name="gestures"/>
 			
 				<action>
 					<touch key="home"/>

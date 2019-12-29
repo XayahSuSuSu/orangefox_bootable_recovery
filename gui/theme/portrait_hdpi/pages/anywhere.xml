@@ -91,6 +91,8 @@
 				<font resource="fixed"/>
 			</console>
 
+			<template name="gestures"/>
+
 			<action>
 				<touch key="home"/>
 				<action function="overlay"/>

@@ -148,6 +148,8 @@
 				</listitem>
 			</listbox>
 
+			<template name="gestures"/>
+
             <action>
 				<touch key="home"/>
 				<action function="page">main</action>
@@ -196,6 +198,8 @@
 					<data variable="fox_reboot_advanced_stock_recovery_check"/>
 				</listitem>
 			</listbox>
+
+			<template name="gestures"/>
 
             <action>
 				<touch key="home"/>
@@ -259,6 +263,8 @@
 
 			<template name="base"/>
 
+			<template name="gestures"/>
+
 			<text style="text_ab_title">
 				<placement x="%col1_x_indent%" y="%ab_bc_y%"/>
 				<text>OrangeFox Lab (Beta)</text>
@@ -313,6 +319,8 @@
 				<placement x="%btn_float_x%" y="%btn_float_y%" placement="4"/>
 				<image resource="fab_accept"/>
 			</image>
+
+			<template name="gestures"/>
 
 			<action>
 				<touch key="home"/>
@@ -401,6 +409,8 @@
 				<placement x="%col1_x_caption%" y="%row1_3_y%" w="%input_w%" h="%input_line_height%" placement="1"/>
 			</fill>
 
+			<template name="gestures_key"/>
+
 			<action>
 				<touch key="home"/>
 				<action function="page">main</action>
@@ -436,6 +446,8 @@
 			<fill color="%accent%">
 				<placement x="%col1_x_caption%" y="%row1_3_y%" w="%input_w%" h="%input_line_height%" placement="1"/>
 			</fill>
+
+			<template name="gestures_key"/>
 
 			<action>
 				<touch key="home"/>

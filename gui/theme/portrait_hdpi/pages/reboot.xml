@@ -105,6 +105,8 @@
 				<image resource="actionbar_settings"/>
 			</image>
 
+			<template name="gestures"/>
+
 			<action>
 				<touch key="home"/>
 				<action function="page">main</action>

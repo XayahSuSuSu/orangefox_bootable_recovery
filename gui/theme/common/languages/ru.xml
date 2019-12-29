@@ -1121,9 +1121,8 @@
 		<string name="gst_back_right">Справа</string>
 		<string name="gst_console_enable">Открыть консоль</string>
 		<string name="gst_console">Жест сверху вниз</string>
-		<string name="gst_navbar_error">Настройки недоступны!</string>
-		<string name="gst_navbar_error_2">Отключите жесты для продолжения.</string>
-		<string name="gst_navbar_error_open">Открыть настройки жестов</string>
+		<string name="gst_navbar_error">Некоторые настройки недоступны.</string>
+		<string name="gst_navbar_error_2">Отключите жесты, чтобы показать их.</string>
 
 
 		<string name="in">в</string>

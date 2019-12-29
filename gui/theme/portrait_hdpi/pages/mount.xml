@@ -93,6 +93,8 @@
 				<image resource="fab_usb"/>
 			</image>
 
+			<template name="gestures"/>
+
 			<action>
 				<touch key="home"/>
 				<action function="page">main</action>
@@ -176,6 +178,8 @@
 				<action function="set">tw_page_done=1</action>
 				<action function="page">main</action>
 			</action>
+
+			<template name="gestures"/>
 		</page>
 
 		<page name="system_readonly_mount">
@@ -194,6 +198,8 @@
 				<action function="set">tw_page_done=1</action>
 				<action function="page">ext_general</action>
 			</action>
+
+			<template name="gestures"/>
 		</page>
 
 		<page name="decrypt">
@@ -267,6 +273,8 @@
 				<placement x="%col1_x_caption%" y="%row4_3_y%"/>
 				<text>{@restore_dec_fail}</text>
 			</text>
+
+			<template name="gestures"/>
 
 			<action>
 				<touch key="home"/>
@@ -358,6 +366,8 @@
 				<text>6x6</text>
 				<action function="set">tw_gui_pattern_grid_size=6</action>
 			</button>
+
+			<template name="gestures"/>
 
 			<action>
 				<touch key="home"/>

@@ -180,6 +180,8 @@
 
 			<template name="navbar_back_fm"/>
 
+			<template name="gestures"/>
+
 			<action>
 				<touch key="home"/>
 				<action function="set">tw_file_location1=/sdcard</action>
@@ -201,6 +203,8 @@
 				<action function="set">tw_file_location1=tw_file_location1_tmp</action>
 				<action function="page">filemanagerlist</action>
 			</input>
+
+			<template name="gestures_key"/>
 		</page>
 
 		<page name="file_quick_actions_dark">
@@ -213,6 +217,8 @@
 				<action function="set">tw_file_location1=tw_file_location1_tmp</action>
 				<action function="page">filemanagerlist</action>
 			</input>
+
+			<template name="gestures_key"/>
 		</page>
 
 		<page name="files_mkdir">
@@ -255,6 +261,8 @@
 				<placement x="%col1_x_caption%" y="%row2_3a_y%" w="%input_w%" h="%input_line_height%" placement="1"/>
 			</fill>
 
+			<template name="gestures_key"/>
+
 			<action>
 				<touch key="home"/>
 				<action function="page">main</action>
@@ -291,6 +299,8 @@
 				<action function="set">tw_keyboard_press_key=0</action>
 				<action function="page">file_search</action>
 			</action>
+
+			<template name="gestures_key"/>
 		</page>
 		
 		<page name="file_dark_search">
@@ -318,6 +328,8 @@
 				<action function="set">tw_keyboard_press_key=0</action>
 				<action function="page">file_dark_search</action>
 			</action>
+
+			<template name="gestures_key"/>
 		</page>
 		
 		<page name="files_redirect">
@@ -696,6 +708,8 @@
 				<action function="page">files_bookmarks_prepare</action>
 			</action>
 
+			<template name="gestures"/>
+
 			<action>
 				<touch key="home"/>
 				<action function="page">main</action>
@@ -936,6 +950,8 @@
 				<text>%tw_filename1%</text>
 			</text>
 
+			<template name="gestures"/>
+
 			<action>
 				<touch key="home"/>
 				<action function="page">main</action>
@@ -1003,6 +1019,8 @@
 				<placement x="%col1_x_indent%" y="%row1_2_y%"/>
 				<text>%tw_filename1%</text>
 			</text>
+
+			<template name="gestures"/>
 			
 			<action>
 				<touch key="home"/>
@@ -1159,6 +1177,8 @@
 				<placement x="%col1_x_caption%" y="%row5_2a_y%"/>
 				<text>%ft_inf_sha5%</text>
 			</text>
+
+			<template name="gestures"/>
 			
 			<action>
 				<touch key="home"/>
@@ -1230,6 +1250,8 @@
 				<image resource="fab_accept"/>
 			</image>
 
+			<template name="gestures"/>
+
 			<action>
 				<touch key="home"/>
 				<action function="page">main</action>
@@ -1280,6 +1302,8 @@
 				<placement x="%col1_x_caption%" y="%row2_3a_y%" w="%input_w%" h="%input_line_height%" placement="1"/>
 			</fill>
 
+			<template name="gestures_key"/>
+
 			<action>
 				<touch key="home"/>
 				<action function="page">main</action>
@@ -1329,6 +1353,8 @@
 			<fill color="%accent%">
 				<placement x="%col1_x_caption%" y="%row2_3a_y%" w="%input_w%" h="%input_line_height%" placement="1"/>
 			</fill>
+
+			<template name="gestures_key"/>
 
 			<action>
 				<touch key="home"/>
@@ -1487,6 +1513,8 @@
 				<placement x="%btn_float_x%" y="%btn_float_y%" placement="4"/>
 				<image resource="fab_accept"/>
 			</image>
+
+			<template name="gestures"/>
 			
 			<action>
 				<touch key="home"/>
@@ -1565,6 +1593,8 @@
 					<action function="set">tw_filemanager_rename=0755</action>
 				</listitem>
 			</listbox>
+
+			<template name="gestures_key"/>
 			
 			<action>
 				<touch key="home"/>
@@ -1614,6 +1644,8 @@
 				<placement x="%center_x%" y="%slider_y%" placement="5"/>
 				<action function="page">filemanageraction</action>
 			</slider>
+
+			<template name="gestures"/>
 
 			<action>
 				<touch key="back"/>
@@ -1717,6 +1749,8 @@
 				<condition var1="tw_pack_lvl" var2="0"/>
 				<action function="set">tw_pack_lvl=1</action>
 			</action>
+
+			<template name="gestures"/>
 			
 			<action>
 				<touch key="back"/>
@@ -1958,6 +1992,8 @@
 
 			<template name="back_btn"/>
 
+			<template name="gestures"/>
+
 			<action>
 				<touch key="home"/>
 				<action function="set">tw_reload_fm=1</action>
@@ -2013,6 +2049,8 @@
 				<condition var1="use_fixed_font" var2="1"/>
 				<font resource="fixed"/>
 			</console>
+
+			<template name="gestures"/>
 
 			<action>
 				<touch key="home"/>

@@ -121,6 +121,8 @@
 				<action function="flash">flash_zip</action>
 			</slider>
 
+			<template name="gestures"/>
+
 			<action>
 				<touch key="back"/>
 				<action function="queueclear"/>
@@ -221,6 +223,8 @@
 				<placement x="%center_x%" y="%slider_y%" placement="5"/>
 				<action function="flash">flash_zip</action>
 			</slider>
+
+			<template name="gestures"/>
 
 			<action>
 				<touch key="back"/>
@@ -403,6 +407,8 @@
 				<action function="page">flash_confirm</action>
 			</button>
 
+			<template name="gestures"/>
+
 			<action>
 				<touch key="back"/>
 				<action function="page">flash_confirm</action>
@@ -474,6 +480,8 @@
 				<action function="page">flash_image</action>
 			</slider>
 
+			<template name="gestures"/>
+
 			<action>
 				<touch key="back"/>
 				<action function="page">%install_back%</action>
@@ -536,6 +544,8 @@
 				<action function="queuezip"/>
 				<action function="page">queue_zip</action>
 			</action>
+
+			<template name="gestures"/>
 
 			<action>
 				<touch key="back"/>
@@ -695,6 +705,8 @@
 				<action function="page">flash_sleep_and_reboot</action>
 			</action>
 
+			<template name="gestures"/>
+
 			<action>
 				<touch key="back"/>
 				<action function="set">tw_clear_destination=%install_back%</action>
@@ -776,6 +788,8 @@
 				<action function="set">tw_action_param=recovery</action>
 				<action function="page">rebootcheck</action>
 			</button>
+
+			<template name="gestures"/>
 
 			<action>
 				<touch key="home"/>

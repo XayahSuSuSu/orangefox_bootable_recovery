@@ -1,35 +1,104 @@
 <?xml version="1.0"?>
 <recovery>
 	<templates>
-		<template name="navbar">
+		<template name="gestures_basic">
+			<fill color="#FFFFFF">
+				<condition var1="tw_busy" var2="0"/>
+				<condition var1="navbar_accent" var2="1"/>
+				<condition var1="navbar_bkg" op="&gt;=" var2="3"/>
+				<condition var1="theme_style" var2="Light"/>
+				<condition var1="real_gestures_enable" var2="1"/>
+				<placement x="340" y="%gst_line_y%" w="400" h="4" placement="4"/>
+			</fill>
+			<fill color="#FFFFFF">
+				<condition var1="tw_busy" var2="0"/>
+				<condition var1="navbar_accent" var2="1"/>
+				<condition var1="theme_style" op="!=" var2="Light"/>
+				<condition var1="real_gestures_enable" var2="1"/>
+				<placement x="340" y="%gst_line_y%" w="400" h="4" placement="4"/>
+			</fill>
+			<fill color="#5F6368">
+				<condition var1="tw_busy" var2="0"/>
+				<condition var1="navbar_accent" var2="1"/>
+				<condition var1="navbar_bkg" op="&lt;=" var2="2"/>
+				<condition var1="theme_style" var2="Light"/>
+				<condition var1="real_gestures_enable" var2="1"/>
+				<placement x="340" y="%gst_line_y%" w="400" h="4" placement="4"/>
+			</fill>
+			<fill color="%accent%">
+				<condition var1="tw_busy" var2="0"/>
+				<condition var1="navbar_accent" var2="0"/>
+				<condition var1="real_gestures_enable" var2="1"/>
+				<placement x="340" y="%gst_line_y%" w="400" h="4" placement="4"/>
+			</fill>
+
 			<gesture>
 				<condition var1="tw_busy" var2="0"/>
-				<placement x="0" y="%row_nav_y%" w="%screen_w%" h="%nav_h%"/>
-				<fill color="#00000000"/>
-				<settings side="0" sense="300" />
-				<action function="key">home</action>
-			</gesture>
-			<gesture>
 				<condition var1="gst_console" var2="1"/>
 				<placement x="0" y="0" w="%screen_w%" h="%status_h%"/>
 				<fill color="#00000000"/>
 				<settings side="3" sense="300" />
 				<action function="overlay">console</action>
 			</gesture>
+		</template>
+
+		<template name="gestures_key">
+			<template name="gestures_basic"/>
 			<gesture>
+				<condition var1="tw_busy" var2="0"/>
+				<condition var1="real_gestures_enable" var2="1"/>
+				<placement x="0" y="%row_nav_y%" w="%screen_w%" h="48"/>
+				<fill color="#00000000"/>
+				<settings side="0" sense="300" />
+				<action function="key">home</action>
+			</gesture>
+			<gesture>
+				<condition var1="tw_busy" var2="0"/>
 				<condition var1="gst_back_left" var2="1"/>
-				<placement x="0" y="0" w="48" h="%screen_h%"/>
+				<placement x="0" y="%ab_h%" w="48" h="%gst_keyboard_y%"/>
 				<fill color="#00000000"/>
 				<settings side="2" sense="200" />
 				<action function="key">back</action>
 			</gesture>
 			<gesture>
+				<condition var1="tw_busy" var2="0"/>
 				<condition var1="gst_back_right" var2="1"/>
-				<placement x="1032" y="0" w="48" h="%screen_h%"/>
+				<placement x="1032" y="%ab_h%" w="48" h="%gst_keyboard_y%"/>
 				<fill color="#00000000"/>
 				<settings side="1" sense="200" />
 				<action function="key">back</action>
 			</gesture>
+		</template>
+
+		<template name="gestures">
+			<template name="gestures_basic"/>
+			<gesture>
+				<condition var1="tw_busy" var2="0"/>
+				<condition var1="real_gestures_enable" var2="1"/>
+				<placement x="0" y="%row_nav_y%" w="%screen_w%" h="48"/>
+				<fill color="#00000000"/>
+				<settings side="0" sense="300" />
+				<action function="key">home</action>
+			</gesture>
+			<gesture>
+				<condition var1="tw_busy" var2="0"/>
+				<condition var1="gst_back_left" var2="1"/>
+				<placement x="0" y="%ab_h%" w="48" h="%screen_h%"/>
+				<fill color="#00000000"/>
+				<settings side="2" sense="200" />
+				<action function="key">back</action>
+			</gesture>
+			<gesture>
+				<condition var1="tw_busy" var2="0"/>
+				<condition var1="gst_back_right" var2="1"/>
+				<placement x="1032" y="%ab_h%" w="48" h="%screen_h%"/>
+				<fill color="#00000000"/>
+				<settings side="1" sense="200" />
+				<action function="key">back</action>
+			</gesture>
+		</template>
+		
+		<template name="navbar">
 			<template name="navbar_home"/>
 			<template name="navbar_console"/>
 			<template name="navbar_back"/>
@@ -78,6 +147,7 @@
 
 		<template name="navbar_home">
 			<button>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<placement x="%center_x%" y="%row_navbtn_y%" placement="4"/>
 				<image resource="nb_btn" highlightresource="nb_btn_hl"/>
@@ -85,6 +155,7 @@
 			</button>
 			
 			<image>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_accent" var2="0"/>
 				<condition var1="nougat" var2="1"/>
@@ -93,6 +164,7 @@
 			</image>
 
 			<image>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_accent" var2="1"/>
 				<condition var1="nougat" var2="1"/>
@@ -103,6 +175,7 @@
 			</image>
 
 			<image>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_accent" var2="1"/>
 				<condition var1="nougat" var2="1"/>
@@ -112,6 +185,7 @@
 			</image>
 
 			<image>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_accent" var2="1"/>
 				<condition var1="nougat" var2="1"/>
@@ -122,6 +196,7 @@
 			</image>
 
 			<image>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="nougat" var2="0"/>
 				<condition var1="navbar_accent" var2="0"/>
@@ -130,6 +205,7 @@
 			</image>
 
 			<image>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_accent" var2="1"/>
 				<condition var1="nougat" var2="0"/>
@@ -140,6 +216,7 @@
 			</image>
 
 			<image>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_accent" var2="1"/>
 				<condition var1="nougat" var2="0"/>
@@ -149,6 +226,7 @@
 			</image>
 
 			<image>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_accent" var2="1"/>
 				<condition var1="nougat" var2="0"/>
@@ -160,6 +238,7 @@
 
 			<!-- Pie -->
 			<image>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="nougat" var2="3"/>
 				<condition var1="navbar_accent" var2="1"/>
@@ -170,6 +249,7 @@
 			</image>
 
 			<image>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="nougat" var2="3"/>
 				<condition var1="navbar_accent" var2="1"/>
@@ -179,6 +259,7 @@
 			</image>
 			
 			<image>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="nougat" var2="3"/>
 				<condition var1="navbar_accent" var2="1"/>
@@ -189,6 +270,7 @@
 			</image>
 			
 			<image>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="nougat" var2="3"/>
 				<condition var1="navbar_accent" var2="0"/>
@@ -199,6 +281,7 @@
 
 		<template name="navbar_console">
 			<button>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_sams" var2="0"/>
 				<condition var1="show_slideout" var2="1"/>
@@ -208,6 +291,7 @@
 			</button>
 			
 			<button>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_sams" var2="1"/>
 				<condition var1="show_slideout" var2="1"/>
@@ -217,6 +301,7 @@
 			</button>
 			
 			<image>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_sams" var2="0"/>
 				<condition var1="navbar_accent" var2="0"/>
@@ -227,6 +312,7 @@
 			</image>
 
 			<image>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_sams" var2="0"/>
 				<condition var1="navbar_accent" var2="1"/>
@@ -239,6 +325,7 @@
 			</image>
 
 			<image>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_sams" var2="0"/>
 				<condition var1="navbar_accent" var2="1"/>
@@ -250,6 +337,7 @@
 			</image>
 
 			<image>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_sams" var2="0"/>
 				<condition var1="navbar_accent" var2="1"/>
@@ -262,6 +350,7 @@
 			</image>
 
 			<image>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_sams" var2="1"/>
 				<condition var1="navbar_accent" var2="0"/>
@@ -272,6 +361,7 @@
 			</image>
 
 			<image>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_sams" var2="1"/>
 				<condition var1="navbar_accent" var2="1"/>
@@ -283,6 +373,7 @@
 				<image resource="slideout_white_ng"/>
 			</image>
 			<image>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_sams" var2="1"/>
 				<condition var1="navbar_accent" var2="1"/>
@@ -293,6 +384,7 @@
 				<image resource="slideout_white_ng"/>
 			</image>
 			<image>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_sams" var2="1"/>
 				<condition var1="navbar_accent" var2="1"/>
@@ -305,6 +397,7 @@
 			</image>
 
 			<image>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_sams" var2="0"/>
 				<condition var1="nougat" var2="0"/>
@@ -315,6 +408,7 @@
 			</image>
 
 			<image>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_sams" var2="0"/>
 				<condition var1="nougat" var2="0"/>
@@ -326,6 +420,7 @@
 				<image resource="slideout_white"/>
 			</image>
 			<image>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_sams" var2="0"/>
 				<condition var1="nougat" var2="0"/>
@@ -336,6 +431,7 @@
 				<image resource="slideout_white"/>
 			</image>
 			<image>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_sams" var2="0"/>
 				<condition var1="nougat" var2="0"/>
@@ -348,6 +444,7 @@
 			</image>
 
 			<image>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_sams" var2="1"/>
 				<condition var1="navbar_accent" var2="0"/>
@@ -358,6 +455,7 @@
 			</image>
 
 			<image>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_sams" var2="1"/>
 				<condition var1="navbar_accent" var2="1"/>
@@ -369,6 +467,7 @@
 				<image resource="slideout_white"/>
 			</image>
 			<image>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_sams" var2="1"/>
 				<condition var1="navbar_accent" var2="1"/>
@@ -379,6 +478,7 @@
 				<image resource="slideout_white"/>
 			</image>
 			<image>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_sams" var2="1"/>
 				<condition var1="navbar_accent" var2="1"/>
@@ -392,6 +492,7 @@
 
 			<!-- Pie -->
 			<image>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_sams" var2="0"/>
 				<condition var1="navbar_accent" var2="1"/>
@@ -403,6 +504,7 @@
 				<image resource="slideout_white_key_pie"/>
 			</image>
 			<image>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_sams" var2="0"/>
 				<condition var1="navbar_accent" var2="1"/>
@@ -413,6 +515,7 @@
 				<image resource="slideout_white_key_pie"/>
 			</image>
 			<image>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_sams" var2="0"/>
 				<condition var1="navbar_accent" var2="1"/>
@@ -425,6 +528,7 @@
 			</image>
 
 			<image>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_sams" var2="1"/>
 				<condition var1="navbar_accent" var2="1"/>
@@ -436,6 +540,7 @@
 				<image resource="slideout_white_key_pie"/>
 			</image>
 			<image>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_sams" var2="1"/>
 				<condition var1="navbar_accent" var2="1"/>
@@ -446,6 +551,7 @@
 				<image resource="slideout_white_key_pie"/>
 			</image>
 			<image>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_sams" var2="1"/>
 				<condition var1="navbar_accent" var2="1"/>
@@ -458,6 +564,7 @@
 			</image>
 			
 			<image>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_sams" var2="0"/>
 				<condition var1="nougat" var2="3"/>
@@ -468,6 +575,7 @@
 			</image>
 
 			<image>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_sams" var2="1"/>
 				<condition var1="nougat" var2="3"/>
@@ -482,6 +590,7 @@
 			<template name="navbar_bkg"/>
 			
 			<button>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<placement x="%center_x%" y="%row_navbtn_y%" placement="4"/>
 				<image resource="nb_btn" highlightresource="nb_btn_hl"/>
@@ -489,6 +598,7 @@
 			</button>
 
 			<image>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_accent" var2="0"/>
 				<condition var1="nougat" var2="0"/>
@@ -497,6 +607,7 @@
 			</image>
 
 			<image>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_accent" var2="1"/>
 				<condition var1="nougat" var2="0"/>
@@ -506,6 +617,7 @@
 				<image resource="keyboard_hide_white"/>
 			</image>
 			<image>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_accent" var2="1"/>
 				<condition var1="nougat" var2="0"/>
@@ -514,6 +626,7 @@
 				<image resource="keyboard_hide_white"/>
 			</image>
 			<image>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_accent" var2="1"/>
 				<condition var1="nougat" var2="0"/>
@@ -524,6 +637,7 @@
 			</image>
 
 			<image>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_accent" var2="0"/>
 				<condition var1="nougat" var2="1"/>
@@ -532,6 +646,7 @@
 			</image>
 
 			<image>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_accent" var2="1"/>
 				<condition var1="nougat" var2="1"/>
@@ -541,6 +656,7 @@
 				<image resource="keyboard_hide_white_ng"/>
 			</image>
 			<image>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_accent" var2="1"/>
 				<condition var1="nougat" var2="1"/>
@@ -549,6 +665,7 @@
 				<image resource="keyboard_hide_white_ng"/>
 			</image>
 			<image>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_accent" var2="1"/>
 				<condition var1="nougat" var2="1"/>
@@ -560,6 +677,7 @@
 
 			<!-- Pie -->
 			<image>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="nougat" var2="3"/>
 				<condition var1="navbar_accent" var2="1"/>
@@ -569,6 +687,7 @@
 				<image resource="back_white_key_pie"/>
 			</image>
 			<image>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="nougat" var2="3"/>
 				<condition var1="navbar_accent" var2="1"/>
@@ -577,6 +696,7 @@
 				<image resource="back_white_key_pie"/>
 			</image>
 			<image>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="nougat" var2="3"/>
 				<condition var1="navbar_accent" var2="1"/>
@@ -587,6 +707,7 @@
 			</image>
 			
 			<image>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="nougat" var2="3"/>
 				<condition var1="navbar_accent" var2="0"/>
@@ -602,6 +723,7 @@
 
 		<template name="navbar_back_cls">
 			<button>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_sams" var2="0"/>
 				<condition var1="nougat" op="!=" var2="3"/>
@@ -611,6 +733,7 @@
 			</button>
 			
 			<button>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_sams" var2="1"/>
 				<condition var1="nougat" op="!=" var2="3"/>
@@ -620,6 +743,7 @@
 			</button>
 			
 			<image>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_sams" var2="0"/>
 				<condition var1="navbar_accent" var2="0"/>
@@ -629,6 +753,7 @@
 			</image>
 
 			<image>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_sams" var2="0"/>
 				<condition var1="navbar_accent" var2="1"/>
@@ -639,6 +764,7 @@
 				<image resource="back_white_ng"/>
 			</image>
 			<image>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_sams" var2="0"/>
 				<condition var1="navbar_accent" var2="1"/>
@@ -648,6 +774,7 @@
 				<image resource="back_white_ng"/>
 			</image>
 			<image>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_sams" var2="0"/>
 				<condition var1="navbar_accent" var2="1"/>
@@ -659,6 +786,7 @@
 			</image>
 
 			<image>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_sams" var2="1"/>
 				<condition var1="navbar_accent" var2="0"/>
@@ -668,6 +796,7 @@
 			</image>
 
 			<image>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_sams" var2="1"/>
 				<condition var1="navbar_accent" var2="1"/>
@@ -678,6 +807,7 @@
 				<image resource="back_white_ng"/>
 			</image>
 			<image>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_sams" var2="1"/>
 				<condition var1="navbar_accent" var2="1"/>
@@ -687,6 +817,7 @@
 				<image resource="back_white_ng"/>
 			</image>
 			<image>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_sams" var2="1"/>
 				<condition var1="navbar_accent" var2="1"/>
@@ -698,6 +829,7 @@
 			</image>
 
 			<image>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_sams" var2="0"/>
 				<condition var1="navbar_accent" var2="0"/>
@@ -707,6 +839,7 @@
 			</image>
 
 			<image>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_sams" var2="0"/>
 				<condition var1="navbar_accent" var2="1"/>
@@ -717,6 +850,7 @@
 				<image resource="back_white"/>
 			</image>
 			<image>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_sams" var2="0"/>
 				<condition var1="navbar_accent" var2="1"/>
@@ -726,6 +860,7 @@
 				<image resource="back_white"/>
 			</image>
 			<image>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_sams" var2="0"/>
 				<condition var1="navbar_accent" var2="1"/>
@@ -737,6 +872,7 @@
 			</image>
 
 			<image>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_sams" var2="1"/>
 				<condition var1="navbar_accent" var2="0"/>
@@ -746,6 +882,7 @@
 			</image>
 
 			<image>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_sams" var2="1"/>
 				<condition var1="nougat" var2="0"/>
@@ -756,6 +893,7 @@
 				<image resource="back_white"/>
 			</image>
 			<image>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_sams" var2="1"/>
 				<condition var1="nougat" var2="0"/>
@@ -765,6 +903,7 @@
 				<image resource="back_white"/>
 			</image>
 			<image>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_sams" var2="1"/>
 				<condition var1="nougat" var2="0"/>
@@ -778,6 +917,7 @@
 
 		<template name="navbar_back_pie">
 			<button>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_sams" var2="0"/>
 				<condition var1="nougat" var2="3"/>
@@ -787,6 +927,7 @@
 			</button>
 			
 			<button>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_sams" var2="1"/>
 				<condition var1="nougat" var2="3"/>
@@ -796,6 +937,7 @@
 			</button>
 			<!-- Pie -->
 			<image>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_sams" var2="0"/>
 				<condition var1="nougat" var2="3"/>
@@ -806,6 +948,7 @@
 				<image resource="back_white_pie"/>
 			</image>
 			<image>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_sams" var2="0"/>
 				<condition var1="nougat" var2="3"/>
@@ -815,6 +958,7 @@
 				<image resource="back_white_pie"/>
 			</image>
 			<image>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_sams" var2="0"/>
 				<condition var1="nougat" var2="3"/>
@@ -826,6 +970,7 @@
 			</image>
 
 			<image>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_sams" var2="1"/>
 				<condition var1="nougat" var2="3"/>
@@ -836,6 +981,7 @@
 				<image resource="back_white_pie"/>
 			</image>
 			<image>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_sams" var2="1"/>
 				<condition var1="nougat" var2="3"/>
@@ -845,6 +991,7 @@
 				<image resource="back_white_pie"/>
 			</image>
 			<image>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_sams" var2="1"/>
 				<condition var1="nougat" var2="3"/>
@@ -856,6 +1003,7 @@
 			</image>
 			
 			<image>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_sams" var2="0"/>
 				<condition var1="nougat" var2="3"/>
@@ -865,6 +1013,7 @@
 			</image>
 
 			<image>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_sams" var2="1"/>
 				<condition var1="nougat" var2="3"/>
@@ -876,6 +1025,7 @@
 
 		<template name="navbar_back_fm">
 			<button>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_sams" var2="0"/>
 				<condition var1="nougat" var2="3"/>
@@ -886,6 +1036,7 @@
 			</button>
 			
 			<button>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_sams" var2="1"/>
 				<condition var1="nougat" var2="3"/>
@@ -896,6 +1047,7 @@
 			</button>
 			<!-- Pie -->
 			<image>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_sams" var2="0"/>
 				<condition var1="nougat" var2="3"/>
@@ -907,6 +1059,7 @@
 				<image resource="back_white_pie"/>
 			</image>
 			<image>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_sams" var2="0"/>
 				<condition var1="nougat" var2="3"/>
@@ -917,6 +1070,7 @@
 				<image resource="back_white_pie"/>
 			</image>
 			<image>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_sams" var2="0"/>
 				<condition var1="nougat" var2="3"/>
@@ -929,6 +1083,7 @@
 			</image>
 
 			<image>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_sams" var2="1"/>
 				<condition var1="nougat" var2="3"/>
@@ -940,6 +1095,7 @@
 				<image resource="back_white_pie"/>
 			</image>
 			<image>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_sams" var2="1"/>
 				<condition var1="nougat" var2="3"/>
@@ -950,6 +1106,7 @@
 				<image resource="back_white_pie"/>
 			</image>
 			<image>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_sams" var2="1"/>
 				<condition var1="nougat" var2="3"/>
@@ -962,6 +1119,7 @@
 			</image>
 			
 			<image>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_sams" var2="0"/>
 				<condition var1="nougat" var2="3"/>
@@ -972,6 +1130,7 @@
 			</image>
 
 			<image>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_sams" var2="1"/>
 				<condition var1="nougat" var2="3"/>
@@ -984,6 +1143,7 @@
 
 		<template name="navbar_terminal">
 			<button>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_sams" var2="0"/>
 				<condition var1="tw_hide_kb" var2="1"/>
@@ -993,6 +1153,7 @@
 			</button>
 			
 			<button>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_sams" var2="1"/>
 				<condition var1="tw_hide_kb" var2="1"/>
@@ -1002,6 +1163,7 @@
 			</button>
 			
 			<button>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_sams" var2="0"/>
 				<condition var1="tw_hide_kb" var2="0"/>
@@ -1011,6 +1173,7 @@
 			</button>
 			
 			<button>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_sams" var2="1"/>
 				<condition var1="tw_hide_kb" var2="0"/>
@@ -1020,6 +1183,7 @@
 			</button>
 		
 			<image>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_sams" var2="0"/>
 				<condition var1="navbar_accent" var2="0"/>
@@ -1030,6 +1194,7 @@
 			</image>
 
 			<image>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_sams" var2="0"/>
 				<condition var1="navbar_accent" var2="1"/>
@@ -1041,6 +1206,7 @@
 				<image resource="back_white_ng"/>
 			</image>
 			<image>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_sams" var2="0"/>
 				<condition var1="navbar_accent" var2="1"/>
@@ -1051,6 +1217,7 @@
 				<image resource="back_white_ng"/>
 			</image>
 			<image>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_sams" var2="0"/>
 				<condition var1="navbar_accent" var2="1"/>
@@ -1063,6 +1230,7 @@
 			</image>
 
 			<image>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_sams" var2="1"/>
 				<condition var1="navbar_accent" var2="0"/>
@@ -1073,6 +1241,7 @@
 			</image>
 
 			<image>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_sams" var2="1"/>
 				<condition var1="navbar_accent" var2="1"/>
@@ -1084,6 +1253,7 @@
 				<image resource="back_white_ng"/>
 			</image>
 			<image>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_sams" var2="1"/>
 				<condition var1="navbar_accent" var2="1"/>
@@ -1094,6 +1264,7 @@
 				<image resource="back_white_ng"/>
 			</image>
 			<image>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_sams" var2="1"/>
 				<condition var1="navbar_accent" var2="1"/>
@@ -1106,6 +1277,7 @@
 			</image>
 
 			<image>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_sams" var2="0"/>
 				<condition var1="navbar_accent" var2="0"/>
@@ -1116,6 +1288,7 @@
 			</image>
 
 			<image>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_sams" var2="0"/>
 				<condition var1="navbar_accent" var2="1"/>
@@ -1127,6 +1300,7 @@
 				<image resource="back_white"/>
 			</image>
 			<image>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_sams" var2="0"/>
 				<condition var1="navbar_accent" var2="1"/>
@@ -1137,6 +1311,7 @@
 				<image resource="back_white"/>
 			</image>
 			<image>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_sams" var2="0"/>
 				<condition var1="navbar_accent" var2="1"/>
@@ -1149,6 +1324,7 @@
 			</image>
 
 			<image>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_sams" var2="1"/>
 				<condition var1="navbar_accent" var2="0"/>
@@ -1159,6 +1335,7 @@
 			</image>
 
 			<image>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_sams" var2="1"/>
 				<condition var1="nougat" var2="0"/>
@@ -1170,6 +1347,7 @@
 				<image resource="back_white"/>
 			</image>
 			<image>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_sams" var2="1"/>
 				<condition var1="nougat" var2="0"/>
@@ -1180,6 +1358,7 @@
 				<image resource="back_white"/>
 			</image>
 			<image>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_sams" var2="1"/>
 				<condition var1="nougat" var2="0"/>
@@ -1192,6 +1371,7 @@
 			</image>
 
 			<image>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_sams" var2="0"/>
 				<condition var1="navbar_accent" var2="0"/>
@@ -1202,6 +1382,7 @@
 			</image>
 
 			<image>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_sams" var2="0"/>
 				<condition var1="navbar_accent" var2="1"/>
@@ -1213,6 +1394,7 @@
 				<image resource="keyboard_hide_white_ng"/>
 			</image>
 			<image>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_sams" var2="0"/>
 				<condition var1="navbar_accent" var2="1"/>
@@ -1223,6 +1405,7 @@
 				<image resource="keyboard_hide_white_ng"/>
 			</image>
 			<image>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_sams" var2="0"/>
 				<condition var1="navbar_accent" var2="1"/>
@@ -1235,6 +1418,7 @@
 			</image>
 
 			<image>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_sams" var2="1"/>
 				<condition var1="navbar_accent" var2="0"/>
@@ -1245,6 +1429,7 @@
 			</image>
 
 			<image>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_sams" var2="1"/>
 				<condition var1="navbar_accent" var2="1"/>
@@ -1256,6 +1441,7 @@
 				<image resource="keyboard_hide_white_ng"/>
 			</image>
 			<image>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_sams" var2="1"/>
 				<condition var1="navbar_accent" var2="1"/>
@@ -1266,6 +1452,7 @@
 				<image resource="keyboard_hide_white_ng"/>
 			</image>
 			<image>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_sams" var2="1"/>
 				<condition var1="navbar_accent" var2="1"/>
@@ -1278,6 +1465,7 @@
 			</image>
 
 			<image>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_sams" var2="0"/>
 				<condition var1="nougat" var2="0"/>
@@ -1288,6 +1476,7 @@
 			</image>
 
 			<image>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_sams" var2="0"/>
 				<condition var1="navbar_accent" var2="1"/>
@@ -1299,6 +1488,7 @@
 				<image resource="keyboard_hide_white"/>
 			</image>
 			<image>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_sams" var2="0"/>
 				<condition var1="navbar_accent" var2="1"/>
@@ -1309,6 +1499,7 @@
 				<image resource="keyboard_hide_white"/>
 			</image>
 			<image>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_sams" var2="0"/>
 				<condition var1="navbar_accent" var2="1"/>
@@ -1321,6 +1512,7 @@
 			</image>
 
 			<image>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_sams" var2="1"/>
 				<condition var1="navbar_accent" var2="0"/>
@@ -1331,6 +1523,7 @@
 			</image>
 
 			<image>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_sams" var2="1"/>
 				<condition var1="navbar_accent" var2="1"/>
@@ -1342,6 +1535,7 @@
 				<image resource="keyboard_hide_white"/>
 			</image>
 			<image>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_sams" var2="1"/>
 				<condition var1="navbar_accent" var2="1"/>
@@ -1352,6 +1546,7 @@
 				<image resource="keyboard_hide_white"/>
 			</image>
 			<image>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_sams" var2="1"/>
 				<condition var1="navbar_accent" var2="1"/>
@@ -1365,6 +1560,7 @@
 
 			<!-- Pie -->
 			<image>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_sams" var2="0"/>
 				<condition var1="navbar_accent" var2="0"/>
@@ -1375,6 +1571,7 @@
 			</image>
 
 			<image>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_sams" var2="1"/>
 				<condition var1="nougat" var2="3"/>
@@ -1385,6 +1582,7 @@
 			</image>
 			
 			<image>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_sams" var2="0"/>
 				<condition var1="navbar_accent" var2="1"/>
@@ -1396,6 +1594,7 @@
 				<image resource="back_white_key_pie"/>
 			</image>
 			<image>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_sams" var2="0"/>
 				<condition var1="navbar_accent" var2="1"/>
@@ -1406,6 +1605,7 @@
 				<image resource="back_white_key_pie"/>
 			</image>
 			<image>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_sams" var2="0"/>
 				<condition var1="navbar_accent" var2="1"/>
@@ -1418,6 +1618,7 @@
 			</image>
 
 			<image>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_sams" var2="1"/>
 				<condition var1="nougat" var2="3"/>
@@ -1429,6 +1630,7 @@
 				<image resource="back_white_key_pie"/>
 			</image>
 			<image>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_sams" var2="1"/>
 				<condition var1="nougat" var2="3"/>
@@ -1439,6 +1641,7 @@
 				<image resource="back_white_key_pie"/>
 			</image>
 			<image>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_sams" var2="1"/>
 				<condition var1="nougat" var2="3"/>
@@ -1451,6 +1654,7 @@
 			</image>
 			
 			<image>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_sams" var2="0"/>
 				<condition var1="navbar_accent" var2="0"/>
@@ -1461,6 +1665,7 @@
 			</image>
 
 			<image>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_sams" var2="1"/>
 				<condition var1="nougat" var2="3"/>
@@ -1471,6 +1676,7 @@
 			</image>
 			
 			<image>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_sams" var2="0"/>
 				<condition var1="navbar_accent" var2="1"/>
@@ -1482,6 +1688,7 @@
 				<image resource="back_white_pie"/>
 			</image>
 			<image>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_sams" var2="0"/>
 				<condition var1="navbar_accent" var2="1"/>
@@ -1492,6 +1699,7 @@
 				<image resource="back_white_pie"/>
 			</image>
 			<image>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_sams" var2="0"/>
 				<condition var1="navbar_accent" var2="1"/>
@@ -1504,6 +1712,7 @@
 			</image>
 
 			<image>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_sams" var2="1"/>
 				<condition var1="nougat" var2="3"/>
@@ -1515,6 +1724,7 @@
 				<image resource="back_white_pie"/>
 			</image>
 			<image>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_sams" var2="1"/>
 				<condition var1="nougat" var2="3"/>
@@ -1525,6 +1735,7 @@
 				<image resource="back_white_pie"/>
 			</image>
 			<image>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_sams" var2="1"/>
 				<condition var1="nougat" var2="3"/>
@@ -1539,6 +1750,7 @@
 
 		<template name="navbar_key">
 			<button>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_sams" var2="0"/>
 				<placement x="%back_button_x%" y="%row_navbtn_y%" placement="4"/>
@@ -1547,6 +1759,7 @@
 			</button>
 			
 			<button>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_sams" var2="1"/>
 				<placement x="%slideout_button_x%" y="%row_navbtn_y%" placement="4"/>
@@ -1555,6 +1768,7 @@
 			</button>
 			
 			<image>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_sams" var2="0"/>
 				<condition var1="navbar_accent" var2="0"/>
@@ -1564,6 +1778,7 @@
 			</image>
 
 			<image>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_sams" var2="0"/>
 				<condition var1="navbar_accent" var2="1"/>
@@ -1574,6 +1789,7 @@
 				<image resource="keyboard_hide_white"/>
 			</image>
 			<image>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_sams" var2="0"/>
 				<condition var1="navbar_accent" var2="1"/>
@@ -1583,6 +1799,7 @@
 				<image resource="keyboard_hide_white"/>
 			</image>
 			<image>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_sams" var2="0"/>
 				<condition var1="navbar_accent" var2="1"/>
@@ -1594,6 +1811,7 @@
 			</image>
 
 			<image>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_sams" var2="1"/>
 				<condition var1="navbar_accent" var2="0"/>
@@ -1603,6 +1821,7 @@
 			</image>
 
 			<image>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_sams" var2="1"/>
 				<condition var1="navbar_accent" var2="1"/>
@@ -1613,6 +1832,7 @@
 				<image resource="keyboard_hide_white"/>
 			</image>
 			<image>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_sams" var2="1"/>
 				<condition var1="navbar_accent" var2="1"/>
@@ -1622,6 +1842,7 @@
 				<image resource="keyboard_hide_white"/>
 			</image>
 			<image>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_sams" var2="1"/>
 				<condition var1="navbar_accent" var2="1"/>
@@ -1633,6 +1854,7 @@
 			</image>
 
 			<image>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_sams" var2="0"/>
 				<condition var1="navbar_accent" var2="0"/>
@@ -1642,6 +1864,7 @@
 			</image>
 
 			<image>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_sams" var2="0"/>
 				<condition var1="navbar_accent" var2="1"/>
@@ -1652,6 +1875,7 @@
 				<image resource="keyboard_hide_white_ng"/>
 			</image>
 			<image>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_sams" var2="0"/>
 				<condition var1="navbar_accent" var2="1"/>
@@ -1661,6 +1885,7 @@
 				<image resource="keyboard_hide_white_ng"/>
 			</image>
 			<image>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_sams" var2="0"/>
 				<condition var1="navbar_accent" var2="1"/>
@@ -1672,6 +1897,7 @@
 			</image>
 
 			<image>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_sams" var2="1"/>
 				<condition var1="navbar_accent" var2="0"/>
@@ -1681,6 +1907,7 @@
 			</image>
 
 			<image>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_sams" var2="1"/>
 				<condition var1="navbar_accent" var2="1"/>
@@ -1691,6 +1918,7 @@
 				<image resource="keyboard_hide_white_ng"/>
 			</image>
 			<image>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_sams" var2="1"/>
 				<condition var1="navbar_accent" var2="1"/>
@@ -1700,6 +1928,7 @@
 				<image resource="keyboard_hide_white_ng"/>
 			</image>
 			<image>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_sams" var2="1"/>
 				<condition var1="navbar_accent" var2="1"/>
@@ -1712,6 +1941,7 @@
 
 			<!-- Pie -->
 			<image>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_sams" var2="0"/>
 				<condition var1="nougat" var2="3"/>
@@ -1722,6 +1952,7 @@
 				<image resource="back_white_key_pie"/>
 			</image>
 			<image>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_sams" var2="0"/>
 				<condition var1="nougat" var2="3"/>
@@ -1731,6 +1962,7 @@
 				<image resource="back_white_key_pie"/>
 			</image>
 			<image>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_sams" var2="0"/>
 				<condition var1="nougat" var2="3"/>
@@ -1742,6 +1974,7 @@
 			</image>
 			
 			<image>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_sams" var2="1"/>
 				<condition var1="nougat" var2="3"/>
@@ -1752,6 +1985,7 @@
 				<image resource="back_white_key_pie"/>
 			</image>
 			<image>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_sams" var2="1"/>
 				<condition var1="nougat" var2="3"/>
@@ -1761,6 +1995,7 @@
 				<image resource="back_white_key_pie"/>
 			</image>
 			<image>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_sams" var2="1"/>
 				<condition var1="nougat" var2="3"/>
@@ -1772,6 +2007,7 @@
 			</image>
 			
 			<image>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_sams" var2="0"/>
 				<condition var1="nougat" var2="3"/>
@@ -1781,6 +2017,7 @@
 			</image>
 			
 			<image>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_sams" var2="1"/>
 				<condition var1="nougat" var2="3"/>

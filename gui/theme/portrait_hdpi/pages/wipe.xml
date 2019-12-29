@@ -68,6 +68,8 @@
 				<image resource="actionbar_settings"/>
 			</image>
 
+			<template name="gestures_basic"/>
+
 			<action>
 				<touch key="home"/>
 				<action function="page">wipe</action>
@@ -145,6 +147,8 @@
 				<placement x="%col1_x_caption%" y="%row5_1_y%" w="%content_w%" h="%input_w%" placement="1"/>
 			</fill>
 
+			<template name="gestures_key"/>
+
 			<action>
 				<touch key="home"/>
 				<action function="page">main</action>
@@ -200,6 +204,8 @@
 				<placement x="%center_x%" y="%slider_y%" placement="5"/>
 				<action function="page">wipe_action_page</action>
 			</slider>
+
+			<template name="gestures"/>
 
 			<action>
 				<touch key="back"/>
@@ -267,6 +273,8 @@
 			</text>
 
 			<template name="back_btn"/>
+
+			<template name="gestures"/>
 
 			<action>
 				<touch key="home"/>
@@ -462,6 +470,8 @@
 					<action function="page">selectfilesystem</action>
 				</button>
 
+			<template name="gestures"/>
+
 				<action>
 					<touch key="home"/>
 					<action function="page">main</action>
@@ -569,6 +579,8 @@
 					<action function="page">wipe_action_page</action>
 				</slider>
 
+			<template name="gestures"/>
+
 				<action>
 					<touch key="home"/>
 					<action function="page">main</action>
@@ -622,6 +634,8 @@
 					<placement x="%btn_float_x%" y="%btn_float_y%" placement="4"/>
 					<image resource="fab_accept"/>
 				</image>
+
+				<template name="gestures"/>
 
 				<action>
 					<touch key="home"/>
