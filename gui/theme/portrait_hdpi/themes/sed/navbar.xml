@@ -3,5 +3,6 @@
 	<variables>
 		<variable name="navbar_disable" value="#NAVBAR_DISABLE#"/>
 		<variable name="screen_h" value="#SCREEN_H#"/>
+		<variable name="real_gestures_enable" value="#RGE#"/>
 	</variables>
 </recovery>

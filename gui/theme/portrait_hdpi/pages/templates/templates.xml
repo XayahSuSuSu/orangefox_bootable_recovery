@@ -341,6 +341,7 @@
 				<action function="set">update_action=0</action>
 				
 				<action function="set">navbar_disable_tmp=%navbar_disable%</action>
+				<action function="set">real_gestures_enable_tmp=%real_gestures_enable%</action>
 				<action function="set">navbar_disable_add_tmp=%navbar_disable_add%</action>
 				
 				<action function="set">theme_font_tmp=%theme_font%</action>

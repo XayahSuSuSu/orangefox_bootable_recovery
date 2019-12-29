@@ -1009,6 +1009,17 @@
 		<string name="wipe_format_moved_info2">Manage Partitions page.</string>
 		
 		<!-- R11 -->
+		<string name="gst_title">Gesture navigation</string>
+		<string name="gst_enable_all">Enable gestures</string>
+		<string name="gst_back">Back gesture</string>
+		<string name="gst_back_left">From left</string>
+		<string name="gst_back_right">From right</string>
+		<string name="gst_console">Console gesture</string>
+		<string name="gst_console_enable">Swipe from status bar</string>
+		<string name="gst_navbar_error">Settings not avaible.</string>
+		<string name="gst_navbar_error_2">Disable gestures to continue.</string>
+		<string name="gst_navbar_error_open">Open gestures settings</string>
+
 		<string name="in">in</string>
 		<string name="con_digest_start">[DIGEST CREATION STARTED]</string>
 		<string name="con_digest_error">Partition list is empty!</string>

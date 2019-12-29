@@ -65,7 +65,7 @@
 		<variable name="navbar_sams" value="0" persist="1"/>
 		<variable name="navbar_accent" value="0" persist="1"/>
 		<variable name="darker_ui" value="0" persist="1"/>
-		<variable name="show_slideout" value="1" persist="1"/> <!-- Everything should work perfectly! -->
+		<variable name="show_slideout" value="1" persist="1"/>
 		<variable name="separate_status" value="0" persist="1"/>
 		<variable name="style_battery" value="0" persist="1"/>
 		<variable name="show_shadow" value="0" persist="1"/>
@@ -75,7 +75,11 @@
 		<variable name="key_allow_swipe" value="0" persist="1"/> 
 		<variable name="ota_new_screen" value="1" persist="1"/> 
 		<variable name="new_nav_panel_des" value="1" persist="1"/> 
-		<variable name="accent_title" value="0" persist="1"/> 
+		<variable name="accent_title" value="0" persist="1"/>
+
+		<variable name="gst_back_left" value="0" persist="1"/> 
+		<variable name="gst_back_right" value="0" persist="1"/> 
+		<variable name="gst_console" value="0" persist="1"/> 
 		
 		<!-- Other... -->
 		<variable name="of_hide_data_hint" value="0" persist="1"/>
@@ -97,6 +101,12 @@
 		<variable name="startup" value="0"/>
 		<variable name="tw_backups_folder_fm" value="/tmp"/>
 		
+		<!-- Gesture -->
+		<variable name="gst_bg_y" value="78"/>
+		<variable name="gst_anim_y" value="%gst_bg_y%+98"/>
+		<variable name="gst_switch_y" value="%cutout_w%+1164"/>
+		<variable name="gst_text_y" value="%cutout_w%+1122"/>
+
 		<!-- Placement -->
 		<variable name="welcome_text" value="%center_y%+160"/>
 		<variable name="welcome_text2" value="%center_y%+240"/>

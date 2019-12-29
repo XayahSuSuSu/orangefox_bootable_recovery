@@ -3,33 +3,36 @@
 	<templates>
 		<template name="navbar">
 			<gesture>
+				<condition var1="tw_busy" var2="0"/>
 				<placement x="0" y="%row_nav_y%" w="%screen_w%" h="%nav_h%"/>
-				<fill color="#7c7c7c7c"/>
+				<fill color="#00000000"/>
 				<settings side="0" sense="300" />
 				<action function="key">home</action>
 			</gesture>
 			<gesture>
+				<condition var1="gst_console" var2="1"/>
 				<placement x="0" y="0" w="%screen_w%" h="%status_h%"/>
-				<fill color="#7c7c7c7c"/>
+				<fill color="#00000000"/>
 				<settings side="3" sense="300" />
 				<action function="overlay">console</action>
 			</gesture>
 			<gesture>
+				<condition var1="gst_back_left" var2="1"/>
 				<placement x="0" y="0" w="48" h="%screen_h%"/>
-				<fill color="#7c7c7c7c"/>
+				<fill color="#00000000"/>
 				<settings side="2" sense="200" />
 				<action function="key">back</action>
 			</gesture>
 			<gesture>
+				<condition var1="gst_back_right" var2="1"/>
 				<placement x="1032" y="0" w="48" h="%screen_h%"/>
-				<fill color="#7c7c7c7c"/>
+				<fill color="#00000000"/>
 				<settings side="1" sense="200" />
 				<action function="key">back</action>
 			</gesture>
-		<!--
 			<template name="navbar_home"/>
 			<template name="navbar_console"/>
-			<template name="navbar_back"/-->
+			<template name="navbar_back"/>
 		</template>
 
 		<template name="navbar_bkg">

@@ -2,5 +2,6 @@
 <recovery>
 	<variables>
 		<variable name="navbar_disable" value="0"/>
+		<variable name="real_gestures_enable" value="0"/>
 	</variables>
 </recovery>

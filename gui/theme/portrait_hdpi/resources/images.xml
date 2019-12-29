@@ -8,6 +8,8 @@
 	</mousecursor>
 	
 	<resources>
+		<animation name="gesture_help" filename="Default/Gestures/gst"/>
+		<image name="gesture_help_bg" filename="Default/Gestures/gesture_help_bg" retainaspect="1"/>
 		<!-- NavPanel -->
 		<image name="nav_menu_d" filename="Default/NavPanel/menu_d" retainaspect="1"/>
 		<image name="nav_wipe_d" filename="Default/NavPanel/wipe_d" retainaspect="1"/>
@@ -227,6 +229,7 @@
 		<image name="a_off" filename="Default/Icons/a_off" retainaspect="1"/>
 		<image name="b_on" filename="Default/Icons/b_on" retainaspect="1"/>
 		<image name="a_on" filename="Default/Icons/a_on" retainaspect="1"/>
+		<image name="gestures" filename="Default/Icons/gestures" retainaspect="1"/>
 		
 		<!-- Other -->
 		<image name="actionbar_clear" filename="Default/Other/actionbar_clear" retainaspect="1"/>

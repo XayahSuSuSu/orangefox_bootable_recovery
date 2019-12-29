@@ -1112,7 +1112,20 @@
 		<!-- Wipe format moved -->
 		<string name="wipe_format_moved_info1">Функция форматирования data</string>
 		<string name="wipe_format_moved_info2">перемещена в "Управление разделами".</string>
+
 		<!-- R11 -->
+		<string name="gst_title">Жесты</string>
+		<string name="gst_enable_all">Включить жесты</string>
+		<string name="gst_back">Жест "назад"</string>
+		<string name="gst_back_left">Слева</string>
+		<string name="gst_back_right">Справа</string>
+		<string name="gst_console_enable">Открыть консоль</string>
+		<string name="gst_console">Жест сверху вниз</string>
+		<string name="gst_navbar_error">Настройки недоступны!</string>
+		<string name="gst_navbar_error_2">Отключите жесты для продолжения.</string>
+		<string name="gst_navbar_error_open">Открыть настройки жестов</string>
+
+
 		<string name="in">в</string>
 		<string name="con_digest_start">[СОЗДАНИЕ КОНТРОЛЬНЫХ СУММ НАЧАТО]</string>
 		<string name="con_digest_error">Список разделов пуст!</string>
