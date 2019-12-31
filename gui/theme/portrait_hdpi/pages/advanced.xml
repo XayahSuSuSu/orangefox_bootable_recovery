@@ -197,7 +197,7 @@
 				<placement x="%col1_x%" y="%ab_bc_y%"/>
 				<text>{@menu_btn}</text>
 			</text>
-
+			
 			<template name="gestures_basic"/>
 
 			<action>
@@ -599,7 +599,7 @@
 				<action function="flashlight"/>
 			</action>
 
-			<template name="gestures"/>
+			<template name="gestures_key"/>
 
 			<action>
 				<touch key="home"/>

@@ -344,13 +344,17 @@
 		<variable name="lb_l15" value="1350"/>
 		
 		<!-- Battery -->
-		<variable name="battery_12_x" value="830-%status_indent_right%"/>
-		<variable name="battery_24_x" value="895-%status_indent_right%"/>
-		<variable name="battery_center_x" value="1025-%status_indent_right%"/>
-		<variable name="battery_12_t_x" value="893-%status_indent_right%"/>
-		<variable name="battery_24_t_x" value="958-%status_indent_right%"/>
+		<variable name="battery_12_x" value="844-%status_indent_right%"/>
+		<variable name="battery_12_dynamic_x" value="848-%status_indent_right%"/>
+		<variable name="battery_24_x" value="910-%status_indent_right%"/>
+		<variable name="battery_24_dynamic_x" value="914-%status_indent_right%"/>
+		<variable name="battery_center_x" value="1040-%status_indent_right%"/>
+		<variable name="battery_center_dynamic_x" value="1044-%status_indent_right%"/>
+		<variable name="battery_12_t_x" value="896-%status_indent_right%"/>
+		<variable name="battery_24_t_x" value="960-%status_indent_right%"/>
 		<variable name="battery_center_t_x" value="1088-%status_indent_right%"/>
-		<variable name="battery_y" value="%status_info_y%-8"/>
+		<variable name="battery_y" value="%status_info_y%+6"/>
+		<variable name="battery_dynamic_y" value="%status_info_y%+14"/>
 		
 		<!-- File list -->
 		<variable name="fileselector_width" value="%screen_w%"/>

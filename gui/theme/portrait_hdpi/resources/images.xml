@@ -82,8 +82,7 @@
 		<!-- Battery -->
 		<image name="battery15" filename="Default/Battery/battery15" retainaspect="1"/>
 		<image name="battery5" filename="Default/Battery/battery5" retainaspect="1"/>
-		<image name="battery15_p" filename="Default/Battery/battery15_p" retainaspect="1"/>
-		<image name="battery5_p" filename="Default/Battery/battery5_p" retainaspect="1"/>
+		<image name="battery_low_p" filename="Default/Battery/battery_low_p" retainaspect="1"/>
 		<image name="battery_power" filename="Default/Battery/powersave" retainaspect="1"/>
 		<image name="battery_power_p" filename="Default/Battery/powersave_p" retainaspect="1"/>
 		

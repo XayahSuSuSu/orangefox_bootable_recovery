@@ -668,7 +668,7 @@ void DataManager::SetDefaultValues()
       mConst.SetValue("of_fl_path_2", OF_FL_PATH2);
       mData.SetValue("of_flash_on", "0");
     }
-  #endif 
+  #endif
 
   mConst.SetValue("fox_build_type1", BUILD_TYPE);
 
@@ -1253,7 +1253,7 @@ int DataManager::GetMagicValue(const string & varName, string & value)
       if (varName == "tw_battery_charge")
         sprintf(tmp, "%i%%%c", lastVal, charging);
       else
-        sprintf(tmp, "%i%%", lastVal);
+        sprintf(tmp, "%i", lastVal);
       value = tmp;
       return 0;
     }

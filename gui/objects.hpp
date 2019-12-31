@@ -254,6 +254,32 @@ protected:
 	COLOR mColor;
 };
 
+class GUIBattery : public GUIObject, public RenderObject
+{
+public:
+	GUIBattery(xml_node<>* node);
+
+public:
+	virtual int Render(void);
+
+protected:
+	COLOR mColor;
+	COLOR mColorLow;
+	int mDX, mDY, mDW, mDH,
+		mCX, mCY, mCW, mCH;
+	bool mStateMode;
+	ImageResource* mCharge;
+	ImageResource* mImg;
+	ImageResource* mLowImg;
+	ImageResource* mImg100;
+	ImageResource* mImg75;
+	ImageResource* mImg50;
+	ImageResource* mImg25;
+	ImageResource* mImg15;
+	ImageResource* mImgc15;
+	ImageResource* mImg5;
+};
+
 // GUIAction - Used for standard actions
 class GUIAction : public GUIObject, public ActionObject
 {

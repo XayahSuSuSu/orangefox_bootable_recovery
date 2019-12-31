@@ -14,6 +14,7 @@ LOCAL_SRC_FILES := \
     fill.cpp \
     button.cpp \
     gesture.cpp \
+    battery.cpp \
     checkbox.cpp \
     fileselector.cpp \
     progressbar.cpp \
