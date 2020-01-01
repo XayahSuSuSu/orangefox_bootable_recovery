@@ -6,7 +6,6 @@
 		
 		<!-- OrangeFox vars -->
 		<variable name="ota_back_file" value="0"/>
-		<variable name="fox_busy" value="0"/>
 		<variable name="update_fonts" value="0"/>
 		<variable name="remove_theme" value="0"/>
 		<variable name="update_navbar" value="0"/>
