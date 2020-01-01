@@ -5,6 +5,7 @@
 	<resources>
 		<!-- Font overrides - only change these if your language requires special characters -->
 
+
 		<!-- Partition display names -->
 		<string name="system">Hệ thống</string>
 		<string name="system_image">Hình ảnh hệ thống</string>
