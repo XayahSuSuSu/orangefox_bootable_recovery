@@ -47,7 +47,7 @@
 		<string name="sort_by_size_desc">Tamaño</string>
 		<string name="install_btn">Instalar</string>
 		<string name="wipe_btn">Borrar</string>
-		<string name="backup_btn">Copias de seguridad</string>
+		<string name="backup_btn">Backups</string>
 		<string name="restore_btn">Restaurar</string>
 		<string name="mount_btn">Montar</string>
 		<string name="file_manager_btn">Archivos</string>
@@ -736,7 +736,7 @@
 		<string name="lang_set_wait">Cambiando idioma...</string>
 		<string name="installing_theme">Instalando tema...</string>
 		
-		<string name="menu_btn">Datos</string>
+		<string name="menu_btn">Menú</string>
 		
 		<string name="data_backup">Datos</string>
 		<string name="autostorage">Almacenamiento</string>
