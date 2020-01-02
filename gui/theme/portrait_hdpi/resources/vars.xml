@@ -6,7 +6,6 @@
 		
 		<!-- OrangeFox vars -->
 		<variable name="ota_back_file" value="0"/>
-		<variable name="fox_busy" value="0"/>
 		<variable name="update_fonts" value="0"/>
 		<variable name="remove_theme" value="0"/>
 		<variable name="update_navbar" value="0"/>
@@ -26,7 +25,6 @@
 		<variable name="tw_menu_key" value="slideout"/>
 		<variable name="navbar_check" value="0" persist="1"/>
 		<variable name="tw_enable_keys" value="1" persist="1"/>
-		<variable name="adb_startup" value="1" persist="1"/>
 		
 		<!-- Favorites menu -->
 		<variable name="book_1" value="/system/app" persist="1"/>

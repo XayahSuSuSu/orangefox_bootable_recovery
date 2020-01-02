@@ -1652,8 +1652,6 @@
 			<template name="dialog_body"/>
 			
 			<action>
-				<condition var1="fox_busy" op="!=" var2="1"/>
-				<action function="set">fox_busy=1</action>
 				<action function="ftls">
 					#Remove theme
 					if [[ '%remove_theme%' = '1' ]] || [[ '%theme_style_tmp%' = 'Night' && '%theme_accent_tmp%' = 'Orange' && '%theme_font_tmp%' = 'Roboto' && '%theme_sec_font_tmp%' = 'GoogleSans' && '%theme_font_size_tmp%' = 'n' ]]; then
@@ -1728,8 +1726,6 @@
 			<template name="busy_screen"/>
 			
 			<action>
-				<condition var1="fox_busy" op="!=" var2="1"/>
-				<action function="set">fox_busy=1</action>
 				<action function="wlfw"/>
 				<action function="cmd">
 						if [[ '%spl_bg_user%' = '1' ]]; then
