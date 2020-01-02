@@ -340,6 +340,7 @@
 			<patternpassword>
 				<placement x="%pattern_x%" y="%row4_1a_y%" w="%pattern_size%" h="%pattern_size%"/>
 				<data name="tw_crypto_password"/>
+				<action function="set">data_decrypted=0</action>
 				<action function="page">trydecrypt</action>
 			</patternpassword>
 
@@ -409,10 +410,28 @@
 				<action function="page">decrypt</action>
 			</action>
 
+			<!-- After successful decryption at recovery startup, here [vvv]
+				 we set data_decrypted to 1, that triggers block of code
+				 in twrp.cpp [DataManager::GetStrValue("data_decrypted") == "1"]
+				 that instead of starting UI from `main` page,
+				 requesting reload and starting UI from `reapply_settings` page.
+				 Recovery shows up `reapply_settings` and begin reload theme.
+				 When theme was reloaded, recovery shows up `main` page,
+				 then `filemanagerlist` page. -->
+
 			<action>
 				<condition var1="tw_operation_state" var2="1"/>
 				<condition var1="tw_operation_status" var2="0"/>
+				<action function="set">data_decrypted=1</action>
 				<action function="set">tw_page_done=1</action>
+				<!-- next code will execute after user cancelled decryption at startup
+				     and later selected decrypt menu item
+					 This happens because block of code in twrp.cpp can't execute in this case.
+					 Why I can't remove block of code in twrp.cpp? Because twrp
+					 calls `decrypt` page and if we just reload after
+					 decryption using `action function` we will broke twrp startup code.
+					 We need to exit from `decrypt` page using `tw_page_done`
+					 to continue startup. -->
 				<action function="set">of_reload_back=main</action>
 				<action function="reload"/>
 				<action function="page">reapply_settings</action>

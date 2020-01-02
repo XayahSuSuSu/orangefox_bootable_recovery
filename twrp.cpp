@@ -274,7 +274,6 @@ int main(int argc, char **argv)
 	LOGINFO("Backup of TWRP ramdisk done.\n");
 #endif
 
-	DataManager::SetValue("data_decrypted", "0");
 	// Offer to decrypt if the device is encrypted
 	if (DataManager::GetIntValue(TW_IS_ENCRYPTED) != 0) {
 		if (SkipDecryption) {
@@ -287,7 +286,6 @@ int main(int argc, char **argv)
 				  LOGINFO("- DEBUG: OrangeFox OTA: detected custom encryption\n");
 				  DataManager::SetValue("OTA_decrypted", "1");
 				  TWFunc::check_selinux_support();
-				  gui_loadCustomResources();
 			       } 
 			 }
 			else //
@@ -297,7 +295,6 @@ int main(int argc, char **argv)
 			LOGINFO("Is encrypted, do decrypt page first\n");			
 			//
 			LOGINFO("- DEBUG: OrangeFox: detected custom encryption\n");
-			DataManager::SetValue("used_custom_encryption", "1");
 			usleep(16);
 			//
 			if (gui_startPage("decrypt", 1, 1) != 0) {
@@ -305,7 +302,6 @@ int main(int argc, char **argv)
 			} else {
 				// Check for and load custom theme if present
 				TWFunc::check_selinux_support();
-				gui_loadCustomResources();
 			}
 		}
 	} else if (datamedia) {
@@ -413,7 +409,7 @@ int main(int argc, char **argv)
   // LOGINFO("OrangeFox: Reloading theme to apply generated theme on sdcard - again...\n");
   if (DataManager::GetStrValue("data_decrypted") == "1")
   {
-	//[f/d] Start UI using reapply_settings page
+	//[f/d] Start UI using reapply_settings page (executed on recovery startup)
   	DataManager::SetValue("of_reload_back", "main");
 	PageManager::RequestReload();
     gui_startPage("reapply_settings", 1, 0);
