@@ -286,6 +286,7 @@ int main(int argc, char **argv)
 				  LOGINFO("- DEBUG: OrangeFox OTA: detected custom encryption\n");
 				  DataManager::SetValue("OTA_decrypted", "1");
 				  TWFunc::check_selinux_support();
+				  gui_loadCustomResources();
 			       } 
 			 }
 			else //
@@ -295,6 +296,9 @@ int main(int argc, char **argv)
 			LOGINFO("Is encrypted, do decrypt page first\n");			
 			//
 			LOGINFO("- DEBUG: OrangeFox: detected custom encryption\n");
+			#ifdef FOX_OLD_DECRYPT_RELOAD
+				DataManager::SetValue("used_custom_encryption", "1");
+			#endif
 			usleep(16);
 			//
 			if (gui_startPage("decrypt", 1, 1) != 0) {
@@ -302,6 +306,7 @@ int main(int argc, char **argv)
 			} else {
 				// Check for and load custom theme if present
 				TWFunc::check_selinux_support();
+				gui_loadCustomResources();
 			}
 		}
 	} else if (datamedia) {
@@ -407,6 +412,13 @@ int main(int argc, char **argv)
   adb_bu_fifo->threadAdbBuFifo();
 
   // LOGINFO("OrangeFox: Reloading theme to apply generated theme on sdcard - again...\n");
+
+#ifdef FOX_OLD_DECRYPT_RELOAD
+  LOGINFO("Using R10 way to reload theme.\n");
+  if (DataManager::GetStrValue("used_custom_encryption") == "1")
+    PageManager::RequestReload();
+#else
+
   if (DataManager::GetStrValue("data_decrypted") == "1")
   {
 	//[f/d] Start UI using reapply_settings page (executed on recovery startup)
@@ -415,6 +427,7 @@ int main(int argc, char **argv)
     gui_startPage("reapply_settings", 1, 0);
   }
   else
+#endif
 	gui_start(); // Launch the main GUI
 
 #ifndef TW_OEM_BUILD
