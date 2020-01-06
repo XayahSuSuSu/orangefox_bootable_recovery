@@ -27,7 +27,7 @@
 				<text>%tw_time%</text>
 			</text>
 			<text style="text_status">
-				<placement x="%time_x%" y="%status_info_y%" placement="1"/>
+				<placement x="%status_right_x%" y="%status_info_y%" placement="1"/>
 				<condition var1="center_clock" var2="0"/>
 				<text>%tw_time%</text>
 			</text>
@@ -39,23 +39,23 @@
 			</text>
 
 			<battery>
-				<placement x="%battery_center_x%" y="%battery_y%" w="26" h="44"/>
+				<placement x="%status_right_x%" y="%battery_y%" w="26" h="44"/>
 				<condition var1="center_clock" var2="1"/>
 				<condition var1="style_battery" op="!=" var2="1"/>
 			</battery>
 			<battery style="battery_circle">
-				<placement x="%battery_cir_center_x%" y="%battery_circle_y%" w="48" h="48" />
+				<placement x="%status_right_x%" y="%battery_circle_y%" w="48" h="48" />
 				<condition var1="center_clock" var2="1"/>
 				<condition var1="style_battery" var2="1"/>
 			</battery>
 			
 			<battery>
-				<placement x="%battery_center_x%" y="%battery_y%" w="26" h="44"/>
+				<placement x="%status_right_x%" y="%battery_y%" w="26" h="44"/>
 				<condition var1="center_clock" var2="2"/>
 				<condition var1="style_battery" op="!=" var2="1"/>
 			</battery>
 			<battery style="battery_circle">
-				<placement x="%battery_cir_center_x%" y="%battery_circle_y%" w="48" h="48" />
+				<placement x="%status_right_x%" y="%battery_circle_y%" w="48" h="48" />
 				<condition var1="center_clock" var2="2"/>
 				<condition var1="style_battery" var2="1"/>
 			</battery>
@@ -67,7 +67,7 @@
 				<condition var1="style_battery" op="!=" var2="1"/>
 			</battery>
 			<battery style="battery_circle">
-				<placement x="%battery_cir_12_x%" y="%battery_circle_y%" w="48" h="48" />
+				<placement x="%battery_12_x%" y="%battery_circle_y%" w="48" h="48" />
 				<condition var1="center_clock" var2="0"/>
 				<condition var1="tw_military_time" op="!=" var2="1"/>
 				<condition var1="style_battery" var2="1"/>
@@ -80,7 +80,7 @@
 				<condition var1="style_battery" op="!=" var2="1"/>
 			</battery>
 			<battery style="battery_circle">
-				<placement x="%battery_cir_24_x%" y="%battery_circle_y%" w="48" h="48" />
+				<placement x="%battery_24_x%" y="%battery_circle_y%" w="48" h="48" />
 				<condition var1="center_clock" var2="0"/>
 				<condition var1="tw_military_time" var2="1"/>
 				<condition var1="style_battery" var2="1"/>

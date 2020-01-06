@@ -126,9 +126,10 @@ int GUIBattery::Render(void)
 	else
 		return -1;
 
-	int mBatteryPercent = DataManager::GetIntValue("tw_battery1");
-	std::string mBatteryPercentStr = DataManager::GetStrValue("tw_battery1");
+	std::string mBatteryPercentStr;
+	int mBatteryPercent = DataManager::GetIntValue("tw_battery");
 	int mBatteryCharge = DataManager::GetIntValue("charging_now");
+	int mBatteryIcon = DataManager::GetIntValue("enable_battery");
 	ImageResource* finalImage;
 
 	if (mBatteryPercent > 15 || mBatteryCharge == 1)
@@ -136,9 +137,14 @@ int GUIBattery::Render(void)
 	else
 		gr_color(mColorLow.red, mColorLow.green, mColorLow.blue, mColorLow.alpha);
 
-	if (DataManager::GetIntValue("enable_battery") == 0)
-		mBatteryPercentStr = DataManager::GetStrValue("tw_battery_charge");
-	else {
+	mBatteryPercentStr = mBatteryIcon == 0 ? DataManager::GetStrValue("tw_battery_charge") :
+											 DataManager::GetStrValue("tw_battery") + "%" ;
+	
+	int textW = gr_ttf_measureEx(mBatteryPercentStr.c_str(), fontResource);
+	
+	if (mBatteryIcon == 1) {
+		int iconRealX = textW + mPadding + mRenderW;
+
 		if (mStateMode) {
 				if (mBatteryPercent > 75) finalImage = mImg100;
 			else if (mBatteryPercent > 50) finalImage = mImg75 ;
@@ -150,24 +156,22 @@ int GUIBattery::Render(void)
 		} else {
 			finalImage = (mBatteryPercent > 15 || mBatteryCharge == 1) ? mImg : mLowImg;
 			int height = mDH * mBatteryPercent / 100;
-			gr_fill(mDX, mDY+mDH-height, mDW, height);
+			gr_fill(mDX - iconRealX, mDY+mDH-height, mDW, height);
 		}
 
 		if (!finalImage || !finalImage->GetResource())
 			return -1;
-		gr_blit(finalImage->GetResource(), 0, 0, mRenderW, mRenderH, mRenderX, mRenderY);
+		gr_blit(finalImage->GetResource(), 0, 0, mRenderW, mRenderH, mRenderX - iconRealX, mRenderY);
 
 
 		if (!mCharge || !mCharge->GetResource())
 			return 0;
 		if (mBatteryCharge == 1)
-			gr_blit(mCharge->GetResource(), 0, 0, mCW, mCH, mCX, mCY);
-
-		 mBatteryPercentStr += "%";
+			gr_blit(mCharge->GetResource(), 0, 0, mCW, mCH, mCX - iconRealX, mCY);
 
 	}
 
-	gr_textEx_scaleW(mRenderX + mRenderW + mPadding, mRenderY + ((mRenderH - mFontHeight) / 2) - 2,
+	gr_textEx_scaleW(mRenderX - textW, mRenderY + ((mRenderH - mFontHeight) / 2) - 2,
 			  mBatteryPercentStr.c_str(), fontResource, 0, TOP_LEFT, false);
 
 	return 0;

@@ -272,7 +272,7 @@
 		<style name="battery">
 			<dynamic dx="4" dy="8" dw="18" dh="32"
 					 img="battery_p" imgLow="battery_low_p"/>
-			<font resource="status" color="%text_status%" colorLow="#FFA244" padding="24"/>
+			<font resource="status" color="%text_status%" colorLow="#FFA244" padding="28"/>
 			<charging img="battery_charge" x="28" y="13"/>
 		</style>
 		<style name="battery_circle">

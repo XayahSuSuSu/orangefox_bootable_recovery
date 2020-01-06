@@ -931,8 +931,15 @@ int PageSet::LoadDetails(LoadingContext& ctx, xml_node<>* root)
 				}
 #endif
 				if (width != 0 && height != 0) {
-					float scale_w = (((float)gr_fb_width() + (float)tw_w_offset) - ((float)offx * 2.0)) / (float)width;
-					float scale_h = (((float)gr_fb_height() + (float)tw_h_offset) - ((float)offy * 2.0)) / (float)height;
+					std::string num;
+					float scale_w, scale_h;
+					if (TWFunc::read_file("/sdcard/Fox/scaling", num) == 0) {
+							scale_w = ::atof(num.c_str());
+							scale_h = ::atof(num.c_str());
+					} else {
+						scale_w = (((float)gr_fb_width() + (float)tw_w_offset) - ((float)offx * 2.0)) / (float)width;
+						scale_h = (((float)gr_fb_height() + (float)tw_h_offset) - ((float)offy * 2.0)) / (float)height;
+					}
 #ifdef TW_ROUND_SCREEN
 					float scale_off_w = ((float)gr_fb_width() + (float)tw_w_offset) / (float)width;
 					float scale_off_h = ((float)gr_fb_height() + (float)tw_h_offset) / (float)height;

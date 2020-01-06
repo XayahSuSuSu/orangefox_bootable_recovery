@@ -321,7 +321,7 @@
 		<variable name="nav_h" value="144"/>
 		
 		<!-- Status Bar -->
-		<variable name="time_x" value="1080-%status_indent_right%"/>
+		<variable name="status_right_x" value="1080-%status_indent_right%"/>
 		
 		<!-- Big invisible button -->
 		<variable name="mb_h_hide" value="120"/>
@@ -344,14 +344,9 @@
 		<variable name="lb_l15" value="1350"/>
 		
 		<!-- Battery -->
-		<variable name="battery_12_x" value="720-%status_indent_right%"/>
-		<variable name="battery_24_x" value="790-%status_indent_right%"/>
-		<variable name="battery_center_x" value="922-%status_indent_right%"/>
+		<variable name="battery_12_x" value="880-%status_indent_right%"/>
+		<variable name="battery_24_x" value="940-%status_indent_right%"/>
 		<variable name="battery_y" value="%status_info_y%+6"/>
-
-		<variable name="battery_cir_12_x" value="706-%status_indent_right%"/>
-		<variable name="battery_cir_24_x" value="776-%status_indent_right%"/>
-		<variable name="battery_cir_center_x" value="908-%status_indent_right%"/>
 		<variable name="battery_circle_y" value="%status_info_y%+4"/>
 		
 		<!-- File list -->
