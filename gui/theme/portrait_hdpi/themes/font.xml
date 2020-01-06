@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <recovery>
 	<resources>
-		<font name="status" filename="Roboto-Medium.ttf" size="40"/>
+		<font name="status" filename="GoogleSans-Medium.ttf" size="40"/>
 		<font name="bigfont" filename="Roboto-Medium.ttf" size="48"/>
 		<font name="body1" filename="Roboto-Regular.ttf" size="42"/>
 		<font name="body2" filename="Roboto-Medium.ttf" size="42"/>

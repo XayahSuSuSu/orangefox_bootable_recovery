@@ -266,7 +266,8 @@ protected:
 	COLOR mColor;
 	COLOR mColorLow;
 	int mDX, mDY, mDW, mDH,
-		mCX, mCY, mCW, mCH;
+		mCX, mCY, mCW, mCH,
+		mFontHeight, mPadding;
 	bool mStateMode;
 	ImageResource* mCharge;
 	ImageResource* mImg;
@@ -278,6 +279,7 @@ protected:
 	ImageResource* mImg15;
 	ImageResource* mImgc15;
 	ImageResource* mImg5;
+	FontResource* mFont;
 };
 
 // GUIAction - Used for standard actions

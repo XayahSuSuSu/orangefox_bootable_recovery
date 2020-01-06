@@ -213,7 +213,7 @@
 			<background color="%background%" />
 			<exicon up="up_icon" link="link_icon" block="block_icon"  zip="zip_icon" img="img_icon" txt="txt_icon" png="png_icon" />
 			<iconsize w="216" h="168" padding="24" />
-			<font resource="status" spacing="%fileselector_spacing%" color="%text%" />
+			<font resource="body2" spacing="%fileselector_spacing%" color="%text%" />
 		</style>
 
 		<style name="fileselector_s">
@@ -222,7 +222,7 @@
 			<background color="%background%" />
 			<exicon up="up_icon_small" link="link_icon_small" block="block_icon_small" zip="zip_icon_small" img="img_icon_small" txt="txt_icon_small" png="png_icon_small" />
 			<iconsize w="128" h="96" padding="-4" />
-			<font resource="status" spacing="%fileselector_spacing%" color="%text%" />
+			<font resource="body2" spacing="%fileselector_spacing%" color="%text%" />
 		</style>
 
 		<style name="terminal">
@@ -267,6 +267,19 @@
 			<dot color="%color_disable%" activecolor="%accent%" radius="%pattern_dot_dia%"/>
 			<line color="%accent%" width="%pattern_line_w%"/>
 			<size name="tw_gui_pattern_grid_size" default="3"/>
+		</style>
+		
+		<style name="battery">
+			<dynamic dx="4" dy="8" dw="18" dh="32"
+					 img="battery_p" imgLow="battery_low_p"/>
+			<font resource="status" color="%text_status%" colorLow="#FFA244" padding="24"/>
+			<charging img="battery_charge" x="28" y="13"/>
+		</style>
+		<style name="battery_circle">
+			<states 100="battery100" 75="battery75" 50="battery50"
+				    25="battery25" 15="battery15" c15="battery15_good" 5="battery5"/>
+			<charging img="battery_charge" x="17" y="13"/>
+			<font resource="status" color="%text_status%" colorLow="#FFA244" padding="16"/>
 		</style>
 	</styles>
 </recovery>

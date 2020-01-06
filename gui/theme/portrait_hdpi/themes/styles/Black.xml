@@ -17,7 +17,6 @@
 		<image name="battery15_good" filename="Default/Battery/battery15_good" retainaspect="1"/>
 		<!-- Pie -->
 		<image name="battery_p" filename="Default/Battery/battery_p" retainaspect="1"/>
-		<image name="battery_charge_p" filename="Default/Battery/battery_charge_p" retainaspect="1"/>
 		<image name="battery_charge" filename="Default/Battery/battery_charge" retainaspect="1"/>
 		
 		<!-- Fullscreen Icons -->

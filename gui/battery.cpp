@@ -47,7 +47,13 @@ extern "C" {
 GUIBattery::GUIBattery(xml_node<>* node)
 	: GUIObject(node)
 {
+	#ifdef TW_NO_BATT_PERCENT
+		return;
+	#endif
+
 	mStateMode = false;
+	mFont = NULL;
+	mFontHeight = 0;
 	xml_node <> *child;
 	mImg100 = mImg75 = mImg50 = mImg25 = mImg15 = mImgc15 = mImg5 = mImg = mLowImg = NULL;
 
@@ -58,12 +64,10 @@ GUIBattery::GUIBattery(xml_node<>* node)
 	if (child) {
 		mImg = LoadAttrImage(child, "img"); //default empty image
 		mLowImg = LoadAttrImage(child, "imgLow"); // empty image for <15%
-		mColor = LoadAttrColor(child, "color", COLOR(0,0,0,255)); // color for dynamic part
-		mColorLow = LoadAttrColor(child, "colorLow", COLOR(128,0,0,255)); // color for dynamic part when <15%
-		mDX = LoadAttrInt(child, "dx", 0); //dynamic part placement
-		mDY = LoadAttrInt(child, "dy", 0);
-		mDW = LoadAttrInt(child, "dw", 32);
-		mDH = LoadAttrInt(child, "dh", 18);
+		mDX = LoadAttrIntScaleX(child, "dx", 0); //dynamic part placement
+		mDY = LoadAttrIntScaleY(child, "dy", 0);
+		mDW = LoadAttrIntScaleX(child, "dw", 32);
+		mDH = LoadAttrIntScaleY(child, "dh", 18);
 	} else {
 		child = FindNode(node, "states"); // Battery based on images
 		if (child) {
@@ -83,8 +87,8 @@ GUIBattery::GUIBattery(xml_node<>* node)
 	child = FindNode(node, "charging"); // charging icon
 	if (child) {
 		mCharge = LoadAttrImage(child, "img");
-		mCX = LoadAttrInt(child, "x", 0); //placement
-		mCY = LoadAttrInt(child, "y", 0);
+		mCX = LoadAttrIntScaleX(child, "x", 0); //placement
+		mCY = LoadAttrIntScaleY(child, "y", 0);
 		if (mCharge && mCharge->GetResource())
 		{
 			mCW = mCharge->GetWidth();
@@ -92,30 +96,23 @@ GUIBattery::GUIBattery(xml_node<>* node)
 		}
 	}
 
+	mFont = LoadAttrFont(FindNode(node, "font"), "resource");
+	if (!mFont || !mFont->GetResource())
+		return;
+
+	mPadding = LoadAttrIntScaleX(FindNode(node, "font"), "padding", 0); //text padding
+	mColor = LoadAttrColor(FindNode(node, "font"), "color", COLOR(0,0,0,255));
+	mColorLow = LoadAttrColor(FindNode(node, "font"), "colorLow", COLOR(128,0,0,255));
+
 	// Load the placement
 	LoadPlacement(FindNode(node, "placement"), &mRenderX, &mRenderY, &mRenderW, &mRenderH, &mPlacement);
-
-	// Adjust for placement
-	if (mPlacement != TOP_LEFT && mPlacement != BOTTOM_LEFT)
-	{
-		if (mPlacement == CENTER)
-			mRenderX -= (mRenderW / 2);
-		else
-			mRenderX -= mRenderW;
-	}
-	if (mPlacement != TOP_LEFT && mPlacement != TOP_RIGHT)
-	{
-		if (mPlacement == CENTER)
-			mRenderY -= (mRenderH / 2);
-		else
-			mRenderY -= mRenderH;
-	}
 	SetPlacement(TOP_LEFT);
 	
 	mDX += mRenderX;
 	mDY += mRenderY;
 	mCX += mRenderX;
 	mCY += mRenderY;
+	mFontHeight = mFont->GetHeight();
 }
 
 int GUIBattery::Render(void)
@@ -123,43 +120,55 @@ int GUIBattery::Render(void)
 	if (!isConditionTrue())
 		return 0;
 
-	int mBatteryPercent = DataManager::GetIntValue("tw_battery_t");
+	void* fontResource = NULL;
+	if (mFont)
+		fontResource = mFont->GetResource();
+	else
+		return -1;
+
+	int mBatteryPercent = DataManager::GetIntValue("tw_battery1");
+	std::string mBatteryPercentStr = DataManager::GetStrValue("tw_battery1");
 	int mBatteryCharge = DataManager::GetIntValue("charging_now");
 	ImageResource* finalImage;
 
-	if (mStateMode) {
+	if (mBatteryPercent > 15 || mBatteryCharge == 1)
+		gr_color(mColor.red, mColor.green, mColor.blue, mColor.alpha);
+	else
+		gr_color(mColorLow.red, mColorLow.green, mColorLow.blue, mColorLow.alpha);
 
-		     if (mBatteryPercent > 75) finalImage = mImg100;
-		else if (mBatteryPercent > 50) finalImage = mImg75 ;
-		else if (mBatteryPercent > 25) finalImage = mImg50 ;
-		else if (mBatteryPercent > 15) finalImage = mImg25 ;
-		else if (mBatteryPercent <= 15 && mBatteryCharge == 1) finalImage = mImgc15;
-		else if (mBatteryPercent > 5)  finalImage = mImg15 ;
-		else 				           finalImage = mImg5  ;
-
-	} else {
-
-		if (mBatteryPercent > 15 || mBatteryCharge == 1) {
-			finalImage = mImg;
-			gr_color(mColor.red, mColor.green, mColor.blue, mColor.alpha);
+	if (DataManager::GetIntValue("enable_battery") == 0)
+		mBatteryPercentStr = DataManager::GetStrValue("tw_battery_charge");
+	else {
+		if (mStateMode) {
+				if (mBatteryPercent > 75) finalImage = mImg100;
+			else if (mBatteryPercent > 50) finalImage = mImg75 ;
+			else if (mBatteryPercent > 25) finalImage = mImg50 ;
+			else if (mBatteryPercent > 15) finalImage = mImg25 ;
+			else if (mBatteryPercent <= 15 && mBatteryCharge == 1) finalImage = mImgc15;
+			else if (mBatteryPercent > 5)  finalImage = mImg15 ;
+			else 				           finalImage = mImg5  ;
 		} else {
-			finalImage = mLowImg;
-			gr_color(mColorLow.red, mColorLow.green, mColorLow.blue, mColorLow.alpha);
+			finalImage = (mBatteryPercent > 15 || mBatteryCharge == 1) ? mImg : mLowImg;
+			int height = mDH * mBatteryPercent / 100;
+			gr_fill(mDX, mDY+mDH-height, mDW, height);
 		}
 
-		int height = mDH * mBatteryPercent / 100;
-		gr_fill(mDX, mDY+mDH-height, mDW, height);
+		if (!finalImage || !finalImage->GetResource())
+			return -1;
+		gr_blit(finalImage->GetResource(), 0, 0, mRenderW, mRenderH, mRenderX, mRenderY);
+
+
+		if (!mCharge || !mCharge->GetResource())
+			return 0;
+		if (mBatteryCharge == 1)
+			gr_blit(mCharge->GetResource(), 0, 0, mCW, mCH, mCX, mCY);
+
+		 mBatteryPercentStr += "%";
 
 	}
 
-	if (!finalImage || !finalImage->GetResource())
-		return -1;
-	gr_blit(finalImage->GetResource(), 0, 0, mRenderW, mRenderH, mRenderX, mRenderY);
-
-	if (!mCharge || !mCharge->GetResource())
-		return 0;
-	if (DataManager::GetIntValue("charging_now") == 1)
-		gr_blit(mCharge->GetResource(), 0, 0, mCW, mCH, mCX, mCY);
+	gr_textEx_scaleW(mRenderX + mRenderW + mPadding, mRenderY + ((mRenderH - mFontHeight) / 2) - 2,
+			  mBatteryPercentStr.c_str(), fontResource, 0, TOP_LEFT, false);
 
 	return 0;
 }

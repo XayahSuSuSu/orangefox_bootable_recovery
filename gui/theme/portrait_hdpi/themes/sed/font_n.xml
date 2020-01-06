@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <recovery>
 	<resources>
-		<font name="status" filename="#PRIMARY_FONT_MED#.ttf" size="40"/>
+		<font name="status" filename="#SECONDARY_FONT_MED#.ttf" size="40"/>
 		<font name="bigfont" filename="#PRIMARY_FONT_MED#.ttf" size="48"/>
 		<font name="body1" filename="#PRIMARY_FONT_REG#.ttf" size="42"/>
 		<font name="body2" filename="#PRIMARY_FONT_MED#.ttf" size="42"/>
