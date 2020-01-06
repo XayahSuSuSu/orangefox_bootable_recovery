@@ -220,6 +220,7 @@
 
 		<variable name="col1_x_caption" value="216"/>
 		<variable name="input_w" value="816"/>
+		<variable name="input_backup_w" value="708"/>
 		
 		<variable name="col_col_center_x" value="386"/>
 		<variable name="col_x_color3" value="724"/>
@@ -414,8 +415,6 @@
 		<variable name="keyboard_term_num_y" value="%screen_h%-992"/>
 		
 		<!-- Input fields -->
-		<variable name="input_width" value="984"/>
-		<variable name="input_backup_width" value="876"/>
 		<variable name="input_encr_width" value="696"/>
 		<variable name="input_height" value="60"/>
 		<variable name="input_encr_y" value="629"/>

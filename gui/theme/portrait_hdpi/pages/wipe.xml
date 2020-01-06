@@ -144,7 +144,7 @@
 			</input>
 
 			<fill color="%accent%">
-				<placement x="%col1_x_caption%" y="%row5_1_y%" w="%content_w%" h="%input_w%" placement="1"/>
+				<placement x="%col1_x_caption%" y="%row5_1_y%" w="%input_w%" h="%input_line_height%" placement="1"/>
 			</fill>
 
 			<template name="gestures_key"/>

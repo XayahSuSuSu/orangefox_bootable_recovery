@@ -239,7 +239,7 @@
 			</text>
 
 			<input>
-				<placement x="%col1_x_caption%" y="%row2_2a_y%"  w="%input_w%" h="%input_height%"/>
+				<placement x="%col1_x_caption%" y="%row2_2a_y%"  w="%input_backup_w%" h="%input_height%"/>
 				<text>%tw_backup_name%</text>
 				<data name="tw_backup_name"/>
 				<restrict minlen="0" maxlen="64" allow="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890-_.{}[]"/>
@@ -258,12 +258,12 @@
 
 			<fill color="%accent%">
 				<condition var1="tw_fileexists" var2="0"/>
-				<placement x="%col1_x_caption%" y="%row2_3a_y%" w="%input_w%" h="%input_line_height%" placement="1"/>
+				<placement x="%col1_x_caption%" y="%row2_3a_y%" w="%input_backup_w%" h="%input_line_height%" placement="1"/>
 			</fill>
 
 			<fill color="%text_fail%">
 				<condition var1="tw_fileexists" var2="1"/>
-				<placement x="%col1_x_caption%" y="%row2_3a_y%" w="%input_w%" h="%input_line_height%" placement="1"/>
+				<placement x="%col1_x_caption%" y="%row2_3a_y%" w="%input_backup_w%" h="%input_line_height%" placement="1"/>
 			</fill>
 
 			<text style="text_input_fail">
