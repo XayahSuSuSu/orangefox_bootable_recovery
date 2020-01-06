@@ -70,7 +70,7 @@
 			</text>
 
 			<partitionlist>
-				<placement x="0" y="%row2_1a_y%" w="%screen_w%" h="%part_list_btns_9_h%"/>
+				<placement x="0" y="%row2_1a_y%" w="%screen_w%" h="%part_list_mount_h%"/>
 				<listtype name="mount"/>
 			</partitionlist>
 			

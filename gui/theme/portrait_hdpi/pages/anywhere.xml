@@ -39,7 +39,6 @@
 
 			<text style="caption">
 				<condition var1="lock_btn" var2="0"/>
-				<condition var1="navbar_disable" op="!=" var2="1"/>
 				<placement x="%center_x%" y="%slider_text_y_l%" placement="5"/>
 				<text>{@swipe_to_unlock}</text>
 			</text>
@@ -47,21 +46,6 @@
 			<slider style="slider_action">
 				<condition var1="lock_btn" var2="0"/>
 				<placement x="%center_x%" y="%slider_y_l%" placement="5"/>
-				<condition var1="navbar_disable" op="!=" var2="1"/>
-				<action function="overlay"/>
-			</slider>
-			
-			<text style="caption">
-				<condition var1="lock_btn" var2="0"/>
-				<condition var1="navbar_disable" var2="1"/>
-				<placement x="%center_x%" y="%slider_text_y%" placement="5"/>
-				<text>{@swipe_to_unlock}</text>
-			</text>
-
-			<slider style="slider_action">
-				<condition var1="lock_btn" var2="0"/>
-				<condition var1="navbar_disable" var2="1"/>
-				<placement x="%center_x%" y="%slider_y%" placement="5"/>
 				<action function="overlay"/>
 			</slider>
 
