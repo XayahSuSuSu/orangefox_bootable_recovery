@@ -754,7 +754,7 @@
 		<string name="lang_set_wait">Changing language...</string>
 		<string name="installing_theme">Installing theme...</string>
 		
-		<string name="menu_btn">Data</string>
+		<string name="menu_btn">菜單</string>
 		
 		<string name="data_backup">Data</string>
 		<string name="autostorage">存儲</string>
