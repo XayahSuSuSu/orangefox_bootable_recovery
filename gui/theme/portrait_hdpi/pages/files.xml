@@ -158,8 +158,15 @@
 			</image>
 			<image>
 				<condition var1="theme_pie" op="!=" var2="1"/>
+				<condition var1="theme_style" op="!=" var2="Light"/>
 				<placement x="600" y="%ab_y%" placement="4"/>
 				<image resource="back_white_key_pie"/>
+			</image>
+			<image>
+				<condition var1="theme_pie" op="!=" var2="1"/>
+				<condition var1="theme_style" var2="Light"/>
+				<placement x="600" y="%ab_y%" placement="4"/>
+				<image resource="back_dark_key_pie"/>
 			</image>
 			<button style="menu_btn">
 				<condition var1="darker_ui" op="!=" var2="1"/>
