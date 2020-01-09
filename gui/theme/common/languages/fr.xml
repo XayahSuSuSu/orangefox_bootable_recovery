@@ -725,7 +725,7 @@
 		<string name="lang_set_wait">Changement de langue...</string>
 		<string name="installing_theme">Installation du thème...</string>
 		
-		<string name="menu_btn">Données</string>
+		<string name="menu_btn">Menu</string>
 		
 		<string name="data_backup">Données</string>
 		<string name="autostorage">Stockage</string>
