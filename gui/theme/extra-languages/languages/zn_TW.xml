@@ -36,18 +36,18 @@
 
 		<!-- Partition display names -->
 		<string name="system">系統</string>
-		<string name="system_image">System 映像</string>
+		<string name="system_image">系統映象</string>
 		<string name="vendor">Vendor</string>
-		<string name="vendor_image">Vender 映像</string>
-		<string name="boot">Boot</string>
-		<string name="recovery">Recovery</string>
-		<string name="cache">Cache</string>
-		<string name="data">Data</string>
+		<string name="vendor_image">供應商映像</string>
+		<string name="boot">开机</string>
+		<string name="recovery">复苏</string>
+		<string name="cache">快取</string>
+		<string name="data">菜单</string>
 		<string name="sdcard">SD 卡</string>
 		<string name="internal">內部儲存空間</string>
 		<string name="microsd">Micro SD 卡</string>
 		<string name="usbotg">USB OTG</string>
-		<string name="android_secure">Android Secure</string>
+		<string name="android_secure">Android安全</string>
 		<string name="dalvik">Dalvik / ART Cache</string>
 		<!-- This is a rarely used partition on a Micro SD card for a very old app2sd system -->
 		<string name="sdext">SD-EXT</string>
@@ -145,7 +145,7 @@
 		<string name="part_mount_point">挂載點</string>
 		<string name="part_curr_fs">檔案系統</string>
 		<string name="part_present">Present</string>
-		<string name="part_removable">Removable</string>
+		<string name="part_removable">移除</string>
 		<string name="part_yes">是</string>
 		<string name="part_no">不是</string>
 		<string name="part_size">大小</string>
@@ -217,8 +217,8 @@
 		<string name="unmount_btn">取消掛載</string>
 		<string name="rb_system_btn">系統</string>
 		<string name="rb_poweroff_btn">關機</string>
-		<string name="rb_recovery_btn">Recovery</string>
-		<string name="rb_bootloader_btn">Bootloader</string>
+		<string name="rb_recovery_btn">复苏</string>
+		<string name="rb_bootloader_btn">開機導引程式</string>
 		<string name="rb_theme">主題</string>
 		<string name="rb_download_btn">下載模式</string>
 		<string name="rb_edl_btn">Edl 模式</string>
