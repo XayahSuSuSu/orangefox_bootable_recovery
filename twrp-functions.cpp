@@ -1550,8 +1550,6 @@ void TWFunc::Fixup_Time_On_Boot(const string & time_paths)
       // DJ9
       if (offset < 1261440000) // bad RTC (less than 41 years since epoch!)
       {  
-	 LOGINFO ("TWFunc::Fixup_Time: Your RTC is broken (the alleged date/time is %s)\n", TWFunc::Get_Current_Date().c_str());
-	 
 	 // try to correct 	 
 	 if (DataManager::GetValue("fox_epoch_drift", stored_drift) < 0) // read from .foxs
 	 	stored_drift = 0;
@@ -1600,7 +1598,7 @@ void TWFunc::Fixup_Time_On_Boot(const string & time_paths)
            
          } // if (drift > 0) || (stored_drift > 0)
       }	// if offset
-      // DJ9      
+      // DJ9
       
       tv.tv_sec = offset;
       tv.tv_usec = 0;
@@ -4489,5 +4487,14 @@ void TWFunc::Dump_Current_Settings(void)
    #endif
 
    LOGINFO("**********************************************************\n");
+}
+
+void TWFunc::Reset_Clock(void)
+{
+   string fox_build_date_utc = TWFunc::File_Property_Get ("/etc/fox.cfg", "ro.build.date.utc_fox");
+   if (fox_build_date_utc != "")
+      {
+        TWFunc::Exec_With_Output("date -s \"@" + fox_build_date_utc + "\" > /dev/null");
+      }
 }
 //
