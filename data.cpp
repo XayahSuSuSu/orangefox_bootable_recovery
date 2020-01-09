@@ -691,9 +691,9 @@ void DataManager::SetDefaultValues()
 
   TWPartition *store = PartitionManager.Get_Default_Storage_Partition();
   if (store)
-    mData.SetValue("tw_storage_path", store->Storage_Path);
+    mPersist.SetValue("tw_storage_path", store->Storage_Path);
   else
-    mData.SetValue("tw_storage_path", "/");
+    mPersist.SetValue("tw_storage_path", "/");
 
 #ifdef TW_FORCE_CPUINFO_FOR_DEVICE_ID
   printf("TW_FORCE_CPUINFO_FOR_DEVICE_ID := true\n");
