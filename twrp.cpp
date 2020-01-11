@@ -136,6 +136,9 @@ int main(int argc, char **argv)
          }
      }
 
+  // set the start date to the recovery's build date
+  //TWFunc::Reset_Clock();
+
   DataManager::GetValue(FOX_COMPATIBILITY_DEVICE, Fox_Current_Device);
   time_t StartupTime = time(NULL);
   printf("Starting OrangeFox TWRP %s-%s-%s (built on %s for %s) on %s (pid %d)\n", FOX_VERSION,

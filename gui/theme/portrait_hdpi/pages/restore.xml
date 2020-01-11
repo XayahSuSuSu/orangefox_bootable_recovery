@@ -668,14 +668,14 @@
 			</text>
 
 			<button style="btn_raised">
-				<condition var1="fileexists" op="!=" var2="/sdcard/Fox/FoxFiles/PassReset.zip"/>
+				<condition var1="fileexists" op="!=" var2="/FFiles/OF_DelPass/OF_DelPass.zip"/>
 				<placement x="%btn_raised_left_x%" y="%row_btn1_y%"/>
 				<text>{@back_btn}</text>
 				<action function="key">back</action>
 			</button>
 
 			<button style="btn_raised">
-				<condition var1="fileexists" var2="/sdcard/Fox/FoxFiles/PassReset.zip"/>
+				<condition var1="fileexists" var2="/FFiles/OF_DelPass/OF_DelPass.zip"/>
 				<placement x="%btn_raised_left_x%" y="%row_btn1_y%"/>
 				<text>{@module_pass}</text>
 				<action function="set">tw_clear_destination=%tw_back%</action>

@@ -1550,8 +1550,6 @@ void TWFunc::Fixup_Time_On_Boot(const string & time_paths)
       // DJ9
       if (offset < 1261440000) // bad RTC (less than 41 years since epoch!)
       {  
-	 LOGINFO ("TWFunc::Fixup_Time: Your RTC is broken (the alleged date/time is %s)\n", TWFunc::Get_Current_Date().c_str());
-	 
 	 // try to correct 	 
 	 if (DataManager::GetValue("fox_epoch_drift", stored_drift) < 0) // read from .foxs
 	 	stored_drift = 0;
@@ -1600,7 +1598,7 @@ void TWFunc::Fixup_Time_On_Boot(const string & time_paths)
            
          } // if (drift > 0) || (stored_drift > 0)
       }	// if offset
-      // DJ9      
+      // DJ9
       
       tv.tv_sec = offset;
       tv.tv_usec = 0;
@@ -3376,7 +3374,7 @@ bool TWFunc::Repack_Image(string mount_point)
 bool TWFunc::JustInstalledMiui(void)
 {
   Fox_Zip_Installer_Code = DataManager::GetIntValue(FOX_ZIP_INSTALLER_CODE);
-  if ((Fox_Zip_Installer_Code == 22) || (Fox_Zip_Installer_Code == 23) || (Fox_Zip_Installer_Code == 3))
+  if ((Fox_Zip_Installer_Code == 22) || (Fox_Zip_Installer_Code == 23) || (Fox_Zip_Installer_Code == 3) || (Fox_Zip_Installer_Code == 2))
       return true;
   else
       return false;
@@ -4408,11 +4406,13 @@ string TWFunc::Get_MagiskBoot(void)
   return "/sbin/magiskboot";
 }
 
+// hopefully, this function will be obsolete one day ... //
 void TWFunc::Setup_Verity_Forced_Encryption(void)
 {
   DataManager::SetValue(FOX_ADVANCED_STOCK_REPLACE, "1");
 
-// retain dm-verity and/or forced-encryption on devices that have problems with disabling them
+/* untick the dm-verity and/or forced-encryption boxes on every bootup 
+(regardless of user settings) on devices that have problems with disabling them */
 #ifdef OF_KEEP_DM_VERITY_FORCED_ENCRYPTION
   DataManager::SetValue(FOX_DISABLE_DM_VERITY, "0");
   DataManager::SetValue(FOX_DISABLE_FORCED_ENCRYPTION, "0");
@@ -4426,17 +4426,18 @@ void TWFunc::Setup_Verity_Forced_Encryption(void)
   DataManager::SetValue(FOX_DISABLE_DM_VERITY, "0");
 #endif
 
-// disable dm-verity and/or forced-encryption on devices that require these
-#ifdef OF_DISABLE_DM_VERITY_FORCED_ENCRYPTION
+/* tick the disable dm-verity and/or forced-encryption boxes on every bootup 
+(regardless of user settings) on devices that require them */
+#ifdef OF_FORCE_DISABLE_DM_VERITY_FORCED_ENCRYPTION
   DataManager::SetValue(FOX_DISABLE_DM_VERITY, "1");
   DataManager::SetValue(FOX_DISABLE_FORCED_ENCRYPTION, "1");
 #endif
 
-#ifdef OF_DISABLE_FORCED_ENCRYPTION
+#ifdef OF_FORCE_DISABLE_FORCED_ENCRYPTION
   DataManager::SetValue(FOX_DISABLE_FORCED_ENCRYPTION, "1");
 #endif
 
-#ifdef OF_DISABLE_DM_VERITY
+#ifdef OF_FORCE_DISABLE_DM_VERITY
   DataManager::SetValue(FOX_DISABLE_DM_VERITY, "1");
 #endif
 }
@@ -4480,5 +4481,14 @@ void TWFunc::Dump_Current_Settings(void)
    #endif
 
    LOGINFO("**********************************************************\n");
+}
+
+void TWFunc::Reset_Clock(void)
+{
+   string fox_build_date_utc = TWFunc::File_Property_Get ("/etc/fox.cfg", "ro.build.date.utc_fox");
+   if (fox_build_date_utc != "")
+      {
+        TWFunc::Exec_With_Output("date -s \"@" + fox_build_date_utc + "\" > /dev/null");
+      }
 }
 //

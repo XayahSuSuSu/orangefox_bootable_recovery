@@ -273,7 +273,7 @@
 
 			<listbox style="btn_list">
 				<placement x="0" y="%row1_2_y%" w="%screen_w%" h="%bl_h2%"/>
-				<listitem name="{@module_install} Magisk 19.3">
+				<listitem name="{@module_install} Magisk 20.1">
 					<icon res="bs_btn_archive"/>
 					<action function="page">mod_magisk</action>
 				</listitem>
@@ -358,7 +358,7 @@
 					<action function="page">filecheck</action>
 				</listitem>
 				<listitem name="{@module_pass}">
-					<condition var1="fileexists" var2="/sdcard/Fox/FoxFiles/PassReset.zip"/>
+					<condition var1="fileexists" var2="/FFiles/OF_DelPass/OF_DelPass.zip"/>
 					<icon res="bs_btn_archive"/>
 					<action function="page">mod_pass</action>
 				</listitem>
