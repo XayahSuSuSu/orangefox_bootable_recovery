@@ -280,7 +280,7 @@ int main(int argc, char **argv)
 	// Offer to decrypt if the device is encrypted
 	if (DataManager::GetIntValue(TW_IS_ENCRYPTED) != 0) {
 		if (SkipDecryption) {
-		   #ifdef OF_OTA_RES_DECRYPT
+		  // #ifdef OF_OTA_RES_DECRYPT
 			if (Need_Decrypt == 1)
 			 {
 			    usleep(16);
@@ -293,7 +293,7 @@ int main(int argc, char **argv)
 			       } 
 			 }
 			else //
-		   #endif
+		 //  #endif
 			  LOGINFO("Skipping decryption\n");			
 		} else {
 			LOGINFO("Is encrypted, do decrypt page first\n");			

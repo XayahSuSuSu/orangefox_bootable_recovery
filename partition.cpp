@@ -1161,6 +1161,11 @@ void TWPartition::Setup_Data_Media() {
 		DataManager::SetValue("tw_has_internal", 1);
 		DataManager::SetValue("tw_has_data_media", 1);
 		backup_exclusions.add_absolute_dir("/data/data/com.google.android.music/files");
+
+		// DJ9, 18Jan2020 - implement the OrangeFox Backup Exclusions
+		TWPartition::Fox_Add_Backup_Exclusions();
+		// end:  OrangeFox Backup Exclusions
+
 		wipe_exclusions.add_absolute_dir(Mount_Point + "/misc/vold"); // adopted storage keys
 		ExcludeAll(Mount_Point + "/.layout_version");
 		ExcludeAll(Mount_Point + "/system/storage.xml");
@@ -3375,4 +3380,9 @@ void TWPartition::Set_Backup_FileName(string fname) {
 
 string TWPartition::Get_Backup_Name() {
 	return Backup_Name;
+}
+
+void TWPartition::Fox_Add_Backup_Exclusions() {
+   backup_exclusions.add_absolute_dir("/data/per_boot");
+   backup_exclusions.add_absolute_dir("/data/vendor_ce/999");
 }

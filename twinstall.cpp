@@ -505,10 +505,10 @@ static int Prepare_Update_Binary(const char *path, ZipWrap * Zip,
 	  //if (!storage_is_encrypted()) //(DataManager::GetIntValue(TW_IS_ENCRYPTED) == 0)
 	  if (
 	     (!storage_is_encrypted()) 
-	#ifdef OF_OTA_RES_DECRYPT
+//	#ifdef OF_OTA_RES_DECRYPT
 	  || (TWFunc::Path_Exists(Boot_File)) 
 	  || (DataManager::GetIntValue("OTA_decrypted") == 1)
-	#endif
+//	#endif
 	     )
 	    {
 	      if (TWFunc::Path_Exists(Boot_File))

@@ -1946,7 +1946,7 @@ void TWFunc::Disable_Stock_Recovery_Replace_Func(void)
 	      		Rename_File(rootdir + "/etc/recovery-resource.dat",
 		   	  	rootdir + "/etc/wlfx0recovery-resource0xwlf");
 
-          	if (TWFunc::Path_Exists(rootdir + "/recovery-from-boot.p"))
+          	if (Path_Exists(rootdir + "/recovery-from-boot.p"))
   	     	   {
 	         	Rename_File(rootdir + "/recovery-from-boot.p",
 		      	     rootdir + "/wlfx0recovery-from-boot.bak0xwlf");
@@ -1979,6 +1979,12 @@ void TWFunc::Disable_Stock_Recovery_Replace_Func(void)
 	  	if (Path_Exists("/system/vendor/etc/recovery-resource.dat"))
 	    		rename("/system/vendor/etc/recovery-resource.dat",
 		   		"/system/vendor/etc/wlfx0recovery-resource0xwlf");
+
+          	if (Path_Exists("/system/vendor/recovery-from-boot.p"))
+  	     	   {
+	         	Rename_File("/system/vendor/recovery-from-boot.p",
+		      	     "/system/vendor/wlfx0recovery-from-boot.bak0xwlf");
+	     	   }
 
 	  	usleep(512);	  	
 	  	if (we_mounted) // cleanup
@@ -2017,6 +2023,12 @@ void TWFunc::Disable_Stock_Recovery_Replace_Func(void)
 	  	if (Path_Exists("/vendor/etc/recovery-resource.dat"))
 	    		rename("/vendor/etc/recovery-resource.dat",
 		   	"/vendor/etc/wlfx0recovery-resource0xwlf");
+
+          	if (Path_Exists("/vendor/recovery-from-boot.p"))
+  	     	   {
+	         	Rename_File("/vendor/recovery-from-boot.p",
+		      	     "/vendor/wlfx0recovery-from-boot.bak0xwlf");
+	     	   }
 	  	
 	  	usleep(512);
 	  	if (we_mounted) // cleanup
