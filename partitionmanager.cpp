@@ -319,7 +319,7 @@ int TWPartitionManager::Process_Fstab(string Fstab_Filename, bool Display_Error)
 							LOGINFO("Trying wrapped key.\n");
 							property_set("fbe.data.wrappedkey", "true");
 							if (!Decrypt_Data->Decrypt_FBE_DE()) {
-								LOGERR("Unable to decrypt FBE device\n");
+								LOGINFO("Device not encrypted/Unable to decrypt FBE device\n");
 							}
 						}
 					}
