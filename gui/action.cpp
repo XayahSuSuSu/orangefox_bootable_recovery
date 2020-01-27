@@ -1962,6 +1962,7 @@ int GUIAction::decrypt(std::string arg __unused)
 
 int GUIAction::adbsideload(std::string arg __unused)
 {
+  int ret_val = 0;
   operation_start("Sideload");
   if (simulate)
     {
@@ -1989,8 +1990,8 @@ int GUIAction::adbsideload(std::string arg __unused)
 	  int wipe_cache = 0;
 	  int wipe_dalvik = 0;
 	  DataManager::GetValue("tw_wipe_dalvik", wipe_dalvik);
-
-	  if (TWinstall_zip(FUSE_SIDELOAD_HOST_PATHNAME, &wipe_cache) == 0)
+	  ret_val = TWinstall_zip(FUSE_SIDELOAD_HOST_PATHNAME, &wipe_cache);
+	  if (ret_val == 0)
 	    {
 	      if (wipe_cache || DataManager::GetIntValue("tw_wipe_cache"))
 		PartitionManager.Wipe_By_Path("/cache");
