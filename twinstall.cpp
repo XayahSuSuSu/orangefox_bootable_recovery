@@ -233,6 +233,7 @@ static int Prepare_Update_Binary(const char *path, ZipWrap * Zip,
   zip_is_survival_trigger = false; // assume non-miui
   DataManager::SetValue(FOX_ZIP_INSTALLER_CODE, 0); // assume standard zip installer
   DataManager::SetValue(FOX_ZIP_INSTALLER_TREBLE, "0");
+  DataManager::SetValue("found_fox_overwriting_rom", "0");
   
   if (!Zip->
       ExtractEntry(ASSUMED_UPDATE_BINARY_NAME, TMP_UPDATER_BINARY_PATH, 0755))
@@ -260,6 +261,7 @@ static int Prepare_Update_Binary(const char *path, ZipWrap * Zip,
 	        {
 		  zip_is_rom_package = true;
 		  DataManager::SetValue(FOX_ZIP_INSTALLER_CODE, 1); // standard ROM
+		  
 		  // check for miui entries
 		  if (TWFunc::CheckWord(FOX_TMP_PATH, "miui_update")
 		  ||  TWFunc::CheckWord(FOX_TMP_PATH, "firmware-update")
@@ -268,7 +270,23 @@ static int Prepare_Update_Binary(const char *path, ZipWrap * Zip,
 		     {
 		        zip_has_miui_stuff = 1;
 		     }
+		     
+	          // check for embedded recovery installs
+	          if  (
+	                 (TWFunc::CheckWord(FOX_TMP_PATH, "/dev/block/bootdevice/by-name/recovery")
+	              && TWFunc::CheckWord(FOX_TMP_PATH, "recovery.img")
+	              && Zip->EntryExists("recovery.img"))
+	              || (TWFunc::CheckWord(FOX_TMP_PATH, "package_extract_file(\"recovery.img\", \"/dev/block/bootdevice/by-name/recovery\")")
+	                 && Zip->EntryExists("recovery.img"))
+	              )
+	             {
+	                  DataManager::SetValue("found_fox_overwriting_rom", "1");
+	                  usleep(32);
+	                  TWFunc::Check_OrangeFox_Overwrite_FromROM(true, path);
+	             }
+
 		}
+	      
 	      unlink(FOX_TMP_PATH);
 	    }
 	}
@@ -318,7 +336,8 @@ static int Prepare_Update_Binary(const char *path, ZipWrap * Zip,
 	    {
 	      DataManager::SetValue(FOX_MIUI_ZIP_TMP, 1);
 	      DataManager::SetValue(FOX_CALL_DEACTIVATION, 1);
-	      DataManager::SetValue(FOX_ZIP_INSTALLER_CODE, 2); // MIUI ROM  
+	      DataManager::SetValue(FOX_ZIP_INSTALLER_CODE, 2); // MIUI ROM
+	      DataManager::SetValue("found_fox_overwriting_rom", "0");
 	      //DataManager::SetValue(FOX_DISABLE_DM_VERITY, 1);
 	    }
 	  gui_msg ("fox_install_miui_detected=- Detected MIUI Update zip installer"); 
@@ -632,7 +651,6 @@ static bool update_binary_has_legacy_properties(const char *binary)
 
   return found;
 }
-
 
 static int Run_Update_Binary(const char *path, ZipWrap * Zip, int *wipe_cache,
 			     zip_type ztype)
@@ -978,13 +996,12 @@ int TWinstall_zip(const char *path, int *wipe_cache)
       else
 	{
 	  ret_val = Prepare_Update_Binary(path, &Zip, wipe_cache);
+	  usleep(32);
 	  if (ret_val == INSTALL_SUCCESS)
 	    {
 	  	TWFunc::Run_Pre_Flash_Protocol(false);
-	        
-	        ret_val = Run_Update_Binary
-	            (path, &Zip, wipe_cache, UPDATE_BINARY_ZIP_TYPE);
-	            
+	        ret_val = Run_Update_Binary (path, &Zip, wipe_cache, UPDATE_BINARY_ZIP_TYPE);
+	        usleep(32); 	
 	  	TWFunc::Run_Post_Flash_Protocol();
 	    }
 	  else 
@@ -1062,6 +1079,14 @@ int TWinstall_zip(const char *path, int *wipe_cache)
 #ifdef USE_MINZIP
   sysReleaseMap(&map);
 #endif
+
+   usleep(32);
+   if (DataManager::GetIntValue(FOX_ZIP_INSTALLER_CODE) != 0) // just flashed a ROM
+   {
+      usleep(16);
+      TWFunc::Check_OrangeFox_Overwrite_FromROM(false, path);
+   }
+ 
   return ret_val;
 }
 

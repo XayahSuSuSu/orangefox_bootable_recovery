@@ -200,6 +200,29 @@ static string Trim_Trailing_NewLine (const string src)
    return ret;
 }
 
+/* convert string to lowercase */
+static string lowercase (const string src)
+{
+   string str = src;
+   transform(str.begin(), str.end(), str.begin(), ::tolower);
+   return str;
+}
+
+/* convert string to uppercase */
+static string uppercase (const string src)
+{
+   string str = src;
+   transform(str.begin(), str.end(), str.begin(), ::toupper);
+   return str;
+}
+
+/* find the position of "subs" in "str" (or -1 if not found) */
+static int pos (const string subs, const string str)
+{
+  std::size_t found = str.find(subs);
+  return (int) found;
+}
+
 /* is this a real treble device? (else, treble is emulated via /cust) */
 static bool Is_Real_Treble(void)
 {
@@ -4508,5 +4531,65 @@ void TWFunc::Reset_Clock(void)
       {
         TWFunc::Exec_With_Output("date -s \"@" + fox_build_date_utc + "\" > /dev/null");
       }
+}
+
+bool TWFunc::Check_OrangeFox_Overwrite_FromROM_Trigger(const std::string name)
+{
+    if (DataManager::GetIntValue("found_fox_overwriting_rom") != 1) return false;
+    string tmp = lowercase (name);
+    #if !defined(OF_CHECK_OVERWRITE_DEVICE) || !defined(OF_CHECK_OVERWRITE_ROM)
+       return false;
+    #else
+        string dev1 = OF_CHECK_OVERWRITE_DEVICE;
+        string rom1 = OF_CHECK_OVERWRITE_ROM;
+   	if ((Fox_Current_Device != dev1 || pos(dev1, name) < 0) || (pos(rom1, name) < 0)) 
+      	    return false;
+    	else
+      	   return true;
+    #endif
+}
+
+bool TWFunc::Check_OrangeFox_Overwrite_FromROM(bool WarnUser, const std::string name)
+{
+#ifndef OF_CHECK_OVERWRITE_ATTEMPTS
+   return false;
+#endif
+
+  if (!Check_OrangeFox_Overwrite_FromROM_Trigger(name))
+     {
+        DataManager::SetValue("found_fox_overwriting_rom", "0");
+        return false;
+     }
+
+  // turn on debug screen (for OTA)
+  DataManager::SetValue("ota_new_screen", "1");
+  
+  // proceed
+  if (WarnUser)
+    {
+      int i;
+      int j = 75;
+      gui_print_color("error", "\nALERT!\nThis ROM (%s) wants to overwrite your recovery partition!!!\n\n", name.c_str());
+      gui_print_color("error", "It might then pretend (when you try to boot it) that no OS is found.\n");
+      gui_print_color("error", "\nRECOMMENDATION: DUMP THIS ROM! NOW! Get one that is better-behaved!\n\n");
+      gui_print_color("error", "I will pause for %i seconds. To stop this installation, hard-reboot the device now!\n\n", j);
+      gui_print("The %i-second countdown will start in 20 seconds ...\n", j);
+      sleep(20);
+      for (i = j; i > 0; i--)
+         {
+            gui_print("DUMP THIS ROM! Reboot now! %i seconds left!\n", i);
+            sleep(1);
+         }
+      gui_print_color("error", "\n\nSo, you have chosen to continue with \"%s\"! That seems *very* trusting! Good luck!\n\n", name.c_str());
+      return true;
+    }
+  else
+    {
+      gui_print_color("error",
+      "\nALERT!\nThis ROM (%s) may now have overwritten your recovery partition!\n\nGood luck!\n\n",
+      name.c_str());
+      DataManager::SetValue("found_fox_overwriting_rom", "0");
+      return true;
+    }
 }
 //

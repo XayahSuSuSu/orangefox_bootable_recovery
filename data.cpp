@@ -935,6 +935,7 @@ void DataManager::SetDefaultValues()
   mConst.SetValue(FOX_ACTUAL_BUILD_VAR, FOX_BUILD);
   mConst.SetValue(FOX_TMP_SCRIPT_DIR, Fox_tmp_dir);
   mConst.SetValue(FOX_COMPATIBILITY_DEVICE, FOX_DEVICE);
+  mData.SetValue("found_fox_overwriting_rom", 0);
 
   // End of the OrangeFox variables
 
