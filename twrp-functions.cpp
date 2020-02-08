@@ -86,12 +86,28 @@ int OrangeFox_Startup_Executed = 0;
 int Fox_Has_Welcomed = 0;
 string Fox_Current_ROM = "";
 
+/*
 static const bool Is_AB_Device =
   #ifdef OF_AB_DEVICE
   	true;
   #else
   	false;
   #endif
+*/
+
+/* is this an A/B device? */
+static bool Is_AB_Device() 
+{
+  #ifdef OF_AB_DEVICE
+     return true;
+  #endif
+  string propfile = "/default.prop";
+  if (!TWFunc::Path_Exists(propfile))
+     propfile = "/prop.default";  
+  string s = TWFunc::File_Property_Get(propfile, "ro.boot.slot_suffix");
+  string u = TWFunc::File_Property_Get(propfile, "ro.build.ab_update");
+  return (!s.empty() && u == "true");
+}
 
 /* create a new (text) file */
 static void CreateNewFile(string file_path)
@@ -2065,6 +2081,9 @@ void TWFunc::Disable_Stock_Recovery_Replace_Func(void)
 // Disable flashing of stock recovery
 void TWFunc::Disable_Stock_Recovery_Replace(void)
 {
+  #ifdef OF_VANILLA_BUILD
+  return;
+  #endif
   if (PartitionManager.Mount_By_Path(PartitionManager.Get_Android_Root_Path(), false))
      { 
          Disable_Stock_Recovery_Replace_Func();           
@@ -4071,6 +4090,7 @@ void TWFunc::PrepareToFinish(void)
     }
 
   // restore the stock recovery ?
+  #ifndef OF_VANILLA_BUILD
   if (
      (DataManager::GetIntValue(FOX_DONT_REPLACE_STOCK) == 1)
   && (PartitionManager.Mount_By_Path(PartitionManager.Get_Android_Root_Path(), false))
@@ -4089,6 +4109,7 @@ void TWFunc::PrepareToFinish(void)
 	
       PartitionManager.UnMount_By_Path(PartitionManager.Get_Android_Root_Path(), false);
     }
+   #endif
 }
 
 bool TWFunc::DontPatchBootImage(void)
@@ -4096,7 +4117,7 @@ bool TWFunc::DontPatchBootImage(void)
   // check whether to patch on new OrangeFox installations 
   if (New_Fox_Installation == 1)
      { 
-        if (Is_AB_Device) // don't patch the boot image of A/B devices at post-install stage
+        if (Is_AB_Device()) // don't patch the boot image of A/B devices at post-install stage
         {
            return true;
         }
@@ -4199,10 +4220,7 @@ void TWFunc::check_selinux_support() {
 
 void TWFunc::Deactivation_Process(void)
 {
-bool patched_verity = false;
-bool patched_crypt = false;
-
-  #ifdef OF_SKIP_ORANGEFOX_PROCESS
+  #if defined(OF_SKIP_ORANGEFOX_PROCESS) || defined(OF_VANILLA_BUILD)
 	gui_print_color("warning", "\nOrangeFox: Skipping the OrangeFox Process.\n");
 	New_Fox_Installation = 0;
 	Fox_Force_Deactivate_Process = 0;
@@ -4210,6 +4228,9 @@ bool patched_crypt = false;
 	return;
   #endif
 
+  bool patched_verity = false;
+  bool patched_crypt = false;
+  
   // don't call this on first boot following fresh installation
   if (New_Fox_Installation != 1)
      {
@@ -4480,6 +4501,12 @@ void TWFunc::Setup_Verity_Forced_Encryption(void)
 
 #ifdef OF_FORCE_DISABLE_DM_VERITY
   DataManager::SetValue(FOX_DISABLE_DM_VERITY, "1");
+#endif
+
+#ifdef OF_VANILLA_BUILD
+  DataManager::SetValue(FOX_DISABLE_DM_VERITY, "0");
+  DataManager::SetValue(FOX_DISABLE_FORCED_ENCRYPTION, "0");
+  DataManager::SetValue(FOX_ADVANCED_STOCK_REPLACE, "0");
 #endif
 }
 

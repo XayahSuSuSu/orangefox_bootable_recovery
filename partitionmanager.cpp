@@ -3930,6 +3930,11 @@ void TWPartitionManager::Coldboot()
 
 int TWPartitionManager::Run_OTA_Survival_Backup(bool adbbackup)
 {
+#ifdef OF_VANILLA_BUILD
+   LOGINFO("- OrangeFox: DEBUG: skipping the OTA_RES process...\n");
+   return 0;
+#endif
+
   PartitionSettings part_settings;
   int partition_count = 0, disable_free_space_check = 0, skip_digest = 1;
   int gui_adb_backup;
@@ -4286,6 +4291,10 @@ bool TWPartitionManager::Flash_Repacked_Image(string & path,
 
 int TWPartitionManager::Run_OTA_Survival_Restore(const string & Restore_Name)
 {
+#ifdef OF_VANILLA_BUILD
+   LOGINFO("- OrangeFox: DEBUG: skipping the OTA_RES process...\n");
+   return 0;
+#endif
   PartitionSettings part_settings;
   int check_digest = 0;
 

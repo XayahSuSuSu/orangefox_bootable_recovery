@@ -1095,6 +1095,10 @@ int TWinstall_zip(const char *path, int *wipe_cache)
 
 int TWinstall_Run_OTA_BAK (bool reportback) 
 {
+#ifdef OF_VANILLA_BUILD
+   LOGINFO("- OrangeFox: DEBUG: skipping the OTA_BAK process...\n");
+   return 0;
+#endif
 int result = 1;
       if ((DataManager::GetIntValue(FOX_MIUI_ZIP_TMP) != 0) || (DataManager::GetIntValue(FOX_METADATA_PRE_BUILD) != 0))
       {

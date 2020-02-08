@@ -814,6 +814,10 @@ int OpenRecoveryScript::remountrw(void)
 
 int OpenRecoveryScript::Run_Fox_Process_After_ORS(void)
 {
+#ifdef OF_VANILLA_BUILD
+   LOGINFO("- OrangeFox: DEBUG: skipping the Run_Fox_Process_After_ORS process...\n");
+   return 0;
+#endif
    Fox_Zip_Installer_Code = DataManager::GetIntValue(FOX_ZIP_INSTALLER_CODE);
    if (Fox_Zip_Installer_Code != 0) // a ROM was installed
      {
