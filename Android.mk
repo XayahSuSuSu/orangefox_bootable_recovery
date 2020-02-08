@@ -1124,6 +1124,11 @@ ifeq ($(shell test $(PLATFORM_SDK_VERSION) -lt 24; echo $$?),0)
     include $(commands_TWRP_local_path)/libmincrypt/Android.mk
 endif
 
+ifneq ($(TW_OZIP_DECRYPT_KEY),)
+    TWRP_REQUIRED_MODULES += ozip_decrypt
+    include $(commands_TWRP_local_path)/ozip_decrypt/Android.mk
+endif
+
 ifeq ($(TW_INCLUDE_CRYPTO), true)
     ifeq ($(OF_USE_LEGACY_CRYPTO),1)
     include $(commands_TWRP_local_path)/crypto/lollipop/Android.mk
