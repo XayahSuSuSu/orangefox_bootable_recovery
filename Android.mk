@@ -216,6 +216,10 @@ ifeq ($(OF_SUPPORT_PRE_FLASH_SCRIPT),1)
     LOCAL_CFLAGS += -DOF_SUPPORT_PRE_FLASH_SCRIPT='"1"'
 endif
 
+ifeq ($(OF_SUPPORT_OZIP_DECRYPTION),1)
+    LOCAL_CFLAGS += -DOF_SUPPORT_OZIP_DECRYPTION='"1"'
+endif
+
 ifeq ($(OF_KEEP_DM_VERITY_FORCED_ENCRYPTION),1)
     LOCAL_CFLAGS += -DOF_KEEP_DM_VERITY_FORCED_ENCRYPTION='"1"'
     OF_KEEP_DM_VERITY := 1
@@ -1124,9 +1128,11 @@ ifeq ($(shell test $(PLATFORM_SDK_VERSION) -lt 24; echo $$?),0)
     include $(commands_TWRP_local_path)/libmincrypt/Android.mk
 endif
 
+ifeq ($(OF_SUPPORT_OZIP_DECRYPTION),1)
 ifneq ($(TW_OZIP_DECRYPT_KEY),)
     TWRP_REQUIRED_MODULES += ozip_decrypt
     include $(commands_TWRP_local_path)/ozip_decrypt/Android.mk
+endif
 endif
 
 ifeq ($(TW_INCLUDE_CRYPTO), true)
