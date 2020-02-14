@@ -280,7 +280,7 @@ int main(int argc, char **argv)
 			    usleep(16);
 			    if (gui_startPage("decrypt", 1, 1) == 0)
 			       {  
-				  LOGINFO("- DEBUG: OrangeFox OTA: detected custom encryption\n");
+				  LOGINFO("- DEBUG: OrangeFox OTA: detected custom or FBE encryption\n");
 				  DataManager::SetValue("OTA_decrypted", "1");
 				  TWFunc::check_selinux_support();
 				  gui_loadCustomResources();
@@ -292,7 +292,7 @@ int main(int argc, char **argv)
 		} else {
 			LOGINFO("Is encrypted, do decrypt page first\n");			
 			//
-			LOGINFO("- DEBUG: OrangeFox: detected custom encryption\n");
+			LOGINFO("- DEBUG: OrangeFox: detected custom or FBE encryption\n");
 			DataManager::SetValue("used_custom_encryption", "1");
 			usleep(16);
 			//
