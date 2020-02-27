@@ -2923,7 +2923,7 @@ bool TWPartitionManager::Enable_MTP(void)
 #ifdef TW_HAS_MTP
   if (mtppid)
     {
-      gui_err("mtp_already_enabled=MTP already enabled");
+      LOGINFO("MTP already enabled\n");
       return true;
     }
 
