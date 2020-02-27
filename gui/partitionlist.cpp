@@ -37,7 +37,7 @@ GUIPartitionList::GUIPartitionList(xml_node<>* node) : GUIScrollList(node)
 
 	mIconSelected = mIconUnselected = NULL;
 	mUpdate = 0;
-	updateList = false;
+	countTotal = updateList = false;
 
 	child = FindNode(node, "icon");
 	if (child)
@@ -82,6 +82,10 @@ GUIPartitionList::GUIPartitionList(xml_node<>* node) : GUIScrollList(node)
 	child = FindNode(node, "listtype");
 	if (child && (attr = child->first_attribute("name"))) {
 		ListType = attr->value();
+		if (ListType == "backup_total") {
+			ListType = "backup";
+			countTotal = true;
+		}
 		updateList = true;
 	} else {
 		mList.clear();
@@ -178,6 +182,7 @@ void GUIPartitionList::SetPageFocus(int inFocus)
 void GUIPartitionList::MatchList(void) {
 	int i, listSize = mList.size();
 	string variablelist, searchvalue;
+	unsigned long long totalSize = 0;
 	size_t pos;
 
 	DataManager::GetValue(mVariable, variablelist);
@@ -187,9 +192,17 @@ void GUIPartitionList::MatchList(void) {
 		pos = variablelist.find(searchvalue);
 		if (pos != string::npos) {
 			mList.at(i).selected = 1;
+			if (countTotal)
+				totalSize += mList.at(i).PartitionSize;
 		} else {
 			mList.at(i).selected = 0;
 		}
+	}
+
+	if (countTotal) {
+		char formatSize[255];
+		sprintf(formatSize, "%.2lf", (double)totalSize / 1024 / 1024);
+		DataManager::SetValue("fox_total_backup", formatSize);
 	}
 }
 
@@ -281,6 +294,17 @@ void GUIPartitionList::NotifySelect(size_t item_selected)
 					mList.at(item_selected).selected = 0;
 				else
 					mList.at(item_selected).selected = 1;
+
+				if (countTotal) { // [f/d] count size of backup after selecting partition
+					unsigned long long totalSize = 0;
+					char formatSize[255];
+					for (int i=0; i<listSize; i++)
+						if(mList.at(i).selected == 1)
+							totalSize += mList.at(i).PartitionSize;
+					
+					sprintf(formatSize, "%.2lf", (double)totalSize / 1024 / 1024);
+					DataManager::SetValue("fox_total_backup", formatSize);
+				}
 
 				int i;
 				string variablelist;

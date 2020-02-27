@@ -41,7 +41,7 @@
 
 			<text style="text_ab_subtitle">
 				<placement x="%col1_x%" y="%ab_bc_double_d_y%"/>
-				<text>%tw_storage_display_name% (%tw_storage_free_size% {@mbyte})</text>
+				<text>%tw_storage_display_name% (%tw_storage_free_size%{@mbyte})</text>
 			</text>
 
 			<text style="text_ab_title">

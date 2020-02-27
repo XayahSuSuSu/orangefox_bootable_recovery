@@ -781,6 +781,7 @@ protected:
 	ImageResource* mIconSelected;
 	ImageResource* mIconUnselected;
 	bool updateList;
+	bool countTotal;
 };
 
 class GUITextBox : public GUIScrollList
