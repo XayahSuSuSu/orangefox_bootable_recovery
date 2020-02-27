@@ -1306,6 +1306,20 @@ void GUIAction::reinject_after_flash()
     }
 }
 
+#ifdef OF_SUPPORT_OZIP_DECRYPTION
+int GUIAction::ozip_decrypt(string zip_path)
+{
+   if (!TWFunc::Path_Exists("/sbin/ozip_decrypt")) 
+      {
+         return 1;
+      }
+   gui_msg("ozip_decrypt_decryption=Starting Ozip Decryption...");
+   TWFunc::Exec_Cmd("ozip_decrypt " + (string)TW_OZIP_DECRYPT_KEY + " '" + zip_path + "'");
+   gui_msg("ozip_decrypt_finish=Ozip Decryption Finished!");
+   return 0;
+}
+#endif
+
 int GUIAction::flash(std::string arg)
 {
   int i, ret_val = 0, wipe_cache = 0;
@@ -1321,6 +1335,24 @@ int GUIAction::flash(std::string arg)
       size_t slashpos = zip_path.find_last_of('/');
       string zip_filename = (slashpos == string::npos) ? zip_path : zip_path.substr(slashpos + 1);
       operation_start("Flashing");
+
+      #ifdef OF_SUPPORT_OZIP_DECRYPTION
+      if ((zip_path.substr(zip_path.size() - 4, 4)) == "ozip")
+	{
+		if ((ozip_decrypt(zip_path)) != 0)
+		  {
+                	LOGERR("Unable to find ozip_decrypt!");
+			break;
+		  }
+		zip_filename = (zip_filename.substr(0, zip_filename.size() - 4)).append("zip");
+            	zip_path = (zip_path.substr(0, zip_path.size() - 4)).append("zip");
+		if (!TWFunc::Path_Exists(zip_path)) {
+			LOGERR("Unable to find decrypted zip");
+			break;
+		}
+	}
+      #endif
+
       DataManager::SetValue("tw_filename", zip_path);
       DataManager::SetValue("tw_file", zip_filename);
       DataManager::SetValue(TW_ZIP_INDEX, (i + 1));
@@ -1983,6 +2015,7 @@ int GUIAction::decrypt(std::string arg __unused)
 
 int GUIAction::adbsideload(std::string arg __unused)
 {
+  int ret_val = 0;
   operation_start("Sideload");
   if (simulate)
     {
@@ -2010,8 +2043,8 @@ int GUIAction::adbsideload(std::string arg __unused)
 	  int wipe_cache = 0;
 	  int wipe_dalvik = 0;
 	  DataManager::GetValue("tw_wipe_dalvik", wipe_dalvik);
-
-	  if (TWinstall_zip(FUSE_SIDELOAD_HOST_PATHNAME, &wipe_cache) == 0)
+	  ret_val = TWinstall_zip(FUSE_SIDELOAD_HOST_PATHNAME, &wipe_cache);
+	  if (ret_val == 0)
 	    {
 	      if (wipe_cache || DataManager::GetIntValue("tw_wipe_cache"))
 		PartitionManager.Wipe_By_Path("/cache");

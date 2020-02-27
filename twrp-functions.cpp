@@ -86,12 +86,28 @@ int OrangeFox_Startup_Executed = 0;
 int Fox_Has_Welcomed = 0;
 string Fox_Current_ROM = "";
 
+/*
 static const bool Is_AB_Device =
   #ifdef OF_AB_DEVICE
   	true;
   #else
   	false;
   #endif
+*/
+
+/* is this an A/B device? */
+static bool Is_AB_Device() 
+{
+  #ifdef OF_AB_DEVICE
+     return true;
+  #endif
+  string propfile = "/default.prop";
+  if (!TWFunc::Path_Exists(propfile))
+     propfile = "/prop.default";  
+  string s = TWFunc::File_Property_Get(propfile, "ro.boot.slot_suffix");
+  string u = TWFunc::File_Property_Get(propfile, "ro.build.ab_update");
+  return (!s.empty() && u == "true");
+}
 
 /* create a new (text) file */
 static void CreateNewFile(string file_path)
@@ -198,6 +214,29 @@ static string Trim_Trailing_NewLine (const string src)
    string ret = src;
    ret.erase(std::remove(ret.begin(), ret.end(), '\n'), ret.end());   
    return ret;
+}
+
+/* convert string to lowercase */
+static string lowercase (const string src)
+{
+   string str = src;
+   transform(str.begin(), str.end(), str.begin(), ::tolower);
+   return str;
+}
+
+/* convert string to uppercase */
+static string uppercase (const string src)
+{
+   string str = src;
+   transform(str.begin(), str.end(), str.begin(), ::toupper);
+   return str;
+}
+
+/* find the position of "subs" in "str" (or -1 if not found) */
+static int pos (const string subs, const string str)
+{
+  std::size_t found = str.find(subs);
+  return (int) found;
 }
 
 /* is this a real treble device? (else, treble is emulated via /cust) */
@@ -2042,6 +2081,9 @@ void TWFunc::Disable_Stock_Recovery_Replace_Func(void)
 // Disable flashing of stock recovery
 void TWFunc::Disable_Stock_Recovery_Replace(void)
 {
+  #ifdef OF_VANILLA_BUILD
+  return;
+  #endif
   if (PartitionManager.Mount_By_Path(PartitionManager.Get_Android_Root_Path(), false))
      { 
          Disable_Stock_Recovery_Replace_Func();           
@@ -4042,6 +4084,7 @@ void TWFunc::PrepareToFinish(void)
     }
 
   // restore the stock recovery ?
+  #ifndef OF_VANILLA_BUILD
   if (
      (DataManager::GetIntValue(FOX_DONT_REPLACE_STOCK) == 1)
   && (PartitionManager.Mount_By_Path(PartitionManager.Get_Android_Root_Path(), false))
@@ -4060,6 +4103,7 @@ void TWFunc::PrepareToFinish(void)
 	
       PartitionManager.UnMount_By_Path(PartitionManager.Get_Android_Root_Path(), false);
     }
+   #endif
 }
 
 bool TWFunc::DontPatchBootImage(void)
@@ -4067,7 +4111,7 @@ bool TWFunc::DontPatchBootImage(void)
   // check whether to patch on new OrangeFox installations 
   if (New_Fox_Installation == 1)
      { 
-        if (Is_AB_Device) // don't patch the boot image of A/B devices at post-install stage
+        if (Is_AB_Device()) // don't patch the boot image of A/B devices at post-install stage
         {
            return true;
         }
@@ -4170,10 +4214,7 @@ void TWFunc::check_selinux_support() {
 
 void TWFunc::Deactivation_Process(void)
 {
-bool patched_verity = false;
-bool patched_crypt = false;
-
-  #ifdef OF_SKIP_ORANGEFOX_PROCESS
+  #if defined(OF_SKIP_ORANGEFOX_PROCESS) || defined(OF_VANILLA_BUILD)
 	gui_print_color("warning", "\nOrangeFox: Skipping the OrangeFox Process.\n");
 	New_Fox_Installation = 0;
 	Fox_Force_Deactivate_Process = 0;
@@ -4181,6 +4222,9 @@ bool patched_crypt = false;
 	return;
   #endif
 
+  bool patched_verity = false;
+  bool patched_crypt = false;
+  
   // don't call this on first boot following fresh installation
   if (New_Fox_Installation != 1)
      {
@@ -4452,6 +4496,12 @@ void TWFunc::Setup_Verity_Forced_Encryption(void)
 #ifdef OF_FORCE_DISABLE_DM_VERITY
   DataManager::SetValue(FOX_DISABLE_DM_VERITY, "1");
 #endif
+
+#ifdef OF_VANILLA_BUILD
+  DataManager::SetValue(FOX_DISABLE_DM_VERITY, "0");
+  DataManager::SetValue(FOX_DISABLE_FORCED_ENCRYPTION, "0");
+  DataManager::SetValue(FOX_ADVANCED_STOCK_REPLACE, "0");
+#endif
 }
 
 void TWFunc::Dump_Current_Settings(void)
@@ -4502,5 +4552,65 @@ void TWFunc::Reset_Clock(void)
       {
         TWFunc::Exec_With_Output("date -s \"@" + fox_build_date_utc + "\" > /dev/null");
       }
+}
+
+bool TWFunc::Check_OrangeFox_Overwrite_FromROM_Trigger(const std::string name)
+{
+    if (DataManager::GetIntValue("found_fox_overwriting_rom") != 1) return false;
+    string tmp = lowercase (name);
+    #if !defined(OF_CHECK_OVERWRITE_DEVICE) || !defined(OF_CHECK_OVERWRITE_ROM)
+       return false;
+    #else
+        string dev1 = OF_CHECK_OVERWRITE_DEVICE;
+        string rom1 = OF_CHECK_OVERWRITE_ROM;
+   	if ((Fox_Current_Device != dev1 || pos(dev1, name) < 0) || (pos(rom1, name) < 0)) 
+      	    return false;
+    	else
+      	   return true;
+    #endif
+}
+
+bool TWFunc::Check_OrangeFox_Overwrite_FromROM(bool WarnUser, const std::string name)
+{
+#ifndef OF_CHECK_OVERWRITE_ATTEMPTS
+   return false;
+#endif
+
+  if (!Check_OrangeFox_Overwrite_FromROM_Trigger(name))
+     {
+        DataManager::SetValue("found_fox_overwriting_rom", "0");
+        return false;
+     }
+
+  // turn on debug screen (for OTA)
+  DataManager::SetValue("ota_new_screen", "1");
+  
+  // proceed
+  if (WarnUser)
+    {
+      int i;
+      int j = 75;
+      gui_print_color("error", "\nALERT!\nThis ROM (%s) wants to overwrite your recovery partition!!!\n\n", name.c_str());
+      gui_print_color("error", "It might then pretend (when you try to boot it) that no OS is found.\n");
+      gui_print_color("error", "\nRECOMMENDATION: DUMP THIS ROM! NOW! Get one that is better-behaved!\n\n");
+      gui_print_color("error", "I will pause for %i seconds. To stop this installation, hard-reboot the device now!\n\n", j);
+      gui_print("The %i-second countdown will start in 20 seconds ...\n", j);
+      sleep(20);
+      for (i = j; i > 0; i--)
+         {
+            gui_print("DUMP THIS ROM! Reboot now! %i seconds left!\n", i);
+            sleep(1);
+         }
+      gui_print_color("error", "\n\nSo, you have chosen to continue with \"%s\"! That seems *very* trusting! Good luck!\n\n", name.c_str());
+      return true;
+    }
+  else
+    {
+      gui_print_color("error",
+      "\nALERT!\nThis ROM (%s) may now have overwritten your recovery partition!\n\nGood luck!\n\n",
+      name.c_str());
+      DataManager::SetValue("found_fox_overwriting_rom", "0");
+      return true;
+    }
 }
 //

@@ -11,7 +11,7 @@
 					<action function="set">general_back=settings</action>
 					<action function="page">ext_general</action>
 				</listitem>
-				<listitem name="MIUI OTA">
+				<listitem name="OTA">
 					<condition var1="of_no_miui_features" op="!=" var2="1"/>
 					<icon res="bs_btn_set_ota"/>
 					<action function="page">fox_ota</action>

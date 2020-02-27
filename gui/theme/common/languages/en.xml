@@ -763,6 +763,8 @@
 		<string name="changing_boot_slot">Changing Boot Slot</string>
 		<string name="changing_boot_slot_complete">Changing Boot Slot completed</string>
 		<string name="unable_set_boot_slot">Error changing bootloader boot slot to {1}</string>
+		<string name="ozip_decrypt_decryption">Starting Ozip Decryption...</string>
+		<string name="ozip_decrypt_finish">Ozip Decryption Finished!</string>
 		<string name="backup_storage_warning">Backups of {1} do not include any files in internal storage such as pictures or downloads.</string>
 		<string name="sha2_chk">Use SHA2 for hashing</string>
 		<string name="disabled">Disabled</string>
@@ -774,8 +776,8 @@
 		<string name="fox_incremental_ota_compatibility_chk">Verifying Incremental Package Signature...</string>
 		<string name="fox_incremental_ota_compatibility_false">Incremental package isn't compatible with this ROM!</string>
 		<string name="fox_incremental_ota_compatibility_true">Incremental package is compatible</string>
-		<string name="fox_incremental_ota_status_enabled">Support MIUI Incremental package status: Enabled</string>
-		<string name="fox_incremental_ota_status_disabled">Support MIUI Incremental package status: Disabled</string>
+		<string name="fox_incremental_ota_status_enabled">Support Incremental package status: Enabled</string>
+		<string name="fox_incremental_ota_status_disabled">Support Incremental package status: Disabled</string>
 		<string name="fox_incremental_package_detected">Detected Incremental package '{1}'</string>
 		<string name="fox_survival_does_not_exist">OTA Survival does not exist! Please flash a full ROM first!</string>
 		<string name="fox_install_detecting">Detecting Current Package</string>
@@ -932,7 +934,7 @@
 		
 		<!-- MIUI OTA -->
 		<string name="fox_ota_settings">OTA Settings</string>
-		<string name="fox_miui_ota_on">Enable MIUI OTA</string>
+		<string name="fox_miui_ota_on">Enable OTA</string>
 		<string name="fox_ota_on">Enable OTA</string>
 		<string name="fox_patch_rom">Patch ROM</string>
 		<string name="fox_ota_lite">OTA &amp; ROM</string>
@@ -994,9 +996,9 @@
 		<!-- OTA -->
 		<string name="fox_ota_msg_ready">You are ready to receive updates!</string>
 		<string name="fox_ota_msg_custom">Enabled custom ROM mode</string>
-		<string name="fox_ota_msg_reflash">Please flash full MIUI ROM!</string>
+		<string name="fox_ota_msg_reflash">Please flash full ROM!</string>
 		<string name="fox_advanced_stock_recovery">Aggressive stock recovery deactivation</string>
-		<string name="fox_support_miui_ota_chk">Support MIUI Incremental OTA</string>
+		<string name="fox_support_miui_ota_chk">Support OTA</string>
 		<string name="fox_include_system_survival_chk">Include system in OTA survival</string>
 		<string name="fox_verify_incremental_ota_signature_chk">Incremental OTA signature verification</string>
 		<string name="fox_dmverity_chk">Disable DM-Verity</string>

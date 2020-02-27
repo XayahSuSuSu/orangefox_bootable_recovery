@@ -45,7 +45,7 @@
 
             <text style="text_ab_title">
 				<placement x="%col1_x_indent%" y="%ab_bc_y%"/>
-				<text>MIUI OTA</text>
+				<text>OTA</text>
 			</text>
 
 			<!-- Check MIUI Bak file -->

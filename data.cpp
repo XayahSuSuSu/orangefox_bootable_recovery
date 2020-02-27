@@ -883,14 +883,14 @@ void DataManager::SetDefaultValues()
   mPersist.SetValue(FOX_DISABLE_OTA_AUTO_REBOOT, "0");
 
   // { MIUI
-  string miui_ota = "1";    // enable by default, unless turned off below
+  string incremental_ota = "1";    // enable by default, unless turned off below
   #if defined(OF_DISABLE_MIUI_SPECIFIC_FEATURES) || defined(OF_TWRP_COMPATIBILITY_MODE)
-  miui_ota = "0";
+  incremental_ota = "0";
   #endif  
 
-  mPersist.SetValue("fox_verify_incremental_ota_signature", miui_ota);  // set to 1 to support miui ota
-  mPersist.SetValue(FOX_INCREMENTAL_PACKAGE, miui_ota); 		// set to 1 to support miui ota
-  mPersist.SetValue(FOX_DO_SYSTEM_ON_OTA, miui_ota);
+  mPersist.SetValue("fox_verify_incremental_ota_signature", incremental_ota);  // set to 1 to support incremental ota
+  mPersist.SetValue(FOX_INCREMENTAL_PACKAGE, incremental_ota); 		// set to 1 to support incremental ota
+  mPersist.SetValue(FOX_DO_SYSTEM_ON_OTA, incremental_ota);
 
   // DJ9 - turn these off by default until further notice, else there might be 
   // issues in new Xiaomi devices or new ROMs; DJ9 //
@@ -945,6 +945,7 @@ void DataManager::SetDefaultValues()
   mConst.SetValue(FOX_ACTUAL_BUILD_VAR, FOX_BUILD);
   mConst.SetValue(FOX_TMP_SCRIPT_DIR, Fox_tmp_dir);
   mConst.SetValue(FOX_COMPATIBILITY_DEVICE, FOX_DEVICE);
+  mData.SetValue("found_fox_overwriting_rom", 0);
 
   // End of the OrangeFox variables
 

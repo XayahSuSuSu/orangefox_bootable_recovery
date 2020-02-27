@@ -895,10 +895,11 @@
 					[ -L "%tw_filename1%" ] && link=$(readlink "%tw_filename1%")
 					twrp xset ft_inf_real=$link
 					twrp xset ft_inf_size=$(du -h "%tw_filename1%" | sed 's*%tw_filename1%**g');
-					twrp xset ft_inf_rights=$(stat -c '%%a (%%A)' "%tw_filename1%")
-					twrp xset ft_inf_acc=$(stat -c %%x "%tw_filename1%")
-					twrp xset ft_inf_mod=$(stat -c %%y "%tw_filename1%")
-					twrp xset ft_inf_ch=$(stat -c %%z "%tw_filename1%")
+					
+					twrp xset ft_inf_rights=$(ls -ls "%tw_filename1%" | awk '{print $2}')
+					twrp xset ft_inf_acc=$(ls -lseu "%tw_filename1%" | awk '{print $7,$8,$9,$10,$11}')
+					twrp xset ft_inf_mod=$(ls -lset "%tw_filename1%" | awk '{print $7,$8,$9,$10,$11}')
+					twrp xset ft_inf_ch=$(ls -lsec "%tw_filename1%" | awk '{print $7,$8,$9,$10,$11}')
 					</action>
 					<action function="page">checksum_confirm</action>
 				</listitem>

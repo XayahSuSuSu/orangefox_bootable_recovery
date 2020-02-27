@@ -67,6 +67,15 @@ ifeq ($(FOX_DEVICE_MODEL),)
     LOCAL_CFLAGS += -DFOX_DEVICE_MODEL='"$(DEVICE)"'
 endif
 
+ifeq ($(OF_VANILLA_BUILD),1)
+    LOCAL_CFLAGS += -DOF_VANILLA_BUILD='"1"'
+    OF_SKIP_ORANGEFOX_PROCESS := 1
+    OF_DISABLE_MIUI_SPECIFIC_FEATURES := 1
+    OF_DONT_PATCH_ENCRYPTED_DEVICE := 1
+    OF_DONT_PATCH_ON_FRESH_INSTALLATION := 1
+    OF_KEEP_DM_VERITY_FORCED_ENCRYPTION := 1
+endif
+
 ifeq ($(OF_DISABLE_MIUI_SPECIFIC_FEATURES),1)
     LOCAL_CFLAGS += -DOF_DISABLE_MIUI_SPECIFIC_FEATURES='"1"'
 endif
@@ -215,6 +224,10 @@ ifeq ($(OF_SUPPORT_PRE_FLASH_SCRIPT),1)
     LOCAL_CFLAGS += -DOF_SUPPORT_PRE_FLASH_SCRIPT='"1"'
 endif
 
+ifeq ($(OF_SUPPORT_OZIP_DECRYPTION),1)
+    LOCAL_CFLAGS += -DOF_SUPPORT_OZIP_DECRYPTION='"1"'
+endif
+
 ifeq ($(OF_KEEP_DM_VERITY_FORCED_ENCRYPTION),1)
     LOCAL_CFLAGS += -DOF_KEEP_DM_VERITY_FORCED_ENCRYPTION='"1"'
     OF_KEEP_DM_VERITY := 1
@@ -257,6 +270,20 @@ ifeq ($(OF_FORCE_DISABLE_FORCED_ENCRYPTION),1)
     LOCAL_CFLAGS += -DOF_FORCE_DISABLE_FORCED_ENCRYPTION='"1"'
 endif
 
+ifeq ($(OF_CHECK_OVERWRITE_ATTEMPTS),1)
+    LOCAL_CFLAGS += -DOF_CHECK_OVERWRITE_ATTEMPTS='"1"'
+    ifneq ($(OF_CHECK_OVERWRITE_DEVICE),)
+        LOCAL_CFLAGS += -DOF_CHECK_OVERWRITE_DEVICE='"$(OF_CHECK_OVERWRITE_DEVICE)"'
+    else
+        You must supply "OF_CHECK_OVERWRITE_DEVICE"
+    endif
+    ifneq ($(OF_CHECK_OVERWRITE_ROM),)
+        LOCAL_CFLAGS += -DOF_CHECK_OVERWRITE_ROM='"$(OF_CHECK_OVERWRITE_ROM)"'
+    else
+        You must supply "OF_CHECK_OVERWRITE_ROM"
+    endif
+endif
+
 ifeq ($(OF_OTA_RES_DECRYPT),1)
     LOCAL_CFLAGS += -DOF_OTA_RES_DECRYPT='"1"'
 endif
@@ -275,6 +302,10 @@ endif
 
 ifeq ($(OF_DONT_KEEP_LOG_HISTORY),1)
     LOCAL_CFLAGS += -DOF_DONT_KEEP_LOG_HISTORY='"1"'
+endif
+
+ifeq ($(OF_SUPPORT_ALL_BLOCK_OTA_UPDATES),1)
+    LOCAL_CFLAGS += -DOF_SUPPORT_ALL_BLOCK_OTA_UPDATES='"1"'
 endif
 
 ifeq ($(TW_USE_TOOLBOX), true)
@@ -1107,6 +1138,13 @@ include $(commands_TWRP_local_path)/injecttwrp/Android.mk \
 
 ifeq ($(shell test $(PLATFORM_SDK_VERSION) -lt 24; echo $$?),0)
     include $(commands_TWRP_local_path)/libmincrypt/Android.mk
+endif
+
+ifeq ($(OF_SUPPORT_OZIP_DECRYPTION),1)
+ifneq ($(TW_OZIP_DECRYPT_KEY),)
+    TWRP_REQUIRED_MODULES += ozip_decrypt
+    include $(commands_TWRP_local_path)/ozip_decrypt/Android.mk
+endif
 endif
 
 ifeq ($(TW_INCLUDE_CRYPTO), true)

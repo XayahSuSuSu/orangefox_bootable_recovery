@@ -319,7 +319,7 @@ int TWPartitionManager::Process_Fstab(string Fstab_Filename, bool Display_Error)
 							LOGINFO("Trying wrapped key.\n");
 							property_set("fbe.data.wrappedkey", "true");
 							if (!Decrypt_Data->Decrypt_FBE_DE()) {
-								LOGERR("Unable to decrypt FBE device\n");
+								LOGINFO("Device not encrypted/Unable to decrypt FBE device\n");
 							}
 						}
 					}
@@ -2763,7 +2763,7 @@ void TWPartitionManager::Get_Partition_List(string ListType,
 					}
 				}
 				part.PartitionSize = Backup_Size;
-				sprintf(backup_size, "%llu", Backup_Size / 1024 / 1024);
+				sprintf(backup_size, "%.2lf", (double)Backup_Size / 1024 / 1024);
 				part.Display_Name = (*iter)->Backup_Display_Name + " (";
 				part.Display_Name += backup_size;
 				part.Display_Name += "MB)";
@@ -2935,7 +2935,7 @@ bool TWPartitionManager::Enable_MTP(void)
 #ifdef TW_HAS_MTP
   if (mtppid)
     {
-      LOGERR("MTP already enabled\n");
+      LOGINFO("MTP already enabled\n");
       return true;
     }
 
@@ -3942,6 +3942,11 @@ void TWPartitionManager::Coldboot()
 
 int TWPartitionManager::Run_OTA_Survival_Backup(bool adbbackup)
 {
+#ifdef OF_VANILLA_BUILD
+   LOGINFO("- OrangeFox: DEBUG: skipping the OTA_RES process...\n");
+   return 0;
+#endif
+
   PartitionSettings part_settings;
   int partition_count = 0, disable_free_space_check = 0, skip_digest = 1;
   int gui_adb_backup;
@@ -4298,6 +4303,10 @@ bool TWPartitionManager::Flash_Repacked_Image(string & path,
 
 int TWPartitionManager::Run_OTA_Survival_Restore(const string & Restore_Name)
 {
+#ifdef OF_VANILLA_BUILD
+   LOGINFO("- OrangeFox: DEBUG: skipping the OTA_RES process...\n");
+   return 0;
+#endif
   PartitionSettings part_settings;
   int check_digest = 0;
 

@@ -132,6 +132,7 @@ public:
 	static int  stream_adb_backup(string &Restore_Name); // Tell ADB Backup to Stream to TWRP from GUI selection
 	static int  Check_MIUI_Treble(void); // check whether we are running a MIUI or Treble ROM 
 	static bool Fresh_Fox_Install(void); // have we just installed OrangeFox - do some stuff?
+	static bool Check_OrangeFox_Overwrite_FromROM(bool WarnUser, const std::string name); // report on badly behaved ROM installers
 	static bool JustInstalledMiui(void); // has a MIUI ROM just been installed?
 	static bool RunStartupScript(void); // run startup script if not already run by init
 	static bool Rerun_Startup(void); // rerun startup
@@ -165,6 +166,7 @@ private:
     	// static void Patch_Others(void); // obsolete 	
     	static void PrepareToFinish(void); // call this only when we are about to shutdown or reboot
     	static bool DontPatchBootImage(void); // return true to avoid patching the boot image
+    	static bool Check_OrangeFox_Overwrite_FromROM_Trigger(const std::string name);
 };
 
 extern int Log_Offset;
