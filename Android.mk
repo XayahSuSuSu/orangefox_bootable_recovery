@@ -264,16 +264,6 @@ endif
 
 ifeq ($(OF_CHECK_OVERWRITE_ATTEMPTS),1)
     LOCAL_CFLAGS += -DOF_CHECK_OVERWRITE_ATTEMPTS='"1"'
-    ifneq ($(OF_CHECK_OVERWRITE_DEVICE),)
-        LOCAL_CFLAGS += -DOF_CHECK_OVERWRITE_DEVICE='"$(OF_CHECK_OVERWRITE_DEVICE)"'
-    else
-        You must supply "OF_CHECK_OVERWRITE_DEVICE"
-    endif
-    ifneq ($(OF_CHECK_OVERWRITE_ROM),)
-        LOCAL_CFLAGS += -DOF_CHECK_OVERWRITE_ROM='"$(OF_CHECK_OVERWRITE_ROM)"'
-    else
-        You must supply "OF_CHECK_OVERWRITE_ROM"
-    endif
 endif
 
 ifeq ($(OF_OTA_RES_DECRYPT),1)

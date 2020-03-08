@@ -276,17 +276,15 @@ static int Prepare_Update_Binary(const char *path, ZipWrap * Zip,
 	          // check for embedded recovery installs
 	          if  (
 	                 (TWFunc::CheckWord(FOX_TMP_PATH, "/dev/block/bootdevice/by-name/recovery")
-	              && TWFunc::CheckWord(FOX_TMP_PATH, "recovery.img")
-	              && Zip->EntryExists("recovery.img"))
-	              || (TWFunc::CheckWord(FOX_TMP_PATH, "package_extract_file(\"recovery.img\", \"/dev/block/bootdevice/by-name/recovery\")")
-	                 && Zip->EntryExists("recovery.img"))
+	              && (TWFunc::CheckWord(FOX_TMP_PATH, "recovery.img") || TWFunc::CheckWord(FOX_TMP_PATH, "twrp.img"))
+	              && (Zip->EntryExists("recovery.img") || Zip->EntryExists("twrp.img") || Zip->EntryExists("recovery/twrp.img") || Zip->EntryExists("recovery/recovery.img"))
+	                 )
 	              )
 	             {
 	                  DataManager::SetValue("found_fox_overwriting_rom", "1");
 	                  usleep(32);
 	                  TWFunc::Check_OrangeFox_Overwrite_FromROM(true, path);
 	             }
-
 		}
 	      
 	      unlink(FOX_TMP_PATH);
