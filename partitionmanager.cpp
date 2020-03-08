@@ -2732,7 +2732,8 @@ void TWPartitionManager::Get_Partition_List(string ListType,
 	      sprintf(free_space, "%llu", (*iter)->Free / 1024 / 1024);
 	      part.Display_Name = (*iter)->Storage_Name + " (";
 	      part.Display_Name += free_space;
-	      part.Display_Name += "MB)";
+		  part.Display_Name += gui_parse_text("{@mbyte}");
+		  part.Display_Name += ")";
 	      part.Mount_Point = (*iter)->Storage_Path;
 	      if ((*iter)->Storage_Path == Current_Storage)
 		part.selected = 1;
@@ -2763,10 +2764,11 @@ void TWPartitionManager::Get_Partition_List(string ListType,
 					}
 				}
 				part.PartitionSize = Backup_Size;
-				sprintf(backup_size, "%.2lf", (double)Backup_Size / 1024 / 1024);
+				sprintf(backup_size, Backup_Size % 1048576 == 0 ? "%.0lf" : "%.2lf", (double)Backup_Size / 1048576);
 				part.Display_Name = (*iter)->Backup_Display_Name + " (";
 				part.Display_Name += backup_size;
-				part.Display_Name += "MB)";
+				part.Display_Name += gui_parse_text("{@mbyte}");
+				part.Display_Name += ")";
 				part.Mount_Point = (*iter)->Backup_Path;
 				part.selected = 0;
 				Partition_List->push_back(part);

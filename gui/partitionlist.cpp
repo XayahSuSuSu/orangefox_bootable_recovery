@@ -201,7 +201,7 @@ void GUIPartitionList::MatchList(void) {
 
 	if (countTotal) {
 		char formatSize[255];
-		sprintf(formatSize, "%.2lf", (double)totalSize / 1024 / 1024);
+		sprintf(formatSize, totalSize % 1048576 == 0 ? "%.0lf" : "%.2lf", (double)totalSize / 1048576);
 		DataManager::SetValue("fox_total_backup", formatSize);
 	}
 }
@@ -277,7 +277,8 @@ void GUIPartitionList::NotifySelect(size_t item_selected)
 						sprintf(free_space, "%llu", Part->Free / 1024 / 1024);
 						mList.at(item_selected).Display_Name = Part->Storage_Name + " (";
 						mList.at(item_selected).Display_Name += free_space;
-						mList.at(item_selected).Display_Name += "MB)";
+						mList.at(item_selected).Display_Name += gui_parse_text("{@mbyte}");
+						mList.at(item_selected).Display_Name += ")";
 					}
 					mList.at(item_selected).selected = 1;
 					mUpdate = 1;
@@ -301,8 +302,8 @@ void GUIPartitionList::NotifySelect(size_t item_selected)
 					for (int i=0; i<listSize; i++)
 						if(mList.at(i).selected == 1)
 							totalSize += mList.at(i).PartitionSize;
-					
-					sprintf(formatSize, "%.2lf", (double)totalSize / 1024 / 1024);
+
+					sprintf(formatSize, totalSize % 1048576 == 0 ? "%.0lf" : "%.2lf", (double)totalSize / 1048576);
 					DataManager::SetValue("fox_total_backup", formatSize);
 				}
 
