@@ -135,7 +135,7 @@
 		<string name="swipe_repair">Glisser pour réparer</string>
 		<string name="change_fs_btn">Changer FS</string>
 		<string name="change_fs_warn1">Certaines ROMs ou noyaux peuvent ne pas être supportés</string>
-		<string name="change_fs_warn2">certains systèmes de fichiers. Procédez avec précaution!</string>
+		<string name="change_fs_warn2">some file systems. Proceed with caution!</string>
 		<string name="change_fs_confirm">Changer FS pour</string>
 		<string name="formatting">Formatage ...</string>
 		<string name="format_complete">Formatage terminé</string>
@@ -176,7 +176,7 @@
 		<string name="rename_backup_complete">Sauvegarde Renommée</string>
 		<string name="swipe_to_rename">Glisser pour Renommer</string>
 		<string name="mount_hdr">Monter</string>
-		<string name="mount_sys_ro_chk">Montez la partition système en lecture seule</string>
+		<string name="mount_sys_ro_chk">Mount system and vendor read-only</string>
 		<string name="decrypt_data_btn">Déchiffrer les données</string>
 		<string name="disable_mtp_btn">Désactiver MTP</string>
 		<string name="enable_mtp_btn">Activer MTP</string>
@@ -377,24 +377,24 @@
 		<string name="mtp_disabled">MTP désactivé</string>
 		<string name="mtp_crash">MTP a planté, pas de démarrage de MTP à l'allumage.</string>
 		<string name="decrypt_success">Déchiffrage réussie avec le mot de passe par défaut.</string>
-		<string name="unable_to_decrypt">Impossible de déchiffrer avec le mot de passe par défaut. Vous devriez peut-être effectuer un formatage des données.</string>
+		<string name="unable_to_decrypt">Unable to decrypt with default password. You may need to perform a Format Data.</string>
 		<string name="generating_md51">Génération du MD5</string>
 		<!-- Message displayed during a backup if we are generating an MD5, ideally, leave the leading " * " to help align and separate this text from other console text -->
-		<string name="generating_md52"> * Génération du MD5...</string>
-		<string name="md5_created"> * MD5 créé.</string>
-		<string name="md5_error"> * Erreur MD5 !</string>
-		<string name="md5_compute_error"> * Erreur dans le calcul du MD5.</string>
+		<string name="generating_md52"> * Generating md5...</string>
+		<string name="md5_created"> * MD5 Created.</string>
+		<string name="md5_error"> * MD5 Error!</string>
+		<string name="md5_compute_error"> * Error computing MD5.</string>
 		<string name="current_date">(Date du jour)</string>
 		<string name="auto_generate">(Génération automatisée)</string>
 		<string name="unable_to_locate_partition">Impossible de localiser la partition '{1}' pour le calcul de la sauvegarde.</string>
 		<string name="no_partition_selected">Aucune partition sélectionnée pour la sauvegarde.</string>
-		<string name="total_partitions_backup"> * Nombre de partitions à sauvegarder : {1}</string>
-		<string name="total_backup_size"> * Taille totale des données: {1}MB</string>
-		<string name="available_space"> * Espace disponible: {1}MB</string>
+		<string name="total_partitions_backup"> * Total number of partitions to back up: {1}</string>
+		<string name="total_backup_size"> * Total size of all data: {1}MB</string>
+		<string name="available_space"> * Available space: {1}MB</string>
 		<string name="unable_locate_storage">Impossible de trouver le périphérique de stockage.</string>
 		<string name="no_space">Pas assez d'espace libre.</string>
 		<string name="backup_started">[SAUVEGARDE COMMENCÉE]</string>
-		<string name="backup_folder"> * Dossier de sauvegarde: {1}</string>
+		<string name="backup_folder"> * Backup Folder: {1}</string>
 		<string name="fail_backup_folder">Échec de la création du dossier de sauvegarde.</string>
 		<string name="avg_backup_fs">Vitesse moyenne pour les systèmes de fichiers: {1} MB/sec</string>
 		<string name="avg_backup_img">Vitesse moyenne pour les images disque: {1} MB/sec</string>
@@ -454,7 +454,7 @@
 		<string name="invalid_flash">Emplacement spécifié invalide.</string>
 		<string name="flash_done">[ÉCRITURE IMAGE COMPLÉTÉE]</string>
 		<string name="wiping">Effacement {1}</string>
-		<string name="repair_not_exist">{1} n'existe pas! Impossible de réparer!</string>
+		<string name="repair_not_exist">{1} does not exist! Cannot repair!</string>
 		<string name="repairing_using">Réparation de {1} à l'aide de {2}...</string>
 		<string name="unable_repair">Impossible de réparer {1}.</string>
 		<string name="mount_data_footer">Échec du montage de /data et impossible de trouver la fin du bloc crypto.</string>
@@ -467,7 +467,7 @@
 		<string name="cannot_resize">Impossible de redimensionner {1}.</string>
 		<string name="repair_resize">Réparation de {1} avant de redimensionner.</string>
 		<string name="unable_resize">Impossible de redimensionner {1}.</string>
-		<string name="no_md5_found">Aucun fichier md5 trouvé pour '{1}'. Décochez la case Activer la vérification MD5 pour restaurer.</string>
+		<string name="no_md5_found">No md5 file found for '{1}'. Please unselect Enable MD5 verification to restore.</string>
 		<string name="md5_fail_match">Le MD5 ne corresponds pas pour '{1}'.</string>
 		<string name="fail_decrypt_tar">Impossible de déchiffrer le fichier tar «{1} »</string>
 		<string name="format_data_msg">Vous devrez peut-être redémarrer en mode récupération pour pouvoir utiliser /data à nouveau.</string>
@@ -480,7 +480,7 @@
 		<string name="backing_up">Sauvegarde {1}...</string>
 		<string name="backing">Sauvegarde</string>
 		<string name="backup_size">La taille de la sauvegarde de '{1}' est de 0 octets.</string>
-		<string name="datamedia_fs_restore">AVERTISSEMENT: Cette sauvegarde / données a été effectuée avec le système de fichiers {1}! La sauvegarde ne peut pas démarrer sauf si vous revenez à {1}.</string>
+		<string name="datamedia_fs_restore">WARNING: This /data backup was made with {1} file system! The backup may not boot unless you change back to {1}.</string>
 		<string name="restoring">Restauration de {1}...</string>
 		<string name="restoring_hdr">Restauration...</string>
 		<string name="recreate_folder_err">Impossible de recréer le dossier {1}.</string>
@@ -512,7 +512,7 @@
 		<string name="compression_on">Compression activée</string>
 		<string name="md5_off">La génération de MD5 est désactivée</string>
 		<string name="backup_fail">Échec de la sauvegarde</string>
-		<string name="backup_clean">Échec de la sauvegarde. Nettoyage du dossier de sauvegarde.</string>
+		<string name="backup_clean">Backup Failed. Cleaning Backup Folder.</string>
 		<string name="running_recovery_commands">Exécution des commandes de récupération</string>
 		<string name="recovery_commands_complete">Commandes de récupération complétées</string>
 		<string name="running_ors">OpenRecoveryScript en cours d'exécution</string>
@@ -558,11 +558,11 @@
 		<string name="curr_date">(Date du jour)</string>
 		<string name="backup_name_len">Le nom de sauvegarde est trop long.</string>
 		<string name="backup_name_invalid">Le nom de sauvegarde '{1}' contient un caractère invalide : '{1}'</string>
-		<string name="no_real_sdcard">Cet appareil n'a pas de carte SD réelle ! Abandon !</string>
+		<string name="no_real_sdcard">This device does not have a real SD Card! Aborting!</string>
 		<string name="cancel_sideload">Annulation du chargement latéral ADB...</string>
 		<string name="change_fs_err">Erreur lors du changement du système de fichiers.</string>
 		<string name="change_fs_hdr">Changer le système de fichiers</string>
-		<string name="theme_ver_err">La version personnalisée du thème ne correspond pas à la version OrangeFox. Utilisation du thème stock.</string>
+		<string name="theme_ver_err">Custom theme version does not match OrangeFox version. Using stock theme.</string>
 		<string name="up_a_level">..</string>
 
 		<!-- new-->
@@ -588,7 +588,7 @@
 		<string name="verifying_pas">Confirmer le mot de passe</string>
 		<string name="dialog_offset_note">Sélectionnez votre valeur offset</string>
 		<string name="queue_no">#</string>
-		<string name="options_cptn">Paramètres</string>
+		<string name="options_cptn">Options</string>
 		<string name="flash_img_confirm">Fichier d'image Flash</string>
 		<string name="also_wipes">Effacer aussi</string>
 		<string name="confirm_wipe_cptn">Confirmer l’effacement</string>
@@ -672,7 +672,7 @@
 		<string name="no_os_title">Êtes-vous sûr ?</string>
 		<string name="no_os_subtitle">La partition système est vide</string>
 		
-		<string name="no_os1">Aucun système d'exploitation n'est installé ! Êtes-vous sûr</string>
+		<string name="no_os1">No OS installed! Are you sure you</string>
 		<string name="no_osrb">de vouloir redémarrer ?</string>
 		<string name="no_ospo">de vouloir éteindre ?</string>
 		<string name="no_osrb_recovery">de vouloir redémarrer en mode de récupération ?</string>
@@ -725,7 +725,7 @@
 		<string name="lang_set_wait">Changement de langue...</string>
 		<string name="installing_theme">Installation du thème...</string>
 		
-		<string name="menu_btn">Menu</string>
+		<string name="menu_btn">Données</string>
 		
 		<string name="data_backup">Données</string>
 		<string name="autostorage">Stockage</string>
@@ -733,17 +733,17 @@
 		<string name="cancel_reboot_btn">Annuler le redémarrage</string>
 		<string name="skip_digest_backup_chk" version="2">Sauter la génération du Digest pendant la sauvegarde</string>
 		<string name="restore_digest_chk" version="2">Activer la vérification du Digest des sauvegardes</string>
-		<string name="restore_enable_digest_chk" version="2">Fichiers manquants nécessaires pour vold decrypt: {1}</string>
+		<string name="restore_enable_digest_chk" version="2">Activer la vérification du Digest des sauvegardes</string>
 		<string name="decrypt_data_vold_os_missing">Fichiers manquants nécessaires pour vold decrypt: {1}</string>
 		<string name="generating_digest1" version="2">Génération du Digest</string>
-		<string name="generating_digest2" version="2"> * Génération du Digest...</string>
-		<string name="digest_created" version="2"> * Digest créé.</string>
-		<string name="digest_error" version="2"> * Erreur du Digest !</string>
-		<string name="digest_compute_error" version="2"> * Erreur de calcul du Digest.</string>
+		<string name="generating_digest2" version="2"> * Generating Digest...</string>
+		<string name="digest_created" version="2"> * Digest created.</string>
+		<string name="digest_error" version="2"> * Digest error!</string>
+		<string name="digest_compute_error" version="2"> * Error computing Digest.</string>
 		<string name="verifying_digest" version="2">Vérification du Digest</string>
 		<string name="skip_digest" version="2">Données décryptées avec succès</string>
 		<string name="decrypt_success_nodev">Données décryptées avec succès</string>
-		<string name="no_digest_found" version="2">Aucun fichier Digest trouvé pour '{1}'. Veuillez désactiver la vérification du Digest pour restaurer.</string>
+		<string name="no_digest_found" version="2">No Digest file found for '{1}'. Please unselect Enable Digest verification to restore.</string>
 		<string name="digest_fail_match" version="2">Le Digest ne correspond pas pour '{1}'.</string>
 		<string name="digest_matched" version="2">Le Digest correspond pour '{1}'.</string>
 		<string name="digest_check_skip" version="2">Le saut du contrôle du Digest est activé</string>
@@ -762,6 +762,8 @@
 		<string name="changing_boot_slot">Changement de l'emplacement de démarrage</string>
 		<string name="changing_boot_slot_complete">Changement de l'emplacement de démarrage terminé</string>
 		<string name="unable_set_boot_slot">Erreur lors du changement de l'emplacement de démarrage vers {1}</string>
+		<string name="ozip_decrypt_decryption">Starting Ozip Decryption...</string>
+		<string name="ozip_decrypt_finish">Ozip Decryption Finished!</string>
 		<string name="backup_storage_warning">Les sauvegardes de {1} ne contiennent aucun fichier dans le stockage interne comme les images ou les téléchargements.</string>
 		<string name="sha2_chk">Utiliser SHA2 pour le hachage</string>
 		<string name="disabled">Désactivé</string>
@@ -773,10 +775,10 @@
 		<string name="fox_incremental_ota_compatibility_chk">Vérification de la signature du paquet incrémental...</string>
 		<string name="fox_incremental_ota_compatibility_false">Le paquet incrémental n'est pas compatible avec cette ROM !</string>
 		<string name="fox_incremental_ota_compatibility_true">Le paquet incrémental est compatible</string>
-		<string name="fox_incremental_ota_status_enabled">Statut du support du paquet MIUI incrémental : Activé</string>
-		<string name="fox_incremental_ota_status_disabled">Statut du support du paquet MIUI incrémental : Désactivé</string>
+		<string name="fox_incremental_ota_status_enabled">Support Incremental package status: Enabled</string>
+		<string name="fox_incremental_ota_status_disabled">Support Incremental package status: Disabled</string>
 		<string name="fox_incremental_package_detected">Paquet Incrémental détecté '{1}'</string>
-		<string name="fox_survival_does_not_exist">La Survie OTA n'existe pas ! Veuillez d'abord flasher une ROM complète !</string>
+		<string name="fox_survival_does_not_exist">OTA Survival does not exist! Please flash a full ROM first!</string>
 		<string name="fox_install_detecting">Détection du paquet actuel</string>
 		<string name="fox_install_standard_detected">- Paquet standard détecté</string>
 		<string name="fox_install_miui_detected">- Paquet de mise à jour MIUI détecté</string>
@@ -786,7 +788,7 @@
 		<string name="fox_incremental_ota_res_run">Exécution du processus OTA_RES...</string>
 		<string name="fox_incremental_ota_bak_run">Exécution du processus OTA_BAK...</string>
 		<string name="fox_incremental_ota_bak">OTA_BAK -- terminé !</string>
-		<string name="fox_internal_fatal_i1">OrangeFox: ERREUR FATALE! Vous ne pouvez pas sauvegarder le stockage interne sur lui-même !</string>
+		<string name="fox_internal_fatal_i1">OrangeFox: FATAL ERROR! You cannot backup Internal Storage onto itself!</string>
 		<string name="fox_internal_fatal_i2">Vous DEVEZ changer la destination de sauvegarde vers MicroSD/USB-OTG.</string>
 		<string name="fox_internal_q1">OrangeFox - Stockage interne - prenez soin !</string>
 
@@ -928,7 +930,10 @@
 		
 		<!-- MIUI OTA -->
 		<string name="fox_ota_settings">Paramètres OTA</string>
+		<string name="fox_miui_ota_on">Activer OTA</string>
 		<string name="fox_ota_on">Activer OTA</string>
+		<string name="fox_patch_rom">Patch ROM</string>
+		<string name="fox_ota_lite">OTA &amp; ROM</string>
 		
 		<!-- About -->
 		<string name="abt_maintainer">Mainteneur</string>
@@ -943,7 +948,7 @@
 		<string name="abt_credits">Crédits</string>
 		<string name="abt_trans">Traducteurs</string>
 		<string name="abt_changes">Historique des changements</string>
-		<string name="abt_main_shrt">Mainteneurs</string>
+		<string name="abt_main_shrt">Mainteneur</string>
 		<string name="welcome_msg">Bienvenue à OrangeFox !</string>
 		<string name="welcome_msg2"><!-- If welcome message is too big in your lang, use this string --></string>
 		
@@ -987,14 +992,19 @@
 		<!-- OTA -->
 		<string name="fox_ota_msg_ready">Vous êtes prêt à recevoir des mises à jour !</string>
 		<string name="fox_ota_msg_custom">Mode ROM personnalisé activé</string>
-		<string name="fox_ota_msg_reflash">Veuillez flash ROM MIUI complète !</string>
+		<string name="fox_ota_msg_reflash">Veuillez flasher une ROM complète !</string>
 		<string name="fox_advanced_stock_recovery">Désactivation de la récupération stock agressive</string>
-		<string name="fox_support_miui_ota_chk">Support de l'OTA Incremental des ROM MIUI</string>
+		<string name="fox_support_miui_ota_chk">Support OTA</string>
 		<string name="fox_include_system_survival_chk">Inclure le système dans la survie OTA</string>
 		<string name="fox_verify_incremental_ota_signature_chk">Vérification de la signature OTA Incrementale</string>
 		<string name="fox_dmverity_chk">Désactiver la DM-Verity</string>
 		<string name="fox_forced_encryption_chk">Cryptage forcé désactivé</string>
 		<string name="FOX_DISABLE_OTA_AUTO_REBOOT_chk">Empêcher le redémarrage automatique après l'installation de OTA</string>
-		<string name="of_ota_reboot_disabled">Mise à jour OTA réussie. Vous avez désactivé le redémarrage automatique. Vous avez maintenant le contrôle.</string>
+		<string name="of_ota_reboot_disabled">OTA update completed. You disabled auto-reboot. Returning control to you.</string>
+
+		<!-- Wipe format moved -->
+		<string name="wipe_format_moved_info1">Note: Format Data moved to</string>
+		<string name="wipe_format_moved_info2">Manage Partitions page.</string>
+		
 	</resources>
 </language>

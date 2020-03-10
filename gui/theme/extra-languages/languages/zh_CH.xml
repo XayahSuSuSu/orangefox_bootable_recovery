@@ -34,6 +34,8 @@
 		<resource name="clock" type="fontoverride" filename="DroidSansFallback.ttf" scale="100"/>
 		<resource name="info" type="fontoverride" filename="DroidSansFallback.ttf" scale="100"/>
 
+		<resource name="fixed" type="fontoverride" filename="DroidSansFallback.ttf" scale="100" />
+
 		<!-- Partition display names -->
 		<string name="system">System</string>
 		<string name="system_image">System 镜像</string>
@@ -50,7 +52,7 @@
 		<string name="android_secure">Android Secure</string>
 		<string name="dalvik">Dalvik / ART 缓存</string>
 		<!-- This is a rarely used partition on a Micro SD card for a very old app2sd system -->
-		<string name="sdext">SD 卡额外分区</string>
+		<string name="sdext">SD-EXT</string>
 		<string name="adopted_data">采用 Data</string>
 		<string name="adopted_storage">采用的存储</string>
 
@@ -137,7 +139,7 @@
 		<string name="format_data_ptr3">移除内部储存的加密。</string>
 		<string name="format_data_adopted">包括已使用的存储</string>
 		<string name="format_data_undo">这将不可撤销！！！</string>
-		<string name="format_data_complete">数据格式化已完成</string>
+		<string name="format_data_complete">Data 分区格式化已完成</string>
 		<!-- Translator note: the word "yes" must remain English! -->
 		<string name="yes_continue">输入 “yes” 以确认。</string>
 		<string name="part_opt_hdr">分区信息</string>
@@ -164,7 +166,7 @@
 		<string name="swipe_repair">滑动以修复</string>
 		<string name="change_fs_btn">修改文件系统</string>
 		<string name="change_fs_warn1">一些 ROM 或内核可能不支持</string>
-		<string name="change_fs_warn2">某些文件系统。 请谨慎操作！</string>
+		<string name="change_fs_warn2">部分文件系统。请谨慎操作!</string>
 		<string name="change_fs_confirm">修改文件系统</string>
 		<string name="formatting">正在格式化...</string>
 		<string name="format_complete">格式化已完成</string>
@@ -200,12 +202,12 @@
 		<string name="swipe_restore">滑动以恢复</string>
 		<string name="rename_backup_hdr">重命名备份</string>
 		<string name="rename_backup_confirm">是否重命名备份？</string>
-		<string name="rename_backup_confirm2">此操作无法撤消！</string>
+		<string name="rename_backup_confirm2">此操作无法撤销！</string>
 		<string name="renaming_backup">正在重命名备份...</string>
 		<string name="rename_backup_complete">备份重命名完成</string>
 		<string name="swipe_to_rename">滑动以重命名</string>
 		<string name="mount_hdr">挂载</string>
-		<string name="mount_sys_ro_chk">挂载系统分区为只读</string>
+		<string name="mount_sys_ro_chk">挂载system和vendor分区为只读</string>
 		<string name="decrypt_data_btn">解密 Data 分区</string>
 		<string name="disable_mtp_btn">禁用 MTP</string>
 		<string name="enable_mtp_btn">启用 MTP</string>
@@ -215,7 +217,7 @@
 		<string name="usb_stor_mnt2">在安全地移除你的设备之前</string>
 		<string name="usb_stor_mnt3">请务必将其从计算机中弹出！</string>
 		<string name="unmount_btn">取消挂载</string>
-		<string name="rb_system_btn">系统</string>
+		<string name="rb_system_btn">System</string>
 		<string name="rb_poweroff_btn">关机</string>
 		<string name="rb_recovery_btn">Recovery</string>
 		<string name="rb_bootloader_btn">Bootloader</string>
@@ -353,9 +355,9 @@
 		<string name="fm_move_btn">移动</string>
 		<string name="fm_moving">正在移动</string>
 		<string name="fm_chmod755_btn">设定权限为 755 </string>
-		<string name="fm_chmod755ing">设定权限为 755</string>
+		<string name="fm_chmod755ing">设定权限为 755 </string>
 		<string name="fm_chmod644_btn">设定权限为 644</string>
-		<string name="fm_chmod644ing">设定权限为 644 </string>
+		<string name="fm_chmod644ing">设定权限为 644</string>
 		<string name="fm_chmod_btn">设定权限</string>
 		<string name="fm_delete_btn">删除</string>
 		<string name="fm_deleting">正在删除</string>
@@ -406,24 +408,24 @@
 		<string name="mtp_disabled">已禁用 MTP</string>
 		<string name="mtp_crash">MTP 崩溃，不在启动时启用 MTP。</string>
 		<string name="decrypt_success">成功使用默认密码解密。</string>
-		<string name="unable_to_decrypt">无法使用默认密码解密， 您可能需要格式化 Data 分区。</string>
+		<string name="unable_to_decrypt">无法用默认密码解密，您可能需要格式化 Data 分区。</string>
 		<string name="generating_md51">正在生成 MD5</string>
 		<!-- Message displayed during a backup if we are generating an MD5, ideally, leave the leading " * " to help align and separate this text from other console text -->
 		<string name="generating_md52"> * 正在生成MD5...</string>
-		<string name="md5_created"> * 已创建 MD5.</string>
+		<string name="md5_created"> * 已创建 MD5。</string>
 		<string name="md5_error"> * MD5 错误!</string>
-		<string name="md5_compute_error"> * 计算 MD5 出错.</string>
+		<string name="md5_compute_error"> * 计算 MD5 出错。</string>
 		<string name="current_date">(当前日期)</string>
 		<string name="auto_generate">(自动生成)</string>
 		<string name="unable_to_locate_partition">无法定位 '{1}' 分区进行备份计算。</string>
 		<string name="no_partition_selected">没有选择要备份的分区。</string>
-		<string name="total_partitions_backup"> * 要备份的分区数量: {1}</string>
-		<string name="total_backup_size"> * 数据总大小: {1}MB</string>
-		<string name="available_space"> * 可用空间: {1}MB</string>
+		<string name="total_partitions_backup"> * 要备份的分区数量：{1}</string>
+		<string name="total_backup_size"> * 数据总大小：{1}MB</string>
+		<string name="available_space"> * 可用空间：{1}MB</string>
 		<string name="unable_locate_storage">无法定位存储设备。</string>
 		<string name="no_space">可用的存储空间不足。</string>
 		<string name="backup_started">[开始备份]</string>
-		<string name="backup_folder"> * 备份文件夹: {1}</string>
+		<string name="backup_folder"> * 备份文件夹：{1}</string>
 		<string name="fail_backup_folder">建立备份文件夹失败。</string>
 		<string name="avg_backup_fs">文件系统的平均备份速度: {1} MB/s</string>
 		<string name="avg_backup_img">镜像设备的平均备份速度: {1} MB/s</string>
@@ -458,11 +460,11 @@
 		<string name="unable_to_mount">无法挂载 {1}</string>
 		<string name="unable_to_mount_internal">无法挂载内置存储</string>
 		<string name="unable_to_mount_storage">无法挂载存储</string>
-		<string name="fail_decrypt">解密数据失败。</string>
+		<string name="fail_decrypt">解密Data失败。</string>
 		<string name="no_crypto_support">此构建版本的编译不含加密支持。</string>
 		<string name="decrypt_success_dev">数据解密成功，新的块设备：'{1}'</string>
 		<string name="done">完成</string>
-		<string name="start_partition_sd">SD 卡分区中...</string>
+		<string name="start_partition_sd">分区 SD 存储中...</string>
 		<string name="partition_sd_locate">无法定位要分区的设备。</string>
 		<string name="ext_swap_size">额外分区和交换分区大小超出 SD 卡大小。</string>
 		<string name="remove_part_table">正在移除分区表...</string>
@@ -483,7 +485,7 @@
 		<string name="invalid_flash">指定的刷入分区无效。</string>
 		<string name="flash_done">[镜像刷入完成]</string>
 		<string name="wiping">清除 {1}</string>
-		<string name="repair_not_exist">{1} 不存在！ 无法修复！</string>
+		<string name="repair_not_exist">{1} 不存在。无法修复！</string>
 		<string name="repairing_using">使用 {2} 修复 {1}...</string>
 		<string name="unable_repair">无法修复 {1}。</string>
 		<string name="mount_data_footer">未能挂载 /data 从而无法找到 crypto footer（加密元信息）。</string>
@@ -496,7 +498,7 @@
 		<string name="cannot_resize">无法调整 {1} 的大小。</string>
 		<string name="repair_resize">调整大小前修复 {1}。</string>
 		<string name="unable_resize">无法调整 {1} 的大小。</string>
-		<string name="no_md5_found">找不到 '{1}' 的 MD5 文件。 请取消选择“启用MD5验证”以进行还原。</string>
+		<string name="no_md5_found">没有找到 '{1}' 的 md5 文件。请取消“启用 MD5 验证”以恢复。</string>
 		<string name="md5_fail_match">匹配 '{1}' 的 MD5 失败。</string>
 		<string name="fail_decrypt_tar">无法解密 tar 文件'{1}'</string>
 		<string name="format_data_msg">您可能需重启 recovery 才能再次使用 /data。</string>
@@ -509,7 +511,7 @@
 		<string name="backing_up">正在备份 {1}...</string>
 		<string name="backing">正在备份</string>
 		<string name="backup_size">'{1}' 的备份文件大小为 0 字节。</string>
-		<string name="datamedia_fs_restore">警告：此 /Data 备份是使用 {1} 文件系统进行的！ 除非您更改回  {1} 否则备份可能无法启动。</string>
+		<string name="datamedia_fs_restore">警告：此 /data 备份是使用 {1} 文件系统进行的！除非您改回到 {1} ，否则备份可能无法启动。</string>
 		<string name="restoring">正在还原 {1}...</string>
 		<string name="restoring_hdr">正在还原...</string>
 		<string name="recreate_folder_err">无法重新创建 {1} 文件夹。</string>
@@ -541,7 +543,7 @@
 		<string name="compression_on">启用压缩</string>
 		<string name="md5_off">关闭 MD5 生成</string>
 		<string name="backup_fail">备份失败</string>
-		<string name="backup_clean">备份失败. 清理备份文件夹。</string>
+		<string name="backup_clean">备份失败，正在清理备份文件夹</string>
 		<string name="running_recovery_commands">正在运行 Recovery 命令...</string>
 		<string name="recovery_commands_complete">Recovery 命令已执行</string>
 		<string name="running_ors">正在运行 OpenRecoveryScript...</string>
@@ -587,11 +589,11 @@
 		<string name="curr_date">(当前日期)</string>
 		<string name="backup_name_len">备份名称太长。</string>
 		<string name="backup_name_invalid">备份名称 '{1}' 包含无效字符 '{1}'</string>
-		<string name="no_real_sdcard">未能在此设备上找到 SD 卡！ 异常中止！</string>
+		<string name="no_real_sdcard">未能在此设备上找到 SD 卡！操作中止！</string>
 		<string name="cancel_sideload">正在取消 ADB Sideload...</string>
 		<string name="change_fs_err">更改文件系统时出错。</string>
 		<string name="change_fs_hdr">更改文件系统</string>
-		<string name="theme_ver_err">自定义主题版本与 OrangeFox 版本不匹配。 使用默认主题。</string>
+		<string name="theme_ver_err">自定义主题版本与 OrangeFox 版本不匹配。将使用默认主题</string>
 		<string name="up_a_level">...</string>
 
 		<!-- new-->
@@ -701,7 +703,7 @@
 		<string name="no_os_title">是否确定？</string>
 		<string name="no_os_subtitle">系统分区为空</string>
 		
-		<string name="no_os1">未安装操作系统！ 您确定</string>
+		<string name="no_os1">未安装操作系统！您确定</string>
 		<string name="no_osrb">要重启吗？</string>
 		<string name="no_ospo">要关机吗？</string>
 		<string name="no_osrb_recovery">要重启到 Recovery 吗？</string>
@@ -756,7 +758,7 @@
 		
 		<string name="menu_btn">菜单</string>
 		
-		<string name="data_backup">数据</string>
+		<string name="data_backup">Data</string>
 		<string name="autostorage">存储</string>
 		<string name="install_reboot">将在 %tw_sleep% 秒内重启</string>
 		<string name="cancel_reboot_btn">取消重启</string>
@@ -765,14 +767,14 @@
 		<string name="restore_enable_digest_chk" version="2">启用 Digest 验证备份</string>
 		<string name="decrypt_data_vold_os_missing">Vold 解密所需的文件丢失： {1}</string>
 		<string name="generating_digest1" version="2">生成Digest</string>
-		<string name="generating_digest2" version="2"> * 生成 Digest…</string>
+		<string name="generating_digest2" version="2"> * 正在生成 Digest...</string>
 		<string name="digest_created" version="2"> * Digest 已创建。</string>
 		<string name="digest_error" version="2"> * Digest 错误！</string>
 		<string name="digest_compute_error" version="2"> * 计算Digest时出错</string>
-		<string name="verifying_digest" version="2">验证Digest中</string>
+		<string name="verifying_digest" version="2">正在验证Digest</string>
 		<string name="skip_digest" version="2">基于用户设定，跳过Digest检查</string>
 		<string name="decrypt_success_nodev">Data 解密成功</string>
-		<string name="no_digest_found" version="2">未找到 ‘{1}’ 的 Digest 校验文件。 请取消勾选“启用 Digest 校验备份文件”复选框。</string>
+		<string name="no_digest_found" version="2">没有找到 '{1}' 的 Digest。请取消“启用 Digest 验证”以恢复。</string>
 		<string name="digest_fail_match" version="2">Digest 无法与 '{1}' 匹配。</string>
 		<string name="digest_matched" version="2">'{1}' 的 Digest 已匹配</string>
 		<string name="digest_check_skip" version="2">已开启跳过Digest检查</string>
@@ -791,6 +793,8 @@
 		<string name="changing_boot_slot">正在更改启动位置</string>
 		<string name="changing_boot_slot_complete">已成功更改启动位置</string>
 		<string name="unable_set_boot_slot">将 Bootloader 启动位置更改为 {1} 时出错</string>
+		<string name="ozip_decrypt_decryption">正在启动 Ozip 解密...</string>
+		<string name="ozip_decrypt_finish">Ozip 解密已完成！</string>
 		<string name="backup_storage_warning">备份 {1} 不包括内部存储中的任何文件，例如图片或下载等。</string>
 		<string name="sha2_chk">使用SHA2进行散列</string>
 		<string name="disabled">未启用</string>
@@ -802,10 +806,10 @@
 		<string name="fox_incremental_ota_compatibility_chk">正在验证增量包签名...</string>
 		<string name="fox_incremental_ota_compatibility_false">增量包与此 ROM 不兼容！</string>
 		<string name="fox_incremental_ota_compatibility_true">增量包兼容此 ROM</string>
-		<string name="fox_incremental_ota_status_enabled">支持 MIUI 增量包状态：已启用</string>
-		<string name="fox_incremental_ota_status_disabled">支持 MIUI 增量包状态：已禁用</string>
+		<string name="fox_incremental_ota_status_enabled">支持增量包状态：已启用</string>
+		<string name="fox_incremental_ota_status_disabled">支持增量包状态：已禁用</string>
 		<string name="fox_incremental_package_detected">检测到增量包  '{1}'</string>
-		<string name="fox_survival_does_not_exist">OTA Survival 不存在！ 请先刷入当前版本或是更高版本的完整 ROM！</string>
+		<string name="fox_survival_does_not_exist">OTA Survival 不存在！请先刷入完整的 ROM！</string>
 		<string name="fox_install_detecting">检测到当前版本</string>
 		<string name="fox_install_standard_detected">- 检测到标准包</string>
 		<string name="fox_install_miui_detected">- 检测到 MIUI 更新包</string>
@@ -815,7 +819,7 @@
 		<string name="fox_incremental_ota_res_run">正在运行 OTA_RES 进程...</string>
 		<string name="fox_incremental_ota_bak_run">正在运行 OTA_BAK 进程...</string>
 		<string name="fox_incremental_ota_bak">OTA_BAK -- 已完成</string>
-		<string name="fox_internal_fatal_i1">OrangeFox：致命错误！ 您不能将内部存储备份到内部存储上！</string>
+		<string name="fox_internal_fatal_i1">OrangeFox: 致命错误! 您不能将内部存储备份到内部存储!</string>
 		<string name="fox_internal_fatal_i2">您必须将备份目标更改为 MicroSD 或是 USB-OTG。</string>
 		<string name="fox_internal_q1">OrangeFox  - 内部存储 - 注意！</string>
 
@@ -957,7 +961,10 @@
 		
 		<!-- MIUI OTA -->
 		<string name="fox_ota_settings">OTA设置</string>
+		<string name="fox_miui_ota_on">启用OTA</string>
 		<string name="fox_ota_on">启用OTA</string>
+		<string name="fox_patch_rom">Patch ROM</string>
+		<string name="fox_ota_lite">OTA &amp; ROM</string>
 		
 		<!-- About -->
 		<string name="abt_maintainer">维护人员</string>
@@ -1016,14 +1023,19 @@
 		<!-- OTA -->
 		<string name="fox_ota_msg_ready">您已准备好接收更新！</string>
 		<string name="fox_ota_msg_custom">启用自定义ROM模式</string>
-		<string name="fox_ota_msg_reflash">请刷入完整的MIUI ROM!</string>
+		<string name="fox_ota_msg_reflash">请刷入完整的ROM！</string>
 		<string name="fox_advanced_stock_recovery">强制禁用官方 Recovery</string>
-		<string name="fox_support_miui_ota_chk">支持MIUI OTA增量更新</string>
+		<string name="fox_support_miui_ota_chk">支持 OTA</string>
 		<string name="fox_include_system_survival_chk">OTA Survival（含系统）</string>
 		<string name="fox_verify_incremental_ota_signature_chk">增量OTA签名验证</string>
 		<string name="fox_dmverity_chk">禁用 DM 检验</string>
 		<string name="fox_forced_encryption_chk">禁用强制加密</string>
 		<string name="FOX_DISABLE_OTA_AUTO_REBOOT_chk">安装OTA后阻止自动重启</string>
-		<string name="of_ota_reboot_disabled">OTA更新成功, 根据您的设置， 已阻止自动重启。</string>
+		<string name="of_ota_reboot_disabled">OTA更新已完成。您已禁用自动重启，请继续进行您的操作</string>
+
+		<!-- Wipe format moved -->
+		<string name="wipe_format_moved_info1">注意：格式化 Data 分区移动到</string>
+		<string name="wipe_format_moved_info2">分区管理界面</string>
+		
 	</resources>
 </language>
