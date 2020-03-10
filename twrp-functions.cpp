@@ -4587,9 +4587,11 @@ bool TWFunc::Check_OrangeFox_Overwrite_FromROM(bool WarnUser, const std::string 
     }
   else
     {
-      gui_print_color("error",
-      "\nALERT!\nThis ROM (%s) may now have overwritten your recovery partition!\n\nGood luck!\n\n",
-      name.c_str());
+      if (DataManager::GetIntValue("found_fox_overwriting_rom") == 1)
+      {
+      	gui_print_color("error",
+      	"\nALERT!\nThis ROM (%s) may now have overwritten your recovery partition!\n\nGood luck!\n\n", name.c_str());
+      }
       DataManager::SetValue("found_fox_overwriting_rom", "0");
       return true;
     }
