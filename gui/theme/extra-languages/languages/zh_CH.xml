@@ -34,6 +34,8 @@
 		<resource name="clock" type="fontoverride" filename="DroidSansFallback.ttf" scale="100"/>
 		<resource name="info" type="fontoverride" filename="DroidSansFallback.ttf" scale="100"/>
 
+	        <resource name="fixed" type="fontoverride" filename="DroidSansFallback.ttf" scale="100" />
+
 		<!-- Partition display names -->
 		<string name="system">System</string>
 		<string name="system_image">System 镜像</string>
