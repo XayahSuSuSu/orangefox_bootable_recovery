@@ -135,7 +135,7 @@
 		<string name="swipe_repair">Glisați pentru a repara</string>
 		<string name="change_fs_btn">Modificare SF</string>
 		<string name="change_fs_warn1">Este posibil ca unele ROM-uri sau nucleuri să nu accepte</string>
-		<string name="change_fs_warn2">unele sisteme de fișiere. Continuați cu precauție!</string>
+		<string name="change_fs_warn2">nişte fişiere de sistem. Procedaţi cu atenţie!</string>
 		<string name="change_fs_confirm">Modificare SF în</string>
 		<string name="formatting">Formatare...</string>
 		<string name="format_complete">Formatare finalizată</string>
@@ -176,7 +176,7 @@
 		<string name="rename_backup_complete">Redenumire finalizată</string>
 		<string name="swipe_to_rename">Glisați pentru a redenumi</string>
 		<string name="mount_hdr">Montare</string>
-		<string name="mount_sys_ro_chk">Montaţi partiţia de sistem doar-în-citire</string>
+		<string name="mount_sys_ro_chk">Montaţi partiţiile sistem şi vendor doar-în-citire</string>
 		<string name="decrypt_data_btn">Decriptare date</string>
 		<string name="disable_mtp_btn">Dezactivaţi MTP</string>
 		<string name="enable_mtp_btn">Activați MTP</string>
@@ -377,7 +377,7 @@
 		<string name="mtp_disabled">MTP este dezactivat</string>
 		<string name="mtp_crash">Eroare MTP. MTP nu pornește.</string>
 		<string name="decrypt_success">Decriptate cu succes cu parola implicită.</string>
-		<string name="unable_to_decrypt">Imposibil de decriptat cu parola implicită. Este posibil să fie necesar să efectuați o formatare a datelor.</string>
+		<string name="unable_to_decrypt">Imposibil de decriptat cu parola implicită. Trebuie să efectuaţi Formatare Date.</string>
 		<string name="generating_md51">Generare MD5</string>
 		<!-- Message displayed during a backup if we are generating an MD5, ideally, leave the leading " * " to help align and separate this text from other console text -->
 		<string name="generating_md52"> * Generare md5...</string>
@@ -388,7 +388,7 @@
 		<string name="auto_generate">(Automat)</string>
 		<string name="unable_to_locate_partition">Imposibil de localizat partiția '{1}' pentru calcule.</string>
 		<string name="no_partition_selected">Nicio partiţie selectată pentru copiere de rezervă.</string>
-		<string name="total_partitions_backup"> * Numărul total de partiţii pentru a face o copie de rezervă: {1}</string>
+		<string name="total_partitions_backup"> * Numărul total de partiţii pentru copia de rezervă: {1}</string>
 		<string name="total_backup_size"> * Dimensiunea totală a tuturor datelor: {1}MB</string>
 		<string name="available_space"> * Spaţiu disponibil: {1}MB</string>
 		<string name="unable_locate_storage">Imposibil de a localiza stocarea dispozitivului.</string>
@@ -467,7 +467,7 @@
 		<string name="cannot_resize">Imposibil de redimensionat {1}.</string>
 		<string name="repair_resize">Repararea {1} înainte de redimensionare.</string>
 		<string name="unable_resize">Imposibil de redimensionat {1}.</string>
-		<string name="no_md5_found">Nu a fost găsit niciun fișier md5 pentru '{1}'. Deselectați activarea verificării MD5 pentru a restabili.</string>
+		<string name="no_md5_found">Nici un fişier de md5 găsit pentru "{1}". Deselectați Activare verificare MD5 pentru a restabili.</string>
 		<string name="md5_fail_match">MD5 nu se potrivește pentru '{1}'.</string>
 		<string name="fail_decrypt_tar">Nu s-a putut decripta fișierul tar '{1}'</string>
 		<string name="format_data_msg">Poate fi necesară repornirea în Recuperare pentru a putea folosi /data din nou.</string>
@@ -480,7 +480,7 @@
 		<string name="backing_up">Creare copie de rezervă pentru {1}...</string>
 		<string name="backing">Rezervare</string>
 		<string name="backup_size">Dimensiunea copiei de rezervă a '{1}' este 0 B.</string>
-		<string name="datamedia_fs_restore">AVERTIZARE: Această copie de rezervă pentru /data a fost făcută cu sistemul de fișiere {1}! Este posibil ca dispozitivul să nu pornească dacă nu schimbați înapoi la {1}.</string>
+		<string name="datamedia_fs_restore">AVERTISMENT: Această copie de rezervă pentru /date a fost făcută cu sistemul de fișiere {1}! S-ar putea ca dispozitivul să nu poată porni decât dacă reveniți la {1}.</string>
 		<string name="restoring">Restaurare {1}...</string>
 		<string name="restoring_hdr">Restaurare...</string>
 		<string name="recreate_folder_err">Nu a reușit recreerea dosarului {1}.</string>
@@ -512,7 +512,7 @@
 		<string name="compression_on">Comprimare activată</string>
 		<string name="md5_off">Generare MD5 oprită</string>
 		<string name="backup_fail">Copiere de rezervă eşuată</string>
-		<string name="backup_clean">Copiere de rezervă eşuată. Curățarea dosarului copiilor de rezervă.</string>
+		<string name="backup_clean">Copierea de rezervă a eșuat. Curățare dosar copii de rezervă.</string>
 		<string name="running_recovery_commands">Rulare comenzi Recuperare</string>
 		<string name="recovery_commands_complete">Comenzi Recuperare finalizate</string>
 		<string name="running_ors">Rulare OpenRecoveryScript</string>
@@ -568,7 +568,7 @@
 		<!-- new-->
 		<string name="sel_color">Selectați culoarea</string>
 		<string name="s_color">Culoare</string>
-		<string name="current_color">Fişierele sistemului:</string>
+		<string name="current_color">Sistem de fișiere:</string>
 		<string name="show_cpu_temp_bar">Afișarea temperaturii procesorului</string>
 		<string name="ts_inform">Informaţii</string>
 		<string name="sel_splash_png">Selectați Splash PNG</string>
@@ -672,7 +672,7 @@
 		<string name="no_os_title">Sunteți sigur?</string>
 		<string name="no_os_subtitle">Partiția de sistem este goală</string>
 		
-		<string name="no_os1">Niciun SO instalat! Sunteți sigur că</string>
+		<string name="no_os1">Nu este instalat niciun sistem de operare! Sunteţi sigur că</string>
 		<string name="no_osrb">doriți să reporniți?</string>
 		<string name="no_ospo">doriți să opriți?</string>
 		<string name="no_osrb_recovery">doriți să reporniți în Recuperare?</string>
@@ -727,7 +727,7 @@
 		
 		<string name="menu_btn">Meniu</string>
 		
-		<string name="data_backup">Spațiu de stocare</string>
+		<string name="data_backup">Date</string>
 		<string name="autostorage">Spațiu de stocare</string>
 		<string name="install_reboot">Repornire în %tw_sleep% secunde</string>
 		<string name="cancel_reboot_btn">Anulare repornire</string>
@@ -743,7 +743,7 @@
 		<string name="verifying_digest" version="2">Verificare Digest</string>
 		<string name="skip_digest" version="2">Omitere verificare Digest bazat pe setarea utilizatorului.</string>
 		<string name="decrypt_success_nodev">Datele au fost decriptate cu succes</string>
-		<string name="no_digest_found" version="2">Nu a fost găsit niciun fișier Digest pentru '{1}'. Deselectați activarea verificării Digest pentru a restabili.</string>
+		<string name="no_digest_found" version="2">Nici un fişier Digest găsit pentru "{1}". Deselectați Activare verificare Digest pentru a restabili.</string>
 		<string name="digest_fail_match" version="2">Digest nu se potrivește pentru '{1}'.</string>
 		<string name="digest_matched" version="2">Digest corespunde pentru '{1}'.</string>
 		<string name="digest_check_skip" version="2">Omiterea verificării Digest este activată</string>
@@ -762,6 +762,8 @@
 		<string name="changing_boot_slot">Schimbare Slot Boot</string>
 		<string name="changing_boot_slot_complete">Schimbare Slot Boot finalizată</string>
 		<string name="unable_set_boot_slot">Eroare la schimbarea slotului de bootloader la {1}</string>
+		<string name="ozip_decrypt_decryption">Pornire decriptare Ozip...</string>
+		<string name="ozip_decrypt_finish">Decriptare Ozip finalizată!</string>
 		<string name="backup_storage_warning">Copiile de rezervă ale {1} nu includ niciun fișier din memoria internă, cum ar fi imagini sau descărcări.</string>
 		<string name="sha2_chk">Utilizați SHA2 pentru hashing</string>
 		<string name="disabled">Dezactivat</string>
@@ -773,10 +775,10 @@
 		<string name="fox_incremental_ota_compatibility_chk">Verificarea semnăturii pachetului incremental...</string>
 		<string name="fox_incremental_ota_compatibility_false">Pachetul incremental nu este compatibil cu acest ROM!</string>
 		<string name="fox_incremental_ota_compatibility_true">Pachetul incremental este compatibil</string>
-		<string name="fox_incremental_ota_status_enabled">Stare suport pentru pachet incremental MIUI: Activat</string>
-		<string name="fox_incremental_ota_status_disabled">Stare suport pentru pachet incremental MIUI: Dezactivat</string>
+		<string name="fox_incremental_ota_status_enabled">Stare suport pentru pachet incremental: Activat</string>
+		<string name="fox_incremental_ota_status_disabled">Stare suport pentru pachet incremental: Dezactivat</string>
 		<string name="fox_incremental_package_detected">S-a detectat pachetul incremental '{1}'</string>
-		<string name="fox_survival_does_not_exist">Supraviețuirea OTA nu există! Instalați un ROM complet mai întâi!</string>
+		<string name="fox_survival_does_not_exist">Supraviețuire OTA nu există! Instalaţi un ROM complet mai întâi!</string>
 		<string name="fox_install_detecting">Detectarea pachetului curent</string>
 		<string name="fox_install_standard_detected">- Pachet standard detectat</string>
 		<string name="fox_install_miui_detected">- Detectat pachet de actualizare MIUI</string>
@@ -786,7 +788,7 @@
 		<string name="fox_incremental_ota_res_run">Rulare proces OTA_RES...</string>
 		<string name="fox_incremental_ota_bak_run">Rulare proces OTA_BAK...</string>
 		<string name="fox_incremental_ota_bak">OTA_BAK -- finalizat!</string>
-		<string name="fox_internal_fatal_i1">OrangeFox: EROARE FATALĂ! Nu puteți salva stocarea internă pe ea însăși!</string>
+		<string name="fox_internal_fatal_i1">OrangeFox: EROARE FATALĂ! Nu puteți face rezervare a stocării interne pe ea însăși!</string>
 		<string name="fox_internal_fatal_i2">TREBUIE să schimbați destinația copiei de rezervă la MicroSD/USB-OTG.</string>
 		<string name="fox_internal_q1">OrangeFox - Stocare Internă - fiți atenți!</string>
 
@@ -804,7 +806,7 @@
 		<string name="install_remlatest">Eliminați ultimele</string>
 		
 		<string name="backups_remove_all">Toate copiile de rezervă</string>
-		<string name="backups_remove">Ștergeți</string>
+		<string name="backups_remove">Ștergere</string>
 		
 		<!-- OrangeFox Recovery - Pie Door theme -->
 
@@ -820,7 +822,7 @@
 		<string name="backup_short_hdr">Copie de rezervă nouă</string>
 		<string name="backups_wat">Unde sunt copiile de rezervă?</string>
 		
-		<string name="module_install">Instalează</string>
+		<string name="module_install">Instalare</string>
 		<string name="module_uninstall">Dezinstalare</string>
 		<string name="remove_of_files">Eliminați fișierele OrangeFox</string>
 		<string name="module_initd">Activare suport init.d</string>
@@ -928,7 +930,10 @@
 		
 		<!-- MIUI OTA -->
 		<string name="fox_ota_settings">Setări OTA</string>
+		<string name="fox_miui_ota_on">Activați OTA</string>
 		<string name="fox_ota_on">Activați OTA</string>
+		<string name="fox_patch_rom">Patch ROM</string>
+		<string name="fox_ota_lite">OTA şi ROM</string>
 		
 		<!-- About -->
 		<string name="abt_maintainer">Dezvoltator</string>
@@ -987,14 +992,19 @@
 		<!-- OTA -->
 		<string name="fox_ota_msg_ready">Sunteți gata să primiți actualizări!</string>
 		<string name="fox_ota_msg_custom">Este activat modul ROM personalizat</string>
-		<string name="fox_ota_msg_reflash">Instalați ROM-ul complet MIUI!</string>
+		<string name="fox_ota_msg_reflash">Instalați ROM-ul complet!</string>
 		<string name="fox_advanced_stock_recovery">Dezactivarea Recuperării agresive stoc</string>
-		<string name="fox_support_miui_ota_chk">Susține MIUI OTA incremental</string>
+		<string name="fox_support_miui_ota_chk">OTA suport</string>
 		<string name="fox_include_system_survival_chk">Includere sistem în supraviețuirea OTA</string>
 		<string name="fox_verify_incremental_ota_signature_chk">Verificarea semnăturii OTA incremental</string>
 		<string name="fox_dmverity_chk">Dezactivare DM-Verity</string>
 		<string name="fox_forced_encryption_chk">Dezactivare criptare forțată</string>
 		<string name="FOX_DISABLE_OTA_AUTO_REBOOT_chk">Împiedicați repornirea automată după instalarea OTA</string>
-		<string name="of_ota_reboot_disabled">Actualizare OTA cu succes. Ați dezactivat repornirea automată. Reîntoarcere control către dvs.</string>
+		<string name="of_ota_reboot_disabled">Actualizarea OTA a fost finalizată. Ați dezactivat repornirea automată. Aveţi controlul.</string>
+
+		<!-- Wipe format moved -->
+		<string name="wipe_format_moved_info1">Notă: Formatare Date mutată la</string>
+		<string name="wipe_format_moved_info2">pagina Gestionare partiții.</string>
+		
 	</resources>
 </language>

@@ -91,7 +91,7 @@
 		<string name="inject_twrp_chk">Đưa OrangeFox vào sau khi cài đặt</string>
 		<string name="install_reboot_chk">Khởi động lại sau khi cài đặt hoàn tất</string>
 		<string name="options_hdr">Tùy chọn</string>
-		<string name="zip_queue">Danh sách chờ</string>
+		<string name="zip_queue">Thêm tệp</string>
 		<string name="install_zip_count_hdr">Đang cài đặt: %tw_zip_index% of %tw_zip_queue_count%</string>
 		<string name="working">Đang tiến hành...</string>
 		<string name="failed">Thất bại</string>
@@ -113,7 +113,7 @@
 		<string name="swipe_reboot">Trượt để khởi động lại</string>
 		<string name="confirm_action">Xác nhận tác vụ</string>
 		<string name="cancel_btn">Hủy bỏ</string>
-		<string name="wipe_hdr">Xóa</string>
+		<string name="wipe_hdr">Wipe</string>
 		<string name="factory_reset_hdr">Đặt lại Chế độ Nhà sản xuất</string>
 		<string name="factory_reset1">Wipes Data, Cache, and Dalvik</string>
 		<string name="factory_reset2">(không bao gồm bộ nhớ trong)</string>
@@ -164,7 +164,7 @@
 		<string name="swipe_repair">Trượt để Sửa Chữa</string>
 		<string name="change_fs_btn">Thay đổi FS</string>
 		<string name="change_fs_warn1">Một số ROM hoặc kernel có thể không hỗ trợ</string>
-		<string name="change_fs_warn2">một số tập tin hệ thống. Cẩn thận khi tiến hành!</string>
+		<string name="change_fs_warn2">some file systems. Proceed with caution!</string>
 		<string name="change_fs_confirm">Thay đổi FS sang</string>
 		<string name="formatting">Đang định dạng...</string>
 		<string name="format_complete">Đã định dạng hoàn tất</string>
@@ -205,7 +205,7 @@
 		<string name="rename_backup_complete">Đổi tên Sao lưu hoàn tất</string>
 		<string name="swipe_to_rename">Trượt để Đổi tên</string>
 		<string name="mount_hdr">Mount</string>
-		<string name="mount_sys_ro_chk">Mount phân vùng hệ thống chế độ-chỉ đọc</string>
+		<string name="mount_sys_ro_chk">Mount system and vendor read-only</string>
 		<string name="decrypt_data_btn">Mã Hóa Dữ Liệu</string>
 		<string name="disable_mtp_btn">Tắt MTP</string>
 		<string name="enable_mtp_btn">Bật MTP</string>
@@ -378,7 +378,7 @@
 		<string name="decrypt_try_again">Xin hãy thử lại.</string>
 		<string name="decrypt_data_enter_pattern">Nhập Mẫu Hình.</string>
 		<string name="decrypt_data_trying">Đang thử Giải mã</string>
-		<string name="term_s_hdr">Dòng lệnh</string>
+		<string name="term_s_hdr">Sử Dụng Dòng lệnh</string>
 		<string name="adb_sideload_hdr">ADB Sideload</string>
 		<string name="sideload_wipe_dalvik_chk">Xóa Dalvik Cache</string>
 		<string name="sideload_wipe_cache_chk">Xóa Bộ Nhớ Đệm</string>
@@ -406,24 +406,24 @@
 		<string name="mtp_disabled">MTP đã tắt</string>
 		<string name="mtp_crash">MTP Đã Ngừng, không thể khởi động MTP từ boot.</string>
 		<string name="decrypt_success">Giải mã thành công với mật khẩu mặc định.</string>
-		<string name="unable_to_decrypt">Không thể giải mã bằng mật khẩu mặc định. Bạn có thể cần phải thực hiện định dạng dữ liệu.</string>
+		<string name="unable_to_decrypt">Unable to decrypt with default password. You may need to perform a Format Data.</string>
 		<string name="generating_md51">Đang Tạo MD5</string>
 		<!-- Message displayed during a backup if we are generating an MD5, ideally, leave the leading " * " to help align and separate this text from other console text -->
-		<string name="generating_md52"> * Đang Tạo md5...</string>
-		<string name="md5_created"> * Đã Tạo MD5.</string>
-		<string name="md5_error"> * Lỗi MD5!</string>
-		<string name="md5_compute_error"> * Lỗi khi tính toán MD5.</string>
+		<string name="generating_md52"> * Generating md5...</string>
+		<string name="md5_created"> * MD5 Created.</string>
+		<string name="md5_error"> * MD5 Error!</string>
+		<string name="md5_compute_error"> * Error computing MD5.</string>
 		<string name="current_date">(Ngày Hiện Tại)</string>
 		<string name="auto_generate">(Tự Động Tạo)</string>
 		<string name="unable_to_locate_partition">Không thể xác định vị trí '{1}' để tính toán phân vùng backup.</string>
 		<string name="no_partition_selected">Không có phân vùng được chọn để sao lưu.</string>
-		<string name="total_partitions_backup"> * Tổng số phân vùng để sao lưu: {1}</string>
-		<string name="total_backup_size"> * Tổng số kích thước của tất cả dữ liệu: {1}MB</string>
-		<string name="available_space"> * Dung lượng trống: {1}MB</string>
+		<string name="total_partitions_backup"> * Total number of partitions to back up: {1}</string>
+		<string name="total_backup_size"> * Total size of all data: {1}MB</string>
+		<string name="available_space"> * Available space: {1}MB</string>
 		<string name="unable_locate_storage">Không thể định vị thiết bị lưu trữ.</string>
 		<string name="no_space">Không đủ dung lượng trống trên bộ nhớ.</string>
 		<string name="backup_started">[ĐÃ KHỞI ĐỘNG SAO LƯU]</string>
-		<string name="backup_folder"> * Thư mục sao lưu: {1}</string>
+		<string name="backup_folder"> * Backup Folder: {1}</string>
 		<string name="fail_backup_folder">Không thể tạo thư mục sao lưu.</string>
 		<string name="avg_backup_fs">Tỷ lệ backup trung bình các file hệ thống: {1} MB/s</string>
 		<string name="avg_backup_img">Tỷ lệ backup trung bình các file dữ liệu: {1} MB/s</string>
@@ -483,7 +483,7 @@
 		<string name="invalid_flash">Phân vùng được chỉ định để flash không hợp lệ.</string>
 		<string name="flash_done">[FLASH IMAGE HOÀN THÀNH]</string>
 		<string name="wiping">Đang Xoá {1}</string>
-		<string name="repair_not_exist">{1} không tồn tại! Không thể sửa!</string>
+		<string name="repair_not_exist">{1} does not exist! Cannot repair!</string>
 		<string name="repairing_using">Sửa chữa {1} bằng cách sử dụng {2}...</string>
 		<string name="unable_repair">Không thể sửa chữa {1}.</string>
 		<string name="mount_data_footer">Không thể mount /data và không thể tìm thấy chân mã hóa.</string>
@@ -496,7 +496,7 @@
 		<string name="cannot_resize">Không thể thay đổi kích cỡ {1}.</string>
 		<string name="repair_resize">Sửa chữa {1} trước khi thay đổi kích thước.</string>
 		<string name="unable_resize">Không thể thay đổi kích cỡ {1}.</string>
-		<string name="no_md5_found">Không tìm thấy tệp md5 nào cho '{1}'. Vui lòng bỏ chọn Bật xác minh MD5 để khôi phục.</string>
+		<string name="no_md5_found">No md5 file found for '{1}'. Please unselect Enable MD5 verification to restore.</string>
 		<string name="md5_fail_match">MD5 không khớp với '{1}'.</string>
 		<string name="fail_decrypt_tar">Không thể giải mã tệp tar '{1}'</string>
 		<string name="format_data_msg">Bạn có thể cần phải khởi động lại revocery để có thể sử dụng lại /data.</string>
@@ -509,7 +509,7 @@
 		<string name="backing_up">Đang sao lưu {1}...</string>
 		<string name="backing">Đang Sao Lưu</string>
 		<string name="backup_size">Kích thước tập tin sao lưu cho '{1}' là 0 byte.</string>
-		<string name="datamedia_fs_restore">Cảnh báo: Sao lưu /data này đã được thực hiện với hệ thống tệp {1}! Bản sao lưu có thể không khởi động trừ khi bạn thay đổi về {1}.</string>
+		<string name="datamedia_fs_restore">WARNING: This /data backup was made with {1} file system! The backup may not boot unless you change back to {1}.</string>
 		<string name="restoring">Đang khôi phục {1}...</string>
 		<string name="restoring_hdr">Đang khôi phục...</string>
 		<string name="recreate_folder_err">Không thể tạo lại thư mục {1}.</string>
@@ -541,7 +541,7 @@
 		<string name="compression_on">Nén đang bật</string>
 		<string name="md5_off">MD5 Generation đã tắt</string>
 		<string name="backup_fail">Sao Lưu Thất Bại</string>
-		<string name="backup_clean">Sao lưu thất bại. Làm sạch thư mục sao lưu.</string>
+		<string name="backup_clean">Backup Failed. Cleaning Backup Folder.</string>
 		<string name="running_recovery_commands">Đang Chạy Lệnh Phục Hồi</string>
 		<string name="recovery_commands_complete">Hoàn Thành Lệnh Phục Hồi</string>
 		<string name="running_ors">Đang chạy OpenRecoveryScript</string>
@@ -587,11 +587,11 @@
 		<string name="curr_date">(Ngày Hiện Tại)</string>
 		<string name="backup_name_len">Tên sao lưu quá dài.</string>
 		<string name="backup_name_invalid">Tên sao lưu '{1}' chứa ký tự không hợp lệ: '{1}'</string>
-		<string name="no_real_sdcard">Thiết bị này không thực sự có Thẻ SD! Đang hủy!</string>
+		<string name="no_real_sdcard">This device does not have a real SD Card! Aborting!</string>
 		<string name="cancel_sideload">Đang hủy bỏ ADB sideload...</string>
 		<string name="change_fs_err">Lỗi khi thay đổi tập tin hệ thống.</string>
 		<string name="change_fs_hdr">Thay đổi Tệp System</string>
-		<string name="theme_ver_err">Phiên bản chủ đề tùy chỉnh không khớp với phiên bản OrangeFox. Sử dụng chủ đề mặc định.</string>
+		<string name="theme_ver_err">Custom theme version does not match OrangeFox version. Using stock theme.</string>
 		<string name="up_a_level">..</string>
 
 		<!-- new-->
@@ -701,7 +701,7 @@
 		<string name="no_os_title">Bạn có chắc không?</string>
 		<string name="no_os_subtitle">Không có hệ điều hành được cài!</string>
 		
-		<string name="no_os1">Không có hệ điều hành nào được cài! Bạn có chắc không</string>
+		<string name="no_os1">No OS installed! Are you sure you</string>
 		<string name="no_osrb">trượt để khởi động lại?</string>
 		<string name="no_ospo">trượt để Tắt Nguồn?</string>
 		<string name="no_osrb_recovery">trượt để khởi động lại recovery?</string>
@@ -716,7 +716,7 @@
 		
 		<string name="areb_off">Tắt</string>
 		
-		<string name="restoredialog_readonly">Không bao giờ hiển thị hộp thoại chỉ đọc hệ thống gắn kết</string>
+		<string name="restoredialog_readonly">Không hiện thị mount system read-only</string>
 		
 		<string name="offset_wrong">Sai lầm được bù lại!</string>
 
@@ -762,17 +762,17 @@
 		<string name="cancel_reboot_btn">Bỏ qua quá trình tạo digest khi backup</string>
 		<string name="skip_digest_backup_chk" version="2">Bỏ qua quá trình tạo digest khi backup</string>
 		<string name="restore_digest_chk" version="2">Kích hoạt xác minh Digest của tập tin sao lưu</string>
-		<string name="restore_enable_digest_chk" version="2">Cho phép xác minh Digest sao lưu</string>
+		<string name="restore_enable_digest_chk" version="2">Kích hoạt xác minh Digest của tập tin sao lưu</string>
 		<string name="decrypt_data_vold_os_missing">Thiếu tệp cần thiết để giải mã: {1}</string>
 		<string name="generating_digest1" version="2">Đang tạo Digest</string>
-		<string name="generating_digest2" version="2"> * Đang tạo Digest...</string>
-		<string name="digest_created" version="2"> * Đã tạo Digest.</string>
-		<string name="digest_error" version="2"> * Lỗi tính toán Digest!</string>
-		<string name="digest_compute_error" version="2"> * Lỗi tính toán Digest.</string>
+		<string name="generating_digest2" version="2"> * Generating Digest...</string>
+		<string name="digest_created" version="2"> * Digest created.</string>
+		<string name="digest_error" version="2"> * Digest error!</string>
+		<string name="digest_compute_error" version="2"> * Error computing Digest.</string>
 		<string name="verifying_digest" version="2">Đang xác minh Digest</string>
 		<string name="skip_digest" version="2">Bỏ qua kiểm tra Digest dựa trên cài đặt người dùng.</string>
 		<string name="decrypt_success_nodev">Đã giải mã dữ liệu thành công</string>
-		<string name="no_digest_found" version="2">Digest không khớp với '{1}'. Vui lòng bỏ chọn Bật xác minh Digest để khôi phục.</string>
+		<string name="no_digest_found" version="2">No Digest file found for '{1}'. Please unselect Enable Digest verification to restore.</string>
 		<string name="digest_fail_match" version="2">Digest không khớp với '{1}'.</string>
 		<string name="digest_matched" version="2">Digest khớp với '{1}'.</string>
 		<string name="digest_check_skip" version="2">Đã bật bỏ qua kiểm tra Digest</string>
@@ -791,6 +791,8 @@
 		<string name="changing_boot_slot">Đang đổi Boot Slot</string>
 		<string name="changing_boot_slot_complete">Thay đổi Boot Slot Hoàn thành</string>
 		<string name="unable_set_boot_slot">Lỗi khi thay đổi bootloader boot slot sang {1}</string>
+		<string name="ozip_decrypt_decryption">Starting Ozip Decryption...</string>
+		<string name="ozip_decrypt_finish">Ozip Decryption Finished!</string>
 		<string name="backup_storage_warning">Bản sao lưu của {1} không bao gồm bất kỳ tệp nào trong bộ nhớ trong như hình ảnh hoặc tải xuống.</string>
 		<string name="sha2_chk">Sử dụng SHA2 để băm</string>
 		<string name="disabled">Tắt</string>
@@ -802,10 +804,10 @@
 		<string name="fox_incremental_ota_compatibility_chk">Đang xác minh chữ ký gói gia tăng...</string>
 		<string name="fox_incremental_ota_compatibility_false">Gói gia tăng không tương thích với ROM này!</string>
 		<string name="fox_incremental_ota_compatibility_true">Gói gia tăng tương thích</string>
-		<string name="fox_incremental_ota_status_enabled">Trạng thái hỗ trợ gói MIUI Incremental: Đã bật</string>
-		<string name="fox_incremental_ota_status_disabled">Trạng thái hỗ trợ gói MIUI Incremental: Đã tắt</string>
+		<string name="fox_incremental_ota_status_enabled">Support Incremental package status: Enabled</string>
+		<string name="fox_incremental_ota_status_disabled">Support Incremental package status: Disabled</string>
 		<string name="fox_incremental_package_detected">Đã phát hiện gói gia tăng '{1}'</string>
-		<string name="fox_survival_does_not_exist">OTA Survival không tồn tại! Trước tiên hãy flash ROM đầy đủ!</string>
+		<string name="fox_survival_does_not_exist">OTA Survival does not exist! Please flash a full ROM first!</string>
 		<string name="fox_install_detecting">Phát hiện gói hiện tại</string>
 		<string name="fox_install_standard_detected">- Phát hiện gói tiêu chuẩn</string>
 		<string name="fox_install_miui_detected">- Gói cập nhật MIUI được phát hiện</string>
@@ -815,7 +817,7 @@
 		<string name="fox_incremental_ota_res_run">Đang chạy quy trình OTA_RES...</string>
 		<string name="fox_incremental_ota_bak_run">Đang chạy quy trình OTA_BAK...</string>
 		<string name="fox_incremental_ota_bak">OTA_BAK - đã xong!</string>
-		<string name="fox_internal_fatal_i1">OrangeFox: LỖI NGHIÊM TRỌNG! Bạn không thể sao lưu Bộ nhớ trong vào chính nó!</string>
+		<string name="fox_internal_fatal_i1">OrangeFox: FATAL ERROR! You cannot backup Internal Storage onto itself!</string>
 		<string name="fox_internal_fatal_i2">Bạn PHẢI thay đổi đích sao lưu sang MicroSD/USB-OTG.</string>
 		<string name="fox_internal_q1">OrangeFox - Bộ nhớ trong - cẩn thận!</string>
 
@@ -860,7 +862,7 @@
 		<string name="fox_files_not_exist_3">bằng cách sử dụng zip cài đặt.</string>
 
 		<!-- Customization -->
-		<string name="cust_new_ota_screen">Hiển thị ít chi tiết trong khi cài các bản cập nhật OTA</string>
+		<string name="cust_new_ota_screen">Hiển thị ít chi tiết trong khi cài các bản OTA</string>
 		<string name="fm_icons_simple">Làm icon tệp to hơn</string>
 		<string name="theme_engine_update">Áp dụng thay đổi và khởi động lại?</string>
 		<string name="theme_engine_reset">Chủ đề</string>
@@ -957,7 +959,10 @@
 		
 		<!-- MIUI OTA -->
 		<string name="fox_ota_settings">Cài đặt OTA</string>
+		<string name="fox_miui_ota_on">Bật OTA</string>
 		<string name="fox_ota_on">Bật OTA</string>
+		<string name="fox_patch_rom">Patch ROM</string>
+		<string name="fox_ota_lite">OTA &amp; ROM</string>
 		
 		<!-- About -->
 		<string name="abt_maintainer">Người bảo trì</string>
@@ -965,7 +970,7 @@
 		<string name="abt_bork">CEO, Site &amp; UI</string>
 		<string name="abt_dj">Build system, C++</string>
 		<string name="abt_front">Nhà phát triển</string>
-		<string name="abt_back">Nhà phát triển cuối cùng</string>
+		<string name="abt_back">Nhà phát triển</string>
 		<string name="abt_device">Thiết bị</string>
 		<string name="version_twrp">Phiên bản TWRP</string>
 		<string name="build_type">Loại bản dựng</string>
@@ -1016,14 +1021,19 @@
 		<!-- OTA -->
 		<string name="fox_ota_msg_ready">Bạn sẵn sàng cập nhật!</string>
 		<string name="fox_ota_msg_custom">Đã được bật tùy chọn ROM tùy biến</string>
-		<string name="fox_ota_msg_reflash">Vui lòng flash đầy đủ MIUI ROM!</string>
+		<string name="fox_ota_msg_reflash">Please flash full ROM!</string>
 		<string name="fox_advanced_stock_recovery">Vô hiệu hoá khôi phục recovery mặc định</string>
-		<string name="fox_support_miui_ota_chk">Hỗ trợ MIUI incremental OTA</string>
+		<string name="fox_support_miui_ota_chk">Support OTA</string>
 		<string name="fox_include_system_survival_chk">Bao gồm hệ thống trong sự sống còn OTA</string>
 		<string name="fox_verify_incremental_ota_signature_chk">Xác minh chữ ký OTA tăng dần</string>
 		<string name="fox_dmverity_chk">Tắt DM-Verity</string>
 		<string name="fox_forced_encryption_chk">Vô hiệu hoá bắt buộc mã hóa</string>
-		<string name="FOX_DISABLE_OTA_AUTO_REBOOT_chk">Ngăn tự động khởi động lại sau khi cài đặt OTA</string>
-		<string name="of_ota_reboot_disabled">Cập nhật thành công OTA. Bạn đã tắt tự động khởi động lại. Trả lại quyền kiểm soát cho bạn.</string>
+		<string name="FOX_DISABLE_OTA_AUTO_REBOOT_chk">Ngăn tự động khởi động sau khi cài đặt OTA</string>
+		<string name="of_ota_reboot_disabled">OTA update completed. You disabled auto-reboot. Returning control to you.</string>
+
+		<!-- Wipe format moved -->
+		<string name="wipe_format_moved_info1">Note: Format Data moved to</string>
+		<string name="wipe_format_moved_info2">Manage Partitions page.</string>
+		
 	</resources>
 </language>

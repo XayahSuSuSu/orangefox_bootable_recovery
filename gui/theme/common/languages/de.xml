@@ -31,8 +31,8 @@
 		<string name="sort_by_name_asc">Name aufsteigend</string>
 		<string name="sort_by_date_asc">Datum aufsteigend</string>
 		<string name="sort_by_size_asc">Größe aufsteigend</string>
-		<string name="sort_by_name_desc">Name absteigend</string>
-		<string name="sort_by_date_desc">Datum absteigend</string>
+		<string name="sort_by_name_desc">Name aufsteigend</string>
+		<string name="sort_by_date_desc">Datum aufsteigend</string>
 		<string name="sort_by_size_desc">Größe aufsteigend</string>
 		<string name="install_btn">Installieren</string>
 		<string name="wipe_btn">Löschen</string>
@@ -59,12 +59,12 @@
 		<string name="folder">Ordner</string>
 		<string name="file">Datei</string>
 		<string name="zip_sig_chk">Zip-Signaturprüfung</string>
-		<string name="inject_twrp_chk">OrangeFox nach der Installation einspeisen</string>
+		<string name="inject_twrp_chk">OrangeFox nach der Installation einbinden</string>
 		<string name="install_reboot_chk">Nach Abschluss der Installation neu starten</string>
 		<string name="options_hdr">Optionen</string>
 		<string name="zip_queue">Warteschlange</string>
 		<string name="install_zip_count_hdr">Datei %tw_zip_index% von %tw_zip_queue_count% wird installiert</string>
-		<string name="working">Bitte warten...</string>
+		<string name="working">Bitte warten…</string>
 		<string name="failed">Fehlgeschlagen</string>
 		<string name="successful">Erfolgreich</string>
 		<string name="wipe_cache_btn">Cache löschen</string>
@@ -72,15 +72,15 @@
 		<string name="reboot_recovery_btn">Recovery neustarten</string>
 		<string name="install_sel_target">Zielpartition auswählen</string>
 		<string name="flash_image_select">Partition</string>
-		<string name="flashing_image">Flashe Image...</string>
+		<string name="flashing_image">Flashe Image…</string>
 		<string name="image_flashed">Image wurde geflasht</string>
 		<string name="wipe_cache_dalvik_confirm">Cache &amp; Dalvik löschen?</string>
 		<string name="wipe_dalvik_confirm">Dalvik leeren?</string>
-		<string name="wiping_cache_dalvik">Cache &amp; Dalvik löschen...</string>
+		<string name="wiping_cache_dalvik">Cache &amp; Dalvik löschen…</string>
 		<string name="wipe_cache_dalvik_complete">Cache &amp; Dalvik erfolgreich gelöscht</string>
 		<string name="cache_dalvik_done">Cache &amp; Dalvik erfolgreich gelöscht</string>
 		<string name="swipe_wipe">Zum Löschen wischen</string>
-		<string name="rebooting">Wird neugestartet...</string>
+		<string name="rebooting">Wird neugestartet…</string>
 		<string name="swipe_reboot">Zum Neustarten wischen</string>
 		<string name="confirm_action">Vorgang bestätigen</string>
 		<string name="cancel_btn">Abbrechen</string>
@@ -119,7 +119,7 @@
 		<string name="part_removable">Entfernbar</string>
 		<string name="part_yes">Ja</string>
 		<string name="part_no">Nein</string>
-		<string name="part_size">Größe</string>
+		<string name="part_size">Größe aufsteigend</string>
 		<string name="part_used">Belegt</string>
 		<string name="part_free">Frei</string>
 		<string name="part_backup_size">Sicherungsgröße</string>
@@ -135,7 +135,7 @@
 		<string name="swipe_repair">Wischen zum Reparieren</string>
 		<string name="change_fs_btn">FS ändern</string>
 		<string name="change_fs_warn1">Manche ROMs oder Kernel unterstützen möglicherweise</string>
-		<string name="change_fs_warn2">einige Dateisysteme nicht. Fortfahren auf eigene Gefahr!</string>
+		<string name="change_fs_warn2">some file systems. Proceed with caution!</string>
 		<string name="change_fs_confirm">Ändere FS zu</string>
 		<string name="formatting">Formatiere...</string>
 		<string name="format_complete">Formatierung abgeschlossen</string>
@@ -145,7 +145,7 @@
 		<string name="swipe_factory_reset">Wischen für Werkseinstellung</string>
 		<string name="backup_hdr">Sicherung</string>
 		<string name="encryption_hdr">Verschlüsselung aktivieren</string>
-		<string name="name">Name</string>
+		<string name="name">Name aufsteigend</string>
 		<string name="enable_backup_comp_chk">Komprimierung aktivieren</string>
 		<string name="skip_md5_backup_chk">Überspringe MD5-Generierung während der Sicherung</string>
 		<string name="disable_backup_space_chk">Überprüfung auf freien Speicherplatz deaktivieren</string>
@@ -176,7 +176,7 @@
 		<string name="rename_backup_complete">Sicherung erfolgreich umbenannt</string>
 		<string name="swipe_to_rename">Wischen zum Unbenennen</string>
 		<string name="mount_hdr">Einhängen</string>
-		<string name="mount_sys_ro_chk">Systempartition schreibgeschützt einhängen</string>
+		<string name="mount_sys_ro_chk">Mount system and vendor read-only</string>
 		<string name="decrypt_data_btn">Daten entschlüsseln</string>
 		<string name="disable_mtp_btn">MTP deaktivieren</string>
 		<string name="enable_mtp_btn">MTP aktivieren</string>
@@ -184,8 +184,8 @@
 		<string name="usb_storage_btn">USB-Speicher</string>
 		<string name="usb_stor_mnt1">USB-Speicher eingehängt</string>
 		<string name="usb_stor_mnt2">Achten Sie darauf Ihr Gerät sicher zu entfernen</string>
-		<string name="usb_stor_mnt3">bevor sie es vom Computer abhängen!</string>
-		<string name="unmount_btn">Abhängen</string>
+		<string name="usb_stor_mnt3">bevor Sie es vom Computer abhängen!</string>
+		<string name="unmount_btn">Aushängen</string>
 		<string name="rb_system_btn">System</string>
 		<string name="rb_poweroff_btn">Ausschalten</string>
 		<string name="rb_recovery_btn">Recovery</string>
@@ -315,7 +315,7 @@
 		<string name="dumlock_install_complete">HTC Dumlock Installation abgeschlossen</string>
 		<string name="swipe_to_unlock">Wischen zum Entsperren</string>
 		<string name="fm_actions">Aktionen</string>
-		<string name="fm_hdr">Dateimanager</string>
+		<string name="fm_hdr">Dateien</string>
 		<string name="fm_sel_file">Wählen Sie eine Datei oder einen Ordner</string>
 		<string name="fm_type_folder">Ordner</string>
 		<string name="fm_type_file">Datei</string>
@@ -377,24 +377,24 @@
 		<string name="mtp_disabled">MTP ist deaktiviert</string>
 		<string name="mtp_crash">MTP abgestürzt, MTP wird beim Booten nicht gestartet.</string>
 		<string name="decrypt_success">Erfolgreich mit Standard-Passwort entschlüsselt.</string>
-		<string name="unable_to_decrypt">Kann mit dem Standardkennwort nicht entschlüsseln. Sie müssen eventuell die Daten formatieren.</string>
+		<string name="unable_to_decrypt">Unable to decrypt with default password. You may need to perform a Format Data.</string>
 		<string name="generating_md51">Generieren MD5</string>
 		<!-- Message displayed during a backup if we are generating an MD5, ideally, leave the leading " * " to help align and separate this text from other console text -->
-		<string name="generating_md52"> * Generiere MD5...</string>
-		<string name="md5_created"> * MD5 erstellt.</string>
-		<string name="md5_error"> * MD5 Fehler!</string>
-		<string name="md5_compute_error"> * Fehler beim Berechnen von MD5.</string>
+		<string name="generating_md52"> * Generating md5...</string>
+		<string name="md5_created"> * MD5 Created.</string>
+		<string name="md5_error"> * MD5 Error!</string>
+		<string name="md5_compute_error"> * Error computing MD5.</string>
 		<string name="current_date">(Aktuelles Datum)</string>
 		<string name="auto_generate">(Automatisch generiert)</string>
 		<string name="unable_to_locate_partition">Die Partition "{1}" konnte für die Sicherungsberechnungen nicht gefunden werden.</string>
 		<string name="no_partition_selected">Keine Partitionen für die Sicherung ausgewählt.</string>
-		<string name="total_partitions_backup"> * Gesamtzahl der zu sichernden Partitionen: {1}</string>
-		<string name="total_backup_size"> * Gesamtgröße aller Daten: {1}MB</string>
-		<string name="available_space"> * Verfügbarer Speicherplatz: {1}MB</string>
+		<string name="total_partitions_backup"> * Total number of partitions to back up: {1}</string>
+		<string name="total_backup_size"> * Total size of all data: {1}MB</string>
+		<string name="available_space"> * Available space: {1}MB</string>
 		<string name="unable_locate_storage">Speichergerät konnte nicht gefunden werden.</string>
 		<string name="no_space">Nicht genügend Speicherplatz auf dem Speicher.</string>
 		<string name="backup_started">[Sicherung gestartet]</string>
-		<string name="backup_folder"> * Sicherungsordner: {1}</string>
+		<string name="backup_folder"> * Backup Folder: {1}</string>
 		<string name="fail_backup_folder">Fehler beim Erstellen des Sicherungsordners.</string>
 		<string name="avg_backup_fs">Durchschnittliche Sicherungsrate für Dateisysteme: {1} MB / Sek</string>
 		<string name="avg_backup_img">Durchschnittliche Sicherungsrate für Image-Laufwerke: {1} MB / Sek</string>
@@ -407,8 +407,8 @@
 		<string name="verifying_md5">Überprüfen von MD5</string>
 		<string name="skip_md5">Überspringen der MD5-Prüfung basierend auf den Benutzereinstellungen.</string>
 		<string name="calc_restore">Wiederherstellungsdetails berechnen...</string>
-		<string name="restore_read_only">Wiederherstellung fehlgeschlagen {1} -- als nur lesend eingehängt.</string>
-		<string name="restore_unable_locate">Die Partition "{1}" konnte zum Wiederherstellen nicht gefunden werden.</string>
+		<string name="restore_read_only">{1} kann nicht wiederhergestellt werden -- schreibgeschützt eingehängt.</string>
+		<string name="restore_unable_locate">Die Partition '{1}' konnte zum Wiederherstellen nicht gefunden werden.</string>
 		<string name="no_part_restore">Keine Partitionen für die Wiederherstellung ausgewählt.</string>
 		<string name="restore_part_count">Wiederherstellen von {1} Partitionen...</string>
 		<string name="total_restore_size">Die gesamte Wiederherstellungsgröße beträgt {1}MB</string>
@@ -427,13 +427,13 @@
 		<string name="unable_to_locate">Kann {1} nicht finden.</string>
 		<string name="wiping_datamedia">Lösche internen Speicher - /data/media...</string>
 		<string name="unable_to_mount">Kann {1} nicht einhängen</string>
-		<string name="unable_to_mount_internal">Der internal_storage kann nicht eingehangen werden</string>
-		<string name="unable_to_mount_storage">Der Speicher konnte nicht eingehangen werden</string>
-		<string name="fail_decrypt">Fehler beim Entschlüsseln der Daten.</string>
+		<string name="unable_to_mount_internal">Interner Speicher konnte nicht eingehängt werden</string>
+		<string name="unable_to_mount_storage">Speicher kann nicht eingehängt werden</string>
+		<string name="fail_decrypt">Daten entschlüsseln fehlgeschlagen.</string>
 		<string name="no_crypto_support">In diesem Build wurde keine Krypto-Unterstützung kompiliert.</string>
 		<string name="decrypt_success_dev">Daten erfolgreich entschlüsselt, neues Blockgerät: '{1}'</string>
 		<string name="done">Erledigt</string>
-		<string name="start_partition_sd">SD-Karte partitionieren...</string>
+		<string name="start_partition_sd">SD-Karte wird partitioniert...</string>
 		<string name="partition_sd_locate">Das zu partitionierende Gerät konnte nicht gefunden werden.</string>
 		<string name="ext_swap_size">EXT + Swap-Größe ist größer als die SD-Karte.</string>
 		<string name="remove_part_table">Partitionstabelle wird entfernt...</string>
@@ -454,7 +454,7 @@
 		<string name="invalid_flash">Ungültige Flash-Partition angegeben.</string>
 		<string name="flash_done">[IMAGE FLASH ABGESCHLOSSEN]</string>
 		<string name="wiping">Lösche {1}</string>
-		<string name="repair_not_exist">{1} existiert nicht! Kann nicht repariert werden!</string>
+		<string name="repair_not_exist">{1} does not exist! Cannot repair!</string>
 		<string name="repairing_using">Reparieren von {1} mit {2}...</string>
 		<string name="unable_repair">Kann {1} nicht reparieren.</string>
 		<string name="mount_data_footer">/data konnte nicht eingehangen und es konnte keine Krypto-Fußzeile gefunden werden.</string>
@@ -467,7 +467,7 @@
 		<string name="cannot_resize">Die Größe von {1} kann nicht geändert werden.</string>
 		<string name="repair_resize">Repariere {1} vor der Größenänderung.</string>
 		<string name="unable_resize">Die Größe von {1} konnte nicht geändert werden.</string>
-		<string name="no_md5_found">Keine Md5-Datei für '{1}' gefunden. Deaktivieren Sie die Option MD5-Überprüfung, um sie wiederherzustellen.</string>
+		<string name="no_md5_found">No md5 file found for '{1}'. Please unselect Enable MD5 verification to restore.</string>
 		<string name="md5_fail_match">MD5 stimmte nicht überein für '{1}'.</string>
 		<string name="fail_decrypt_tar">Entschlüsselung der Tar-Datei '{1}' fehlgeschlagen</string>
 		<string name="format_data_msg">Möglicherweise müssen Sie die Wiederherstellung neu starten, um /data erneut zu verwenden.</string>
@@ -480,7 +480,7 @@
 		<string name="backing_up">Sichere {1}...</string>
 		<string name="backing">Sichere</string>
 		<string name="backup_size">Sicherungsgröße für '{1}' ist 0 Bytes.</string>
-		<string name="datamedia_fs_restore">ACHTUNG: Diese Datensicherung wurde mit {1} Dateisystem durchgeführt! Diese Sicherung kann möglicherweise nicht gestartet werden, bevor Sie nicht wieder auf {1} wechseln.</string>
+		<string name="datamedia_fs_restore">WARNING: This /data backup was made with {1} file system! The backup may not boot unless you change back to {1}.</string>
 		<string name="restoring">Wiederherstellen {1}...</string>
 		<string name="restoring_hdr">Wiederherstellung...</string>
 		<string name="recreate_folder_err">Der Ordner {1} nicht wiederhergestellt werden.</string>
@@ -512,7 +512,7 @@
 		<string name="compression_on">Die Komprimierung ist aktiviert</string>
 		<string name="md5_off">Die MD5-Generierung ist deaktiviert</string>
 		<string name="backup_fail">Sicherung fehlgeschlagen</string>
-		<string name="backup_clean">Sicherung fehlgeschlagen. Sicherungsordner säubern.</string>
+		<string name="backup_clean">Backup Failed. Cleaning Backup Folder.</string>
 		<string name="running_recovery_commands">Ausführen von Wiederherstellungsbefehlen</string>
 		<string name="recovery_commands_complete">Wiederherstellungsbefehle abgeschlossen</string>
 		<string name="running_ors">OpenRecoveryScript wird ausgeführt</string>
@@ -558,11 +558,11 @@
 		<string name="curr_date">(Aktuelles Datum)</string>
 		<string name="backup_name_len">Sicherungsname ist zu lang.</string>
 		<string name="backup_name_invalid">Sicherungsname "{1}" enthält ungültiges Zeichen: "{1}"</string>
-		<string name="no_real_sdcard">Dieses Gerät hat keine echte SD-Karte! Wird abgebrochen!</string>
+		<string name="no_real_sdcard">This device does not have a real SD Card! Aborting!</string>
 		<string name="cancel_sideload">ADB Sideload wird abgebrochen...</string>
 		<string name="change_fs_err">Fehler beim Ändern des Dateisystems.</string>
 		<string name="change_fs_hdr">Ändere Dateisystem</string>
-		<string name="theme_ver_err">Die benutzerdefinierte Themenversion stimmt nicht mit der OrangeFox-Version überein. Standard Thema wird verwendet.</string>
+		<string name="theme_ver_err">Custom theme version does not match OrangeFox version. Using stock theme.</string>
 		<string name="up_a_level">..</string>
 
 		<!-- new-->
@@ -618,7 +618,7 @@
 		<string name="fm_open_text">Textdatei</string>
 		<string name="fm_open_ZIP">Flashbare ZIP</string>
 		
-		<string name="fm_open_backup">Sichern</string>
+		<string name="fm_open_backup">Sicherung</string>
 		<string name="fm_open_makezip">Komprimieren</string>
 		<string name="fm_open_unpackzip">Archiv entpacken</string>
 		<string name="fm_open_image">Flashbares Image</string>
@@ -672,7 +672,7 @@
 		<string name="no_os_title">Sind Sie sicher?</string>
 		<string name="no_os_subtitle">Systempartition ist leer</string>
 		
-		<string name="no_os1">Kein Betriebssystem installiert! Sind Sie sicher, dass Sie</string>
+		<string name="no_os1">No OS installed! Are you sure you</string>
 		<string name="no_osrb">Neustarten wollen?</string>
 		<string name="no_ospo">Ausschalten wollen?</string>
 		<string name="no_osrb_recovery">Möchten Sie zum Recovery neu starten?</string>
@@ -736,14 +736,14 @@
 		<string name="restore_enable_digest_chk" version="2">Aktiviere Digest Überprüfung der Sicherungen</string>
 		<string name="decrypt_data_vold_os_missing">Fehlende Dateien, die für die Vold-Entschlüsselung benötigt werden: {1}</string>
 		<string name="generating_digest1" version="2">Generiere Digest</string>
-		<string name="generating_digest2" version="2"> * Generiere Digest...</string>
-		<string name="digest_created" version="2"> * Digest erstellt.</string>
-		<string name="digest_error" version="2"> * Digest Fehler!</string>
-		<string name="digest_compute_error" version="2"> * Fehler beim Berechnen des Digest.</string>
+		<string name="generating_digest2" version="2"> * Generating Digest...</string>
+		<string name="digest_created" version="2"> * Digest created.</string>
+		<string name="digest_error" version="2"> * Digest error!</string>
+		<string name="digest_compute_error" version="2"> * Error computing Digest.</string>
 		<string name="verifying_digest" version="2">Überprüfung des Digest</string>
 		<string name="skip_digest" version="2">Überspringen der MD5-Prüfung basierend auf den Benutzereinstellungen.</string>
 		<string name="decrypt_success_nodev">Daten erfolgreich entschlüsselt</string>
-		<string name="no_digest_found" version="2">Keine Digest-Datei für '{1}' gefunden. Deaktivieren Sie die Option Überprüfung der Digests, um wiederherzustellen.</string>
+		<string name="no_digest_found" version="2">No Digest file found for '{1}'. Please unselect Enable Digest verification to restore.</string>
 		<string name="digest_fail_match" version="2">Digest stimmt bei "{1}" nicht überein.</string>
 		<string name="digest_matched" version="2">Digest für "{1}" abgestimmt.</string>
 		<string name="digest_check_skip" version="2">Digest-Check-Überspringen ist aktiv</string>
@@ -762,6 +762,8 @@
 		<string name="changing_boot_slot">Boot-Slot ändern</string>
 		<string name="changing_boot_slot_complete">Boot-Slot wurde geändert</string>
 		<string name="unable_set_boot_slot">Fehler beim Ändern des Bootloader-Boot-Slots auf {1}</string>
+		<string name="ozip_decrypt_decryption">Starting Ozip Decryption...</string>
+		<string name="ozip_decrypt_finish">Ozip Decryption Finished!</string>
 		<string name="backup_storage_warning">Sicherungen von {1} enthalten keine Dateien des internen Speichers, wie Bilder oder Downloads.</string>
 		<string name="sha2_chk">Verwenden Sie SHA2 zum Hashen</string>
 		<string name="disabled">Deaktiviert</string>
@@ -773,10 +775,10 @@
 		<string name="fox_incremental_ota_compatibility_chk">Inkrementelle Paketsignatur wird überprüft...</string>
 		<string name="fox_incremental_ota_compatibility_false">Inkrementelles Paket ist nicht mit diesem ROM kompatibel!</string>
 		<string name="fox_incremental_ota_compatibility_true">Inkrementelles Paket ist kompatibel</string>
-		<string name="fox_incremental_ota_status_enabled">Support MIUI Inkrementeller Paketstatus: Aktiviert</string>
-		<string name="fox_incremental_ota_status_disabled">Support MIUI Inkrementeller Paketstatus: Deaktiviert</string>
+		<string name="fox_incremental_ota_status_enabled">Support Incremental package status: Enabled</string>
+		<string name="fox_incremental_ota_status_disabled">Support Incremental package status: Disabled</string>
 		<string name="fox_incremental_package_detected">Erkanntes inkrementelles Paket '{1}'</string>
-		<string name="fox_survival_does_not_exist">OTA Survival existiert nicht! Bitte zuerst ein komplettes ROM flashen!</string>
+		<string name="fox_survival_does_not_exist">OTA Survival does not exist! Please flash a full ROM first!</string>
 		<string name="fox_install_detecting">Aktuelles Paket erkennen</string>
 		<string name="fox_install_standard_detected">- Erkanntes Standardpaket</string>
 		<string name="fox_install_miui_detected">- Erkanntes MIUI-Aktualisierungspaket</string>
@@ -786,7 +788,7 @@
 		<string name="fox_incremental_ota_res_run">OTA_RES-Prozess wird ausgeführt...</string>
 		<string name="fox_incremental_ota_bak_run">OTA_BAK-Prozess wird ausgeführt...</string>
 		<string name="fox_incremental_ota_bak">OTA_BAK - fertig!</string>
-		<string name="fox_internal_fatal_i1">OrangeFox: FATALER FEHLER! Sie können den internen Speicher nicht auf sich selbst sichern!</string>
+		<string name="fox_internal_fatal_i1">OrangeFox: FATAL ERROR! You cannot backup Internal Storage onto itself!</string>
 		<string name="fox_internal_fatal_i2">Sie MÜSSEN das Sicherungsziel auf MicroSD / USB-OTG ändern.</string>
 		<string name="fox_internal_q1">OrangeFox - Interner Speicher - Vorsicht!</string>
 
@@ -928,7 +930,10 @@
 		
 		<!-- MIUI OTA -->
 		<string name="fox_ota_settings">OTA Einstellungen</string>
+		<string name="fox_miui_ota_on">Aktivieren Sie OTA</string>
 		<string name="fox_ota_on">Aktivieren Sie OTA</string>
+		<string name="fox_patch_rom">Patch ROM</string>
+		<string name="fox_ota_lite">OTA &amp; ROM</string>
 		
 		<!-- About -->
 		<string name="abt_maintainer">Betreuer</string>
@@ -966,8 +971,8 @@
 
 		<!-- this error will shown when recovery cannot create backup folder
 		 -->
-		<string name="backups_rw_error_1">Speicher nur lesend</string>
-		<string name="backups_rw_error_2">eingehangen!</string>
+		<string name="backups_rw_error_1">Speicher eingehangen</string>
+		<string name="backups_rw_error_2">als nur lesbar!</string>
 
 		<!-- App mgr -->
 		<string name="appmgr_apps">Apps</string>
@@ -987,14 +992,19 @@
 		<!-- OTA -->
 		<string name="fox_ota_msg_ready">Du bist bereit, um Aktualisierungen zu erhalten!</string>
 		<string name="fox_ota_msg_custom">Custom ROM Modus aktivieren</string>
-		<string name="fox_ota_msg_reflash">Bitte komplettes MIUI-ROM flashen!</string>
+		<string name="fox_ota_msg_reflash">Please flash full ROM!</string>
 		<string name="fox_advanced_stock_recovery">Aggressive Stock Recovery-Deaktivierung</string>
-		<string name="fox_support_miui_ota_chk">Unterstützung für MIUI inkrementelle OTA</string>
+		<string name="fox_support_miui_ota_chk">Support OTA</string>
 		<string name="fox_include_system_survival_chk">System in OTA-Überleben einschließen</string>
 		<string name="fox_verify_incremental_ota_signature_chk">Inkrementelle OTA-Signaturprüfung</string>
 		<string name="fox_dmverity_chk">DM-Verity deaktivieren</string>
 		<string name="fox_forced_encryption_chk">Erzwungene Verschlüsselung deaktivieren</string>
 		<string name="FOX_DISABLE_OTA_AUTO_REBOOT_chk">Neustart nach OTA-Installation verhindern</string>
-		<string name="of_ota_reboot_disabled">OTA-Update erfolgreich. Automatischer Neustart ist deaktiviert. Kontrolle wird an Sie übergeben.</string>
+		<string name="of_ota_reboot_disabled">OTA update completed. You disabled auto-reboot. Returning control to you.</string>
+
+		<!-- Wipe format moved -->
+		<string name="wipe_format_moved_info1">Note: Format Data moved to</string>
+		<string name="wipe_format_moved_info2">Manage Partitions page.</string>
+		
 	</resources>
 </language>

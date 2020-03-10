@@ -68,8 +68,8 @@
 		<string name="failed">Gagal</string>
 		<string name="successful">Berhasil</string>
 		<string name="wipe_cache_btn">Bersihkan Cache</string>
-		<string name="reboot_system_btn">Reboot Sistem</string>
-		<string name="reboot_recovery_btn">Reboot ke Recovery</string>
+		<string name="reboot_system_btn">Mulai Ulang Sistem</string>
+		<string name="reboot_recovery_btn">Mulai Ulang ke Pemulihan</string>
 		<string name="install_sel_target">Pilih Target Partisi</string>
 		<string name="flash_image_select">Partisi</string>
 		<string name="flashing_image">Memasang Image...</string>
@@ -91,7 +91,7 @@
 		<string name="factory_reset3">Sebagian besar waktu ini</string>
 		<string name="factory_reset4">penghapusan yang hanya Anda butuhkan.</string>
 		<string name="factory_resetting">Membersihkan Data, Cache, dan Dalvik...</string>
-		<string name="advanced_wipe_hdr">Tingkat Lanjut</string>
+		<string name="advanced_wipe_hdr">Bersihkan Tingkat Lanjut</string>
 		<string name="advanced_wipe_btn">Bersihkan Tingkat Lanjut</string>
 		<string name="wipe_enc_confirm">Hapus Enkripsi dari Data?</string>
 		<string name="formatting_data">Memformat Data ...</string>
@@ -104,14 +104,14 @@
 		<string name="format_data_hdr">Format Data</string>
 		<string name="format_data_btn">Format Data</string>
 		<string name="format_data_ptr1">Format Data akan menghapus semua aplikasi Anda,</string>
-		<string name="format_data_ptr2">backup, gambar, video, media, dan</string>
+		<string name="format_data_ptr2">cadangan, gambar, video, media, dan</string>
 		<string name="format_data_ptr3">akan menghapus enkripsi pada penyimpanan internal.</string>
 		<string name="format_data_adopted">Termasuk Penyimpanan yang Teradopsi</string>
 		<string name="format_data_undo">Ini tidak dapat dibatalkan.</string>
 		<string name="format_data_complete">Format Data selesai</string>
 		<!-- Translator note: the word "yes" must remain English! -->
 		<string name="yes_continue">Ketik "yes" untuk konfirmasi.</string>
-		<string name="part_opt_hdr">Tipe partisi</string>
+		<string name="part_opt_hdr">Informasi partisi</string>
 		<string name="file_sys_opt">Opsi Partisi</string>
 		<string name="part_mount_point">Titik Muat</string>
 		<string name="part_curr_fs">Berkas sistem</string>
@@ -135,7 +135,7 @@
 		<string name="swipe_repair">Geser untuk Perbaiki</string>
 		<string name="change_fs_btn">Ganti FS</string>
 		<string name="change_fs_warn1">Beberapa ROM dan Kernel Tidak mendukung</string>
-		<string name="change_fs_warn2">beberapa berkas sistem. Lakukan dengan hati - hati!</string>
+		<string name="change_fs_warn2">some file systems. Proceed with caution!</string>
 		<string name="change_fs_confirm">Ganti FS</string>
 		<string name="formatting">Formatting...</string>
 		<string name="format_complete">Format selesai</string>
@@ -175,8 +175,8 @@
 		<string name="renaming_backup">Mengganti nama Cadangan...</string>
 		<string name="rename_backup_complete">Ganti Nama Cadangan Selesai</string>
 		<string name="swipe_to_rename">Geser untuk Ganti Nama</string>
-		<string name="mount_hdr">Mount</string>
-		<string name="mount_sys_ro_chk">Mount partisi sistem read-only</string>
+		<string name="mount_hdr">Muat</string>
+		<string name="mount_sys_ro_chk">Mount system and vendor read-only</string>
 		<string name="decrypt_data_btn">Dekripsi data</string>
 		<string name="disable_mtp_btn">Nonaktifkan MTP</string>
 		<string name="enable_mtp_btn">Aktifkan MTP</string>
@@ -188,7 +188,7 @@
 		<string name="unmount_btn">Melepas</string>
 		<string name="rb_system_btn">Sistem</string>
 		<string name="rb_poweroff_btn">Matikan Daya</string>
-		<string name="rb_recovery_btn">Recovery</string>
+		<string name="rb_recovery_btn">Pemulihan</string>
 		<string name="rb_bootloader_btn">Bootloader</string>
 		<string name="rb_theme">Tema</string>
 		<string name="rb_download_btn">Download</string>
@@ -269,7 +269,7 @@
 		<string name="button_vibration">Tombol Getaran:</string>
 		<string name="kb_vibration">Getaran Keyboard:</string>
 		<string name="act_vibration">Aksi Getaran:</string>
-		<string name="advanced_hdr">Tingkat Lanjut</string>
+		<string name="advanced_hdr">Lanjutan</string>
 		<string name="copy_log_confirm">Salin Log ke kartu SD?</string>
 		<string name="copying_log">Menyalin Log ke kartu SD...</string>
 		<string name="copy_log_complete">Log disalin</string>
@@ -377,24 +377,24 @@
 		<string name="mtp_disabled">MTP dinonaktifkan</string>
 		<string name="mtp_crash">MTP Rusak, tidak memulai MTP saat boot.</string>
 		<string name="decrypt_success">Berhasil didekripsi dengan kata sandi default.</string>
-		<string name="unable_to_decrypt">Tidak dapat mendekripsi dengan kata sandi default. Anda mungkin perlu melakukan Format Data.</string>
+		<string name="unable_to_decrypt">Unable to decrypt with default password. You may need to perform a Format Data.</string>
 		<string name="generating_md51">Menghasilkan MD5</string>
 		<!-- Message displayed during a backup if we are generating an MD5, ideally, leave the leading " * " to help align and separate this text from other console text -->
-		<string name="generating_md52"> * Menghasilkan md5...</string>
-		<string name="md5_created"> * MD5 Dibuat.</string>
-		<string name="md5_error"> * Kesalahan MD5!</string>
-		<string name="md5_compute_error"> * Kesalahan komputasi MD5.</string>
+		<string name="generating_md52"> * Generating md5...</string>
+		<string name="md5_created"> * MD5 Created.</string>
+		<string name="md5_error"> * MD5 Error!</string>
+		<string name="md5_compute_error"> * Error computing MD5.</string>
 		<string name="current_date">(Tanggal sekarang)</string>
 		<string name="auto_generate">(Hasilkan Otomatis)</string>
 		<string name="unable_to_locate_partition">Tidak dapat menemukan partisi '{1}' untuk perhitungan cadangan.</string>
 		<string name="no_partition_selected">Tidak ada partisi yang dipilih untuk cadangan.</string>
-		<string name="total_partitions_backup"> * Jumlah total partisi yang dicadangkan: {1}</string>
-		<string name="total_backup_size"> * Ukuran total semua data: {1}MB</string>
-		<string name="available_space"> * Ruang yang tersedia: {1}MB</string>
+		<string name="total_partitions_backup"> * Total number of partitions to back up: {1}</string>
+		<string name="total_backup_size"> * Total size of all data: {1}MB</string>
+		<string name="available_space"> * Available space: {1}MB</string>
 		<string name="unable_locate_storage">Tidak dapat menemukan perangkat penyimpanan.</string>
 		<string name="no_space">Tidak cukup ruang penyimpanan.</string>
 		<string name="backup_started">[BACKUP DIMULAI]</string>
-		<string name="backup_folder"> * Folder Cadangan: {1}</string>
+		<string name="backup_folder"> * Backup Folder: {1}</string>
 		<string name="fail_backup_folder">Gagal membuat folder cadangan.</string>
 		<string name="avg_backup_fs">Rata-rata tingkat pencadangan untuk sistem file: {1} MB / detik</string>
 		<string name="avg_backup_img">Rata-rata tingkat pencadangan untuk drive yang dicitrakan: {1} MB / detik</string>
@@ -454,7 +454,7 @@
 		<string name="invalid_flash">Partisi flash yang ditentukan tidak valid.</string>
 		<string name="flash_done">[IMAGE FLASH SELESAI]</string>
 		<string name="wiping">Menghapus {1}</string>
-		<string name="repair_not_exist">{1} tidak ada! Tidak bisa diperbaiki!</string>
+		<string name="repair_not_exist">{1} does not exist! Cannot repair!</string>
 		<string name="repairing_using">Memperbaiki {1} menggunakan {2}...</string>
 		<string name="unable_repair">Tidak dapat memperbaiki {1}.</string>
 		<string name="mount_data_footer">Tidak dapat memasang /data dan tidak dapat menemukan footer kripto.</string>
@@ -467,7 +467,7 @@
 		<string name="cannot_resize">Tidak dapat mengubah ukuran {1}.</string>
 		<string name="repair_resize">Memperbaiki {1} sebelum mengubah ukuran.</string>
 		<string name="unable_resize">Tidak dapat mengubah ukuran {1}.</string>
-		<string name="no_md5_found">Tidak ada file md5 yang ditemukan untuk '{1}'. Batalkan pilihan Aktifkan verifikasi MD5 untuk dipulihkan.</string>
+		<string name="no_md5_found">No md5 file found for '{1}'. Please unselect Enable MD5 verification to restore.</string>
 		<string name="md5_fail_match">MD5 gagal mencocokkan pada '{1}'.</string>
 		<string name="fail_decrypt_tar">Gagal mendekripsi file tar '{1}'</string>
 		<string name="format_data_msg">Anda mungkin perlu me-reboot pemulihan agar dapat menggunakan /data lagi.</string>
@@ -480,7 +480,7 @@
 		<string name="backing_up">Mencadangkan {1}...</string>
 		<string name="backing">Mencadangkan</string>
 		<string name="backup_size">Ukuran file cadangan untuk '{1}' adalah 0 byte.</string>
-		<string name="datamedia_fs_restore">PERINGATAN: Pencadangan /data ini dibuat dengan sistem file {1}! Cadangan mungkin tidak bisa boot kecuali Anda mengubah kembali ke {1}.</string>
+		<string name="datamedia_fs_restore">WARNING: This /data backup was made with {1} file system! The backup may not boot unless you change back to {1}.</string>
 		<string name="restoring">Memulihkan {1}...</string>
 		<string name="restoring_hdr">Memulihkan...</string>
 		<string name="recreate_folder_err">Tidak dapat membuat ulang {1} folder.</string>
@@ -512,7 +512,7 @@
 		<string name="compression_on">Kompresi aktif</string>
 		<string name="md5_off">Generasi MD5 tidak aktif</string>
 		<string name="backup_fail">Cadangan Gagal</string>
-		<string name="backup_clean">Cadangan Gagal. Membersihkan Folder Cadangan.</string>
+		<string name="backup_clean">Backup Failed. Cleaning Backup Folder.</string>
 		<string name="running_recovery_commands">Menjalankan Perintah Pemulihan</string>
 		<string name="recovery_commands_complete">Perintah Pemulihan selesai</string>
 		<string name="running_ors">Menjalankan OpenRecoveryScript</string>
@@ -558,11 +558,11 @@
 		<string name="curr_date">(Tanggal sekarang)</string>
 		<string name="backup_name_len">Nama cadangan terlalu panjang.</string>
 		<string name="backup_name_invalid">Nama cadangan '{1}' mengandung karakter tidak valid: '{1}'</string>
-		<string name="no_real_sdcard">Perangkat ini tidak memiliki kartu SD sungguhan! Batalkan!</string>
+		<string name="no_real_sdcard">This device does not have a real SD Card! Aborting!</string>
 		<string name="cancel_sideload">Membatalkan sideload ADB...</string>
 		<string name="change_fs_err">Kesalahan mengubah sistem file.</string>
 		<string name="change_fs_hdr">Ubah Sistem File untuk</string>
-		<string name="theme_ver_err">Versi tema khusus tidak cocok dengan versi OrangeFox. Menggunakan tema stok.</string>
+		<string name="theme_ver_err">Custom theme version does not match OrangeFox version. Using stock theme.</string>
 		<string name="up_a_level">..</string>
 
 		<!-- new-->
@@ -588,7 +588,7 @@
 		<string name="verifying_pas">Verifikasi Kata Sandi</string>
 		<string name="dialog_offset_note">Pilih nilai offset Anda</string>
 		<string name="queue_no">#</string>
-		<string name="options_cptn">Pilihan</string>
+		<string name="options_cptn">Opsi</string>
 		<string name="flash_img_confirm">Flash Image File</string>
 		<string name="also_wipes">Juga hapus</string>
 		<string name="confirm_wipe_cptn">Konfirmasikan Penghapusan</string>
@@ -672,7 +672,7 @@
 		<string name="no_os_title">Anda yakin?</string>
 		<string name="no_os_subtitle">Partisi sistem kosong</string>
 		
-		<string name="no_os1">Tidak ada OS yang diinstal! Apakah kamu yakin?</string>
+		<string name="no_os1">No OS installed! Are you sure you</string>
 		<string name="no_osrb">Usap untuk Memulai Ulang?</string>
 		<string name="no_ospo">Usap untuk Matikan daya?</string>
 		<string name="no_osrb_recovery">Tidak dapat menyalakan ulang ke mode pemulihan</string>
@@ -723,7 +723,7 @@
 		
 		<string name="starting_aroma">Memulai AromaFM ...</string>
 		<string name="lang_set_wait">Ubah bahasa</string>
-		<string name="installing_theme">Menginstall Motif</string>
+		<string name="installing_theme">Memasang tema</string>
 		
 		<string name="menu_btn">Menu</string>
 		
@@ -736,18 +736,18 @@
 		<string name="restore_enable_digest_chk" version="2">Aktifkan Verifikasi Digest dari File Cadangan</string>
 		<string name="decrypt_data_vold_os_missing">File yang hilang diperlukan untuk mendekripsi tanda terima: {1}</string>
 		<string name="generating_digest1" version="2">Menghasilkan Digest</string>
-		<string name="generating_digest2" version="2"> * Menghasilkan Digest...</string>
-		<string name="digest_created" version="2"> * Digest Dibuat.</string>
-		<string name="digest_error" version="2"> * Kesalahan Digest!</string>
-		<string name="digest_compute_error" version="2"> * Kesalahan menghitung Digest.</string>
+		<string name="generating_digest2" version="2"> * Generating Digest...</string>
+		<string name="digest_created" version="2"> * Digest created.</string>
+		<string name="digest_error" version="2"> * Digest error!</string>
+		<string name="digest_compute_error" version="2"> * Error computing Digest.</string>
 		<string name="verifying_digest" version="2">Memeriksa Digest</string>
 		<string name="skip_digest" version="2">Melewatkan pemeriksaan Digest berdasarkan pengaturan pengguna.</string>
 		<string name="decrypt_success_nodev">Data berhasil didekripsi</string>
-		<string name="no_digest_found" version="2">Tidak ada file digest yang ditemukan untuk '{1}'. Harap batalkan pilihan Mengaktifkan verifikasi Digest untuk dipulihkan.</string>
+		<string name="no_digest_found" version="2">No Digest file found for '{1}'. Please unselect Enable Digest verification to restore.</string>
 		<string name="digest_fail_match" version="2">Intisari gagal mencocokkan pada '{1}'.</string>
 		<string name="digest_matched" version="2">Intisari cocok untuk '{1}'.</string>
 		<string name="digest_check_skip" version="2">Lewati pemeriksaan digest aktif</string>
-		<string name="digest_off" version="2">Generasi MD5 tidak aktif</string>
+		<string name="digest_off" version="2">Pembuatan digest tidak aktif</string>
 		<string name="invalid_zip_format">Format file zip tidak valid!</string>
 		<string name="check_for_digest" version="2">Memeriksa file Digest...</string>
 		<string name="no_digest" version="2">Melewatkan pemeriksaan Digest: tidak ditemukan file Digest</string>
@@ -762,21 +762,23 @@
 		<string name="changing_boot_slot">Mengubah Slot Boot</string>
 		<string name="changing_boot_slot_complete">Mengganti Boot Slot selesai</string>
 		<string name="unable_set_boot_slot">Kesalahan mengubah bootloader ke slot {1}</string>
+		<string name="ozip_decrypt_decryption">Starting Ozip Decryption...</string>
+		<string name="ozip_decrypt_finish">Ozip Decryption Finished!</string>
 		<string name="backup_storage_warning">Cadangan {1} tidak termasuk file apa pun dalam penyimpanan internal seperti gambar atau unduhan.</string>
 		<string name="sha2_chk">Gunakan SHA2 untuk hashing</string>
-		<string name="disabled">Cacat</string>
+		<string name="disabled">Nonaktif</string>
 		<string name="enabled">Diaktifkan</string>
 		<string name="zip_compatible_err">Kesalahan kompatibilitas Zip Treble!</string>
 		
 		
 		<!-- Console Messages -->
 		<string name="fox_incremental_ota_compatibility_chk">Memverifikasi Penandatanganan Paket Incremental...</string>
-		<string name="fox_incremental_ota_compatibility_false">Paket inkremental tidak kompatibel dengan ROM ini!</string>
-		<string name="fox_incremental_ota_compatibility_true">Paket inkremental kompatibel</string>
-		<string name="fox_incremental_ota_status_enabled">Mendukung status paket MIUI Incremental: Diaktifkan</string>
-		<string name="fox_incremental_ota_status_disabled">Mendukung status paket MIUI Incremental: Nonaktif</string>
+		<string name="fox_incremental_ota_compatibility_false">Paket incremental tidak kompatibel dengan ROM ini!</string>
+		<string name="fox_incremental_ota_compatibility_true">Paket incremental kompatibel</string>
+		<string name="fox_incremental_ota_status_enabled">Support Incremental package status: Enabled</string>
+		<string name="fox_incremental_ota_status_disabled">Support Incremental package status: Disabled</string>
 		<string name="fox_incremental_package_detected">Paket Incremental Terdeteksi '{1}'</string>
-		<string name="fox_survival_does_not_exist">Kelangsungan Hidup OTA tidak ada! Harap flash full ROM terlebih dahulu!</string>
+		<string name="fox_survival_does_not_exist">OTA Survival does not exist! Please flash a full ROM first!</string>
 		<string name="fox_install_detecting">Mendeteksi Paket Saat Ini</string>
 		<string name="fox_install_standard_detected">- Paket Standar Terdeteksi</string>
 		<string name="fox_install_miui_detected">- Paket Pembaruan MIUI Terdeteksi</string>
@@ -786,7 +788,7 @@
 		<string name="fox_incremental_ota_res_run">Menjalankan proses OTA_RES...</string>
 		<string name="fox_incremental_ota_bak_run">Menjalankan proses OTA_BAK...</string>
 		<string name="fox_incremental_ota_bak">OTA_BAK -- selesai!</string>
-		<string name="fox_internal_fatal_i1">OrangeFox: KESALAHAN FATAL! Anda tidak dapat mencadangkan Penyimpanan Internal ke dalamnya sendiri!</string>
+		<string name="fox_internal_fatal_i1">OrangeFox: FATAL ERROR! You cannot backup Internal Storage onto itself!</string>
 		<string name="fox_internal_fatal_i2">Anda HARUS mengubah tujuan pencadangan ke MicroSD/USB-OTG.</string>
 		<string name="fox_internal_q1">OrangeFox - Penyimpanan Internal - hati-hati!</string>
 
@@ -808,33 +810,33 @@
 		
 		<!-- OrangeFox Recovery - Pie Door theme -->
 
-		<string name="unpack">Buka</string>
-		<string name="repack">Repack</string>
+		<string name="unpack">Bongkar</string>
+		<string name="repack">Bongkar ulang</string>
 
 		<string name="fox_save_load_aromafm_config_chk">Simpan/Muat konfigurasi AromaFM</string>
 		<string name="search_help">★ Mencari file dan folder</string>
 		
 		<string name="reboot_to_take_effect">Mulai ulang untuk perubahan mulai berlaku</string>
 		<string name="fox_modules_hdr">Tambahan Fox</string>
-		<string name="fox_modules_inst">Pasang addon</string>
+		<string name="fox_modules_inst">Pasang tambahan</string>
 		<string name="backup_short_hdr">Cadangan Baru</string>
 		<string name="backups_wat">Di mana cadangannya?</string>
 		
 		<string name="module_install">Pasang</string>
 		<string name="module_uninstall">Hapus</string>
 		<string name="remove_of_files">Menghapus file OrangeFox</string>
-		<string name="module_initd">Aktifkan dukungan JSONP</string>
+		<string name="module_initd">Aktifkan dukungan init.d</string>
 		<string name="module_cam">Aktifkan Camera2API</string>
 		<string name="module_pass">Hapus kata sandi</string>
 		<string name="fox_files_not_exist_1">File tidak ada!</string>
-		<string name="fox_files_not_exist_2">Harap reflash recovery</string>
+		<string name="fox_files_not_exist_2">Harap flash ulang pemulihan</string>
 		<string name="fox_files_not_exist_3">menggunakan zip instalasi.</string>
 
 		<!-- Customization -->
-		<string name="cust_new_ota_screen">Jadikan ikon file lebih besar</string>
+		<string name="cust_new_ota_screen">Tampilkan detil lebih sedikit ketika menjalankan pembaruan OTA</string>
 		<string name="fm_icons_simple">Jadikan ikon file lebih besar</string>
 		<string name="theme_engine_update">Terapkan perubahan dan muat ulang?</string>
-		<string name="theme_engine_reset">Tema</string>
+		<string name="theme_engine_reset">Atur ulang tema dan muat ulang?</string>
 		<string name="apply_btn">Terapkan</string>
 		<string name="theme_hdr">Tema</string>
 		
@@ -842,13 +844,13 @@
 		<string name="font_norm">Normal</string>
 		<string name="font_big">Besar</string>
 		<string name="font_size">ukuran Huruf</string>
-		<string name="cust_autoapply">Terapkan tema dengan konfirmasi</string>
+		<string name="cust_autoapply">Terapkan tema tanpa konfirmasi</string>
 		<string name="cust_expand_list">Perluas daftar secara otomatis</string>
 		
 		<string name="status_battery_style">Gaya Baterai</string>
 		<string name="status_battery_circle">Bulat</string>
 		<!-- Status bar -->
-		<string name="status_clock_pos">posisi jam</string>
+		<string name="status_clock_pos">Posisi jam</string>
 		<string name="status_clock_left">Kiri</string>
 		<string name="status_clock_center">Tengah</string>
 		<string name="status_clock_right">Kanan</string>
@@ -858,8 +860,8 @@
 		<string name="hide_notch">Sembunyikan poni</string>
 		<!-- NavBar -->
 		<string name="navbar_title">Bilah Navigasi</string>
-		<string name="navbar_onscreen">Aktifkan NavBar</string>
-		<string name="show_slideout">Tampilkan tombol konsol pengembang</string>
+		<string name="navbar_onscreen">Aktifkan Bilah Navigasi</string>
+		<string name="show_slideout">Tampilkan tombol konsol</string>
 		<string name="dark_nav">Gelap</string>
 		<!-- Keyboard -->
 		<string name="keyboard_title">Papan ketik</string>
@@ -867,25 +869,25 @@
 		<string name="keyboard_nums">Baris Angka</string>
 		<string name="key_swipe">Geser pada keyboard untuk menghapus semua</string>
 		<!-- Lockscreen -->
-		<string name="lockscreen_unlock">Membuka kunci</string>
-		<string name="lockscreen_title">Kunci layar</string>
-		<string name="lockscreen_style">Gaya lockscreen</string>
+		<string name="lockscreen_unlock">Buka kunci</string>
+		<string name="lockscreen_title">Layar kunci</string>
+		<string name="lockscreen_style">Gaya layar kunci</string>
 		<string name="lockscreen_clock">Jam</string>
 		<string name="lockscreen_icon">Ikon</string>
 		<string name="lockscreen_btn">Ganti slider dengan tombol</string>
-		<string name="lockscreen_info">Tampilkan info baterai dan CPU</string>
+		<string name="lockscreen_info">Tampilkan informasi baterai dan CPU</string>
 		<string name="lockscreen_quicklock">Mengetuk ikon kunci mengunci layar</string>
 
 		<!-- OTA working page -->
-		<string name="ota_console_title">Memasang...</string>
+		<string name="ota_console_title">Memasang OTA...</string>
 		<string name="ota_simple_title">Memperbarui...</string>
-		<string name="ota_simple_log_btn">Catatan</string>
+		<string name="ota_simple_log_btn">Log</string>
 
 		<string name="battery">Baterai</string>
 
 		<!-- Pass -->
 		<string name="pass_gk">Kunci gerakan</string>
-		<string name="pass_classic">Setel kata sandi</string>
+		<string name="pass_classic">Teks kata sandi</string>
 		<string name="pass_dis">Nonaktifkan kata sandi</string>
 		<string name="pass_pin">Kode PIN</string>
 		
@@ -902,18 +904,18 @@
 		<string name="new_pass_info_4">Anda harus memasukkan kata sandi dua kali</string>
 		<string name="new_pass_info_4_gk">Anda perlu menggambar tombol gerakan dua kali</string>
 		<string name="new_pass_info_4_2">Masukkan sandi lagi.</string>
-		<string name="new_pass_info_4_2_gk">Gambar lagi tombol isyarat</string>
+		<string name="new_pass_info_4_2_gk">Gambar lagi tombol gerakan</string>
 		
 		<string name="pass_page_block">Metode pemblokiran saat ini</string>
-		<string name="pass_page_block_inf1">Anda bisa tidur dengan lebih baik</string>
+		<string name="pass_page_block_inf1">Anda bisa tidur dengan lebih baik ketika</string>
 		<string name="pass_page_block_inf2">Anda dilindungi.</string>
-		<string name="pass_page_select">Ulang password untuk</string>
+		<string name="pass_page_select">Pilih tipe kata sandi</string>
 		
 		<!-- Utilities -->
 		<string name="more">Lebih...</string>
 		<string name="hide">Sembunyikan</string>
-		<string name="part_menu_hdr">Partisi Data</string>
-		<string name="run_adb_startup">Modul</string>
+		<string name="part_menu_hdr">Kelola Partisi</string>
+		<string name="run_adb_startup">Jalankan ADB pada startup</string>
 
 		<!-- MMGUI -->
 		<string name="mm_module_active">Aktif</string>
@@ -921,44 +923,47 @@
 		<string name="mm_modules">Modul</string>
 		<string name="mm_ver">Versi Magisk</string>
 		<string name="mm_mod_ver">Versi Modul</string>
-		<string name="magisk_not_found">Anak tidak ditemukan!</string>
+		<string name="magisk_not_found">Magisk tidak ditemukan!</string>
 		<string name="magisk_not_found_1">Apakah Anda ingin pergi ke Fox Addons</string>
 		<string name="magisk_not_found_2">dan instal Magisk yang telah dibangun sebelumnya?</string>
 		<string name="magisk_not_found_3"/>
 		
 		<!-- MIUI OTA -->
-		<string name="fox_ota_settings">Pengaturan HW</string>
+		<string name="fox_ota_settings">Pengaturan OTA</string>
+		<string name="fox_miui_ota_on">Aktifkan OTA</string>
 		<string name="fox_ota_on">Aktifkan OTA</string>
+		<string name="fox_patch_rom">Patch ROM</string>
+		<string name="fox_ota_lite">OTA &amp; ROM</string>
 		
 		<!-- About -->
 		<string name="abt_maintainer">Pengelola</string>
 		<string name="abt_fd">Pembuat tema &amp; amp;  perancang</string>
 		<string name="abt_bork">CEO, Situs &amp; amp;  UI</string>
-		<string name="abt_dj">Membangun sistem, C ++</string>
-		<string name="abt_front">Pengembang frontend</string>
-		<string name="abt_back">Pengembang frontend</string>
+		<string name="abt_dj">Sistem bentukan, C ++</string>
+		<string name="abt_front">Pengembang garis depan</string>
+		<string name="abt_back">Pengembang garis belakang</string>
 		<string name="abt_device">Perangkat</string>
 		<string name="version_twrp">Versi TWRP</string>
 		<string name="build_type">Tipe pembuatan</string>
 		<string name="abt_credits">Kredit</string>
 		<string name="abt_trans">Penerjemah</string>
-		<string name="abt_changes">Perubahan Log</string>
+		<string name="abt_changes">Daftar Perubahan</string>
 		<string name="abt_main_shrt">Pengelola</string>
-		<string name="welcome_msg">Buka folder data.</string>
+		<string name="welcome_msg">Selamat Datang di OrangeFox</string>
 		<string name="welcome_msg2"><!-- If welcome message is too big in your lang, use this string --></string>
 		
 		<!-- Symlink -->
 		<string name="symlink_dir_name">Tautan ke folder (s)</string>
-		<string name="symlink_file_name">Tautan berkas</string>
+		<string name="symlink_file_name">Tautan ke berkas</string>
 		<string name="symlink_broken_name">Tautan rusak</string>
-		<string name="symlink_folder">Buka folder data.</string>
-		<string name="symlink_file">Buka folder data.</string>
+		<string name="symlink_folder">Buka folder asli</string>
+		<string name="symlink_file">Buka berkas asli</string>
 		
 		<!-- Files -->
-		<string name="files_show_hidden">Tampilkan file dan folder tersembunyi</string>
+		<string name="files_show_hidden">Tampilkan berkas dan folder tersembunyi</string>
 		<string name="files_auto_open">Deteksi otomatis jenis file dalam File</string>
 		<string name="file_read_error">Tidak bisa membuka berkas.</string>
-		<string name="subs_wipe">Substratum Overlays</string>
+		<string name="subs_wipe">Hapus Substratum Overlays</string>
 		<string name="sort_ex_all">Semua file</string>
 		<string name="sort_ex_img">File IMG</string>
 		<string name="sort_ex_zip">File ZIP</string>
@@ -966,8 +971,8 @@
 
 		<!-- this error will shown when recovery cannot create backup folder
 		 -->
-		<string name="backups_rw_error_1">Performa tinggi</string>
-		<string name="backups_rw_error_2">Hemat daya</string>
+		<string name="backups_rw_error_1">Penyimpanan dimuat</string>
+		<string name="backups_rw_error_2">hanya baca saja!</string>
 
 		<!-- App mgr -->
 		<string name="appmgr_apps">Aplikasi</string>
@@ -980,21 +985,26 @@
 		<string name="perf_conf_high">Performa tinggi</string>
 		<string name="perf_conf_batt">Hemat daya</string>
 
-		<string name="fox_led_title">Pengaturan HW</string>
+		<string name="fox_led_title">Pengaturan LED</string>
 		<string name="fox_use_green_led">Pakai led warna hijau</string>
 		<string name="fox_boot_fastcharge">Paksa pengisian cepat</string>
 
 		<!-- OTA -->
 		<string name="fox_ota_msg_ready">Anda siap menerima pembaruan!</string>
-		<string name="fox_ota_msg_custom">Diaktifkan mode ROM kustom</string>
-		<string name="fox_ota_msg_reflash">Tolong flash ROM MIUI penuh!</string>
-		<string name="fox_advanced_stock_recovery">Penonaktifan pemulihan stok agresif</string>
-		<string name="fox_support_miui_ota_chk">Mendukung MIUI Incremental OTA</string>
+		<string name="fox_ota_msg_custom">Mode ROM kustom diaktifkan</string>
+		<string name="fox_ota_msg_reflash">Please flash full ROM!</string>
+		<string name="fox_advanced_stock_recovery">Penonaktifan pemulihan bawaan secara agresif</string>
+		<string name="fox_support_miui_ota_chk">Support OTA</string>
 		<string name="fox_include_system_survival_chk">Sertakan sistem dalam survival OTA</string>
 		<string name="fox_verify_incremental_ota_signature_chk">Verifikasi tanda tangan OTA tambahan</string>
 		<string name="fox_dmverity_chk">Nonaktifkan DM-Verity</string>
 		<string name="fox_forced_encryption_chk">Nonaktifkan Enkripsi Paksa</string>
-		<string name="FOX_DISABLE_OTA_AUTO_REBOOT_chk">Cegah reboot otomatis setelah menginstal OTA</string>
-		<string name="of_ota_reboot_disabled">Update OTA berhasil. Anda mematikan muat ulang otomatis. Mengembalikan kontrol kepada anda.</string>
+		<string name="FOX_DISABLE_OTA_AUTO_REBOOT_chk">Cegah mulai ulang otomatis setelah memasang OTA</string>
+		<string name="of_ota_reboot_disabled">OTA update completed. You disabled auto-reboot. Returning control to you.</string>
+
+		<!-- Wipe format moved -->
+		<string name="wipe_format_moved_info1">Note: Format Data moved to</string>
+		<string name="wipe_format_moved_info2">Manage Partitions page.</string>
+		
 	</resources>
 </language>
