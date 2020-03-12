@@ -143,7 +143,7 @@ static int New_Magiskboot_Binary(void)
    string magiskboot = TWFunc::Get_MagiskBoot();
    if (!TWFunc::Path_Exists(magiskboot))
      return -2; // magiskboot can't be found
-     
+
    string cmd_script = "/tmp/tmp_0tm.sh";
    CreateNewFile(cmd_script);
    chmod (cmd_script.c_str(), 0755);
@@ -160,13 +160,8 @@ static int New_Magiskboot_Binary(void)
      return -3; // failure to create the script
 
    usleep(128);
-
    string mCheck = TWFunc::Exec_With_Output(cmd_script + " " + magiskboot);        
-
    unlink(cmd_script.c_str());
-
-   //gui_print("TESTING RESULT of %s=%s\n", magiskboot.c_str(), mCheck.c_str());
-   
    if (mCheck == "0") // this is a new magiskboot binary
    	return 1;
    else 
@@ -2376,8 +2371,6 @@ int TWFunc::Check_MIUI_Treble(void)
     	gui_print_color("warning", "* No ROM.\n");
       }
 
-   //New_Magiskboot_Binary();
-
    gui_print("--------------------------\n");  
    return 0;
 }
@@ -2825,12 +2818,8 @@ bool TWFunc::PackRepackImage_MagiskBoot(bool do_unpack, bool is_boot)
   int res = 0;
   std::string cmd_script =  "/tmp/do_magisk-unpack.sh";
   std::string cmd_script2 = "/tmp/do_magisk-repack.sh";
-  
-  std::string magiskboot = "magiskboot";
-  std::string magiskboot_sbin = Get_MagiskBoot();
-  std::string magiskboot_action = magiskboot_sbin + " --";
-  int NewMagiskBoot = New_Magiskboot_Binary();
 
+  std::string magiskboot_sbin = Get_MagiskBoot();
   if (!TWFunc::Path_Exists(magiskboot_sbin))
      {
      	LOGERR("TWFunc::PackRepackImage_MagiskBoot: Cannot find magiskboot!");
@@ -2885,7 +2874,7 @@ bool TWFunc::PackRepackImage_MagiskBoot(bool do_unpack, bool is_boot)
 	        AppendLineToFile (cmd_script, cd_dir + Fox_tmp_dir);
 	        AppendLineToFile (cmd_script, "LOGINFO \"- Unpacking boot/recovery image - block device=\"");
 	        AppendLineToFile (cmd_script, "LOGINFO \"[" + tmpstr + "] \"");
-	        AppendLineToFile (cmd_script, magiskboot_action + "unpack -h \"" + tmpstr + "\" > /dev/null 2>&1");
+	        AppendLineToFile (cmd_script, magiskboot_sbin + " unpack -h \"" + tmpstr + "\" > /dev/null 2>&1");
 	        AppendLineToFile (cmd_script, "[ $? == 0 ] && LOGINFO \"- Succeeded.\" || abort \"- Unpacking image failed.\"");
 	        AppendLineToFile (cmd_script, "#");
 	        // processing boot image?
@@ -2918,21 +2907,13 @@ bool TWFunc::PackRepackImage_MagiskBoot(bool do_unpack, bool is_boot)
 		        		
 	              AppendLineToFile (cmd_script, "cp -af ramdisk.cpio ramdisk.cpio.orig");
 	              AppendLineToFile (cmd_script, "LOGINFO \"- Patching ramdisk (verity/encryption) ...\"");
-	              AppendLineToFile (cmd_script, magiskboot_sbin + " --cpio ramdisk.cpio \"patch " + keepdmverity + keepforcedencryption + "\" > /dev/null 2>&1");
+	              AppendLineToFile (cmd_script, magiskboot_sbin + " cpio ramdisk.cpio \"patch " + keepdmverity + keepforcedencryption + "\" > /dev/null 2>&1");
 	              AppendLineToFile (cmd_script, "[ $? == 0 ] && LOGINFO \"- Succeeded.\" || abort \"- Ramdisk patch failed.\"");
 	              AppendLineToFile (cmd_script, "rm -f ramdisk.cpio.orig");
 	              if (keepverity == false)
 	                 {
-	              	    if (NewMagiskBoot > 0)
-	              	    {
-	              	    	AppendLineToFile (cmd_script, "[ -f dtb ] && " + magiskboot_sbin + " dtb dtb patch > /dev/null 2>&1");
-	              	    	AppendLineToFile (cmd_script, "[ -f extra ] && " + magiskboot_sbin + " dtb extra patch > /dev/null 2>&1");	              	    
-	              	    }
-	              	    else
-	              	    {
-	              	    	AppendLineToFile (cmd_script, "[ -f dtb ] && " + magiskboot_sbin + " --dtb-patch dtb > /dev/null 2>&1");
-	              	    	AppendLineToFile (cmd_script, "[ -f extra ] && " + magiskboot_sbin + " --dtb-patch extra > /dev/null 2>&1");
-	              	    }
+	              	    AppendLineToFile (cmd_script, "[ -f dtb ] && " + magiskboot_sbin + " dtb dtb patch > /dev/null 2>&1");
+	              	    AppendLineToFile (cmd_script, "[ -f extra ] && " + magiskboot_sbin + " dtb extra patch > /dev/null 2>&1");	              	    
 	                 }
 	           } // is_boot
 
@@ -2941,7 +2922,7 @@ bool TWFunc::PackRepackImage_MagiskBoot(bool do_unpack, bool is_boot)
 	        AppendLineToFile (cmd_script, "mv " + tmp_cpio + " " + ramdisk_cpio);
 	        AppendLineToFile (cmd_script, cd_dir + Fox_ramdisk_dir);
 	        AppendLineToFile (cmd_script, "LOGINFO \"- Extracting ramdisk files ...\"");
-	        AppendLineToFile (cmd_script, magiskboot_action + "cpio ramdisk.cpio extract > /dev/null 2>&1");
+	        AppendLineToFile (cmd_script, magiskboot_sbin + " cpio ramdisk.cpio extract > /dev/null 2>&1");
 	        AppendLineToFile (cmd_script, "[ $? == 0 ] && LOGINFO \"- Succeeded.\" || abort \"- Ramdisk file extraction failed.\"");
 	        AppendLineToFile (cmd_script, "rm -f " + ramdisk_cpio);
 	        
@@ -2977,7 +2958,7 @@ bool TWFunc::PackRepackImage_MagiskBoot(bool do_unpack, bool is_boot)
 	        AppendLineToFile (cmd_script2, "[ $? == 0 ] && LOGINFO \"- Succeeded.\" || abort \"- Archiving of ramdisk.cpio failed.\"");
 	        AppendLineToFile (cmd_script2, cd_dir + Fox_tmp_dir);
 	        AppendLineToFile (cmd_script2, "LOGINFO \"- Repacking boot/recovery image ...\"");
-	        AppendLineToFile (cmd_script2, magiskboot_action + "repack \"" + tmpstr + "\" > /dev/null 2>&1");
+	        AppendLineToFile (cmd_script2, magiskboot_sbin + " repack \"" + tmpstr + "\" > /dev/null 2>&1");
 	        AppendLineToFile (cmd_script2, "[ $? == 0 ] && LOGINFO \"- Succeeded.\" || abort \"- Repacking of image failed.\"");
 	        AppendLineToFile (cmd_script2, "LOGINFO \"- Flashing repacked image ...\"");
 	        #ifdef OF_AB_DEVICE
@@ -2986,7 +2967,7 @@ bool TWFunc::PackRepackImage_MagiskBoot(bool do_unpack, bool is_boot)
 	        AppendLineToFile (cmd_script2, "flash_image \"" +  tmpstr + "\" new-boot.img");
 	        #endif
 	        AppendLineToFile (cmd_script2, "[ $? == 0 ] && LOGINFO \"- Succeeded.\" || abort \"- Flashing repacked image failed.\"");
-	        AppendLineToFile (cmd_script2, magiskboot_action + "cleanup > /dev/null 2>&1");
+	        AppendLineToFile (cmd_script2, magiskboot_sbin + " cleanup > /dev/null 2>&1");
 
 	        AppendLineToFile (cmd_script2, "exit 0");
 	        res = Exec_Cmd (cmd_script2, result);
@@ -4461,10 +4442,12 @@ string sdkverstr = TWFunc::System_Property_Get("ro.build.version.sdk");
 
 string TWFunc::Get_MagiskBoot(void)
 {
+  /*
   #ifdef OF_USE_NEW_MAGISKBOOT
   if (Get_Android_SDK_Version() > 25 && TWFunc::Path_Exists(FOX_NEW_MAGISKBOOT))
      return FOX_NEW_MAGISKBOOT;
   #endif
+  */
   return "/sbin/magiskboot";
 }
 
