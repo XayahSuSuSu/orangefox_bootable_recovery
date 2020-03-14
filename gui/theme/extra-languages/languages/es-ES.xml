@@ -47,7 +47,7 @@
 		<string name="sort_by_size_desc">Tamaño</string>
 		<string name="install_btn">Instalar</string>
 		<string name="wipe_btn">Borrar</string>
-		<string name="backup_btn">Copias de seguridad</string>
+		<string name="backup_btn">Copias</string>
 		<string name="restore_btn">Restaurar</string>
 		<string name="mount_btn">Montar</string>
 		<string name="file_manager_btn">Archivos</string>
@@ -61,7 +61,7 @@
 		<string name="install_select_file_hdr">Seleccionar archivo</string>
 		<string name="install_select_file_btn">Seleccionar archivo</string>
 		<string name="adb_sideload_btn">ADB &amp; Sideload</string>
-		<string name="select_storage_hdr">Seleccionar almacenamiento</string>
+		<string name="select_storage_hdr">Selec. almacenamiento</string>
 		<string name="select_storage_btn">Seleccionar almacenamiento</string>
 		<string name="queue_hdr">En cola</string>
 		<string name="raised_clearqueue_btn">Vaciar cola</string>
@@ -80,7 +80,7 @@
 		<string name="successful">Correcto</string>
 		<string name="wipe_cache_btn">Borrar Cachés</string>
 		<string name="reboot_system_btn">Reiniciar Sistema</string>
-		<string name="reboot_recovery_btn">Reiniciar Modo Recovery</string>
+		<string name="reboot_recovery_btn">Reiniciar al Recovery</string>
 		<string name="install_sel_target">Seleccione la partición de destino</string>
 		<string name="flash_image_select">Partición</string>
 		<string name="flashing_image">Flasheando imagen...</string>
@@ -736,7 +736,7 @@
 		<string name="lang_set_wait">Cambiando idioma...</string>
 		<string name="installing_theme">Instalando tema...</string>
 		
-		<string name="menu_btn">Datos</string>
+		<string name="menu_btn">Menú</string>
 		
 		<string name="data_backup">Datos</string>
 		<string name="autostorage">Almacenamiento</string>
@@ -975,7 +975,7 @@
 		<string name="files_auto_open">Detectar automáticamente el tipo de archivo</string>
 		<string name="file_read_error">¡No se puede abrir el archivo!</string>
 		<string name="subs_wipe">Borrar capas de Substratum</string>
-		<string name="sort_ex_all">Todos los archivos</string>
+		<string name="sort_ex_all">Todos</string>
 		<string name="sort_ex_img">Archivos IMG</string>
 		<string name="sort_ex_zip">Archivos ZIP</string>
 		<string name="aroma_help">Presiona de nuevo para empezar AromaFM...</string>
