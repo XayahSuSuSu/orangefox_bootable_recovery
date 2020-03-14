@@ -612,7 +612,7 @@ initfail:
             ftr->keymaster_blob, KEYMASTER_BLOB_SIZE, &ftr->keymaster_blob_size);
 #endif //TW_KEYMASTER_MAX_API == 3
 #if TW_KEYMASTER_MAX_API >= 4
-    //for (;;) {
+    for (;;) {
         auto result = keymaster_sign_object_for_cryptfs_scrypt(
             ftr->keymaster_blob, ftr->keymaster_blob_size, KEYMASTER_CRYPTFS_RATE_LIMIT, to_sign,
             to_sign_size, signature, signature_size);
@@ -636,8 +636,7 @@ initfail:
             SLOGE("Failed to write upgraded key to disk");
         }*/
         SLOGD("Key upgraded successfully\n");
-        return 0;
-    //}
+    }
 #endif
     return -1;
 }
@@ -996,7 +995,11 @@ static int load_crypto_mapping_table(struct crypt_mnt_ftr *crypt_ftr,
   tgt->length = crypt_ftr->fs_size;
   crypt_params = buffer + sizeof(struct dm_ioctl) + sizeof(struct dm_target_spec);
   buff_offset = crypt_params - buffer;
-  SLOGI("Extra parameters for dm_crypt: %s\n", extra_params);
+  // SLOGI("Extra parameters for dm_crypt: %s\n", extra_params);
+  SLOGI(
+	"Creating crypto dev \"%s\"; cipher=%s, keysize=%u, real_dev=%s, len=%llu, params=\"%s\"\n",
+	name, crypt_ftr->crypto_type_name, crypt_ftr->keysize, real_blk_name, tgt->length * 512,
+	extra_params);
 
 #ifdef CONFIG_HW_DISK_ENCRYPTION
   if(is_hw_disk_encryption((char*)crypt_ftr->crypto_type_name)) {
@@ -1418,6 +1421,13 @@ static int test_mount_hw_encrypted_fs(struct crypt_mnt_ftr* crypt_ftr,
 
   int key_index = 0;
   if(is_hw_disk_encryption((char*)crypt_ftr->crypto_type_name)) {
+    if (crypt_ftr->flags & CRYPT_FORCE_COMPLETE) {
+       if (decrypt_master_key(passwd, decrypted_master_key, crypt_ftr, 0, 0)) {
+           printf("Failed to decrypt master key\n");
+           rc = -1;
+           goto errout;
+       }
+    }
     key_index = verify_and_update_hw_fde_passwd(passwd, crypt_ftr);
     if (key_index < 0) {
       rc = -1;
@@ -1482,7 +1492,7 @@ static int test_mount_encrypted_fs(struct crypt_mnt_ftr* crypt_ftr,
   //char real_blkdev[MAXPATHLEN];
   char tmp_mount_point[64];
   unsigned int orig_failed_decrypt_count;
-  int rc;
+  int rc = 0;
   int use_keymaster = 0;
   unsigned char* intermediate_key = 0;
   size_t intermediate_key_size = 0;
@@ -1637,7 +1647,7 @@ int check_unmounted_and_get_ftr(struct crypt_mnt_ftr* crypt_ftr)
 int cryptfs_check_passwd_hw(const char* passwd)
 {
     struct crypt_mnt_ftr crypt_ftr;
-    int rc;
+    int rc = 0;
     unsigned char master_key[KEY_LEN_BYTES];
     /* get key */
     if (get_crypt_ftr_and_key(&crypt_ftr)) {
