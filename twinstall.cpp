@@ -227,6 +227,7 @@ static int Prepare_Update_Binary(const char *path, ZipWrap * Zip,
   string mCheck = "";
   string miui_check1 = "ro.miui.ui.version";
   string check_command = "grep " + miui_check1 + " " + TMP_UPDATER_BINARY_PATH;
+  string zip_name = path;
   int is_new_miui_update_binary = 0;
   int zip_has_miui_stuff = 0;
   
@@ -462,9 +463,10 @@ static int Prepare_Update_Binary(const char *path, ZipWrap * Zip,
 		    
 		      if (zip_is_for_specific_build)
 			 {
+			   #ifndef OF_FIX_OTA_UPDATE_MANUAL_FLASH_ERROR
 			   if ((!ors_is_active()) && (zip_is_rom_package))
-			   gui_err
-			     ("You must flash incremental OTA updates from the ROM's updater, because only the ROM can decrypt the zips.");
+			       LOGERR("You must flash incremental OTA updates from the ROM's updater, because only the ROM can decrypt the zips.\n");
+			   #endif
 			 }			
 		      unlink(take_out_metadata.c_str());		      
 		    }
@@ -518,7 +520,23 @@ static int Prepare_Update_Binary(const char *path, ZipWrap * Zip,
 	  if (action != "openrecoveryscript"
 	      && DataManager::GetIntValue(FOX_MIUI_ZIP_TMP) != 0)
 	    {
-	      LOGERR("Please flash this package using MIUI updater app!\n");
+		#ifdef OF_FIX_OTA_UPDATE_MANUAL_FLASH_ERROR
+	    	std::string cachefile = "/cache/recovery/openrecoveryscript";
+	    	LOGERR("- You tried to flash OTA zip (%s) manually! Attempting to recover the situation...\n", path);
+	    	TWFunc::CreateNewFile(cachefile);
+	    	usleep(256);
+	    	if (TWFunc::Path_Exists(cachefile))
+	       	   {
+	    	   	TWFunc::AppendLineToFile(cachefile, "install " + zip_name);
+	    	   	usleep(256);
+	    	   	Zip->Close();
+	    	   	usleep(256);
+	    	   	LOGINFO("- Rebooting into OpenRecoveryScript mode ...\n");
+	    	   	usleep(256);
+	    	   	TWFunc::tw_reboot(rb_recovery);
+	       	   }
+		#endif
+	      LOGERR("Please flash this package using the ROM's updater app!\n");
 	      return INSTALL_ERROR;
 	    }
 
