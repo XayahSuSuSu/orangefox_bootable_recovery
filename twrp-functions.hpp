@@ -158,6 +158,10 @@ public:
 	static std::string get_cache_dir(); // return the cache partition existence
 	static void check_selinux_support(); // print whether selinux support is enabled to console
 
+	//
+	static void CreateNewFile(string file_path); // create a new (text) file
+	static void AppendLineToFile(string file_path, string line); // append a line to a text file
+
 private:
 	static void Copy_Log(string Source, string Destination);
 	static string Load_File(string extension);

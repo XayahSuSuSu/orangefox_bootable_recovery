@@ -109,33 +109,11 @@ static bool Is_AB_Device()
   return (!s.empty() && u == "true");
 }
 
-/* create a new (text) file */
-static void CreateNewFile(string file_path)
-{
-  string blank = "";
-  string bak = file_path;
-  if (TWFunc::Path_Exists(bak))
-    unlink(file_path.c_str());
-  ofstream file;
-  file.open(file_path.c_str());
-  file << blank;
-  file.close();
-  chmod (file_path.c_str(), 0644);
-}
-
 /* Have we just installed OrangeFox on a device with a Treble ROM?
 static bool New_Fox_On_Treble(void)
 {
  return ((Fox_Current_ROM_IsTreble == 1 || ROM_IsRealTreble == 1) && (New_Fox_Installation == 1));
 } */
-
-/* append a line to a text file */
-static void AppendLineToFile(string file_path, string line)
-{
-    std::ofstream file;
-    file.open(file_path, std::ios::out | std::ios::app);
-    file << line << std::endl;
-}
 
 /* whether we have a new (20.x) magiskboot binary */
 static int New_Magiskboot_Binary(void)
@@ -145,16 +123,16 @@ static int New_Magiskboot_Binary(void)
      return -2; // magiskboot can't be found
 
    string cmd_script = "/tmp/tmp_0tm.sh";
-   CreateNewFile(cmd_script);
+   TWFunc::CreateNewFile(cmd_script);
    chmod (cmd_script.c_str(), 0755);
-   AppendLineToFile (cmd_script, "#!/sbin/sh");
-   AppendLineToFile (cmd_script, "abort() { echo \"$1\"; exit $1; }");
-   AppendLineToFile (cmd_script, "[ -z \"$1\" -o ! -x \"$1\" ] && abort \"2\"");
-   AppendLineToFile (cmd_script, "tmp=/tmp/chk_mgsk_01.txt");
-   AppendLineToFile (cmd_script, "$1 &> $tmp");
-   AppendLineToFile (cmd_script, "F=$(cat $tmp | grep \"dtb-<cmd> <dtb>\")");
-   AppendLineToFile (cmd_script, "rm -f $tmp");
-   AppendLineToFile (cmd_script, "[ -z \"$F\" ] && abort \"0\" || abort \"1\"");
+   TWFunc::AppendLineToFile (cmd_script, "#!/sbin/sh");
+   TWFunc::AppendLineToFile (cmd_script, "abort() { echo \"$1\"; exit $1; }");
+   TWFunc::AppendLineToFile (cmd_script, "[ -z \"$1\" -o ! -x \"$1\" ] && abort \"2\"");
+   TWFunc::AppendLineToFile (cmd_script, "tmp=/tmp/chk_mgsk_01.txt");
+   TWFunc::AppendLineToFile (cmd_script, "$1 &> $tmp");
+   TWFunc::AppendLineToFile (cmd_script, "F=$(cat $tmp | grep \"dtb-<cmd> <dtb>\")");
+   TWFunc::AppendLineToFile (cmd_script, "rm -f $tmp");
+   TWFunc::AppendLineToFile (cmd_script, "[ -z \"$F\" ] && abort \"0\" || abort \"1\"");
 
    if (!TWFunc::Path_Exists(cmd_script))
      return -3; // failure to create the script
@@ -4580,4 +4558,25 @@ bool TWFunc::Check_OrangeFox_Overwrite_FromROM(bool WarnUser, const std::string 
     }
 #endif
 }
+
+void TWFunc::AppendLineToFile(string file_path, string line)
+{
+    std::ofstream file;
+    file.open(file_path, std::ios::out | std::ios::app);
+    file << line << std::endl;
+}
+
+void TWFunc::CreateNewFile(string file_path)
+{
+  string blank = "";
+  string bak = file_path;
+  if (TWFunc::Path_Exists(bak))
+    unlink(file_path.c_str());
+  ofstream file;
+  file.open(file_path.c_str());
+  file << blank;
+  file.close();
+  chmod (file_path.c_str(), 0644);
+}
+
 //
