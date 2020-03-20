@@ -160,7 +160,22 @@ int main(int argc, char **argv)
 	bool Shutdown = false;
 	bool SkipDecryption = false;
 	int Need_Decrypt = 0;
-	
+
+        // use the ROM's fingerprint?
+	#ifdef OF_USE_SYSTEM_FINGERPRINT
+        TWFunc::RunStartupScript(); // run the startup script early
+  	if (TWFunc::Path_Exists(orangefox_cfg) && TWFunc::Path_Exists("/sbin/resetprop"))
+    	 {
+  	   string rom_finger_print = TWFunc::File_Property_Get(orangefox_cfg, "ROM_FINGERPRINT");
+  	   if (!rom_finger_print.empty())
+             {
+  	        LOGINFO("- Using the ROM's fingerprint (%s)\n", rom_finger_print.c_str());
+  	        TWFunc::Exec_Cmd("/sbin/resetprop ro.build.fingerprint " + rom_finger_print);
+             }
+             else LOGINFO("- ROM fingerprint not available\n");
+    	 }
+	#endif
+
 	string Send_Intent = "";
 	{
 		TWPartition* misc = PartitionManager.Find_Partition_By_Path("/misc");
