@@ -78,7 +78,6 @@ static string Internal_SD = PartitionManager.Get_Internal_Storage_Path();
 static string fstab2 = "/vendor/etc";
 static string exec_error_str = "EXEC_ERROR!";
 static string popen_error_str = "popen error!";
-static string fox_cfg = "/tmp/orangefox.cfg";
 int Fox_Current_ROM_IsTreble = 0;
 int ROM_IsRealTreble = 0;
 int New_Fox_Installation = 0;
@@ -323,11 +322,15 @@ bool TWFunc::Has_Vendor_Partition(void)
 bool TWFunc::RunStartupScript(void)
 {
 string tprop = Get_Property("orangefox.postinit.status");
-bool i = Path_Exists("/tmp/orangefox.cfg");
+bool i = Path_Exists(orangefox_cfg);
    
    if (i == true || tprop == "1")
-     return false;
+      {
+         LOGINFO("DEBUG: OrangeFox: the startup script has been executed.\n");
+         return false;
+      }
    
+   LOGINFO("DEBUG: OrangeFox: running the startup script...\n");
    Exec_Cmd(FOX_STARTUP_SCRIPT);
    return true;
 }
@@ -342,7 +345,7 @@ bool TWFunc::Rerun_Startup(void)
 
    LOGINFO("OrangeFox: Starting possible running of OrangeFox_Startup() again...\n");
    string tprop = Get_Property("orangefox.postinit.status");
-   bool i = Path_Exists("/tmp/orangefox.cfg");
+   bool i = Path_Exists(orangefox_cfg);
    if (i == true || tprop == "1")
      return false;
 
@@ -2274,15 +2277,15 @@ int TWFunc::Check_MIUI_Treble(void)
   RunStartupScript();
   // *
   
-  if (TWFunc::Path_Exists(fox_cfg)) 
+  if (TWFunc::Path_Exists(orangefox_cfg)) 
     {
-  	fox_is_miui_rom_installed = TWFunc::File_Property_Get (fox_cfg, "MIUI");
-  	fox_is_treble_rom_installed = TWFunc::File_Property_Get (fox_cfg, "TREBLE");
-  	fox_is_real_treble_rom = TWFunc::File_Property_Get (fox_cfg, "REALTREBLE");
-  	display_panel = TWFunc::File_Property_Get (fox_cfg, "panel_name");	
-  	Fox_Current_ROM = TWFunc::File_Property_Get (fox_cfg, "ROM");
-  	incr_version = TWFunc::File_Property_Get (fox_cfg, "INCREMENTAL_VERSION");
-  	finger_print = TWFunc::File_Property_Get (fox_cfg, "ROM_FINGERPRINT");
+  	fox_is_miui_rom_installed = TWFunc::File_Property_Get (orangefox_cfg, "MIUI");
+  	fox_is_treble_rom_installed = TWFunc::File_Property_Get (orangefox_cfg, "TREBLE");
+  	fox_is_real_treble_rom = TWFunc::File_Property_Get (orangefox_cfg, "REALTREBLE");
+  	display_panel = TWFunc::File_Property_Get (orangefox_cfg, "panel_name");	
+  	Fox_Current_ROM = TWFunc::File_Property_Get (orangefox_cfg, "ROM");
+  	incr_version = TWFunc::File_Property_Get (orangefox_cfg, "INCREMENTAL_VERSION");
+  	finger_print = TWFunc::File_Property_Get (orangefox_cfg, "ROM_FINGERPRINT");
     }
 
    // Treble ?
