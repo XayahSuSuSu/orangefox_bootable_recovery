@@ -78,7 +78,6 @@ static string Internal_SD = PartitionManager.Get_Internal_Storage_Path();
 static string fstab2 = "/vendor/etc";
 static string exec_error_str = "EXEC_ERROR!";
 static string popen_error_str = "popen error!";
-static string fox_cfg = "/tmp/orangefox.cfg";
 int Fox_Current_ROM_IsTreble = 0;
 int ROM_IsRealTreble = 0;
 int New_Fox_Installation = 0;
@@ -109,33 +108,11 @@ static bool Is_AB_Device()
   return (!s.empty() && u == "true");
 }
 
-/* create a new (text) file */
-static void CreateNewFile(string file_path)
-{
-  string blank = "";
-  string bak = file_path;
-  if (TWFunc::Path_Exists(bak))
-    unlink(file_path.c_str());
-  ofstream file;
-  file.open(file_path.c_str());
-  file << blank;
-  file.close();
-  chmod (file_path.c_str(), 0644);
-}
-
 /* Have we just installed OrangeFox on a device with a Treble ROM?
 static bool New_Fox_On_Treble(void)
 {
  return ((Fox_Current_ROM_IsTreble == 1 || ROM_IsRealTreble == 1) && (New_Fox_Installation == 1));
 } */
-
-/* append a line to a text file */
-static void AppendLineToFile(string file_path, string line)
-{
-    std::ofstream file;
-    file.open(file_path, std::ios::out | std::ios::app);
-    file << line << std::endl;
-}
 
 /* whether we have a new (20.x) magiskboot binary */
 static int New_Magiskboot_Binary(void)
@@ -143,30 +120,25 @@ static int New_Magiskboot_Binary(void)
    string magiskboot = TWFunc::Get_MagiskBoot();
    if (!TWFunc::Path_Exists(magiskboot))
      return -2; // magiskboot can't be found
-     
+
    string cmd_script = "/tmp/tmp_0tm.sh";
-   CreateNewFile(cmd_script);
+   TWFunc::CreateNewFile(cmd_script);
    chmod (cmd_script.c_str(), 0755);
-   AppendLineToFile (cmd_script, "#!/sbin/sh");
-   AppendLineToFile (cmd_script, "abort() { echo \"$1\"; exit $1; }");
-   AppendLineToFile (cmd_script, "[ -z \"$1\" -o ! -x \"$1\" ] && abort \"2\"");
-   AppendLineToFile (cmd_script, "tmp=/tmp/chk_mgsk_01.txt");
-   AppendLineToFile (cmd_script, "$1 &> $tmp");
-   AppendLineToFile (cmd_script, "F=$(cat $tmp | grep \"dtb-<cmd> <dtb>\")");
-   AppendLineToFile (cmd_script, "rm -f $tmp");
-   AppendLineToFile (cmd_script, "[ -z \"$F\" ] && abort \"0\" || abort \"1\"");
+   TWFunc::AppendLineToFile (cmd_script, "#!/sbin/sh");
+   TWFunc::AppendLineToFile (cmd_script, "abort() { echo \"$1\"; exit $1; }");
+   TWFunc::AppendLineToFile (cmd_script, "[ -z \"$1\" -o ! -x \"$1\" ] && abort \"2\"");
+   TWFunc::AppendLineToFile (cmd_script, "tmp=/tmp/chk_mgsk_01.txt");
+   TWFunc::AppendLineToFile (cmd_script, "$1 &> $tmp");
+   TWFunc::AppendLineToFile (cmd_script, "F=$(cat $tmp | grep \"dtb-<cmd> <dtb>\")");
+   TWFunc::AppendLineToFile (cmd_script, "rm -f $tmp");
+   TWFunc::AppendLineToFile (cmd_script, "[ -z \"$F\" ] && abort \"0\" || abort \"1\"");
 
    if (!TWFunc::Path_Exists(cmd_script))
      return -3; // failure to create the script
 
    usleep(128);
-
    string mCheck = TWFunc::Exec_With_Output(cmd_script + " " + magiskboot);        
-
    unlink(cmd_script.c_str());
-
-   //gui_print("TESTING RESULT of %s=%s\n", magiskboot.c_str(), mCheck.c_str());
-   
    if (mCheck == "0") // this is a new magiskboot binary
    	return 1;
    else 
@@ -350,11 +322,15 @@ bool TWFunc::Has_Vendor_Partition(void)
 bool TWFunc::RunStartupScript(void)
 {
 string tprop = Get_Property("orangefox.postinit.status");
-bool i = Path_Exists("/tmp/orangefox.cfg");
+bool i = Path_Exists(orangefox_cfg);
    
    if (i == true || tprop == "1")
-     return false;
+      {
+         LOGINFO("DEBUG: OrangeFox: the startup script has been executed.\n");
+         return false;
+      }
    
+   LOGINFO("DEBUG: OrangeFox: running the startup script...\n");
    Exec_Cmd(FOX_STARTUP_SCRIPT);
    return true;
 }
@@ -369,7 +345,7 @@ bool TWFunc::Rerun_Startup(void)
 
    LOGINFO("OrangeFox: Starting possible running of OrangeFox_Startup() again...\n");
    string tprop = Get_Property("orangefox.postinit.status");
-   bool i = Path_Exists("/tmp/orangefox.cfg");
+   bool i = Path_Exists(orangefox_cfg);
    if (i == true || tprop == "1")
      return false;
 
@@ -2301,15 +2277,15 @@ int TWFunc::Check_MIUI_Treble(void)
   RunStartupScript();
   // *
   
-  if (TWFunc::Path_Exists(fox_cfg)) 
+  if (TWFunc::Path_Exists(orangefox_cfg)) 
     {
-  	fox_is_miui_rom_installed = TWFunc::File_Property_Get (fox_cfg, "MIUI");
-  	fox_is_treble_rom_installed = TWFunc::File_Property_Get (fox_cfg, "TREBLE");
-  	fox_is_real_treble_rom = TWFunc::File_Property_Get (fox_cfg, "REALTREBLE");
-  	display_panel = TWFunc::File_Property_Get (fox_cfg, "panel_name");	
-  	Fox_Current_ROM = TWFunc::File_Property_Get (fox_cfg, "ROM");
-  	incr_version = TWFunc::File_Property_Get (fox_cfg, "INCREMENTAL_VERSION");
-  	finger_print = TWFunc::File_Property_Get (fox_cfg, "ROM_FINGERPRINT");
+  	fox_is_miui_rom_installed = TWFunc::File_Property_Get (orangefox_cfg, "MIUI");
+  	fox_is_treble_rom_installed = TWFunc::File_Property_Get (orangefox_cfg, "TREBLE");
+  	fox_is_real_treble_rom = TWFunc::File_Property_Get (orangefox_cfg, "REALTREBLE");
+  	display_panel = TWFunc::File_Property_Get (orangefox_cfg, "panel_name");	
+  	Fox_Current_ROM = TWFunc::File_Property_Get (orangefox_cfg, "ROM");
+  	incr_version = TWFunc::File_Property_Get (orangefox_cfg, "INCREMENTAL_VERSION");
+  	finger_print = TWFunc::File_Property_Get (orangefox_cfg, "ROM_FINGERPRINT");
     }
 
    // Treble ?
@@ -2375,8 +2351,6 @@ int TWFunc::Check_MIUI_Treble(void)
       {
     	gui_print_color("warning", "* No ROM.\n");
       }
-
-   //New_Magiskboot_Binary();
 
    gui_print("--------------------------\n");  
    return 0;
@@ -2819,12 +2793,8 @@ bool TWFunc::PackRepackImage_MagiskBoot(bool do_unpack, bool is_boot)
   int res = 0;
   std::string cmd_script =  "/tmp/do_magisk-unpack.sh";
   std::string cmd_script2 = "/tmp/do_magisk-repack.sh";
-  
-  std::string magiskboot = "magiskboot";
-  std::string magiskboot_sbin = Get_MagiskBoot();
-  std::string magiskboot_action = magiskboot_sbin + " --";
-  int NewMagiskBoot = New_Magiskboot_Binary();
 
+  std::string magiskboot_sbin = Get_MagiskBoot();
   if (!TWFunc::Path_Exists(magiskboot_sbin))
      {
      	LOGERR("TWFunc::PackRepackImage_MagiskBoot: Cannot find magiskboot!");
@@ -2879,7 +2849,7 @@ bool TWFunc::PackRepackImage_MagiskBoot(bool do_unpack, bool is_boot)
 	        AppendLineToFile (cmd_script, cd_dir + Fox_tmp_dir);
 	        AppendLineToFile (cmd_script, "LOGINFO \"- Unpacking boot/recovery image - block device=\"");
 	        AppendLineToFile (cmd_script, "LOGINFO \"[" + tmpstr + "] \"");
-	        AppendLineToFile (cmd_script, magiskboot_action + "unpack -h \"" + tmpstr + "\" > /dev/null 2>&1");
+	        AppendLineToFile (cmd_script, magiskboot_sbin + " unpack -h \"" + tmpstr + "\" > /dev/null 2>&1");
 	        AppendLineToFile (cmd_script, "[ $? == 0 ] && LOGINFO \"- Succeeded.\" || abort \"- Unpacking image failed.\"");
 	        AppendLineToFile (cmd_script, "#");
 	        // processing boot image?
@@ -2912,21 +2882,13 @@ bool TWFunc::PackRepackImage_MagiskBoot(bool do_unpack, bool is_boot)
 		        		
 	              AppendLineToFile (cmd_script, "cp -af ramdisk.cpio ramdisk.cpio.orig");
 	              AppendLineToFile (cmd_script, "LOGINFO \"- Patching ramdisk (verity/encryption) ...\"");
-	              AppendLineToFile (cmd_script, magiskboot_sbin + " --cpio ramdisk.cpio \"patch " + keepdmverity + keepforcedencryption + "\" > /dev/null 2>&1");
+	              AppendLineToFile (cmd_script, magiskboot_sbin + " cpio ramdisk.cpio \"patch " + keepdmverity + keepforcedencryption + "\" > /dev/null 2>&1");
 	              AppendLineToFile (cmd_script, "[ $? == 0 ] && LOGINFO \"- Succeeded.\" || abort \"- Ramdisk patch failed.\"");
 	              AppendLineToFile (cmd_script, "rm -f ramdisk.cpio.orig");
 	              if (keepverity == false)
 	                 {
-	              	    if (NewMagiskBoot > 0)
-	              	    {
-	              	    	AppendLineToFile (cmd_script, "[ -f dtb ] && " + magiskboot_sbin + " dtb dtb patch > /dev/null 2>&1");
-	              	    	AppendLineToFile (cmd_script, "[ -f extra ] && " + magiskboot_sbin + " dtb extra patch > /dev/null 2>&1");	              	    
-	              	    }
-	              	    else
-	              	    {
-	              	    	AppendLineToFile (cmd_script, "[ -f dtb ] && " + magiskboot_sbin + " --dtb-patch dtb > /dev/null 2>&1");
-	              	    	AppendLineToFile (cmd_script, "[ -f extra ] && " + magiskboot_sbin + " --dtb-patch extra > /dev/null 2>&1");
-	              	    }
+	              	    AppendLineToFile (cmd_script, "[ -f dtb ] && " + magiskboot_sbin + " dtb dtb patch > /dev/null 2>&1");
+	              	    AppendLineToFile (cmd_script, "[ -f extra ] && " + magiskboot_sbin + " dtb extra patch > /dev/null 2>&1");	              	    
 	                 }
 	           } // is_boot
 
@@ -2935,7 +2897,7 @@ bool TWFunc::PackRepackImage_MagiskBoot(bool do_unpack, bool is_boot)
 	        AppendLineToFile (cmd_script, "mv " + tmp_cpio + " " + ramdisk_cpio);
 	        AppendLineToFile (cmd_script, cd_dir + Fox_ramdisk_dir);
 	        AppendLineToFile (cmd_script, "LOGINFO \"- Extracting ramdisk files ...\"");
-	        AppendLineToFile (cmd_script, magiskboot_action + "cpio ramdisk.cpio extract > /dev/null 2>&1");
+	        AppendLineToFile (cmd_script, magiskboot_sbin + " cpio ramdisk.cpio extract > /dev/null 2>&1");
 	        AppendLineToFile (cmd_script, "[ $? == 0 ] && LOGINFO \"- Succeeded.\" || abort \"- Ramdisk file extraction failed.\"");
 	        AppendLineToFile (cmd_script, "rm -f " + ramdisk_cpio);
 	        
@@ -2971,7 +2933,7 @@ bool TWFunc::PackRepackImage_MagiskBoot(bool do_unpack, bool is_boot)
 	        AppendLineToFile (cmd_script2, "[ $? == 0 ] && LOGINFO \"- Succeeded.\" || abort \"- Archiving of ramdisk.cpio failed.\"");
 	        AppendLineToFile (cmd_script2, cd_dir + Fox_tmp_dir);
 	        AppendLineToFile (cmd_script2, "LOGINFO \"- Repacking boot/recovery image ...\"");
-	        AppendLineToFile (cmd_script2, magiskboot_action + "repack \"" + tmpstr + "\" > /dev/null 2>&1");
+	        AppendLineToFile (cmd_script2, magiskboot_sbin + " repack \"" + tmpstr + "\" > /dev/null 2>&1");
 	        AppendLineToFile (cmd_script2, "[ $? == 0 ] && LOGINFO \"- Succeeded.\" || abort \"- Repacking of image failed.\"");
 	        AppendLineToFile (cmd_script2, "LOGINFO \"- Flashing repacked image ...\"");
 	        #ifdef OF_AB_DEVICE
@@ -2980,7 +2942,7 @@ bool TWFunc::PackRepackImage_MagiskBoot(bool do_unpack, bool is_boot)
 	        AppendLineToFile (cmd_script2, "flash_image \"" +  tmpstr + "\" new-boot.img");
 	        #endif
 	        AppendLineToFile (cmd_script2, "[ $? == 0 ] && LOGINFO \"- Succeeded.\" || abort \"- Flashing repacked image failed.\"");
-	        AppendLineToFile (cmd_script2, magiskboot_action + "cleanup > /dev/null 2>&1");
+	        AppendLineToFile (cmd_script2, magiskboot_sbin + " cleanup > /dev/null 2>&1");
 
 	        AppendLineToFile (cmd_script2, "exit 0");
 	        res = Exec_Cmd (cmd_script2, result);
@@ -4455,10 +4417,12 @@ string sdkverstr = TWFunc::System_Property_Get("ro.build.version.sdk");
 
 string TWFunc::Get_MagiskBoot(void)
 {
+  /*
   #ifdef OF_USE_NEW_MAGISKBOOT
   if (Get_Android_SDK_Version() > 25 && TWFunc::Path_Exists(FOX_NEW_MAGISKBOOT))
      return FOX_NEW_MAGISKBOOT;
   #endif
+  */
   return "/sbin/magiskboot";
 }
 
@@ -4554,34 +4518,11 @@ void TWFunc::Reset_Clock(void)
       }
 }
 
-bool TWFunc::Check_OrangeFox_Overwrite_FromROM_Trigger(const std::string name)
-{
-    if (DataManager::GetIntValue("found_fox_overwriting_rom") != 1) return false;
-    string tmp = lowercase (name);
-    #if !defined(OF_CHECK_OVERWRITE_DEVICE) || !defined(OF_CHECK_OVERWRITE_ROM)
-       return false;
-    #else
-        string dev1 = OF_CHECK_OVERWRITE_DEVICE;
-        string rom1 = OF_CHECK_OVERWRITE_ROM;
-   	if ((Fox_Current_Device != dev1 || pos(dev1, name) < 0) || (pos(rom1, name) < 0)) 
-      	    return false;
-    	else
-      	   return true;
-    #endif
-}
-
 bool TWFunc::Check_OrangeFox_Overwrite_FromROM(bool WarnUser, const std::string name)
 {
 #ifndef OF_CHECK_OVERWRITE_ATTEMPTS
    return false;
-#endif
-
-  if (!Check_OrangeFox_Overwrite_FromROM_Trigger(name))
-     {
-        DataManager::SetValue("found_fox_overwriting_rom", "0");
-        return false;
-     }
-
+#else
   // turn on debug screen (for OTA)
   DataManager::SetValue("ota_new_screen", "1");
   
@@ -4589,16 +4530,14 @@ bool TWFunc::Check_OrangeFox_Overwrite_FromROM(bool WarnUser, const std::string 
   if (WarnUser)
     {
       int i;
-      int j = 75;
+      int j = 40;
       gui_print_color("error", "\nALERT!\nThis ROM (%s) wants to overwrite your recovery partition!!!\n\n", name.c_str());
-      gui_print_color("error", "It might then pretend (when you try to boot it) that no OS is found.\n");
-      gui_print_color("error", "\nRECOMMENDATION: DUMP THIS ROM! NOW! Get one that is better-behaved!\n\n");
-      gui_print_color("error", "I will pause for %i seconds. To stop this installation, hard-reboot the device now!\n\n", j);
+      gui_print_color("error", "I will pause for %i seconds.\n\nTo stop this installation, hard-reboot the device now!\n\n", j);
       gui_print("The %i-second countdown will start in 20 seconds ...\n", j);
       sleep(20);
       for (i = j; i > 0; i--)
          {
-            gui_print("DUMP THIS ROM! Reboot now! %i seconds left!\n", i);
+            gui_print("Reboot now! %i seconds left!\n", i);
             sleep(1);
          }
       gui_print_color("error", "\n\nSo, you have chosen to continue with \"%s\"! That seems *very* trusting! Good luck!\n\n", name.c_str());
@@ -4606,11 +4545,35 @@ bool TWFunc::Check_OrangeFox_Overwrite_FromROM(bool WarnUser, const std::string 
     }
   else
     {
-      gui_print_color("error",
-      "\nALERT!\nThis ROM (%s) may now have overwritten your recovery partition!\n\nGood luck!\n\n",
-      name.c_str());
+      if (DataManager::GetIntValue("found_fox_overwriting_rom") == 1)
+      {
+      	gui_print_color("error",
+      	"\nALERT!\nThis ROM (%s) may now have overwritten your recovery partition!\n\nGood luck!\n\n", name.c_str());
+      }
       DataManager::SetValue("found_fox_overwriting_rom", "0");
       return true;
     }
+#endif
 }
+
+void TWFunc::AppendLineToFile(string file_path, string line)
+{
+    std::ofstream file;
+    file.open(file_path, std::ios::out | std::ios::app);
+    file << line << std::endl;
+}
+
+void TWFunc::CreateNewFile(string file_path)
+{
+  string blank = "";
+  string bak = file_path;
+  if (TWFunc::Path_Exists(bak))
+    unlink(file_path.c_str());
+  ofstream file;
+  file.open(file_path.c_str());
+  file << blank;
+  file.close();
+  chmod (file_path.c_str(), 0644);
+}
+
 //

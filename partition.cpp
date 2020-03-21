@@ -680,7 +680,7 @@ void TWPartition::Setup_Data_Partition(bool Display_Error) {
 			property_get("fbe.data.wrappedkey", wrappedvalue, "");
 			std::string wrappedkeyvalue(wrappedvalue);
 			if (wrappedkeyvalue == "true") {
-				LOGERR("Unable to decrypt FBE device\n");
+				gui_print("Device not encrypted/Unable to decrypt FBE device\n");
 			} else {
 				LOGINFO("Trying wrapped key.\n");
 				property_set("fbe.data.wrappedkey", "true");
@@ -1544,7 +1544,13 @@ bool TWPartition::Mount(bool Display_Error) {
 			}
 		} else {
 #endif
-			if (!Removable && Display_Error)
+			if (
+			   (!Removable && Display_Error)
+			   #ifdef OF_FBE_METADATA_MOUNT_IGNORE
+			   // DJ9 (20200309)- check for /metadata - don't spam with mount error if metadata encryption is not being used
+			   && (Mount_Point != "/metadata")
+			   #endif
+			   )
 				gui_msg(Msg(msg::kError, "fail_mount=Failed to mount '{1}' ({2})")(Mount_Point)(strerror(errno)));
 			else
 				LOGINFO("Unable to mount '%s'\n", Mount_Point.c_str());
