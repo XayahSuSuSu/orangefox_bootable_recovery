@@ -3435,6 +3435,9 @@ bool TWFunc::Fresh_Fox_Install()
 	       }
 	    TWFunc::Deactivation_Process();
 	    New_Fox_Installation = 0;
+            usleep(32768);
+            TWFunc::Patch_AVB20();
+            usleep(32768);
 	#endif // OF_DONT_PATCH_ON_FRESH_INSTALLATION
 	
 	LOGINFO ("DEBUG [Fresh_Fox_Install()] - copying log to:/sdcard/Fox/logs/post-install.log \n");
@@ -4305,6 +4308,29 @@ void TWFunc::Deactivation_Process(void)
 #endif // OF_USE_MAGISKBOOT
   Fox_Force_Deactivate_Process = 0;
   DataManager::SetValue(FOX_FORCE_DEACTIVATE_PROCESS, 0);
+}
+
+void TWFunc::Patch_AVB20(void)
+{
+#ifdef OF_PATCH_AVB20
+std::string zipname = FFiles_dir + "/OF_avb20/OF_avb20.zip";
+int res=0, wipe_cache=0;
+  if (!TWFunc::Path_Exists("/sbin/magiskboot"))
+     {
+        gui_print("ERROR - cannot find /sbin/magiskboot\n");
+  	return;
+     }
+
+   if (!TWFunc::Path_Exists(zipname))
+     {
+        gui_print("ERROR - cannot find %s\n", zipname.c_str());
+  	return;
+     }
+
+   DataManager::SetValue(FOX_INSTALL_PREBUILT_ZIP, "1");
+   res = TWinstall_zip(zipname.c_str(), &wipe_cache);
+   DataManager::SetValue(FOX_INSTALL_PREBUILT_ZIP, "0");
+#endif
 }
 
 int TWFunc::Patch_DMVerity_ForcedEncryption_Magisk(void)
