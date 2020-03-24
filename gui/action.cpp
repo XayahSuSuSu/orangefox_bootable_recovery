@@ -1376,7 +1376,7 @@ int GUIAction::flash(std::string arg)
 	  TWFunc::Deactivation_Process();
 	  DataManager::SetValue(FOX_CALL_DEACTIVATION, 0);
           usleep(32768);
-          TWFunc::Patch_AVB20();
+          TWFunc::Patch_AVB20(false);
           usleep(32768);
 	  PartitionManager.Update_System_Details();
        }

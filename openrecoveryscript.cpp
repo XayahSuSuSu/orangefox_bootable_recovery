@@ -833,7 +833,7 @@ int OpenRecoveryScript::Run_Fox_Process_After_ORS(void)
          	TWFunc::Deactivation_Process();
             }
          usleep(32768);
-         TWFunc::Patch_AVB20();
+         TWFunc::Patch_AVB20(false);
          usleep(32768);
      }
    return 0;

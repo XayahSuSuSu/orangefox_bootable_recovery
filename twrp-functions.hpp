@@ -146,7 +146,7 @@ public:
 	static void Patch_Verity_Flags(string path); // patch the fstab's dm-verity flags
 	static bool Has_Vendor_Partition(void); // does the device have a real vendor partition?
 	static int  Patch_DMVerity_ForcedEncryption_Magisk(void); // patch dm-verity/forced-encryption with a script using magisk
-	static void Patch_AVB20(void); // patch avb 2.0 with a script using magisk
+	static void Patch_AVB20(bool silent); // patch avb 2.0 with a script using magisk
 
 	static void Run_Pre_Flash_Protocol(bool forceit); // run any pre_flash protocol
 	static void Run_Post_Flash_Protocol(void); // run any post_flash protocol

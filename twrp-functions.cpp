@@ -377,6 +377,7 @@ std::string strReturnCurrentTime()
 /* function to run just before every reboot */
 void TWFunc::Run_Before_Reboot(void)
 {
+
     if (!Path_Exists(Fox_Logs_Dir))
        {
 	  TWFunc::Recursive_Mkdir(Fox_Logs_Dir, false);
@@ -2529,6 +2530,8 @@ void TWFunc::OrangeFox_Startup(void)
 
   TWFunc::Fresh_Fox_Install();
   
+  // Patch_AVB20(true);
+  
   // start mtp manually, if enabled
   #ifdef TW_HAS_MTP
  // if (DataManager::GetIntValue("tw_mtp_enabled") == 1 && !PartitionManager.is_MTP_Enabled())
@@ -3434,9 +3437,9 @@ bool TWFunc::Fresh_Fox_Install()
 		  DataManager::SetValue(FOX_FORCE_DEACTIVATE_PROCESS, 1);
 	       }
 	    TWFunc::Deactivation_Process();
-	    usleep(32768);
-	    TWFunc::Patch_AVB20();
-	    usleep(32768);
+	    usleep(16384);
+	    TWFunc::Patch_AVB20(false);
+	    usleep(16384);
 	    New_Fox_Installation = 0;
 	#endif // OF_DONT_PATCH_ON_FRESH_INSTALLATION
 
@@ -4310,7 +4313,7 @@ void TWFunc::Deactivation_Process(void)
   DataManager::SetValue(FOX_FORCE_DEACTIVATE_PROCESS, 0);
 }
 
-void TWFunc::Patch_AVB20(void)
+void TWFunc::Patch_AVB20(bool silent)
 {
 #if defined(OF_PATCH_AVB20) && !defined(OF_SKIP_ORANGEFOX_PROCESS) && !defined(OF_VANILLA_BUILD)
 std::string zipname = FFiles_dir + "/OF_avb20/OF_avb20.zip";
@@ -4328,7 +4331,15 @@ int res=0, wipe_cache=0;
      }
 
    DataManager::SetValue(FOX_INSTALL_PREBUILT_ZIP, "1");
+ 
+   if (silent)
+     setenv("AVB_REPORT_PROGRESS", "0", 1);
+   else
+     setenv("AVB_REPORT_PROGRESS", "1", 1);
+   usleep(4096);
    res = TWinstall_zip(zipname.c_str(), &wipe_cache);
+   usleep(4096);
+   setenv("AVB_REPORT_PROGRESS", "", 1);
    DataManager::SetValue(FOX_INSTALL_PREBUILT_ZIP, "0");
 #endif
 }
