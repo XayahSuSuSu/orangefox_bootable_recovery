@@ -3435,10 +3435,11 @@ bool TWFunc::Fresh_Fox_Install()
 	       }
 	    TWFunc::Deactivation_Process();
 	    New_Fox_Installation = 0;
-            usleep(32768);
-            TWFunc::Patch_AVB20();
-            usleep(32768);
 	#endif // OF_DONT_PATCH_ON_FRESH_INSTALLATION
+
+        usleep(32768);
+        TWFunc::Patch_AVB20();
+        usleep(32768);
 	
 	LOGINFO ("DEBUG [Fresh_Fox_Install()] - copying log to:/sdcard/Fox/logs/post-install.log \n");
 	copy_file("/tmp/recovery.log", "/sdcard/Fox/logs/post-install.log", 0644);
@@ -4185,13 +4186,14 @@ void TWFunc::check_selinux_support() {
 
 void TWFunc::Deactivation_Process(void)
 {
-  #if defined(OF_SKIP_ORANGEFOX_PROCESS) || defined(OF_VANILLA_BUILD)
+  if (TWFunc::To_Skip_OrangeFox_Process())
+     {
 	gui_print_color("warning", "\nOrangeFox: Skipping the OrangeFox Process.\n");
 	New_Fox_Installation = 0;
 	Fox_Force_Deactivate_Process = 0;
 	DataManager::SetValue(FOX_FORCE_DEACTIVATE_PROCESS, 0);
 	return;
-  #endif
+     }
 
   bool patched_verity = false;
   bool patched_crypt = false;
@@ -4203,8 +4205,7 @@ void TWFunc::Deactivation_Process(void)
      }
    
   // advanced stock replace
-  // if (MIUI_Is_Running()) // don't do this for MIUI only
-  	Disable_Stock_Recovery_Replace();
+  Disable_Stock_Recovery_Replace();
 
 // patch ROM's fstab
 #ifndef OF_USE_MAGISKBOOT
@@ -4606,6 +4607,15 @@ void TWFunc::CreateNewFile(string file_path)
   file << blank;
   file.close();
   chmod (file_path.c_str(), 0644);
+}
+
+bool TWFunc::To_Skip_OrangeFox_Process(void)
+{
+  #if defined(OF_SKIP_ORANGEFOX_PROCESS) || defined(OF_VANILLA_BUILD)
+     return true;
+  #else
+     return false;
+  #endif
 }
 
 //

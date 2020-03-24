@@ -92,14 +92,15 @@ public:
 	static int Get_Android_SDK_Version(void);				// Return the SDK version of the current ROM (or default to 21 (Android 5.0))
 	static string Get_MagiskBoot(void);					// Return the name of the magiskboot binary that should be used for patching
 
-	static void Deactivation_Process(void);                     		// Run deactivation proces...
+	static void Deactivation_Process(void);                     		// Run deactivation process...
+	static bool To_Skip_OrangeFox_Process(void);				// Return whether to skip the deactivation process
 	static void OrangeFox_Startup(void);        				// Run StartUP code for OrangeFox
-	static int Recursive_Mkdir(string Path, bool ShowErr = true);                                    // Recursively makes the entire path
-	static void GUI_Operation_Text(string Read_Value, string Default_Text);     // Updates text for display in the GUI, e.g. Backing up %partition name%
+	static int Recursive_Mkdir(string Path, bool ShowErr = true);           // Recursively makes the entire path
+	static void GUI_Operation_Text(string Read_Value, string Default_Text); // Updates text for display in the GUI, e.g. Backing up %partition name%
 	static void GUI_Operation_Text(string Read_Value, string Partition_Name, string Default_Text); // Same as above but includes partition name
-	static void Update_Log_File(void);                                          // Writes the log to last_log
-	static void Update_Intent_File(string Intent);                              // Updates intent file
-	static int tw_reboot(RebootCommand command);                                // Prepares the device for rebooting
+	static void Update_Log_File(void);                                      // Writes the log to last_log
+	static void Update_Intent_File(string Intent);                          // Updates intent file
+	static int tw_reboot(RebootCommand command);                            // Prepares the device for rebooting
 	static void check_and_run_script(const char* script_file, const char* display_name); // checks for the existence of a script, chmods it to 755, then runs it
 	static int removeDir(const string path, bool removeParent); //recursively remove a directory
 	static int copy_file(string src, string dst, int mode); //copy file from src to dst with mode permissions
