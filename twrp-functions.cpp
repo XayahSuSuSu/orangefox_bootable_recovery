@@ -3434,13 +3434,12 @@ bool TWFunc::Fresh_Fox_Install()
 		  DataManager::SetValue(FOX_FORCE_DEACTIVATE_PROCESS, 1);
 	       }
 	    TWFunc::Deactivation_Process();
+	    usleep(32768);
+	    TWFunc::Patch_AVB20();
+	    usleep(32768);
 	    New_Fox_Installation = 0;
 	#endif // OF_DONT_PATCH_ON_FRESH_INSTALLATION
 
-        usleep(32768);
-        TWFunc::Patch_AVB20();
-        usleep(32768);
-	
 	LOGINFO ("DEBUG [Fresh_Fox_Install()] - copying log to:/sdcard/Fox/logs/post-install.log \n");
 	copy_file("/tmp/recovery.log", "/sdcard/Fox/logs/post-install.log", 0644);
 
@@ -4313,7 +4312,7 @@ void TWFunc::Deactivation_Process(void)
 
 void TWFunc::Patch_AVB20(void)
 {
-#ifdef OF_PATCH_AVB20
+#if defined(OF_PATCH_AVB20) && !defined(OF_SKIP_ORANGEFOX_PROCESS) && !defined(OF_VANILLA_BUILD)
 std::string zipname = FFiles_dir + "/OF_avb20/OF_avb20.zip";
 int res=0, wipe_cache=0;
   if (!TWFunc::Path_Exists("/sbin/magiskboot"))
