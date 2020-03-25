@@ -378,6 +378,8 @@ std::string strReturnCurrentTime()
 void TWFunc::Run_Before_Reboot(void)
 {
 
+    Patch_AVB20(true);
+
     if (!Path_Exists(Fox_Logs_Dir))
        {
 	  TWFunc::Recursive_Mkdir(Fox_Logs_Dir, false);
