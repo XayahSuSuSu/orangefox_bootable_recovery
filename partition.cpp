@@ -3385,13 +3385,6 @@ string TWPartition::Get_Backup_Name() {
 	return Backup_Name;
 }
 
-std::string int_to_string(int value)
-{
-  std::ostringstream os;
-  os << value;
-  return os.str();
-}
-
 void TWPartition::Fox_Add_Backup_Exclusions() {
    backup_exclusions.add_absolute_dir("/data/per_boot");
 
@@ -3403,7 +3396,7 @@ void TWPartition::Fox_Add_Backup_Exclusions() {
 	string user;
 	for (i=0; i<=1; i++)
 	    {
-   	   	user = int_to_string(Users[i]);
+   	   	user = TWFunc::to_string(Users[i]);
    	   	backup_exclusions.add_absolute_dir("/data/media/" + user);
    	   	backup_exclusions.add_absolute_dir("/data/user/" + user);
    	   	backup_exclusions.add_absolute_dir("/data/misc/user/" + user);

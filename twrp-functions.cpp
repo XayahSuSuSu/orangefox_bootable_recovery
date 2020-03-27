@@ -259,28 +259,6 @@ static bool StorageIsEncrypted(void)
      return true;
 }
 
-/* convert number to string */
-std::string num_to_string(int value)
-{
-  std::ostringstream os;
-  os << value;
-  return os.str();
-}
-
-std::string num_to_string(long value)
-{
-  std::ostringstream os;
-  os << value;
-  return os.str();
-}
-
-std::string num_to_string(uint64_t value)
-{
-  std::ostringstream os;
-  os << value;
-  return os.str();
-}
-
 /* convert string to number, with default value in case of error */
 int string_to_int(string String, int def_value)
 {
