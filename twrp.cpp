@@ -135,8 +135,8 @@ int main(int argc, char **argv)
 
   DataManager::GetValue(FOX_COMPATIBILITY_DEVICE, Fox_Current_Device);
   time_t StartupTime = time(NULL);
-  printf("Starting OrangeFox TWRP %s-%s-%s (built on %s for %s) on %s (pid %d)\n", FOX_VERSION,
-	 FOX_BUILD, TW_GIT_REVISION, fox_build_date.c_str(), Fox_Current_Device.c_str(), ctime(&StartupTime), getpid());
+  printf("Starting OrangeFox TWRP %s-%s-%s (built on %s for %s [dev_ver: %s]) on %s (pid %d)\n", FOX_VERSION,
+	 FOX_BUILD, TW_GIT_REVISION, fox_build_date.c_str(), Fox_Current_Device.c_str(), FOX_CURRENT_DEV_STR, ctime(&StartupTime), getpid());
 
   // Load default values to set DataManager constants and handle ifdefs
 	DataManager::SetDefaultValues();
