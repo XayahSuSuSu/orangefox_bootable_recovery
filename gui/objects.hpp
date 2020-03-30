@@ -696,7 +696,7 @@ protected:
 	ImageResource* mExLinkIcon;
 	ImageResource* mExBlockIcon;
 	bool updateFileList;
-	int isDirEmpty;
+	bool hasFiles, hasHiddenFiles;
 	int doubleLine = 0;
 	std::string mFileFilterVar;
 };
