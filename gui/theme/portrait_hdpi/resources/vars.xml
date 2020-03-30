@@ -98,10 +98,6 @@
 		<variable name="tw_backups_folder_fm" value="/tmp"/>
 		
 		<!-- Gesture -->
-		<variable name="gst_bg_y" value="78"/>
-		<variable name="gst_anim_y" value="%gst_bg_y%+98"/>
-		<variable name="gst_switch_y" value="%cutout_w%+1164"/>
-		<variable name="gst_text_y" value="%cutout_w%+1122"/>
 		<variable name="gst_keyboard_y" value="%keyboard_y%-%ab_h%"/>
 		<variable name="gst_line_y" value="%screen_h%-120"/>
 

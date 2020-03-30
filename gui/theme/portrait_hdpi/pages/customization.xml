@@ -35,52 +35,36 @@
 			<action>
 				<action function="set">of_reload_back=ext_custom_gest</action>
 			</action>
-			<fill color="#F4B183">
-				<placement x="0" y="" w="%screen_w%" h="1080"/>
-			</fill>
-			<image>
-				<placement x="310" y="%gst_bg_y%"/>
-				<image resource="gesture_help_bg"/>
-			</image>
-			<animation>
-				<placement x="348" y="%gst_anim_y%"/>
-				<resource name="gesture_help"/>
-				<speed fps="60" render="2"/>
-				<loop frame="1"/>
-			</animation>
-			<template name="body"/>
-			<template name="statusbarinfo"/>
-			<template name="actionbar_back"/>
 
 			<!-- Switch -->
 			<fill color="%accent%">
 				<condition var1="real_gestures_enable_tmp" var2="1"/>
-				<placement x="0" y="1080" w="%screen_w%" h="%ab_btn_h%"/>
+				<placement x="0" y="%ab_h%" w="%screen_w%" h="%ab_btn_h%"/>
 			</fill>
 
 			<fill color="%unactive_title%">
 				<condition var1="real_gestures_enable_tmp" op="!=" var2="1"/>
-				<placement x="0" y="1080" w="%screen_w%" h="%ab_btn_h%"/>
+				<placement x="0" y="%ab_h%" w="%screen_w%" h="%ab_btn_h%"/>
 			</fill>
 
 			<image style="switch_on">
 				<condition var1="real_gestures_enable_tmp" var2="1"/>
-				<placement x="%ab_btn1_x%" y="%gst_switch_y%" placement="4"/>
+				<placement x="%ab_btn1_x%" y="%ab2_y%" placement="4"/>
 			</image>
 			
 			<image style="switch_off">
 				<condition var1="real_gestures_enable_tmp" op="!=" var2="1"/>
-				<placement x="%ab_btn1_x%" y="%gst_switch_y%" placement="4"/>
+				<placement x="%ab_btn1_x%" y="%ab2_y%" placement="4"/>
 			</image>
 
 			<text style="text_ab_switch">
-				<placement x="%col1_x_indent%" y="%gst_text_y%"/>
+				<placement x="%col1_x_indent%" y="%ab_bc2_y%"/>
 				<text>{@gst_enable_all}</text>
 			</text>
 
 			<button style="bs_btn">
 				<condition var1="real_gestures_enable_tmp" op="!=" var2="1"/>
-				<placement x="0" y="1080" w="%screen_w%" h="%ab_btn_h%"/>
+				<placement x="0" y="%ab_h%" w="%screen_w%" h="%ab_btn_h%"/>
 				<action function="set">real_gestures_enable_tmp=1</action>
 				<action function="set">needs_repack=1</action>
 				<action function="set">update_navbar=1</action>
@@ -93,7 +77,7 @@
 
 			<button style="bs_btn">
 				<condition var1="real_gestures_enable_tmp" var2="1"/>
-				<placement x="0" y="1080" w="%screen_w%" h="%ab_btn_h%"/>
+				<placement x="0" y="%ab_h%" w="%screen_w%" h="%ab_btn_h%"/>
 				<action function="set">real_gestures_enable_tmp=0</action>
 				<action function="set">needs_repack=1</action>
 				<action function="set">update_navbar=1</action>
@@ -104,19 +88,20 @@
 				<action function="set">navbar_disable_add_tmp=0</action>
 			</button>
 
-			<image>
-				<condition var1="show_shadow" var2="1"/>
-				<image resource="actionbar_shadow"/>
-				<placement x="0" y="1080"/>
-			</image>
+			<template name="base"/>
+
+			<text style="text_ab_title">
+				<placement x="%col1_x_indent%" y="%ab_bc_y%"/>
+				<text>{@gst_title}</text>
+			</text>
 
 			<text style="caption">
-				<placement x="%col1_x_caption%" y="%row6_3_y%"/>
+				<placement x="%col1_x_caption%" y="%row1_3a_y%"/>
 				<text>{@gst_back}</text>
 			</text>
 
 			<listbox style="settingslist">
-				<placement x="0" y="%row7_1_y%" w="%screen_w%" h="%lb_l2%"/>
+				<placement x="0" y="%row2_1a_y%" w="%screen_w%" h="%lb_l2%"/>
 				<listitem name="{@gst_back_left}">
 					<data variable="gst_back_left"/>
 				</listitem>
@@ -126,12 +111,12 @@
 			</listbox>
 
 			<text style="caption">
-				<placement x="%col1_x_caption%" y="%row8_2_y%"/>
+				<placement x="%col1_x_caption%" y="%row3_2a_y%"/>
 				<text>{@gst_console}</text>
 			</text>
 
 			<listbox style="settingslist">
-				<placement x="0" y="%row8_3_y%" w="%screen_w%" h="%lb_l1%"/>
+				<placement x="0" y="%row3_3a_y%" w="%screen_w%" h="%lb_l1%"/>
 				<listitem name="{@gst_console_enable}">
 					<data variable="gst_console"/>
 				</listitem>
