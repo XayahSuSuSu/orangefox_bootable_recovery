@@ -756,17 +756,23 @@
 
 			<listbox style="settingslist">
 				<placement x="0" y="%row5_2a_y%" w="%screen_w%" h="%lb_l1%"/>
-				<listitem name="{@cust_navbar_white}">
+				<listitem name="{@cust_line_white}">
 					<condition var1="theme_style" op="!=" var2="Light"/>
 					<data variable="navbar_accent"/>
 					<condition var1="navbar_bkg" op="!=" var2="3"/>
 				</listitem>
-				<listitem name="{@cust_navbar_gray}">
+				<listitem name="{@cust_line_gray}">
 					<condition var1="theme_style" var2="Light"/>
 					<data variable="navbar_accent"/>
 					<condition var1="navbar_bkg" op="!=" var2="3"/>
 				</listitem>
 			</listbox>
+
+			<action>
+				<condition var1="navbar_bkg" var2="3"/>
+				<condition var1="navbar_accent" var2="0"/>
+				<action function="set">navbar_accent=1</action>
+			</action>
 
 			<template name="gestures"/>
 

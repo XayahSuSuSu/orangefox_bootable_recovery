@@ -99,7 +99,7 @@
 		
 		<!-- Gesture -->
 		<variable name="gst_keyboard_y" value="%keyboard_y%-%ab_h%"/>
-		<variable name="gst_line_y" value="%screen_h%-120"/>
+		<variable name="gst_line_y" value="%screen_h%-123"/>
 
 		<!-- Placement -->
 		<variable name="welcome_text" value="%center_y%+160"/>

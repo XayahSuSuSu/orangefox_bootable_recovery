@@ -1160,6 +1160,9 @@
 
 		<string name="mbyte">МБ</string>
 
+		<string name="cust_navbar_white">Использовать белую линию</string>
+		<string name="cust_navbar_gray">Использовать серую линию</string>
+
 		<!-- Updated slot selection -->
 		<string name="slot_show">Переключить слот</string>
 		<string name="slot_switch_a">Переключить на слот A</string>

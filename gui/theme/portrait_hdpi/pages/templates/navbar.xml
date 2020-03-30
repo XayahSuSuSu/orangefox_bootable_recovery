@@ -2,34 +2,34 @@
 <recovery>
 	<templates>
 		<template name="gestures_basic">
-			<fill color="#FFFFFF">
+			<fill color="#FFFFFF" rounded="1">
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_accent" var2="1"/>
 				<condition var1="navbar_bkg" op="&gt;=" var2="3"/>
 				<condition var1="theme_style" var2="Light"/>
 				<condition var1="real_gestures_enable" var2="1"/>
-				<placement x="340" y="%gst_line_y%" w="400" h="4" placement="4"/>
+				<placement x="435" y="%gst_line_y%" w="210" h="7" placement="4"/>
 			</fill>
-			<fill color="#FFFFFF">
+			<fill color="#FFFFFF" rounded="1">
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_accent" var2="1"/>
 				<condition var1="theme_style" op="!=" var2="Light"/>
 				<condition var1="real_gestures_enable" var2="1"/>
-				<placement x="340" y="%gst_line_y%" w="400" h="4" placement="4"/>
+				<placement x="435" y="%gst_line_y%" w="210" h="7" placement="4"/>
 			</fill>
-			<fill color="#5F6368">
+			<fill color="#5F6368" rounded="1">
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_accent" var2="1"/>
 				<condition var1="navbar_bkg" op="&lt;=" var2="2"/>
 				<condition var1="theme_style" var2="Light"/>
 				<condition var1="real_gestures_enable" var2="1"/>
-				<placement x="340" y="%gst_line_y%" w="400" h="4" placement="4"/>
+				<placement x="435" y="%gst_line_y%" w="210" h="7" placement="4"/>
 			</fill>
-			<fill color="%accent%">
+			<fill color="%accent%" rounded="1">
 				<condition var1="tw_busy" var2="0"/>
 				<condition var1="navbar_accent" var2="0"/>
 				<condition var1="real_gestures_enable" var2="1"/>
-				<placement x="340" y="%gst_line_y%" w="400" h="4" placement="4"/>
+				<placement x="435" y="%gst_line_y%" w="210" h="7" placement="4"/>
 			</fill>
 
 			<gesture>

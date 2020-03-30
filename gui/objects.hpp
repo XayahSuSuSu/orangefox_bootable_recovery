@@ -244,6 +244,7 @@ class GUIFill : public GUIObject, public RenderObject
 {
 public:
 	GUIFill(xml_node<>* node);
+	virtual ~GUIFill();
 
 public:
 	// Render - Render the full object to the GL surface
@@ -252,6 +253,8 @@ public:
 
 protected:
 	COLOR mColor;
+	gr_surface mCircle;
+	std::string mIsRounded;
 };
 
 class GUIBattery : public GUIObject, public RenderObject
