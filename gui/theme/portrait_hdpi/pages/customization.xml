@@ -1163,7 +1163,7 @@
 				<placement x="%ws_cards_x1%" y="%ws_cards_y1%" placement="4"/>
 				<image resource="style_night"/>
 				<action function="set">theme_style_tmp=Night</action>
-				<action function="set">theme_style_act_tmp=DBlack</action>
+				<action function="set">theme_style_act_tmp=Default</action>
 			</button>
 
 			<image>
@@ -1183,7 +1183,7 @@
 				<placement x="%ws_cards_x2%" y="%ws_cards_y1%" placement="4"/>
 				<image resource="style_black"/>
 				<action function="set">theme_style_tmp=Black</action>
-				<action function="set">theme_style_act_tmp=DBlack</action>
+				<action function="set">theme_style_act_tmp=Default</action>
 			</button>
 
 			<image>
@@ -1203,7 +1203,7 @@
 				<placement x="%ws_cards_x3%" y="%ws_cards_y1%" placement="4"/>
 				<image resource="style_gray"/>
 				<action function="set">theme_style_tmp=Gray</action>
-				<action function="set">theme_style_act_tmp=DBlack</action>
+				<action function="set">theme_style_act_tmp=Default</action>
 			</button>
 
 			<image>
@@ -1924,7 +1924,7 @@
 				
 					#Accent
 					if [[ '%update_accent%' = '1' ]] || [[ '%update_style%' = '1' ]]; then
-						if [[ '%theme_style_act_tmp%' = 'DBlack' ]]; then
+						if [[ '%theme_style_act_tmp%' = 'Default' ]]; then
 							cat "/twres/themes/sed/accent.xml" | sed -e "
 							s/#ACCENT#/D%theme_accent_tmp%/g;
 							s/#ACCENT_NAME#/%theme_accent_tmp%/g;
@@ -1946,7 +1946,7 @@
 					#ActBar
 					if [[ '%update_action%' = '1' ]] || [[ '%update_style%' = '1' ]] || [[ '%update_accent%' = '1' ]]; then
 						if [[ '%theme_pie_tmp%' = '1' ]]; then
-							if [[ '%theme_style_act_tmp%' = 'DBlack' ]]; then
+							if [[ '%theme_style_act_tmp%' = 'Default' ]]; then
 								cat "/twres/themes/sed/action.xml" | sed -e "
 								s/#ACCENT#/D%theme_accent_tmp%/g;
 								s/#A_COLOR#/accent/g;
