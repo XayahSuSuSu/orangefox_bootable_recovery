@@ -1535,7 +1535,7 @@ void TWFunc::Fixup_Time_On_Boot(const string & time_paths)
   uint64_t drift = 0;
   int store = 0;
   unsigned long long stored_drift = 0;
-  const uint64_t min_offset = 1526913615; // minimum offset = Mon May 21 15:40:17 BST 2018
+  const uint64_t min_offset = 1585559739; // minimum offset = Mon Mar 30 10:15:39 BST 2020
   std::string sepoch = "/sys/class/rtc/rtc0/since_epoch";
 
   if (TWFunc::read_file(sepoch, offset) == 0)
@@ -4535,7 +4535,7 @@ void TWFunc::Dump_Current_Settings(void)
 void TWFunc::Reset_Clock(void)
 {
    string fox_build_date_utc = TWFunc::File_Property_Get ("/etc/fox.cfg", "ro.build.date.utc_fox");
-   if (fox_build_date_utc != "")
+   if (!fox_build_date_utc.empty())
       {
         TWFunc::Exec_With_Output("date -s \"@" + fox_build_date_utc + "\" > /dev/null");
       }
