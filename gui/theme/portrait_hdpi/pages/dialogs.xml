@@ -518,6 +518,7 @@
 				<text>{@ok_btn}</text>
 				<actions>
 					<action function="overlay"/>
+					<action function="set">install_back=advanced</action>
 					<action function="page">mod_magisk</action>
 				</actions>
 			</button>
