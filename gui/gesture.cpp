@@ -120,13 +120,13 @@ int GUIGesture::NotifyTouch(TOUCH_STATE state, int x, int y)
 	if (!isConditionTrue())	 return -1;
 
 	if (state == TOUCH_START)
-		vibrateLock = false;
+		vibrateLock = false; //Execute gesture action only one time
 
 	if ((
-		(mMode == 0 && y < mRenderY - mSensetivity) ||
+		(mMode == 0 && y < mRenderY - mSensetivity && y > 960) ||
 		(mMode == 1 && x < mRenderX - mSensetivity) ||
 		(mMode == 2 && x > mRenderX + mSensetivity + mRenderW) ||
-		(mMode == 3 && y > mRenderY + mSensetivity + mRenderH)
+		(mMode == 3 && y > mRenderY + mSensetivity + mRenderH && y < 960)
 		) && !vibrateLock)  {
 		#ifndef TW_NO_HAPTICS
 			DataManager::Vibrate("tw_button_vibrate");
