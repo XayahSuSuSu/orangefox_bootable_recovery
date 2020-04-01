@@ -449,7 +449,13 @@ void GUIFileSelector::RenderItem(size_t itemindex, int yPos, bool selected)
 				icon = mExPngIcon;
 			} else if (ext == "txt" || ext == "log" || ext == "cfg" || ext == "prop" || ext == "xml" || ext == "sh" || ext == "rc" || ext == "conf" || ext == "fstab" || ext == "default") {
 				icon = mExTxtIcon;
-			} else {
+			} 
+			#ifdef OF_SUPPORT_OZIP_DECRYPTION
+				else if (ext == "ozip") {
+					icon = mExZipIcon;
+				}
+			#endif
+			else {
 				icon = mFileIcon;
 			}
 		}

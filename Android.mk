@@ -274,10 +274,6 @@ ifeq ($(OF_CHECK_OVERWRITE_ATTEMPTS),1)
     LOCAL_CFLAGS += -DOF_CHECK_OVERWRITE_ATTEMPTS='"1"'
 endif
 
-ifeq ($(OF_OTA_RES_DECRYPT),1)
-    LOCAL_CFLAGS += -DOF_OTA_RES_DECRYPT='"1"'
-endif
-
 ifeq ($(FOX_ENABLE_LAB),1)
     LOCAL_CFLAGS += -DFOX_ENABLE_LAB='"1"'
 endif
@@ -308,6 +304,14 @@ endif
 
 ifeq ($(OF_USE_SYSTEM_FINGERPRINT),1)
     LOCAL_CFLAGS += -DOF_USE_SYSTEM_FINGERPRINT='"1"'
+endif
+
+ifeq ($(OF_PATCH_AVB20),1)
+    LOCAL_CFLAGS += -DOF_PATCH_AVB20='"1"'
+endif
+
+ifeq ($(OF_SKIP_MULTIUSER_FOLDERS_BACKUP),1)
+    LOCAL_CFLAGS += -DOF_SKIP_MULTIUSER_FOLDERS_BACKUP='"1"'
 endif
 
 ifeq ($(TW_USE_TOOLBOX), true)
@@ -785,11 +789,11 @@ ifeq ($(shell test $(PLATFORM_SDK_VERSION) -ge 26; echo $$?),0)
     TWRP_REQUIRED_MODULES += ld.config.txt
     ifeq ($(BOARD_VNDK_RUNTIME_DISABLE),true)
         LOCAL_POST_INSTALL_CMD += \
-            sed '0,/^namespace.default.search.paths\s\{1,\}/!b;//a\namespace.default.search.paths += \/sbin' \
+	    sed 's/\(namespace.default.search.paths\)\s\{1,\}=/namespace.default.search.paths  = \/sbin\n\1 +=/' \
                 $(TARGET_OUT_ETC)/ld.config.vndk_lite.txt > $(TARGET_RECOVERY_ROOT_OUT)/sbin/ld.config.txt;
     else
         LOCAL_POST_INSTALL_CMD += \
-            sed '0,/^namespace.default.search.paths\s\{1,\}/!b;//a\namespace.default.search.paths += \/sbin' \
+	    sed 's/\(namespace.default.search.paths\)\s\{1,\}=/namespace.default.search.paths  = \/sbin\n\1 +=/' \
                 $(TARGET_OUT_ETC)/ld.config.txt > $(TARGET_RECOVERY_ROOT_OUT)/sbin/ld.config.txt;
     endif
 endif

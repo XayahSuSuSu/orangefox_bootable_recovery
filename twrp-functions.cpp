@@ -259,28 +259,6 @@ static bool StorageIsEncrypted(void)
      return true;
 }
 
-/* convert number to string */
-std::string num_to_string(int value)
-{
-  std::ostringstream os;
-  os << value;
-  return os.str();
-}
-
-std::string num_to_string(long value)
-{
-  std::ostringstream os;
-  os << value;
-  return os.str();
-}
-
-std::string num_to_string(uint64_t value)
-{
-  std::ostringstream os;
-  os << value;
-  return os.str();
-}
-
 /* convert string to number, with default value in case of error */
 int string_to_int(string String, int def_value)
 {
@@ -377,6 +355,9 @@ std::string strReturnCurrentTime()
 /* function to run just before every reboot */
 void TWFunc::Run_Before_Reboot(void)
 {
+
+    Patch_AVB20(true);
+
     if (!Path_Exists(Fox_Logs_Dir))
        {
 	  TWFunc::Recursive_Mkdir(Fox_Logs_Dir, false);
@@ -1554,7 +1535,7 @@ void TWFunc::Fixup_Time_On_Boot(const string & time_paths)
   uint64_t drift = 0;
   int store = 0;
   unsigned long long stored_drift = 0;
-  const uint64_t min_offset = 1526913615; // minimum offset = Mon May 21 15:40:17 BST 2018
+  const uint64_t min_offset = 1585559739; // minimum offset = Mon Mar 30 10:15:39 BST 2020
   std::string sepoch = "/sys/class/rtc/rtc0/since_epoch";
 
   if (TWFunc::read_file(sepoch, offset) == 0)
@@ -2528,6 +2509,14 @@ void TWFunc::OrangeFox_Startup(void)
       }
 
   TWFunc::Fresh_Fox_Install();
+  
+  // Patch_AVB20(true);
+  
+  // start mtp manually, if enabled
+  #ifdef TW_HAS_MTP
+ // if (DataManager::GetIntValue("tw_mtp_enabled") == 1 && !PartitionManager.is_MTP_Enabled())
+ //    PartitionManager.Enable_MTP();
+  #endif
 }
 
 void TWFunc::copy_kernel_log(string curr_storage)
@@ -3428,9 +3417,12 @@ bool TWFunc::Fresh_Fox_Install()
 		  DataManager::SetValue(FOX_FORCE_DEACTIVATE_PROCESS, 1);
 	       }
 	    TWFunc::Deactivation_Process();
+	    usleep(16384);
+	    TWFunc::Patch_AVB20(false);
+	    usleep(16384);
 	    New_Fox_Installation = 0;
 	#endif // OF_DONT_PATCH_ON_FRESH_INSTALLATION
-	
+
 	LOGINFO ("DEBUG [Fresh_Fox_Install()] - copying log to:/sdcard/Fox/logs/post-install.log \n");
 	copy_file("/tmp/recovery.log", "/sdcard/Fox/logs/post-install.log", 0644);
 
@@ -4176,13 +4168,14 @@ void TWFunc::check_selinux_support() {
 
 void TWFunc::Deactivation_Process(void)
 {
-  #if defined(OF_SKIP_ORANGEFOX_PROCESS) || defined(OF_VANILLA_BUILD)
+  if (TWFunc::To_Skip_OrangeFox_Process())
+     {
 	gui_print_color("warning", "\nOrangeFox: Skipping the OrangeFox Process.\n");
 	New_Fox_Installation = 0;
 	Fox_Force_Deactivate_Process = 0;
 	DataManager::SetValue(FOX_FORCE_DEACTIVATE_PROCESS, 0);
 	return;
-  #endif
+     }
 
   bool patched_verity = false;
   bool patched_crypt = false;
@@ -4194,8 +4187,7 @@ void TWFunc::Deactivation_Process(void)
      }
    
   // advanced stock replace
-  // if (MIUI_Is_Running()) // don't do this for MIUI only
-  	Disable_Stock_Recovery_Replace();
+  Disable_Stock_Recovery_Replace();
 
 // patch ROM's fstab
 #ifndef OF_USE_MAGISKBOOT
@@ -4299,6 +4291,37 @@ void TWFunc::Deactivation_Process(void)
 #endif // OF_USE_MAGISKBOOT
   Fox_Force_Deactivate_Process = 0;
   DataManager::SetValue(FOX_FORCE_DEACTIVATE_PROCESS, 0);
+}
+
+void TWFunc::Patch_AVB20(bool silent)
+{
+#if defined(OF_PATCH_AVB20) && !defined(OF_SKIP_ORANGEFOX_PROCESS) && !defined(OF_VANILLA_BUILD)
+std::string zipname = FFiles_dir + "/OF_avb20/OF_avb20.zip";
+int res=0, wipe_cache=0;
+  if (!TWFunc::Path_Exists("/sbin/magiskboot"))
+     {
+        gui_print("ERROR - cannot find /sbin/magiskboot\n");
+  	return;
+     }
+
+   if (!TWFunc::Path_Exists(zipname))
+     {
+        gui_print("ERROR - cannot find %s\n", zipname.c_str());
+  	return;
+     }
+
+   DataManager::SetValue(FOX_INSTALL_PREBUILT_ZIP, "1");
+ 
+   if (silent)
+     setenv("AVB_REPORT_PROGRESS", "0", 1);
+   else
+     setenv("AVB_REPORT_PROGRESS", "1", 1);
+   usleep(4096);
+   res = TWinstall_zip(zipname.c_str(), &wipe_cache);
+   usleep(4096);
+   setenv("AVB_REPORT_PROGRESS", "", 1);
+   DataManager::SetValue(FOX_INSTALL_PREBUILT_ZIP, "0");
+#endif
 }
 
 int TWFunc::Patch_DMVerity_ForcedEncryption_Magisk(void)
@@ -4512,7 +4535,7 @@ void TWFunc::Dump_Current_Settings(void)
 void TWFunc::Reset_Clock(void)
 {
    string fox_build_date_utc = TWFunc::File_Property_Get ("/etc/fox.cfg", "ro.build.date.utc_fox");
-   if (fox_build_date_utc != "")
+   if (!fox_build_date_utc.empty())
       {
         TWFunc::Exec_With_Output("date -s \"@" + fox_build_date_utc + "\" > /dev/null");
       }
@@ -4574,6 +4597,15 @@ void TWFunc::CreateNewFile(string file_path)
   file << blank;
   file.close();
   chmod (file_path.c_str(), 0644);
+}
+
+bool TWFunc::To_Skip_OrangeFox_Process(void)
+{
+  #if defined(OF_SKIP_ORANGEFOX_PROCESS) || defined(OF_VANILLA_BUILD)
+     return true;
+  #else
+     return false;
+  #endif
 }
 
 //

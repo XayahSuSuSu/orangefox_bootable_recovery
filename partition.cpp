@@ -642,11 +642,13 @@ void TWPartition::Setup_Data_Partition(bool Display_Error) {
 		DataManager::SetValue(TW_IS_DECRYPTED, 1);
 		Is_Encrypted = true;
 		Is_Decrypted = true;
-		if (Key_Directory.empty())
+		if (Key_Directory.empty()) {
 			Is_FBE = false;
-		else
+			DataManager::SetValue(TW_IS_FBE, 0);
+		} else {
 			Is_FBE = true;
-		DataManager::SetValue(TW_IS_FBE, 0);
+			DataManager::SetValue(TW_IS_FBE, 1);
+		}
 		Decrypted_Block_Device = crypto_blkdev;
 		LOGINFO("Data already decrypted, new block device: '%s'\n", crypto_blkdev);
 	} else if (!Mount(false)) {
@@ -709,7 +711,9 @@ if (TWFunc::Path_Exists("/data/unencrypted/key/version")) {
 		#ifdef OF_SKIP_FBE_DECRYPTION
 		    LOGINFO("Skip FBE decryption is triggered. I will not try to decrypt ...\n");
 		    return false;
-		#endif	
+		#endif
+		Is_FBE = true;
+		DataManager::SetValue(TW_IS_FBE, 1);
 		ExcludeAll(Mount_Point + "/convert_fbe");
 		ExcludeAll(Mount_Point + "/unencrypted");
 		//ExcludeAll(Mount_Point + "/system/users/0"); // we WILL need to retain some of this if multiple users are present or we just need to delete more folders for the extra users somewhere else
@@ -736,8 +740,6 @@ if (TWFunc::Path_Exists("/data/unencrypted/key/version")) {
 			property_set("ro.crypto.state", "encrypted");
 			Is_Encrypted = true;
 			Is_Decrypted = false;
-			Is_FBE = true;
-			DataManager::SetValue(TW_IS_FBE, 1);
 			DataManager::SetValue(TW_IS_ENCRYPTED, 1);
 			string filename;
 			int pwd_type = Get_Password_Type(0, filename);
@@ -3390,5 +3392,32 @@ string TWPartition::Get_Backup_Name() {
 
 void TWPartition::Fox_Add_Backup_Exclusions() {
    backup_exclusions.add_absolute_dir("/data/per_boot");
-   backup_exclusions.add_absolute_dir("/data/vendor_ce/999");
+
+   // avoid parallel/dual apps or multi-user backup issues
+   #if defined(TW_INCLUDE_FBE) && defined(OF_SKIP_MULTIUSER_FOLDERS_BACKUP)
+   //if (DataManager::GetIntValue(TW_IS_FBE) == 1) {
+	int Users[2] = {10,999};
+	int i;
+	string user;
+	for (i=0; i<=1; i++)
+	    {
+   	   	user = TWFunc::to_string(Users[i]);
+   	   	backup_exclusions.add_absolute_dir("/data/media/" + user);
+   	   	backup_exclusions.add_absolute_dir("/data/user/" + user);
+   	   	backup_exclusions.add_absolute_dir("/data/misc/user/" + user);
+
+   	   	// _ce/x
+   	   	backup_exclusions.add_absolute_dir("/data/vendor_ce/" + user);
+   	   	backup_exclusions.add_absolute_dir("/data/system_ce/" + user);
+   	   	backup_exclusions.add_absolute_dir("/data/user_ce/" + user);
+   	   	backup_exclusions.add_absolute_dir("/data/misc_ce/" + user);
+
+		// _de/x
+   	   	backup_exclusions.add_absolute_dir("/data/vendor_de/" + user);
+   	   	backup_exclusions.add_absolute_dir("/data/system_de/" + user);
+   	   	backup_exclusions.add_absolute_dir("/data/user_de/" + user);
+   	   	backup_exclusions.add_absolute_dir("/data/misc_de/" + user);
+	   }
+     //}
+   #endif
 }

@@ -137,12 +137,12 @@ int main(int argc, char **argv)
      }
 
   // set the start date to the recovery's build date
-  //TWFunc::Reset_Clock();
+  TWFunc::Reset_Clock();
 
   DataManager::GetValue(FOX_COMPATIBILITY_DEVICE, Fox_Current_Device);
-  time_t StartupTime = time(NULL);
-  printf("Starting OrangeFox TWRP %s-%s-%s (built on %s for %s) on %s (pid %d)\n", FOX_VERSION,
-	 FOX_BUILD, TW_GIT_REVISION, fox_build_date.c_str(), Fox_Current_Device.c_str(), ctime(&StartupTime), getpid());
+  printf("Starting OrangeFox TWRP %s-%s-%s (built on %s for %s [dev_ver: %s]; pid %d)\n", 
+  	FOX_VERSION, FOX_BUILD, TW_GIT_REVISION, fox_build_date.c_str(), Fox_Current_Device.c_str(), 
+  	FOX_CURRENT_DEV_STR, getpid());
 
   // Load default values to set DataManager constants and handle ifdefs
 	DataManager::SetDefaultValues();
@@ -164,8 +164,6 @@ int main(int argc, char **argv)
 	gui_loadResources();
 
 	bool Shutdown = false;
-	bool SkipDecryption = false;
-	int Need_Decrypt = 0;
 
         // use the ROM's fingerprint?
 	#ifdef OF_USE_SYSTEM_FINGERPRINT
@@ -220,12 +218,6 @@ int main(int argc, char **argv)
 				if (*ptr) {
 					string ORSCommand = "install ";
 					ORSCommand.append(ptr);
-
-					// If we have a map of blocks we don't need to mount data.
-					SkipDecryption = *ptr == '@';
-					if (*ptr == '@')
-					   Need_Decrypt = 1;
-					else Need_Decrypt = 0;
 
 					if (!OpenRecoveryScript::Insert_ORS_Command(ORSCommand))
 						break;
@@ -294,38 +286,19 @@ int main(int argc, char **argv)
 
 	// Offer to decrypt if the device is encrypted
 	if (DataManager::GetIntValue(TW_IS_ENCRYPTED) != 0) {
-		if (SkipDecryption) {
-		  // #ifdef OF_OTA_RES_DECRYPT
-			if (Need_Decrypt == 1)
-			 {
-			    usleep(16);
-			    if (gui_startPage("decrypt", 1, 1) == 0)
-			       {  
-				  LOGINFO("- DEBUG: OrangeFox OTA: detected custom or FBE encryption\n");
-				  DataManager::SetValue("OTA_decrypted", "1");
-				  TWFunc::check_selinux_support();
-				  gui_loadCustomResources();
-			       } 
-			 }
-			else //
-		 //  #endif
-			  LOGINFO("Skipping decryption\n");			
+		LOGINFO("Is encrypted, do decrypt page first\n");
+		if (gui_startPage("decrypt", 1, 1) != 0) {
+			LOGERR("Failed to start decrypt GUI page.\n");
 		} else {
-			LOGINFO("Is encrypted, do decrypt page first\n");			
-			//
-			LOGINFO("- DEBUG: OrangeFox: detected custom or FBE encryption\n");
+			// Check for and load custom theme if present
+			TWFunc::check_selinux_support();
+			gui_loadCustomResources();
+			// OrangeFox - make note of this decryption
+			DataManager::SetValue("OTA_decrypted", "1");
 			#ifdef FOX_OLD_DECRYPT_RELOAD
 				DataManager::SetValue("used_custom_encryption", "1");
 			#endif
 			usleep(16);
-			//
-			if (gui_startPage("decrypt", 1, 1) != 0) {
-				LOGERR("Failed to start decrypt GUI page.\n");
-			} else {
-				// Check for and load custom theme if present
-				TWFunc::check_selinux_support();
-				gui_loadCustomResources();
-			}
 		}
 	} else if (datamedia) {
 		TWFunc::check_selinux_support();
@@ -352,7 +325,8 @@ int main(int argc, char **argv)
 	// Run any outstanding OpenRecoveryScript
 	std::string cacheDir = TWFunc::get_cache_dir();
 	std::string orsFile = cacheDir + "/recovery/openrecoveryscript";
-	if ((DataManager::GetIntValue(TW_IS_ENCRYPTED) == 0 || SkipDecryption) && (TWFunc::Path_Exists(SCRIPT_FILE_TMP) || TWFunc::Path_Exists(orsFile))) {
+	
+	if (TWFunc::Path_Exists(SCRIPT_FILE_TMP) || (DataManager::GetIntValue(TW_IS_ENCRYPTED) == 0 && TWFunc::Path_Exists(orsFile))) {
 		OpenRecoveryScript::Run_OpenRecoveryScript();
 	}
 
@@ -433,16 +407,21 @@ int main(int argc, char **argv)
 
 #ifdef FOX_OLD_DECRYPT_RELOAD
   LOGINFO("Using R10 way to reload theme.\n");
-  if (DataManager::GetStrValue("used_custom_encryption") == "1")
-    PageManager::RequestReload();
+  if (DataManager::GetStrValue("used_custom_encryption") == "1") {
+     if (TWFunc::Path_Exists(Fox_Home + "/.theme") || TWFunc::Path_Exists(Fox_Home + "/.navbar")) // using custom themes
+         PageManager::RequestReload();
+  }
 #else
-
   if (DataManager::GetStrValue("data_decrypted") == "1")
   {
 	//[f/d] Start UI using reapply_settings page (executed on recovery startup)
-  	DataManager::SetValue("of_reload_back", "main");
-	PageManager::RequestReload();
-    gui_startPage("reapply_settings", 1, 0);
+	if (TWFunc::Path_Exists(Fox_Home + "/.theme") || TWFunc::Path_Exists(Fox_Home + "/.navbar")) {
+  		DataManager::SetValue("of_reload_back", "main");
+		PageManager::RequestReload();
+    	gui_startPage("reapply_settings", 1, 0);
+	} else {
+		gui_start();
+    }
   }
   else
 #endif

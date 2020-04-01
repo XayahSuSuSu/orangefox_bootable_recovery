@@ -92,14 +92,15 @@ public:
 	static int Get_Android_SDK_Version(void);				// Return the SDK version of the current ROM (or default to 21 (Android 5.0))
 	static string Get_MagiskBoot(void);					// Return the name of the magiskboot binary that should be used for patching
 
-	static void Deactivation_Process(void);                     		// Run deactivation proces...
+	static void Deactivation_Process(void);                     		// Run deactivation process...
+	static bool To_Skip_OrangeFox_Process(void);				// Return whether to skip the deactivation process
 	static void OrangeFox_Startup(void);        				// Run StartUP code for OrangeFox
-	static int Recursive_Mkdir(string Path, bool ShowErr = true);                                    // Recursively makes the entire path
-	static void GUI_Operation_Text(string Read_Value, string Default_Text);     // Updates text for display in the GUI, e.g. Backing up %partition name%
+	static int Recursive_Mkdir(string Path, bool ShowErr = true);           // Recursively makes the entire path
+	static void GUI_Operation_Text(string Read_Value, string Default_Text); // Updates text for display in the GUI, e.g. Backing up %partition name%
 	static void GUI_Operation_Text(string Read_Value, string Partition_Name, string Default_Text); // Same as above but includes partition name
-	static void Update_Log_File(void);                                          // Writes the log to last_log
-	static void Update_Intent_File(string Intent);                              // Updates intent file
-	static int tw_reboot(RebootCommand command);                                // Prepares the device for rebooting
+	static void Update_Log_File(void);                                      // Writes the log to last_log
+	static void Update_Intent_File(string Intent);                          // Updates intent file
+	static int tw_reboot(RebootCommand command);                            // Prepares the device for rebooting
 	static void check_and_run_script(const char* script_file, const char* display_name); // checks for the existence of a script, chmods it to 755, then runs it
 	static int removeDir(const string path, bool removeParent); //recursively remove a directory
 	static int copy_file(string src, string dst, int mode); //copy file from src to dst with mode permissions
@@ -144,7 +145,9 @@ public:
 	static bool Fstab_Has_Verity_Flag(string path); // does the fstab file have dm-verity flags?
 	static void Patch_Verity_Flags(string path); // patch the fstab's dm-verity flags
 	static bool Has_Vendor_Partition(void); // does the device have a real vendor partition?
-	static int Patch_DMVerity_ForcedEncryption_Magisk(void); // patch dm-verity/forced-encryption with a script using magisk
+	static int  Patch_DMVerity_ForcedEncryption_Magisk(void); // patch dm-verity/forced-encryption with a script using magisk
+	static void Patch_AVB20(bool silent); // patch avb 2.0 with a script using magisk
+
 	static void Run_Pre_Flash_Protocol(bool forceit); // run any pre_flash protocol
 	static void Run_Post_Flash_Protocol(void); // run any post_flash protocol
 	static bool Has_System_Root(void); // is this a system-as-root device?

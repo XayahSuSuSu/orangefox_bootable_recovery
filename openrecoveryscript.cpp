@@ -2,7 +2,7 @@
 	Copyright 2003 to 2017 TeamWin
 	This file is part of TWRP/TeamWin Recovery Project.
 
-	Copyright (C) 2018-2019 OrangeFox Recovery Project
+	Copyright (C) 2018-2020 OrangeFox Recovery Project
 	This file is part of the OrangeFox Recovery Project.
 
 	TWRP is free software: you can redistribute it and/or modify
@@ -829,8 +829,12 @@ int OpenRecoveryScript::Run_Fox_Process_After_ORS(void)
             {
          	DataManager::SetValue(FOX_FORCE_DEACTIVATE_PROCESS, 1);
          	Fox_Force_Deactivate_Process = DataManager::GetIntValue(FOX_FORCE_DEACTIVATE_PROCESS);
+         	usleep(2048);
          	TWFunc::Deactivation_Process();
             }
+         usleep(32768);
+         TWFunc::Patch_AVB20(false);
+         usleep(32768);
      }
    return 0;
 }

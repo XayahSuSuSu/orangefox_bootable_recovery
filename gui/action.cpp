@@ -1376,15 +1376,16 @@ int GUIAction::flash(std::string arg)
       if (Fox_Zip_Installer_Code != 0) // we have just installed a ROM - ideally, the user should reboot the recovery
        {
           has_installed_rom++;
-          usleep(50000);
+          usleep(32768);
 	  TWFunc::Deactivation_Process();
 	  DataManager::SetValue(FOX_CALL_DEACTIVATION, 0);
-          usleep(50000);
+          usleep(32768);
+          TWFunc::Patch_AVB20(false);
+          usleep(32768);
 	  PartitionManager.Update_System_Details();
        }
 
        usleep(250000);
-
      } // for i
 
    zip_queue_index = 0;
