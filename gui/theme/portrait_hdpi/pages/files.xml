@@ -244,6 +244,7 @@
 		
 			<action>
 				<condition var1="tw_file_extension" var2="zip"/>
+				<condition var1="tw_file_extension" var2="ozip"/>
 				<actions>
 					<action function="set">fex_found=1</action>
 					<action function="queueclear"/>

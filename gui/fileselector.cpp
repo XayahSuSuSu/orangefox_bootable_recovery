@@ -421,7 +421,7 @@ void GUIFileSelector::RenderItem(size_t itemindex, int yPos, bool selected)
 			icon = mExBlockIcon;
 		} else {
 			// [f/d] Detect file extension and set icon
-			if (ext == "zip" || ext == "apk" || ext == "tar" || ext == "gz" || ext == "bz2" || ext == "xz" || ext == "lzo" || ext == "cpio" || ext == "lzma" || ext == "z" || ext == "zz") {
+			if (ext == "ozip" || ext == "zip" || ext == "apk" || ext == "tar" || ext == "gz" || ext == "bz2" || ext == "xz" || ext == "lzo" || ext == "cpio" || ext == "lzma" || ext == "z" || ext == "zz") {
 				icon = mExZipIcon;
 			} else if (ext == "img") {
 				icon = mExImgIcon;
