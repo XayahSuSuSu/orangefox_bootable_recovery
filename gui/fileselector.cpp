@@ -421,7 +421,7 @@ void GUIFileSelector::RenderItem(size_t itemindex, int yPos, bool selected)
 			icon = mExBlockIcon;
 		} else {
 			// [f/d] Detect file extension and set icon
-			if (ext == "ozip" || ext == "zip" || ext == "apk" || ext == "tar" || ext == "gz" || ext == "bz2" || ext == "xz" || ext == "lzo" || ext == "cpio" || ext == "lzma" || ext == "z" || ext == "zz") {
+			if (ext == "zip" || ext == "apk" || ext == "tar" || ext == "gz" || ext == "bz2" || ext == "xz" || ext == "lzo" || ext == "cpio" || ext == "lzma" || ext == "z" || ext == "zz") {
 				icon = mExZipIcon;
 			} else if (ext == "img") {
 				icon = mExImgIcon;
@@ -429,7 +429,13 @@ void GUIFileSelector::RenderItem(size_t itemindex, int yPos, bool selected)
 				icon = mExPngIcon;
 			} else if (ext == "txt" || ext == "log" || ext == "cfg" || ext == "prop" || ext == "xml" || ext == "sh" || ext == "rc" || ext == "conf" || ext == "fstab" || ext == "default") {
 				icon = mExTxtIcon;
-			} else {
+			} 
+			#ifdef OF_SUPPORT_OZIP_DECRYPTION
+				else if (ext == "ozip") {
+					icon = mExZipIcon;
+				}
+			#endif
+			else {
 				icon = mFileIcon;
 			}
 		}

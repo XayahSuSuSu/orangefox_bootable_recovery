@@ -241,10 +241,23 @@
 		</page>
 		
 		<page name="files_redirect">
-		
+			<action>
+				<condition var1="of_support_ozip_decryption" var2="1"/>
+				<condition var1="tw_file_extension" var2="ozip"/>
+				<actions>
+					<action function="set">fex_found=1</action>
+					<action function="queueclear"/>
+					<action function="set">tw_file=%tw_selection1%</action>
+					<action function="set">tw_filename=%tw_filename1%</action>
+					<action function="set">install_back=filemanagerlist</action>
+					<action function="set">tw_zip_location=%tw_file_location1%</action>
+					<action function="queuezip"/>
+					<action function="set">tw_q_1=%tw_file%</action>
+					<action function="page">flash_confirm</action>
+				</actions>
+			</action>
 			<action>
 				<condition var1="tw_file_extension" var2="zip"/>
-				<condition var1="tw_file_extension" var2="ozip"/>
 				<actions>
 					<action function="set">fex_found=1</action>
 					<action function="queueclear"/>

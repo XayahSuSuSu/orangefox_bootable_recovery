@@ -635,6 +635,10 @@ void DataManager::SetDefaultValues()
   mConst.SetValue(OF_MAINTAINER_STR, OF_MAINTAINER);
   mConst.SetValue(BUILD_TYPE_STR, BUILD_TYPE);
 
+  #ifdef OF_SUPPORT_OZIP_DECRYPTION
+    mConst.SetValue("of_support_ozip_decryption", "1");
+	#endif
+
   
   //[f/d] UI Vars
   int of_status_placement = (atoi(OF_STATUS_H) / 2) - 28;
