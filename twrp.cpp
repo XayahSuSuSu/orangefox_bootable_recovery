@@ -392,7 +392,7 @@ int main(int argc, char **argv)
   // LOGINFO("OrangeFox: Reloading theme to apply generated theme on sdcard - again...\n");
   if (DataManager::GetStrValue("used_custom_encryption") == "1")
     {
-       if (TWFunc::Path_Exists(Fox_Home + "/.theme")) // using custom themes
+       if (TWFunc::Path_Exists(Fox_Home + "/.theme") || TWFunc::Path_Exists(Fox_Home + "/.navbar")) // using custom themes
          PageManager::RequestReload();
     }
 
