@@ -2,6 +2,9 @@
 	Copyright 2013 bigbiff/Dees_Troy TeamWin
 	This file is part of TWRP/TeamWin Recovery Project.
 
+	Copyright (C) 2018-2020 OrangeFox Recovery Project
+	This file is part of the OrangeFox Recovery Project.
+
 	TWRP is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
 	the Free Software Foundation, either version 3 of the License, or
@@ -880,10 +883,10 @@ int PageSet::LoadDetails(LoadingContext& ctx, xml_node<>* root)
 		if (theme_ver != TW_THEME_VERSION) {
 			LOGINFO("theme version from xml: %i, expected %i\n", theme_ver, TW_THEME_VERSION);
 			if (ctx.zip) {
-				gui_err("theme_ver_err=Custom theme version does not match TWRP version. Using stock theme.");
+				gui_err("theme_ver_err=Custom theme version does not match OrangeFox version. Using stock theme.");
 				return TW_THEME_VER_ERR;
 			} else {
-				gui_print_color("warning", "Stock theme version does not match TWRP version.\n");
+				gui_print_color("warning", "Stock theme version does not match OrangeFox version.\n");
 			}
 		}
 		xml_node<>* resolution = child->first_node("resolution");
@@ -1553,11 +1556,11 @@ int PageManager::RunReload()
 	}
 
 	theme_path += "/OrangeFox/theme/ui.zip";
-	if (ret_val != 0 || ReloadPackage("TWRP", theme_path) != 0)
+	if (ret_val != 0 || ReloadPackage("OrangeFox", theme_path) != 0)
 	{
 		// Loading the custom theme failed - try loading the stock theme
 		LOGINFO("Attempting to reload stock theme...\n");
-		if (ReloadPackage("TWRP", TWRES "ui.xml"))
+		if (ReloadPackage("OrangeFox", TWRES "ui.xml"))
 		{
 			LOGERR("Failed to load base packages.\n");
 			ret_val = 1;

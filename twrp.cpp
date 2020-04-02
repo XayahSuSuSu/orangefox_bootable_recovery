@@ -1,7 +1,7 @@
 /*
 	This file is part of TWRP/TeamWin Recovery Project.
 
-	Copyright (C) 2018-2019 OrangeFox Recovery Project
+	Copyright (C) 2018-2020 OrangeFox Recovery Project
 	This file is part of the OrangeFox Recovery Project.
 
 	TWRP is free software: you can redistribute it and/or modify
@@ -96,7 +96,6 @@ int main(int argc, char **argv)
     {
       property_set("ctl.stop", "adbd");
 #ifdef TW_USE_NEW_MINADBD
-      //adb_server_main(0, DEFAULT_ADB_PORT, -1); TODO fix this for android8
       minadbd_main();
 #else
       adb_main(argv[2]);
@@ -110,13 +109,13 @@ int main(int argc, char **argv)
 
   char crash_prop_val[PROPERTY_VALUE_MAX];
   int crash_counter;
-  property_get("twrp.crash_counter", crash_prop_val, "-1");
+  property_get("orangefox.crash_counter", crash_prop_val, "-1");
   crash_counter = atoi(crash_prop_val) + 1;
   snprintf(crash_prop_val, sizeof(crash_prop_val), "%d", crash_counter);
-  property_set("twrp.crash_counter", crash_prop_val);
-  property_set("ro.twrp.boot", "1");
-  property_set("ro.twrp.build", "orangefox");
-  property_set("ro.twrp.version", FOX_VERSION);
+  property_set("orangefox.crash_counter", crash_prop_val);
+  property_set("ro.orangefox.boot", "1");
+  property_set("ro.orangefox.build", "orangefox");
+  property_set("ro.orangefox.version", FOX_VERSION);
   
   string fox_build_date = TWFunc::File_Property_Get ("/etc/fox.cfg", "FOX_BUILD_DATE");
   if (fox_build_date == "")
@@ -134,8 +133,8 @@ int main(int argc, char **argv)
   TWFunc::Reset_Clock();
 
   DataManager::GetValue(FOX_COMPATIBILITY_DEVICE, Fox_Current_Device);
-  printf("Starting OrangeFox TWRP %s-%s-%s (built on %s for %s [dev_ver: %s]; pid %d)\n", 
-  	FOX_VERSION, FOX_BUILD, TW_GIT_REVISION, fox_build_date.c_str(), Fox_Current_Device.c_str(), 
+  printf("Starting OrangeFox Recovery %s-%s-%s (built on %s for %s [dev_ver: %s]; pid %d)\n",
+  	FOX_MAIN_VERSION_STR, FOX_BUILD, TW_GIT_REVISION, fox_build_date.c_str(), Fox_Current_Device.c_str(),
   	FOX_CURRENT_DEV_STR, getpid());
 
   // Load default values to set DataManager constants and handle ifdefs
@@ -225,7 +224,8 @@ int main(int argc, char **argv)
 					if (!OpenRecoveryScript::Insert_ORS_Command("wipe cache\n"))
 						break;
 				}
-				// Other 'w' items are wipe_ab and wipe_package_size which are related to bricking the device remotely. We will not bother to suppor these as having TWRP probably makes "bricking" the device in this manner useless
+				// Other 'w' items are wipe_ab and wipe_package_size which are related to bricking the device remotely. 
+				// We will not bother to support these as having TWRP probably makes "bricking" the device in this manner useless
 			} else if (*argptr == 'n') {
 				DataManager::SetValue(TW_BACKUP_NAME, gui_parse_text("{@auto_generate}"));
 				if (!OpenRecoveryScript::Insert_ORS_Command("backup BSDCAE\n"))
@@ -258,7 +258,7 @@ int main(int argc, char **argv)
 		property_list(Print_Prop, NULL);
 		printf("\n");
 	} else {
-		printf("twrp.crash_counter=%d\n", crash_counter);
+		printf("orangefox.crash_counter=%d\n", crash_counter);
 	}
 
 	// Check for and run startup script if script exists
@@ -266,16 +266,16 @@ int main(int argc, char **argv)
 	TWFunc::check_and_run_script("/sbin/postrecoveryboot.sh", "boot");
 
 #ifdef TW_INCLUDE_INJECTTWRP
-	// Back up TWRP Ramdisk if needed:
+	// Back up OrangeFox Ramdisk if needed:
 	TWPartition* Boot = PartitionManager.Find_Partition_By_Path("/boot");
-	LOGINFO("Backing up TWRP ramdisk...\n");
+	LOGINFO("Backing up OrangeFox ramdisk...\n");
 	if (Boot == NULL || Boot->Current_File_System != "emmc")
 		TWFunc::Exec_Cmd("injecttwrp --backup /tmp/backup_recovery_ramdisk.img");
 	else {
 		string injectcmd = "injecttwrp --backup /tmp/backup_recovery_ramdisk.img bd=" + Boot->Actual_Block_Device;
 		TWFunc::Exec_Cmd(injectcmd);
 	}
-	LOGINFO("Backup of TWRP ramdisk done.\n");
+	LOGINFO("Backup of OrangeFox ramdisk done.\n");
 #endif
 
 	// Offer to decrypt if the device is encrypted
@@ -343,7 +343,7 @@ int main(int argc, char **argv)
 		DataManager::SetValue("tw_mtp_enabled", 0);
 		PartitionManager.Disable_MTP();
 	} else if (crash_counter == 1) {
-		LOGINFO("TWRP crashed; disabling MTP as a precaution.\n");
+		LOGINFO("OrangeFox crashed; disabling MTP as a precaution.\n");
 		PartitionManager.Disable_MTP();
 	}
 #endif

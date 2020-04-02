@@ -2350,7 +2350,7 @@ void TWFunc::Welcome_Message(void)
     else
       gui_print("[Build type]: %s\n", BUILD_TYPE);
     
-    gui_print("[TWRP Version]: %s\n", FOX_VERSION);
+    gui_print("[OrangeFox Version]: %s\n", FOX_VERSION);
     #if defined(OF_DISABLE_MIUI_SPECIFIC_FEATURES) || defined(OF_TWRP_COMPATIBILITY_MODE)
     LOGINFO(" [MIUI-specific features not enabled]\n");
     #endif
@@ -4109,7 +4109,7 @@ std::string TWFunc::get_cache_dir() {
 	if (PartitionManager.Find_Partition_By_Path(NON_AB_CACHE_DIR) == NULL) {
 		if (PartitionManager.Find_Partition_By_Path(AB_CACHE_DIR) == NULL) {
 			if (PartitionManager.Find_Partition_By_Path(PERSIST_CACHE_DIR) == NULL) {
-				LOGINFO("Unable to find a directory to store TWRP logs.");
+				LOGINFO("Unable to find a directory to store OrangeFox logs.");
 				return "";
 			}
 			return PERSIST_CACHE_DIR;

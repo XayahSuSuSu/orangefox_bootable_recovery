@@ -1,10 +1,10 @@
 LOCAL_PATH:= $(call my-dir)
 include $(CLEAR_VARS)
 
-ifneq ($(TW_DEVICE_VERSION),)
-    LOCAL_CFLAGS += -DTW_DEVICE_VERSION='"-$(TW_DEVICE_VERSION)"'
+ifneq ($(FOX_VERSION),)
+    LOCAL_CFLAGS += -DFOX_VERSION='"-$(FOX_VERSION)"'
 else
-    LOCAL_CFLAGS += -DTW_DEVICE_VERSION='"-Unofficial"'
+    LOCAL_CFLAGS += -DFOX_VERSION='"-Unofficial"'
 endif
 
 LOCAL_SRC_FILES:= \

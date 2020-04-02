@@ -943,7 +943,7 @@
 		<string name="abt_front">Programista Frontend</string>
 		<string name="abt_back">Programista backend</string>
 		<string name="abt_device">Urządzenie</string>
-		<string name="version_twrp">Wersja TWRP</string>
+		<string name="version_twrp">Wersja OrangeFox</string>
 		<string name="build_type">Typ kompilacji</string>
 		<string name="abt_credits">Podziękowania</string>
 		<string name="abt_trans">Tłumacze</string>

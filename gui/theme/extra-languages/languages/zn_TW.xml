@@ -969,7 +969,7 @@
 		<!-- About -->
 		<string name="abt_maintainer">後端開發者</string>
 		<string name="abt_fd">裝置</string>
-		<string name="abt_bork">TWRP 版本</string>
+		<string name="abt_bork">OrangeFox 版本</string>
 		<string name="abt_dj">建構類型</string>
 		<string name="abt_front">貢獻者</string>
 		<string name="abt_back">翻譯人員</string>

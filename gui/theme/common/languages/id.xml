@@ -197,11 +197,11 @@
 		<string name="swipe_power_off">Geser untuk Matikan daya</string>
 		<string name="sys_ro">Partisi Sistem</string>
 		<string name="sys_ro_hdr">Sistem Partisi tidak termodifikasi</string>
-		<string name="sys_rop1">TWRP dapat membuat sistem partisi anda</string>
+		<string name="sys_rop1">OrangeFox dapat membuat sistem partisi anda</string>
 		<string name="sys_rop2">tidak dimodifikasi untuk mempermudah Anda</string>
 		<string name="sys_rop2a">melakukan pembaruan resmi.</string>
-		<string name="sys_rop3">TWRP tidak dapat mencegah</string>
-		<string name="sys_rop4">Stock ROM untuk mengganti TWRP.</string>
+		<string name="sys_rop3">OrangeFox tidak dapat mencegah</string>
+		<string name="sys_rop4">Stock ROM untuk mengganti OrangeFox.</string>
 		<string name="sys_rop5">Instalasi zip atau operasi ADB</string>
 		<string name="sys_rop6">masih dapat memodifikasi partisi sistem.</string>
 		<string name="sys_ro_never_show_chk">Jangan pernah tampilkan pesan ini</string>
@@ -505,7 +505,7 @@
 		<string name="need_new_adb">Anda perlu adb 1.0.32 atau yang lebih baru untuk melakukan sideload ke perangkat ini.</string>
 		<string name="no_pwd">Tidak ada kata sandi yang disediakan.</string>
 		<string name="done_ors">Selesai memproses file skrip</string>
-		<string name="injecttwrp">Menyuntikkan TWRP ke dalam boot image...</string>
+		<string name="injecttwrp">Menyuntikkan OrangeFox ke dalam boot image...</string>
 		<string name="zip_err">Kesalahan menginstal file zip '{1}'</string>
 		<string name="installing_zip">Memasang file zip '{1}'</string>
 		<string name="select_backup_opt">Menetapkan opsi cadangan:</string>
@@ -943,7 +943,7 @@
 		<string name="abt_front">Pengembang garis depan</string>
 		<string name="abt_back">Pengembang garis belakang</string>
 		<string name="abt_device">Perangkat</string>
-		<string name="version_twrp">Versi TWRP</string>
+		<string name="version_twrp">Versi OrangeFox</string>
 		<string name="build_type">Tipe pembuatan</string>
 		<string name="abt_credits">Kredit</string>
 		<string name="abt_trans">Penerjemah</string>
