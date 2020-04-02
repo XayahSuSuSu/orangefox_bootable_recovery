@@ -133,9 +133,8 @@ int main(int argc, char **argv)
   TWFunc::Reset_Clock();
 
   DataManager::GetValue(FOX_COMPATIBILITY_DEVICE, Fox_Current_Device);
-  printf("Starting OrangeFox Recovery %s-%s-%s (built on %s for %s [dev_ver: %s]; pid %d)\n",
-  	FOX_MAIN_VERSION_STR, FOX_BUILD, TW_GIT_REVISION, fox_build_date.c_str(), Fox_Current_Device.c_str(),
-  	FOX_CURRENT_DEV_STR, getpid());
+  printf("Starting OrangeFox Recovery %s (built on %s for %s [dev_ver: %s]; pid %d)\n",
+  	FOX_BUILD, fox_build_date.c_str(), Fox_Current_Device.c_str(), FOX_CURRENT_DEV_STR, getpid());
 
   // Load default values to set DataManager constants and handle ifdefs
 	DataManager::SetDefaultValues();

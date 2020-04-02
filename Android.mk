@@ -55,10 +55,8 @@ TARGET_RECOVERY_GUI := true
 
 ifneq ($(FOX_VERSION),)
     LOCAL_CFLAGS += -DFOX_VERSION='"$(FOX_VERSION)"'
-    export FOX_DEVICE_VERSION=$(FOX_VERSION)
 else
     LOCAL_CFLAGS += -DFOX_VERSION='"Unofficial"'
-    export FOX_DEVICE_VERSION=R10.1
 endif
 
 DEVICE := $(subst omni_,,$(TARGET_PRODUCT))

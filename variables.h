@@ -21,18 +21,17 @@
 #ifndef _VARIABLES_HEADER_
 #define _VARIABLES_HEADER_
 
-#define FOX_RECOVERY_NAME	"OrangeFox"
-#define FOX_CURRENT_DEV_STR 	"20200402"
+#define FOX_RECOVERY_NAME	 "OrangeFox"
+#define FOX_CURRENT_DEV_STR 	 "20200402"
+#define FOX_MAIN_VERSION_STR    "R10.1"
 #define TW_MAIN_VERSION_STR     "3.3.1"
-#define TW_VERSION_STR TW_MAIN_VERSION_STR FOX_VERSION
-#define BUILD_TYPE_STR BUILD_TYPE
+#define TW_VERSION_STR 		FOX_VERSION
+#define BUILD_TYPE_STR 		BUILD_TYPE
 
 // OrangeFox - Values
-#define FOX_BUILD                FOX_VERSION
-#define FOX_DEVICE               FOX_DEVICE_MODEL
-#define FOX_MAIN_VERSION_STR     TW_MAIN_VERSION_STR
-#define OF_MAINTAINER_STR	 "of_maintainer"
-#define BUILD_TYPE_STR           BUILD_TYPE
+#define FOX_BUILD               FOX_VERSION
+#define FOX_DEVICE              FOX_DEVICE_MODEL
+#define OF_MAINTAINER_STR	"of_maintainer"
 #define OF_FLASHLIGHT_ENABLE_STR "of_flashlight_enable"
 
 // fordownloads values

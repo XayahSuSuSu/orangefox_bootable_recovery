@@ -2350,7 +2350,6 @@ void TWFunc::Welcome_Message(void)
     else
       gui_print("[Build type]: %s\n", BUILD_TYPE);
     
-    gui_print("[OrangeFox Version]: %s\n", FOX_VERSION);
     #if defined(OF_DISABLE_MIUI_SPECIFIC_FEATURES) || defined(OF_TWRP_COMPATIBILITY_MODE)
     LOGINFO(" [MIUI-specific features not enabled]\n");
     #endif

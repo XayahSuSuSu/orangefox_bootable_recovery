@@ -864,10 +864,6 @@
 				<placement x="%about_txt_x%" y="%about_txt3_y%"/>
 				<text>{@build_type}: %fox_build_type1%</text>
 			</text>
-			<text style="text_ab_subtitle">
-				<placement x="%about_txt_x%" y="%about_txt4_y%"/>
-				<text>{@version_twrp}: %tw_version%</text>
-			</text>
 			
 			<!-- Yan's Card -->
 			
