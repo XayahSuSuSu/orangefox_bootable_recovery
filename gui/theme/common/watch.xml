@@ -3473,7 +3473,7 @@
 
 			<text style="text_m">
 				<placement x="%center_x%" y="%row2_y%" placement="5"/>
-				<text>{@sys_rop1=TWRP can leave your system partition unmodified}</text>
+				<text>{@sys_rop1=OrangeFox can leave your system partition unmodified}</text>
 			</text>
 
 			<text style="text_m">
@@ -3483,12 +3483,12 @@
 
 			<text style="text_m">
 				<placement x="%center_x%" y="%row4_y%" placement="5"/>
-				<text>{@sys_rop3=TWRP will be unable to prevent the stock ROM from}</text>
+				<text>{@sys_rop3=OrangeFox will be unable to prevent the stock ROM from}</text>
 			</text>
 
 			<text style="text_m">
 				<placement x="%center_x%" y="%row5_y%" placement="5"/>
-				<text>{@sys_rop4=replacing TWRP and will not offer to root your device.}</text>
+				<text>{@sys_rop4=replacing OrangeFox and will not offer to root your device.}</text>
 			</text>
 
 			<text style="text_m_fail">

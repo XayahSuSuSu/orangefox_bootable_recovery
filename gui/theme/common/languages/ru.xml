@@ -1034,7 +1034,7 @@
 		<string name="abt_device">Устройство</string>
 		<string name="abt_front">Frontend разработчик</string>
 		<string name="abt_back">Backend разработчик</string>
-		<string name="version_twrp">Версия TWRP</string>
+		<string name="version_twrp">Версия OrangeFox</string>
 		<string name="build_type">Тип сборки</string>
 		<string name="abt_credits">Спасибо</string>
 		<string name="abt_trans">Перевод</string>

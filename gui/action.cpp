@@ -623,7 +623,7 @@ void GUIAction::operation_end(const int operation_status)
 	DataManager::SetValue("tw_operation_state", 1);
 	DataManager::SetValue(TW_ACTION_BUSY, 0);
 	blankTimer.resetTimerAndUnblank();
-	property_set("twrp.action_complete", "1");
+	property_set("orangefox.action_complete", "1");
 	time(&Stop);
 
 #ifndef TW_NO_HAPTICS
@@ -658,7 +658,7 @@ int GUIAction::key(std::string arg)
 
 int GUIAction::page(std::string arg)
 {
-  property_set("twrp.action_complete", "0");
+  property_set("orangefox.action_complete", "0");
   std::string page_name = gui_parse_text(arg);
   return gui_changePage(page_name);
 }

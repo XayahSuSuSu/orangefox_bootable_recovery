@@ -2,7 +2,7 @@
 	Copyright 2012 bigbiff/Dees_Troy TeamWin
 	This file is part of TWRP/TeamWin Recovery Project.
 
-  	Copyright (C) 2018-2019 OrangeFox Recovery Project
+  	Copyright (C) 2018-2020 OrangeFox Recovery Project
  	This file is part of the OrangeFox Recovery Project
  
 	TWRP is free software: you can redistribute it and/or modify
@@ -122,15 +122,15 @@ public:
 	static bool Toggle_MTP(bool enable);                                        // Disables MTP if enable is false and re-enables MTP if enable is true and it was enabled the last time it was toggled off
 	static std::string to_string(unsigned long value); //convert ul to string
 	static void SetPerformanceMode(bool mode); // support recovery.perf.mode
-	static void Disable_Stock_Recovery_Replace(); // Disable stock ROMs from replacing TWRP with stock recovery
-	static void Disable_Stock_Recovery_Replace_Func(); // Disable stock ROMs from replacing TWRP with stock recovery (/system must be already mounted)	
+	static void Disable_Stock_Recovery_Replace(); // Disable stock ROMs from replacing OrangeFox with stock recovery
+	static void Disable_Stock_Recovery_Replace_Func(); // Disable stock ROMs from replacing OrangeFox with stock recovery (/system must be already mounted)	
 	static unsigned long long IOCTL_Get_Block_Size(const char* block_device);
 	static void copy_kernel_log(string curr_storage); // Copy Kernel Log to Current Storage (PSTORE/KMSG)
 	static void create_fingerprint_file(string file_path, string fingerprint); // Create new file and write in to it loaded fingerprintPSTORE/KMSG)
 	static bool Verify_Incremental_Package(string fingerprint, string metadatafp, string metadatadevice); // Verify if the Incremental Package is compatible with the ROM
 	static bool Verify_Loaded_OTA_Signature(std::string loadedfp, std::string ota_folder); // Verify loaded fingerprint from our OTA folder
 	static bool isNumber(string strtocheck); // return true if number, false if not a number
-	static int  stream_adb_backup(string &Restore_Name); // Tell ADB Backup to Stream to TWRP from GUI selection
+	static int  stream_adb_backup(string &Restore_Name); // Tell ADB Backup to Stream to OrangeFox from GUI selection
 	static int  Check_MIUI_Treble(void); // check whether we are running a MIUI or Treble ROM 
 	static bool Fresh_Fox_Install(void); // have we just installed OrangeFox - do some stuff?
 	static bool Check_OrangeFox_Overwrite_FromROM(bool WarnUser, const std::string name); // report on badly behaved ROM installers
