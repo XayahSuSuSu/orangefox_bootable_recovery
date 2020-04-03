@@ -92,6 +92,7 @@ public:
 	static int Get_Android_SDK_Version(void);				// Return the SDK version of the current ROM (or default to 21 (Android 5.0))
 	static string Get_MagiskBoot(void);					// Return the name of the magiskboot binary that should be used for patching
 
+	static string lowercase(const string src);
 	static void Deactivation_Process(void);                     		// Run deactivation process...
 	static bool To_Skip_OrangeFox_Process(void);				// Return whether to skip the deactivation process
 	static void OrangeFox_Startup(void);        				// Run StartUP code for OrangeFox

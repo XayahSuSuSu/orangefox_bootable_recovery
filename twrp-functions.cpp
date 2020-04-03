@@ -189,7 +189,7 @@ static string Trim_Trailing_NewLine (const string src)
 }
 
 /* convert string to lowercase */
-static string lowercase (const string src)
+string TWFunc::lowercase (const string src)
 {
    string str = src;
    transform(str.begin(), str.end(), str.begin(), ::tolower);
