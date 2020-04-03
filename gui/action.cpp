@@ -770,8 +770,7 @@ int GUIAction::up_a_level(std::string arg)
 
 int GUIAction::fileextension(std::string arg)
 {
-  string f_ext = arg.substr(arg.find_last_of(".") + 1);
-  DataManager::SetValue("tw_file_extension", f_ext);
+  DataManager::SetValue("tw_file_extension", TWFunc::lowercase(arg.substr(arg.find_last_of(".") + 1)));
   return 0;
 }
 

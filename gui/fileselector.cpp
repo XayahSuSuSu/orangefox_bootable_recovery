@@ -305,8 +305,7 @@ int GUIFileSelector::GetFileList(const std::string folder)
 	string showHiddenFiles, reloadfm, searchString;
 	DataManager::GetValue("tw_hidden_files", showHiddenFiles);
 	if (mFileFilterVar != "") {
-		DataManager::GetValue(mFileFilterVar, searchString);
-		std::transform(searchString.begin(), searchString.end(), searchString.begin(), ::tolower);
+		searchString = TWFunc::lowercase(DataManager::GetStrValue(mFileFilterVar));
 	}
 	DataManager::GetValue("tw_reload_fm", reloadfm);
 	if (reloadfm == "1") {
@@ -326,8 +325,7 @@ int GUIFileSelector::GetFileList(const std::string folder)
 		// [f/d] filter files by name
 		if (searchString != "" && mFileFilterVar != "") {
 			if (data.fileName != ".." && data.fileName.find(searchString) == string::npos){
-				string fileLower = data.fileName;
-				std::transform(fileLower.begin(), fileLower.end(), fileLower.begin(), ::tolower);
+				string fileLower = TWFunc::lowercase(data.fileName);
 				if (fileLower.find(searchString) == string::npos)
 					continue;
 			}
@@ -365,12 +363,12 @@ int GUIFileSelector::GetFileList(const std::string folder)
 			for (const std::string& mExtnElement : mExtnResults)
 			{
 				std::string mExtnName = android::base::Trim(mExtnElement);
-				if (mExtnName.empty() || (data.fileName.length() > mExtnName.length() && data.fileName.substr(data.fileName.length() - mExtnName.length()) == mExtnName)) {
+				if (mExtnName.empty() || (data.fileName.length() > mExtnName.length() && TWFunc::lowercase(data.fileName.substr(data.fileName.length() - mExtnName.length())) == mExtnName)) {
 					if (mExtnName == ".ab" && twadbbu::Check_ADB_Backup_File(path)) {
 						mFolderList.push_back(data);
 					} else {
 						// [f/d] Get file extension
-						data.fileExt = data.fileName.substr(data.fileName.find_last_of(".") + 1);
+						data.fileExt = TWFunc::lowercase(data.fileName.substr(data.fileName.find_last_of(".") + 1));
 						mFileList.push_back(data);
 					}
 				}
@@ -383,12 +381,12 @@ int GUIFileSelector::GetFileList(const std::string folder)
 			} else {
 				mExtnf = mExtn;
 			}
-			if (mExtnf.empty() || (data.fileName.length() > mExtnf.length() && data.fileName.substr(data.fileName.length() - mExtnf.length()) == mExtnf)) {
+			if (mExtnf.empty() || (data.fileName.length() > mExtnf.length() && TWFunc::lowercase(data.fileName.substr(data.fileName.length() - mExtnf.length())) == mExtnf)) {
 				if (mExtnf == ".ab" && twadbbu::Check_ADB_Backup_File(path)) {
 					mFolderList.push_back(data);
 				} else {
 					// [f/d] Get file extension
-					data.fileExt = data.fileName.substr(data.fileName.find_last_of(".") + 1);
+					data.fileExt = TWFunc::lowercase(data.fileName.substr(data.fileName.find_last_of(".") + 1));
 					mFileList.push_back(data);
 				}
 			}
