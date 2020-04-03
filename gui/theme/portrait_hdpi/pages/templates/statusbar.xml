@@ -7,7 +7,7 @@
 				<condition var1="show_cpu_temp" var2="0"/>
 				<condition var1="center_clock" op="!=" var2="2"/>
 				<placement x="%status_indent_left%" y="%status_info_y%"/>
-				<text>{@twrp_watch_header}</text>
+				<text>%tw_storage_free_size% MB</text>
 			</text>
 
 			<text style="text_status">
