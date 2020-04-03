@@ -4607,4 +4607,31 @@ bool TWFunc::To_Skip_OrangeFox_Process(void)
   #endif
 }
 
+void TWFunc::UseSystemFingerprint(void)
+{
+string rom_finger_print = "";
+  if (!Path_Exists("/sbin/resetprop"))
+     {
+        LOGINFO("\n- I cannot find /sbin/resetprop, therefore I cannot use the system fingerprint\n");
+        return;
+     }
+
+  if (TWFunc::Path_Exists(orangefox_cfg))
+     {
+	rom_finger_print = File_Property_Get(orangefox_cfg, "ROM_FINGERPRINT");
+     }
+
+  if (rom_finger_print.empty())
+ 	rom_finger_print = System_Property_Get("ro.system.build.fingerprint");
+
+  if (rom_finger_print.empty())
+  	rom_finger_print = System_Property_Get("ro.build.fingerprint");
+
+  if (!rom_finger_print.empty())
+     {
+  	LOGINFO("- Using the ROM's fingerprint (%s)\n", rom_finger_print.c_str());
+  	Exec_Cmd("/sbin/resetprop ro.build.fingerprint " + rom_finger_print);
+     }
+  else LOGINFO("- ROM fingerprint not available\n");
+}
 //
