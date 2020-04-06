@@ -55,6 +55,10 @@
 			<font resource="body1" color="%actbar_color%"/>
 		</style>
 
+		<style name="text_body1_dark">
+			<font resource="caption" color="%color_disable%"/>
+		</style>
+
 		<style name="text_body2">
 			<font resource="body2" color="%text%"/>
 		</style>

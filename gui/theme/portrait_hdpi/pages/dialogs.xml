@@ -533,6 +533,61 @@
 				<action function="overlay"/>
 			</action>
 		</page>
+		
+		<page name="dialog_reset_average">
+			<template name="dialog_body"/>
+
+			<button>
+				<placement x="%bg_storage_x%" y="%bg_storage_y%"/>
+				<image resource="dialog_bg"/>
+			</button>
+
+			<text style="text_dlg_title">
+				<placement x="%bg_storage_hdr_x%" y="%bg_storage_hdr_y%"/>
+				<text>{@backup_av}</text>
+			</text>
+
+			<text style="text_body2">
+				<placement x="%bg_storage_hdr_x%" y="%db_text1_y%"/>
+				<text>{@backup_av1}</text>
+			</text>
+
+			<text style="text_body2">
+				<placement x="%bg_storage_hdr_x%" y="%db_text2_y%"/>
+				<text>{@backup_av2}</text>
+			</text>
+
+			<text style="text_body2">
+				<placement x="%bg_storage_hdr_x%" y="%db_text3_y%"/>
+				<text>{@backup_av3}</text>
+			</text>
+
+			<button style="btn_dlg">
+				<placement x="%db_left_x%" y="%db_y%"/>
+				<text>{@cancel_btn}</text>
+				<action function="overlay"/>
+			</button>
+
+			<button style="btn_dlg_hl">
+				<placement x="%db_right_x%" y="%db_y%"/>
+				<text>{@ok_btn}</text>
+				<action function="set">of_average_img=42</action>
+				<action function="set">of_average_file=30</action>
+				<action function="set">of_average_ext_img=15</action>
+				<action function="set">of_average_ext_file=10</action>
+				<action function="overlay"/>
+			</button>
+
+			<action>
+				<touch key="home"/>
+				<action function="page">main</action>
+			</action>
+
+			<action>
+				<touch key="back"/>
+				<action function="overlay"/>
+			</action>
+		</page>
 
 		<page name="dialog_lost_info">
 			<template name="dialog_body"/>

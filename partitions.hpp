@@ -55,6 +55,7 @@ struct PartitionList {
 	std::string Display_Name;
 	std::string Mount_Point;
 	unsigned int selected;
+	bool isFiles;
 	unsigned long long PartitionSize = 0;
 };
 

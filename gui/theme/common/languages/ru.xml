@@ -1159,9 +1159,21 @@
 		<string name="accent_in_titles">Акцент в заголовке</string>
 
 		<string name="mbyte">МБ</string>
+		<string name="backup_exp_size">Ожидаемый размер</string>
+		<string name="time_minute">мин.</string>
 
-		<string name="cust_navbar_white">Использовать белую линию</string>
-		<string name="cust_navbar_gray">Использовать серую линию</string>
+		<string name="backup_quick_info1">Эти разделы будут выбраны при</string>
+		<string name="backup_quick_info2">нажатии на кнопку "Быстрая копия"</string>
+		<string name="mbytesec">МБ/с</string>
+		<string name="backup_av_files">Файл</string>
+		<string name="backup_av_img">Образ</string>
+		<string name="backup_av">Подсчет времени</string>
+		<string name="backup_av1">Вы хотите сбросить скорости</string>
+		<string name="backup_av2">на значения по умолчанию?</string>
+		<string name="backup_av3">Время будет менее точным.</string>
+
+		<string name="cust_line_white">Использовать белую линию</string>
+		<string name="cust_line_gray">Использовать серую линию</string>
 
 		<!-- Updated slot selection -->
 		<string name="slot_show">Переключить слот</string>

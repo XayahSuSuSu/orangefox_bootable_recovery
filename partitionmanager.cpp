@@ -1148,14 +1148,23 @@ int TWPartitionManager::Run_Backup(bool adbbackup)
   unsigned long long file_bps =
     part_settings.file_bytes / (int) part_settings.file_time;
 
-  if (part_settings.file_bytes != 0)
+  bool isInternal = strstr(part_settings.Backup_Folder.c_str(), "data/media/0"); 
+  if (part_settings.file_bytes != 0) {
+	file_bps /= 1048576;
     gui_msg(Msg
 	    ("avg_backup_fs=Average backup rate for file systems: {1} MB/sec")
-	    (file_bps / (1024 * 1024)));
-  if (part_settings.img_bytes != 0)
+	    (file_bps));
+	string varFile = isInternal ? "of_average_file" : "of_average_ext_file";
+	DataManager::SetValue(varFile, (file_bps + DataManager::GetIntValue(varFile)) / 2);
+  }
+  if (part_settings.img_bytes != 0) {
+	img_bps /= 1048576;
     gui_msg(Msg
 	    ("avg_backup_img=Average backup rate for imaged drives: {1} MB/sec")
-	    (img_bps / (1024 * 1024)));
+	    (img_bps));
+	string varImg = isInternal ? "of_average_img" : "of_average_ext_img";
+	DataManager::SetValue(varImg, (img_bps + DataManager::GetIntValue(varImg)) / 2);
+  }
 
   time(&total_stop);
   int total_time = (int) difftime(total_stop, total_start);
@@ -2764,6 +2773,7 @@ void TWPartitionManager::Get_Partition_List(string ListType,
 					}
 				}
 				part.PartitionSize = Backup_Size;
+				part.isFiles = (*iter)->Backup_Method == BM_FILES ? true : false;
 				sprintf(backup_size, Backup_Size % 1048576 == 0 ? "%.0lf" : "%.2lf", (double)Backup_Size / 1048576);
 				part.Display_Name = (*iter)->Backup_Display_Name + " (";
 				part.Display_Name += backup_size;

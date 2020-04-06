@@ -589,11 +589,41 @@
 
 			<text style="caption">
 				<placement x="%col1_x_caption%" y="%row1_1_y%"/>
+				<text>{@settings_backup_qbkp_custom}</text>
+			</text>
+
+			<text style="text_body2">
+				<placement x="%col1_x_caption%" y="%row1_2_y%"/>
+				<text>%tw_backup_list_quick%</text>
+			</text>
+
+			<button style="menu_btn">
+				<placement x="%col1_x_caption%" y="%row1_1_y%" w="%input_w%" h="%mb_h_hide%"/>
+				<action function="page">ext_backup_quick</action>
+			</button>
+
+			<text style="caption">
+				<placement x="%col1_x_caption%" y="%row2_1_y%"/>
+				<text>{@backup_av}</text>
+			</text>
+
+			<text style="text_body2">
+				<placement x="%col1_x_caption%" y="%row2_2_y%"/>
+				<text>{@backup_av_files}: %of_average_file% (%of_average_ext_file%) | {@backup_av_img}: %of_average_img% (%of_average_ext_img%) {@mbytesec}</text>
+			</text>
+
+			<button style="menu_btn">
+				<placement x="%col1_x_caption%" y="%row2_1_y%" w="%input_w%" h="%mb_h_hide%"/>
+				<action function="overlay">dialog_reset_average</action>
+			</button>
+
+			<text style="caption">
+				<placement x="%col1_x_caption%" y="%row3_1_y%"/>
 				<text>{@settings_backup_name}</text>
 			</text>
 
 			<listbox>
-				<placement x="0" y="%row1_2_y%" w="%screen_w%" h="%lb_l3%"/>
+				<placement x="0" y="%row3_2_y%" w="%screen_w%" h="%lb_l3%"/>
 				<data name="auto_generate"/>
 				<listitem name="{@settings_backup_name_user}">2</listitem>
 				<listitem name="{@settings_backup_name_auto}">1</listitem>
@@ -601,12 +631,12 @@
 			</listbox>
 
 			<text style="caption">
-				<placement x="%col1_x_caption%" y="%row5_3a_y%"/>
+				<placement x="%col1_x_caption%" y="%row5_1a_y%"/>
 				<text>{@cust_oth}</text>
 			</text>
 
 			<listbox style="settingslist">
-				<placement x="0" y="%row6_1a_y%" w="%screen_w%" h="%lb_l6%"/>		
+				<placement x="0" y="%row5_2a_y%" w="%screen_w%" h="%lb_l6%"/>		
 				<listitem name="{@enable_backup_comp_chk}">
 					<data variable="tw_use_compression"/>
 				</listitem>
@@ -628,17 +658,6 @@
 					<data variable="fox_adv_backup"/>
 				</listitem>
 			</listbox>
-
-			<text style="caption">
-				<placement x="%col1_x_caption%" y="%row3_1a_y%"/>
-				<text>{@settings_backup_qbkp_custom}</text>
-			</text>
-
-			<partitionlist>
-				<placement x="0" y="%row3_2a_y%" w="%screen_w%" h="%lb_l4%"/>
-				<data name="tw_backup_list_quick"/>
-				<listtype name="backup"/>
-			</partitionlist>
 
 			<template name="gestures"/>
 
@@ -1295,6 +1314,53 @@
 			<action>
 				<touch key="back"/>
 				<action function="page">ext_general</action>
+			</action>
+		</page>
+
+		<page name="ext_backup_quick">
+			<template name="base"/>
+
+			<text style="text_ab_title">
+				<placement x="%col1_x_indent%" y="%ab_bc_y%"/>
+				<text>{@backup_hdr}</text>
+			</text>
+
+			<image>
+				<placement x="%col1_x%" y="%row1_1_y%"/>
+				<image resource="icon_info"/>
+			</image>
+
+			<text style="text_body2_hl">
+				<placement x="%col1_x_indent%" y="%row1_1_y%"/>
+				<text>{@backup_quick_info1}</text>
+			</text>
+
+			<text style="text_body2_hl">
+				<placement x="%col1_x_indent%" y="%row1_2_y%"/>
+				<text>{@backup_quick_info2}</text>
+			</text>
+
+			<text style="caption">
+				<placement x="%col1_x_caption%" y="%row2_1_y%" />
+				<text>{@settings_backup_qbkp_custom}</text>
+			</text>
+
+			<partitionlist>
+				<placement x="0" y="%row2_2_y%" w="%screen_w%" h="%fullscreen_list_info_h%"/>
+				<data name="tw_backup_list_quick"/>
+				<listtype name="backup"/>
+			</partitionlist>
+
+			<template name="gestures"/>
+
+			<action>
+				<touch key="home"/>
+				<action function="page">main</action>
+			</action>
+
+			<action>
+				<touch key="back"/>
+				<action function="page">ext_backup</action>
 			</action>
 		</page>
 	</pages>

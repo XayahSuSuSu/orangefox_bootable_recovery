@@ -641,7 +641,11 @@ void DataManager::SetDefaultValues()
     mConst.SetValue("of_support_ozip_decryption", "1");
 	#endif
 
-  
+  mPersist.SetValue("of_average_img", "42");
+  mPersist.SetValue("of_average_file", "30");
+  mPersist.SetValue("of_average_ext_img", "15");
+  mPersist.SetValue("of_average_ext_file", "10");
+
   //[f/d] UI Vars
   int of_status_placement = (atoi(OF_STATUS_H) / 2) - 28;
   int of_center_y = atoi(OF_SCREEN_H) / 2;

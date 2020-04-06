@@ -1054,7 +1054,18 @@
 		<string name="accent_in_titles">Accent text color in title</string>
 		<string name="accentbg_in_titles">Accent background in title</string>
 
+		<string name="backup_quick_info1">These partitions will be selected</string>
+		<string name="backup_quick_info2">after tapping "Quick Backup" button</string>
 		<string name="mbyte">MB</string>
+		<string name="mbytesec">MB/s</string>
+		<string name="backup_av_files">File</string>
+		<string name="backup_av_img">Image</string>
+		<string name="backup_exp_size">Expected size</string>
+		<string name="time_minute">min.</string>
+		<string name="backup_av">Average time</string>
+		<string name="backup_av1">Do you want to reset speed values</string>
+		<string name="backup_av2">to defaults? Average time</string>
+		<string name="backup_av3">predictions will be less accurate.</string>
 
 		<string name="cust_line_white">Use white line</string>
 		<string name="cust_line_gray">Use gray line</string>

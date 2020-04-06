@@ -33,7 +33,7 @@
 
 			<text style="text_ab_subtitle">
 				<placement x="%col1_x_indent%" y="%row1_2_y%"/>
-				<text>{@part_size}: %fox_total_backup%/%tw_storage_free_size%{@mbyte}</text>
+				<text>{@part_free}: %tw_storage_free_size%{@mbyte}</text>
 			</text>
 
 			<button style="actionbar">
@@ -169,6 +169,32 @@
 				<data name="tw_backup_list"/>
 				<listtype name="backup_total"/>
 			</partitionlist>
+
+			<fill color="%linecolor%">
+				<condition var1="tw_fileexists" var2="0"/>
+				<condition var1="tw_backup_name" op="!=" var2="{@auto_gen}"/>
+				<placement x="%col1_x_caption%" y="%row2_3a_y%" w="%input_w%" h="%input_line_height%" placement="1"/>
+			</fill>
+
+			<fill color="%linecolor%">
+				<placement x="%col1_x%" y="%part_backup_line_y%" w="%content_w%" h="%input_line_height%" placement="1"/>
+			</fill>
+
+			<text style="text_body1_dark">
+				<placement x="%col1_x%" y="%part_backup_info_y%" />
+				<text>{@backup_exp_size}:  %fox_total_backup%{@mbyte}</text>
+			</text>
+			
+			<text style="text_body1_dark">
+				<condition var1="fox_ai_deep_learning_time" op="&lt;" var2="1"/>
+				<placement x="%col1_x_neg%" y="%part_backup_info_y%" placement="1"/>
+				<text>~&lt;1 {@time_minute}</text>
+			</text>
+			<text style="text_body1_dark">
+				<condition var1="fox_ai_deep_learning_time" op="&gt;=" var2="1"/>
+				<placement x="%col1_x_neg%" y="%part_backup_info_y%" placement="1"/>
+				<text>~%fox_ai_deep_learning_time% {@time_minute}</text>
+			</text>
 
 			<button style="btn_raised">
 				<placement x="%btn_raised_left_x%" y="%row_btn2_y%"/>

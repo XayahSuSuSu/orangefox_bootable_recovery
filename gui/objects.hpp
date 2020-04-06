@@ -775,6 +775,7 @@ public:
 
 protected:
 	void MatchList();
+	void CalculateTime(unsigned long long fileSize, unsigned long long imgSize);
 	void SetPosition();
 
 protected:
