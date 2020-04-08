@@ -274,7 +274,6 @@ GUIAction::GUIAction(xml_node <> *node):GUIObject(node)
 
       //[f/d] Threaded actions
       ADD_ACTION(generatedigests);
-      ADD_ACTION(canceldigest);
       ADD_ACTION(ftls); //ftls (foxtools) - silent cmd
    }
 
@@ -1677,11 +1676,6 @@ int GUIAction::generatedigests(std::string arg __unused)
   op_status = twrpDigestDriver::Run_Digest();
   operation_end(op_status);
 
-  return 0;
-}
-int GUIAction::canceldigest(std::string arg __unused)
-{
-  twrpDigestDriver::Cancel_Digest();
   return 0;
 }
 

@@ -33,7 +33,6 @@
 #include "twrpDigest/twrpSHA.hpp"
 
 std::vector<string> PartFilenames; 
-bool cancelDigest; 
 
 bool twrpDigestDriver::Check_Restore_File_Digest(const string& Filename) {
 	twrpDigest *digest;
@@ -181,11 +180,6 @@ void twrpDigestDriver::Add_Digest(string Full_Filename) {
 	PartFilenames.push_back(Full_Filename);
 }
 
-void twrpDigestDriver::Cancel_Digest() {
-	LOGINFO("Cancel digest!\n");
-	cancelDigest = true;
-}
-
 void twrpDigestDriver::CleanList() {
 	PartFilenames.clear();
 }
@@ -207,12 +201,7 @@ int twrpDigestDriver::Run_Digest() { //translate
 
   	time(&total_start);
 
-	for (int i = 0; i < vector_size; i++) {\
-		if (cancelDigest) {
-			cancelDigest = false;
-			gui_msg(Msg("con_digest_cancel=Cancelling..."));
-			break;
-		}
+	for (int i = 0; i < vector_size; i++) {
 		gui_print("%s\n", basename(PartFilenames[i].c_str()));
         if (!twrpDigestDriver::Make_Digest(PartFilenames[i])) {
 			ret_val = 1;
@@ -248,7 +237,7 @@ bool twrpDigestDriver::Make_Digest(string Full_Filename) {
 		while (index < 1000) {
 			string digest_src(filename);
 			if (TWFunc::Path_Exists(filename)) {
-				if (!Write_Digest(filename) || cancelDigest)
+				if (!Write_Digest(filename))
 					return false;
 				}
 				else

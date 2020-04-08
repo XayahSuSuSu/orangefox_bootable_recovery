@@ -487,7 +487,7 @@
 		</page>
 		
 		<page name="backup_digest">
-			<template name="base_console"/>
+			<template name="base_console_cancel"/>
 
 			<text style="text_ab_title">
 				<placement x="%col1_x_indent%" y="%ab_bc_y%"/>
@@ -503,18 +503,6 @@
 				<placement x="%col1_x_indent%" y="%row1_2_y%"/>
 				<text>{@digest_creating}</text>
 			</text>
-			
-			<button style="actionbar">
-				<condition var1="tw_busy" var2="1"/>
-				<placement x="%ab_back_x%" y="%ab_y%" placement="4"/>
-				<action function="canceldigest"/>
-			</button>
-
-			<image>
-				<condition var1="tw_busy" var2="1"/>
-				<placement x="%ab_back_x%" y="%ab_y%" placement="4"/>
-				<image resource="actionbar_cancel"/>
-			</image>
 
 			<action>
 				<action function="generatedigests"/>

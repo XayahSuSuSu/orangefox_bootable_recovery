@@ -385,7 +385,6 @@ protected:
 	int checkbackupname(std::string arg);
 	int checkbackupfolder(std::string arg);
 	int generatedigests(std::string arg);
-	int canceldigest(std::string arg);
 	int decrypt(std::string arg);
 	int adbsideload(std::string arg);
 	int adbsideloadcancel(std::string arg);
