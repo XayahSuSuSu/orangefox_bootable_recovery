@@ -2138,7 +2138,7 @@ int TWPartitionManager::Decrypt_Device(string Password)
 	}
     }
 
-  property_set("twrp.mount_to_decrypt", "1");
+  property_set("orangefox.mount_to_decrypt", "1");
   property_get("ro.crypto.state", crypto_state, "error");
   if (strcmp(crypto_state, "error") == 0)
     {
@@ -2232,7 +2232,7 @@ int TWPartitionManager::Decrypt_Device(string Password)
 	}
     }
 
-  property_set("twrp.mount_to_decrypt", "0");
+  property_set("orangefox.mount_to_decrypt", "0");
 
   if (pwret != 0)
     {

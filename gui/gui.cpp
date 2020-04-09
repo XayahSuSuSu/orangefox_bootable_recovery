@@ -2,6 +2,9 @@
         Copyright 2012 bigbiff/Dees_Troy TeamWin
         This file is part of TWRP/TeamWin Recovery Project.
 
+	Copyright (C) 2019-2020 OrangeFox Recovery Project
+	This file is part of the OrangeFox Recovery Project.
+
         TWRP is free software: you can redistribute it and/or modify
         it under the terms of the GNU General Public License as published by
         the Free Software Foundation, either version 3 of the License, or
@@ -14,8 +17,6 @@
 
         You should have received a copy of the GNU General Public License
         along with TWRP.  If not, see <http://www.gnu.org/licenses/>.
-
-		Copyright 2019 OrangeFox Recovery Project
 */
 
 #include <linux/input.h>
@@ -824,7 +825,7 @@ extern "C" int gui_loadResources(void)
 
 	if (check)
 	{
-		if (PageManager::LoadPackage("TWRP", TWRES "ui.xml", "decrypt"))
+		if (PageManager::LoadPackage("OrangeFox", TWRES "ui.xml", "decrypt"))
 		{
 			gui_err("base_pkg_err=Failed to load base packages.");
 			goto error;
@@ -855,10 +856,10 @@ extern "C" int gui_loadResources(void)
 		}
 
 		theme_path += "/Fox/.bin./pa.zip"; 
-		if (check || PageManager::LoadPackage("TWRP", theme_path, "main"))
+		if (check || PageManager::LoadPackage("OrangeFox", theme_path, "main"))
 		{
 #endif // ifndef TW_OEM_BUILD
-			if (PageManager::LoadPackage("TWRP", TWRES "ui.xml", "main"))
+			if (PageManager::LoadPackage("OrangeFox", TWRES "ui.xml", "main"))
 			{
 				gui_err("base_pkg_err=Failed to load base packages.");
 				goto error;
@@ -868,7 +869,7 @@ extern "C" int gui_loadResources(void)
 	}
 #endif // ifndef TW_OEM_BUILD
 	// Set the default package
-	PageManager::SelectPackage("TWRP");
+	PageManager::SelectPackage("OrangeFox");
 
 	gGuiInitialized = 1;
 	return 0;
@@ -894,10 +895,10 @@ extern "C" int gui_loadCustomResources(void)
 	if (TWFunc::Path_Exists(theme_path)) 
 	{
 		// There is a custom theme, try to load it
-		if (PageManager::ReloadPackage("TWRP", theme_path)) 
+		if (PageManager::ReloadPackage("OrangeFox", theme_path)) 
 		{
 			// Custom theme failed to load, try to load stock theme
-			if (PageManager::ReloadPackage("TWRP", TWRES "ui.xml")) 
+			if (PageManager::ReloadPackage("OrangeFox", TWRES "ui.xml")) 
 			{
 				gui_err("base_pkg_err=Failed to load base packages.");
 				goto error;
@@ -905,7 +906,7 @@ extern "C" int gui_loadCustomResources(void)
 		}
 	}
 	// Set the default package
-	PageManager::SelectPackage("TWRP");
+	PageManager::SelectPackage("OrangeFox");
 #endif
 	return 0;
 
@@ -926,7 +927,7 @@ extern "C" int gui_startPage(const char *page_name, const int allow_commands, in
 		return -1;
 
 	// Set the default package
-	PageManager::SelectPackage("TWRP");
+	PageManager::SelectPackage("OrangeFox");
 
 	input_handler.init();
 #ifndef TW_OEM_BUILD

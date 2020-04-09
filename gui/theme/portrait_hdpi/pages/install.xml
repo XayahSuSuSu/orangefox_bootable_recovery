@@ -499,7 +499,7 @@
 				<placement x="0" y="%row_ab_ex_y%" w="%fileselector_width%" h="%fileselector_terminal_height%"/>
 				<sort name="tw_gui_sort_order"/>
 				<icon folder="folder_icon" file="file_icon" />
-				<filter extn=".zip" folders="1" files="1"/>
+				<filter extn=".zip;.ozip" folders="1" files="1"/>
 				<path name="tw_zip_location_tmp" default="/sdcard"/>
 				<data name="tw_filename_tmp"/>
 				<selection name="tw_file_tmp"/>
@@ -510,7 +510,7 @@
 				<placement x="0" y="%row_ab_ex_y%" w="%fileselector_width%" h="%fileselector_terminal_height%"/>
 				<sort name="tw_gui_sort_order"/>
 				<icon folder="folder_icon_small" file="file_icon_small" />
-				<filter extn=".zip" folders="1" files="1"/>
+				<filter extn=".zip;.ozip" folders="1" files="1"/>
 				<path name="tw_zip_location_tmp" default="/sdcard"/>
 				<data name="tw_filename_tmp"/>
 				<selection name="tw_file_tmp"/>

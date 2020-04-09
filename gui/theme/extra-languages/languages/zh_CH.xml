@@ -974,7 +974,7 @@
 		<string name="abt_front">前端开发者</string>
 		<string name="abt_back">后端开发者</string>
 		<string name="abt_device">设备</string>
-		<string name="version_twrp">TWRP 版本</string>
+		<string name="version_twrp">OrangeFox 版本</string>
 		<string name="build_type">构建类型</string>
 		<string name="abt_credits">贡献者</string>
 		<string name="abt_trans">翻译人员</string>

@@ -101,7 +101,7 @@
 			<!-- zip -->
 			<button style="menu_btn_sort">
 				<placement x="%ab_menu_sort_x%" y="%ab_menu_inst_5_y%" w="%ab_menu_sort_btn_w%" h="%ab_menu_sort_btn_h%"/>
-				<action function="set">fm_type_sort=.zip</action>
+				<action function="set">fm_type_sort=.zip;.ozip</action>
 			</button>
 
 			<text style="menu_text">
@@ -110,7 +110,7 @@
 			</text>
 
 			<image>
-				<condition var1="fm_type_sort" var2=".zip"/>
+				<condition var1="fm_type_sort" var2=".zip;.ozip"/>
 				<placement x="%ab_menu_x%" y="%ab_menu_inst_5_y%"/>
 				<image resource="sort_select"/>
 			</image>

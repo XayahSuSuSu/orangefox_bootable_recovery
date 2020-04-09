@@ -57,7 +57,7 @@ using namespace std;
 
 string DataManager::mBackingFile;
 int DataManager::mInitialized = 0;
-InfoManager DataManager::mPersist;	// Data that that is not constant and will be saved to the settings file
+InfoManager DataManager::mPersist;	// Data that is not constant and will be saved to the settings file
 InfoManager DataManager::mData;  	// Data that is not constant and will not be saved to settings file
 InfoManager DataManager::mConst;	// Data that is constant and will not be saved to settings file
 
@@ -639,7 +639,7 @@ void DataManager::SetDefaultValues()
 
   #ifdef OF_SUPPORT_OZIP_DECRYPTION
     mConst.SetValue("of_support_ozip_decryption", "1");
-	#endif
+  #endif
 
   mPersist.SetValue("of_average_img", "42");
   mPersist.SetValue("of_average_file", "30");

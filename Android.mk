@@ -53,12 +53,10 @@ TWHTCD_PATH := $(TWRES_PATH)htcd/
 
 TARGET_RECOVERY_GUI := true
 
-ifneq ($(TW_DEVICE_VERSION),)
-    LOCAL_CFLAGS += -DTW_DEVICE_VERSION='"$(TW_DEVICE_VERSION)"'
-    export FOX_DEVICE_VERSION=$(TW_DEVICE_VERSION)
+ifneq ($(FOX_VERSION),)
+    LOCAL_CFLAGS += -DFOX_VERSION='"$(FOX_VERSION)"'
 else
-    LOCAL_CFLAGS += -DTW_DEVICE_VERSION='"Unofficial"'
-    export FOX_DEVICE_VERSION=R10.1
+    LOCAL_CFLAGS += -DFOX_VERSION='"Unofficial"'
 endif
 
 DEVICE := $(subst omni_,,$(TARGET_PRODUCT))
@@ -412,7 +410,7 @@ else
     LOCAL_SHARED_LIBRARIES += libcrypto
 endif
 
-ifeq ($(shell test $(PLATFORM_SDK_VERSION) -ge 24; echo $$?),0)
+ifeq ($(shell test $(PLATFORM_SDK_VERSION) -ge 23; echo $$?),0)
     LOCAL_SHARED_LIBRARIES += libbase
 endif
 

@@ -189,7 +189,7 @@ static string Trim_Trailing_NewLine (const string src)
 }
 
 /* convert string to lowercase */
-static string lowercase (const string src)
+string TWFunc::lowercase (const string src)
 {
    string str = src;
    transform(str.begin(), str.end(), str.begin(), ::tolower);
@@ -2350,7 +2350,6 @@ void TWFunc::Welcome_Message(void)
     else
       gui_print("[Build type]: %s\n", BUILD_TYPE);
     
-    gui_print("[TWRP Version]: %s\n", FOX_VERSION);
     #if defined(OF_DISABLE_MIUI_SPECIFIC_FEATURES) || defined(OF_TWRP_COMPATIBILITY_MODE)
     LOGINFO(" [MIUI-specific features not enabled]\n");
     #endif
@@ -4109,7 +4108,7 @@ std::string TWFunc::get_cache_dir() {
 	if (PartitionManager.Find_Partition_By_Path(NON_AB_CACHE_DIR) == NULL) {
 		if (PartitionManager.Find_Partition_By_Path(AB_CACHE_DIR) == NULL) {
 			if (PartitionManager.Find_Partition_By_Path(PERSIST_CACHE_DIR) == NULL) {
-				LOGINFO("Unable to find a directory to store TWRP logs.");
+				LOGINFO("Unable to find a directory to store OrangeFox logs.");
 				return "";
 			}
 			return PERSIST_CACHE_DIR;
@@ -4608,4 +4607,31 @@ bool TWFunc::To_Skip_OrangeFox_Process(void)
   #endif
 }
 
+void TWFunc::UseSystemFingerprint(void)
+{
+string rom_finger_print = "";
+  if (!Path_Exists("/sbin/resetprop"))
+     {
+        LOGINFO("\n- I cannot find /sbin/resetprop, therefore I cannot use the system fingerprint\n");
+        return;
+     }
+
+  if (TWFunc::Path_Exists(orangefox_cfg))
+     {
+	rom_finger_print = File_Property_Get(orangefox_cfg, "ROM_FINGERPRINT");
+     }
+
+  if (rom_finger_print.empty())
+ 	rom_finger_print = System_Property_Get("ro.system.build.fingerprint");
+
+  if (rom_finger_print.empty())
+  	rom_finger_print = System_Property_Get("ro.build.fingerprint");
+
+  if (!rom_finger_print.empty())
+     {
+  	LOGINFO("- Using the ROM's fingerprint (%s)\n", rom_finger_print.c_str());
+  	Exec_Cmd("/sbin/resetprop ro.build.fingerprint " + rom_finger_print);
+     }
+  else LOGINFO("- ROM fingerprint not available\n");
+}
 //

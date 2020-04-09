@@ -965,7 +965,7 @@
 		<string name="abt_front">Frontend-fejlesztő</string>
 		<string name="abt_back">Backend-fejlesztő</string>
 		<string name="abt_device">Készülék</string>
-		<string name="version_twrp">TWRP-verzió</string>
+		<string name="version_twrp">OrangeFox-verzió</string>
 		<string name="build_type">Build-típus</string>
 		<string name="abt_credits">Közreműködők</string>
 		<string name="abt_trans">Fordítók</string>

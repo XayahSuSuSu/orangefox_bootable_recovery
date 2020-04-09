@@ -1,7 +1,7 @@
 /*
  * Copyright (C) 2007 The Android Open Source Project
  *
- * Copyright (C) 2018-2019 OrangeFox Recovery Project
+ * Copyright (C) 2018-2020 OrangeFox Recovery Project
  * This file is part of the OrangeFox Recovery Project.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -21,17 +21,17 @@
 #ifndef _VARIABLES_HEADER_
 #define _VARIABLES_HEADER_
 
-#define FOX_CURRENT_DEV_STR 	"20200331"
-#define TW_MAIN_VERSION_STR       "3.3.1"
-#define TW_VERSION_STR TW_MAIN_VERSION_STR TW_DEVICE_VERSION
-#define BUILD_TYPE_STR BUILD_TYPE
+#define FOX_RECOVERY_NAME	 "OrangeFox"
+#define FOX_CURRENT_DEV_STR 	 "20200403"
+#define FOX_MAIN_VERSION_STR    "R10.1"
+#define TW_MAIN_VERSION_STR     "3.3.1"
+#define TW_VERSION_STR 		FOX_VERSION
+#define BUILD_TYPE_STR 		BUILD_TYPE
 
 // OrangeFox - Values
-#define FOX_BUILD                TW_DEVICE_VERSION
-#define FOX_DEVICE               FOX_DEVICE_MODEL
-#define FOX_VERSION              TW_MAIN_VERSION_STR
-#define OF_MAINTAINER_STR      	"of_maintainer"
-#define BUILD_TYPE_STR              BUILD_TYPE
+#define FOX_BUILD               FOX_VERSION
+#define FOX_DEVICE              FOX_DEVICE_MODEL
+#define OF_MAINTAINER_STR	"of_maintainer"
 #define OF_FLASHLIGHT_ENABLE_STR "of_flashlight_enable"
 
 // fordownloads values
@@ -90,86 +90,86 @@ static int Fox_Current_ROM_IsMIUI = 0; // is the currently installed ROM a MIUI 
 
 // **** //
 
-#define FOX_SURVIVAL_FOLDER_VAR      "fox_survival_backup_folder_path"
-#define FOX_SURVIVAL_BACKUP_NAME       "fox_survival_backup_folder_name"
-#define FOX_SURVIVAL_BACKUP       "OTA"
-#define FOX_FILES_BACKUPS_FOLDER_VAR       "fox_files_backup_folder_var"
-#define FOX_DISABLE_BOOT_CHK       "fox_disable_boot_check"
-#define FOX_DO_SYSTEM_ON_OTA       "fox_include_system_survival"
-#define FOX_INSTALL_PREBUILT_ZIP       "fox_install_built_in_zip"
-#define FOX_DONT_REPLACE_STOCK       "fox_reboot_dont_disable_stock_recovery"
-#define FOX_ACTUAL_BUILD_VAR              "fox_actual_build"
-#define FOX_INCREMENTAL_PACKAGE          "fox_support_miui_ota"
-#define FOX_ENABLE_SECURE_RO             "fox_reboot_enable_secure_ro"
-#define FOX_DISABLE_SECURE_RO             "fox_reboot_disable_secure_ro"
-#define FOX_ENABLE_ADB_RO             "fox_reboot_enable_adb_ro"
-#define FOX_DISABLE_ADB_RO             "fox_reboot_disable_adb_ro"
-#define FOX_ADVANCED_WARN_CHK             "fox_advanced_warning_checkbox"
-#define FOX_DISABLE_MOCK_LOCATION           "fox_reboot_disable_mock_location"
-#define FOX_ENABLE_MOCK_LOCATION           "fox_reboot_enable_mock_location"
-#define FOX_DISABLE_SECURE_BOOT           "fox_reboot_disable_secure_boot"
-#define FOX_ADVANCED_STOCK_REPLACE           "fox_reboot_advanced_stock_recovery_check"
+#define FOX_SURVIVAL_FOLDER_VAR      	"fox_survival_backup_folder_path"
+#define FOX_SURVIVAL_BACKUP_NAME       	"fox_survival_backup_folder_name"
+#define FOX_SURVIVAL_BACKUP       	"OTA"
+#define FOX_FILES_BACKUPS_FOLDER_VAR    "fox_files_backup_folder_var"
+#define FOX_DISABLE_BOOT_CHK       	"fox_disable_boot_check"
+#define FOX_DO_SYSTEM_ON_OTA       	"fox_include_system_survival"
+#define FOX_INSTALL_PREBUILT_ZIP       	"fox_install_built_in_zip"
+#define FOX_DONT_REPLACE_STOCK       	"fox_reboot_dont_disable_stock_recovery"
+#define FOX_ACTUAL_BUILD_VAR            "fox_actual_build"
+#define FOX_INCREMENTAL_PACKAGE         "fox_support_miui_ota"
+#define FOX_ENABLE_SECURE_RO            "fox_reboot_enable_secure_ro"
+#define FOX_DISABLE_SECURE_RO           "fox_reboot_disable_secure_ro"
+#define FOX_ENABLE_ADB_RO             	"fox_reboot_enable_adb_ro"
+#define FOX_DISABLE_ADB_RO             	"fox_reboot_disable_adb_ro"
+#define FOX_ADVANCED_WARN_CHK           "fox_advanced_warning_checkbox"
+#define FOX_DISABLE_MOCK_LOCATION       "fox_reboot_disable_mock_location"
+#define FOX_ENABLE_MOCK_LOCATION        "fox_reboot_enable_mock_location"
+#define FOX_DISABLE_SECURE_BOOT         "fox_reboot_disable_secure_boot"
+#define FOX_ADVANCED_STOCK_REPLACE      "fox_reboot_advanced_stock_recovery_check"
 #define FOX_SAVE_LOAD_AROMAFM           "fox_reboot_saveload_aromafm_check"
 #define FOX_DISABLE_DEBUGGING           "fox_reboot_disable_debugging_check"
-#define FOX_ENABLE_DEBUGGING           "fox_reboot_forced_debugging_check"
-#define FOX_DISABLE_FORCED_ENCRYPTION           "fox_reboot_forced_encryption_check"
+#define FOX_ENABLE_DEBUGGING           	"fox_reboot_forced_debugging_check"
+#define FOX_DISABLE_FORCED_ENCRYPTION   "fox_reboot_forced_encryption_check"
 #define FOX_DISABLE_DM_VERITY           "fox_reboot_dm_verity_check"
-#define FOX_REBOOT_AFTER_RESTORE           "fox_reboot_after_restore"
-#define FOX_COMPATIBILITY_DEVICE         "fox_compatibility_fox_device"
-#define FOX_MAIN_SURVIVAL_TRIGGER         "fox_main_survival_trigger"
-//#define FOX_SUPERSU_CONFIG           "fox_supersu_config_chk"
-#define FOX_NO_OS_SEARCH_ENGINE           "fox_noos_engine"
-#define FOX_TMP_SCRIPT_DIR       "fox_tmp_script_directory"
-#define FOX_STATUSBAR_ON_LOCK       "fox_statusbar_on_lockpass"
-#define FOX_LED_COLOR       "fox_led_color"
-#define FOX_BALANCE_CHECK       "fox_boot_balance_check"
-#define FOX_NOTIFY_AFTER_RESTORE       "fox_inject_after_restore"
-#define FOX_NOTIFY_AFTER_BACKUP       "fox_inject_after_backup"
-#define FOX_FLASHLIGHT_VAR     "flashlight"
-#define FOX_FSYNC_CHECK       "fox_boot_fsync_check"
-#define FOX_FORCE_FAST_CHARGE_CHECK       "fox_boot_fastcharge_check"
-#define FOX_T2W_CHECK       "fox_boot_t2w_check"
-#define FOX_PERFORMANCE_CHECK       "fox_boot_performance_check"
-#define FOX_POWERSAVE_CHECK       "fox_boot_powersave_check"
-#define FOX_CALL_DEACTIVATION         "fox_call_deactivation_process"
-#define FOX_GOVERNOR_STABLE         "governor_stable"
+#define FOX_REBOOT_AFTER_RESTORE        "fox_reboot_after_restore"
+#define FOX_COMPATIBILITY_DEVICE        "fox_compatibility_fox_device"
+#define FOX_MAIN_SURVIVAL_TRIGGER       "fox_main_survival_trigger"
+//#define FOX_SUPERSU_CONFIG           	"fox_supersu_config_chk"
+#define FOX_NO_OS_SEARCH_ENGINE         "fox_noos_engine"
+#define FOX_TMP_SCRIPT_DIR       	"fox_tmp_script_directory"
+#define FOX_STATUSBAR_ON_LOCK       	"fox_statusbar_on_lockpass"
+#define FOX_LED_COLOR       		"fox_led_color"
+#define FOX_BALANCE_CHECK       	"fox_boot_balance_check"
+#define FOX_NOTIFY_AFTER_RESTORE       	"fox_inject_after_restore"
+#define FOX_NOTIFY_AFTER_BACKUP       	"fox_inject_after_backup"
+#define FOX_FLASHLIGHT_VAR     		"flashlight"
+#define FOX_FSYNC_CHECK       		"fox_boot_fsync_check"
+#define FOX_FORCE_FAST_CHARGE_CHECK     "fox_boot_fastcharge_check"
+#define FOX_T2W_CHECK       		"fox_boot_t2w_check"
+#define FOX_PERFORMANCE_CHECK       	"fox_boot_performance_check"
+#define FOX_POWERSAVE_CHECK       	"fox_boot_powersave_check"
+#define FOX_CALL_DEACTIVATION         	"fox_call_deactivation_process"
+#define FOX_GOVERNOR_STABLE         	"governor_stable"
 
-#define FOX_MIUI_ZIP_TMP                    "fox_miui_zip_tmp"
-#define FOX_LOADED_FINGERPRINT                    "fox_loaded_signature"
+#define FOX_MIUI_ZIP_TMP                "fox_miui_zip_tmp"
+#define FOX_LOADED_FINGERPRINT          "fox_loaded_signature"
 #define FOX_MIN_EXPECTED_FP_SIZE 30
 
-#define FOX_INCREMENTAL_OTA_FAIL                 "fox_ota_fail"
-#define FOX_RUN_SURVIVAL_BACKUP                 "fox_run_survival_backup"
-#define FOX_METADATA_PRE_BUILD                 "fox_pre_build"
+#define FOX_INCREMENTAL_OTA_FAIL        "fox_ota_fail"
+#define FOX_RUN_SURVIVAL_BACKUP         "fox_run_survival_backup"
+#define FOX_METADATA_PRE_BUILD          "fox_pre_build"
 
 //
-#define TW_USE_COMPRESSION_VAR      "tw_use_compression"
-#define TW_FILENAME                 "tw_filename"
-#define TW_ZIP_INDEX                "tw_zip_index"
-#define TW_ZIP_QUEUE_COUNT       "tw_zip_queue_count"
+#define TW_USE_COMPRESSION_VAR      	"tw_use_compression"
+#define TW_FILENAME                 	"tw_filename"
+#define TW_ZIP_INDEX                	"tw_zip_index"
+#define TW_ZIP_QUEUE_COUNT       	"tw_zip_queue_count"
 
 #define MAX_BACKUP_NAME_LEN 64
-#define TW_BACKUP_TEXT              "tw_backup_text"
+#define TW_BACKUP_TEXT              	"tw_backup_text"
 #define TW_BACKUP_NAME		        "tw_backup_name"
-#define TW_BACKUP_SYSTEM_VAR        "tw_backup_system"
-#define TW_BACKUP_DATA_VAR          "tw_backup_data"
-#define TW_BACKUP_BOOT_VAR          "tw_backup_boot"
-#define TW_BACKUP_RECOVERY_VAR      "tw_backup_recovery"
-#define TW_BACKUP_CACHE_VAR         "tw_backup_cache"
-#define TW_BACKUP_ANDSEC_VAR        "tw_backup_andsec"
-#define TW_BACKUP_SDEXT_VAR         "tw_backup_sdext"
-#define TW_BACKUP_AVG_IMG_RATE      "tw_backup_avg_img_rate"
-#define TW_BACKUP_AVG_FILE_RATE     "tw_backup_avg_file_rate"
+#define TW_BACKUP_SYSTEM_VAR        	"tw_backup_system"
+#define TW_BACKUP_DATA_VAR          	"tw_backup_data"
+#define TW_BACKUP_BOOT_VAR          	"tw_backup_boot"
+#define TW_BACKUP_RECOVERY_VAR      	"tw_backup_recovery"
+#define TW_BACKUP_CACHE_VAR         	"tw_backup_cache"
+#define TW_BACKUP_ANDSEC_VAR        	"tw_backup_andsec"
+#define TW_BACKUP_SDEXT_VAR         	"tw_backup_sdext"
+#define TW_BACKUP_AVG_IMG_RATE      	"tw_backup_avg_img_rate"
+#define TW_BACKUP_AVG_FILE_RATE     	"tw_backup_avg_file_rate"
 #define TW_BACKUP_AVG_FILE_COMP_RATE    "tw_backup_avg_file_comp_rate"
-#define TW_BACKUP_SYSTEM_SIZE       "tw_backup_system_size"
-#define TW_BACKUP_DATA_SIZE         "tw_backup_data_size"
-#define TW_BACKUP_BOOT_SIZE         "tw_backup_boot_size"
-#define TW_BACKUP_RECOVERY_SIZE     "tw_backup_recovery_size"
-#define TW_BACKUP_CACHE_SIZE        "tw_backup_cache_size"
-#define TW_BACKUP_ANDSEC_SIZE       "tw_backup_andsec_size"
-#define TW_BACKUP_SDEXT_SIZE        "tw_backup_sdext_size"
-#define TW_STORAGE_FREE_SIZE        "tw_storage_free_size"
-#define TW_GENERATE_DIGEST_TEXT     "tw_generate_digest_text"
+#define TW_BACKUP_SYSTEM_SIZE       	"tw_backup_system_size"
+#define TW_BACKUP_DATA_SIZE         	"tw_backup_data_size"
+#define TW_BACKUP_BOOT_SIZE         	"tw_backup_boot_size"
+#define TW_BACKUP_RECOVERY_SIZE     	"tw_backup_recovery_size"
+#define TW_BACKUP_CACHE_SIZE        	"tw_backup_cache_size"
+#define TW_BACKUP_ANDSEC_SIZE       	"tw_backup_andsec_size"
+#define TW_BACKUP_SDEXT_SIZE        	"tw_backup_sdext_size"
+#define TW_STORAGE_FREE_SIZE        	"tw_storage_free_size"
+#define TW_GENERATE_DIGEST_TEXT     	"tw_generate_digest_text"
 
 #define TW_RESTORE_TEXT             "tw_restore_text"
 #define TW_RESTORE_SYSTEM_VAR       "tw_restore_system"

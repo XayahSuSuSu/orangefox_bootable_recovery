@@ -947,7 +947,7 @@
 		<string name="abt_front">Frontend developer</string>
 		<string name="abt_back">Backend developer</string>
 		<string name="abt_device">Device</string>
-		<string name="version_twrp">TWRP Version</string>
+		<string name="version_twrp">OrangeFox Version</string>
 		<string name="build_type">Build type</string>
 		<string name="abt_credits">Credits</string>
 		<string name="abt_trans">Translators</string>

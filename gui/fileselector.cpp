@@ -20,7 +20,15 @@
 #include <sys/stat.h>
 #include <dirent.h>
 #include <algorithm>
-
+#ifdef __ANDROID_API_M__
+#include <vector>
+#ifdef __ANDROID_API_N__
+#include <android-base/strings.h>
+#else
+#include <base/strings.h>
+#endif
+#else
+#endif
 extern "C" {
 #include "../twcommon.h"
 }
@@ -305,8 +313,7 @@ int GUIFileSelector::GetFileList(const std::string folder)
 	
 	string reloadfm, searchString, showHiddenFiles;
 	if (mFileFilterVar != "") {
-		DataManager::GetValue(mFileFilterVar, searchString);
-		std::transform(searchString.begin(), searchString.end(), searchString.begin(), ::tolower);
+		searchString = TWFunc::lowercase(DataManager::GetStrValue(mFileFilterVar));
 		showHiddenFiles = "1";
 	} else
 		if (ignoreHideVar)
@@ -331,8 +338,7 @@ int GUIFileSelector::GetFileList(const std::string folder)
 		// [f/d] filter files by name
 		if (searchString != "" && mFileFilterVar != "") {
 			if (data.fileName != ".." && data.fileName.find(searchString) == string::npos){
-				string fileLower = data.fileName;
-				std::transform(fileLower.begin(), fileLower.end(), fileLower.begin(), ::tolower);
+				string fileLower = TWFunc::lowercase(data.fileName);
 				if (fileLower.find(searchString) == string::npos)
 					continue;
 			}
@@ -370,17 +376,41 @@ int GUIFileSelector::GetFileList(const std::string folder)
 			if (mShowNavFolders || (data.fileName != "." && data.fileName != ".."))
 				mFolderList.push_back(data);
 		} else if (data.fileType == DT_REG || data.fileType == DT_LNK || data.fileType == DT_BLK) {
-			if (mExtn.empty() || (data.fileName.length() > mExtn.length() && data.fileName.substr(data.fileName.length() - mExtn.length()) == mExtn)) {
-				if (mExtn == ".ab" && twadbbu::Check_ADB_Backup_File(path)) {
+#ifdef __ANDROID_API_M__
+			std::vector<std::string> mExtnResults = android::base::Split(mExtn, ";");
+			for (const std::string& mExtnElement : mExtnResults)
+			{
+				std::string mExtnName = android::base::Trim(mExtnElement);
+				if (mExtnName.empty() || (data.fileName.length() > mExtnName.length() && TWFunc::lowercase(data.fileName.substr(data.fileName.length() - mExtnName.length())) == mExtnName)) {
+					if (mExtnName == ".ab" && twadbbu::Check_ADB_Backup_File(path)) {
+						mFolderList.push_back(data);
+					} else {
+						// [f/d] Get file extension
+						data.fileExt = TWFunc::lowercase(data.fileName.substr(data.fileName.find_last_of(".") + 1));
+						mFileList.push_back(data);
+					}
+				}
+			}
+#else //On android 5.1 we can't use android::base::Trim and Split so just use the first extension written in the list
+			std::size_t seppos = mExtn.find_first_of(";");
+			std::string mExtnf;
+			if (seppos!=std::string::npos){
+				mExtnf = mExtn.substr(0, seppos);
+			} else {
+				mExtnf = mExtn;
+			}
+			if (mExtnf.empty() || (data.fileName.length() > mExtnf.length() && TWFunc::lowercase(data.fileName.substr(data.fileName.length() - mExtnf.length())) == mExtnf)) {
+				if (mExtnf == ".ab" && twadbbu::Check_ADB_Backup_File(path)) {
 					mFolderList.push_back(data);
 				} else {
 					// [f/d] Get file extension
-					data.fileExt = data.fileName.substr(data.fileName.find_last_of(".") + 1);
+					data.fileExt = TWFunc::lowercase(data.fileName.substr(data.fileName.find_last_of(".") + 1));
 					mFileList.push_back(data);
 				}
 			}
+#endif
 		}
-  }
+ 	}
 	closedir(d);
 
 	std::sort(mFolderList.begin(), mFolderList.end(), fileSort);
