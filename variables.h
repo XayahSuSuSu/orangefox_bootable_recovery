@@ -21,12 +21,12 @@
 #ifndef _VARIABLES_HEADER_
 #define _VARIABLES_HEADER_
 
-#define FOX_RECOVERY_NAME	 "OrangeFox"
-#define FOX_CURRENT_DEV_STR 	 "20200403"
+#define FOX_RECOVERY_NAME	"OrangeFox"
+#define FOX_CURRENT_DEV_STR 	"20200410"
 #define FOX_MAIN_VERSION_STR    "R10.1"
 #define TW_MAIN_VERSION_STR     "3.3.1"
 #define TW_VERSION_STR 		FOX_VERSION
-#define BUILD_TYPE_STR 		BUILD_TYPE
+#define BUILD_TYPE_STR 		FOX_BUILD_TYPE
 
 // OrangeFox - Values
 #define FOX_BUILD               FOX_VERSION

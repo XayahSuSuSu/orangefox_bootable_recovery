@@ -2343,12 +2343,13 @@ void TWFunc::Welcome_Message(void)
     return;
     gui_print("--------------------------\n");
     gui_print("Welcome to OrangeFox Recovery!\n");
-    gui_print("[OrangeFox Version]: %s\n", FOX_BUILD);
+    gui_print("[Release]   : %s\n", FOX_BUILD);
+    gui_print("[Codebase]  : %s\n", FOX_CURRENT_DEV_STR);
     
     if (FOX_BUILD == "Unofficial")
       gui_print_color("warning", "[Build type]: Unofficial\n");
     else
-      gui_print("[Build type]: %s\n", BUILD_TYPE);
+    gui_print("[Build type]: %s\n", FOX_BUILD_TYPE);
     
     #if defined(OF_DISABLE_MIUI_SPECIFIC_FEATURES) || defined(OF_TWRP_COMPATIBILITY_MODE)
     LOGINFO(" [MIUI-specific features not enabled]\n");

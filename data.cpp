@@ -633,7 +633,7 @@ void DataManager::SetDefaultValues()
 
   mConst.SetValue(TW_VERSION_VAR, FOX_VERSION);
   mConst.SetValue(OF_MAINTAINER_STR, OF_MAINTAINER);
-  mConst.SetValue(BUILD_TYPE_STR, BUILD_TYPE);
+  mConst.SetValue(BUILD_TYPE_STR, FOX_BUILD_TYPE);
 
   #ifdef OF_SUPPORT_OZIP_DECRYPTION
     mConst.SetValue("of_support_ozip_decryption", "1");
@@ -665,7 +665,7 @@ void DataManager::SetDefaultValues()
     }
   #endif 
 
-  mConst.SetValue("fox_build_type1", BUILD_TYPE);
+  mConst.SetValue("fox_build_type1", FOX_BUILD_TYPE);
 
   #if defined(OF_DISABLE_MIUI_SPECIFIC_FEATURES) || defined(OF_TWRP_COMPATIBILITY_MODE)
     mData.SetValue("of_no_miui_features", "1");
