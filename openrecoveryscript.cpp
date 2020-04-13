@@ -142,17 +142,13 @@ int OpenRecoveryScript::run_script_file(void) {
 				strncpy(command, script_line, line_len - remove_nl + 1);
 				gui_print("command is: '%s' and there is no value\n", command);
 			}
-			if (strcmp(command, "install") == 0) 
-			{
+			if (strcmp(command, "install") == 0) {
 				// Install Zip
 				DataManager::SetValue("tw_action_text2", "Installing Zip");
-				//PartitionManager.Mount_All_Storage();
 				ret_val = Install_Command(value);
 				tmp_tmp = ret_val;
 				install_cmd = -1;
-			} else 
-			if (strcmp(command, "wipe") == 0) 
-			{
+			} else if (strcmp(command, "wipe") == 0) {
 				// Wipe
 				if (strcmp(value, "cache") == 0 || strcmp(value, "/cache") == 0) {
 					PartitionManager.Wipe_By_Path("/cache");
@@ -166,9 +162,7 @@ int OpenRecoveryScript::run_script_file(void) {
 					LOGERR("Error with wipe command value: '%s'\n", value);
 					ret_val = 1;
 				}
-			} else 
-			if (strcmp(command, "backup") == 0) 
-			{
+			} else if (strcmp(command, "backup") == 0) {
 				// Backup
 				DataManager::SetValue("tw_action_text2", gui_parse_text("{@backing}"));
 				tok = strtok(value, " ");
@@ -178,8 +172,7 @@ int OpenRecoveryScript::run_script_file(void) {
 					memset(value2, 0, sizeof(value2));
 					strcpy(value2, tok);
 					line_len = strlen(tok);
-					if ((int)value2[line_len - 1] == 10 || (int)value2[line_len - 1] == 13) 
-					{
+					if ((int)value2[line_len - 1] == 10 || (int)value2[line_len - 1] == 13) {
 						if ((int)value2[line_len - 1] == 10 || (int)value2[line_len - 1] == 13)
 							remove_nl = 2;
 						else
@@ -193,16 +186,13 @@ int OpenRecoveryScript::run_script_file(void) {
 						ret_val = 1;
 						continue;
 					}
-				} 
-				else 
-				{
+				} else {
 					char empt[50];
 					strcpy(empt, "(Current Date)");
 					DataManager::SetValue(TW_BACKUP_NAME, empt);
 				}
 				ret_val = Backup_Command(value1);
-			} else if (strcmp(command, "restore") == 0) 
-			{
+			} else if (strcmp(command, "restore") == 0) {
 				// Restore
 				DataManager::SetValue("tw_action_text2", gui_parse_text("{@restore}"));
 				PartitionManager.Mount_All_Storage();
@@ -305,13 +295,9 @@ int OpenRecoveryScript::run_script_file(void) {
 					ret_val = 1;
 				else
 					gui_msg("done=Done.");
-			} else 
-			if (strcmp(command, "remountrw") == 0) 
-			{
+			} else if (strcmp(command, "remountrw") == 0) {
 				ret_val = remountrw();
-			} else 
-			if (strcmp(command, "mount") == 0) 
-			{
+			} else if (strcmp(command, "mount") == 0) {
 				// Mount
 				DataManager::SetValue("tw_action_text2", gui_parse_text("{@mounting}"));
 				if (value[0] != '/') {
@@ -321,9 +307,7 @@ int OpenRecoveryScript::run_script_file(void) {
 					strcpy(mount, value);
 				if (PartitionManager.Mount_By_Path(mount, true))
 					gui_msg(Msg("mounted=Mounted '{1}'")(mount));
-			} else 
-			if (strcmp(command, "unmount") == 0 || strcmp(command, "umount") == 0) 
-			{
+			} else if (strcmp(command, "unmount") == 0 || strcmp(command, "umount") == 0) {
 				// Unmount
 				DataManager::SetValue("tw_action_text2", gui_parse_text("{@unmounting}"));
 				if (value[0] != '/') {
@@ -332,38 +316,29 @@ int OpenRecoveryScript::run_script_file(void) {
 				} else
 					strcpy(mount, value);
 				if (PartitionManager.UnMount_By_Path(mount, true))
-					gui_msg(Msg("unmounted=Unmounted '{1}'")(mount));
-			} else 
-			if (strcmp(command, "set") == 0) 
-			{
+					gui_msg(Msg("unmounted=Unounted '{1}'")(mount));
+			} else if (strcmp(command, "set") == 0) {
 				// Set value
 				size_t len = strlen(value);
 				tok = strtok(value, " ");
 				strcpy(value1, tok);
-				if (len > strlen(value1) + 1) 
-				{
+				if (len > strlen(value1) + 1) {
 					char *val2 = value + strlen(value1) + 1;
 					gui_msg(Msg("setting=Setting '{1}' to '{2}'")(value1)(val2));
 					DataManager::SetValue(value1, val2);
-				} else 
-				{
+				} else {
 					gui_msg(Msg("setting_empty=Setting '{1}' to empty")(value1));
 					DataManager::SetValue(value1, "");
 				}
-			} else 
-			if (strcmp(command, "mkdir") == 0) 
-			{
+			} else if (strcmp(command, "mkdir") == 0) {
 				// Make directory (recursive)
 				DataManager::SetValue("tw_action_text2", gui_parse_text("{@making_dir1}"));
 				gui_msg(Msg("making_dir2=Making directory: '{1}'")(value));
-				if (!TWFunc::Recursive_Mkdir(value)) 
-				{
+				if (!TWFunc::Recursive_Mkdir(value)) {
 					// error message already displayed by Recursive_Mkdir
 					ret_val = 1;
 				}
-			} else 
-			if (strcmp(command, "reboot") == 0) 
-			{
+			} else if (strcmp(command, "reboot") == 0) {
 				if (strlen(value) && strcmp(value, "recovery") == 0)
 					TWFunc::tw_reboot(rb_recovery);
 				else if (strlen(value) && strcmp(value, "poweroff") == 0)
@@ -376,24 +351,16 @@ int OpenRecoveryScript::run_script_file(void) {
 					TWFunc::tw_reboot(rb_edl);
 				else
 					TWFunc::tw_reboot(rb_system);
-			} else 
-			if (strcmp(command, "cmd") == 0) 
-			{
+			} else if (strcmp(command, "cmd") == 0) {
 				DataManager::SetValue("tw_action_text2", gui_parse_text("{@running_command}"));
-				if (cindex != 0) 
-				{
+				if (cindex != 0) {
 					TWFunc::Exec_Cmd(value);
-				} else 
-				{
+				} else {
 					LOGERR("No value given for cmd\n");
 				}
-			} 
-			else if (strcmp(command, "print") == 0) 
-			{
+			} else if (strcmp(command, "print") == 0) {
 				gui_print("%s\n", value);
-			} 
-			else if (strcmp(command, "sideload") == 0) 
-			{
+			} else if (strcmp(command, "sideload") == 0) {
 				// ADB Sideload
 				DataManager::SetValue("tw_action_text2", gui_parse_text("{@sideload}"));
 				install_cmd = -1;
@@ -404,25 +371,18 @@ int OpenRecoveryScript::run_script_file(void) {
 
 				gui_msg("start_sideload=Starting ADB sideload feature...");
 				ret_val = apply_from_adb("/", &sideload_child_pid);
-				if (ret_val != 0) 
-				{
+				if (ret_val != 0) {
 					if (ret_val == -2)
 						gui_err("need_new_adb=You need adb 1.0.32 or newer to sideload to this device.");
 					ret_val = 1; // failure
-				} 
-				else 
-				if (TWinstall_zip(FUSE_SIDELOAD_HOST_PATHNAME, &wipe_cache) == 0) 
-				{
-				    if (wipe_cache)
-					PartitionManager.Wipe_By_Path("/cache");
-				} 
-				else 
-				{
+				} else if (TWinstall_zip(FUSE_SIDELOAD_HOST_PATHNAME, &wipe_cache) == 0) {
+					if (wipe_cache)
+						PartitionManager.Wipe_By_Path("/cache");
+				} else {
 					ret_val = 1; // failure
 				}
 				sideload = 1; // Causes device to go to the home screen afterwards
-				if (sideload_child_pid != 0) 
-				{
+				if (sideload_child_pid != 0) {
 					LOGINFO("Signaling child sideload process to exit.\n");
 					struct stat st;
 					// Calling stat() on this magic filename signals the minadbd
@@ -434,30 +394,20 @@ int OpenRecoveryScript::run_script_file(void) {
 				}
 				property_set("ctl.start", "adbd");
 				gui_msg("done=Done.");
-			} 
-			else 
-			if (strcmp(command, "fixperms") == 0 || strcmp(command, "fixpermissions") == 0 || strcmp(command, "fixcontexts") == 0) 
-			{
+			} else if (strcmp(command, "fixperms") == 0 || strcmp(command, "fixpermissions") == 0 || strcmp(command, "fixcontexts") == 0) {
 				ret_val = PartitionManager.Fix_Contexts();
 				if (ret_val != 0)
 					ret_val = 1; // failure
-			} 
-			else 
-			if (strcmp(command, "decrypt") == 0) 
-			{
-				if (*value) 
-				{
+			} else if (strcmp(command, "decrypt") == 0) {
+				if (*value) {
 					ret_val = PartitionManager.Decrypt_Device(value);
 					if (ret_val != 0)
 						ret_val = 1; // failure
-				} else 
-				{
+				} else {
 					gui_err("no_pwd=No password provided.");
 					ret_val = 1; // failure
 				}
-			} 
-			else 
-			{
+			} else {
 				LOGERR("Unrecognized script command: '%s'\n", command);
 				ret_val = 1;
 			}
@@ -466,35 +416,29 @@ int OpenRecoveryScript::run_script_file(void) {
 		unlink(SCRIPT_FILE_TMP);
 		gui_msg("done_ors=Done processing script file");
 		tmp_tmp = ret_val;
-
 		//* DJ9 - disable auto-reboot after incremental OTA updates? *//
 		if (DataManager::GetIntValue(FOX_DISABLE_OTA_AUTO_REBOOT) == 1) 
 		  {
 		     ret_val = 3; // forces booting to the home page - also runs DM-Verity patch
 		  }
 		//** DJ9
-		
-	} 
-	else 
-	{
+	} else {
 		gui_msg(Msg(msg::kError, "error_opening_strerr=Error opening: '{1}' ({2})")(SCRIPT_FILE_TMP)(strerror(errno)));
 		return 1;
 	}
 
-	if (install_cmd && DataManager::GetIntValue(TW_HAS_INJECTTWRP) == 1 && DataManager::GetIntValue(TW_INJECT_AFTER_ZIP) == 1) 
-	{
+	if (install_cmd && DataManager::GetIntValue(TW_HAS_INJECTTWRP) == 1 && DataManager::GetIntValue(TW_INJECT_AFTER_ZIP) == 1) {
 		gui_msg("injecttwrp=Injecting TWRP into boot image...");
 		TWPartition* Boot = PartitionManager.Find_Partition_By_Path("/boot");
 		if (Boot == NULL || Boot->Current_File_System != "emmc")
 			TWFunc::Exec_Cmd("injecttwrp --dump /tmp/backup_recovery_ramdisk.img /tmp/injected_boot.img --flash");
-		else 
-		{
+		else {
 			string injectcmd = "injecttwrp --dump /tmp/backup_recovery_ramdisk.img /tmp/injected_boot.img --flash bd=" + Boot->Actual_Block_Device;
 			TWFunc::Exec_Cmd(injectcmd.c_str());
 		}
 		gui_msg("done=Done.");
 	}
-	
+
 	// DJ9
 	if (tmp_tmp == 0)
 	   Run_Fox_Process_After_ORS();
@@ -502,7 +446,6 @@ int OpenRecoveryScript::run_script_file(void) {
 	
 	if (sideload)
 		ret_val = 1; // Forces booting to the home page after sideload
-		
 	return ret_val;
 }
 
@@ -520,75 +463,58 @@ int OpenRecoveryScript::Insert_ORS_Command(string Command) {
 	return 0;
 }
 
-int OpenRecoveryScript::Install_Command(string Zip) 
-{
+int OpenRecoveryScript::Install_Command(string Zip) {
 	// Install zip
 	string ret_string;
 	int ret_val = 0, wipe_cache = 0;
 	std::vector<PartitionList> Storage_List;
 	string Full_Path;
 
-	if (Zip.substr(0, 1) == "@") 
-	{
+	if (Zip.substr(0, 1) == "@") {
 		// This is a special file that contains a map of blocks on the data partition
 		Full_Path = Zip.substr(1);
-		if (!PartitionManager.Mount_By_Path(Full_Path, true) || !TWFunc::Path_Exists(Full_Path)) 
-		{
+		if (!PartitionManager.Mount_By_Path(Full_Path, true) || !TWFunc::Path_Exists(Full_Path)) {
 			LOGINFO("Unable to install via mapped zip '%s'\n", Full_Path.c_str());
 			gui_msg(Msg(msg::kError, "zip_err=Error installing zip file '{1}'")(Zip));
 			return 1;
 		}
 		LOGINFO("Installing mapped zip file '%s'\n", Full_Path.c_str());
 		gui_msg(Msg("installing_zip=Installing zip file '{1}'")(Zip));
-	} 
-	else 
-	if (!TWFunc::Path_Exists(Zip)) 
-	{
+	} else if (!TWFunc::Path_Exists(Zip)) {
 		PartitionManager.Mount_All_Storage();
 		PartitionManager.Get_Partition_List("storage", &Storage_List);
 		int listSize = Storage_List.size();
-		for (int i = 0; i < listSize; i++) 
-		{
-			if (PartitionManager.Is_Mounted_By_Path(Storage_List.at(i).Mount_Point)) 
-			{
+		for (int i = 0; i < listSize; i++) {
+			if (PartitionManager.Is_Mounted_By_Path(Storage_List.at(i).Mount_Point)) {
 				Full_Path = Storage_List.at(i).Mount_Point + "/" + Zip;
-				if (TWFunc::Path_Exists(Full_Path)) 
-				{
+				if (TWFunc::Path_Exists(Full_Path)) {
 					Zip = Full_Path;
 					break;
 				}
 				Full_Path = Zip;
 				LOGINFO("Trying to find zip '%s' on '%s'...\n", Full_Path.c_str(), Storage_List.at(i).Mount_Point.c_str());
 				ret_string = Locate_Zip_File(Full_Path, Storage_List.at(i).Mount_Point);
-				if (!ret_string.empty()) 
-				{
+				if (!ret_string.empty()) {
 					Zip = ret_string;
 					break;
 				}
 			}
 		}
-		if (!TWFunc::Path_Exists(Zip)) 
-		   {
+		if (!TWFunc::Path_Exists(Zip)) {
 			// zip file doesn't exist
 			gui_print("Unable to locate zip file '%s'.\n", Zip.c_str());
 			ret_val = 1;
-		   } 
-		else
+		} else
 			gui_msg(Msg("installing_zip=Installing zip file '{1}'")(Zip));
 	}
 
 	ret_val = TWinstall_zip(Zip.c_str(), &wipe_cache);
-	if (ret_val != 0) 
-	  {
+	if (ret_val != 0) {
 		LOGINFO ("OpenRecoveryScript::Install_Command() error.\n");
 		gui_msg(Msg(msg::kError, "zip_err=Error installing zip file '{1}'")(Zip));
 		ret_val = 1;
-	  } 
-	else 
-	  {
-		if (wipe_cache)
-		   PartitionManager.Wipe_By_Path("/cache");
-	  }
+	} else if (wipe_cache)
+		PartitionManager.Wipe_By_Path("/cache");
 
 	TWFunc::Dump_Current_Settings();
 
@@ -700,39 +626,32 @@ void OpenRecoveryScript::Run_OpenRecoveryScript(void) {
 }
 
 // this is called by the "openrecoveryscript" GUI action called via action page from Run_OpenRecoveryScript
-int OpenRecoveryScript::Run_OpenRecoveryScript_Action() 
-{
+int OpenRecoveryScript::Run_OpenRecoveryScript_Action() {
 	int op_status = 1;
 	// Check for the SCRIPT_FILE_TMP first as these are AOSP recovery commands
 	// that we converted to ORS commands during boot in recovery.cpp.
 	// Run those first.
 	int reboot = 0;
 	int code1 = 0; int code2 = 0; // DJ9 if either of these is set to 3, disable auto-reboot
-	
-	if (TWFunc::Path_Exists(SCRIPT_FILE_TMP)) 
-	   {
+	if (TWFunc::Path_Exists(SCRIPT_FILE_TMP)) {
 		gui_msg("running_recovery_commands=Running Recovery Commands");
 		code1 = OpenRecoveryScript::run_script_file();
-		if (code1 == 0) 
-		  {
-		     reboot = 1;
-		     op_status = 0;
-		  } 
-	   }
+		if (code1 == 0) {
+			reboot = 1;
+			op_status = 0;
+		}
+	}
 	// Check for the ORS file in /cache and attempt to run those commands.
-	if (OpenRecoveryScript::check_for_script_file()) 
-	   {
+	if (OpenRecoveryScript::check_for_script_file()) {
 		gui_msg("running_ors=Running OpenRecoveryScript");
 		code2 = OpenRecoveryScript::run_script_file();
-		if (code2 == 0) 
-		{
-		    reboot = 1;
-		    op_status = 0;
+		if (code2 == 0) {
+			reboot = 1;
+			op_status = 0;
 		}
-	   }
-
+	}
 	if (reboot || code1 == 3 || code2 == 3) 
-	  {	  
+	   {	  
     		// have we disabled auto-reboot?
     		if (code1 == 3 || code2 == 3) 
        		  { 
@@ -747,13 +666,10 @@ int OpenRecoveryScript::Run_OpenRecoveryScript_Action()
 		     TWFunc::tw_reboot(rb_system);
 		     usleep(5000000); // Sleep for 5 seconds to allow reboot to occur
 		  }
-          } 
-      else 
-     	{
-	  DataManager::SetValue("tw_page_done", 1);
+           } else {
+		DataManager::SetValue("tw_page_done", 1);
 	}
-    
-    return op_status;
+	return op_status;
 }
 
 // this is called by the "twcmd" GUI action when a command is received via FIFO from the "twrp" command line tool
