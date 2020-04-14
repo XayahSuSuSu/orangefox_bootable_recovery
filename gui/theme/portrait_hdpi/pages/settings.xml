@@ -195,6 +195,7 @@
 				</listitem>
 				<listitem name="{@fox_save_load_aromafm_config_chk}">
 					<condition var1="general_back" var2="settings"/>
+					<condition var1="fileexists" var2="/sdcard/Fox/FoxFiles/AromaFM/AromaFM.zip"/>
 					<data variable="fox_reboot_saveload_aromafm_check"/>
 				</listitem>
 				<listitem name="{@files_auto_open}">
