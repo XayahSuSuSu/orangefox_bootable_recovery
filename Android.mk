@@ -1177,6 +1177,13 @@ ifeq ($(TW_INCLUDE_FB2PNG), true)
     include $(commands_TWRP_local_path)/fb2png/Android.mk
 endif
 
+# LZMA
+ifeq ($(FOX_USE_LZMA_COMPRESSION),1)
+    ifeq ($(LZMA_RAMDISK_TARGETS),)
+    LZMA_RAMDISK_TARGETS := recovery
+    endif
+endif
+
 endif
 
 commands_TWRP_local_path :=
