@@ -4211,12 +4211,17 @@ void TWFunc::Deactivation_Process(void)
 	      if (MIUI_Is_Running())
 	         {
 	            if (JustInstalledMiui())
-	              {              	
+	              {
+	            #ifdef OF_NO_MIUI_PATCH_WARNING
+	              	LOGINFO("OrangeFox: Not patching boot image. Some ROMs will need you to flash magisk, or the ROM might not boot.\n");
+	            	LOGINFO("NOTE: It is possible that MIUI will replace OrangeFox with the stock MIUI recovery.\n");
+	            #else
 	              	gui_print_color("warning", 
 	              	"\nOrangeFox: WARNING! Not patching boot image.\nSome ROMs will need you to flash\nmagisk *now*, or the ROM might not boot.\n");
 	            	
 	            	gui_print_color("warning", 
 	            	"\nNOTE: It is possible that booting MIUI now will replace OrangeFox with the stock MIUI recovery.\n");
+	            #endif
 	              }
 	         }
 	   }
