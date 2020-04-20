@@ -352,12 +352,55 @@ std::string strReturnCurrentTime()
   return str;
 }
 
+bool TWFunc::MIUI_ROM_SetProperty(const int code)
+{
+string res = "0";
+string cmd = "/sbin/resetprop";
+bool ret = false;
+    
+    if (!Path_Exists(cmd)) cmd = "/sbin/setprop";
+
+    if (code != 0) // whether a ROM was installed, and it is MIUI
+      {
+    	ret = (code == 2 || code == 3 || code == 22 || code == 23);
+      }
+    else // check for MIUI - running or freshly installed
+      {
+    	ret = TWFunc::MIUI_Is_Running();
+      }
+
+    if (ret)
+       res = "1";
+
+    Exec_Cmd(cmd + " orangefox.miui.rom " + res);
+    usleep(4096);
+
+    return ret;
+}
+
+bool TWFunc::RunFoxScript(std::string script)
+{
+    if (!Path_Exists(script))
+       return false;
+
+    chmod(script.c_str(), S_IRWXU | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH);
+    TWFunc::Exec_Cmd(script);
+    usleep(500000);
+    return true;
+}
+
 /* function to run just before every reboot */
 void TWFunc::Run_Before_Reboot(void)
 {
-
+    // AVB20
     Patch_AVB20(true);
+    usleep(4096);
 
+    // Run any custom script before rebooting
+    TWFunc::MIUI_ROM_SetProperty(0);
+    TWFunc::RunFoxScript("/sbin/beforereboot.sh");
+
+    // logs & stuff
     if (!Path_Exists(Fox_Logs_Dir))
        {
 	  TWFunc::Recursive_Mkdir(Fox_Logs_Dir, false);
@@ -2509,8 +2552,6 @@ void TWFunc::OrangeFox_Startup(void)
       }
 
   TWFunc::Fresh_Fox_Install();
-  
-  // Patch_AVB20(true);
   
   // start mtp manually, if enabled
   #ifdef TW_HAS_MTP

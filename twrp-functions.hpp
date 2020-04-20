@@ -154,6 +154,8 @@ public:
 	static void Run_Post_Flash_Protocol(void); // run any post_flash protocol
 	static bool Has_System_Root(void); // is this a system-as-root device?
 	static int Rename_File(std::string oldname, std::string newname); // rename a file, using std strings
+	static bool MIUI_ROM_SetProperty(const int code); // Are we running a MIUI ROM (old or freshly installed) - set fox property
+	static bool RunFoxScript(std::string script); // execute a script and introduce a delay if the script was executed
 	static bool MIUI_Is_Running(void); // Are we running a MIUI ROM (old or freshly installed) ?
 	static void Dump_Current_Settings(void); // log some current settings before flashing a ROM
 	static void Setup_Verity_Forced_Encryption(void); //setup dm-verity/forced-encryption build vars

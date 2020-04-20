@@ -1377,6 +1377,13 @@ int GUIAction::flash(std::string arg)
           usleep(32768);
           TWFunc::Patch_AVB20(false);
           usleep(32768);
+
+    	  // Run any custom script after ROM flashing
+    	  TWFunc::MIUI_ROM_SetProperty(Fox_Zip_Installer_Code);
+    	  TWFunc::RunFoxScript("/sbin/afterromflash.sh");
+          usleep(4096);
+
+    	  //
 	  PartitionManager.Update_System_Details();
        }
 

@@ -751,6 +751,11 @@ int OpenRecoveryScript::Run_Fox_Process_After_ORS(void)
          usleep(32768);
          TWFunc::Patch_AVB20(false);
          usleep(32768);
+
+    	 // Run any custom script after ROM flashing
+    	 TWFunc::MIUI_ROM_SetProperty(Fox_Zip_Installer_Code);
+     	 TWFunc::RunFoxScript("/sbin/afterromflash.sh");
+         usleep(4096);
      }
    return 0;
 }

@@ -252,8 +252,7 @@ int main(int argc, char **argv)
 	}
 
 	// Check for and run startup script if script exists
-	TWFunc::check_and_run_script("/sbin/runatboot.sh", "boot");
-	TWFunc::check_and_run_script("/sbin/postrecoveryboot.sh", "boot");
+	TWFunc::RunFoxScript("/sbin/runatboot.sh");
 
 #ifdef TW_INCLUDE_INJECTTWRP
 	// Back up OrangeFox Ramdisk if needed:
@@ -385,6 +384,9 @@ int main(int argc, char **argv)
        if (TWFunc::Path_Exists(Fox_Home + "/.theme")) // using custom themes
          PageManager::RequestReload();
     }
+
+  // run the postrecoveryboot script here
+  TWFunc::RunFoxScript("/sbin/postrecoveryboot.sh");
 
   // Launch the main GUI
   gui_start();
