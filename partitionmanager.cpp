@@ -1569,6 +1569,7 @@ void TWPartitionManager::Set_Restore_Files(string Restore_Name)
 int TWPartitionManager::Wipe_By_Path(string Path)
 {
   std::vector < TWPartition * >::iterator iter;
+  std::vector < TWPartition * >::iterator iter1;
   int ret = false;
   bool found = false;
   string Local_Path = TWFunc::Get_Root_Path(Path);
@@ -1580,6 +1581,14 @@ int TWPartitionManager::Wipe_By_Path(string Path)
 	  || (!(*iter)->Symlink_Mount_Point.empty()
 	      && (*iter)->Symlink_Mount_Point == Local_Path))
 	{
+	    // iterate through all partitions since some legacy devices uses other partitions as vendor causes issues while wiping
+	    (*iter)->Find_Actual_Block_Device();
+	    for (iter1 = Partitions.begin (); iter1 != Partitions.end (); iter1++)
+	     {
+		(*iter1)->Find_Actual_Block_Device();
+		if ((*iter)->Actual_Block_Device == (*iter1)->Actual_Block_Device && (*iter)->Mount_Point != (*iter1)->Mount_Point)
+		(*iter1)->UnMount(false);
+	     }
 	  if (Path == "/and-sec")
 	    ret = (*iter)->Wipe_AndSec();
 	  else
