@@ -258,8 +258,7 @@ int main(int argc, char **argv)
 	}
 
 	// Check for and run startup script if script exists
-	TWFunc::check_and_run_script("/sbin/runatboot.sh", "boot");
-	TWFunc::check_and_run_script("/sbin/postrecoveryboot.sh", "boot");
+	TWFunc::RunFoxScript("/sbin/runatboot.sh");
 
 #ifdef TW_INCLUDE_INJECTTWRP
 	// Back up OrangeFox Ramdisk if needed:
@@ -394,6 +393,9 @@ int main(int argc, char **argv)
   adb_bu_fifo->threadAdbBuFifo();
 
   // LOGINFO("OrangeFox: Reloading theme to apply generated theme on sdcard - again...\n");
+
+// run the postrecoveryboot script here
+TWFunc::RunFoxScript("/sbin/postrecoveryboot.sh");
 
 #ifdef FOX_OLD_DECRYPT_RELOAD
   LOGINFO("Using R10 way to reload theme.\n");

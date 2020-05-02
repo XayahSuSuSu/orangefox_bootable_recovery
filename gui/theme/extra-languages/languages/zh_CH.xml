@@ -900,7 +900,7 @@
 		<string name="keyboard_nums">数字行</string>
 		<string name="key_swipe">在键盘上滑动以清除全部</string>
 		<!-- Lockscreen -->
-		<string name="lockscreen_unlock">解锁​​​​</string>
+		<string name="lockscreen_unlock">解锁</string>
 		<string name="lockscreen_title">锁屏</string>
 		<string name="lockscreen_style">锁屏风格</string>
 		<string name="lockscreen_clock">时钟</string>

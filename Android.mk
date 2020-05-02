@@ -95,10 +95,10 @@ ifeq ($(OF_DONT_PATCH_ON_FRESH_INSTALLATION),1)
     LOCAL_CFLAGS += -DOF_DONT_PATCH_ON_FRESH_INSTALLATION='"1"'
 endif
 
-ifneq ($(BUILD_TYPE),)
-    LOCAL_CFLAGS += -DBUILD_TYPE='"$(BUILD_TYPE)"'
+ifneq ($(FOX_BUILD_TYPE),)
+    LOCAL_CFLAGS += -DFOX_BUILD_TYPE='"$(FOX_BUILD_TYPE)"'
 else
-    LOCAL_CFLAGS += -DBUILD_TYPE='"Unofficial"'
+    LOCAL_CFLAGS += -DFOX_BUILD_TYPE='"Unofficial"'
 endif
 
 ifeq ($(OF_USE_MAGISKBOOT),1)
@@ -116,6 +116,10 @@ endif
 
 ifeq ($(OF_FORCE_MAGISKBOOT_BOOT_PATCH_MIUI),1)
     LOCAL_CFLAGS += -DOF_FORCE_MAGISKBOOT_BOOT_PATCH_MIUI='"1"'
+endif
+
+ifeq ($(OF_NO_MIUI_PATCH_WARNING),1)
+    LOCAL_CFLAGS += -DOF_NO_MIUI_PATCH_WARNING='"1"'
 endif
 
 ifeq ($(OF_AB_DEVICE),1)
@@ -294,6 +298,10 @@ endif
 
 ifeq ($(OF_FIX_OTA_UPDATE_MANUAL_FLASH_ERROR),1)
     LOCAL_CFLAGS += -DOF_FIX_OTA_UPDATE_MANUAL_FLASH_ERROR='"1"'
+endif
+
+ifeq ($(OF_OTA_BACKUP_STOCK_BOOT_IMAGE),1)
+    LOCAL_CFLAGS += -DOF_OTA_BACKUP_STOCK_BOOT_IMAGE
 endif
 
 ifeq ($(OF_FBE_METADATA_MOUNT_IGNORE),1)
@@ -1187,6 +1195,13 @@ endif
 # FB2PNG
 ifeq ($(TW_INCLUDE_FB2PNG), true)
     include $(commands_TWRP_local_path)/fb2png/Android.mk
+endif
+
+# LZMA
+ifeq ($(FOX_USE_LZMA_COMPRESSION),1)
+    ifeq ($(LZMA_RAMDISK_TARGETS),)
+    LZMA_RAMDISK_TARGETS := recovery
+    endif
 endif
 
 endif
