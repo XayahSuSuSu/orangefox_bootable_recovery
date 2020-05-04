@@ -137,7 +137,6 @@ public:
 	static bool Check_OrangeFox_Overwrite_FromROM(bool WarnUser, const std::string name); // report on badly behaved ROM installers
 	static bool JustInstalledMiui(void); // has a MIUI ROM just been installed?
 	static bool RunStartupScript(void); // run startup script if not already run by init
-	static bool Rerun_Startup(void); // rerun startup
 	static void Welcome_Message(void); // provide the welcome message
 	static void Run_Before_Reboot(void); // run this just before rebooting
 	//

@@ -313,31 +313,6 @@ bool i = Path_Exists(orangefox_cfg);
    return true;
 }
 
-/* rerun startup if needed after decryption */
-bool TWFunc::Rerun_Startup(void)
-{
-   return false; // something is causing spontaneous reboots to fastboot, so just exit
-   
-   if (OrangeFox_Startup_Executed > 0)
-      return false;
-
-   LOGINFO("OrangeFox: Starting possible running of OrangeFox_Startup() again...\n");
-   string tprop = Get_Property("orangefox.postinit.status");
-   bool i = Path_Exists(orangefox_cfg);
-   if (i == true || tprop == "1")
-     return false;
-
-   // LOGINFO("OrangeFox: Reading settings file - again...\n");
-   DataManager::ReadSettingsFile();
-
-   // LOGINFO("OrangeFox: Executing OrangeFox_Startup() again...\n");
-   OrangeFox_Startup(); 
-
-   LOGINFO("OrangeFox: Finished rerun.\n");
-   
-   return true;
-}
-
 std::string strReturnCurrentTime()
 {
   time_t rawtime;

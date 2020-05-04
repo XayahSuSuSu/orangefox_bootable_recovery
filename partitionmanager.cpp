@@ -3568,9 +3568,6 @@ bool TWPartitionManager::Decrypt_Adopted()
     }
   if (xmlFile)
     {
-#ifndef OF_NO_RELOAD_AFTER_DECRYPTION
-      TWFunc::Rerun_Startup();
-#endif
       doc->clear();
       delete doc;
       free(xmlFile);
