@@ -534,7 +534,7 @@ static int Prepare_Update_Binary(const char *path, ZipWrap * Zip,
 	    {
 		#ifdef OF_FIX_OTA_UPDATE_MANUAL_FLASH_ERROR
 	    	std::string cachefile = "/cache/recovery/openrecoveryscript";
-	    	LOGERR("- You tried to flash OTA zip (%s) manually! Attempting to recover the situation...\n", path);
+	    	LOGINFO("- You tried to flash OTA zip (%s) manually! Attempting to recover the situation...\n", path);
 	    	TWFunc::CreateNewFile(cachefile);
 	    	usleep(256);
 	    	if (TWFunc::Path_Exists(cachefile))
@@ -829,7 +829,55 @@ static int Run_Update_Binary(const char *path, ZipWrap * Zip, int *wipe_cache,
   // if updater-script doesn't find the correct device
   if (WEXITSTATUS (status) == TW_ERROR_WRONG_DEVICE)
      {
-       gui_print_color("error", "Do you have the correct device and firmware version? Search online for error %i.\n", TW_ERROR_WRONG_DEVICE);
+       #ifdef OF_TARGET_DEVICES
+       // see if we can fix this error 7 if we have declared target devices for this (eg, raphaelin,raphael)
+         string alt_cmd = "/sbin/resetprop";
+         if (TWFunc::Path_Exists(alt_cmd))
+           {
+   	      	string mygrep = "";
+   	      	string myret = "";
+         	string alt_dev = "";
+   	      	bool myfound = false;
+   	      	std::vector <std::string> devs = TWFunc::Split_String(OF_TARGET_DEVICES, ",");	
+
+   	      	string tmpstr = TWFunc::Exec_With_Output ("getprop ro.product.device");
+   	      	if (tmpstr.empty() || tmpstr == "EXEC_ERROR!") 
+   	           tmpstr = Fox_Current_Device;
+   	           
+  		for (size_t i = 0; i < devs.size(); ++i)
+    		   {
+   	      		usleep(524288);
+   	      		// make sure we are not processing the current device
+      		   	alt_dev = "";
+      		   	myfound = false;
+   	      		if (tmpstr != devs[i])
+   	      		   {
+      		   		mygrep = "cat /tmp/recovery.log | grep E3004 | grep 'This package is for ' | grep 'script aborted' | grep " + devs[i];
+      		   		myret = TWFunc::Exec_With_Output (mygrep);
+      		   		usleep(131072);
+   	      			if ((!myret.empty()) && (myret != "EXEC_ERROR!") && (myret.find(devs[i]) != std::string::npos))
+   	      		  	  {
+   	      		     	     myfound = true;
+   	      		     	     alt_dev = devs[i];
+   	      		     	     break;
+   	      		  	  }
+   	      		   }
+    		   } // for i
+    		
+    		if (myfound && !alt_dev.empty())
+   	          {
+                      if (TWFunc::Exec_Cmd (alt_cmd + " ro.product.device " + alt_dev) == 0)
+                      {
+       		     	gui_print_color("warning", 
+       		     	"\nOrangeFox has received an \"error %i\".\nTrying to compensate by setting the device name to \"%s\". \n\nNow, flash the zip again.\n\n", 
+       		      	TW_ERROR_WRONG_DEVICE, alt_dev.c_str());
+                     	return INSTALL_ERROR;
+                      }
+                  }
+           }
+       #endif
+       gui_print_color("error", "Wrong device/firmware, or corrupt zip? For possible causes, search online for error %i.\n", TW_ERROR_WRONG_DEVICE);
+       gui_print_color("error", "Check \"/tmp/recovery.log\" for the specific cause of this error.\n");
      }
 
 #ifndef TW_NO_LEGACY_PROPS
