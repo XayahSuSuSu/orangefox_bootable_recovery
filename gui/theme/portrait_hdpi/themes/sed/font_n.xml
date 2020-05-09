@@ -36,5 +36,6 @@
 		<variable name="theme_font" value="#PRIMARY_NAME#"/>
 		<variable name="theme_sec_font" value="#SECONDARY_NAME#"/>
 		<variable name="theme_font_size" value="n"/>
+		<variable name="theme_font_weight" value="#WEIGHT#"/>
 	</variables>
 </recovery>

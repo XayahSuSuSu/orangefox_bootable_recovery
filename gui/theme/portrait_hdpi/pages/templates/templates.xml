@@ -347,6 +347,7 @@
 				<action function="set">theme_font_tmp=%theme_font%</action>
 				<action function="set">theme_sec_font_tmp=%theme_sec_font%</action>
 				<action function="set">theme_font_size_tmp=%theme_font_size%</action>
+				<action function="set">theme_font_weight_tmp=%theme_font_weight%</action>
 				<action function="set">theme_pie_tmp=%theme_pie%</action>
 				<action function="set">theme_style_act_tmp=%theme_style_act%</action>
 				

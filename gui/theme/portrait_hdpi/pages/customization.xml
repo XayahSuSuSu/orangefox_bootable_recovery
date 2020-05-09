@@ -19,6 +19,7 @@
 				<action function="set">theme_font_tmp=%theme_font%</action>
 				<action function="set">theme_sec_font_tmp=%theme_sec_font%</action>
 				<action function="set">theme_font_size_tmp=%theme_font_size%</action>
+				<action function="set">theme_font_weight_tmp=%theme_font_weight%</action>
 				
 				<action function="set">theme_accent_tmp=%theme_accent%</action>
 				<action function="set">theme_accent_light_tmp=%theme_accent_light%</action>
@@ -1189,6 +1190,25 @@
 				<action function="set">update_fonts=1</action>
 			</action>
 
+            <text style="caption">
+				<placement x="%col1_x_caption%" y="%row3_3a_y%" />
+				<text>{@theme_fweight}</text>
+			</text>
+
+			<listbox>
+				<placement x="0" y="%row4_1a_y%" w="%screen_w%" h="%lb_l3%"/>
+				<data name="theme_font_weight_tmp"/>
+				<listitem name="{@theme_fweight_norm}">0</listitem>
+				<listitem name="{@theme_fweight_reg}">1</listitem>
+				<listitem name="{@theme_fweight_med}">2</listitem>
+			</listbox>
+
+			<action>
+				<condition var1="theme_font_weight_tmp" op="modified"/>
+				<action function="set">needs_repack=1</action>
+				<action function="set">update_fonts=1</action>
+			</action>
+
 			<template name="snackbar_update"/>
 
 			<template name="gestures"/>
@@ -2001,19 +2021,26 @@
 
 					#Fonts
 					if [[ '%update_fonts%' = '1' ]]; then
+						medfont=Medium;
+						regfont=Regular;
+
+						[[ '%theme_font_weight_tmp%' = '1' ]] && medfont=Regular;
+						[[ '%theme_font_weight_tmp%' = '2' ]] && regfont=Medium;
+
 						if [ -f "/twres/fonts/%theme_sec_font_tmp%.ttf" ];
 							then sec_med=;
 								 sec_reg=;
-							else sec_med=-Medium;
-								 sec_reg=-Regular;
+							else sec_med=-${medfont};
+								 sec_reg=-${regfont};
 						fi;
 						if [ -f "/twres/fonts/%theme_font_tmp%.ttf" ];
 							then prim_med=;
 								 prim_reg=;
-							else prim_med=-Medium;
-								 prim_reg=-Regular;
+							else prim_med=-${medfont};
+								 prim_reg=-${regfont};
 						fi;
 						cat "/twres/themes/sed/font_%theme_font_size_tmp%.xml" | sed -e "
+						s/#WEIGHT#/%theme_font_weight_tmp%/g;
 						s/#PRIMARY_FONT_MED#/%theme_font_tmp%${prim_med}/g;
 						s/#PRIMARY_FONT_REG#/%theme_font_tmp%${prim_reg}/g;
 						s/#SECONDARY_FONT_MED#/%theme_sec_font_tmp%${sec_med}/g;

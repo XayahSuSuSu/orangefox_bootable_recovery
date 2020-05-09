@@ -1186,5 +1186,10 @@
 		<string name="theme_font_secondary_tab">Заголовки</string>
 		<string name="theme_font_size_tab">Размер</string>
 		<string name="theme_font_select">Выберите шрифт</string>
+
+		<string name="theme_fweight">Вид шрифта</string>
+		<string name="theme_fweight_norm">Стандартный</string>
+		<string name="theme_fweight_reg">Обычный</string>
+		<string name="theme_fweight_med">Жирный</string>
 	</resources>
 </language>

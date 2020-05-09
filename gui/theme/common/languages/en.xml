@@ -1081,5 +1081,10 @@
 		<string name="theme_font_secondary_tab">Secondary</string>
 		<string name="theme_font_size_tab">Size</string>
 		<string name="theme_font_select">Select font</string>
+
+		<string name="theme_fweight">Font weight</string>
+		<string name="theme_fweight_norm">Default</string>
+		<string name="theme_fweight_reg">Regular</string>
+		<string name="theme_fweight_med">Medium</string>
 	</resources>
 </language>

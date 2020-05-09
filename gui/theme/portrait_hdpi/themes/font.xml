@@ -36,5 +36,6 @@
 		<variable name="theme_font" value="Roboto"/>
 		<variable name="theme_sec_font" value="GoogleSans"/>
 		<variable name="theme_font_size" value="n"/>
+		<variable name="theme_font_weight" value="0"/>
 	</variables>
 </recovery>
