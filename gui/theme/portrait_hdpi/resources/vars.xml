@@ -470,7 +470,7 @@
 		<variable name="fastscroll_recth" value="48"/>
 		
 		<!-- Sliders -->
-		<variable name="slider_x" value="48"/>
+		<variable name="slider_x" value="88"/>
 		<variable name="slider_y" value="%screen_h%-320"/>
 		<variable name="slider_text_y" value="%screen_h%-425"/>
 		<variable name="slidervalue_w" value="984"/>
