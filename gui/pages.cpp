@@ -936,13 +936,21 @@ int PageSet::LoadDetails(LoadingContext& ctx, xml_node<>* root)
 				if (width != 0 && height != 0) {
 					std::string num;
 					float scale_w, scale_h;
+					//[f/d] Custom scaling for testing, wew
+					//      I used file because DataManager not loaded user vars at this moment
+					//      Someone may fuck up recovery using this file so just remove code when OF lab disabled
+#ifdef FOX_ENABLE_LAB
 					if (TWFunc::read_file("/sdcard/Fox/scaling", num) == 0) {
+							LOGERR("Custom scaling: %s\n", num.c_str());
 							scale_w = ::atof(num.c_str());
 							scale_h = ::atof(num.c_str());
 					} else {
+#endif
 						scale_w = (((float)gr_fb_width() + (float)tw_w_offset) - ((float)offx * 2.0)) / (float)width;
 						scale_h = (((float)gr_fb_height() + (float)tw_h_offset) - ((float)offy * 2.0)) / (float)height;
+#ifdef FOX_ENABLE_LAB
 					}
+#endif
 #ifdef TW_ROUND_SCREEN
 					float scale_off_w = ((float)gr_fb_width() + (float)tw_w_offset) / (float)width;
 					float scale_off_h = ((float)gr_fb_height() + (float)tw_h_offset) / (float)height;

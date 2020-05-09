@@ -67,6 +67,9 @@ else
 endif
 endif
 
+ifeq ($(FOX_ENABLE_LAB),1)
+    LOCAL_CFLAGS += -DFOX_ENABLE_LAB='"1"'
+endif
 ifneq ($(TW_NO_SCREEN_BLANK),)
     LOCAL_CFLAGS += -DTW_NO_SCREEN_BLANK
 endif

@@ -259,6 +259,13 @@
 					</action>
 					<action function="reload"/>
 				</listitem>
+				
+				<listitem name="Apply scaling">
+					<action function="page">scaling</action>
+				</listitem>
+				<listitem name="Reset scaling">
+					<action function="ftls">rm -f /sdcard/Fox/scaling; pkill recovery</action>
+				</listitem>
 			</listbox>
 
 			<template name="base"/>
@@ -457,6 +464,44 @@
 			<action>
 				<touch key="back"/>
 				<action function="page">debug</action>
+			</action>
+		</page>
+		
+		<page name="scaling">
+			<template name="base_key"/>
+
+			<text style="text_ab_title">
+				<placement x="%col1_x_indent%" y="%ab_bc_y%"/>
+				<text>{@dbg}</text>
+			</text>
+
+			<text style="caption_hl">
+				<placement x="%col1_x_caption%" y="%row1_1_y%"/>
+				<text>Set scaling (eg. 0.5)</text>
+			</text>
+
+			<input>
+				<placement x="%col1_x_caption%" y="%row1_2_y%" w="%input_w%" h="%input_height%"/>
+				<text>%scaling_dbg%</text>
+				<data name="scaling_dbg"/>
+				<restrict minlen="1" maxlen="6" allow="1234567890."/>
+				<action function="ftls">echo "%scaling_dbg%" > /sdcard/Fox/scaling; pkill recovery</action>
+			</input>
+
+			<fill color="%accent%">
+				<placement x="%col1_x_caption%" y="%row1_3_y%" w="%input_w%" h="%input_line_height%" placement="1"/>
+			</fill>
+
+			<template name="gestures_key"/>
+
+			<action>
+				<touch key="home"/>
+				<action function="page">main</action>
+			</action>
+
+			<action>
+				<touch key="back"/>
+				<action function="page">fox_lab</action>
 			</action>
 		</page>
     </pages>

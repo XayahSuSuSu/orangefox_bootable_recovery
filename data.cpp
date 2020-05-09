@@ -666,6 +666,8 @@ void DataManager::SetDefaultValues()
 
   #ifdef FOX_ENABLE_LAB
     mConst.SetValue("fox_lab", "1");
+		LOGERR("Warning: lab enabled\n");
+		LOGERR("Build isn't for release\n");
   #else
     mConst.SetValue("fox_lab", "0");
   #endif
