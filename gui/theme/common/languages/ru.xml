@@ -1181,5 +1181,10 @@
 		<string name="slot_switch_b">Переключить на слот B</string>
 		<string name="slot_active_a">Слот A активен</string>
 		<string name="slot_active_b">Слот B активен</string>
+
+		<string name="theme_font_primary_tab">Текст</string>
+		<string name="theme_font_secondary_tab">Заголовки</string>
+		<string name="theme_font_size_tab">Размер</string>
+		<string name="theme_font_select">Выберите шрифт</string>
 	</resources>
 </language>
