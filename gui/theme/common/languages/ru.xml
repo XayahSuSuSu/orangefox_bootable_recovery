@@ -1191,5 +1191,7 @@
 		<string name="theme_fweight_norm">Стандартный</string>
 		<string name="theme_fweight_reg">Обычный</string>
 		<string name="theme_fweight_med">Жирный</string>
+
+		<string name="swipe_up_to_unlock">Проведите вверх для разблокировки</string>
 	</resources>
 </language>

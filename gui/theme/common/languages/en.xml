@@ -1086,5 +1086,7 @@
 		<string name="theme_fweight_norm">Default</string>
 		<string name="theme_fweight_reg">Regular</string>
 		<string name="theme_fweight_med">Medium</string>
+
+		<string name="swipe_up_to_unlock">Swipe up to Unlock</string>
 	</resources>
 </language>

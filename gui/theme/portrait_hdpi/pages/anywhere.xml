@@ -37,17 +37,19 @@
 				<text>{@cpu_temp} | %tw_battery_charge%</text>
 			</text>
 
-			<text style="caption">
-				<condition var1="lock_btn" var2="0"/>
-				<placement x="%center_x%" y="%slider_text_y_l%" placement="5"/>
-				<text>{@swipe_to_unlock}</text>
-			</text>
-
-			<slider style="slider_action">
+			<text style="text_body1_dark">
 				<condition var1="lock_btn" var2="0"/>
 				<placement x="%center_x%" y="%slider_y_l%" placement="5"/>
+				<text>{@swipe_up_to_unlock}</text>
+			</text>
+
+			<gesture>
+				<condition var1="lock_btn" var2="0"/>
+				<placement x="0" y="%slider_y_l%" w="%screen_w%" h="176"/>
+				<fill color="#00000000"/>
+				<settings side="0" sense="500" />
 				<action function="overlay"/>
-			</slider>
+			</gesture>
 
 			<button style="btn_raised_hl">
 				<condition var1="lock_btn" var2="1"/>
