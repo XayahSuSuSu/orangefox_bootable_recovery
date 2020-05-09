@@ -893,152 +893,105 @@
 			</action>
 		</page>
 
-		<page name="ext_custom_fonts">
-			<template name="base"/>
-
+        <page name="ext_custom_fonts">
 			<action>
 				<action function="set">of_reload_back=ext_custom_fonts</action>
 			</action>
 			
+			<template name="base_tabs"/>
+
 			<text style="text_ab_title">
 				<placement x="%col1_x_indent%" y="%ab_bc_y%"/>
 				<text>{@theme_fonts}</text>
 			</text>
 			
-			<text style="caption">
-				<placement x="%col1_x_caption%" y="%row1_1_y%" />
-				<text>{@theme_font_sel}</text>
-			</text>
+			<button style="tab_btn_hl">
+				<placement x="0" y="%tab_btn_y%" w="360" h="84"/>
+				<text>{@theme_font_primary_tab}</text>
+			</button>
+
+			<button style="tab_btn">
+				<placement x="360" y="%tab_btn_y%" w="360" h="84"/>
+				<text>{@theme_font_secondary_tab}</text>
+				<action function="page">ext_custom_fonts_sec</action>
+			</button>
+
+			<button style="tab_btn">
+				<placement x="720" y="%tab_btn_y%" w="360" h="84"/>
+				<text>{@theme_font_size_tab}</text>
+				<action function="page">ext_custom_fonts_size</action>
+			</button>
+			
+			<image style="tab">
+				<placement x="24" y="%tab_title_h%" placement="2"/>
+			</image>
 			
 			<text style="caption">
-				<placement x="%col2_x_text%" y="%row1_1_y%"/>
-				<text>{@theme_sec_font_sel}</text>
+				<placement x="%col1_x_caption%" y="%row1_3_y%" />
+				<text>{@theme_font_select}</text>
 			</text>
 			
 			<listbox>
-				<placement x="0" y="%row1_2_y%" w="%listbox_tz_width_2%" h="%lb_l1%"/>
+				<placement x="0" y="%row2_1_y%" w="%screen_w%" h="%lb_l1%"/>
 				<font resource="font1" spacing="%fileselector_spacing%" color="%text%" />
 				<data name="theme_font_tmp"/>
 				<listitem name="Roboto">Roboto</listitem>
 			</listbox>
 			
 			<listbox>
-				<placement x="0" y="%row1_3a_y%" w="%listbox_tz_width_2%" h="%lb_l1%"/>
+				<placement x="0" y="%row2_2a_y%" w="%screen_w%" h="%lb_l1%"/>
 				<font resource="font2" spacing="%fileselector_spacing%" color="%text%" />
 				<data name="theme_font_tmp"/>
 				<listitem name="Roboto Slab">RobotoSlab</listitem>
 			</listbox>
 			
 			<listbox>
-				<placement x="0" y="%row2_2_y%" w="%listbox_tz_width_2%" h="%lb_l1%"/>
+				<placement x="0" y="%row3_1_y%" w="%screen_w%" h="%lb_l1%"/>
 				<font resource="font3" spacing="%fileselector_spacing%" color="%text%" />
 				<data name="theme_font_tmp"/>
 				<listitem name="Google Sans">GoogleSans</listitem>
 			</listbox>
 			
 			<listbox>
-				<placement x="0" y="%row2_3a_y%" w="%listbox_tz_width_2%" h="%lb_l1%"/>
+				<placement x="0" y="%row3_2a_y%" w="%screen_w%" h="%lb_l1%"/>
 				<font resource="font4" spacing="%fileselector_spacing%" color="%text%" />
 				<data name="theme_font_tmp"/>
-				<listitem name="Samsung Sans">SamsungSans</listitem>
+				<listitem name="Euclid Flex">EuclidFlex</listitem>
 			</listbox>
 			
 			<listbox>
-				<placement x="0" y="%row3_2_y%" w="%listbox_tz_width_2%" h="%lb_l1%"/>
+				<placement x="0" y="%row4_1_y%" w="%screen_w%" h="%lb_l1%"/>
 				<font resource="font5" spacing="%fileselector_spacing%" color="%text%" />
 				<data name="theme_font_tmp"/>
 				<listitem name="Choco Cooky">Chococooky</listitem>
 			</listbox>
 			
 			<listbox>
-				<placement x="0" y="%row3_3a_y%" w="%listbox_tz_width_2%" h="%lb_l1%"/>
+				<placement x="0" y="%row4_2a_y%" w="%screen_w%" h="%lb_l1%"/>
 				<font resource="font6" spacing="%fileselector_spacing%" color="%text%" />
 				<data name="theme_font_tmp"/>
-				<listitem name="Cool Jazz">Cooljazz</listitem>
+				<listitem name="Fira Code">FiraCode</listitem>
 			</listbox>
 			
 			<listbox>
-				<placement x="0" y="%row4_2_y%" w="%listbox_tz_width_2%" h="%lb_l1%"/>
+				<placement x="0" y="%row5_1_y%" w="%screen_w%" h="%lb_l1%"/>
 				<font resource="font7" spacing="%fileselector_spacing%" color="%text%" />
 				<data name="theme_font_tmp"/>
-				<listitem name="Bender">Bender</listitem>
+				<listitem name="Exo 2">Exo2</listitem>
 			</listbox>
 			
 			<listbox>
-				<placement x="0" y="%row4_3a_y%" w="%listbox_tz_width_2%" h="%lb_l1%"/>
+				<placement x="0" y="%row5_2a_y%" w="%screen_w%" h="%lb_l1%"/>
 				<font resource="font8" spacing="%fileselector_spacing%" color="%text%" />
 				<data name="theme_font_tmp"/>
-				<listitem name="Amatic">Amatic</listitem>
+				<listitem name="MiLan Pro">MILanPro</listitem>
 			</listbox>
 			
 			<listbox>
-				<placement x="0" y="%row5_2_y%" w="%listbox_tz_width_2%" h="%lb_l1%"/>
+				<placement x="0" y="%row6_1_y%" w="%screen_w%" h="%lb_l1%"/>
 				<font resource="font9" spacing="%fileselector_spacing%" color="%text%" />
 				<data name="theme_font_tmp"/>
-				<listitem name="Angry Birds">AngryBirds</listitem>
-			</listbox>
-			
-			<listbox>
-				<placement x="%col2_x%" y="%row1_2_y%" w="%listbox_tz_width_2%" h="%lb_l1%"/>
-				<font resource="font1" spacing="%fileselector_spacing%" color="%text%" />
-				<data name="theme_sec_font_tmp"/>
-				<listitem name="Roboto">Roboto</listitem>
-			</listbox>
-			
-			<listbox>
-				<placement x="%col2_x%" y="%row1_3a_y%" w="%listbox_tz_width_2%" h="%lb_l1%"/>
-				<font resource="font2" spacing="%fileselector_spacing%" color="%text%" />
-				<data name="theme_sec_font_tmp"/>
-				<listitem name="Roboto Slab">RobotoSlab</listitem>
-			</listbox>
-			
-			<listbox>
-				<placement x="%col2_x%" y="%row2_2_y%" w="%listbox_tz_width_2%" h="%lb_l1%"/>
-				<font resource="font3" spacing="%fileselector_spacing%" color="%text%" />
-				<data name="theme_sec_font_tmp"/>
-				<listitem name="Google Sans">GoogleSans</listitem>
-			</listbox>
-			
-			<listbox>
-				<placement x="%col2_x%" y="%row2_3a_y%" w="%listbox_tz_width_2%" h="%lb_l1%"/>
-				<font resource="font4" spacing="%fileselector_spacing%" color="%text%" />
-				<data name="theme_sec_font_tmp"/>
-				<listitem name="Samsung Sans">SamsungSans</listitem>
-			</listbox>
-			
-			<listbox>
-				<placement x="%col2_x%" y="%row3_2_y%" w="%listbox_tz_width_2%" h="%lb_l1%"/>
-				<font resource="font5" spacing="%fileselector_spacing%" color="%text%" />
-				<data name="theme_sec_font_tmp"/>
-				<listitem name="Choco Cooky">Chococooky</listitem>
-			</listbox>
-			
-			<listbox>
-				<placement x="%col2_x%" y="%row3_3a_y%" w="%listbox_tz_width_2%" h="%lb_l1%"/>
-				<font resource="font6" spacing="%fileselector_spacing%" color="%text%" />
-				<data name="theme_sec_font_tmp"/>
-				<listitem name="Cool Jazz">Cooljazz</listitem>
-			</listbox>
-			
-			<listbox>
-				<placement x="%col2_x%" y="%row4_2_y%" w="%listbox_tz_width_2%" h="%lb_l1%"/>
-				<font resource="font7" spacing="%fileselector_spacing%" color="%text%" />
-				<data name="theme_sec_font_tmp"/>
-				<listitem name="Bender">Bender</listitem>
-			</listbox>
-			
-			<listbox>
-				<placement x="%col2_x%" y="%row4_3a_y%" w="%listbox_tz_width_2%" h="%lb_l1%"/>
-				<font resource="font8" spacing="%fileselector_spacing%" color="%text%" />
-				<data name="theme_sec_font_tmp"/>
 				<listitem name="Amatic">Amatic</listitem>
-			</listbox>
-			
-			<listbox>
-				<placement x="%col2_x%" y="%row5_2_y%" w="%listbox_tz_width_2%" h="%lb_l1%"/>
-				<font resource="font9" spacing="%fileselector_spacing%" color="%text%" />
-				<data name="theme_sec_font_tmp"/>
-				<listitem name="Angry Birds">AngryBirds</listitem>
 			</listbox>
 			
 			<action>
@@ -1046,6 +999,122 @@
 				<action function="set">needs_repack=1</action>
 				<action function="set">update_fonts=1</action>
 			</action>
+
+			<template name="snackbar_update"/>
+
+			<template name="gestures"/>
+
+			<action>
+				<touch key="home"/>
+				<action function="page">main</action>
+			</action>
+			
+			<action>
+				<touch key="back"/>
+				<action function="page">ext_custom</action>
+			</action>
+		</page>
+
+        <page name="ext_custom_fonts_sec">
+			<action>
+				<action function="set">of_reload_back=ext_custom_fonts_sec</action>
+			</action>
+			
+			<template name="base_tabs"/>
+
+			<text style="text_ab_title">
+				<placement x="%col1_x_indent%" y="%ab_bc_y%"/>
+				<text>{@theme_fonts}</text>
+			</text>
+			
+			<button style="tab_btn">
+				<placement x="0" y="%tab_btn_y%" w="360" h="84"/>
+				<text>{@theme_font_primary_tab}</text>
+				<action function="page">ext_custom_fonts</action>
+			</button>
+
+			<button style="tab_btn_hl">
+				<placement x="360" y="%tab_btn_y%" w="360" h="84"/>
+				<text>{@theme_font_secondary_tab}</text>
+			</button>
+
+			<button style="tab_btn">
+				<placement x="720" y="%tab_btn_y%" w="360" h="84"/>
+				<text>{@theme_font_size_tab}</text>
+				<action function="page">ext_custom_fonts_size</action>
+			</button>
+
+			<image style="tab">
+				<placement x="384" y="%tab_title_h%" placement="2"/>
+			</image>
+			
+			<text style="caption">
+				<placement x="%col1_x_caption%" y="%row1_3_y%" />
+				<text>{@theme_font_select}</text>
+			</text>
+			
+			<listbox>
+				<placement x="0" y="%row2_1_y%" w="%screen_w%" h="%lb_l1%"/>
+				<font resource="font1" spacing="%fileselector_spacing%" color="%text%" />
+				<data name="theme_sec_font_tmp"/>
+				<listitem name="Roboto">Roboto</listitem>
+			</listbox>
+			
+			<listbox>
+				<placement x="0" y="%row2_2a_y%" w="%screen_w%" h="%lb_l1%"/>
+				<font resource="font2" spacing="%fileselector_spacing%" color="%text%" />
+				<data name="theme_sec_font_tmp"/>
+				<listitem name="Roboto Slab">RobotoSlab</listitem>
+			</listbox>
+			
+			<listbox>
+				<placement x="0" y="%row3_1_y%" w="%screen_w%" h="%lb_l1%"/>
+				<font resource="font3" spacing="%fileselector_spacing%" color="%text%" />
+				<data name="theme_sec_font_tmp"/>
+				<listitem name="Google Sans">GoogleSans</listitem>
+			</listbox>
+			
+			<listbox>
+				<placement x="0" y="%row3_2a_y%" w="%screen_w%" h="%lb_l1%"/>
+				<font resource="font4" spacing="%fileselector_spacing%" color="%text%" />
+				<data name="theme_sec_font_tmp"/>
+				<listitem name="Euclid Flex">EuclidFlex</listitem>
+			</listbox>
+			
+			<listbox>
+				<placement x="0" y="%row4_1_y%" w="%screen_w%" h="%lb_l1%"/>
+				<font resource="font5" spacing="%fileselector_spacing%" color="%text%" />
+				<data name="theme_sec_font_tmp"/>
+				<listitem name="Choco Cooky">Chococooky</listitem>
+			</listbox>
+			
+			<listbox>
+				<placement x="0" y="%row4_2a_y%" w="%screen_w%" h="%lb_l1%"/>
+				<font resource="font6" spacing="%fileselector_spacing%" color="%text%" />
+				<data name="theme_sec_font_tmp"/>
+				<listitem name="Fira Code">FiraCode</listitem>
+			</listbox>
+			
+			<listbox>
+				<placement x="0" y="%row5_1_y%" w="%screen_w%" h="%lb_l1%"/>
+				<font resource="font7" spacing="%fileselector_spacing%" color="%text%" />
+				<data name="theme_sec_font_tmp"/>
+				<listitem name="Exo 2">Exo2</listitem>
+			</listbox>
+			
+			<listbox>
+				<placement x="0" y="%row5_2a_y%" w="%screen_w%" h="%lb_l1%"/>
+				<font resource="font8" spacing="%fileselector_spacing%" color="%text%" />
+				<data name="theme_sec_font_tmp"/>
+				<listitem name="MiLan Pro">MILanPro</listitem>
+			</listbox>
+			
+			<listbox>
+				<placement x="0" y="%row6_1_y%" w="%screen_w%" h="%lb_l1%"/>
+				<font resource="font9" spacing="%fileselector_spacing%" color="%text%" />
+				<data name="theme_sec_font_tmp"/>
+				<listitem name="Amatic">Amatic</listitem>
+			</listbox>
 			
 			<action>
 				<condition var1="theme_sec_font_tmp" op="modified"/>
@@ -1053,14 +1122,61 @@
 				<action function="set">update_fonts=1</action>
 			</action>
 
-			<!-- Font Size -->
-			<text style="caption">
-				<placement x="%col1_x_caption%" y="%row6_1a_y%" />
+			<template name="snackbar_update"/>
+
+			<template name="gestures"/>
+
+			<action>
+				<touch key="home"/>
+				<action function="page">main</action>
+			</action>
+			
+			<action>
+				<touch key="back"/>
+				<action function="page">ext_custom</action>
+			</action>
+		</page>
+        
+        <page name="ext_custom_fonts_size">
+			<action>
+				<action function="set">of_reload_back=ext_custom_fonts_size</action>
+			</action>
+			
+			<template name="base_tabs"/>
+
+			<text style="text_ab_title">
+				<placement x="%col1_x_indent%" y="%ab_bc_y%"/>
+				<text>{@theme_fonts}</text>
+			</text>
+			
+			<button style="tab_btn">
+				<placement x="0" y="%tab_btn_y%" w="360" h="84"/>
+				<text>{@theme_font_primary_tab}</text>
+				<action function="page">ext_custom_fonts</action>
+			</button>
+
+			<button style="tab_btn">
+				<placement x="360" y="%tab_btn_y%" w="360" h="84"/>
+				<text>{@theme_font_secondary_tab}</text>
+				<action function="page">ext_custom_fonts_sec</action>
+			</button>
+
+			<button style="tab_btn_hl">
+				<placement x="720" y="%tab_btn_y%" w="360" h="84"/>
+				<text>{@theme_font_size_tab}</text>
+			</button>
+
+			<image style="tab">
+				<placement x="744" y="%tab_title_h%" placement="2"/>
+			</image>
+			
+            <text style="caption">
+				<placement x="%col1_x_caption%" y="%row1_3_y%" />
 				<text>{@font_size}</text>
 			</text>
 
 			<listbox>
-				<placement x="0" y="%row6_2a_y%" w="%screen_w%" h="%lb_l3%"/>
+				<placement x="0" y="%row2_1_y%" w="%screen_w%" h="%lb_l3%"/>
 				<data name="theme_font_size_tmp"/>
 				<listitem name="{@font_small}">s</listitem>
 				<listitem name="{@font_norm}">n</listitem>

@@ -1076,5 +1076,10 @@
 		<string name="slot_switch_b">Switch to slot B</string>
 		<string name="slot_active_a">Slot A is active</string>
 		<string name="slot_active_b">Slot B is active</string>
+
+		<string name="theme_font_primary_tab">Primary</string>
+		<string name="theme_font_secondary_tab">Secondary</string>
+		<string name="theme_font_size_tab">Size</string>
+		<string name="theme_font_select">Select font</string>
 	</resources>
 </language>

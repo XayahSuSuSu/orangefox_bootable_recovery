@@ -8,6 +8,22 @@
 			<font resource="Secondary" color="%color_disable%"/>
 		</style>
 		
+		<style name="tab_btn">
+			<highlight color="%highlight_color%"/>
+			<fill color="%transparent%"/>
+			<font resource="Secondary" color="%color_disable%"/>
+		</style>
+
+		<style name="tab_btn_hl">
+			<highlight color="%highlight_color%"/>
+			<fill color="%transparent%"/>
+			<font resource="Secondary" color="%accent%"/>
+		</style>
+		
+		<style name="tab">
+			<image resource="tab_hl"/>
+		</style>
+
 		<style name="text_ab_title">
 			<font resource="Secondary-title" color="%actbar_color%"/>
 		</style>

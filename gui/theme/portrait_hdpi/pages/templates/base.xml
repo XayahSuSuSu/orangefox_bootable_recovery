@@ -8,6 +8,31 @@
 			<template name="statusbarinfo"/>
 		</template>
 
+        <template name="base_tabs">
+			<template name="body"/>
+			<fill color="%title_solid_bg%">
+				<condition var1="darker_ui" var2="1"/>
+				<placement x="0" y="0" w="%screen_w%" h="%tab_title_h%"/>
+			</fill>
+			
+			<fill color="%accent%">
+				<condition var1="darker_ui" var2="0"/>
+				<condition var1="theme_pie" var2="0"/>
+				<condition var1="accent_title" var2="1"/>
+				<placement x="0" y="0" w="%screen_w%" h="%tab_title_h%"/>
+			</fill>
+
+			<image>
+				<image resource="actionbar_shadow"/>
+				<condition var1="show_shadow" var2="1"/>
+				<placement x="0" y="%tab_title_h%"/>
+			</image>
+
+			<template name="status_bg"/>
+			<template name="actionbar_back"/>
+			<template name="statusbarinfo"/>
+		</template>
+
 		<template name="base_key">
 			<template name="body_key"/>
 			<template name="ab"/>
