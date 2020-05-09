@@ -76,7 +76,7 @@
 		<image name="spl_image" filename="Default/Workshop/spl_image" retainaspect="1"/>
 		<image name="spl_restore" filename="Default/Workshop/spl_restore" retainaspect="1"/>
 	
-		<font name="fixed" filename="FiraCode-Regular.ttf" size="30"/>
+		<font name="fixed" filename="FiraCode-Regular.ttf" size="29"/>
 		<!-- Battery -->
 		<image name="battery15" filename="Default/Battery/battery15" retainaspect="1"/>
 		<image name="battery5" filename="Default/Battery/battery5" retainaspect="1"/>
