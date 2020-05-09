@@ -62,7 +62,6 @@
 		<page name="console">
 			<background color="%background%"/>
 			<template name="keys"/>
-			<template name="navbar_console_hide"/>
 			<template name="status_bg"/>
 			<template name="statusbarinfo"/>
 			
@@ -76,6 +75,49 @@
 				<condition var1="use_fixed_font" var2="1"/>
 				<font resource="fixed"/>
 			</console>
+
+			<fill color="%title_solid_bg%">
+				<condition var1="darker_ui" var2="1"/>
+				<placement x="0" y="%nav_panel_y%" w="%screen_w%" h="%nav_panel_h%"/>
+			</fill>
+
+			<image>
+				<condition var1="show_shadow" var2="1"/>
+				<placement x="0" y="%nav_panel_y%" placement="2"/>
+				<image resource="nav_shadow"/>
+			</image>
+			
+			<slidervalue>
+				<condition var1="tw_has_brightnesss_file" var2="1"/>
+				<placement x="-24" y="%console_brightness_y%" w="%slidervalue_w%" />
+				<data variable="tw_brightness_pct" min="10" max="100" showrange="0" showcurr="0" changeondrag="1"/>
+				<action function="set">tw_brightness=%tw_brightness_max%</action>
+				<action function="compute">tw_brightness*%tw_brightness_pct%</action>
+				<action function="compute">tw_brightness/100</action>
+				<action function="setbrightness">%tw_brightness%</action>
+			</slidervalue>
+			
+			<button style="actionbar">
+				<condition var1="of_flashlight_enable" var2="1"/>
+				<placement x="996" y="%console_flash_y%" placement="4"/>
+				<action function="flashlight"/>
+			</button>
+
+			<image>
+				<condition var1="of_flashlight_enable" var2="1"/>
+				<condition var1="of_flash_on" op="!=" var2="1"/>
+				<placement x="996" y="%console_flash_y%" placement="4"/>
+				<image resource="actionbar_flash"/>
+			</image>
+
+			<image>
+				<condition var1="of_flashlight_enable" var2="1"/>
+				<condition var1="of_flash_on" var2="1"/>
+				<placement x="996" y="%console_flash_y%" placement="4"/>
+				<image resource="actionbar_flash_on"/>
+			</image>
+
+			<template name="navbar_console_hide"/>
 
 			<template name="gestures"/>
 

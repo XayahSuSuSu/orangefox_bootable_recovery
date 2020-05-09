@@ -420,7 +420,7 @@
 		
 		<!-- Terminal / Console -->
 		<variable name="console_width" value="984"/>
-		<variable name="console_height" value="%screen_min_cut%-312"/>
+		<variable name="console_height" value="%screen_min_cut%-475"/>
 		<variable name="console_action_height" value="%screen_min_cut%-852"/>
 		<variable name="prep" value="%screen_original_h%-%cutout_w%"/>
 		<variable name="console_action_height_big" value="%prep%-552"/>
@@ -431,6 +431,8 @@
 		<variable name="terminal_height" value="%screen_min_cut%-1210"/>
 		<variable name="terminal_num_height" value="%screen_min_cut%-1322"/>
 		<variable name="terminal_nokb_height" value="%screen_min_cut%-460"/>
+		<variable name="console_brightness_y" value="%screen_h%-325"/>
+		<variable name="console_flash_y" value="%screen_h%-228"/>
 		
 		<!-- Dialogs -->
 		<variable name="dialog_w" value="840"/>
