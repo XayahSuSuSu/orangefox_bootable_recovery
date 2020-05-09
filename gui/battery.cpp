@@ -156,7 +156,7 @@ int GUIBattery::Render(void)
 		} else {
 			finalImage = (mBatteryPercent > 15 || mBatteryCharge == 1) ? mImg : mLowImg;
 			int height = mDH * mBatteryPercent / 100;
-			gr_fill(mDX - iconRealX, mDY+mDH-height, mDW, height);
+			gr_fill(mDX - iconRealX, mDY+mDH-height, mDW + 1, height + 1);
 		}
 
 		if (!finalImage || !finalImage->GetResource())
