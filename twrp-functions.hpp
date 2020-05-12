@@ -168,6 +168,10 @@ public:
 	static void CreateNewFile(string file_path); // create a new (text) file
 	static void AppendLineToFile(string file_path, string line); // append a line to a text file
 
+	// string functions
+	static string get_assert_device(const string filename); // find out which device an "assert" with an ro.product.device statement wants
+	static string removechar(const string src, const char chars); // delete all occurrences of a char from a string
+
 private:
 	static void Copy_Log(string Source, string Destination);
 	static string Load_File(string extension);

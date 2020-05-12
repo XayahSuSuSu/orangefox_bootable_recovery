@@ -207,8 +207,87 @@ static string uppercase (const string src)
 /* find the position of "subs" in "str" (or -1 if not found) */
 static int pos (const string subs, const string str)
 {
-  std::size_t found = str.find(subs);
-  return (int) found;
+  return str.find(subs);
+}
+
+/* trim leading character(s) from string */
+std::string ltrim(std::string str, const std::string chars = "\t\n\v\f\r ")
+{
+    str.erase(0, str.find_first_not_of(chars));
+    return str;
+}
+ 
+/* trim trailing character(s) from string */
+std::string rtrim(std::string str, const std::string chars = "\t\n\v\f\r ")
+{
+    str.erase(str.find_last_not_of(chars) + 1);
+    return str;
+}
+
+/* trim both leading and leading character(s) from string */
+std::string trim(std::string str, const std::string chars = "\t\n\v\f\r ")
+{
+    return ltrim(rtrim(str, chars), chars);
+}
+
+/* delete "Size" number of characters from string, starting at Index */
+int DeleteFromIndex(std::string &Str, int Index, int Size)
+{
+  int len = Str.length();
+  if (Index < 0 || Index > len || Size < 1)
+     return -1;
+  int i = (Size - Index);
+  if (i >= len) 
+     Size = i;
+  Str.erase (Index, Size);
+  return Size;
+}
+
+/* Delete all characters before "marker" from a string */
+std::string DeleteBefore(const std::string Str, const std::string marker, bool removemarker)
+{
+  std::string src = Str;
+  int i = src.find(marker);
+  if (i == (int)std::string::npos) 
+     return Str;
+  if (removemarker) 
+     i += marker.length();
+  src.erase (0, i);
+  return src;
+}
+
+/* Delete all characters after "marker" from a string */
+std::string DeleteAfter(const std::string Str, const std::string marker)
+{
+  std::string src = Str;
+  int i = src.find(marker);
+  if (i == (int)std::string::npos) 
+     return Str;
+  src.erase (i, src.length());
+  return src;
+}
+
+// search for a phrase within a text file, and return the contents of the first line that has ot
+std::string find_phrase(std::string filename, std::string search)
+{
+  std::string line = "";
+  std::string str = "";
+  std::ifstream File;
+  File.open(filename);
+  if (File.is_open())
+    {
+      while (!File.eof())
+	{
+	  std::getline(File, line);
+	  if (line.find(search) != std::string::npos)
+	    {
+	      File.close();
+	      return line;
+	    }
+	}
+      File.close();
+    }
+  return str;
 }
 
 /* is this a real treble device? (else, treble is emulated via /cust) */
@@ -4655,5 +4734,54 @@ string rom_finger_print = "";
   	Exec_Cmd("/sbin/resetprop ro.build.fingerprint " + rom_finger_print);
      }
   else LOGINFO("- ROM fingerprint not available\n");
+}
+
+string TWFunc::get_assert_device(const string filename)
+{
+string str = "";
+string temp = find_phrase(filename, "ro.product.device");
+   if (temp.empty())
+      return str;
+   
+   // either assert or getprop should be on the ro.product.device line
+   if (temp.find("assert") == std::string::npos && temp.find("getprop") == std::string::npos)
+      return str;
+
+   // we are also looking for E3004 and abort on the same line
+   if (temp.find("E3004") != std::string::npos && temp.find("abort") != std::string::npos)
+      {
+        //gui_print("- Found E3004 and abort on the ro.product.device line !\n");
+      }
+   else   
+      {
+        //gui_print("- E3004 and abort not found on the ro.product.device line! Search again ...\n");
+        string temp2 = find_phrase(filename, "E3004");
+   	if (temp2.empty()) // we really need this error code
+   	   return str;
+   	   
+   	if (temp2.find("abort") == std::string::npos) // we also need the abort statement
+           return str;
+        //gui_print("- Finally found E3004 and abort!\n");
+      }
+
+   // parse the string to extract the device name
+   str = DeleteBefore(temp, "==", true);// remove everything before "=="
+   str = DeleteAfter(str, "||"); 	// remove everything after "||"
+   str = removechar(str, '"');   	// remove quotation marks
+   str = removechar(str, ' ');		// remove spaces
+
+   return str;
+}
+
+string TWFunc::removechar(const string src, const char chars)
+{
+std::string str = src;
+int i = str.find(chars);
+   while (i != (int)std::string::npos)
+   {
+     str.erase(i, 1);
+     i = str.find(chars);
+   }
+   return str;
 }
 //

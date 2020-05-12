@@ -1,7 +1,7 @@
 /*
 	Copyright 2012 to 2017 bigbiff/Dees_Troy TeamWin
 	
-	Copyright (C) 2018-2019 OrangeFox Recovery Project
+	Copyright (C) 2018-2020 OrangeFox Recovery Project
 	This file is part of the OrangeFox Recovery Project.
 	
 	This file is part of TWRP/TeamWin Recovery Project.
@@ -217,6 +217,47 @@ static bool verify_incremental_package(string fingerprint, string metadatafp,
 	  && metadatafp.find(metadatadevice) == string::npos) ? false : true;
 }
 
+static string CheckForAsserts(void)
+{
+string ret = "";
+string device;
+  #ifdef OF_TARGET_DEVICES
+  device = TWFunc::get_assert_device(FOX_TMP_PATH);
+  if (device.empty())
+       return ret;
+
+  string tmpstr = TWFunc::Exec_With_Output ("getprop ro.product.device");
+  usleep(128000);
+
+  if (tmpstr.empty() || tmpstr == "EXEC_ERROR!")
+   	tmpstr = Fox_Current_Device;
+
+  if (device == tmpstr)
+       return ret;
+
+  LOGINFO("AssertDevice=[%s] and CurrentDevice=[%s]\n", device.c_str(), tmpstr.c_str());
+  std::vector <std::string> devs = TWFunc::Split_String(OF_TARGET_DEVICES, ",");
+  
+  string temp = "";   
+  for (size_t i = 0; i < devs.size(); ++i)
+    {
+   	usleep(4096);
+   	temp = TWFunc::removechar(devs[i], ' ');
+   	// make sure we are not processing the current device
+   	if (tmpstr != temp)
+   	   {
+   	      if (device == temp)
+   	      	{
+		  LOGINFO("Found AssertDevice [%s] at OF_TARGET_DEVICES # %i\n", temp.c_str(), (int)i);
+   	      	  return temp;
+   	    	}
+   	  }
+    } // for i
+
+  #endif
+  return ret;
+}
+
 static int Prepare_Update_Binary(const char *path, ZipWrap * Zip,
 				 int *wipe_cache)
 {
@@ -231,6 +272,7 @@ static int Prepare_Update_Binary(const char *path, ZipWrap * Zip,
   string zip_name = path;
   int is_new_miui_update_binary = 0;
   int zip_has_miui_stuff = 0;
+  string assert_device = "";
 
   zip_is_rom_package = false; 		// assume we are not installing a ROM
   zip_is_survival_trigger = false; 	// assume non-miui
@@ -288,7 +330,9 @@ static int Prepare_Update_Binary(const char *path, ZipWrap * Zip,
 	                  TWFunc::Check_OrangeFox_Overwrite_FromROM(true, path);
 	             }
 		}
-	      
+	      #ifdef OF_TARGET_DEVICES
+	      assert_device = CheckForAsserts();
+	      #endif
 	      unlink(FOX_TMP_PATH);
 	    }
 	}
@@ -630,6 +674,24 @@ static int Prepare_Update_Binary(const char *path, ZipWrap * Zip,
 	}
     }
   Zip->Close();
+  #ifdef OF_TARGET_DEVICES
+    if (!assert_device.empty())
+       {
+         string alt_cmd = "/sbin/resetprop";
+         if (!TWFunc::Path_Exists(alt_cmd))
+              	alt_cmd = "/sbin/setprop";
+         
+         if (!TWFunc::Path_Exists(alt_cmd))
+         	return INSTALL_SUCCESS;
+         
+         if (TWFunc::Exec_Cmd (alt_cmd + " ro.product.device " + assert_device) == 0)
+           {
+       	     gui_print_color("warning",
+       	     "\nThe device name has been switched temporarily to \"%s\" (until you reboot OrangeFox).\n\n", assert_device.c_str());
+       	     usleep (64000);
+           }
+       }
+  #endif
   return INSTALL_SUCCESS;
 }
 
@@ -829,55 +891,9 @@ static int Run_Update_Binary(const char *path, ZipWrap * Zip, int *wipe_cache,
   // if updater-script doesn't find the correct device
   if (WEXITSTATUS (status) == TW_ERROR_WRONG_DEVICE)
      {
-       #ifdef OF_TARGET_DEVICES
-       // see if we can fix this error 7 if we have declared target devices for this (eg, raphaelin,raphael)
-         string alt_cmd = "/sbin/resetprop";
-         if (TWFunc::Path_Exists(alt_cmd))
-           {
-   	      	string mygrep = "";
-   	      	string myret = "";
-         	string alt_dev = "";
-   	      	bool myfound = false;
-   	      	std::vector <std::string> devs = TWFunc::Split_String(OF_TARGET_DEVICES, ",");	
-
-   	      	string tmpstr = TWFunc::Exec_With_Output ("getprop ro.product.device");
-   	      	if (tmpstr.empty() || tmpstr == "EXEC_ERROR!") 
-   	           tmpstr = Fox_Current_Device;
-   	           
-  		for (size_t i = 0; i < devs.size(); ++i)
-    		   {
-   	      		usleep(524288);
-   	      		// make sure we are not processing the current device
-      		   	alt_dev = "";
-      		   	myfound = false;
-   	      		if (tmpstr != devs[i])
-   	      		   {
-      		   		mygrep = "cat /tmp/recovery.log | grep E3004 | grep 'This package is for ' | grep 'script aborted' | grep " + devs[i];
-      		   		myret = TWFunc::Exec_With_Output (mygrep);
-      		   		usleep(131072);
-   	      			if ((!myret.empty()) && (myret != "EXEC_ERROR!") && (myret.find(devs[i]) != std::string::npos))
-   	      		  	  {
-   	      		     	     myfound = true;
-   	      		     	     alt_dev = devs[i];
-   	      		     	     break;
-   	      		  	  }
-   	      		   }
-    		   } // for i
-    		
-    		if (myfound && !alt_dev.empty())
-   	          {
-                      if (TWFunc::Exec_Cmd (alt_cmd + " ro.product.device " + alt_dev) == 0)
-                      {
-       		     	gui_print_color("warning", 
-       		     	"\nOrangeFox has received an \"error %i\".\nTrying to compensate by setting the device name to \"%s\". \n\nNow, flash the zip again.\n\n", 
-       		      	TW_ERROR_WRONG_DEVICE, alt_dev.c_str());
-                     	return INSTALL_ERROR;
-                      }
-                  }
-           }
-       #endif
-       gui_print_color("error", "Wrong device/firmware, or corrupt zip? For possible causes, search online for error %i.\n", TW_ERROR_WRONG_DEVICE);
-       gui_print_color("error", "Check \"/tmp/recovery.log\" for the specific cause of this error.\n");
+       gui_print_color("error", "\nPossible causes of this error:\n  1. Wrong device\n  2. Wrong firmware\n  3. Corrupt zip.\n\nSearch online for \"error %i\". ",
+       			TW_ERROR_WRONG_DEVICE);
+       gui_print_color("error", "Check \"/tmp/recovery.log\", and look above, for the specific cause of this error.\n\n");
      }
 
 #ifndef TW_NO_LEGACY_PROPS
