@@ -101,8 +101,8 @@
 		<variable name="gst_line_y" value="%screen_h%-123"/>
 
 		<!-- Placement -->
-		<variable name="welcome_text" value="%center_y%+160"/>
-		<variable name="welcome_text2" value="%center_y%+240"/>
+		<variable name="welcome_text" value="%center_y%+360"/>
+		<variable name="welcome_text2" value="%center_y%+440"/>
 		<variable name="empty_text_y" value="%center_y%+288"/>
 		
 		<!-- Screen size -->

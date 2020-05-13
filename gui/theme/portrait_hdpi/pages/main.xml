@@ -98,7 +98,7 @@
 			<template name="keys"/>
 
 			<image>
-				<image resource="welcome_fox"/>
+				<image resource="splash_logo_o"/>
 				<placement x="%center_x%" y="%center_y%" placement="4"/>
 			</image>
 
