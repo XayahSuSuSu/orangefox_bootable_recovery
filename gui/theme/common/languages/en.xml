@@ -1016,8 +1016,8 @@
 		<string name="gst_back">Back gesture</string>
 		<string name="gst_back_left">From left</string>
 		<string name="gst_back_right">From right</string>
-		<string name="gst_console">Console gesture</string>
-		<string name="gst_console_enable">Swipe from status bar</string>
+		<string name="gst_home_enable">Home gesture</string>
+		<string name="gst_console_enable">Swipe from status bar to open console</string>
 		<string name="gst_navbar_error">Some settings are hidden.</string>
 		<string name="gst_navbar_error_2">Disable gestures to show.</string>
 
