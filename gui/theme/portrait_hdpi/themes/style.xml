@@ -20,9 +20,7 @@
 		<image name="battery_charge" filename="Default/Battery/battery_charge" retainaspect="1"/>
 		
 		<!-- Fullscreen Icons -->
-		<image name="palette" filename="Default/FullscreenIcons/palette" retainaspect="1"/>
 		<image name="usb" filename="Default/FullscreenIcons/usb" retainaspect="1"/>
-		<image name="aroma_folder" filename="Default/FullscreenIcons/aroma_folder" retainaspect="1"/>
 		
 		<!-- Keyboard -->
 		<image name="keyback" filename="Night/Keyboard/key_butts"/>
@@ -37,10 +35,9 @@
 		<image name="slider_classic" filename="Night/Controls/slider_classic" retainaspect="1"/>
 		
 		<!-- Dialogs -->
-		<image name="db_hl" filename="Default/Dialog/db_hl"/>
 		<image name="arrow" filename="Default/Dialog/arrow"/>
 		<image name="arrow_d" filename="Default/Dialog/arrow_d"/>
-		<image name="sort_select" filename="Default/Dialog/select"/>
+		<image name="sort_select" filename="Light/FAB/accept"/>
 		
 		<!-- Dialogs -->
 		<image name="dialog_bg" filename="Night/Dialog/dialog_bg"/>
@@ -72,13 +69,37 @@
 		<image name="fab_add" filename="Default/FAB/add" retainaspect="1"/>
 		<image name="fab_usb" filename="Default/FAB/usb" retainaspect="1"/>
 		<image name="fab_credits" filename="Default/FAB/credits" retainaspect="1"/>
+		
+		<!-- File Manager -->
+		<image name="folder_icon" filename="Default/FileManager/folder" retainaspect="1"/>
+		<image name="folder_icon_small" filename="Default/FileManager/folder_small" retainaspect="1"/>
+		<image name="up_icon" filename="Default/FileManager/up" retainaspect="1"/>
+		<image name="up_icon_small" filename="Default/FileManager/up_small" retainaspect="1"/>
+		<image name="module_icon_small" filename="Default/FileManager/module_small" retainaspect="1"/>
+		<image name="module_icon" filename="Default/FileManager/module" retainaspect="1"/>
+		<image name="file_icon_small" filename="Default/FileManager/file_small" retainaspect="1"/>
+		<image name="file_icon" filename="Default/FileManager/file" retainaspect="1"/>
+		<image name="bkp_icon_small" filename="Default/FileManager/file_bkp_small" retainaspect="1"/>
+		<image name="bkp_icon" filename="Default/FileManager/file_bkp" retainaspect="1"/>
+		<image name="zip_icon_small" filename="Default/FileManager/zip_small" retainaspect="1"/>
+		<image name="zip_icon" filename="Default/FileManager/zip" retainaspect="1"/>
+		<image name="img_icon_small" filename="Default/FileManager/img_small" retainaspect="1"/>
+		<image name="img_icon" filename="Default/FileManager/img" retainaspect="1"/>
+		<image name="txt_icon_small" filename="Default/FileManager/txt_small" retainaspect="1"/>
+		<image name="txt_icon" filename="Default/FileManager/txt" retainaspect="1"/>
+		<image name="png_icon_small" filename="Default/FileManager/png_small" retainaspect="1"/>
+		<image name="png_icon" filename="Default/FileManager/png" retainaspect="1"/>
+		<image name="block_icon_small" filename="Default/FileManager/block_small" retainaspect="1"/>
+		<image name="block_icon" filename="Default/FileManager/block" retainaspect="1"/>
+		<image name="link_icon_small" filename="Default/FileManager/link_small" retainaspect="1"/>
+		<image name="link_icon" filename="Default/FileManager/link" retainaspect="1"/>
 	</resources>
 	<variables>
 		<variable name="background" value="#1e1f22"/>
 		
 		<variable name="highlight_color" value="#1e1f2266"/>
 		<variable name="highlight_color_full" value="#11111144"/>
-		<variable name="text" value="#FFFFFF"/>
+		<variable name="text" value="#FFFFFF"/> <!-- E8EAED -->
 		<variable name="text_action" value="#FFFFFF"/>
 		<variable name="text_status" value="#FFFFFF"/>
 		<variable name="text_menu" value="#FFFFFF"/>
@@ -91,5 +112,9 @@
 		
 		<variable name="status_solid_bg" value="#18191B"/>
 		<variable name="title_solid_bg" value="#1C1D20"/>
+
+		<variable name="keyboard_bg" value="#1e1f22"/>
+		<variable name="keyboard_dark_bg" value="#1C1D20"/>
+		<variable name="keyboard_hl" value="#1e1f2266"/>
 	</variables>
 </recovery>

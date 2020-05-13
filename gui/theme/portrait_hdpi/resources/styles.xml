@@ -161,7 +161,7 @@
 		<style name="btn_about_credits">
 			<highlight color="#FFFFFF66"/>
 			<font resource="Secondary" color="%accent%"/>
-			<image resource="db_empty" highlightresource="db_l_hl" />
+			<image resource="db_empty" highlightresource="db_hl" />
 		</style>
 
 		<style name="settingslist">

@@ -1448,7 +1448,7 @@
 				<placement x="%ws_cards_x4%" y="%ws_cards_y2%" placement="4"/>
 				<image resource="accent_black"/>
 				<action function="set">theme_accent_tmp=Black</action>
-				<action function="set">theme_accent_light_tmp=#202020</action>
+				<action function="set">theme_accent_light_tmp=#202124</action>
 				<action function="set">theme_accent_dark_tmp=#D7DEE6</action>
 			</button>
 			
@@ -1763,14 +1763,14 @@
 				<condition var1="spl_bg_user" var2="1"/>
 				<placement x="%spl_btn_x6%" y="%spl_custom_btn%" placement="2"/>
 				<image resource="spl_apply"/>
-				<action function="page">apply_splash</action>
+				<action function="overlay">apply_splash</action>
 			</button>
 			
 			<button>
 				<condition var1="spl_bg_user" var2="0"/>
 				<placement x="%spl_btn_x5%" y="%spl_custom_btn%" placement="2"/>
 				<image resource="spl_apply"/>
-				<action function="page">apply_splash</action>
+				<action function="overlay">apply_splash</action>
 			</button>
 			
 			<button>
@@ -2126,17 +2126,15 @@
 		</page>
 
 		<page name="apply_splash">
-			<background color="%background%"/>
-			<template name="status_bg"/>
-			<template name="statusbarinfo"/>
-			
-			<image>
-				<image resource="palette"/>
-				<placement x="%center_x%" y="%center_y%" placement="4"/>
-			</image>
+			<template name="dialog_body"/>
 
-			<text style="bs_text">
-				<placement x="%center_x%" y="%busy_text%" placement="4"/>
+			<image>
+				<image resource="snackbar"/>
+				<placement x="0" y="%row_nav_y%" placement="2"/>
+			</image>
+			
+			<text style="text_body1">
+				<placement x="%snackbar_text_x%" y="%snackbar_text_y%"/>
 				<text>{@theme_apply}</text>
 			</text>
 			
@@ -2167,6 +2165,7 @@
 						cat "/tmp/orangefox/ramdisk/twres/splash.xml" > /twres/splash.xml;
 				</action>
 				<action function="wlfx"/>
+				<action function="overlay"/>
 				<action function="page">ext_custom</action>
 			</action>
 		</page>

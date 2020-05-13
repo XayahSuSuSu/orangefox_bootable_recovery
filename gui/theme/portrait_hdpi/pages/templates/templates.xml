@@ -5,7 +5,7 @@
 			<listbox style="btn_list">
 				<placement x="0" y="%ab_h%" w="%screen_w%" h="720"/>
 				<listitem name="{@fm_mkdir}">
-					<icon res="folder_icon_small"/>
+					<icon res="nav_files_d"/>
 					<action function="set">mkdir_folder=</action>
 					<action function="page">files_mkdir</action>
 				</listitem>
@@ -451,13 +451,13 @@
 		<template name="sort_base">
 			<button style="menu_btn_sort">
 				<condition var1="tw_gui_sort_order" var2="1"/>
-				<placement x="%ab_menu_sort_x%" y="%ab_menu_inst_1_y%" w="%ab_menu_sort_btn_w%" h="%ab_menu_sort_btn_h%"/>
+				<placement x="%ab_menu_sort_x%" y="%ab_menu_btn_1_y%" w="%ab_menu_sort_btn_w%" h="%ab_menu_sort_btn_h%"/>
 				<action function="set">tw_gui_sort_order=-1</action>
 			</button>
 
 			<button style="menu_btn_sort">
 				<condition var1="tw_gui_sort_order" op="!=" var2="1"/>
-				<placement x="%ab_menu_sort_x%" y="%ab_menu_inst_1_y%" w="%ab_menu_sort_btn_w%" h="%ab_menu_sort_btn_h%"/>
+				<placement x="%ab_menu_sort_x%" y="%ab_menu_btn_1_y%" w="%ab_menu_sort_btn_w%" h="%ab_menu_sort_btn_h%"/>
 				<action function="set">tw_gui_sort_order=1</action>
 			</button>
 
@@ -468,25 +468,25 @@
 
 			<image>
 				<condition var1="tw_gui_sort_order" var2="1"/>
-				<placement x="%ab_menu_x%" y="%ab_menu_inst_1_y%"/>
+				<placement x="%ab_menu_x%" y="%ab_menu_inst_1_y%" placement="4"/>
 				<image resource="arrow"/>
 			</image>
 			
 			<image>
 				<condition var1="tw_gui_sort_order" var2="-1"/>
-				<placement x="%ab_menu_x%" y="%ab_menu_inst_1_y%"/>
+				<placement x="%ab_menu_x%" y="%ab_menu_inst_1_y%" placement="4"/>
 				<image resource="arrow_d"/>
 			</image>
 
 			<button style="menu_btn_sort">
 				<condition var1="tw_gui_sort_order" var2="2"/>
-				<placement x="%ab_menu_sort_x%" y="%ab_menu_inst_2_y%" w="%ab_menu_sort_btn_w%" h="%ab_menu_sort_btn_h%"/>
+				<placement x="%ab_menu_sort_x%" y="%ab_menu_btn_2_y%" w="%ab_menu_sort_btn_w%" h="%ab_menu_sort_btn_h%"/>
 				<action function="set">tw_gui_sort_order=-2</action>
 			</button>
 
 			<button style="menu_btn_sort">
 				<condition var1="tw_gui_sort_order" op="!=" var2="2"/>
-				<placement x="%ab_menu_sort_x%" y="%ab_menu_inst_2_y%" w="%ab_menu_sort_btn_w%" h="%ab_menu_sort_btn_h%"/>
+				<placement x="%ab_menu_sort_x%" y="%ab_menu_btn_2_y%" w="%ab_menu_sort_btn_w%" h="%ab_menu_sort_btn_h%"/>
 				<action function="set">tw_gui_sort_order=2</action>
 			</button>
 
@@ -497,24 +497,24 @@
 
 			<image>
 				<condition var1="tw_gui_sort_order" var2="2"/>
-				<placement x="%ab_menu_x%" y="%ab_menu_inst_2_y%"/>
+				<placement x="%ab_menu_x%" y="%ab_menu_inst_2_y%" placement="4"/>
 				<image resource="arrow"/>
 			</image>
 
 			<image>
 				<condition var1="tw_gui_sort_order" var2="-2"/>
-				<placement x="%ab_menu_x%" y="%ab_menu_inst_2_y%"/>
+				<placement x="%ab_menu_x%" y="%ab_menu_inst_2_y%" placement="4"/>
 				<image resource="arrow_d"/>
 			</image>
 
 			<button style="menu_btn_sort">
-				<placement x="%ab_menu_sort_x%" y="%ab_menu_inst_3_y%" w="%ab_menu_sort_btn_w%" h="%ab_menu_sort_btn_h%"/>
+				<placement x="%ab_menu_sort_x%" y="%ab_menu_btn_3_y%" w="%ab_menu_sort_btn_w%" h="%ab_menu_sort_btn_h%"/>
 				<action function="set">tw_gui_sort_order=-3</action>
 			</button>
 
 			<button style="menu_btn_sort">
 				<condition var1="tw_gui_sort_order" op="!=" var2="3"/>
-				<placement x="%ab_menu_sort_x%" y="%ab_menu_inst_3_y%" w="%ab_menu_sort_btn_w%" h="%ab_menu_sort_btn_h%"/>
+				<placement x="%ab_menu_sort_x%" y="%ab_menu_btn_3_y%" w="%ab_menu_sort_btn_w%" h="%ab_menu_sort_btn_h%"/>
 				<action function="set">tw_gui_sort_order=3</action>
 			</button>
 
@@ -525,13 +525,13 @@
 
 			<image>
 				<condition var1="tw_gui_sort_order" var2="3"/>
-				<placement x="%ab_menu_x%" y="%ab_menu_inst_3_y%"/>
+				<placement x="%ab_menu_x%" y="%ab_menu_inst_3_y%" placement="4"/>
 				<image resource="arrow"/>
 			</image>
 
 			<image>
 				<condition var1="tw_gui_sort_order" var2="-3"/>
-				<placement x="%ab_menu_x%" y="%ab_menu_inst_3_y%"/>
+				<placement x="%ab_menu_x%" y="%ab_menu_inst_3_y%" placement="4"/>
 				<image resource="arrow_d"/>
 			</image>
 

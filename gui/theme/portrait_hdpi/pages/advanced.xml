@@ -579,7 +579,7 @@
 			<template name="keyboardtemplate"/>
 			<template name="keyboardterminaltemplate"/>
 
-			<template name="navbar_bkg"/>
+			<!--template name="navbar_bkg"/-->
 			<template name="navbar_home"/>
 			<template name="navbar_console"/>
 			<template name="navbar_terminal"/>
@@ -806,7 +806,6 @@
 				<condition var1="list_font" var2="1"/>
 				<placement x="0" y="%ab_h%" w="%screen_w%" h="%bl_fullscreen_h%"/>
 				<sort name="0"/>
-				<iconsize w="%col1_x_indent%" h="90" padding="25"/>
 				<icon folder="folder_icon" file="module_icon" />
 				<filter folders="0" files="1" nav="0"/>
 				<path name="amgr_path" default="/tmp/listapps/list"/>

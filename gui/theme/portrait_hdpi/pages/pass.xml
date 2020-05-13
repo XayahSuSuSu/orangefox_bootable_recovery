@@ -14,7 +14,7 @@
 		
 			<template name="page_enter_pass_txt"/>
 			<template name="keyboardtemplate"/>
-			<template name="navbar_bkg"/>
+			<!-- <template name="navbar_bkg"/> -->
 			<template name="navbar_home"/>
 
 			<action>
@@ -31,7 +31,7 @@
 		<page name="password_enter_num">			
 			<template name="page_enter_pass_txt"/>
 			<template name="keyboardnum"/>
-			<template name="navbar_bkg"/>
+			<!-- <template name="navbar_bkg"/> -->
 			<template name="navbar_home"/>
 
 			<action>

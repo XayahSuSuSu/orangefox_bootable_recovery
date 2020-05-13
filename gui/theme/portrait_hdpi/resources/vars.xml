@@ -371,24 +371,30 @@
 		
 		<!-- Sort menu -->
 		<variable name="ab_menu_y" value="72+%cutout_w%"/>
-		<variable name="ab_menu_x" value="900"/>
+		<variable name="ab_menu_x" value="972"/>
 		<variable name="ab_menu_sort_x" value="588"/>
 		<variable name="ab_menu_sort_btn_w" value="468"/>
 		<variable name="ab_menu_sort_btn_h" value="144"/>
 		<variable name="ab_menu_sort_text_x" value="638"/>
-		<variable name="ab_menu_text_offset" value="40"/>
-		<variable name="ab_menu_inst_1_y" value="121+%cutout_w%"/>
-		<variable name="ab_menu_inst_2_y" value="265+%cutout_w%"/>
-		<variable name="ab_menu_inst_3_y" value="409+%cutout_w%"/>
-		<variable name="ab_menu_inst_4_y" value="553+%cutout_w%"/>
-		<variable name="ab_menu_inst_5_y" value="697+%cutout_w%"/>
-		<variable name="ab_menu_inst_6_y" value="841+%cutout_w%"/>
-		<variable name="ab_menu_inst_1_text_y" value="%ab_menu_inst_1_y%+%ab_menu_text_offset%"/>
-		<variable name="ab_menu_inst_2_text_y" value="%ab_menu_inst_2_y%+%ab_menu_text_offset%"/>
-		<variable name="ab_menu_inst_3_text_y" value="%ab_menu_inst_3_y%+%ab_menu_text_offset%"/>
-		<variable name="ab_menu_inst_4_text_y" value="%ab_menu_inst_4_y%+%ab_menu_text_offset%"/>
-		<variable name="ab_menu_inst_5_text_y" value="%ab_menu_inst_5_y%+%ab_menu_text_offset%"/>
-		<variable name="ab_menu_inst_6_text_y" value="%ab_menu_inst_6_y%+%ab_menu_text_offset%"/>
+		<variable name="ab_menu_text_offset" value="32"/>
+		<variable name="ab_menu_btn_1_y" value="121+%cutout_w%"/>
+		<variable name="ab_menu_btn_2_y" value="265+%cutout_w%"/>
+		<variable name="ab_menu_btn_3_y" value="409+%cutout_w%"/>
+		<variable name="ab_menu_btn_4_y" value="603+%cutout_w%"/>
+		<variable name="ab_menu_btn_5_y" value="747+%cutout_w%"/>
+		<variable name="ab_menu_btn_6_y" value="891+%cutout_w%"/>
+		<variable name="ab_menu_inst_1_y" value="193+%cutout_w%"/>
+		<variable name="ab_menu_inst_2_y" value="337+%cutout_w%"/>
+		<variable name="ab_menu_inst_3_y" value="481+%cutout_w%"/>
+		<variable name="ab_menu_inst_4_y" value="675+%cutout_w%"/>
+		<variable name="ab_menu_inst_5_y" value="819+%cutout_w%"/>
+		<variable name="ab_menu_inst_6_y" value="963+%cutout_w%"/>
+		<variable name="ab_menu_inst_1_text_y" value="%ab_menu_inst_1_y%-%ab_menu_text_offset%"/>
+		<variable name="ab_menu_inst_2_text_y" value="%ab_menu_inst_2_y%-%ab_menu_text_offset%"/>
+		<variable name="ab_menu_inst_3_text_y" value="%ab_menu_inst_3_y%-%ab_menu_text_offset%"/>
+		<variable name="ab_menu_inst_4_text_y" value="%ab_menu_inst_4_y%-%ab_menu_text_offset%"/>
+		<variable name="ab_menu_inst_5_text_y" value="%ab_menu_inst_5_y%-%ab_menu_text_offset%"/>
+		<variable name="ab_menu_inst_6_text_y" value="%ab_menu_inst_6_y%-%ab_menu_text_offset%"/>
 		
 		<!-- Bottom buttons -->
 		<variable name="row_btn_y" value="%screen_h%-450"/>

@@ -133,14 +133,9 @@
 			<background color="%background%"/>
 			<template name="status_bg"/>
 			<template name="statusbarinfo"/>
-
-			<image>
-				<image resource="aroma_folder"/>
-				<placement x="%center_x%" y="%center_y%" placement="4"/>
-			</image>
 			
 			<text style="bs_text">
-				<placement x="%center_x%" y="%busy_text%" placement="4"/>
+				<placement x="%center_x%" y="%center_y%" placement="4"/>
 				<text>{@starting_aroma}</text>
 			</text>
 

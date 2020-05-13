@@ -210,7 +210,7 @@
 			
 			<template name="body_ct"/>
 			<template name="keyboardtemplate"/>
-			<template name="navbar_bkg"/>
+			<!-- <template name="navbar_bkg"/> -->
 			<template name="navbar_home"/>
 			<template name="navbar_console"/>
 			<template name="navbar_key"/>

@@ -121,7 +121,6 @@
 				<condition var1="list_font" var2="1"/>
 				<placement x="0" y="%row3_1a_y%" w="%fileselector_width%" h="%magisk_list_h%"/>
 				<sort name="0"/>
-				<iconsize w="%col1_x_indent%" h="90" padding="25"/>
 				<icon folder="module_icon" file="module_icon" />
 				<filter folders="1" files="0" nav="0" hidden="1"/>
 				<path name="mmgui_path" default="/data/adb/modules"/>

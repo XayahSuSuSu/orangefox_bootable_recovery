@@ -302,7 +302,7 @@
 			<background color="%background%"/>
 			<template name="keys"/>
 			<template name="keyboardtemplate"/>
-			<template name="navbar_bkg"/>
+			<!-- <template name="navbar_bkg"/> -->
 			<template name="navbar_home"/>
 			<template name="navbar_console"/>
 			<template name="navbar_key"/>
@@ -312,7 +312,7 @@
 			<background color="%background%"/>
 			<template name="keys"/>
 			<template name="keyboardnum"/>
-			<template name="navbar_bkg"/>
+			<!-- <template name="navbar_bkg"/> -->
 			<template name="navbar_home"/>
 			<template name="navbar_console"/>
 			<template name="navbar_key"/>
@@ -335,7 +335,7 @@
 		
 		<template name="dialog_body_key">
 			<background color="%transparent%"/>
-			<template name="navbar_bkg"/>
+			<!-- <template name="navbar_bkg"/> -->
 			
 			<button>
 				<fill color="%darktransparent%"/>
@@ -353,7 +353,7 @@
 
 		<template name="dialog_body_num">
 			<background color="%transparent%"/>
-			<template name="navbar_bkg"/>
+			<!-- <template name="navbar_bkg"/> -->
 			
 			<button>
 				<fill color="%darktransparent%"/>
