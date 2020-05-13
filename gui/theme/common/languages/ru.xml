@@ -1193,5 +1193,17 @@
 		<string name="theme_fweight_med">Жирный</string>
 
 		<string name="swipe_up_to_unlock">Проведите вверх для разблокировки</string>
+
+		<string name="spl_background">Цвет фона</string>
+		<string name="spl_logo">Логотип</string>
+		<string name="spl_white">Белый</string>
+		<string name="spl_black">Черный</string>
+		<string name="spl_night">Ночной</string>
+		<string name="spl_orange">Оранжевый</string>
+		<string name="spl_accent">Акцент</string>
+		<string name="spl_image">Изображение</string>
+		<string name="spl_del_img">Убрать изображение</string>
+		<string name="hidden">Скрыт</string>
+		<string name="spl_ofr">Надпись "OrangeFox Recovery"</string>
 	</resources>
 </language>

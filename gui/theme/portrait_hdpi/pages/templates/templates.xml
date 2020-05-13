@@ -646,68 +646,64 @@
 		</template>
 
 		<template name="splash_preview">
-			<background color="%background%"/>
-			<template name="keys"/>
 			<fill color="#ed6f02">
-				<condition var1="spl_bg_color" var2="#ed6f02"/>
-				<placement x="0" y="0" w="%screen_w%" h="%screen_h%"/>
+				<condition var1="spl_bg_color" var2="#ED6F02"/>
+				<placement x="0" y="%ab_h%" w="%screen_w%" h="%spl_preview_h%"/>
 			</fill>
-			<fill color="#222222">
-				<condition var1="spl_bg_color" var2="#222222"/>
-				<placement x="0" y="0" w="%screen_w%" h="%screen_h%"/>
+			<fill color="#202124">
+				<condition var1="spl_bg_color" var2="#202124"/>
+				<placement x="0" y="%ab_h%" w="%screen_w%" h="%spl_preview_h%"/>
 			</fill>
 			<fill color="#1e1f22">
-				<condition var1="spl_bg_color" var2="#1e1f22"/>
-				<placement x="0" y="0" w="%screen_w%" h="%screen_h%"/>
+				<condition var1="spl_bg_color" var2="#1E1F22"/>
+				<placement x="0" y="%ab_h%" w="%screen_w%" h="%spl_preview_h%"/>
 			</fill>
 			<fill color="#000000">
 				<condition var1="spl_bg_color" var2="#000000"/>
-				<placement x="0" y="0" w="%screen_w%" h="%screen_h%"/>
+				<placement x="0" y="%ab_h%" w="%screen_w%" h="%spl_preview_h%"/>
 			</fill>
-			<fill color="#FAFAFA">
-				<condition var1="spl_bg_color" var2="#FAFAFA"/>
-				<placement x="0" y="0" w="%screen_w%" h="%screen_h%"/>
+			<fill color="#ffffff">
+				<condition var1="spl_bg_color" var2="#FFFFFF"/>
+				<placement x="0" y="%ab_h%" w="%screen_w%" h="%spl_preview_h%"/>
 			</fill>
 			<fill color="%accent%">
 				<condition var1="spl_bg_color" var2="%accent%"/>
-				<placement x="0" y="0" w="%screen_w%" h="%screen_h%"/>
+				<placement x="0" y="%ab_h%" w="%screen_w%" h="%spl_preview_h%"/>
 			</fill>
 			
-			<fill color="#E47718">
-				<condition var1="spl_bg_user" var2="0"/>
-				<placement x="0" y="0" w="%screen_w%" h="%center_y%"/>
-			</fill>
-			<fill color="#8B3506">
-				<condition var1="spl_bg_user" var2="0"/>
-				<placement x="0" y="%center_y%" w="%screen_w%" h="%center_y%"/>
-			</fill>
 			<image>
 				<condition var1="spl_bg_user" var2="0"/>
 				<image resource="splash_bg"/>
-				<placement x="%center_x%" y="%center_y%" placement="4"/>
+				<placement x="%center_x%" y="%row2_3_y%" placement="4"/>
 			</image>
-			
 			<image>
 				<condition var1="spl_bg_on" var2="1"/>
 				<image resource="splash_user"/>
-				<placement x="%center_x%" y="%center_y%" placement="4"/>
+				<placement x="%center_x%" y="%row2_3_y%" placement="4"/>
 			</image>
 			
 			<image>
 				<condition var1="spl_logo_type" var2="w"/>
 				<image resource="splash_logo_w"/>
-				<placement x="%center_x%" y="%center_y%" placement="4"/>
+				<placement x="%center_x%" y="%row2_3_y%" placement="4"/>
 			</image>
 			<image>
 				<condition var1="spl_logo_type" var2="d"/>
 				<image resource="splash_logo_d"/>
-				<placement x="%center_x%" y="%center_y%" placement="4"/>
+				<placement x="%center_x%" y="%row2_3_y%" placement="4"/>
 			</image>
 			<image>
 				<condition var1="spl_logo_type" var2="o"/>
 				<image resource="splash_logo_o"/>
-				<placement x="%center_x%" y="%center_y%" placement="4"/>
+				<placement x="%center_x%" y="%row2_3_y%" placement="4"/>
 			</image>
+
+			<fill color="%background%">
+				<placement x="0" y="%row4_3_y%" w="%screen_w%" h="%spl_preview_bg%"/>
+			</fill>
+			<fill color="%background%">
+				<placement x="0" y="0" w="%screen_w%" h="%ab_h%"/>
+			</fill>
 		</template>
 	</templates>
 </recovery>

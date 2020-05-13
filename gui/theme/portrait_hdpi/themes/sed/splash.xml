@@ -11,19 +11,36 @@
 	<resources>
 		<#LOGO_ON#image name="splash_logo" filename="Splash/logo_#LOGO_TYPE#" retainaspect="1"/#LOGO_ON#>
 		<#BG_IMG#image name="splash_bg" filename="Splash/user" retainaspect="1"/#BG_IMG#>
+		<#SHOWOFR#font name="of" filename="EuclidFlex-Medium.ttf" size="64"/>
+		<font name="recovery" filename="EuclidFlex-Regular.ttf" size="52"/>
 	</resources>
+
+	<variables>
+		<variable name="of" value="%screen_h%-400"/>
+		<variable name="rec" value="%screen_h%-320"/>
+	</variables#SHOWOFR#>
 
 	<pages>
 		<page name="splash">
 			<background color="#BG_COLOR#"/>
-			<#BG_IMG#object type="image">
+			<#BG_IMG#image>
 				<image resource="splash_bg"/>
 				<placement x="540" y="%center_y%" placement="4"/>
-			</object#BG_IMG#>
-			<#LOGO_ON#object type="image">
+			</image#BG_IMG#>
+			<#LOGO_ON#image>
 				<image resource="splash_logo"/>
 				<placement x="540" y="%center_y%" placement="4"/>
-			</object#LOGO_ON#>
+			</image#LOGO_ON#>
+			<#SHOWOFR#text style="menu_text">
+				<placement x="540" y="%of%" placement="4"/>
+				<font resource="of" color="##TCOLOR#"/>
+				<text>OrangeFox</text>
+			</text>
+			<text style="menu_text">
+				<placement x="540" y="%rec%" placement="4"/>
+				<font resource="recovery" color="##TCOLOR#"/>
+				<text>Recovery</text>
+			</text#SHOWOFR#>
 		</page>
 	</pages>
 </recovery>

@@ -148,6 +148,10 @@
 
 			<listbox style="btn_list">
 				<placement x="0" y="%ab_h%" w="%screen_w%" h="%bl_fullscreen_h%"/>
+				<listitem name="{@theme_hdr}">
+					<icon res="invert"/>
+					<action function="page">ext_custom_theme</action>
+				</listitem>
 				<listitem name="{@gst_title}">
 					<icon res="gestures"/>
 					<action function="page">ext_custom_gest</action>
@@ -177,27 +181,23 @@
 					<icon res="lockscreen"/>
 					<action function="page">ext_custom_lock</action>
 				</listitem>
+				<listitem name="{@sph_sph}">
+					<icon res="boot_splash"/>
+					<action function="set">spl_logo_type=w</action>
+					<action function="set">spl_bg_color=#ED6F02</action>
+					<action function="set">spl_bg_user=0</action>
+					<action function="set">spl_bg_on=0</action>
+					<action function="set">spl_ofr=1</action>
+					<action function="page">ext_custom_splash</action>
+				</listitem>
 				<listitem name="{@keyboard_title}">
 					<icon res="keyboard"/>
 					<action function="page">ext_custom_key</action>
-				</listitem>
-				<listitem name="{@theme_hdr}">
-					<icon res="invert"/>
-					<action function="page">ext_custom_theme</action>
 				</listitem>
 				<listitem name="{@theme_fonts}">
 					<icon res="ws_font"/>
 					<action function="set">font_block=0</action>
 					<action function="page">ext_custom_fonts_check</action>
-				</listitem>
-				<listitem name="{@sph_sph}">
-					<icon res="boot_splash"/>
-					<action function="set">spl_bg_show=0</action>
-					<action function="set">spl_logo_type=w</action>
-					<action function="set">spl_bg_color=#000000ff</action>
-					<action function="set">spl_bg_user=0</action>
-					<action function="set">spl_bg_on=0</action>
-					<action function="page">ext_custom_splash</action>
 				</listitem>
 				<listitem name="{@cust_oth}">
 					<icon res="plus"/>
@@ -1658,277 +1658,176 @@
 				<action function="page">main</action>
 			</action>
 		</page>
-		
+
 		<!-- Splash -->
 		<page name="ext_custom_splash">
 			<template name="splash_preview"/>
-			
-			<button>
-				<placement x="%spl_btn_x1%" y="30"/>
-				<image resource="spl_hide"/>
-				<action function="page">ext_custom</action>
-			</button>
+			<template name="base"/>
 
-			<button>
+			<text style="text_ab_title">
+				<placement x="%col1_x_indent%" y="%ab_bc_y%"/>
+				<text>{@sph_sph}</text>
+			</text>
+			
+			<button style="actionbar">
 				<condition var1="spl_bg_user" var2="1"/>
-				<placement x="%spl_btn_x1%" y="%spl_custom_btn%" placement="2"/>
-				<image resource="spl_restore"/>
+				<placement x="%ab_btn1_x%" y="%ab_y%" placement="4"/>
 				<action function="set">spl_bg_user=0</action>
 				<action function="set">spl_logo_type=w</action>
-				<action function="set">spl_bg_color=#000000ff</action>
+				<action function="set">spl_ofr=1</action>
+				<action function="set">spl_bg_color=#ED6F02</action>
 				<action function="page">ext_custom_splash</action>
 			</button>
-			<button>
-				<condition var1="spl_bg_on" var2="0"/>
-				<placement x="%spl_btn_x2%" y="%spl_custom_btn%" placement="2"/>
-				<image resource="spl_image"/>
-				<action function="page">ext_custom_splash_select</action>
-			</button>
-			<button>
-				<condition var1="spl_bg_on" var2="1"/>
-				<placement x="%spl_btn_x2%" y="%spl_custom_btn%" placement="2"/>
-				<image resource="spl_image"/>
-				<action function="set">spl_bg_on=0</action>
-			</button>
+
 			<image>
-				<condition var1="spl_bg_on" var2="1"/>
-				<placement x="%spl_btn_x2%" y="%spl_custom_btn%" placement="2"/>
-				<image resource="color_apply_btn"/>
+				<condition var1="spl_bg_user" var2="1"/>
+				<placement x="%ab_btn1_x%" y="%ab_y%" placement="4"/>
+				<image resource="actionbar_reset"/>
 			</image>
-			<button>
-				<condition var1="spl_bg_show" var2="0"/>
-				<placement x="%spl_btn_x3%" y="%spl_custom_btn%" placement="2"/>
-				<image resource="spl_color"/>
-				<action function="set">spl_bg_show=1</action>
-			</button>
-			<button>
-				<condition var1="spl_bg_show" var2="1"/>
-				<placement x="%spl_btn_x3%" y="%spl_custom_btn%" placement="2"/>
-				<image resource="spl_color"/>
-				<action function="set">spl_bg_show=0</action>
-			</button>
-			<button>
-				<condition var1="spl_logo_type" var2="0"/>
-				<condition var1="spl_bg_user" var2="1"/>
-				<placement x="%spl_btn_x4%" y="%spl_custom_btn%" placement="2"/>
-				<image resource="spl_logo_n"/>
-				<action function="set">spl_logo_type=w</action>
-			</button>
-			<button>
-				<condition var1="spl_logo_type" var2="w"/>
-				<condition var1="spl_bg_user" var2="1"/>
-				<placement x="%spl_btn_x4%" y="%spl_custom_btn%" placement="2"/>
-				<image resource="spl_logo_w"/>
-				<action function="set">spl_logo_type=d</action>
-			</button>
-			<button>
-				<condition var1="spl_logo_type" var2="d"/>
-				<condition var1="spl_bg_user" var2="1"/>
-				<placement x="%spl_btn_x4%" y="%spl_custom_btn%" placement="2"/>
-				<image resource="spl_logo_d"/>
-				<action function="set">spl_logo_type=o</action>
-			</button>
-			<button>
-				<condition var1="spl_logo_type" var2="o"/>
-				<condition var1="spl_bg_user" var2="1"/>
-				<placement x="%spl_btn_x4%" y="%spl_custom_btn%" placement="2"/>
-				<image resource="spl_logo_o"/>
-				<action function="set">spl_logo_type=0</action>
-			</button>
 
-			<button>
-				<condition var1="spl_bg_user" var2="1"/>
-				<placement x="%spl_btn_x5%" y="%spl_custom_btn%" placement="2"/>
-				<image resource="spl_hideui"/>
-				<action function="page">ext_custom_splash_prev</action>
-			</button>
-			
-			<button>
-				<condition var1="spl_bg_user" var2="0"/>
-				<placement x="%spl_btn_x4%" y="%spl_custom_btn%" placement="2"/>
-				<image resource="spl_hideui"/>
-				<action function="page">ext_custom_splash_prev</action>
-			</button>
+			<listbox style="btn_list">
+				<placement x="0" y="%row4_3_y%" w="%screen_w%" h="%spl_list_h%"/>
+				<listitem name="{@spl_image}">
+					<condition var1="spl_bg_on" var2="0"/>
+					<icon res="add_image"/>
+					<action function="page">ext_custom_splash_select</action>
+				</listitem>
+				<listitem name="{@spl_del_img}">
+					<condition var1="spl_bg_on" var2="1"/>
+					<icon res="image_off"/>
+					<action function="set">spl_bg_on=0</action>
+				</listitem>
+				<listitem name="{@spl_background}">
+					<icon res="subs"/>
+					<action function="set">spl_bg_user=1</action>
+					<action function="page">ext_custom_splash_color</action>
+				</listitem>
+				<listitem name="{@spl_logo}">
+					<icon res="logo_icon"/>
+					<action function="set">spl_bg_user=1</action>
+					<action function="page">ext_custom_splash_logo</action>
+				</listitem>
+			</listbox>
 
-			<button>
-				<condition var1="spl_bg_user" var2="1"/>
-				<placement x="%spl_btn_x6%" y="%spl_custom_btn%" placement="2"/>
-				<image resource="spl_apply"/>
+			<image>
+				<placement x="%btn_float_x%" y="%btn_float_y%" placement="4"/>
+				<image resource="fab_shadow"/>
+			</image>
+
+			<button style="floating_btn">
+				<placement x="%btn_float_x%" y="%btn_float_y%" placement="4"/>
 				<action function="overlay">apply_splash</action>
 			</button>
 			
-			<button>
-				<condition var1="spl_bg_user" var2="0"/>
-				<placement x="%spl_btn_x5%" y="%spl_custom_btn%" placement="2"/>
-				<image resource="spl_apply"/>
-				<action function="overlay">apply_splash</action>
-			</button>
-			
-			<button>
-				<condition var1="spl_bg_show" var2="1"/>
-				<placement x="%spl_btn_x1%" y="%spl_custom_2_btn%" placement="2"/>
-				<image resource="spl_color_hex"/>
-				<action function="set">spl_bg_color_tmp=</action>
-				<action function="overlay">dialog_spl_hex</action>
-			</button>
 			<image>
-				<condition var1="spl_bg_show" var2="1"/>
-				<condition var1="spl_bg_color" op="!=" var2="%accent%"/>
-				<condition var1="spl_bg_color" op="!=" var2="#ed6f02"/>
-				<condition var1="spl_bg_color" op="!=" var2="#FAFAFA"/>
-				<condition var1="spl_bg_color" op="!=" var2="#000000"/>
-				<condition var1="spl_bg_color" op="!=" var2="#000000ff"/>
-				<condition var1="spl_bg_color" op="!=" var2="#222222"/>
-				<condition var1="spl_bg_color" op="!=" var2="#1e1f22"/>
-				<placement x="%spl_btn_x1%" y="%spl_custom_2_btn%" placement="2"/>
-				<image resource="color_apply_btn"/>
-			</image>
-			
-			<button>
-				<condition var1="spl_bg_show" var2="1"/>
-				<condition var1="accent" op="!=" var2="#ed6f02"/>
-				<placement x="%spl_btn_x2%" y="%spl_custom_2_btn%" placement="2"/>
-				<image resource="spl_color_a"/>
-				<action function="set">spl_bg_color=%accent%</action>
-				<action function="set">spl_bg_user=1</action>
-			</button>
-			<image>
-				<condition var1="spl_bg_show" var2="1"/>
-				<condition var1="spl_bg_color" var2="%accent%"/>
-				<condition var1="accent" op="!=" var2="#ed6f02"/>
-				<placement x="%spl_btn_x2%" y="%spl_custom_2_btn%" placement="2"/>
-				<image resource="color_apply_btn"/>
-			</image>
-			<button>
-				<condition var1="spl_bg_show" var2="1"/>
-				<condition var1="accent" var2="#ed6f02"/>
-				<placement x="%spl_btn_x2%" y="%spl_custom_2_btn%" placement="2"/>
-				<image resource="spl_color_o_combined"/>
-				<action function="set">spl_bg_color=#ed6f02</action>
-				<action function="set">spl_bg_user=1</action>
-			</button>
-			<button>
-				<condition var1="spl_bg_show" var2="1"/>
-				<condition var1="accent" op="!=" var2="#ed6f02"/>
-				<placement x="%spl_btn_x3%" y="%spl_custom_2_btn%" placement="2"/>
-				<image resource="spl_color_o"/>
-				<action function="set">spl_bg_color=#ed6f02</action>
-				<action function="set">spl_bg_user=1</action>
-			</button>
-			<image>
-				<condition var1="spl_bg_show" var2="1"/>
-				<condition var1="spl_bg_color" var2="#ed6f02"/>
-				<placement x="%spl_btn_x3%" y="%spl_custom_2_btn%" placement="2"/>
-				<image resource="color_apply_w"/>
-			</image>
-			<button>
-				<condition var1="spl_bg_show" var2="1"/>
-				<condition var1="theme_style" var2="Gray"/>
-				<placement x="%spl_btn_x4%" y="%spl_custom_2_btn%" placement="2"/>
-				<image resource="spl_color_d"/>
-				<action function="set">spl_bg_color=#222222</action>
-				<action function="set">spl_bg_user=1</action>
-			</button>
-			<button>
-				<condition var1="spl_bg_show" var2="1"/>
-				<condition var1="theme_style" op="!=" var2="Gray"/>
-				<placement x="%spl_btn_x4%" y="%spl_custom_2_btn%" placement="2"/>
-				<image resource="spl_color_n"/>
-				<action function="set">spl_bg_color=#1e1f22</action>
-				<action function="set">spl_bg_user=1</action>
-			</button>
-			<image>
-				<condition var1="spl_bg_show" var2="1"/>
-				<condition var1="spl_bg_color" var2="#222222"/>
-				<placement x="%spl_btn_x4%" y="%spl_custom_2_btn%" placement="2"/>
-				<image resource="color_apply_w"/>
-			</image>
-			<image>
-				<condition var1="spl_bg_show" var2="1"/>
-				<condition var1="spl_bg_color" var2="#1e1f22"/>
-				<placement x="%spl_btn_x4%" y="%spl_custom_2_btn%" placement="2"/>
-				<image resource="color_apply_w"/>
-			</image>
-			<button>
-				<condition var1="spl_bg_show" var2="1"/>
-				<placement x="%spl_btn_x5%" y="%spl_custom_2_btn%" placement="2"/>
-				<image resource="spl_color_b"/>
-				<action function="set">spl_bg_color=#000000</action>
-				<action function="set">spl_bg_user=1</action>
-			</button>
-			<image>
-				<condition var1="spl_bg_show" var2="1"/>
-				<condition var1="spl_bg_color" var2="#000000"/>
-				<placement x="%spl_btn_x5%" y="%spl_custom_2_btn%" placement="2"/>
-				<image resource="color_apply_w"/>
-			</image>
-			<button>
-				<condition var1="spl_bg_show" var2="1"/>
-				<placement x="%spl_btn_x6%" y="%spl_custom_2_btn%" placement="2"/>
-				<image resource="spl_color_w"/>
-				<action function="set">spl_bg_color=#FAFAFA</action>
-				<action function="set">spl_bg_user=1</action>
-			</button>
-			<image>
-				<condition var1="spl_bg_show" var2="1"/>
-				<condition var1="spl_bg_color" var2="#FAFAFA"/>
-				<placement x="%spl_btn_x6%" y="%spl_custom_2_btn%" placement="2"/>
-				<image resource="color_apply_d"/>
+				<placement x="%btn_float_x%" y="%btn_float_y%" placement="4"/>
+				<image resource="fab_accept"/>
 			</image>
 
-			<action>
-				<condition var1="spl_bg_on" var2="0"/>
-				<condition var1="spl_logo_type" var2="w"/>
-				<condition var1="spl_bg_color" var2="#FAFAFA"/>
-				<action function="set">spl_logo_type=d</action>
-				<action function="page">ext_custom_splash</action>
-			</action>
-			<action>
-				<condition var1="spl_bg_on" var2="0"/>
-				<condition var1="spl_logo_type" op="!=" var2="w"/>
-				<condition var1="spl_bg_color" var2="#ed6f02"/>
-				<action function="set">spl_logo_type=w</action>
-				<action function="page">ext_custom_splash</action>
-			</action>
 			<action>
 				<condition var1="spl_bg_on" var2="0"/>
 				<condition var1="spl_logo_type" var2="0"/>
 				<action function="set">spl_logo_type=w</action>
-				<action function="page">ext_custom_splash</action>
 			</action>
+
 
 			<template name="gestures"/>
 			
 			<action>
-				<touch key="home"/>
-				<action function="page">main</action>
+				<touch key="back"/>
+				<action function="page">ext_custom</action>
 			</action>
 
 			<action>
-				<touch key="back"/>
-				<action function="page">ext_custom</action>
+				<touch key="home"/>
+				<action function="page">main</action>
 			</action>
 		</page>
 		
-		<page name="ext_custom_splash_prev">
+		<page name="ext_custom_splash_color">
 			<template name="splash_preview"/>
-			
-			<button>
-				<fill color="%transparent%"/>
-				<placement x="0" y="0" w="%screen_w%" h="%screen_h%"/>
-				<action function="key">back</action>
-			</button>
+			<template name="base"/>
+
+			<text style="text_ab_title">
+				<placement x="%col1_x_indent%" y="%ab_bc_y%"/>
+				<text>{@spl_background}</text>
+			</text>
+		
+			<listbox>
+				<placement x="0" y="%row4_3_y%" w="%screen_w%" h="%spl_list_h%"/>
+				<data name="spl_bg_color"/>
+				<iconsize w="%col1_x_caption%" h="136" padding="25"/>
+				<listitem name="{@spl_accent}"><condition var1="accent" op="!=" var2="#d86100"/><condition var1="accent" op="!=" var2="#ed6f02"/>%accent%</listitem>
+				<listitem name="{@spl_orange}">#ED6F02</listitem>
+				<listitem name="{@spl_white}">#FFFFFF</listitem>
+				<listitem name="{@spl_black}">#000000</listitem>
+				<listitem name="{@spl_night}">#1E1F22</listitem>
+				<listitem name="Google Dark">#202124</listitem>
+			</listbox>
+
+			<!-- DO NOT use code below for detecting white logo on white bg
+				 It causes recovery crash -->
+			<!--action>
+				<condition var1="spl_logo_type" op="!=" var2="w"/>
+				<condition var1="spl_bg_color" var2="#ED6F02"/>
+				<action function="set">spl_logo_type=w</action>
+			</action>
+			<action>
+				<condition var1="spl_logo_type" op="!=" var2="w"/>
+				<condition var1="spl_bg_color" var2="#D86100"/>
+				<action function="set">spl_logo_type=w</action>
+			</action-->
 
 			<template name="gestures"/>
 			
 			<action>
-				<touch key="home"/>
-				<action function="page">main</action>
+				<touch key="back"/>
+				<action function="page">ext_custom_splash</action>
 			</action>
 
 			<action>
+				<touch key="home"/>
+				<action function="page">main</action>
+			</action>
+		</page>
+		
+		<page name="ext_custom_splash_logo">
+			<template name="splash_preview"/>
+			<template name="base"/>
+
+			<text style="text_ab_title">
+				<placement x="%col1_x_indent%" y="%ab_bc_y%"/>
+				<text>{@spl_logo}</text>
+			</text>
+		
+			<listbox style="settingslist">
+				<placement x="0" y="%row4_3_y%" w="%screen_w%" h="144"/>
+				<iconsize w="%col1_x_caption%" h="144" padding="25"/>
+				<listitem name="{@spl_ofr}">
+					<data variable="spl_ofr"/>
+				</listitem>
+			</listbox>
+
+			<listbox>
+				<placement x="0" y="%row5_2a_y%" w="%screen_w%" h="%lb_l7%"/>
+				<iconsize w="%col1_x_caption%" h="144" padding="25"/>
+				<data name="spl_logo_type"/>
+				<listitem name="{@hidden}"><condition var1="spl_bg_on" var2="1"/>0</listitem>
+				<listitem name="{@spl_white}">w</listitem>
+				<listitem name="{@spl_black}">d</listitem>
+				<listitem name="{@spl_orange}">o</listitem>
+			</listbox>
+
+			<template name="gestures"/>
+			
+			<action>
 				<touch key="back"/>
 				<action function="page">ext_custom_splash</action>
+			</action>
+
+			<action>
+				<touch key="home"/>
+				<action function="page">main</action>
 			</action>
 		</page>
 		
@@ -2133,10 +2032,21 @@
 				<action function="wlfw"/>
 				<action function="cmd">
 						if [[ '%spl_bg_user%' = '1' ]]; then
-							if [[ '%spl_logo_type%' = '0' ]];
+							[[ '%spl_logo_type%' = 'o' ]] && logo_color=F86314;
+							[[ '%spl_logo_type%' = 'w' ]] && logo_color=ffffff;
+							[[ '%spl_logo_type%' = 'd' ]] && logo_color=353535;
+
+							if [[ '%spl_log_type%' = '0' ]];
 								then logo_on=!--;
 								else logo_on=;
 							fi;
+							if [[ '%spl_ofr%' = '1' ]];
+								then logo_ofr=;
+								else logo_ofr=!--;
+							fi;
+
+							[[ '%spl_log_type%' = '0' ]] && logo_ofr=!--;
+
 							if [[ '%spl_bg_on%' = '1' ]];
 									then bg_on=;
 										 cp "%tw_splash_png_path%/%tw_splash_png_name%" "/tmp/orangefox/ramdisk/twres/images/Splash/user.png";
@@ -2146,6 +2056,8 @@
 										cp "/twres/images/Splash/empty.png" "/twres/images/Splash/user.png";
 							fi;
 							cat "/twres/themes/sed/splash.xml" | sed -e "
+							s/#SHOWOFR#/${logo_ofr}/g;
+							s/#TCOLOR#/${logo_color}/g;
 							s/#BG_COLOR#/%spl_bg_color%/g;
 							s/#LOGO_TYPE#/%spl_logo_type%/g;
 							s/#LOGO_ON#/${logo_on}/g;

@@ -1087,5 +1087,17 @@
 		<string name="theme_fweight_med">Medium</string>
 
 		<string name="swipe_up_to_unlock">Swipe up to Unlock</string>
+
+		<string name="spl_background">Background color</string>
+		<string name="spl_logo">Logo</string>
+		<string name="spl_white">White</string>
+		<string name="spl_black">Black</string>
+		<string name="spl_night">Night</string>
+		<string name="spl_orange">Orange</string>
+		<string name="spl_accent">Accent</string>
+		<string name="spl_image">Background image</string>
+		<string name="spl_del_img">Remove image</string>
+		<string name="hidden">Hidden</string>
+		<string name="spl_ofr">"OrangeFox Recovery" label</string>
 	</resources>
 </language>
