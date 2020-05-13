@@ -305,11 +305,6 @@
 				<listitem name="{@dark_title}">
 					<data variable="darker_ui"/>
 				</listitem>
-				<listitem name="{@accentbg_in_titles}">
-					<data variable="accent_title"/>
-					<condition var1="darker_ui" var2="0"/>
-					<condition var1="theme_pie" var2="0"/>
-				</listitem>
 				<listitem name="{@noshadow_title}">
 					<data variable="show_shadow"/>
 				</listitem>
@@ -422,13 +417,6 @@
 			
 			<fill color="%title_solid_bg%">
 				<condition var1="darker_ui" var2="1"/>
-				<placement x="0" y="0" w="%screen_w%" h="%row4_1_y%"/>
-			</fill>
-			
-			<fill color="%accent%">
-				<condition var1="darker_ui" var2="0"/>
-				<condition var1="theme_pie" var2="0"/>
-				<condition var1="accent_title" var2="1"/>
 				<placement x="0" y="0" w="%screen_w%" h="%row4_1_y%"/>
 			</fill>
 

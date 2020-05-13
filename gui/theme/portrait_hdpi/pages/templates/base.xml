@@ -14,13 +14,6 @@
 				<condition var1="darker_ui" var2="1"/>
 				<placement x="0" y="0" w="%screen_w%" h="%tab_title_h%"/>
 			</fill>
-			
-			<fill color="%accent%">
-				<condition var1="darker_ui" var2="0"/>
-				<condition var1="theme_pie" var2="0"/>
-				<condition var1="accent_title" var2="1"/>
-				<placement x="0" y="0" w="%screen_w%" h="%tab_title_h%"/>
-			</fill>
 
 			<image>
 				<image resource="actionbar_shadow"/>
@@ -377,13 +370,6 @@
 				<placement x="0" y="0" w="%screen_w%" h="%ab_ex_h%"/>
 			</fill>
 
-			<fill color="%accent%">
-				<condition var1="darker_ui" var2="0"/>
-				<condition var1="theme_pie" var2="0"/>
-				<condition var1="accent_title" var2="1"/>
-				<placement x="0" y="0" w="%screen_w%" h="%ab_ex_h%"/>
-			</fill>
-
 			<template name="statusbarinfo"/>
 		</template>
         
@@ -391,13 +377,6 @@
         <template name="status_bg">
 			<fill color="%status_solid_bg%">
 				<condition var1="separate_status" var2="1"/>
-				<placement x="0" y="0" w="%screen_w%" h="%status_h%"/>
-			</fill>
-
-			<fill color="#00000011">
-				<condition var1="separate_status" var2="0"/>
-				<condition var1="theme_pie" var2="0"/>
-				<condition var1="accent_title" var2="1"/>
 				<placement x="0" y="0" w="%screen_w%" h="%status_h%"/>
 			</fill>
 			
@@ -437,13 +416,6 @@
 				<placement x="0" y="0" w="%screen_w%" h="%ab_h%"/>
 			</fill>
 			
-			<fill color="%accent%">
-				<condition var1="darker_ui" var2="0"/>
-				<condition var1="theme_pie" var2="0"/>
-				<condition var1="accent_title" var2="1"/>
-				<placement x="0" y="0" w="%screen_w%" h="%ab_h%"/>
-			</fill>
-			
 			<template name="status_bg"/>
 		</template>
 
@@ -461,13 +433,6 @@
 			
 			<fill color="%title_solid_bg%">
 				<condition var1="darker_ui" var2="1"/>
-				<placement x="0" y="0" w="%screen_w%" h="%ab_ex_h%"/>
-			</fill>
-			
-			<fill color="%accent%">
-				<condition var1="darker_ui" var2="0"/>
-				<condition var1="theme_pie" var2="0"/>
-				<condition var1="accent_title" var2="1"/>
 				<placement x="0" y="0" w="%screen_w%" h="%ab_ex_h%"/>
 			</fill>
 			

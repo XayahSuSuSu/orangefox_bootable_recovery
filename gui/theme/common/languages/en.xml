@@ -1052,7 +1052,6 @@
 
 		<string name="navbar_style_line">Line</string>
 		<string name="accent_in_titles">Accent text color in title</string>
-		<string name="accentbg_in_titles">Accent background in title</string>
 
 		<string name="backup_quick_info1">These partitions will be selected</string>
 		<string name="backup_quick_info2">after tapping "Quick Backup" button</string>

@@ -285,13 +285,6 @@
 				<condition var1="darker_ui" var2="1"/>
 				<placement x="0" y="0" w="%screen_w%" h="%row4_1_y%"/>
 			</fill>
-			
-			<fill color="%accent%">
-				<condition var1="darker_ui" var2="0"/>
-				<condition var1="theme_pie" var2="0"/>
-				<condition var1="accent_title" var2="1"/>
-				<placement x="0" y="0" w="%screen_w%" h="%row4_1_y%"/>
-			</fill>
 
 			<template name="status_bg"/>
 			
@@ -842,13 +835,6 @@
 				<condition var1="darker_ui" var2="1"/>
 				<placement x="0" y="0" w="%screen_w%" h="%about_title_h%"/>
 			</fill>
-			
-			<fill color="%accent%">
-				<condition var1="darker_ui" var2="0"/>
-				<condition var1="theme_pie" var2="0"/>
-				<condition var1="accent_title" var2="1"/>
-				<placement x="0" y="0" w="%screen_w%" h="%about_title_h%"/>
-			</fill>
 
 			<template name="status_bg"/>
 			<template name="actionbar_back"/>
@@ -1121,13 +1107,6 @@
 			
 			<fill color="%title_solid_bg%">
 				<condition var1="darker_ui" var2="1"/>
-				<placement x="0" y="0" w="%screen_w%" h="%tab_title_h%"/>
-			</fill>
-			
-			<fill color="%accent%">
-				<condition var1="darker_ui" var2="0"/>
-				<condition var1="theme_pie" var2="0"/>
-				<condition var1="accent_title" var2="1"/>
 				<placement x="0" y="0" w="%screen_w%" h="%tab_title_h%"/>
 			</fill>
 
