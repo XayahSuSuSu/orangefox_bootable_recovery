@@ -28,8 +28,8 @@
 		<font name="Secondary-title" filename="GoogleSans-Medium.ttf" size="58"/>
 		<font name="caption" filename="GoogleSans-Medium.ttf" size="36"/>
 		
-		<font name="clock" filename="GoogleSans-Medium.ttf" size="210"/>
-		<font name="info" filename="GoogleSans-Regular.ttf" size="50"/>
+		<font name="clock" filename="GoogleSans-Regular.ttf" size="210"/>
+		<font name="info" filename="GoogleSans-Medium.ttf" size="50"/>
 	</resources>
 	
 	<variables>
