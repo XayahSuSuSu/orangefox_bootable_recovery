@@ -1013,8 +1013,19 @@ int GUIAction::queuezip(std::string arg __unused)
     {
       zip_queue_index++;
       DataManager::SetValue(TW_ZIP_QUEUE_COUNT, zip_queue_index);
+      DataManager::SetValue("tw_q_" + to_string(zip_queue_index), DataManager::GetStrValue("tw_file"));
+      find_magisk();
     }
+    
   return 0;
+}
+
+void GUIAction::find_magisk(){ //[f/d]
+  int found = 0;
+  for (int i = 0; i < zip_queue_index; i++)
+    if (zip_queue[i] == Fox_Home_Files + "/Magisk.zip")
+      found = 1;
+  DataManager::SetValue("of_magisk_in_queue", found);
 }
 
 int GUIAction::cancelzip(std::string arg __unused)
@@ -1026,7 +1037,15 @@ int GUIAction::cancelzip(std::string arg __unused)
     }
   else
     {
+      DataManager::SetValue("tw_q_" + to_string(zip_queue_index), "");
       zip_queue_index--;
+      string zip_path = zip_queue[zip_queue_index - 1];
+      size_t slashpos = zip_path.find_last_of('/');
+      DataManager::SetValue("tw_zip_location", zip_path.substr(0, slashpos));
+      DataManager::SetValue("tw_file",
+        (slashpos == string::npos) ? zip_path : zip_path.substr(slashpos + 1));
+      find_magisk();
+
       DataManager::SetValue(TW_ZIP_QUEUE_COUNT, zip_queue_index);
     }
   return 0;

@@ -364,6 +364,7 @@
 				<action function="set">install_back=filemanagerlist</action>
 				<action function="set">tw_zip_location=%tw_file_location1%</action>
 				<action function="queuezip"/>
+				<action function="set">tw_q_1=%tw_file%</action>
 				<action function="page">flash_confirm</action>
 			</action>
 
@@ -1002,6 +1003,7 @@
 					<action function="set">tw_filename=%tw_filename1%</action>
 					<action function="set">install_back=filemanagerlist</action>
 					<action function="set">tw_zip_location=%tw_file_location1%</action>
+					<action function="set">tw_q_1=%tw_file%</action>
 					<action function="queuezip"/>
 					<action function="page">flash_confirm</action>
 				</listitem>

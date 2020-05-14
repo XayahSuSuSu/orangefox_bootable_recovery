@@ -318,6 +318,7 @@ protected:
 	int doAction(Action action);
 	ThreadType getThreadType(const Action& action);
 	void simulate_progress_bar(void);
+	void find_magisk(void);
 	int flash_zip(std::string filename, int* wipe_cache);
 	#ifdef OF_SUPPORT_OZIP_DECRYPTION
 	int ozip_decrypt(std::string zip_path);
