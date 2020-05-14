@@ -166,7 +166,8 @@
 				<action function="set">tw_back=formatdata</action>
 				<action function="set">tw_action=wipe</action>
 				<action function="set">tw_action_param=DATAMEDIA</action>
-				<action function="set">tw_action_text1={@formatting_data}</action>
+				<action function="set">tw_action_text1={@factory_reset_hdr}</action>
+				<action function="set">tw_action_text2={@formatting_data}</action>
 				<action function="set">tw_complete_text1={@format_data_complete}</action>
 				<action function="page">wipe_action_page</action>
 			</action>
