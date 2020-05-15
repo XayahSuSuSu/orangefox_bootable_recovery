@@ -368,9 +368,10 @@ void GUIScrollList::RenderStdItem(int yPos, bool selected, ImageResource* icon, 
 	if (mFont && mFont->GetResource()) {
 		int textX = mRenderX + maxIconWidth + 5;
 		if (addtext != NULL) { //[f/d] draw 2 lines
-			int textY = yPos + (iconAndTextH / 2) - 35;
-			int textYt = yPos + (iconAndTextH / 2) + 22;
+			int textY = yPos + (iconAndTextH / 2) - scale_theme_y(34);
+			int textYt = yPos + (iconAndTextH / 2) + scale_theme_y(24);
 			gr_textEx_scaleW(textX, textY, text, mFont->GetResource(), mRenderW, TEXT_ONLY_RIGHT, 0);
+			gr_color(95, 99, 104, 255); //[f/d] i'm lazy af so use #5F6368 color and don't allow set it using xml ಠ_ಠ
 			gr_textEx_scaleW(textX, textYt, addtext, mFont->GetResource(), mRenderW, TEXT_ONLY_RIGHT, 0);
 		} else { //1 line
 			int textY = yPos + (iconAndTextH / 2);

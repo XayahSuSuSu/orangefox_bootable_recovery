@@ -53,7 +53,7 @@ GUIFileSelector::GUIFileSelector(xml_node<>* node) : GUIScrollList(node)
 	mPathVar = "cwd";
 	mFileFilterVar = "";
 	ignoreHideVar = updateFileList = false;
-	mSelListEnabled = hasFiles = hasHiddenFiles = false;
+	allowDouble = mSelListEnabled = hasFiles = hasHiddenFiles = false;
 
 	// Load filter for filtering files (e.g. *.zip for only zips)
 	child = FindNode(node, "filter");
@@ -132,9 +132,12 @@ GUIFileSelector::GUIFileSelector(xml_node<>* node) : GUIScrollList(node)
 
 	// [f/d] Multiselection
 	child = FindNode(node, "extra");
-	if (child && (attr = child->first_attribute("multi")))
-		mSelListEnabled = true;
-
+	if (child) {
+		if (child->first_attribute("multi"))
+			mSelListEnabled = true;
+		if (child->first_attribute("double"))
+			allowDouble = true;
+	}
 	
 	// Get folder and file icons if present
 	child = FindNode(node, "icon");
@@ -317,7 +320,8 @@ int GUIFileSelector::GetFileList(const std::string folder)
 		return -1;
 	}
 
-	DataManager::GetValue("list_font", doubleLine);
+	if (allowDouble)
+		DataManager::GetValue("list_font", doubleLine);
 	
 	string reloadfm, searchString, showHiddenFiles;
 	if (mFileFilterVar != "") {
@@ -453,6 +457,7 @@ void GUIFileSelector::RenderItem(size_t itemindex, int yPos, bool selected)
 {
 	size_t folderSize = mShowFolders ? mFolderList.size() : 0;
 	size_t fileindex = itemindex - folderSize;
+	string secondLine = "";
 	
 	ImageResource* icon;
 	std::string text, ext;
@@ -464,6 +469,8 @@ void GUIFileSelector::RenderItem(size_t itemindex, int yPos, bool selected)
 			text = gui_lookup("up_a_level", "(Up A Level)");
 			icon = mUpIcon;
 		} else {
+			if (allowDouble && doubleLine == 1)
+				secondLine = TWFunc::ConvertTime(mFolderList.at(itemindex).lastModified);
 			if (mSelListEnabled)
 				icon = DataManager::GetStrValue("of_batch_folders").find(text + "/") != string::npos
 				       ? mExSelectedIcon : mExUnselectedIcon;
@@ -472,6 +479,8 @@ void GUIFileSelector::RenderItem(size_t itemindex, int yPos, bool selected)
 		}
 	} else {
 		text = mFileList.at(fileindex).fileName;
+		if (allowDouble && doubleLine == 1)
+			secondLine = TWFunc::ConvertTime(mFileList.at(fileindex).lastModified) + " · " + to_string(mFileList.at(fileindex).fileSize / 1048576) + gui_parse_text("{@mbyte}");
 		if (mSelListEnabled) {
 			icon = DataManager::GetStrValue("of_batch_files").find(text + "/") != string::npos
 				   ? mExSelectedIcon : mExUnselectedIcon;
@@ -513,8 +522,8 @@ void GUIFileSelector::RenderItem(size_t itemindex, int yPos, bool selected)
 	// mFileList.at(fileindex).lastModified
 	// mFileList.at(fileindex).lastStatChange
 
-	if (doubleLine == 1)
-		RenderStdItem(yPos, selected, icon, text.c_str(), ext.c_str());
+	if (allowDouble && doubleLine == 1 && secondLine != "")
+		RenderStdItem(yPos, selected, icon, text.c_str(), secondLine.c_str());
 	else
 		RenderStdItem(yPos, selected, icon, text.c_str());
 }

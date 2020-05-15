@@ -709,6 +709,7 @@ protected:
 	bool hasFiles, hasHiddenFiles;
 	int doubleLine = 0;
 	bool mSelListEnabled; // [f/d] is multiselection enabled
+	bool allowDouble;
 	std::string mFileFilterVar;
 };
 

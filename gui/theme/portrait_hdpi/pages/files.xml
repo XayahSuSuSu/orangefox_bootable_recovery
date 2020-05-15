@@ -25,7 +25,7 @@
 				<path name="tw_file_location1" default="/sdcard"/>
 				<data name="tw_filename1"/>
 				<selection name="tw_selection1"/>
-				<extra hold="tw_hold"/>
+				<extra hold="tw_hold" double="1"/>
 			</fileselector>
 
 			<fileselector style="fileselector_s">
@@ -37,7 +37,7 @@
 				<path name="tw_file_location1" default="/sdcard"/>
 				<data name="tw_filename1"/>
 				<selection name="tw_selection1"/>
-				<extra hold="tw_hold"/>
+				<extra hold="tw_hold" double="1"/>
 			</fileselector>
 			
 			<template name="base_nav"/>

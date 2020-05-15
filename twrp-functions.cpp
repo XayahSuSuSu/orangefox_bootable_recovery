@@ -41,6 +41,7 @@
 #include <sstream>
 #include <cctype>
 #include <algorithm>
+#include <ctime>
 #include <selinux/label.h>
 #include "twrp-functions.hpp"
 #include "twcommon.h"
@@ -4652,6 +4653,13 @@ bool TWFunc::To_Skip_OrangeFox_Process(void)
   #else
      return false;
   #endif
+}
+
+string TWFunc::ConvertTime(time_t time)
+{
+  char buff[32];
+  strftime(buff, 32, "%y/%m/%d %H:%M", localtime(&time));
+  return buff;
 }
 
 void TWFunc::UseSystemFingerprint(void)
