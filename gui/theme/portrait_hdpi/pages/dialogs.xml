@@ -11,8 +11,25 @@
 				<action function="key">back</action>
 			</button>
 
+			<image>
+				<condition var1="show_shadow" var2="1"/>
+				<placement x="0" y="%down_menu_y%" placement="2"/>
+				<image resource="nav_shadow"/>
+			</image>
+
+			<listbox style="settingslist">
+				<iconsize w="%col1_x_caption%" h="136" padding="25"/>
+				<placement x="0" y="%down_menu_y%" w="%screen_w%" h="272"/>
+				<listitem name="{@files_auto_open}">
+					<data variable="fm_auto_open"/>
+				</listitem>
+				<listitem name="{@files_show_hidden}">
+					<data variable="tw_hidden_files"/>
+				</listitem>
+			</listbox>
+
 			<listbox style="btn_list">
-				<placement x="0" y="%down_menu_y%" w="%screen_w%" h="432"/>
+				<placement x="0" y="%down_menu_btn_y%" w="%screen_w%" h="432"/>
 				<listitem name="{@batch_title}">
 					<icon res="batch"/>
 					<action function="overlay"/>
@@ -37,6 +54,10 @@
 					<action function="page">filemanageroptions</action>
 				</listitem>
 			</listbox>
+
+			<fill color="%linecolor%">
+				<placement x="0" y="%down_menu_btn_y%" w="%screen_w%" h="%input_line_height%"/>
+			</fill>
 
 			<template name="keys"/>
 			<template name="statusbarinfo"/>
