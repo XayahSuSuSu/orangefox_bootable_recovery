@@ -65,9 +65,9 @@ GUIScrollList::GUIScrollList(xml_node<>* node) : GUIObject(node)
 	}
 	
 	// [f/d] Hold item
-	child = FindNode(node, "holditem");
+	child = FindNode(node, "extra");
 	if (child) {
-		attr = child->first_attribute("name");
+		attr = child->first_attribute("hold");
 		if (attr) {
 			itemHold = attr->value();
 			DataManager::SetValue(itemHold, "0");

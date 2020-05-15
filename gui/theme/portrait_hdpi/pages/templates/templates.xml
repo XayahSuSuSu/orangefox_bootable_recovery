@@ -559,7 +559,7 @@
 				<path name="tw_file_location1" default="/sdcard"/>
 				<data name="tw_filename1"/>
 				<selection name="tw_selection1"/>
-				<holditem name="tw_hold"/>
+				<extra hold="tw_hold"/>
 			</fileselector>
 
 			<fileselector style="fileselector_s">
@@ -572,7 +572,7 @@
 				<path name="tw_file_location1" default="/sdcard"/>
 				<data name="tw_filename1"/>
 				<selection name="tw_selection1"/>
-				<holditem name="tw_hold"/>
+				<extra hold="tw_hold"/>
 			</fileselector>
 
 			<fileselector style="fileselector_b">
@@ -585,7 +585,7 @@
 				<path name="tw_file_location1" default="/sdcard"/>
 				<data name="tw_filename1"/>
 				<selection name="tw_selection1"/>
-				<holditem name="tw_hold"/>
+				<extra hold="tw_hold"/>
 			</fileselector>
 
 			<fileselector style="fileselector_s">
@@ -598,7 +598,7 @@
 				<path name="tw_file_location1" default="/sdcard"/>
 				<data name="tw_filename1"/>
 				<selection name="tw_selection1"/>
-				<holditem name="tw_hold"/>
+				<extra hold="tw_hold"/>
 			</fileselector>
 			
 			<template name="base_key"/>

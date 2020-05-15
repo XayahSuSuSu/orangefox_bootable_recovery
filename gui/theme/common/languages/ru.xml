@@ -1205,5 +1205,9 @@
 		<string name="spl_del_img">Убрать изображение</string>
 		<string name="hidden">Скрыт</string>
 		<string name="spl_ofr">Надпись "OrangeFox Recovery"</string>
+
+		<string name="batch_selected">Выбрано: %of_batch_count%</string>
+		<string name="batch_title">Пакетные действия</string>
+		<string name="batch_files_folders">Файлы и папки</string>
 	</resources>
 </language>

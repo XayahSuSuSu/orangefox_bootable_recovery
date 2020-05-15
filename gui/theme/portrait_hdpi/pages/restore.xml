@@ -448,8 +448,8 @@
 				<placement x="%col1_x_caption%" y="%input_rename_y%" w="%input_w%" h="%input_height%"/>
 				<text>%tw_backup_rename%</text>
 				<data name="tw_backup_rename"/>
-				<restrict minlen="1" maxlen="64" allow="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890-_.{}[]"/>
-				<action function="set">tw_action_param=cd %tw_backups_folder% &amp;&amp; mv "%tw_restore_name%" "%tw_backup_rename%"</action>
+				<restrict minlen="1" maxlen="64" allow="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890-_.{}[]() "/>
+				<action function="set">tw_action_param=cd %tw_backups_folder% &amp;&amp; mv "%tw_restore_name%" '%tw_backup_rename%'</action>
 				<action function="set">tw_action_text1={@renaming_backup}</action>
 				<action function="set">tw_complete_text1={@rename_backup_complete}</action>
 				<action function="set">tw_filecheck=%tw_backups_folder%/%tw_backup_rename%</action>

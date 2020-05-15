@@ -273,6 +273,8 @@ GUIAction::GUIAction(xml_node <> *node):GUIObject(node)
       ADD_ACTION(disable_replace);
 
       //[f/d] Threaded actions
+      ADD_ACTION(batchfiles);
+      ADD_ACTION(batchfolders);
       ADD_ACTION(generatedigests);
       ADD_ACTION(ftls); //ftls (foxtools) - silent cmd
    }
@@ -2724,4 +2726,39 @@ int GUIAction::fixabrecoverybootloop(std::string arg __unused)
 exit:
 	operation_end(op_status);
 	return 0;
+}
+
+int GUIAction::batchfiles(std::string arg)
+{
+  return batchaction("of_batch_files", arg);
+}
+
+int GUIAction::batchfolders(std::string arg)
+{
+  return batchaction("of_batch_folders", arg);
+}
+
+int GUIAction::cmdf(std::string arg, std::string file)
+{
+  char buff[1024];
+  sprintf(buff, gui_parse_text(arg).c_str(), file.c_str());
+  return terminalcommand(std::string(buff));
+}
+
+int GUIAction::batchaction(std::string s, std::string arg)
+{
+  DataManager::GetValue(s, s);
+  if (s.empty()) return 0;
+  s = s.substr(0, s.size()-1); //remove last delimiter ("/")
+  std::string delimiter = "/";
+
+  size_t pos = 0;
+  std::string token;
+  while ((pos = s.find(delimiter)) != std::string::npos) {
+      token = s.substr(0, pos);
+      cmdf(arg, token);
+      s.erase(0, pos + delimiter.length());
+  }
+  cmdf(arg, s);
+  return 0;
 }

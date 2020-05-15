@@ -47,13 +47,13 @@ GUIFileSelector::GUIFileSelector(xml_node<>* node) : GUIScrollList(node)
 	xml_attribute<>* attr;
 	xml_node<>* child;
 
-	mFolderIcon = mFileIcon = mUpIcon = mExZipIcon = mExImgIcon = mExTxtIcon = mExPngIcon = mExLinkIcon = mExBlockIcon = NULL;
+	mFolderIcon = mFileIcon = mUpIcon = mExZipIcon = mExImgIcon = mExTxtIcon = mExUnselectedIcon = mExSelectedIcon = mExPngIcon = mExLinkIcon = mExBlockIcon = NULL;
 	mShowFolders = mShowFiles = mShowNavFolders = 1;
 	mUpdate = 0;
 	mPathVar = "cwd";
 	mFileFilterVar = "";
 	ignoreHideVar = updateFileList = false;
-	hasFiles = hasHiddenFiles = false;
+	mSelListEnabled = hasFiles = hasHiddenFiles = false;
 
 	// Load filter for filtering files (e.g. *.zip for only zips)
 	child = FindNode(node, "filter");
@@ -129,6 +129,12 @@ GUIFileSelector::GUIFileSelector(xml_node<>* node) : GUIScrollList(node)
 		mSelection = attr->value();
 	else
 		mSelection = "0";
+
+	// [f/d] Multiselection
+	child = FindNode(node, "extra");
+	if (child && (attr = child->first_attribute("multi")))
+		mSelListEnabled = true;
+
 	
 	// Get folder and file icons if present
 	child = FindNode(node, "icon");
@@ -161,6 +167,8 @@ GUIFileSelector::GUIFileSelector(xml_node<>* node) : GUIScrollList(node)
 			mExLinkIcon  = LoadAttrImage(child, "link");
 			mExBlockIcon = LoadAttrImage(child, "block");
 			mUpIcon      = LoadAttrImage(child, "up");
+			mExSelectedIcon = LoadAttrImage(child, "select");
+			mExUnselectedIcon = LoadAttrImage(child, "unselect");
 		}
 	} else {
 		if (mFolderIcon && mFolderIcon->GetResource() && mFileIcon && mFileIcon->GetResource()) {
@@ -447,8 +455,7 @@ void GUIFileSelector::RenderItem(size_t itemindex, int yPos, bool selected)
 	size_t fileindex = itemindex - folderSize;
 	
 	ImageResource* icon;
-	std::string text;
-	std::string ext;
+	std::string text, ext;
 	unsigned char type;
 
 	if (itemindex < folderSize) {
@@ -457,36 +464,45 @@ void GUIFileSelector::RenderItem(size_t itemindex, int yPos, bool selected)
 			text = gui_lookup("up_a_level", "(Up A Level)");
 			icon = mUpIcon;
 		} else {
-			icon = mFolderIcon;
+			if (mSelListEnabled)
+				icon = DataManager::GetStrValue("of_batch_folders").find(text + "/") != string::npos
+				       ? mExSelectedIcon : mExUnselectedIcon;
+			else
+				icon = mFolderIcon;
 		}
 	} else {
 		text = mFileList.at(fileindex).fileName;
-		ext  = mFileList.at(fileindex).fileExt;
-		type = mFileList.at(fileindex).fileType;
-		
-		// [f/d] Detect symlink
-		if (type == DT_LNK) {
-			icon = mExLinkIcon;
-		} else if (type == DT_BLK || type == DT_CHR) {
-			icon = mExBlockIcon;
+		if (mSelListEnabled) {
+			icon = DataManager::GetStrValue("of_batch_files").find(text + "/") != string::npos
+				   ? mExSelectedIcon : mExUnselectedIcon;
 		} else {
-			// [f/d] Detect file extension and set icon
-			if (ext == "zip" || ext == "apk" || ext == "tar" || ext == "gz" || ext == "bz2" || ext == "xz" || ext == "lzo" || ext == "cpio" || ext == "lzma" || ext == "z" || ext == "zz") {
-				icon = mExZipIcon;
-			} else if (ext == "img") {
-				icon = mExImgIcon;
-			} else if (ext == "png" || ext == "jpg" || ext == "bmp" || ext == "gif") {
-				icon = mExPngIcon;
-			} else if (ext == "txt" || ext == "log" || ext == "cfg" || ext == "prop" || ext == "xml" || ext == "sh" || ext == "rc" || ext == "conf" || ext == "fstab" || ext == "default") {
-				icon = mExTxtIcon;
-			} 
-			#ifdef OF_SUPPORT_OZIP_DECRYPTION
-				else if (ext == "ozip") {
+			ext  = mFileList.at(fileindex).fileExt;
+			type = mFileList.at(fileindex).fileType;
+			
+			// [f/d] Detect symlink
+			if (type == DT_LNK) {
+				icon = mExLinkIcon;
+			} else if (type == DT_BLK || type == DT_CHR) {
+				icon = mExBlockIcon;
+			} else {
+				// [f/d] Detect file extension and set icon
+				if (ext == "zip" || ext == "apk" || ext == "tar" || ext == "gz" || ext == "bz2" || ext == "xz" || ext == "lzo" || ext == "cpio" || ext == "lzma" || ext == "z" || ext == "zz") {
 					icon = mExZipIcon;
+				} else if (ext == "img") {
+					icon = mExImgIcon;
+				} else if (ext == "png" || ext == "jpg" || ext == "bmp" || ext == "gif") {
+					icon = mExPngIcon;
+				} else if (ext == "txt" || ext == "log" || ext == "cfg" || ext == "prop" || ext == "xml" || ext == "sh" || ext == "rc" || ext == "conf" || ext == "fstab" || ext == "default") {
+					icon = mExTxtIcon;
+				} 
+				#ifdef OF_SUPPORT_OZIP_DECRYPTION
+					else if (ext == "ozip") {
+						icon = mExZipIcon;
+					}
+				#endif
+				else {
+					icon = mFileIcon;
 				}
-			#endif
-			else {
-				icon = mFileIcon;
 			}
 		}
 	}
@@ -507,6 +523,7 @@ void GUIFileSelector::NotifySelect(size_t item_selected)
 {
 	size_t folderSize = mShowFolders ? mFolderList.size() : 0;
 	size_t fileSize = mShowFiles ? mFileList.size() : 0;
+	std::string msListVar;
 
 	if (item_selected < folderSize + fileSize) {
 		// We've selected an item!
@@ -519,6 +536,7 @@ void GUIFileSelector::NotifySelect(size_t item_selected)
 		if (item_selected < folderSize) {
 			// Path selection
 			std::string cwd;
+			msListVar = "of_batch_folders";
 
 			str = mFolderList.at(item_selected).fileName;
 			if (mSelection != "0")
@@ -549,13 +567,14 @@ void GUIFileSelector::NotifySelect(size_t item_selected)
 			} else if (mShowNavFolders == 0 && (mShowFiles == 0 || mExtn == ".ab")) {
 				// this is probably the restore list and we need to save chosen location to mVariable instead of mPathVar
 				DataManager::SetValue(mVariable, cwd);
-			} else {
+			} else if (!mSelListEnabled) {
 				// We are changing paths, so we need to set mPathVar
 				DataManager::SetValue(mPathVar, cwd);
 			}
 		} else if (!mVariable.empty()) {
 			// File selection (data)
 			str = mFileList.at(item_selected - folderSize).fileName;
+			msListVar = "of_batch_files";
 			if (mSelection != "0")
 				DataManager::SetValue(mSelection, str);
 
@@ -584,6 +603,23 @@ void GUIFileSelector::NotifySelect(size_t item_selected)
 			DataManager::SetValue("tw_fm_isfolder", 0);
 			DataManager::SetValue(mVariable, path);
 		}
+
+		if (mSelListEnabled && (!mVariable.empty() || item_selected < folderSize)) {
+			// [f/d] Multiselection
+			// We get something like this: Android/OFox.zip/DCIM/Pictures
+			if (str == "..") return;
+			std::string multiList = DataManager::GetStrValue(msListVar),
+						fname = str + "/";
+			size_t fnamepos = multiList.find(fname);
+
+			DataManager::SetValue(msListVar, fnamepos != string::npos ?
+			multiList.replace(fnamepos, fname.length(), "") : multiList + fname);
+
+			int count = DataManager::GetIntValue("of_batch_count");
+			DataManager::SetValue("of_batch_count", fnamepos != string::npos ?
+			count - 1 : count + 1);
+		}
+
 	}
 	mUpdate = 1;
 }

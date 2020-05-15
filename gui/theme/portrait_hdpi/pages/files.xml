@@ -25,7 +25,7 @@
 				<path name="tw_file_location1" default="/sdcard"/>
 				<data name="tw_filename1"/>
 				<selection name="tw_selection1"/>
-				<holditem name="tw_hold"/>
+				<extra hold="tw_hold"/>
 			</fileselector>
 
 			<fileselector style="fileselector_s">
@@ -37,7 +37,7 @@
 				<path name="tw_file_location1" default="/sdcard"/>
 				<data name="tw_filename1"/>
 				<selection name="tw_selection1"/>
-				<holditem name="tw_hold"/>
+				<extra hold="tw_hold"/>
 			</fileselector>
 			
 			<template name="base_nav"/>
@@ -100,12 +100,16 @@
 
 			<button style="actionbar">
 				<placement x="%ab_btn2_x%" y="%ab_y%" placement="4"/>
-				<action function="overlay">dialog_storage</action>
+				<action function="set">of_batch_folders=</action>
+				<action function="set">of_batch_files=</action>
+				<action function="set">of_batch_count=0</action>
+				<action function="set">tw_reload_fm=1</action>
+				<action function="page">fm_multiselection</action>
 			</button>
 
 			<image>
 				<placement x="%ab_btn2_x%" y="%ab_y%" placement="4"/>
-				<image resource="actionbar_storage"/>
+				<image resource="actionbar_batch"/>
 			</image>
 			
 			<image>
@@ -255,10 +259,10 @@
 				<placement x="%col1_x_caption%" y="%input_rename_y%" w="%input_w%" h="%input_height%"/>
 				<text>%tw_filemanager_rename%</text>
 				<data name="mkdir_folder"/>
-				<restrict minlen="1" maxlen="32" />
+				<restrict minlen="1" maxlen="32" allow="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890-_.{}[]() " />
 				<actions>
 					<action function="overlay"/>
-					<action function="terminalcommand">mkdir "%tw_file_location1%/%mkdir_folder%"</action>
+					<action function="terminalcommand">mkdir '%tw_file_location1%/%mkdir_folder%'</action>
 					<action function="set">mkdir_folder=</action>
 					<action function="page">filemanagerlist</action>
 				</actions>
@@ -278,6 +282,133 @@
 			<action>
 				<touch key="back"/>
 				<action function="page">filemanagerlist</action>
+			</action>
+		</page>
+
+		<page name="fm_multiselection">
+			<fileselector style="fileselector_s">
+				<iconsize w="%col1_x_caption%" h="136" padding="25"/>
+				<placement x="0" y="%ab_h%" w="%fileselector_width%" h="%bl_fullscreen_h%"/>
+				<sort name="tw_gui_sort_order"/>
+				<exicon select="checkbox_true" unselect="checkbox_false" />
+				<filter folders="1" files="1" extnvar="fm_type_sort" nav="0"/>
+				<path name="tw_file_location1" default="/sdcard"/>
+				<data name="tw_filename1"/>
+				<selection name="tw_selection1"/>
+				<extra multi="1"/>
+			</fileselector>
+			
+			<template name="base"/>
+
+			<text style="text_ab_title">
+				<placement x="%col1_x_indent%" y="%ab_bc_y%"/>
+				<text>{@batch_selected}</text>
+			</text>
+			
+			<button style="actionbar">
+				<placement x="%ab_btn1_x%" y="%ab_y%" placement="4"/>
+				<action function="set">of_batch_folders=</action>
+				<action function="set">of_batch_files=</action>
+				<action function="set">of_batch_count=0</action>
+			</button>
+			
+			<image>
+				<placement x="%ab_btn1_x%" y="%ab_y%" placement="4"/>
+				<image resource="actionbar_cancel"/>
+			</image>
+
+			<image>
+				<condition var1="of_batch_count" op="&gt;=" var2="1"/>
+				<placement x="%btn_float_x%" y="%btn_float_y%" placement="4"/>
+				<image resource="fab_shadow"/>
+			</image>
+
+			<button style="floating_btn">
+				<condition var1="of_batch_count" op="&gt;=" var2="1"/>
+				<placement x="%btn_float_x%" y="%btn_float_y%" placement="4"/>
+				<action function="set">of_is_batch=1</action>
+				<action function="page">fm_ms_actions</action>
+			</button>
+			
+			<image>
+				<condition var1="of_batch_count" op="&gt;=" var2="1"/>
+				<placement x="%btn_float_x%" y="%btn_float_y%" placement="4"/>
+				<image resource="fab_accept"/>
+			</image>
+
+			<template name="gestures"/>
+
+			<action>
+				<touch key="home"/>
+				<action function="page">filemanagerlist</action>
+			</action>
+
+			<action>
+				<touch key="back"/>
+				<action function="page">filemanagerlist</action>
+			</action>
+		</page>
+
+		<page name="fm_ms_actions">
+
+			<listbox style="btn_list">
+				<placement x="0" y="%ab_ex_h%" w="%screen_w%" h="%bl_files_h%"/>
+				<listitem name="{@fm_copy_btn}">
+					<icon res="bs_btn_copy"/>
+					<action function="set">of_batch_cmd_d=cp -R</action>
+					<action function="set">of_batch_cmd_f=cp</action>
+					<action function="set">tw_fm_text1={@fm_copying}</action>
+					<action function="set">tw_back=choosedestinationfolder</action>
+					<action function="page">choosedestinationfolder</action>
+				</listitem>
+				<listitem name="{@fm_move_btn}">
+					<icon res="bs_btn_cut"/>
+					<action function="set">of_batch_cmd_d=mv</action>
+					<action function="set">of_batch_cmd_f=mv</action>
+					<action function="set">tw_fm_text1={@fm_moving}</action>
+					<action function="set">tw_back=choosedestinationfolder</action>
+					<action function="page">choosedestinationfolder</action>
+				</listitem>
+				<listitem name="{@fm_delete_btn}">
+					<icon res="bs_btn_delete"/>
+					<action function="set">of_batch_cmd_d=rm -rf</action>
+					<action function="set">of_batch_cmd_f=rm -rf</action>
+					<action function="set">tw_fm_text1={@fm_deleting}</action>
+					<action function="set">tw_fm_text2=</action>
+					<action function="set">tw_fm_text3=</action>
+					<action function="set">tw_include_text3=0</action>
+					<action function="set">tw_back=fm_ms_actions</action>
+					<action function="page">filemanagerconfirm</action>
+				</listitem>
+			</listbox>
+
+			<template name="base_ex"/>
+			
+			<text style="text_ab_title">
+				<placement x="%col1_x_indent%" y="%ab_bc_y%"/>
+				<text>{@fm_hdr}</text>
+			</text>
+
+			<text style="text_ab_title">
+				<placement x="%col1_x_indent%" y="%row1_2_y%" placement="2"/>
+				<text>{@batch_title}</text>
+			</text>
+
+			<text style="text_ab_subtitle">
+				<placement x="%col1_x_indent%" y="%row1_2_y%"/>
+				<text>{@batch_selected}</text>
+			</text>
+
+			<template name="gestures"/>
+
+			<action>
+				<touch key="home"/>
+				<action function="page">main</action>
+			</action>
+
+			<action>
+				<touch key="back"/>
+				<action function="page">fm_multiselection</action>
 			</action>
 		</page>
 		
@@ -540,7 +671,7 @@
 			<listbox style="btn_list">
 				<placement x="0" y="%ab_ex_h%" w="%screen_w%" h="%bl_files_h%"/>
 				<data requireReload="1"/>
-				<holditem name="book_hold"/>
+				<extra hold="book_hold"/>
 				<listitem name="{@fm_books_edit}">
 					<icon res="bs_btn_rename"/>
 					<condition var1="book_edit" var2="0"/>
@@ -746,6 +877,7 @@
 		
 		<page name="filemanageroptions">
 			<action>
+				<action function="set">of_is_batch=0</action>
 				<action function="set">opts_show=%auto_show_btns%</action>
 			</action>
 
@@ -777,7 +909,7 @@
 					<condition var1="tw_fm_isfolder" var2="1"/>
 					<condition var1="tw_hold" op="!=" var2="1"/>
 					<icon res="bs_btn_copy"/>
-					<action function="set">tw_filemanager_command=cd "%tw_file_location1%" &amp;&amp; cd .. &amp;&amp; cp -R</action>
+					<action function="set">tw_filemanager_command=cd .. &amp;&amp; cp -R</action>
 					<action function="set">tw_fm_text1={@fm_copying}</action>
 					<action function="set">tw_back=choosedestinationfolder</action>
 					<action function="page">choosedestinationfolder</action>
@@ -786,7 +918,7 @@
 					<condition var1="tw_fm_isfolder" var2="1"/>
 					<condition var1="tw_hold" var2="1"/>
 					<icon res="bs_btn_copy"/>
-					<action function="set">tw_filemanager_command=cd "%tw_file_location1%" &amp;&amp; cp -R</action>
+					<action function="set">tw_filemanager_command=cp -R</action>
 					<action function="set">tw_fm_text1={@fm_copying}</action>
 					<action function="set">tw_back=choosedestinationfolder</action>
 					<action function="page">choosedestinationfolder</action>
@@ -812,7 +944,7 @@
 					<icon res="bs_btn_rename"/>
 					<action function="set">tw_filemanager_rename=tw_selection1</action>
 					<action function="set">tw_fm_text1={@fm_renaming}</action>
-					<action function="set">tw_filemanager_command=cd "%tw_file_location1%" &amp;&amp; cd .. &amp;&amp; mv</action>
+					<action function="set">tw_filemanager_command=cd .. &amp;&amp; mv</action>
 					<action function="set">tw_back=filemanageroptions</action>
 					<action function="page">filemanagerrenamefolder</action>
 				</listitem>
@@ -822,7 +954,7 @@
 					<icon res="bs_btn_rename"/>
 					<action function="set">tw_filemanager_rename=tw_selection1</action>
 					<action function="set">tw_fm_text1={@fm_renaming}</action>
-					<action function="set">tw_filemanager_command=cd "%tw_file_location1%" &amp;&amp; mv</action>
+					<action function="set">tw_filemanager_command=mv</action>
 					<action function="set">tw_back=filemanageroptions</action>
 					<action function="page">filemanagerrenamefolder</action>
 				</listitem>
@@ -893,10 +1025,10 @@
 					<action function="set">tw_back=filemanageroptions</action>
 					<action function="set">sum=1</action>
 					<action function="ftls">
-					twrp xset ft_inf_md5=$(md5sum "%tw_filename1%" | sed 's*%tw_filename1%**g')
-					twrp xset ft_inf_sha1=$(sha1sum "%tw_filename1%" | sed 's*%tw_filename1%**g')
-					twrp xset ft_inf_sha2=$(sha256sum "%tw_filename1%" | sed 's*%tw_filename1%**g')
-					twrp xset ft_inf_sha5=$(sha512sum "%tw_filename1%" | sed 's*%tw_filename1%**g')
+					twrp xset ft_inf_md5=$(md5sum '%tw_filename1%' | sed 's*%tw_filename1%**g')
+					twrp xset ft_inf_sha1=$(sha1sum '%tw_filename1%' | sed 's*%tw_filename1%**g')
+					twrp xset ft_inf_sha2=$(sha256sum '%tw_filename1%' | sed 's*%tw_filename1%**g')
+					twrp xset ft_inf_sha5=$(sha512sum '%tw_filename1%' | sed 's*%tw_filename1%**g')
 					</action>
 					<action function="page">checksum_confirm</action>
 				</listitem>
@@ -907,15 +1039,15 @@
 					<action function="set">tw_back=filemanageroptions</action>
 					<action function="set">sum=0</action>
 					<action function="ftls">
-					link="%tw_filename1%"
-					[ -L "%tw_filename1%" ] && link=$(readlink "%tw_filename1%")
+					link='%tw_filename1%'
+					[ -L '%tw_filename1%' ] && link=$(readlink '%tw_filename1%')
 					twrp xset ft_inf_real=$link
-					twrp xset ft_inf_size=$(du -h "%tw_filename1%" | sed 's*%tw_filename1%**g');
+					twrp xset ft_inf_size=$(du -h '%tw_filename1%' | sed 's*%tw_filename1%**g');
 					
-					twrp xset ft_inf_rights=$(ls -ls "%tw_filename1%" | awk '{print $2}')
-					twrp xset ft_inf_acc=$(ls -lseu "%tw_filename1%" | awk '{print $7,$8,$9,$10,$11}')
-					twrp xset ft_inf_mod=$(ls -lset "%tw_filename1%" | awk '{print $7,$8,$9,$10,$11}')
-					twrp xset ft_inf_ch=$(ls -lsec "%tw_filename1%" | awk '{print $7,$8,$9,$10,$11}')
+					twrp xset ft_inf_rights=$(ls -ls '%tw_filename1%' | awk '{print $2}')
+					twrp xset ft_inf_acc=$(ls -lseu '%tw_filename1%' | awk '{print $7,$8,$9,$10,$11}')
+					twrp xset ft_inf_mod=$(ls -lset '%tw_filename1%' | awk '{print $7,$8,$9,$10,$11}')
+					twrp xset ft_inf_ch=$(ls -lsec '%tw_filename1%' | awk '{print $7,$8,$9,$10,$11}')
 					</action>
 					<action function="page">checksum_confirm</action>
 				</listitem>
@@ -1315,9 +1447,9 @@
 				<placement x="%col1_x_caption%" y="%input_rename_y%" w="%input_w%" h="%input_height%"/>
 				<text>%tw_filemanager_rename%</text>
 				<data name="tw_filemanager_rename"/>
-				<restrict minlen="1" maxlen="64"/>
+				<restrict minlen="1" maxlen="64" allow="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890-_.{}[]() "/>
 				<action function="set">tw_fm_text2={@fordowns_to}</action>
-				<action function="set">tw_fm_text3="%tw_file_location1%/%tw_filemanager_rename%"</action>
+				<action function="set">tw_fm_text3=%tw_filemanager_rename%</action>
 				<action function="set">tw_include_text3=1</action>
 				<action function="set">tw_back=filemanageroptions</action>
 				<action function="page">filemanagerconfirm</action>
@@ -1367,7 +1499,7 @@
 				<placement x="%col1_x_caption%" y="%input_rename_y%" w="%input_w%" h="%input_height%"/>
 				<text>%tw_filemanager_rename%</text>
 				<data name="tw_filemanager_rename"/>
-				<restrict minlen="1" maxlen="64"/>
+				<restrict minlen="1" maxlen="64" allow="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890-_.{}[]() "/>
 				<action function="set">tw_fm_text2={@fordowns_to}</action>
 				<action function="set">tw_fm_text3=%tw_filemanager_rename%</action>
 				<action function="set">tw_include_text3=1</action>
@@ -1646,8 +1778,15 @@
 			</text>
 
 			<text style="text_ab_subtitle">
+				<condition var1="of_is_batch" op="!=" var2="1"/>
 				<placement x="%col1_x_indent%" y="%row1_2_y%"/>
 				<text>%tw_filename1%</text>
+			</text>
+
+			<text style="text_ab_subtitle">
+				<condition var1="of_is_batch" var2="1"/>
+				<placement x="%col1_x_indent%" y="%row1_2_y%"/>
+				<text>{@batch_files_folders}</text>
 			</text>
 
 			<text style="text_body2">
@@ -1667,6 +1806,7 @@
 			
 			<slider style="slider_action">
 				<placement x="%center_x%" y="%slider_y%" placement="5"/>
+				<action function="set">tw_terminal_location=%tw_file_location1%</action>
 				<action function="page">filemanageraction</action>
 			</slider>
 
@@ -1766,6 +1906,7 @@
 			
 			<slider style="slider_action">
 				<placement x="%center_x%" y="%slider_y%" placement="5"/>
+				<action function="set">tw_terminal_location=%tw_file_location1%</action>
 				<action function="page">archive_cmd</action>
 			</slider>
 
@@ -1806,14 +1947,14 @@
 			<action>
 				<condition var1="tw_artype" var2="0"/>
 				<condition var1="tw_extract_action" op="!=" var2="1"/>
-				<action function="terminalcommand">mkdir "%tw_file_location1%/%tw_selection1%_unpack"; unzip -o "%tw_filename1%" -d "%tw_file_location1%/%tw_selection1%_unpack";</action>
+				<action function="terminalcommand">mkdir '%tw_file_location1%/%tw_selection1%_unpack'; unzip -o '%tw_filename1%' -d '%tw_file_location1%/%tw_selection1%_unpack';</action>
 				<action function="set">tw_extract_action=0</action>
 			</action>
 
 			<action>
 				<condition var1="tw_artype" var2="1"/>
 				<condition var1="tw_extract_action" op="!=" var2="1"/>
-				<action function="terminalcommand">mkdir "%tw_file_location1%/%tw_selection1%_unpack"; tar -xvf "%tw_filename1%" -C "%tw_file_location1%/%tw_selection1%_unpack";</action>
+				<action function="terminalcommand">mkdir '%tw_file_location1%/%tw_selection1%_unpack'; tar -xvf '%tw_filename1%' -C '%tw_file_location1%/%tw_selection1%_unpack';</action>
 				<action function="set">tw_extract_action=0</action>
 			</action>
 
@@ -1822,7 +1963,7 @@
 				<condition var1="tw_extract_action" var2="1"/>
 				<condition var1="tw_fm_isfolder" var2="1"/>
 				<condition var1="tw_hold" op="!=" var2="1"/>
-				<action function="terminalcommand">cd "%tw_file_location1%"; tar -cvf "%tw_file_location1%.tar" *;</action>
+				<action function="terminalcommand">cd '%tw_file_location1%'; tar -cvf '%tw_file_location1%.tar' *;</action>
 				<action function="set">tw_extract_action=0</action>
 			</action>
 
@@ -1831,7 +1972,7 @@
 				<condition var1="tw_extract_action" var2="1"/>
 				<condition var1="tw_fm_isfolder" var2="1"/>
 				<condition var1="tw_hold" var2="1"/>
-				<action function="terminalcommand">cd "%tw_filename1%"; tar -cvf "%tw_filename1%.tar" *;</action>
+				<action function="terminalcommand">cd '%tw_filename1%'; tar -cvf '%tw_filename1%.tar' *;</action>
 				<action function="set">tw_extract_action=0</action>
 			</action>
 
@@ -1839,7 +1980,7 @@
 				<condition var1="tw_artype" var2="0"/>
 				<condition var1="tw_extract_action" var2="1"/>
 				<condition var1="tw_fm_isfolder" op="!=" var2="1"/>
-				<action function="terminalcommand">pigz -%tw_pack_lvl%vKf "%tw_filename1%";</action>
+				<action function="terminalcommand">pigz -%tw_pack_lvl%vKf '%tw_filename1%';</action>
 				<action function="set">tw_extract_action=0</action>
 			</action>
 
@@ -1847,7 +1988,7 @@
 				<condition var1="tw_artype" var2="1"/>
 				<condition var1="tw_extract_action" var2="1"/>
 				<condition var1="tw_fm_isfolder" op="!=" var2="1"/>
-				<action function="terminalcommand">cd "%tw_file_location1%"; tar -cvf "%tw_filename1%.tar" "%tw_filename1%";</action>
+				<action function="terminalcommand">cd '%tw_file_location1%'; tar -cvf '%tw_filename1%.tar' '%tw_filename1%';</action>
 				<action function="set">tw_extract_action=0</action>
 			</action>
 
@@ -1855,7 +1996,7 @@
 				<condition var1="tw_artype" var2="2"/>
 				<condition var1="tw_extract_action" var2="1"/>
 				<condition var1="tw_hold" op="!=" var2="1"/>
-				<action function="terminalcommand">cd "%tw_file_location1%"; find ./* | cpio -o &gt; "%tw_file_location1%.cpio";</action>
+				<action function="terminalcommand">cd '%tw_file_location1%'; find ./* | cpio -o &gt; '%tw_file_location1%.cpio';</action>
 				<action function="set">tw_extract_action=0</action>
 			</action>
 
@@ -1863,88 +2004,88 @@
 				<condition var1="tw_artype" var2="2"/>
 				<condition var1="tw_extract_action" var2="1"/>
 				<condition var1="tw_hold" var2="1"/>
-				<action function="terminalcommand">cd "%tw_filename1%"; find ./* | cpio -o &gt; "%tw_filename1%.cpio";</action>
+				<action function="terminalcommand">cd '%tw_filename1%'; find ./* | cpio -o &gt; '%tw_filename1%.cpio';</action>
 				<action function="set">tw_extract_action=0</action>
 			</action>
 
 			<action>
 				<condition var1="tw_artype" var2="2"/>
 				<condition var1="tw_extract_action" op="!=" var2="1"/>
-				<action function="terminalcommand">mkdir "%tw_file_location1%/%tw_selection1%_unpack"; cd "%tw_file_location1%/%tw_selection1%_unpack"; cpio -idv &lt; "../%tw_selection1%";</action>
+				<action function="terminalcommand">mkdir '%tw_file_location1%/%tw_selection1%_unpack'; cd '%tw_file_location1%/%tw_selection1%_unpack'; cpio -idv &lt; '../%tw_selection1%';</action>
 				<action function="set">tw_extract_action=0</action>
 			</action>
 
 			<action>
 				<condition var1="tw_artype" var2="3"/>
 				<condition var1="tw_extract_action" op="!=" var2="1"/>
-				<action function="terminalcommand">pigz -vdf "%tw_filename1%";</action>
+				<action function="terminalcommand">pigz -vdf '%tw_filename1%';</action>
 				<action function="set">tw_extract_action=0</action>
 			</action>
 
 			<action>
 				<condition var1="tw_artype" var2="4"/>
 				<condition var1="tw_extract_action" op="!=" var2="1"/>
-				<action function="terminalcommand">bzip2 -vdf "%tw_filename1%";</action>
+				<action function="terminalcommand">bzip2 -vdf '%tw_filename1%';</action>
 				<action function="set">tw_extract_action=0</action>
 			</action>
 
 			<action>
 				<condition var1="tw_artype" var2="6"/>
 				<condition var1="tw_extract_action" op="!=" var2="1"/>
-				<action function="terminalcommand">lzop -fvd "%tw_filename1%";</action>
+				<action function="terminalcommand">lzop -fvd '%tw_filename1%';</action>
 				<action function="set">tw_extract_action=0</action>
 			</action>
 
 			<action>
 				<condition var1="tw_artype" var2="8"/>
 				<condition var1="tw_extract_action" op="!=" var2="1"/>
-				<action function="terminalcommand">pigz -dzfv "%tw_filename1%";</action>
+				<action function="terminalcommand">pigz -dzfv '%tw_filename1%';</action>
 				<action function="set">tw_extract_action=0</action>
 			</action>
 
 			<action>
 				<condition var1="tw_artype" var2="3"/>
 				<condition var1="tw_extract_action" var2="1"/>
-				<action function="terminalcommand">pigz -%tw_pack_lvl%fv "%tw_filename1%";</action>
+				<action function="terminalcommand">pigz -%tw_pack_lvl%fv '%tw_filename1%';</action>
 				<action function="set">tw_extract_action=0</action>
 			</action>
 
 			<action>
 				<condition var1="tw_artype" var2="4"/>
 				<condition var1="tw_extract_action" var2="1"/>
-				<action function="terminalcommand">bzip2 -%tw_pack_lvl%f "%tw_filename1%";</action>
+				<action function="terminalcommand">bzip2 -%tw_pack_lvl%f '%tw_filename1%';</action>
 				<action function="set">tw_extract_action=0</action>
 			</action>
 
 			<action>
 				<condition var1="tw_artype" var2="6"/>
 				<condition var1="tw_extract_action" var2="1"/>
-				<action function="terminalcommand">lzop -fv%tw_pack_lvl% "%tw_filename1%";</action>
+				<action function="terminalcommand">lzop -fv%tw_pack_lvl% '%tw_filename1%';</action>
 				<action function="set">tw_extract_action=0</action>
 			</action>
 
 			<action>
 				<condition var1="tw_artype" var2="8"/>
 				<condition var1="tw_extract_action" var2="1"/>
-				<action function="terminalcommand">pigz -%tw_pack_lvl%zfv "%tw_filename1%";</action>
+				<action function="terminalcommand">pigz -%tw_pack_lvl%zfv '%tw_filename1%';</action>
 				<action function="set">tw_extract_action=0</action>
 			</action>
 
 			<action>
 				<condition var1="tw_artype" var2="7"/>
-				<action function="terminalcommand">xz -df "%tw_filename1%";</action>
+				<action function="terminalcommand">xz -df '%tw_filename1%';</action>
 				<action function="set">tw_extract_action=0</action>
 			</action>
 
 			<action>
 				<condition var1="tw_artype" var2="5"/>
-				<action function="terminalcommand">lzma -df "%tw_filename1%";</action>
+				<action function="terminalcommand">lzma -df '%tw_filename1%';</action>
 				<action function="set">tw_extract_action=0</action>
 			</action>
 
 			<action>
 				<condition var1="tw_artype" var2="9"/>
-				<action function="terminalcommand">uncompress -f "%tw_filename1%";</action>
+				<action function="terminalcommand">uncompress -f '%tw_filename1%';</action>
 				<action function="set">tw_extract_action=0</action>
 			</action>
 			
@@ -1992,13 +2133,29 @@
 			</action>
 
 			<action>
+				<condition var1="of_is_batch" op="!=" var2="1"/>
 				<condition var1="tw_include_text3" var2="0"/>
-				<action function="terminalcommand">%tw_filemanager_command% "%tw_filename1%"</action>
+				<action function="terminalcommand">%tw_filemanager_command% '%tw_filename1%'</action>
 			</action>
 
 			<action>
+				<condition var1="of_is_batch" op="!=" var2="1"/>
 				<condition var1="tw_include_text3" var2="1"/>
-				<action function="terminalcommand">%tw_filemanager_command% "%tw_filename1%" "%tw_fm_text3%"</action>
+				<action function="terminalcommand">%tw_filemanager_command% '%tw_filename1%' '%tw_fm_text3%'</action>
+			</action>
+
+			<action>
+				<condition var1="of_is_batch" var2="1"/>
+				<condition var1="tw_include_text3" var2="0"/>
+				<action function="batchfiles"  >%of_batch_cmd_f% '%tw_file_location1%/%%s'</action>
+				<action function="batchfolders">%of_batch_cmd_d% '%tw_file_location1%/%%s'</action>
+			</action>
+
+			<action>
+				<condition var1="of_is_batch" var2="1"/>
+				<condition var1="tw_include_text3" var2="1"/>
+				<action function="batchfiles"  >%of_batch_cmd_f% '%tw_file_location1%/%%s' '%tw_fm_text3%'</action>
+				<action function="batchfolders">%of_batch_cmd_d% '%tw_file_location1%/%%s' '%tw_fm_text3%'</action>
 			</action>
 		</page>
 
@@ -2036,7 +2193,7 @@
 
 		<page name="cat_file">
 			<action>
-				<action function="terminalcommand">cat "%tw_filename1%"</action>
+				<action function="terminalcommand">cat '%tw_filename1%'</action>
 			</action>
 			
 			<template name="base_ex"/>

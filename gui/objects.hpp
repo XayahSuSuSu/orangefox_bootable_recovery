@@ -365,6 +365,11 @@ protected:
 	int getpartitiondetails(std::string arg);
 	int screenshot(std::string arg);
 	int setbrightness(std::string arg);
+	int cmdf(std::string arg, std::string file);
+	int batchaction(std::string s, std::string arg);
+	int batchfiles(std::string arg);
+	int batchfolders(std::string arg);
+
 
 	// (originally) threaded actions
 	int fileexists(std::string arg);
@@ -698,9 +703,12 @@ protected:
 	ImageResource* mExPngIcon;
 	ImageResource* mExLinkIcon;
 	ImageResource* mExBlockIcon;
+	ImageResource* mExSelectedIcon;
+	ImageResource* mExUnselectedIcon;
 	bool updateFileList;
 	bool hasFiles, hasHiddenFiles;
 	int doubleLine = 0;
+	bool mSelListEnabled; // [f/d] is multiselection enabled
 	std::string mFileFilterVar;
 };
 

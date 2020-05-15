@@ -1099,5 +1099,9 @@
 		<string name="spl_del_img">Remove image</string>
 		<string name="hidden">Hidden</string>
 		<string name="spl_ofr">"OrangeFox Recovery" label</string>
+
+		<string name="batch_selected">%of_batch_count% selected</string>
+		<string name="batch_title">Batch actions</string>
+		<string name="batch_files_folders">Files &amp; Folders</string>
 	</resources>
 </language>
