@@ -17,7 +17,7 @@
 		<image name="actionbar_power_off" filename="#ACCENT#/ActionBar/power_off" retainaspect="1"/>
 		<image name="actionbar_storage" filename="#ACCENT#/ActionBar/storage" retainaspect="1"/>
 		<image name="actionbar_search" filename="#ACCENT#/ActionBar/search" retainaspect="1"/>
-		<image name="actionbar_batch" filename="#ACCENT#/ActionBar/multi" retainaspect="1"/>
+		<image name="actionbar_menu" filename="#ACCENT#/ActionBar/menu" retainaspect="1"/>
     </resources>
 	<variables>
 		<variable name="actbar_color" value="%#A_COLOR#%"/>

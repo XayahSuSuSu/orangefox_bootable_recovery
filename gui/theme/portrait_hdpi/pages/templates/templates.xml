@@ -3,40 +3,41 @@
 	<templates>
 		<template name="files_qa_base">
 			<listbox style="btn_list">
-				<placement x="0" y="%ab_h%" w="%screen_w%" h="720"/>
-				<listitem name="{@fm_mkdir}">
-					<icon res="nav_files_d"/>
-					<action function="set">mkdir_folder=</action>
-					<action function="page">files_mkdir</action>
+				<placement x="0" y="%ab_h%" w="%screen_w%" h="%fm_search_h%"/>
+				<listitem name="{@internal}">
+					<icon res="device"/>
+					<condition var1="fileexists" var2="/sdcard"/>
+					<action function="set">tw_file_location1=/sdcard</action>
+					<action function="page">filemanagerlist</action>
+				</listitem>
+				<listitem name="{@microsd}">
+					<icon res="sdcard"/>
+					<condition var1="fileexists" var2="/sdcard1"/>
+					<action function="set">tw_file_location1=/sdcard1</action>
+					<action function="page">filemanagerlist</action>
+				</listitem>
+				<listitem name="{@microsd}">
+					<icon res="sdcard"/>
+					<condition var1="fileexists" var2="/external_sd"/>
+					<action function="set">tw_file_location1=/external_sd</action>
+					<action function="page">filemanagerlist</action>
+				</listitem>
+				<listitem name="{@usbotg}">
+					<icon res="otg"/>
+					<condition var1="fileexists" var2="/usb-otg"/>
+					<action function="set">tw_file_location1=/usb-otg</action>
+					<action function="page">filemanagerlist</action>
+				</listitem>
+				<listitem name="{@usbotg}">
+					<icon res="otg"/>
+					<condition var1="fileexists" var2="/usb_otg"/>
+					<action function="set">tw_file_location1=/usb_otg</action>
+					<action function="page">filemanagerlist</action>
 				</listitem>
 				<listitem name="{@fm_books}">
 					<icon res="bs_btn_bookmark"/>
 					<action function="set">book_edit=0</action>
 					<action function="page">files_bookmarks_prepare</action>
-				</listitem>
-				<listitem name="{@fm_copy_btn}">
-					<icon res="bs_btn_copy"/>
-					<condition var1="tw_file_location1" op="!=" var2="/"/>
-					<action function="set">tw_filemanager_command=cd "%tw_file_location1%" &amp;&amp; cd .. &amp;&amp; cp -R</action>
-					<action function="set">tw_fm_text1={@fm_copying}</action>
-					<action function="set">tw_back=choosedestinationfolder</action>
-					<action function="page">choosedestinationfolder</action>
-				</listitem>
-				<listitem name="{@fm_delete_btn}">
-					<icon res="bs_btn_delete"/>
-					<condition var1="tw_file_location1" op="!=" var2="/"/>
-					<action function="set">tw_filemanager_command=rm -rf</action>
-					<action function="set">tw_fm_text1={@fm_deleting}</action>
-					<action function="set">tw_fm_text2=</action>
-					<action function="set">tw_fm_text3=</action>
-					<action function="set">tw_include_text3=0</action>
-					<action function="set">tw_back=filemanagerlist</action>
-					<action function="page">filemanagerconfirm</action>
-				</listitem>
-				<listitem name="{@more}">
-					<icon res="utils"/>
-					<condition var1="tw_file_location1" op="!=" var2="/"/>
-					<action function="page">filemanageroptions</action>
 				</listitem>
 			</listbox>
 

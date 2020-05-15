@@ -70,12 +70,12 @@
 			</text>
 			
 			<button style="actionbar">
-				<placement x="%ab_btn1_x%" y="%ab_y%" placement="4"/>
+				<placement x="%ab_btn2_x%" y="%ab_y%" placement="4"/>
 				<action function="overlay">fm_sort</action>
 			</button>
 
 			<image>
-				<placement x="%ab_btn1_x%" y="%ab_y%" placement="4"/>
+				<placement x="%ab_btn2_x%" y="%ab_y%" placement="4"/>
 				<image resource="actionbar_sort"/>
 			</image>
 			
@@ -99,17 +99,13 @@
 			</image>
 
 			<button style="actionbar">
-				<placement x="%ab_btn2_x%" y="%ab_y%" placement="4"/>
-				<action function="set">of_batch_folders=</action>
-				<action function="set">of_batch_files=</action>
-				<action function="set">of_batch_count=0</action>
-				<action function="set">tw_reload_fm=1</action>
-				<action function="page">fm_multiselection</action>
+				<placement x="%ab_btn1_x%" y="%ab_y%" placement="4"/>
+				<action function="overlay">menu</action>
 			</button>
 
 			<image>
-				<placement x="%ab_btn2_x%" y="%ab_y%" placement="4"/>
-				<image resource="actionbar_batch"/>
+				<placement x="%ab_btn1_x%" y="%ab_y%" placement="4"/>
+				<image resource="actionbar_menu"/>
 			</image>
 			
 			<image>

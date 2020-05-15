@@ -315,7 +315,6 @@ void GUIPartitionList::NotifySelect(size_t item_selected)
 					mUpdate = 1;
 
 					DataManager::SetValue(mVariable, str);
-					DataManager::SetValue("tw_file_location1", str);
 				}
 			} else {
 				if (ListType == "flashimg" || ListType == "part_option" ) { // only one item can be selected for flashing images

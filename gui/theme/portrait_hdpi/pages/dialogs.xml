@@ -1,54 +1,48 @@
 <?xml version="1.0"?>
 <recovery>
 	<pages>
-		<page name="dialog_path">
-			<template name="dialog_body_key"/>
-
+		<page name="menu">
+			<background color="%transparent%"/>
+			<template name="navbar_bkg"/>
+			
 			<button>
-				<placement x="%bg_storage_x%" y="%bg_encrypt_y%"/>
-				<image resource="dialog_bg"/>
-			</button>
-
-			<text style="text_dlg_title">
-				<placement x="%bg_storage_hdr_x%" y="%bg_encrypt_hdr_y%"/>
-				<text>{@fm_path}</text>
-			</text>
-
-			<text style="caption_hl">
-				<placement x="%bg_storage_hdr_x%" y="%dlg_input_cap%"/>
-				<text>{@fm_path2}</text>
-			</text>
-
-			<input>
-				<placement x="%bg_storage_hdr_x%" y="%input_encr_y%" w="%input_encr_width%" h="%input_height%"/>
-				<text>%tw_file_location_temp%</text>
-				<data name="tw_file_location_temp"/>
-				<restrict minlen="1" maxlen="999" />
-				<actions>
-					<action function="overlay"/>
-					<action function="set">tw_file_location1=%tw_file_location_temp%</action>
-					<action function="page">filemanagerlist</action>
-				</actions>
-			</input>
-
-			<fill color="%accent%">
-				<placement x="%bg_storage_hdr_x%" y="%dlg_input_line%" w="%input_encr_width%" h="%input_line_height%" placement="1"/>
-			</fill>
-
-			<button style="btn_dlg">
-				<placement x="%db_left_x%" y="%db_encrypt_y%"/>
-				<text>{@cancel_btn}</text>
+				<fill color="%darktransparent%"/>
+				<placement x="0" y="0" w="%screen_w%" h="%screen_h%"/>
 				<action function="key">back</action>
 			</button>
 
-			<button style="btn_dlg_hl">
-				<placement x="%db_right_x%" y="%db_encrypt_y%"/>
-				<text>{@goto_storage}</text>
-				<action function="overlay"/>
-				<action function="overlay">dialog_storage</action>
-			</button>
+			<listbox style="btn_list">
+				<placement x="0" y="%down_menu_y%" w="%screen_w%" h="432"/>
+				<listitem name="{@batch_title}">
+					<icon res="batch"/>
+					<action function="overlay"/>
+					<action function="set">of_batch_folders=</action>
+					<action function="set">of_batch_files=</action>
+					<action function="set">of_batch_count=0</action>
+					<action function="set">tw_reload_fm=1</action>
+					<action function="page">fm_multiselection</action>
+				</listitem>
+				<listitem name="{@fm_mkdir}">
+					<icon res="bs_adv_aroma"/>
+					<action function="overlay"/>
+					<action function="set">mkdir_folder=</action>
+					<action function="page">files_mkdir</action>
+				</listitem>
+				<listitem name="{@fm_action_folder} %tw_filename1%">
+					<icon res="nav_files_d"/>
+					<condition var1="tw_file_location1" op="!=" var2="/"/>
+					<action function="overlay"/>
+					<action function="set">tw_filename1=tw_file_location1</action>
+					<action function="set">tw_fm_isfolder=1</action>
+					<action function="page">filemanageroptions</action>
+				</listitem>
+			</listbox>
 
-			<template name="gestures_key"/>
+			<template name="keys"/>
+			<template name="statusbarinfo"/>
+			<template name="navbar_bkg"/>
+			<template name="navbar"/>
+			<template name="gestures"/>
 
 			<action>
 				<touch key="home"/>

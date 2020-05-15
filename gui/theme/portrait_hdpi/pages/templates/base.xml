@@ -140,6 +140,13 @@
 			</text>
 			
 			<button>
+				<condition var1="nav_panel_id" var2="0"/>
+				<placement x="%nav_item_1%" y="%nav_item_y%" placement="4"/>
+				<image resource="nav_empty" highlightresource="nav_hl"/>
+				<action function="overlay">menu</action>
+			</button>
+			
+			<button>
 				<condition var1="nav_panel_id" op="!=" var2="0"/>
 				<placement x="%nav_item_1%" y="%nav_item_y%" placement="4"/>
 				<image resource="nav_empty" highlightresource="nav_hl"/>

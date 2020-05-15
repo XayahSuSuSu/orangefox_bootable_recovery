@@ -1103,5 +1103,7 @@
 		<string name="batch_selected">%of_batch_count% selected</string>
 		<string name="batch_title">Batch actions</string>
 		<string name="batch_files_folders">Files &amp; Folders</string>
+
+		<string name="fm_action_folder">Actions on this folder</string>
 	</resources>
 </language>

@@ -16,7 +16,7 @@
 		<image name="actionbar_power_off" filename="DFox/ActionBar/power_off" retainaspect="1"/>
 		<image name="actionbar_storage" filename="DFox/ActionBar/storage" retainaspect="1"/>
 		<image name="actionbar_search" filename="DFox/ActionBar/search" retainaspect="1"/>
-		<image name="actionbar_batch" filename="DFox/ActionBar/multi" retainaspect="1"/>
+		<image name="actionbar_menu" filename="DFox/ActionBar/menu" retainaspect="1"/>
 	</resources>
 	<variables>
 		<variable name="actbar_color" value="%accent%"/>

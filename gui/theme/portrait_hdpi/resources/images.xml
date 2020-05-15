@@ -96,6 +96,10 @@
 		<image name="pass_gesture" filename="Default/Icons/pass_gesture" retainaspect="1"/>
 		<image name="bs_btn_link" filename="Default/Icons/link" retainaspect="1"/>
 		<image name="help" filename="Default/Icons/help" retainaspect="1"/>
+		<image name="otg" filename="Default/Icons/otg" retainaspect="1"/>
+		<image name="device" filename="Default/Icons/device" retainaspect="1"/>
+		<image name="sdcard" filename="Default/Icons/sdcard" retainaspect="1"/>
+		<image name="batch" filename="Default/Icons/batch" retainaspect="1"/>
 		
 		<!-- Info -->
 		<image name="icon_warning" filename="Default/Info/icon_warning" retainaspect="1"/>

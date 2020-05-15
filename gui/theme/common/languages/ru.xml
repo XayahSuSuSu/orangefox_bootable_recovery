@@ -1209,5 +1209,7 @@
 		<string name="batch_selected">Выбрано: %of_batch_count%</string>
 		<string name="batch_title">Пакетные действия</string>
 		<string name="batch_files_folders">Файлы и папки</string>
+		
+		<string name="fm_action_folder">Действия над этой папкой</string>
 	</resources>
 </language>
