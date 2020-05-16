@@ -145,7 +145,6 @@ static int New_Magiskboot_Binary(void)
    	return 0;
 }
 
-
 /* Get the display ID of the installed ROM */
 static string GetInstalledRom(void)
 {
@@ -186,108 +185,6 @@ static string Trim_Trailing_NewLine (const string src)
    string ret = src;
    ret.erase(std::remove(ret.begin(), ret.end(), '\n'), ret.end());   
    return ret;
-}
-
-/* convert string to lowercase */
-string TWFunc::lowercase (const string src)
-{
-   string str = src;
-   transform(str.begin(), str.end(), str.begin(), ::tolower);
-   return str;
-}
-
-/* convert string to uppercase */
-static string uppercase (const string src)
-{
-   string str = src;
-   transform(str.begin(), str.end(), str.begin(), ::toupper);
-   return str;
-}
-
-/* find the position of "subs" in "str" (or -1 if not found) */
-static int pos (const string subs, const string str)
-{
-  return str.find(subs);
-}
-
-/* trim leading character(s) from string */
-std::string ltrim(std::string str, const std::string chars = "\t\n\v\f\r ")
-{
-    str.erase(0, str.find_first_not_of(chars));
-    return str;
-}
- 
-/* trim trailing character(s) from string */
-std::string rtrim(std::string str, const std::string chars = "\t\n\v\f\r ")
-{
-    str.erase(str.find_last_not_of(chars) + 1);
-    return str;
-}
-
-/* trim both leading and leading character(s) from string */
-std::string trim(std::string str, const std::string chars = "\t\n\v\f\r ")
-{
-    return ltrim(rtrim(str, chars), chars);
-}
-
-/* delete "Size" number of characters from string, starting at Index */
-int DeleteFromIndex(std::string &Str, int Index, int Size)
-{
-  int len = Str.length();
-  if (Index < 0 || Index > len || Size < 1)
-     return -1;
-  int i = (Size - Index);
-  if (i >= len) 
-     Size = i;
-  Str.erase (Index, Size);
-  return Size;
-}
-
-/* Delete all characters before "marker" from a string */
-std::string DeleteBefore(const std::string Str, const std::string marker, bool removemarker)
-{
-  std::string src = Str;
-  int i = src.find(marker);
-  if (i == (int)std::string::npos) 
-     return Str;
-  if (removemarker) 
-     i += marker.length();
-  src.erase (0, i);
-  return src;
-}
-
-/* Delete all characters after "marker" from a string */
-std::string DeleteAfter(const std::string Str, const std::string marker)
-{
-  std::string src = Str;
-  int i = src.find(marker);
-  if (i == (int)std::string::npos) 
-     return Str;
-  src.erase (i, src.length());
-  return src;
-}
-
-// search for a phrase within a text file, and return the contents of the first line that has ot
-std::string find_phrase(std::string filename, std::string search)
-{
-  std::string line = "";
-  std::string str = "";
-  std::ifstream File;
-  File.open(filename);
-  if (File.is_open())
-    {
-      while (!File.eof())
-	{
-	  std::getline(File, line);
-	  if (line.find(search) != std::string::npos)
-	    {
-	      File.close();
-	      return line;
-	    }
-	}
-      File.close();
-    }
-  return str;
 }
 
 /* is this a real treble device? (else, treble is emulated via /cust) */
@@ -338,8 +235,21 @@ static bool StorageIsEncrypted(void)
      return true;
 }
 
-/* convert string to number, with default value in case of error */
-int string_to_int(string String, int def_value)
+std::string strReturnCurrentTime()
+{
+  time_t rawtime;
+  struct tm * timeinfo;
+  char buffer[80];
+
+  time (&rawtime);
+  timeinfo = localtime(&rawtime);
+
+  strftime(buffer,sizeof(buffer),"%Y%m%d_%H%M%S",timeinfo);
+  std::string str(buffer);
+  return str;
+}
+
+int TWFunc::string_to_int(string String, int def_value)
 {
 int tmp;
   if ((istringstream(String) >> tmp)) 
@@ -348,7 +258,7 @@ int tmp;
       return def_value;
 }
 
-long string_to_long(string String, long def_value)
+long TWFunc::string_to_long(string String, long def_value)
 {
 long tmp;
   if ((istringstream(String) >> tmp)) 
@@ -357,7 +267,7 @@ long tmp;
       return def_value;
 }
 
-uint64_t string_to_long(string String, uint64_t def_value)
+uint64_t TWFunc::string_to_long(string String, uint64_t def_value)
 {
 uint64_t tmp;
   if ((istringstream(String) >> tmp)) 
@@ -390,20 +300,6 @@ bool i = Path_Exists(orangefox_cfg);
    LOGINFO("DEBUG: OrangeFox: running the startup script...\n");
    Exec_Cmd(FOX_STARTUP_SCRIPT);
    return true;
-}
-
-std::string strReturnCurrentTime()
-{
-  time_t rawtime;
-  struct tm * timeinfo;
-  char buffer[80];
-
-  time (&rawtime);
-  timeinfo = localtime(&rawtime);
-
-  strftime(buffer,sizeof(buffer),"%Y%m%d_%H%M%S",timeinfo);
-  std::string str(buffer);
-  return str;
 }
 
 bool TWFunc::MIUI_ROM_SetProperty(const int code)
@@ -4783,5 +4679,98 @@ int i = str.find(chars);
      i = str.find(chars);
    }
    return str;
+}
+
+string TWFunc::lowercase (const string src)
+{
+   string str = src;
+   transform(str.begin(), str.end(), str.begin(), ::tolower);
+   return str;
+}
+
+string TWFunc::uppercase (const string src)
+{
+   string str = src;
+   transform(str.begin(), str.end(), str.begin(), ::toupper);
+   return str;
+}
+
+/* find the position of "subs" in "str" (or -1 if not found) */
+int TWFunc::pos (const string subs, const string str)
+{
+  return str.find(subs);
+}
+
+string TWFunc::ltrim(std::string str, const std::string chars)
+{
+    str.erase(0, str.find_first_not_of(chars));
+    return str;
+}
+ 
+string TWFunc::rtrim(std::string str, const std::string chars)
+{
+    str.erase(str.find_last_not_of(chars) + 1);
+    return str;
+}
+
+string TWFunc::trim(std::string str, const std::string chars)
+{
+    return ltrim(rtrim(str, chars), chars);
+}
+
+int TWFunc::DeleteFromIndex(std::string &Str, int Index, int Size)
+{
+  int len = Str.length();
+  if (Index < 0 || Index > len || Size < 1)
+     return -1;
+  int i = (Size - Index);
+  if (i >= len) 
+     Size = i;
+  Str.erase (Index, Size);
+  return Size;
+}
+
+string TWFunc::DeleteBefore(const std::string Str, const std::string marker, bool removemarker)
+{
+  std::string src = Str;
+  int i = src.find(marker);
+  if (i == (int)std::string::npos) 
+     return Str;
+  if (removemarker) 
+     i += marker.length();
+  src.erase (0, i);
+  return src;
+}
+
+string TWFunc::DeleteAfter(const std::string Str, const std::string marker)
+{
+  std::string src = Str;
+  int i = src.find(marker);
+  if (i == (int)std::string::npos) 
+     return Str;
+  src.erase (i, src.length());
+  return src;
+}
+
+string TWFunc::find_phrase(std::string filename, std::string search)
+{
+  std::string line = "";
+  std::string str = "";
+  std::ifstream File;
+  File.open(filename);
+  if (File.is_open())
+    {
+      while (!File.eof())
+	{
+	  std::getline(File, line);
+	  if (line.find(search) != std::string::npos)
+	    {
+	      File.close();
+	      return line;
+	    }
+	}
+      File.close();
+    }
+  return str;
 }
 //
