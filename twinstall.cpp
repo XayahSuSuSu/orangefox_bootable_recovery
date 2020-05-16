@@ -217,6 +217,77 @@ static bool verify_incremental_package(string fingerprint, string metadatafp,
 	  && metadatafp.find(metadatadevice) == string::npos) ? false : true;
 }
 
+bool is_comment_line(const string Src)
+{
+  string str = TWFunc::trim(Src);
+  return (str.front() == '#');
+}
+
+static bool Installing_ROM_Query(const string path, ZipWrap * Zip)
+{
+string str = "";
+  if (!TWFunc::Path_Exists(path))
+     return false;
+
+  // full ROM or block-based OTA
+  if (TWFunc::CheckWord(path, "block_image_update") || TWFunc::CheckWord(path, "block_image_recover"))
+  	return true;
+
+  // check for file-based OTA - make several checks
+  usleep(8192);
+  int i = 0;
+  str = TWFunc::find_phrase(path, "boot.img");
+  if (!str.empty() && (!is_comment_line(str))
+  	&& str.find("package_extract_file") != string::npos
+  	&& Zip->EntryExists("boot.img"))
+     i++;
+
+  usleep(8192);
+  str = TWFunc::find_phrase(path, "/dev/block/bootdevice/by-name/system");
+  if (!str.empty() && (!is_comment_line(str))
+  	&& str.find("mount") != string::npos
+  	&& str.find("EMMC") != string::npos
+  	&& str.find("/system") != string::npos
+  	&& Zip->EntryExists("system/build.prop"))
+     i++;
+
+  usleep(8192);
+  str = TWFunc::find_phrase(path, "/dev/block/bootdevice/by-name/vendor");
+  if (!str.empty() && (!is_comment_line(str))
+  	&& str.find("mount") != string::npos
+  	&& str.find("EMMC") != string::npos
+  	&& str.find("/vendor") != string::npos
+  	&& Zip->EntryExists("vendor/build.prop"))
+     i++;
+  
+  // if all these are true, then no need to go further
+  usleep(8192);
+  if (i > 2)
+    return true;
+  
+  // continue
+  usleep(8192);
+  str = TWFunc::find_phrase(path, "package_extract_dir(\"system\"");
+  if (!str.empty() && !is_comment_line(str))
+     i++;
+
+  usleep(8192);
+  str = TWFunc::find_phrase(path, "package_extract_dir(\"vendor\"");
+  if (!str.empty() && !is_comment_line(str))
+     i++;
+
+  usleep(8192);
+  str = TWFunc::find_phrase(path, "firmware-update/");
+  if (!str.empty() && !is_comment_line(str) && str.find("package_extract_file") != string::npos)
+      i++;
+
+  usleep(8192);
+  if (i > 2)
+      return true;
+  else
+      return false;
+}
+
 static string CheckForAsserts(void)
 {
 string ret = "";
@@ -303,7 +374,7 @@ static int Prepare_Update_Binary(const char *path, ZipWrap * Zip,
 	{
 	  if (Zip->ExtractEntry(UPDATER_SCRIPT, FOX_TMP_PATH, 0644))
 	    {
-	      if (TWFunc::CheckWord(FOX_TMP_PATH, "block_image_update"))
+	      if (Installing_ROM_Query(FOX_TMP_PATH, Zip))
 	        {
 		  zip_is_rom_package = true;
 		  DataManager::SetValue(FOX_ZIP_INSTALLER_CODE, 1); // standard ROM
