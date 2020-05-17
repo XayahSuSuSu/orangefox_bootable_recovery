@@ -1216,7 +1216,7 @@
 				<text>{@part_size}</text>
 			</text>
 
-			<text style="text_body2">
+			<text style="text_body1">
 				<condition var1="sum" op="!=" var2="1"/>
 				<placement x="%col1_x_caption%" y="%row3_2a_y%"/>
 				<text>%ft_inf_size%</text>
@@ -1228,7 +1228,7 @@
 				<text>{@fm_perms}</text>
 			</text>
 
-			<text style="text_body2">
+			<text style="text_body1">
 				<condition var1="sum" op="!=" var2="1"/>
 				<placement x="%col1_x_caption%" y="%row4_2a_y%"/>
 				<text>%ft_inf_rights%</text>
@@ -1240,7 +1240,7 @@
 				<text>{@access}</text>
 			</text>
 
-			<text style="text_body2">
+			<text style="text_body1">
 				<condition var1="sum" op="!=" var2="1"/>
 				<placement x="%col1_x_caption%" y="%row5_2a_y%"/>
 				<text>%ft_inf_acc%</text>
@@ -1252,7 +1252,7 @@
 				<text>{@time_m}</text>
 			</text>
 
-			<text style="text_body2">
+			<text style="text_body1">
 				<condition var1="sum" op="!=" var2="1"/>
 				<placement x="%col1_x_caption%" y="%row6_2a_y%"/>
 				<text>%ft_inf_mod%</text>
@@ -1264,7 +1264,7 @@
 				<text>{@time_c}</text>
 			</text>
 
-			<text style="text_body2">
+			<text style="text_body1">
 				<condition var1="sum" op="!=" var2="1"/>
 				<placement x="%col1_x_caption%" y="%row7_2a_y%"/>
 				<text>%ft_inf_ch%</text>
@@ -1276,7 +1276,7 @@
 				<text>MD5</text>
 			</text>
 
-			<text style="text_body2">
+			<text style="text_body1">
 				<condition var1="sum" var2="1"/>
 				<placement x="%col1_x_caption%" y="%row2_2a_y%"/>
 				<text>%ft_inf_md5%</text>
@@ -1594,47 +1594,47 @@
 				<data variable="chmod_id3" default="0"/>
 			</checkbox>
 
-			<text style="text_body2">
+			<text style="text_body1">
 				<placement x="%chtxt_r_x%" y="%chtxt_y%" placement="4"/>
 				<text>Read</text>
 			</text>
 
-			<text style="text_body2">
+			<text style="text_body1">
 				<placement x="%chtxt_w_x%" y="%chtxt_y%" placement="4"/>
 				<text>Write</text>
 			</text>
 
-			<text style="text_body2">
+			<text style="text_body1">
 				<placement x="%chtxt_x_x%" y="%chtxt_y%" placement="4"/>
 				<text>Execute</text>
 			</text>
 
-			<text style="text_body2">
+			<text style="text_body1">
 				<placement x="%chtxt_r_x%" y="%chtxt_sph_y%" placement="4"/>
 				<text>Set UID</text>
 			</text>
 
-			<text style="text_body2">
+			<text style="text_body1">
 				<placement x="%chtxt_w_x%" y="%chtxt_sph_y%" placement="4"/>
 				<text>Set GID</text>
 			</text>
 
-			<text style="text_body2">
+			<text style="text_body1">
 				<placement x="%chtxt_x_x%" y="%chtxt_sph_y%" placement="4"/>
 				<text>Sticky</text>
 			</text>
 
-			<text style="text_body2">
+			<text style="text_body1">
 				<placement x="%txt_r_x%" y="%chtxt_own_y%" placement="1"/>
 				<text>Owner</text>
 			</text>
 
-			<text style="text_body2">
+			<text style="text_body1">
 				<placement x="%txt_r_x%" y="%chtxt_grp_y%" placement="1"/>
 				<text>Group</text>
 			</text>
 
-			<text style="text_body2">
+			<text style="text_body1">
 				<placement x="%txt_r_x%" y="%chtxt_oth_y%" placement="1"/>
 				<text>Other</text>
 			</text>
@@ -1781,12 +1781,12 @@
 				<text>{@batch_files_folders}</text>
 			</text>
 
-			<text style="text_body2">
+			<text style="caption">
 				<placement x="%col1_x_indent%" y="%row2_1a_y%"/>
 				<text>%tw_fm_text2%</text>
 			</text>
 
-			<text style="text_body2_hl">
+			<text style="text_body1">
 				<placement x="%col1_x_indent%" y="%row2_2a_y%"/>
 				<text>%tw_fm_text3%</text>
 			</text>
@@ -1883,7 +1883,7 @@
 				<condition var1="tw_extract_action" var2="1"/>
 				<data variable="tw_pack_lvl" min="0" max="9" showrange="0" showcurr="0" changeondrag="1"/>
 			</slidervalue>
-			<text style="text_body2">
+			<text style="text_body1">
 				<condition var1="tw_extract_action" var2="1"/>
 				<condition var1="tw_artype" op="!=" var2="1"/>
 				<condition var1="tw_artype" op="!=" var2="2"/>

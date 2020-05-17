@@ -223,12 +223,12 @@
 				<text>%tw_text2%</text>
 			</text>
 
-			<text style="text_body2">
+			<text style="text_body1">
 				<placement x="%col1_x_caption%" y="%row2_3_y%"/>
 				<text>%tw_text3%</text>
 			</text>
 
-			<text style="text_body2">
+			<text style="text_body1">
 				<placement x="%col1_x_caption%" y="%row3_1_y%"/>
 				<text>%tw_text4%</text>
 			</text>

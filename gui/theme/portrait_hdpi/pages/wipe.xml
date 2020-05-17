@@ -325,7 +325,7 @@
 					<text>{@part_mount_point}</text>
 				</text>
 
-				<text style="text_body2">
+				<text style="text_body1">
 					<placement x="%col1_x_caption%" y="%row2_2a_y%"/>
 					<text>%tw_partition_mount_point%</text>
 				</text>
@@ -335,7 +335,7 @@
 					<text>{@part_curr_fs}</text>
 				</text>
 
-				<text style="text_body2">
+				<text style="text_body1">
 					<placement x="%col2_x%" y="%row2_2a_y%"/>
 					<text>%tw_partition_file_system%</text>
 				</text>
@@ -345,13 +345,13 @@
 					<text>{@part_present}</text>
 				</text>
 
-				<text style="text_body2">
+				<text style="text_body1">
 					<condition var1="tw_partition_is_present" op="!=" var2="0"/>
 					<placement x="%col1_x_caption%" y="%row3_2a_y%"/>
 					<text>{@part_yes}</text>
 				</text>
 
-				<text style="text_body2">
+				<text style="text_body1">
 					<condition var1="tw_partition_is_present" var2="0"/>
 					<placement x="%col1_x_caption%" y="%row3_2a_y%"/>
 					<text>{@part_no}</text>
@@ -362,13 +362,13 @@
 					<text>{@part_removable}</text>
 				</text>
 
-				<text style="text_body2">
+				<text style="text_body1">
 					<condition var1="tw_partition_removable" op="!=" var2="0"/>
 					<placement x="%col2_x%" y="%row3_2a_y%"/>
 					<text>{@part_yes}</text>
 				</text>
 
-				<text style="text_body2">
+				<text style="text_body1">
 					<condition var1="tw_partition_removable" var2="0"/>
 					<placement x="%col2_x%" y="%row3_2a_y%"/>
 					<text>{@part_no}</text>
@@ -379,7 +379,7 @@
 					<text>{@part_size}</text>
 				</text>
 
-				<text style="text_body2">
+				<text style="text_body1">
 					<placement x="%col1_x_caption%" y="%row4_2a_y%"/>
 					<text>%tw_partition_size%{@mbyte}</text>
 				</text>
@@ -389,7 +389,7 @@
 					<text>{@part_backup_size}</text>
 				</text>
 
-				<text style="text_body2">
+				<text style="text_body1">
 					<placement x="%col2_x%" y="%row4_2a_y%"/>
 					<text>%tw_partition_backup_size%{@mbyte}</text>
 				</text>
@@ -399,7 +399,7 @@
 					<text>{@part_used}</text>
 				</text>
 
-				<text style="text_body2">
+				<text style="text_body1">
 					<placement x="%col1_x_caption%" y="%row5_2a_y%"/>
 					<text>%tw_partition_used%{@mbyte}</text>
 				</text>
@@ -409,7 +409,7 @@
 					<text>{@part_free}</text>
 				</text>
 
-				<text style="text_body2">
+				<text style="text_body1">
 					<placement x="%col2_x%" y="%row5_2a_y%"/>
 					<text>%tw_partition_free%{@mbyte}</text>
 				</text>

@@ -370,7 +370,7 @@
 				<text>{@restore_backup_date}</text>
 			</text>
 
-			<text style="text_body2">
+			<text style="text_body1">
 				<placement x="%col1_x_caption%" y="%row2_2a_y%"/>
 				<text>%tw_restore_file_date%</text>
 			</text>

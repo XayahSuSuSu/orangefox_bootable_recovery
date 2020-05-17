@@ -24,7 +24,7 @@
 				<text>{@file}</text>
 			</text>
 
-			<text style="text_body2">
+			<text style="text_body1">
 				<placement x="%col1_x_caption%" y="%row2_2a_y%"/>
 				<text>%tw_file%</text>
 			</text>
@@ -34,7 +34,7 @@
 				<text>{@folder}</text>
 			</text>
 
-			<text style="text_body2">
+			<text style="text_body1">
 				<placement x="%col1_x_caption%" y="%row3_2a_y%"/>
 				<text>%tw_zip_location%</text>
 			</text>
@@ -180,7 +180,7 @@
 				<text>{@author}</text>
 			</text>
 
-			<text style="text_body2">
+			<text style="text_body1">
 				<condition var1="tw_fileexists" var2="1"/>
 				<placement x="%col1_x_caption%" y="%row2_2a_y%"/>
 				<text>%fox_m_author%</text>
@@ -268,7 +268,7 @@
 				<text>1</text>
 			</text>
 
-			<text style="text_body2">
+			<text style="text_body1">
 				<placement x="%col1_x_indent%" y="%row2_2a_y%"/>
 				<text>%tw_q_1%</text>
 			</text>
@@ -279,7 +279,7 @@
 				<text>2</text>
 			</text>
 
-			<text style="text_body2">
+			<text style="text_body1">
 				<condition var1="tw_zip_queue_count" op="&gt;" var2="1"/>
 				<placement x="%col1_x_indent%" y="%row3_1_y%"/>
 				<text>%tw_q_2%</text>
@@ -291,7 +291,7 @@
 				<text>3</text>
 			</text>
 
-			<text style="text_body2">
+			<text style="text_body1">
 				<condition var1="tw_zip_queue_count" op="&gt;" var2="2"/>
 				<placement x="%col1_x_indent%" y="%row3_2a_y%"/>
 				<text>%tw_q_3%</text>
@@ -303,7 +303,7 @@
 				<text>4</text>
 			</text>
 
-			<text style="text_body2">
+			<text style="text_body1">
 				<condition var1="tw_zip_queue_count" op="&gt;" var2="3"/>
 				<placement x="%col1_x_indent%" y="%row4_1_y%"/>
 				<text>%tw_q_4%</text>
@@ -315,7 +315,7 @@
 				<text>5</text>
 			</text>
 
-			<text style="text_body2">
+			<text style="text_body1">
 				<condition var1="tw_zip_queue_count" op="&gt;" var2="4"/>
 				<placement x="%col1_x_indent%" y="%row4_2a_y%"/>
 				<text>%tw_q_5%</text>
@@ -327,7 +327,7 @@
 				<text>6</text>
 			</text>
 
-			<text style="text_body2">
+			<text style="text_body1">
 				<condition var1="tw_zip_queue_count" op="&gt;" var2="5"/>
 				<placement x="%col1_x_indent%" y="%row5_1_y%"/>
 				<text>%tw_q_6%</text>
@@ -339,7 +339,7 @@
 				<text>7</text>
 			</text>
 
-			<text style="text_body2">
+			<text style="text_body1">
 				<condition var1="tw_zip_queue_count" op="&gt;" var2="6"/>
 				<placement x="%col1_x_indent%" y="%row5_2a_y%"/>
 				<text>%tw_q_7%</text>
@@ -351,7 +351,7 @@
 				<text>8</text>
 			</text>
 
-			<text style="text_body2">
+			<text style="text_body1">
 				<condition var1="tw_zip_queue_count" op="&gt;" var2="7"/>
 				<placement x="%col1_x_indent%" y="%row6_1_y%"/>
 				<text>%tw_q_8%</text>
@@ -363,7 +363,7 @@
 				<text>9</text>
 			</text>
 
-			<text style="text_body2">
+			<text style="text_body1">
 				<condition var1="tw_zip_queue_count" op="&gt;" var2="8"/>
 				<placement x="%col1_x_indent%" y="%row6_2a_y%"/>
 				<text>%tw_q_9%</text>
@@ -375,7 +375,7 @@
 				<text>10</text>
 			</text>
 
-			<text style="text_body2">
+			<text style="text_body1">
 				<condition var1="tw_zip_queue_count" op="&gt;" var2="9"/>
 				<placement x="%col1_x_indent%" y="%row7_1_y%"/>
 				<text>%tw_q_10%</text>
@@ -440,7 +440,7 @@
 				<text>{@file}</text>
 			</text>
 
-			<text style="text_body2">
+			<text style="text_body1">
 				<placement x="%col1_x_caption%" y="%row2_2a_y%"/>
 				<text>%tw_file%</text>
 			</text>
@@ -450,7 +450,7 @@
 				<text>{@folder}</text>
 			</text>
 
-			<text style="text_body2">
+			<text style="text_body1">
 				<placement x="%col1_x_caption%" y="%row3_2a_y%"/>
 				<text>%tw_zip_location%</text>
 			</text>

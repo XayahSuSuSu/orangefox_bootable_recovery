@@ -98,7 +98,7 @@
 				<text>{@mm_ver}</text>
 			</text>
 
-			<text style="text_body2">
+			<text style="text_body1">
 				<placement x="%col1_x_caption%" y="%row2_1a_y%"/>
 				<text>%ft_mm_ver%</text>
 			</text>
@@ -226,7 +226,7 @@
 				<text>{@mm_mod_ver}</text>
 			</text>
 
-			<text style="text_body2">
+			<text style="text_body1">
 				<placement x="%col1_x_caption%" y="%row3_2_y%"/>
 				<text>%ft_mm_version%</text>
 			</text>
@@ -236,7 +236,7 @@
 				<text>{@fm_path2}</text>
 			</text>
 
-			<text style="text_body2">
+			<text style="text_body1">
 				<placement x="%col1_x_caption%" y="%row4_2_y%"/>
 				<text>%mmgui_file%</text>
 			</text>

@@ -200,21 +200,21 @@
 				<text>{@perf_conf_mode}</text>
 			</text>
 			
-			<text style="text_body2">
+			<text style="text_body1">
 				<condition var1="general_back" var2="settings"/>
 				<condition var1="fox_boot_performance_check" var2="1"/>
 				<placement x="%col1_x_caption%" y="%row8_1a_y%"/>
 				<text>{@perf_conf_high}</text>
 			</text>
 			
-			<text style="text_body2">
+			<text style="text_body1">
 				<condition var1="general_back" var2="settings"/>
 				<condition var1="fox_boot_powersave_check" var2="1"/>
 				<placement x="%col1_x_caption%" y="%row8_1a_y%"/>
 				<text>{@perf_conf_batt}</text>
 			</text>
 			
-			<text style="text_body2">
+			<text style="text_body1">
 				<condition var1="general_back" var2="settings"/>
 				<condition var1="fox_boot_balance_check" var2="1"/>
 				<placement x="%col1_x_caption%" y="%row8_1a_y%"/>
@@ -433,7 +433,7 @@
 				<text>{@settings_screen_cptn}</text>
 			</text>
 
-			<text style="text_body2">
+			<text style="text_body1">
 				<condition var1="tw_has_brightnesss_file" var2="1"/>
 				<placement x="%col1_x_caption%" y="%row1_2_y%"/>
 				<text>{@screen_bright_slider}</text>
@@ -449,14 +449,14 @@
 				<action function="setbrightness">%tw_brightness%</action>
 			</slidervalue>
 
-			<text style="text_body2">
+			<text style="text_body1">
 				<condition var1="tw_screen_timeout_secs" var2="0"/>
 				<condition var1="tw_no_screen_timeout" op="!=" var2="1"/>
 				<placement x="%col1_x_caption%" y="%row2_3a_y%"/>
 				<text>{@settings_screen_timeout_cptn}</text>
 			</text>
 
-			<text style="text_body2">
+			<text style="text_body1">
 				<condition var1="tw_screen_timeout_secs" op="!=" var2="0"/>
 				<condition var1="tw_no_screen_timeout" op="!=" var2="1"/>
 				<placement x="%col1_x_caption%" y="%row2_3a_y%"/>
@@ -508,13 +508,13 @@
 				<text>{@vibration_hdr}</text>
 			</text>
 
-			<text style="text_body2">
+			<text style="text_body1">
 				<placement x="%col1_x_caption%" y="%row1_2_y%"/>
 				<condition var1="tw_button_vibrate" op="!=" var2="0"/>
 				<text>{@button_vibration} %tw_button_vibrate%</text>
 			</text>
 
-			<text style="text_body2">
+			<text style="text_body1">
 				<condition var1="tw_button_vibrate" var2="0"/>
 				<placement x="%col1_x_caption%" y="%row1_2_y%"/>
 				<text>{@button_vibration_hdr}</text>
@@ -525,13 +525,13 @@
 				<data variable="tw_button_vibrate" min="0" max="300" showrange="0" showcurr="0" changeondrag="1"/>
 			</slidervalue>
 
-			<text style="text_body2">
+			<text style="text_body1">
 				<condition var1="tw_keyboard_vibrate" op="!=" var2="0"/>
 				<placement x="%col1_x_caption%" y="%row2_3a_y%"/>
 				<text>{@kb_vibration} %tw_keyboard_vibrate%</text>
 			</text>
 
-			<text style="text_body2">
+			<text style="text_body1">
 				<condition var1="tw_keyboard_vibrate" var2="0"/>
 				<placement x="%col1_x_caption%" y="%row2_3a_y%"/>
 				<text>{@kb_vibration_hdr}</text>
@@ -542,13 +542,13 @@
 				<data variable="tw_keyboard_vibrate" min="0" max="300" showrange="0" showcurr="0" changeondrag="1"/>
 			</slidervalue>
 
-			<text style="text_body2">
+			<text style="text_body1">
 				<condition var1="tw_action_vibrate" op="!=" var2="0"/>
 				<placement x="%col1_x_caption%" y="%row4_2_y%"/>
 				<text>{@act_vibration} %tw_action_vibrate%</text>
 			</text>
 
-			<text style="text_body2">
+			<text style="text_body1">
 				<condition var1="tw_action_vibrate" var2="0"/>
 				<placement x="%col1_x_caption%" y="%row4_2_y%"/>
 				<text>{@act_vibration_hdr}</text>
@@ -586,7 +586,7 @@
 				<text>{@settings_backup_qbkp_custom}</text>
 			</text>
 
-			<text style="text_body2">
+			<text style="text_body1">
 				<placement x="%col1_x_caption%" y="%row1_2_y%"/>
 				<text>%tw_backup_list_quick%</text>
 			</text>
@@ -601,7 +601,7 @@
 				<text>{@backup_av}</text>
 			</text>
 
-			<text style="text_body2">
+			<text style="text_body1">
 				<placement x="%col1_x_caption%" y="%row2_2_y%"/>
 				<text>{@backup_av_files}: %of_average_file% (%of_average_ext_file%) | {@backup_av_img}: %of_average_img% (%of_average_ext_img%) {@mbytesec}</text>
 			</text>
@@ -729,7 +729,7 @@
 				<text>{@tz_offset}</text>
 			</text>
 
-			<text style="text_body2">
+			<text style="text_body1">
 				<placement x="%col1_x_caption%" y="%row7_1a_y%"/>
 				<text>{@sel_tz_offset}</text>
 			</text>
@@ -746,7 +746,7 @@
 				<text>{@language_cptn}</text>
 			</text>
 
-			<text style="text_body2">
+			<text style="text_body1">
 				<placement x="%col1_x_caption%" y="%row8_1a_y%"/>
 				<text>%tw_language_display%</text>
 			</text>

@@ -524,17 +524,17 @@
 				<text>{@magisk_not_found}</text>
 			</text>
 
-			<text style="text_body2">
+			<text style="text_body1">
 				<placement x="%bg_storage_hdr_x%" y="%db_text1_y%"/>
 				<text>{@magisk_not_found_1}</text>
 			</text>
 
-			<text style="text_body2">
+			<text style="text_body1">
 				<placement x="%bg_storage_hdr_x%" y="%db_text2_y%"/>
 				<text>{@magisk_not_found_2}</text>
 			</text>
 
-			<text style="text_body2">
+			<text style="text_body1">
 				<placement x="%bg_storage_hdr_x%" y="%db_text3_y%"/>
 				<text>{@magisk_not_found_3}</text>
 			</text>
@@ -581,17 +581,17 @@
 				<text>{@backup_av}</text>
 			</text>
 
-			<text style="text_body2">
+			<text style="text_body1">
 				<placement x="%bg_storage_hdr_x%" y="%db_text1_y%"/>
 				<text>{@backup_av1}</text>
 			</text>
 
-			<text style="text_body2">
+			<text style="text_body1">
 				<placement x="%bg_storage_hdr_x%" y="%db_text2_y%"/>
 				<text>{@backup_av2}</text>
 			</text>
 
-			<text style="text_body2">
+			<text style="text_body1">
 				<placement x="%bg_storage_hdr_x%" y="%db_text3_y%"/>
 				<text>{@backup_av3}</text>
 			</text>
@@ -638,21 +638,21 @@
 				<text>{@hint_ffiles_missing1}</text>
 			</text>
 
-			<text style="text_body2">
+			<text style="text_body1">
 				<placement x="%bg_storage_hdr_x%" y="%db_text1_y%"/>
 				<text>{@hint_ffiles_missing2}</text>
 			</text>
 
-			<text style="text_body2">
+			<text style="text_body1">
 				<placement x="%bg_storage_hdr_x%" y="%db_text2_y%"/>
 				<text>{@hint_ffiles_missing3}</text>
 			</text>
 
-			<text style="text_body2">
+			<text style="text_body1">
 				<placement x="%bg_storage_hdr_x%" y="%db_text3_y%"/>
 				<text>{@hint_ffiles_missing4}</text>
 			</text>
-			<text style="text_body2">
+			<text style="text_body1">
 				<placement x="%bg_storage_hdr_x%" y="%db_text4_y%"/>
 				<text>{@hint_ffiles_missing5}</text>
 			</text>
@@ -696,12 +696,12 @@
 				<text>{@part_menu_hdr}</text>
 			</text>
 
-			<text style="text_body2">
+			<text style="text_body1">
 				<placement x="%bg_storage_hdr_x%" y="%db_text1_y%"/>
 				<text>{@part_fs_error_1}</text>
 			</text>
 
-			<text style="text_body2">
+			<text style="text_body1">
 				<placement x="%bg_storage_hdr_x%" y="%db_text2_y%"/>
 				<text>{@part_fs_error_2}</text>
 			</text>

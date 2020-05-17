@@ -419,7 +419,7 @@
 				<action function="addsubtract">tw_sdext_size-128</action>
 			</button>
 
-			<text style="text_body2">
+			<text style="text_body1">
 				<placement x="%center_x%" y="%row1_1a_y%" placement="5"/>
 				<text>{@part_sd_ext_sz} %tw_sdext_size%</text>
 			</text>
@@ -436,7 +436,7 @@
 				<action function="addsubtract">tw_swap_size-32</action>
 			</button>
 
-			<text style="text_body2">
+			<text style="text_body1">
 				<placement x="%center_x%" y="%row2_1a_y%" placement="5"/>
 				<text>{@part_sd_swap_sz} %tw_swap_size%</text>
 			</text>
@@ -453,7 +453,7 @@
 				<action function="set">tw_sdpart_file_system=ext3</action>
 			</button>
 
-			<text style="text_body2">
+			<text style="text_body1">
 				<placement x="%center_x%" y="%row3_1a_y%" placement="5"/>
 				<text>{@current_color} %tw_sdpart_file_system%</text>
 			</text>
