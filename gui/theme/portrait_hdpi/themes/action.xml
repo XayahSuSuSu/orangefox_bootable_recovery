@@ -3,7 +3,6 @@
 	<resources>
 		<image name="actionbar_back" filename="DFox/ActionBar/back" retainaspect="1"/>
 		<image name="actionbar_cancel" filename="DFox/ActionBar/cancel" retainaspect="1"/>
-		<image name="actionbar_cancel_no" filename="DFox/ActionBar/cancel_no" retainaspect="1"/>
 		<image name="actionbar_delete" filename="DFox/ActionBar/delete" retainaspect="1"/>
 		<image name="actionbar_edit" filename="DFox/ActionBar/edit" retainaspect="1"/>
 		<image name="actionbar_encr_dis" filename="DFox/ActionBar/encr_dis" retainaspect="1"/>

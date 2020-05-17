@@ -4,7 +4,6 @@
 		<!-- Action Bar -->
 		<image name="actionbar_back" filename="#ACCENT#/ActionBar/back" retainaspect="1"/>
 		<image name="actionbar_cancel" filename="#ACCENT#/ActionBar/cancel" retainaspect="1"/>
-		<image name="actionbar_cancel_no" filename="#ACCENT#/ActionBar/cancel_no" retainaspect="1"/>
 		<image name="actionbar_delete" filename="#ACCENT#/ActionBar/delete" retainaspect="1"/>
 		<image name="actionbar_edit" filename="#ACCENT#/ActionBar/edit" retainaspect="1"/>
 		<image name="actionbar_encr_dis" filename="#ACCENT#/ActionBar/encr_dis" retainaspect="1"/>
