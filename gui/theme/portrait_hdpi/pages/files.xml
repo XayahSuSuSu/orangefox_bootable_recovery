@@ -42,27 +42,11 @@
 			
 			<template name="base_nav"/>
 
-			<input>
-				<condition var1="darker_ui" op="!=" var2="1"/>
-				<placement x="%col1_x%" y="%ab_bc_double_d_y%" w="552" h="64"/>
-				<cursor color="%transparent%" hasfocus="0" width="0"/>
-				<font resource="Secondary" color="%actbar_color%"/>
-				<background color="%background%"/>
-				<data name="tw_file_location1"/>
-				<restrict disable="1"/>
+			<text style="text_ab_subtitle">
+				<placement x="%col1_x%" y="%ab_bc_double_d_y%"/>
+				<limit length="18"/>
 				<text>%tw_file_location1%</text>
-			</input>
-			
-			<input>
-				<condition var1="darker_ui" var2="1"/>
-				<placement x="%col1_x%" y="%ab_bc_double_d_y%" w="552" h="64"/>
-				<cursor color="%transparent%" hasfocus="0" width="0"/>
-				<font resource="Secondary" color="%actbar_color%"/>
-				<background color="%title_solid_bg%"/>
-				<data name="tw_file_location1"/>
-				<restrict disable="1"/>
-				<text>%tw_file_location1%</text>
-			</input>
+			</text>
 
 			<text style="text_ab_title">
 				<placement x="%col1_x%" y="%ab_bc_double_u_y%" placement="2"/>
@@ -1217,11 +1201,14 @@
 				<text>{@name} ({@real})</text>
 			</text>
 
-			<text style="text_body2">
+			<input>
 				<condition var1="sum" op="!=" var2="1"/>
-				<placement x="%col1_x_caption%" y="%row2_2a_y%"/>
+				<placement x="%col1_x_caption%" y="%row2_2a_y%" w="%input_w%" h="%input_height%"/>
+				<cursor color="%transparent%" hasfocus="0" width="0"/>
+				<data name="ft_inf_real"/>
+				<restrict disable="1"/>
 				<text>%ft_inf_real%</text>
-			</text>
+			</input>
 
 			<text style="caption">
 				<condition var1="sum" op="!=" var2="1"/>
@@ -1301,11 +1288,14 @@
 				<text>SHA1</text>
 			</text>
 
-			<text style="text_body2">
+			<input>
 				<condition var1="sum" var2="1"/>
-				<placement x="%col1_x_caption%" y="%row3_2a_y%"/>
+				<placement x="%col1_x_caption%" y="%row3_2a_y%" w="%input_w%" h="%input_height%"/>
+				<cursor color="%transparent%" hasfocus="0" width="0"/>
+				<data name="ft_inf_sha1"/>
+				<restrict disable="1"/>
 				<text>%ft_inf_sha1%</text>
-			</text>
+			</input>
 
 			<text style="caption">
 				<condition var1="sum" var2="1"/>
@@ -1313,11 +1303,14 @@
 				<text>SHA256</text>
 			</text>
 
-			<text style="text_body2">
+			<input>
 				<condition var1="sum" var2="1"/>
-				<placement x="%col1_x_caption%" y="%row4_2a_y%"/>
+				<placement x="%col1_x_caption%" y="%row4_2a_y%" w="%input_w%" h="%input_height%"/>
+				<cursor color="%transparent%" hasfocus="0" width="0"/>
+				<data name="ft_inf_sha2"/>
+				<restrict disable="1"/>
 				<text>%ft_inf_sha2%</text>
-			</text>
+			</input>
 
 			<text style="caption">
 				<condition var1="sum" var2="1"/>
@@ -1325,11 +1318,14 @@
 				<text>SHA512</text>
 			</text>
 			
-			<text style="text_body2">
+			<input>
 				<condition var1="sum" var2="1"/>
-				<placement x="%col1_x_caption%" y="%row5_2a_y%"/>
+				<placement x="%col1_x_caption%" y="%row5_2a_y%" w="%input_w%" h="%input_height%"/>
+				<cursor color="%transparent%" hasfocus="0" width="0"/>
+				<data name="ft_inf_sha5"/>
+				<restrict disable="1"/>
 				<text>%ft_inf_sha5%</text>
-			</text>
+			</input>
 
 			<template name="gestures"/>
 			

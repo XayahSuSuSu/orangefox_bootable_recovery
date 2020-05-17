@@ -52,8 +52,10 @@ GUIText::GUIText(xml_node<>* node)
 	mFontHeight = 0;
 	maxWidth = 0;
 	scaleWidth = true;
-	isHighlighted = false;
+	mLimit = isHighlighted = false;
+	mLength = 0;
 	mText = "";
+	xml_node<>* child;
 
 	if (!node)
 		return;
@@ -72,8 +74,14 @@ GUIText::GUIText(xml_node<>* node)
 	// Load the placement
 	LoadPlacement(FindNode(node, "placement"), &mRenderX, &mRenderY, &mRenderW, &mRenderH, &mPlacement);
 
-	xml_node<>* child = FindNode(node, "text");
+	child = FindNode(node, "text");
 	if (child)  mText = child->value();
+
+	child = FindNode(node, "limit");
+	if (child) {
+		mLimit = true;
+		mLength = LoadAttrInt(child, "length", mLength);
+	}
 
 	child = FindNode(node, "noscaling");
 	if (child) {
@@ -111,6 +119,11 @@ int GUIText::Render(void)
 		return -1;
 
 	mLastValue = gui_parse_text(mText);
+	if (mLimit) {
+		int valLeng = mLastValue.length();
+		if (valLeng > mLength)
+			mLastValue = "..." + mLastValue.substr(valLeng - mLength, valLeng);
+	}
 
 	mVarChanged = 0;
 

@@ -203,6 +203,8 @@ public:
 public:
 	bool isHighlighted;
 	bool scaleWidth;
+	int mLength;
+	bool mLimit;
 	unsigned maxWidth;
 
 protected:

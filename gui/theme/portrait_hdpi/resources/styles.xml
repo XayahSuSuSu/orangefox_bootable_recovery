@@ -36,6 +36,7 @@
 		</style>
 		
 		<style name="text_ab_subtitle">
+			<limit length="36"/>
 			<font resource="Secondary" color="%actbar_color%"/>
 		</style>
 
