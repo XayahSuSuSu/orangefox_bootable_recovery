@@ -269,8 +269,8 @@
 		<variable name="tab_btn_y" value="240+%cutout_w%"/>
 		<variable name="credits_listbox_h" value="%screen_min_cut%-552"/>
 		<variable name="about_logo_y" value="280+%cutout_w%"/>
-		<variable name="about_logo_x" value="40"/>
-		<variable name="about_txt_x" value="360"/>
+		<variable name="about_logo_x" value="96"/>
+		<variable name="about_txt_x" value="370"/>
 		<variable name="about_txt2_y" value="370+%cutout_w%"/>
 		<variable name="about_txt3_y" value="420+%cutout_w%"/>
 		<variable name="about_txt4_y" value="470+%cutout_w%"/>
@@ -356,6 +356,7 @@
 		<!-- Title / Title buttons -->
 		<variable name="ab_bc_double_u_y" value="165+%cutout_w%"/>
 		<variable name="ab_bc_double_d_y" value="155+%cutout_w%"/>
+		<variable name="ab0_y" value="84+%cutout_w%"/>
 		<variable name="ab_y" value="156+%cutout_w%"/>
 		<variable name="ab2_y" value="324+%cutout_w%"/>
 		<variable name="ab3_y" value="540+%cutout_w%"/>

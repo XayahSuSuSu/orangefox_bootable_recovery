@@ -34,6 +34,8 @@
 		<font name="font8" filename="MILanPro-Regular.ttf" size="42"/>
 		<font name="font9" filename="Amatic.ttf" size="42"/>
 		
+		<font name="about" filename="EuclidFlex-Medium.ttf" size="58"/>
+		
 		<!-- Splash Preview -->
 		<image name="splash_user" filename="Splash/user" retainaspect="1"/>
 		<image name="splash_bg" filename="Splash/original" retainaspect="1"/>
@@ -191,6 +193,7 @@
 		<image name="empty_folder" filename="Default/FullscreenIcons/empty_folder" retainaspect="1"/>
 		<image name="fox_lock" filename="Default/FullscreenIcons/fox_lock" retainaspect="1"/>
 		<image name="empty_box" filename="Default/FullscreenIcons/box" retainaspect="1"/>
+		<image name="actionbar_w_back" filename="Default/ActionBar/back" retainaspect="1"/>
 		
 		<!-- About -->
 		<image name="logo_big" filename="Default/About/logo" retainaspect="1"/>

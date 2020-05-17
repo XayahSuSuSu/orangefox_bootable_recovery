@@ -829,45 +829,55 @@
 
 		<!-- About -->
 		<page name="about">
-			<template name="body"/>
-			
-			<fill color="%title_solid_bg%">
-				<condition var1="darker_ui" var2="1"/>
-				<placement x="0" y="0" w="%screen_w%" h="%about_title_h%"/>
-			</fill>
-
-			<template name="status_bg"/>
-			<template name="actionbar_back"/>
-			<template name="statusbarinfo"/>
-
-			<text style="text_ab_title">
-				<placement x="%col1_x_indent%" y="%ab_bc_y%"/>
-				<text>{@about_hdr}</text>
-			</text>
-			
 			<image>
-				<image resource="actionbar_shadow"/>
-				<condition var1="show_shadow" var2="1"/>
-				<placement x="0" y="%about_title_h%"/>
+				<image resource="splash_bg"/>
+				<placement x="%center_x%" y="%row1_1_y%" placement="4"/>
 			</image>
 			
 			<image>
 				<image resource="logo_big"/>
-				<placement x="%about_logo_x%" y="%about_logo_y%"/>
+				<placement x="%about_logo_x%" y="%row2_1a_y%" placement="2"/>
 			</image>
+
+			<fill color="%background%">
+				<placement x="0" y="%row3_2_y%" w="%screen_w%" h="%spl_preview_bg%"/>
+			</fill>
+			
+			<image>
+				<condition var1="show_shadow" var2="1"/>
+				<placement x="0" y="%row3_2_y%" w="%screen_w%" h="%spl_preview_bg%" placement="2"/>
+				<image resource="nav_shadow"/>
+			</image>
+
+			<template name="body"/>
+
+			<button style="actionbar">
+				<condition var1="tw_busy" var2="0"/>
+				<placement x="%ab_back_x%" y="%ab0_y%" placement="4"/>
+				<action function="key">back</action>
+			</button>
+
+			<image>
+				<condition var1="tw_busy" var2="0"/>
+				<placement x="%ab_back_x%" y="%ab0_y%" placement="4"/>
+				<image resource="actionbar_w_back"/>
+			</image>
+
+
+			<text>
+				<font resource="about" color="#ffffff"/>
+				<placement x="%about_txt_x%" y="%about_logo_y%"/>
+				<text>OrangeFox Recovery</text>
+			</text>
 			
 			<text>
-				<font resource="Secondary-title" color="#ed6f02"/>
-				<placement x="%about_txt_x%" y="%about_logo_y%" />
-				<text>OrangeFox</text>
-			</text>
-
-			<text style="text_ab_subtitle_orange">
+				<font resource="font4" color="#ffffff"/>
 				<placement x="%about_txt_x%" y="%about_txt2_y%"/>
 				<text>{@version}: %fox_actual_build%</text>
 			</text>
 
-			<text style="text_ab_subtitle_orange">
+			<text>
+				<font resource="font4" color="#ffffff"/>
 				<placement x="%about_txt_x%" y="%about_txt3_y%"/>
 				<text>{@build_type}: %fox_build_type1%</text>
 			</text>
@@ -907,7 +917,7 @@
 			<button>
 				<condition var1="of_maintainer" var2="1"/>
 				<image resource="maintainer_layer"/>
-				<font resource="caption" color="%text_raisedbtn%"/>
+				<font resource="caption" color="#ffffff"/>
 				<placement x="%card1_mtag_x%" y="%card1_mtag_y%"/>
 				<text>{@abt_main_shrt}</text>
 			</button>
@@ -948,7 +958,7 @@
 			<button>
 				<condition var1="of_maintainer" var2="2"/>
 				<image resource="maintainer_layer"/>
-				<font resource="caption" color="%text_raisedbtn%"/>
+				<font resource="caption" color="#ffffff"/>
 				<placement x="%card1_mtag_x%" y="%card2_mtag_y%"/>
 				<text>{@abt_main_shrt}</text>
 			</button>
@@ -988,7 +998,7 @@
 			<button>
 				<condition var1="of_maintainer" var2="3"/>
 				<image resource="maintainer_layer"/>
-				<font resource="caption" color="%text_raisedbtn%"/>
+				<font resource="caption" color="#ffffff"/>
 				<placement x="%card1_mtag_x%" y="%card3_mtag_y%"/>
 				<text>{@abt_main_shrt}</text>
 			</button>
