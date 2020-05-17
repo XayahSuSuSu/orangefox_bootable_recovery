@@ -100,7 +100,7 @@
 
 			<button style="actionbar">
 				<placement x="%ab_btn1_x%" y="%ab_y%" placement="4"/>
-				<action function="overlay">menu</action>
+				<action function="page">menu</action>
 			</button>
 
 			<image>

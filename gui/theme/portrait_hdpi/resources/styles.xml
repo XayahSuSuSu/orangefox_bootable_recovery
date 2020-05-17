@@ -113,10 +113,6 @@
 			<fill color="%transparent%"/>
 		</style>
 
-		<style name="bs_text">
-			<font resource="button" color="%text_menu%"/>
-		</style>
-
 		<style name="bs_btn">
 			<highlight color="%highlight_color_full%"/>
 			<fill color="%transparent%"/>

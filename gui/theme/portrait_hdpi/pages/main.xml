@@ -134,7 +134,7 @@
 			<template name="status_bg"/>
 			<template name="statusbarinfo"/>
 			
-			<text style="bs_text">
+			<text style="text_body1">
 				<placement x="%center_x%" y="%center_y%" placement="4"/>
 				<text>{@starting_aroma}</text>
 			</text>

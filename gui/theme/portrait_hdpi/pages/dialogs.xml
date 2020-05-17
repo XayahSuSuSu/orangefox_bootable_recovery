@@ -2,11 +2,11 @@
 <recovery>
 	<pages>
 		<page name="menu">
-			<background color="%transparent%"/>
+			<background color="%background%"/>
 			<template name="navbar_bkg"/>
 			
 			<button>
-				<fill color="%darktransparent%"/>
+				<fill color="%background%"/>
 				<placement x="0" y="0" w="%screen_w%" h="%screen_h%"/>
 				<action function="key">back</action>
 			</button>
@@ -19,12 +19,15 @@
 
 			<listbox style="settingslist">
 				<iconsize w="%col1_x_caption%" h="136" padding="25"/>
-				<placement x="0" y="%down_menu_y%" w="%screen_w%" h="272"/>
+				<placement x="0" y="%down_menu_y%" w="%screen_w%" h="408"/>
 				<listitem name="{@files_auto_open}">
 					<data variable="fm_auto_open"/>
 				</listitem>
 				<listitem name="{@files_show_hidden}">
 					<data variable="tw_hidden_files"/>
+				</listitem>
+				<listitem name="{@fm_icons_simple}">
+					<data variable="list_font"/>
 				</listitem>
 			</listbox>
 
@@ -55,8 +58,8 @@
 				</listitem>
 			</listbox>
 
-			<fill color="%linecolor%">
-				<placement x="0" y="%down_menu_btn_y%" w="%screen_w%" h="%input_line_height%"/>
+			<fill color="#5f636844">
+				<placement x="%col1_x_caption%" y="%down_menu_btn_y%" w="%content_w%" h="%input_line_height%"/>
 			</fill>
 
 			<template name="keys"/>
@@ -67,12 +70,12 @@
 
 			<action>
 				<touch key="home"/>
-				<action function="page">main</action>
+				<action function="page">filemanagerlist</action>
 			</action>
 
 			<action>
 				<touch key="back"/>
-				<action function="overlay"/>
+				<action function="page">filemanagerlist</action>
 			</action>
 		</page>
 
