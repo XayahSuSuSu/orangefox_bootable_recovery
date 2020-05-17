@@ -1542,7 +1542,7 @@
 
 			<image>
 				<placement x="%ab_btn1_x%" y="%ab_y%" placement="4"/>
-				<image resource="actionbar_settings"/>
+				<image resource="actionbar_edit"/>
 			</image>
 
 			<checkbox>
@@ -1708,7 +1708,7 @@
 
 			<image>
 				<placement x="%ab_btn1_x%" y="%ab_y%" placement="4"/>
-				<image resource="actionbar_settings"/>
+				<image resource="actionbar_edit"/>
 			</image>
 
 			<text style="caption_hl">
