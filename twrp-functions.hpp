@@ -165,6 +165,7 @@ public:
 	static void Reset_Clock(void); // reset the date/time to the recovery's build date/time
 	static std::string get_cache_dir(); // return the cache partition existence
 	static void check_selinux_support(); // print whether selinux support is enabled to console
+	static int Property_Override(string Prop_Name, string Prop_Value); // Override properties (including ro. properties)
 	static void CreateNewFile(string file_path); // create a new (text) file
 	static void AppendLineToFile(string file_path, string line); // append a line to a text file
 

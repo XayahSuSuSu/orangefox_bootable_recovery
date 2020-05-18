@@ -66,6 +66,10 @@ extern "C"
 #include "libcrecovery/common.h"
 }
 
+#ifdef TW_INCLUDE_LIBRESETPROP
+    #include <resetprop.h>
+#endif
+
 struct selabel_handle *selinux_handle;
 
 // Globals
@@ -1510,6 +1514,14 @@ void TWFunc::Auto_Generate_Backup_Name() {
 	} else {
 		DataManager::SetValue(TW_BACKUP_NAME, Backup_Name);
 	}
+}
+
+int TWFunc::Property_Override(string Prop_Name, string Prop_Value) {
+#ifdef TW_INCLUDE_LIBRESETPROP
+    return setprop(Prop_Name.c_str(), Prop_Value.c_str(), false);
+#else
+    return -2;
+#endif
 }
 
 void TWFunc::Fixup_Time_On_Boot(const string & time_paths)
