@@ -24,8 +24,9 @@
 
 #include <string>
 #include <vector>
-
+#include <ext4_utils/ext4_crypt.h>
 #include "twrpDigest/twrpDigest.hpp"
+#include "ext4crypt_tar.h"
 
 using namespace std;
 
@@ -85,6 +86,10 @@ public:
 	static bool PackRepackImage_MagiskBoot(bool do_unpack, bool is_boot);       // Unpacking/repacking process for boot/recovery images, using magiskboot
 	static void htc_dumlock_restore_original_boot(void);                        // Restores the backup of boot from HTC Dumlock
 	static void htc_dumlock_reflash_recovery_to_boot(void);                     // Reflashes the current recovery to boot
+
+	static bool Get_Encryption_Policy(ext4_encryption_policy &policy, std::string path); // return encryption policy for path
+	static bool Set_Encryption_Policy(std::string path, const ext4_encryption_policy &policy); // set encryption policy for path
+	static bool Is_Data_Wiped(std::string path); // check if directory has been wiped
 
 	static bool Repack_Image(string mount_point);
 	static bool Unpack_Image(string mount_point);

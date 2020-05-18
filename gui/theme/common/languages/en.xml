@@ -1006,6 +1006,7 @@
 		<!-- Wipe format moved -->
 		<string name="wipe_format_moved_info1">Note: Format Data moved to</string>
 		<string name="wipe_format_moved_info2">Manage Partitions page.</string>
-		
+
+		<string name="fbe_wipe_msg">WARNING: {1} wiped. FBE device should be booted into Android and not Recovery to set initial FBE policy after wipe.</string>		
 	</resources>
 </language>

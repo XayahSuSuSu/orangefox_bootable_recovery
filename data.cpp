@@ -1273,49 +1273,40 @@ int DataManager::GetMagicValue(const string & varName, string & value)
 void DataManager::Output_Version(void)
 {
 #ifndef TW_OEM_BUILD
-  string Path;
-  char version[255];
+	string Path;
+	char version[255];
 
-  if (!PartitionManager.Mount_By_Path("/cache", false))
-    {
-      LOGINFO("Unable to mount '%s' to write version number.\n",
-	      Path.c_str());
-      return;
-    }
-  if (!TWFunc::Path_Exists("/cache/recovery/."))
-    {
-      LOGINFO("Recreating /cache/recovery folder.\n");
-      if (mkdir("/cache/recovery", S_IRWXU | S_IRWXG | S_IWGRP | S_IXGRP) !=
-	  0)
-	{
-	  LOGERR
-	    ("DataManager::Output_Version -- Unable to make /cache/recovery\n");
-	  return;
+	std::string cacheDir = TWFunc::get_cache_dir();
+	if (cacheDir.empty()) {
+		LOGINFO("Unable to find cache directory\n");
+		return;
 	}
-    }
-  Path = "/cache/recovery/.version";
-  if (TWFunc::Path_Exists(Path))
-    {
-      unlink(Path.c_str());
-    }
-  FILE *fp = fopen(Path.c_str(), "w");
-  if (fp == NULL)
-    {
-      gui_msg(Msg
-	      (msg::kError,
-	       "error_opening_strerr=Error opening: '{1}' ({2})") (Path)
-	      (strerror(errno)));
-      return;
-    }
-  strcpy(version, TW_VERSION_STR);
-  fwrite(version, sizeof(version[0]), strlen(version) / sizeof(version[0]),
-	 fp);
-  fclose(fp);
-  TWFunc::copy_file("/etc/recovery.fstab", "/cache/recovery/recovery.fstab",
-		    0644);
-  PartitionManager.Output_Storage_Fstab();
-  sync();
-  LOGINFO("Version number saved to '%s'\n", Path.c_str());
+
+	std::string recoveryCacheDir = cacheDir + "recovery/";
+
+	if (cacheDir == NON_AB_CACHE_DIR) {
+		if (!PartitionManager.Mount_By_Path(NON_AB_CACHE_DIR, false)) {
+			LOGINFO("Unable to mount '%s' to write version number.\n", Path.c_str());
+			return;
+		}
+	}
+
+	std::string verPath = recoveryCacheDir + ".version";
+	if (TWFunc::Path_Exists(verPath)) {
+		unlink(verPath.c_str());
+	}
+	FILE *fp = fopen(verPath.c_str(), "w");
+	if (fp == NULL) {
+		gui_msg(Msg(msg::kError, "error_opening_strerr=Error opening: '{1}' ({2})")(verPath)(strerror(errno)));
+		return;
+	}
+	strcpy(version, TW_VERSION_STR);
+	fwrite(version, sizeof(version[0]), strlen(version) / sizeof(version[0]), fp);
+	fclose(fp);
+	TWFunc::copy_file("/etc/recovery.fstab", recoveryCacheDir + "recovery.fstab", 0644);
+	PartitionManager.Output_Storage_Fstab();
+	sync();
+	LOGINFO("Version number saved to '%s'\n", verPath.c_str());
 #endif
 }
 

@@ -1797,9 +1797,6 @@ int TWPartitionManager::Format_Data(void)
 
   if (dat != NULL)
     {
-      if (!dat->UnMount(true))
-	return false;
-
       return dat->Wipe_Encryption();
     }
   else
