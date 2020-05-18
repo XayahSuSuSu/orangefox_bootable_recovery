@@ -458,7 +458,7 @@ static int Prepare_Update_Binary(const char *path, ZipWrap * Zip,
 	      DataManager::SetValue(FOX_CALL_DEACTIVATION, 1);
 	      DataManager::SetValue(FOX_ZIP_INSTALLER_CODE, 2); // MIUI ROM
 	    }
-	  gui_msg ("fox_install_miui_detected=- Detected MIUI Update zip installer"); 
+	  gui_msg ("fox_install_miui_detected=- Detected MIUI Update zip installer");
 	}
       else // this is a standard ROM installer
 	{
@@ -649,7 +649,7 @@ static int Prepare_Update_Binary(const char *path, ZipWrap * Zip,
 	    {
 		#ifdef OF_FIX_OTA_UPDATE_MANUAL_FLASH_ERROR
 	    	std::string cachefile = "/cache/recovery/openrecoveryscript";
-	    	LOGINFO("- You tried to flash OTA zip (%s) manually! Attempting to recover the situation...\n", path);
+	    	gui_print("\n- You tried to flash OTA zip (%s) manually. Attempting to recover the situation...\n", path);
 	    	TWFunc::CreateNewFile(cachefile);
 	    	usleep(256);
 	    	if (TWFunc::Path_Exists(cachefile))
@@ -658,8 +658,8 @@ static int Prepare_Update_Binary(const char *path, ZipWrap * Zip,
 	    	   	usleep(256);
 	    	   	Zip->Close();
 	    	   	usleep(256);
-	    	   	LOGINFO("- Rebooting into OpenRecoveryScript mode ...\n");
-	    	   	usleep(256);
+	    	   	gui_print("- Rebooting into OTA install mode in 5 seconds. Please wait ...\n");
+	    	   	sleep(5);
 	    	   	TWFunc::tw_reboot(rb_recovery);
 	       	   }
 		#endif
@@ -1310,13 +1310,25 @@ int result = 0;
 	           set_miui_install_status(OTA_SUCCESS, false);    
 	           gui_msg("fox_incremental_ota_bak=Process OTA_BAK --- done!");
 	           Fox_Zip_Installer_Code = DataManager::GetIntValue(FOX_ZIP_INSTALLER_CODE);
+	           usleep(1024);
 	           if (reportback)
 	           {
 	           	Fox_Zip_Installer_Code = DataManager::GetIntValue(FOX_ZIP_INSTALLER_CODE);
-	           	if (Fox_Zip_Installer_Code == 22) // Treble
-	               	   DataManager::SetValue(FOX_ZIP_INSTALLER_CODE, 23); // Treble miui OTA backup succeeded
+	           	// MIUI: 2, 3, 22, 23
+	           	if (Fox_Zip_Installer_Code == 22) // Treble MIUI
+	               	   DataManager::SetValue(FOX_ZIP_INSTALLER_CODE, 23);
 	           	else
-	               	   DataManager::SetValue(FOX_ZIP_INSTALLER_CODE, 3); // non-Treble miui OTA backup succeeded
+	           	if (Fox_Zip_Installer_Code == 2) // non-Treble MIUI
+	               	   DataManager::SetValue(FOX_ZIP_INSTALLER_CODE, 3);
+	           	else
+	           	// custom: 1, 11, 12, 13
+	           	if (Fox_Zip_Installer_Code == 11) // Treble Custom
+	               	   DataManager::SetValue(FOX_ZIP_INSTALLER_CODE, 12);
+	           	else
+	               	   DataManager::SetValue(FOX_ZIP_INSTALLER_CODE, 13); // non-Treble custom
+			usleep(1024);
+	           	Fox_Zip_Installer_Code = DataManager::GetIntValue(FOX_ZIP_INSTALLER_CODE);
+	           	LOGINFO("OTA_BAK status: [code=%i]\n", Fox_Zip_Installer_Code);
 	           }
 	           else
 	           {
