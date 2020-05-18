@@ -997,7 +997,7 @@ static int Run_Update_Binary(const char *path, ZipWrap * Zip, int *wipe_cache,
 
 int TWinstall_zip(const char *path, int *wipe_cache)
 {
-  int ret_val, zip_verify = 1;
+  int ret_val, zip_verify = 1, unmount_system = 1;;
 
   if (strcmp(path, "error") == 0)
     {
@@ -1069,6 +1069,8 @@ int TWinstall_zip(const char *path, int *wipe_cache)
 	}
     }
 
+  DataManager::GetValue(TW_UNMOUNT_SYSTEM, unmount_system);
+
 #ifndef TW_OEM_BUILD
   DataManager::GetValue(TW_SIGNED_ZIP_VERIFY_VAR, zip_verify);
 #endif
@@ -1137,6 +1139,14 @@ int TWinstall_zip(const char *path, int *wipe_cache)
 #endif
       return INSTALL_CORRUPT;
     }
+
+	if (unmount_system) {
+		gui_msg("unmount_system=Unmounting System...");
+		if(!PartitionManager.UnMount_By_Path(PartitionManager.Get_Android_Root_Path(), true)) {
+			gui_err("unmount_system_err=Failed unmounting System");
+			return -1;
+		}
+	}
 
   time_t start, stop;
   time(&start);

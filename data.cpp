@@ -975,6 +975,12 @@ void DataManager::SetDefaultValues()
   mData.SetValue(TW_RESTORE_FILE_DATE, "0");
   mPersist.SetValue("tw_military_time", "1");
 
+#ifdef OF_UNMOUNT_SYSTEM
+  mPersist.SetValue(TW_UNMOUNT_SYSTEM, "1");
+#else
+  mPersist.SetValue(TW_UNMOUNT_SYSTEM, "0");
+#endif
+
 #ifdef TW_INCLUDE_CRYPTO
 	mPersist.SetValue(TW_USE_SHA2, "1");
 	mPersist.SetValue(TW_NO_SHA2, "0");
