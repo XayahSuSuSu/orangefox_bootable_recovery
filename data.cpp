@@ -878,7 +878,7 @@ void DataManager::SetDefaultValues()
 
   // { MIUI
   string incremental_ota = "1";    // enable by default, unless turned off below
-  #if defined(OF_DISABLE_MIUI_SPECIFIC_FEATURES) || defined(OF_TWRP_COMPATIBILITY_MODE) || defined(FOX_DISABLE_MIUI_OTA_BY_DEFAULT)
+  #if defined(OF_DISABLE_MIUI_SPECIFIC_FEATURES) || defined(OF_TWRP_COMPATIBILITY_MODE) || defined(OF_DISABLE_MIUI_OTA_BY_DEFAULT)
   incremental_ota = "0";
   #endif  
 
