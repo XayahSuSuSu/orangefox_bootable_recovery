@@ -24,9 +24,19 @@
 
 #include <string>
 #include <vector>
+
+#ifdef USE_FSCRYPT
 #include <ext4_utils/ext4_crypt.h>
+#else
+#include "ext4crypt_tar.h"
+#endif
+
 #include "twrpDigest/twrpDigest.hpp"
 #include "ext4crypt_tar.h"
+
+#ifndef BUILD_TWRPTAR_MAIN
+#include "partitions.hpp"
+#endif
 
 using namespace std;
 

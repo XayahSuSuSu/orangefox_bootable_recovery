@@ -37,8 +37,7 @@
 #include <sys/reboot.h>
 #endif
 
-extern "C"
-{
+extern "C" {
 #include "gui/gui.h"
 }
 #include "set_metadata.h"
@@ -49,14 +48,19 @@ extern "C"
 #include "twrp-functions.hpp"
 #include "data.hpp"
 #include "partitions.hpp"
+
+#ifdef USE_OLD_BASE_INCLUDE
+#include <base/strings.h>
+#else
+#include <android-base/strings.h>
+#endif
 #include "openrecoveryscript.hpp"
 #include "variables.h"
 #include "twrpAdbBuFifo.hpp"
 #ifdef TW_USE_NEW_MINADBD
 #include "minadbd/minadbd.h"
 #else
-extern "C"
-{
+extern "C" {
 #include "minadbd21/adb.h"
 }
 #endif
