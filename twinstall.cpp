@@ -650,7 +650,7 @@ static int Prepare_Update_Binary(const char *path, ZipWrap * Zip,
 	    {
 		#ifdef OF_FIX_OTA_UPDATE_MANUAL_FLASH_ERROR
 	    	std::string cachefile = "/cache/recovery/openrecoveryscript";
-	    	gui_print("\n- You tried to flash OTA zip (%s) manually. Attempting to recover the situation...\n", path);
+	    	gui_print_color("warning", "\n\n- You tried to flash OTA zip (%s) manually. Attempting to recover the situation...\n\n", path);
 	    	TWFunc::CreateNewFile(cachefile);
 	    	usleep(256);
 	    	if (TWFunc::Path_Exists(cachefile))
@@ -659,9 +659,10 @@ static int Prepare_Update_Binary(const char *path, ZipWrap * Zip,
 	    	   	usleep(256);
 	    	   	Zip->Close();
 	    	   	usleep(256);
-	    	   	gui_print("- Rebooting into OTA install mode in 5 seconds. Please wait ...\n");
-	    	   	sleep(5);
+	    	   	gui_print("- Rebooting into OTA update mode in 10 seconds. Please wait ...\n\n");
+	    	   	sleep(10);
 	    	   	TWFunc::tw_reboot(rb_recovery);
+	    	   	return INSTALL_ERROR;
 	       	   }
 		#endif
 	      LOGERR("Please flash this package using the ROM's updater app!\n");
