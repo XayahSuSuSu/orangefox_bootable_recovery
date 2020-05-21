@@ -115,6 +115,12 @@ ifeq ($(TW_INCLUDE_CRYPTO), true)
 
         LOCAL_SRC_FILES = vold_decrypt.cpp
         LOCAL_SHARED_LIBRARIES := libcutils
+        LOCAL_C_INCLUDES += system/extras/ext4_utils/include
+        ifeq ($(shell test $(PLATFORM_SDK_VERSION) -ge 29; echo $$?),0)
+            LOCAL_C_INCLUDES += bootable/recovery/crypto/fscrypt
+        else
+            LOCAL_C_INCLUDES += bootable/recovery/crypto/ext4crypt
+        endif
         include $(BUILD_STATIC_LIBRARY)
 
         ifeq ($(shell test $(PLATFORM_SDK_VERSION) -ge 28; echo $$?),0)
