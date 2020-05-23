@@ -1,7 +1,7 @@
 /*
 	Copyright 2012 to 2017 bigbiff/Dees_Troy TeamWin
 	
-	Copyright (C) 2018-2019 OrangeFox Recovery Project
+	Copyright (C) 2018-2020 OrangeFox Recovery Project
 	This file is part of the OrangeFox Recovery Project.
 	
 	This file is part of TWRP/TeamWin Recovery Project.
@@ -29,6 +29,7 @@
 #include <sys/mman.h>
 #include <sys/stat.h>
 #include <sys/wait.h>
+#include <sys/mount.h>
 #include <unistd.h>
 #include <iostream>
 #include <fstream>
@@ -217,6 +218,118 @@ static bool verify_incremental_package(string fingerprint, string metadatafp,
 	  && metadatafp.find(metadatadevice) == string::npos) ? false : true;
 }
 
+bool is_comment_line(const string Src)
+{
+  string str = TWFunc::trim(Src);
+  return (str.front() == '#');
+}
+
+static bool Installing_ROM_Query(const string path, ZipWrap * Zip)
+{
+string str = "";
+  if (!TWFunc::Path_Exists(path))
+     return false;
+
+  // full ROM or block-based OTA
+  if (TWFunc::CheckWord(path, "block_image_update") || TWFunc::CheckWord(path, "block_image_recover"))
+  	return true;
+
+  // check for file-based OTA - make several checks
+  usleep(8192);
+  int i = 0;
+  str = TWFunc::find_phrase(path, "boot.img");
+  if (!str.empty() && (!is_comment_line(str))
+  	&& str.find("package_extract_file") != string::npos
+  	&& Zip->EntryExists("boot.img"))
+     i++;
+
+  usleep(8192);
+  str = TWFunc::find_phrase(path, "/dev/block/bootdevice/by-name/system");
+  if (!str.empty() && (!is_comment_line(str))
+  	&& str.find("mount") != string::npos
+  	&& str.find("EMMC") != string::npos
+  	&& str.find("/system") != string::npos
+  	&& Zip->EntryExists("system/build.prop"))
+     i++;
+
+  usleep(8192);
+  str = TWFunc::find_phrase(path, "/dev/block/bootdevice/by-name/vendor");
+  if (!str.empty() && (!is_comment_line(str))
+  	&& str.find("mount") != string::npos
+  	&& str.find("EMMC") != string::npos
+  	&& str.find("/vendor") != string::npos
+  	&& Zip->EntryExists("vendor/build.prop"))
+     i++;
+  
+  // if all these are true, then no need to go further
+  usleep(8192);
+  if (i > 2)
+    return true;
+  
+  // continue
+  usleep(8192);
+  str = TWFunc::find_phrase(path, "package_extract_dir(\"system\"");
+  if (!str.empty() && !is_comment_line(str))
+     i++;
+
+  usleep(8192);
+  str = TWFunc::find_phrase(path, "package_extract_dir(\"vendor\"");
+  if (!str.empty() && !is_comment_line(str))
+     i++;
+
+  usleep(8192);
+  str = TWFunc::find_phrase(path, "firmware-update/");
+  if (!str.empty() && !is_comment_line(str) && str.find("package_extract_file") != string::npos)
+      i++;
+
+  usleep(8192);
+  if (i > 2)
+      return true;
+  else
+      return false;
+}
+
+static string CheckForAsserts(void)
+{
+string ret = "";
+string device;
+  #ifdef OF_TARGET_DEVICES
+  device = TWFunc::get_assert_device(FOX_TMP_PATH);
+  if (device.empty())
+       return ret;
+
+  string tmpstr = TWFunc::Exec_With_Output ("getprop ro.product.device");
+  usleep(128000);
+
+  if (tmpstr.empty() || tmpstr == "EXEC_ERROR!")
+   	tmpstr = Fox_Current_Device;
+
+  if (device == tmpstr)
+       return ret;
+
+  LOGINFO("AssertDevice=[%s] and CurrentDevice=[%s]\n", device.c_str(), tmpstr.c_str());
+  std::vector <std::string> devs = TWFunc::Split_String(OF_TARGET_DEVICES, ",");
+  
+  string temp = "";   
+  for (size_t i = 0; i < devs.size(); ++i)
+    {
+   	usleep(4096);
+   	temp = TWFunc::removechar(devs[i], ' ');
+   	// make sure we are not processing the current device
+   	if (tmpstr != temp)
+   	   {
+   	      if (device == temp)
+   	      	{
+		  LOGINFO("Found AssertDevice [%s] at OF_TARGET_DEVICES # %i\n", temp.c_str(), (int)i);
+   	      	  return temp;
+   	    	}
+   	  }
+    } // for i
+
+  #endif
+  return ret;
+}
+
 static int Prepare_Update_Binary(const char *path, ZipWrap * Zip,
 				 int *wipe_cache)
 {
@@ -231,6 +344,7 @@ static int Prepare_Update_Binary(const char *path, ZipWrap * Zip,
   string zip_name = path;
   int is_new_miui_update_binary = 0;
   int zip_has_miui_stuff = 0;
+  string assert_device = "";
 
   zip_is_rom_package = false; 		// assume we are not installing a ROM
   zip_is_survival_trigger = false; 	// assume non-miui
@@ -261,7 +375,7 @@ static int Prepare_Update_Binary(const char *path, ZipWrap * Zip,
 	{
 	  if (Zip->ExtractEntry(UPDATER_SCRIPT, FOX_TMP_PATH, 0644))
 	    {
-	      if (TWFunc::CheckWord(FOX_TMP_PATH, "block_image_update"))
+	      if (Installing_ROM_Query(FOX_TMP_PATH, Zip))
 	        {
 		  zip_is_rom_package = true;
 		  DataManager::SetValue(FOX_ZIP_INSTALLER_CODE, 1); // standard ROM
@@ -288,7 +402,9 @@ static int Prepare_Update_Binary(const char *path, ZipWrap * Zip,
 	                  TWFunc::Check_OrangeFox_Overwrite_FromROM(true, path);
 	             }
 		}
-	      
+	      #ifdef OF_TARGET_DEVICES
+	      assert_device = CheckForAsserts();
+	      #endif
 	      unlink(FOX_TMP_PATH);
 	    }
 	}
@@ -343,7 +459,7 @@ static int Prepare_Update_Binary(const char *path, ZipWrap * Zip,
 	      DataManager::SetValue(FOX_CALL_DEACTIVATION, 1);
 	      DataManager::SetValue(FOX_ZIP_INSTALLER_CODE, 2); // MIUI ROM
 	    }
-	  gui_msg ("fox_install_miui_detected=- Detected MIUI Update zip installer"); 
+	  gui_msg ("fox_install_miui_detected=- Detected MIUI Update zip installer");
 	}
       else // this is a standard ROM installer
 	{
@@ -534,7 +650,7 @@ static int Prepare_Update_Binary(const char *path, ZipWrap * Zip,
 	    {
 		#ifdef OF_FIX_OTA_UPDATE_MANUAL_FLASH_ERROR
 	    	std::string cachefile = "/cache/recovery/openrecoveryscript";
-	    	LOGERR("- You tried to flash OTA zip (%s) manually! Attempting to recover the situation...\n", path);
+	    	gui_print_color("warning", "\n\n- You tried to flash OTA zip (%s) manually. Attempting to recover the situation...\n\n", path);
 	    	TWFunc::CreateNewFile(cachefile);
 	    	usleep(256);
 	    	if (TWFunc::Path_Exists(cachefile))
@@ -543,9 +659,10 @@ static int Prepare_Update_Binary(const char *path, ZipWrap * Zip,
 	    	   	usleep(256);
 	    	   	Zip->Close();
 	    	   	usleep(256);
-	    	   	LOGINFO("- Rebooting into OpenRecoveryScript mode ...\n");
-	    	   	usleep(256);
+	    	   	gui_print("- Rebooting into OTA update mode in 10 seconds. Please wait ...\n\n");
+	    	   	sleep(10);
 	    	   	TWFunc::tw_reboot(rb_recovery);
+	    	   	return INSTALL_ERROR;
 	       	   }
 		#endif
 	      LOGERR("Please flash this package using the ROM's updater app!\n");
@@ -630,6 +747,24 @@ static int Prepare_Update_Binary(const char *path, ZipWrap * Zip,
 	}
     }
   Zip->Close();
+  #ifdef OF_TARGET_DEVICES
+    if (!assert_device.empty())
+       {
+         string alt_cmd = "/sbin/resetprop";
+         if (!TWFunc::Path_Exists(alt_cmd))
+              	alt_cmd = "/sbin/setprop";
+         
+         if (!TWFunc::Path_Exists(alt_cmd))
+         	return INSTALL_SUCCESS;
+         
+         if (TWFunc::Exec_Cmd (alt_cmd + " ro.product.device " + assert_device) == 0)
+           {
+       	     gui_print_color("warning",
+       	     "\nThe device name has been switched temporarily to \"%s\" (until you reboot OrangeFox).\n\n", assert_device.c_str());
+       	     usleep (64000);
+           }
+       }
+  #endif
   return INSTALL_SUCCESS;
 }
 
@@ -829,7 +964,9 @@ static int Run_Update_Binary(const char *path, ZipWrap * Zip, int *wipe_cache,
   // if updater-script doesn't find the correct device
   if (WEXITSTATUS (status) == TW_ERROR_WRONG_DEVICE)
      {
-       gui_print_color("error", "Do you have the correct device and firmware version? Search online for error %i.\n", TW_ERROR_WRONG_DEVICE);
+       gui_print_color("error", "\nPossible causes of this error:\n  1. Wrong device\n  2. Wrong firmware\n  3. Corrupt zip.\n\nSearch online for \"error %i\". ",
+       			TW_ERROR_WRONG_DEVICE);
+       gui_print_color("error", "Check \"/tmp/recovery.log\", and look above, for the specific cause of this error.\n\n");
      }
 
 #ifndef TW_NO_LEGACY_PROPS
@@ -861,7 +998,7 @@ static int Run_Update_Binary(const char *path, ZipWrap * Zip, int *wipe_cache,
 
 int TWinstall_zip(const char *path, int *wipe_cache)
 {
-  int ret_val, zip_verify = 1;
+  int ret_val, zip_verify = 1, unmount_system = 1;;
 
   if (strcmp(path, "error") == 0)
     {
@@ -933,6 +1070,8 @@ int TWinstall_zip(const char *path, int *wipe_cache)
 	}
     }
 
+  DataManager::GetValue(TW_UNMOUNT_SYSTEM, unmount_system);
+
 #ifndef TW_OEM_BUILD
   DataManager::GetValue(TW_SIGNED_ZIP_VERIFY_VAR, zip_verify);
 #endif
@@ -1002,6 +1141,14 @@ int TWinstall_zip(const char *path, int *wipe_cache)
       return INSTALL_CORRUPT;
     }
 
+	if (unmount_system) {
+		gui_msg("unmount_system=Unmounting System...");
+		if(!PartitionManager.UnMount_By_Path(PartitionManager.Get_Android_Root_Path(), true)) {
+			gui_err("unmount_system_err=Failed unmounting System");
+			return -1;
+		}
+	}
+
   time_t start, stop;
   time(&start);
   if (Zip.EntryExists(ASSUMED_UPDATE_BINARY_NAME))
@@ -1044,9 +1191,21 @@ int TWinstall_zip(const char *path, int *wipe_cache)
     {
       if (Zip.EntryExists(AB_OTA))
 	{
-	  LOGINFO("AB zip\n");
-	  ret_val =
-	    Run_Update_Binary(path, &Zip, wipe_cache, AB_OTA_ZIP_TYPE);
+		LOGINFO("AB zip\n");
+		// We need this so backuptool can do its magic
+		bool system_mount_state = PartitionManager.Is_Mounted_By_Path(PartitionManager.Get_Android_Root_Path());
+		bool vendor_mount_state = PartitionManager.Is_Mounted_By_Path("/vendor");
+		PartitionManager.Mount_By_Path(PartitionManager.Get_Android_Root_Path(), true);
+		PartitionManager.Mount_By_Path("/vendor", true);
+		TWFunc::Exec_Cmd("cp -f /sbin/sh /tmp/sh");
+		mount("/tmp/sh", "/system/bin/sh", "auto", MS_BIND, NULL);
+		ret_val = Run_Update_Binary(path, &Zip, wipe_cache, AB_OTA_ZIP_TYPE);
+		umount("/system/bin/sh");
+		unlink("/tmp/sh");
+		if (!vendor_mount_state)
+			PartitionManager.UnMount_By_Path("/vendor", true);
+		if (!system_mount_state)
+			PartitionManager.UnMount_By_Path(PartitionManager.Get_Android_Root_Path(), true);
 	}
       else
 	{
@@ -1175,13 +1334,25 @@ int result = 0;
 	           set_miui_install_status(OTA_SUCCESS, false);    
 	           gui_msg("fox_incremental_ota_bak=Process OTA_BAK --- done!");
 	           Fox_Zip_Installer_Code = DataManager::GetIntValue(FOX_ZIP_INSTALLER_CODE);
+	           usleep(1024);
 	           if (reportback)
 	           {
 	           	Fox_Zip_Installer_Code = DataManager::GetIntValue(FOX_ZIP_INSTALLER_CODE);
-	           	if (Fox_Zip_Installer_Code == 22) // Treble
-	               	   DataManager::SetValue(FOX_ZIP_INSTALLER_CODE, 23); // Treble miui OTA backup succeeded
+	           	// MIUI: 2, 3, 22, 23
+	           	if (Fox_Zip_Installer_Code == 22) // Treble MIUI
+	               	   DataManager::SetValue(FOX_ZIP_INSTALLER_CODE, 23);
 	           	else
-	               	   DataManager::SetValue(FOX_ZIP_INSTALLER_CODE, 3); // non-Treble miui OTA backup succeeded
+	           	if (Fox_Zip_Installer_Code == 2) // non-Treble MIUI
+	               	   DataManager::SetValue(FOX_ZIP_INSTALLER_CODE, 3);
+	           	else
+	           	// custom: 1, 11, 12, 13
+	           	if (Fox_Zip_Installer_Code == 11) // Treble Custom
+	               	   DataManager::SetValue(FOX_ZIP_INSTALLER_CODE, 12);
+	           	else
+	               	   DataManager::SetValue(FOX_ZIP_INSTALLER_CODE, 13); // non-Treble custom
+			usleep(1024);
+	           	Fox_Zip_Installer_Code = DataManager::GetIntValue(FOX_ZIP_INSTALLER_CODE);
+	           	LOGINFO("OTA_BAK status: [code=%i]\n", Fox_Zip_Installer_Code);
 	           }
 	           else
 	           {

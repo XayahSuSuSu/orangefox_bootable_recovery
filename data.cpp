@@ -894,7 +894,7 @@ void DataManager::SetDefaultValues()
 
   // { MIUI
   string incremental_ota = "1";    // enable by default, unless turned off below
-  #if defined(OF_DISABLE_MIUI_SPECIFIC_FEATURES) || defined(OF_TWRP_COMPATIBILITY_MODE)
+  #if defined(OF_DISABLE_MIUI_SPECIFIC_FEATURES) || defined(OF_TWRP_COMPATIBILITY_MODE) || defined(OF_DISABLE_MIUI_OTA_BY_DEFAULT)
   incremental_ota = "0";
   #endif  
 
@@ -990,6 +990,12 @@ void DataManager::SetDefaultValues()
   mData.SetValue("tw_background_thread_running", "0");
   mData.SetValue(TW_RESTORE_FILE_DATE, "0");
   mPersist.SetValue("tw_military_time", "1");
+
+#ifdef OF_UNMOUNT_SYSTEM
+  mPersist.SetValue(TW_UNMOUNT_SYSTEM, "1");
+#else
+  mPersist.SetValue(TW_UNMOUNT_SYSTEM, "0");
+#endif
 
 #ifdef TW_INCLUDE_CRYPTO
 	mPersist.SetValue(TW_USE_SHA2, "1");
@@ -1291,49 +1297,40 @@ int DataManager::GetMagicValue(const string & varName, string & value)
 void DataManager::Output_Version(void)
 {
 #ifndef TW_OEM_BUILD
-  string Path;
-  char version[255];
+	string Path;
+	char version[255];
 
-  if (!PartitionManager.Mount_By_Path("/cache", false))
-    {
-      LOGINFO("Unable to mount '%s' to write version number.\n",
-	      Path.c_str());
-      return;
-    }
-  if (!TWFunc::Path_Exists("/cache/recovery/."))
-    {
-      LOGINFO("Recreating /cache/recovery folder.\n");
-      if (mkdir("/cache/recovery", S_IRWXU | S_IRWXG | S_IWGRP | S_IXGRP) !=
-	  0)
-	{
-	  LOGERR
-	    ("DataManager::Output_Version -- Unable to make /cache/recovery\n");
-	  return;
+	std::string cacheDir = TWFunc::get_cache_dir();
+	if (cacheDir.empty()) {
+		LOGINFO("Unable to find cache directory\n");
+		return;
 	}
-    }
-  Path = "/cache/recovery/.version";
-  if (TWFunc::Path_Exists(Path))
-    {
-      unlink(Path.c_str());
-    }
-  FILE *fp = fopen(Path.c_str(), "w");
-  if (fp == NULL)
-    {
-      gui_msg(Msg
-	      (msg::kError,
-	       "error_opening_strerr=Error opening: '{1}' ({2})") (Path)
-	      (strerror(errno)));
-      return;
-    }
-  strcpy(version, TW_VERSION_STR);
-  fwrite(version, sizeof(version[0]), strlen(version) / sizeof(version[0]),
-	 fp);
-  fclose(fp);
-  TWFunc::copy_file("/etc/recovery.fstab", "/cache/recovery/recovery.fstab",
-		    0644);
-  PartitionManager.Output_Storage_Fstab();
-  sync();
-  LOGINFO("Version number saved to '%s'\n", Path.c_str());
+
+	std::string recoveryCacheDir = cacheDir + "recovery/";
+
+	if (cacheDir == NON_AB_CACHE_DIR) {
+		if (!PartitionManager.Mount_By_Path(NON_AB_CACHE_DIR, false)) {
+			LOGINFO("Unable to mount '%s' to write version number.\n", Path.c_str());
+			return;
+		}
+	}
+
+	std::string verPath = recoveryCacheDir + ".version";
+	if (TWFunc::Path_Exists(verPath)) {
+		unlink(verPath.c_str());
+	}
+	FILE *fp = fopen(verPath.c_str(), "w");
+	if (fp == NULL) {
+		gui_msg(Msg(msg::kError, "error_opening_strerr=Error opening: '{1}' ({2})")(verPath)(strerror(errno)));
+		return;
+	}
+	strcpy(version, TW_VERSION_STR);
+	fwrite(version, sizeof(version[0]), strlen(version) / sizeof(version[0]), fp);
+	fclose(fp);
+	TWFunc::copy_file("/etc/recovery.fstab", recoveryCacheDir + "recovery.fstab", 0644);
+	PartitionManager.Output_Storage_Fstab();
+	sync();
+	LOGINFO("Version number saved to '%s'\n", verPath.c_str());
 #endif
 }
 

@@ -67,6 +67,10 @@ extern "C"
 #include "libcrecovery/common.h"
 }
 
+#ifdef TW_INCLUDE_LIBRESETPROP
+    #include <resetprop.h>
+#endif
+
 struct selabel_handle *selinux_handle;
 
 // Globals
@@ -146,7 +150,6 @@ static int New_Magiskboot_Binary(void)
    	return 0;
 }
 
-
 /* Get the display ID of the installed ROM */
 static string GetInstalledRom(void)
 {
@@ -187,29 +190,6 @@ static string Trim_Trailing_NewLine (const string src)
    string ret = src;
    ret.erase(std::remove(ret.begin(), ret.end(), '\n'), ret.end());   
    return ret;
-}
-
-/* convert string to lowercase */
-string TWFunc::lowercase (const string src)
-{
-   string str = src;
-   transform(str.begin(), str.end(), str.begin(), ::tolower);
-   return str;
-}
-
-/* convert string to uppercase */
-static string uppercase (const string src)
-{
-   string str = src;
-   transform(str.begin(), str.end(), str.begin(), ::toupper);
-   return str;
-}
-
-/* find the position of "subs" in "str" (or -1 if not found) */
-static int pos (const string subs, const string str)
-{
-  std::size_t found = str.find(subs);
-  return (int) found;
 }
 
 /* is this a real treble device? (else, treble is emulated via /cust) */
@@ -260,8 +240,21 @@ static bool StorageIsEncrypted(void)
      return true;
 }
 
-/* convert string to number, with default value in case of error */
-int string_to_int(string String, int def_value)
+std::string strReturnCurrentTime()
+{
+  time_t rawtime;
+  struct tm * timeinfo;
+  char buffer[80];
+
+  time (&rawtime);
+  timeinfo = localtime(&rawtime);
+
+  strftime(buffer,sizeof(buffer),"%Y%m%d_%H%M%S",timeinfo);
+  std::string str(buffer);
+  return str;
+}
+
+int TWFunc::string_to_int(string String, int def_value)
 {
 int tmp;
   if ((istringstream(String) >> tmp)) 
@@ -270,7 +263,7 @@ int tmp;
       return def_value;
 }
 
-long string_to_long(string String, long def_value)
+long TWFunc::string_to_long(string String, long def_value)
 {
 long tmp;
   if ((istringstream(String) >> tmp)) 
@@ -279,7 +272,7 @@ long tmp;
       return def_value;
 }
 
-uint64_t string_to_long(string String, uint64_t def_value)
+uint64_t TWFunc::string_to_long(string String, uint64_t def_value)
 {
 uint64_t tmp;
   if ((istringstream(String) >> tmp)) 
@@ -312,45 +305,6 @@ bool i = Path_Exists(orangefox_cfg);
    LOGINFO("DEBUG: OrangeFox: running the startup script...\n");
    Exec_Cmd(FOX_STARTUP_SCRIPT);
    return true;
-}
-
-/* rerun startup if needed after decryption */
-bool TWFunc::Rerun_Startup(void)
-{
-   return false; // something is causing spontaneous reboots to fastboot, so just exit
-   
-   if (OrangeFox_Startup_Executed > 0)
-      return false;
-
-   LOGINFO("OrangeFox: Starting possible running of OrangeFox_Startup() again...\n");
-   string tprop = Get_Property("orangefox.postinit.status");
-   bool i = Path_Exists(orangefox_cfg);
-   if (i == true || tprop == "1")
-     return false;
-
-   // LOGINFO("OrangeFox: Reading settings file - again...\n");
-   DataManager::ReadSettingsFile();
-
-   // LOGINFO("OrangeFox: Executing OrangeFox_Startup() again...\n");
-   OrangeFox_Startup(); 
-
-   LOGINFO("OrangeFox: Finished rerun.\n");
-   
-   return true;
-}
-
-std::string strReturnCurrentTime()
-{
-  time_t rawtime;
-  struct tm * timeinfo;
-  char buffer[80];
-
-  time (&rawtime);
-  timeinfo = localtime(&rawtime);
-
-  strftime(buffer,sizeof(buffer),"%Y%m%d_%H%M%S",timeinfo);
-  std::string str(buffer);
-  return str;
 }
 
 bool TWFunc::MIUI_ROM_SetProperty(const int code)
@@ -1133,7 +1087,8 @@ int TWFunc::tw_reboot(RebootCommand command)
 {
   int DoDeactivate = 0;
   DataManager::Flush();
-  Update_Log_File();
+  if (!Is_Data_Wiped("/data"))
+  	Update_Log_File();
   
   // Always force a sync before we reboot
   sync();
@@ -1560,6 +1515,14 @@ void TWFunc::Auto_Generate_Backup_Name() {
 	} else {
 		DataManager::SetValue(TW_BACKUP_NAME, Backup_Name);
 	}
+}
+
+int TWFunc::Property_Override(string Prop_Name, string Prop_Value) {
+#ifdef TW_INCLUDE_LIBRESETPROP
+    return setprop(Prop_Name.c_str(), Prop_Value.c_str(), false);
+#else
+    return -2;
+#endif
 }
 
 void TWFunc::Fixup_Time_On_Boot(const string & time_paths)
@@ -4206,6 +4169,60 @@ void TWFunc::check_selinux_support() {
 	}
 }
 
+bool TWFunc::Get_Encryption_Policy(ext4_encryption_policy &policy, std::string path) {
+#ifdef TW_INCLUDE_FBE
+	if (!TWFunc::Path_Exists(path)) {
+		LOGERR("Unable to find %s to get policy\n", path.c_str());
+		return false;
+	}
+	if (!e4crypt_policy_get_struct(path.c_str(), &policy)) {
+		LOGERR("No policy set for path %s\n", path.c_str());
+		return false;
+	}
+#endif
+	return true;
+}
+
+bool TWFunc::Set_Encryption_Policy(std::string path, const ext4_encryption_policy &policy) {
+#ifdef TW_INCLUDE_FBE
+	if (!TWFunc::Path_Exists(path)) {
+		LOGERR("unable to find %s to set policy\n", path.c_str());
+		return false;
+	}
+	char binary_policy[EXT4_KEY_DESCRIPTOR_SIZE];
+	char policy_hex[EXT4_KEY_DESCRIPTOR_SIZE_HEX];
+	policy_to_hex(binary_policy, policy_hex);
+	if (!e4crypt_policy_set_struct(path.c_str(), &policy)) {
+		LOGERR("unable to set policy for path: %s\n", path.c_str());
+		return false;
+	}
+#endif
+	return true;
+}
+
+bool TWFunc::Is_Data_Wiped(std::string path) {
+#ifdef TW_INCLUDE_FBE
+	DIR* d = opendir(path.c_str());
+	size_t file_count = 0;
+	if (d != NULL) {
+		struct dirent* de;
+		while ((de = readdir(d)) != NULL) {
+			LOGINFO("file: %s\n", de->d_name);
+			if (strcmp(de->d_name, ".") == 0 || strcmp(de->d_name, "..") == 0)
+				continue;
+			if (strncmp(de->d_name, "lost+found", 10) == 0 || strncmp(de->d_name, "media", 5) == 0)
+				continue;
+			file_count++;
+
+		}
+		closedir(d);
+	}
+	LOGINFO("file_count: %zu\n", file_count);
+	return file_count == 0;
+#else
+	return true;
+#endif
+}
 #endif // ndef BUILD_TWRPTAR_MAIN
 
 void TWFunc::Deactivation_Process(void)
@@ -4688,5 +4705,147 @@ string rom_finger_print = "";
   	Exec_Cmd("/sbin/resetprop ro.build.fingerprint " + rom_finger_print);
      }
   else LOGINFO("- ROM fingerprint not available\n");
+}
+
+string TWFunc::get_assert_device(const string filename)
+{
+string str = "";
+string temp = find_phrase(filename, "ro.product.device");
+   if (temp.empty())
+      return str;
+   
+   // either assert or getprop should be on the ro.product.device line
+   if (temp.find("assert") == std::string::npos && temp.find("getprop") == std::string::npos)
+      return str;
+
+   // we are also looking for E3004 and abort on the same line
+   if (temp.find("E3004") != std::string::npos && temp.find("abort") != std::string::npos)
+      {
+        //gui_print("- Found E3004 and abort on the ro.product.device line !\n");
+      }
+   else   
+      {
+        //gui_print("- E3004 and abort not found on the ro.product.device line! Search again ...\n");
+        string temp2 = find_phrase(filename, "E3004");
+   	if (temp2.empty()) // we really need this error code
+   	   return str;
+   	   
+   	if (temp2.find("abort") == std::string::npos) // we also need the abort statement
+           return str;
+        //gui_print("- Finally found E3004 and abort!\n");
+      }
+
+   // parse the string to extract the device name
+   str = DeleteBefore(temp, "==", true);// remove everything before "=="
+   str = DeleteAfter(str, "||"); 	// remove everything after "||"
+   str = removechar(str, '"');   	// remove quotation marks
+   str = removechar(str, ' ');		// remove spaces
+
+   return str;
+}
+
+string TWFunc::removechar(const string src, const char chars)
+{
+std::string str = src;
+int i = str.find(chars);
+   while (i != (int)std::string::npos)
+   {
+     str.erase(i, 1);
+     i = str.find(chars);
+   }
+   return str;
+}
+
+string TWFunc::lowercase (const string src)
+{
+   string str = src;
+   transform(str.begin(), str.end(), str.begin(), ::tolower);
+   return str;
+}
+
+string TWFunc::uppercase (const string src)
+{
+   string str = src;
+   transform(str.begin(), str.end(), str.begin(), ::toupper);
+   return str;
+}
+
+/* find the position of "subs" in "str" (or -1 if not found) */
+int TWFunc::pos (const string subs, const string str)
+{
+  return str.find(subs);
+}
+
+string TWFunc::ltrim(std::string str, const std::string chars)
+{
+    str.erase(0, str.find_first_not_of(chars));
+    return str;
+}
+ 
+string TWFunc::rtrim(std::string str, const std::string chars)
+{
+    str.erase(str.find_last_not_of(chars) + 1);
+    return str;
+}
+
+string TWFunc::trim(std::string str, const std::string chars)
+{
+    return ltrim(rtrim(str, chars), chars);
+}
+
+int TWFunc::DeleteFromIndex(std::string &Str, int Index, int Size)
+{
+  int len = Str.length();
+  if (Index < 0 || Index > len || Size < 1)
+     return -1;
+  int i = (Size - Index);
+  if (i >= len) 
+     Size = i;
+  Str.erase (Index, Size);
+  return Size;
+}
+
+string TWFunc::DeleteBefore(const std::string Str, const std::string marker, bool removemarker)
+{
+  std::string src = Str;
+  int i = src.find(marker);
+  if (i == (int)std::string::npos) 
+     return Str;
+  if (removemarker) 
+     i += marker.length();
+  src.erase (0, i);
+  return src;
+}
+
+string TWFunc::DeleteAfter(const std::string Str, const std::string marker)
+{
+  std::string src = Str;
+  int i = src.find(marker);
+  if (i == (int)std::string::npos) 
+     return Str;
+  src.erase (i, src.length());
+  return src;
+}
+
+string TWFunc::find_phrase(std::string filename, std::string search)
+{
+  std::string line = "";
+  std::string str = "";
+  std::ifstream File;
+  File.open(filename);
+  if (File.is_open())
+    {
+      while (!File.eof())
+	{
+	  std::getline(File, line);
+	  if (line.find(search) != std::string::npos)
+	    {
+	      File.close();
+	      return line;
+	    }
+	}
+      File.close();
+    }
+  return str;
 }
 //
