@@ -1211,5 +1211,24 @@
 		<string name="batch_files_folders">Файлы и папки</string>
 		
 		<string name="fm_action_folder">Действия над этой папкой</string>
+
+		<!-- Missing functions from TWRP -->
+		<string name="img_advanced">Прошить ядро</string>
+		<string name="img_type">Тип образа</string>
+		<string name="img_select_type">Выберите тип образа</string>
+
+		<string name="repack_backup_first">Сделать резервную копию образа</string>
+
+		<string name="unpack_error">Ошибка распаковки образа.</string>
+		<string name="repack_error">Ошибка перепаковки образа.</string>
+		<string name="unpacking_image">Распаковка {1}...</string>
+		<string name="repacking_image">Перепаковка {1}...</string>
+		
+		<string name="fix_recovery_loop">Исправить bootloop</string>
+		<string name="fix_recovery_loop_confirm">Исправить Bootloop</string>
+		<string name="fixing_recovery_loop">Исправление Bootloop'a...</string>
+		<string name="fix_recovery_loop_complete">Исправление Bootloop'a завершено</string>
+		<string name="fixing_recovery_loop_patch">Исправление ядра...</string>
+		<string name="fix_recovery_loop_patch_error">Ошибка исправления ядра.</string>
 	</resources>
 </language>
