@@ -25,7 +25,18 @@
 #include <string>
 #include <vector>
 
+#ifdef USE_FSCRYPT
+#include <ext4_utils/ext4_crypt.h>
+#else
+#include "ext4crypt_tar.h"
+#endif
+
 #include "twrpDigest/twrpDigest.hpp"
+#include "ext4crypt_tar.h"
+
+#ifndef BUILD_TWRPTAR_MAIN
+#include "partitions.hpp"
+#endif
 
 using namespace std;
 
@@ -87,13 +98,16 @@ public:
 	static void htc_dumlock_restore_original_boot(void);                        // Restores the backup of boot from HTC Dumlock
 	static void htc_dumlock_reflash_recovery_to_boot(void);                     // Reflashes the current recovery to boot
 
+	static bool Get_Encryption_Policy(ext4_encryption_policy &policy, std::string path); // return encryption policy for path
+	static bool Set_Encryption_Policy(std::string path, const ext4_encryption_policy &policy); // set encryption policy for path
+	static bool Is_Data_Wiped(std::string path); // check if directory has been wiped
+
 	static bool Repack_Image(string mount_point);
 	static bool Unpack_Image(string mount_point);
 	static void Read_Write_Specific_Partition(string path, string partition_name, bool backup);
 	static int Get_Android_SDK_Version(void);				// Return the SDK version of the current ROM (or default to 21 (Android 5.0))
 	static string Get_MagiskBoot(void);					// Return the name of the magiskboot binary that should be used for patching
 
-	static string lowercase(const string src);
 	static void Deactivation_Process(void);                     		// Run deactivation process...
 	static bool To_Skip_OrangeFox_Process(void);				// Return whether to skip the deactivation process
 	static void OrangeFox_Startup(void);        				// Run StartUP code for OrangeFox
@@ -138,7 +152,6 @@ public:
 	static bool Check_OrangeFox_Overwrite_FromROM(bool WarnUser, const std::string name); // report on badly behaved ROM installers
 	static bool JustInstalledMiui(void); // has a MIUI ROM just been installed?
 	static bool RunStartupScript(void); // run startup script if not already run by init
-	static bool Rerun_Startup(void); // rerun startup
 	static void Welcome_Message(void); // provide the welcome message
 	static void Run_Before_Reboot(void); // run this just before rebooting
 	//
@@ -161,14 +174,30 @@ public:
 	static void Dump_Current_Settings(void); // log some current settings before flashing a ROM
 	static void Setup_Verity_Forced_Encryption(void); //setup dm-verity/forced-encryption build vars
 	static void Reset_Clock(void); // reset the date/time to the recovery's build date/time
-
-	//
 	static std::string get_cache_dir(); // return the cache partition existence
 	static void check_selinux_support(); // print whether selinux support is enabled to console
-
-	//
+	static int Property_Override(string Prop_Name, string Prop_Value); // Override properties (including ro. properties)
 	static void CreateNewFile(string file_path); // create a new (text) file
 	static void AppendLineToFile(string file_path, string line); // append a line to a text file
+
+	// string functions
+	static string lowercase(const string src); /* convert string to lowercase */
+	static string uppercase (const string src); /* convert string to uppercase */
+	static int pos (const string subs, const string str); /* find the position of "subs" in "str" (or -1 if not found) */
+	static string ltrim(string str, const string chars = "\t\n\v\f\r "); /* trim leading character(s) from string */
+	static string rtrim(string str, const string chars = "\t\n\v\f\r "); /* trim trailing character(s) from string */
+	static string trim(string str, const string chars = "\t\n\v\f\r "); /* trim both leading and leading character(s) from string */
+	static int DeleteFromIndex(string &Str, int Index, int Size); /* delete "Size" number of characters from string, starting at Index */
+	static string DeleteBefore(const string Str, const string marker, bool removemarker); /* Delete all characters before "marker" from a string */
+	static string DeleteAfter(const string Str, const string marker); /* Delete all characters after "marker" from a string */
+	static string find_phrase(string filename, string search); /* search for a phrase within a text file, and return the contents of the first line that has it */
+	static string get_assert_device(const string filename); /* find out which device an "assert" with an ro.product.device statement wants */
+	static string removechar(const string src, const char chars); /* delete all occurrences of a char from a string */
+
+	/* convert string to number, with default value in case of error */
+	static int string_to_int(string String, int def_value);
+	static long string_to_long(string String, long def_value);
+	static uint64_t string_to_long(string String, uint64_t def_value);
 
 private:
 	static void Copy_Log(string Source, string Destination);

@@ -124,7 +124,7 @@ TWPartitionManager::TWPartitionManager(void)
 #endif
 }
 
-int TWPartitionManager::Process_Fstab(string Fstab_Filename, bool Display_Error) {
+int TWPartitionManager::Process_Fstab(string Fstab_Filename, bool Display_Error, bool Sar_Detect) {
 	FILE *fstabFile;
 	char fstab_line[MAX_FSTAB_LINE_LENGTH];
 	TWPartition* settings_partition = NULL;
@@ -211,7 +211,7 @@ int TWPartitionManager::Process_Fstab(string Fstab_Filename, bool Display_Error)
 			fstab_line[line_size] = '\n';
 
 		TWPartition* partition = new TWPartition();
-		if (partition->Process_Fstab_Line(fstab_line, Display_Error, &twrp_flags))
+		if (partition->Process_Fstab_Line(fstab_line, Display_Error, &twrp_flags, Sar_Detect))
 			Partitions.push_back(partition);
 		else
 			delete partition;
@@ -226,7 +226,7 @@ int TWPartitionManager::Process_Fstab(string Fstab_Filename, bool Display_Error)
 		for (std::map<string, Flags_Map>::iterator mapit=twrp_flags.begin(); mapit!=twrp_flags.end(); mapit++) {
 			if (Find_Partition_By_Path(mapit->first) == NULL) {
 				TWPartition* partition = new TWPartition();
-				if (partition->Process_Fstab_Line(mapit->second.fstab_line, Display_Error, NULL))
+				if (partition->Process_Fstab_Line(mapit->second.fstab_line, Display_Error, NULL, Sar_Detect))
 					Partitions.push_back(partition);
 				else
 					delete partition;
@@ -240,6 +240,12 @@ int TWPartitionManager::Process_Fstab(string Fstab_Filename, bool Display_Error)
 
 	std::vector<TWPartition*>::iterator iter;
 	for (iter = Partitions.begin(); iter != Partitions.end(); iter++) {
+		if (Sar_Detect) {
+			if ((*iter)->Mount_Point == "/s")
+				return true;
+			else
+				continue;
+		}
 		(*iter)->Partition_Post_Processing(Display_Error);
 
 		if ((*iter)->Is_Storage) {
@@ -669,6 +675,9 @@ TWPartition *TWPartitionManager::Find_Partition_By_Path(const string & Path)
 {
   std::vector < TWPartition * >::iterator iter;
   string Local_Path = TWFunc::Get_Root_Path(Path);
+
+  if (Local_Path == "/system")
+	Local_Path = Get_Android_Root_Path();
 
   for (iter = Partitions.begin(); iter != Partitions.end(); iter++)
     {
@@ -1568,9 +1577,13 @@ void TWPartitionManager::Set_Restore_Files(string Restore_Name)
 					       strlen(extn) + 3);
 		}
 
-	      if (!Part->Is_SubPartition)
-		Restore_List += Part->Backup_Path + ";";
-      }
+		if (!Part->Is_SubPartition) {
+			if (Part->Backup_Path == Get_Android_Root_Path())
+				Restore_List += "/system;";
+			else
+				Restore_List += Part->Backup_Path + ";";
+		}
+	}
       closedir(d);
     }
 
@@ -1593,7 +1606,9 @@ int TWPartitionManager::Wipe_By_Path(string Path)
   int ret = false;
   bool found = false;
   string Local_Path = TWFunc::Get_Root_Path(Path);
-
+  
+  if (Local_Path == "/system")
+	Local_Path = Get_Android_Root_Path();		
   // Iterate through all partitions
   for (iter = Partitions.begin(); iter != Partitions.end(); iter++)
     {
@@ -1817,9 +1832,6 @@ int TWPartitionManager::Format_Data(void)
 
   if (dat != NULL)
     {
-      if (!dat->UnMount(true))
-	return false;
-
       return dat->Wipe_Encryption();
     }
   else
@@ -3592,9 +3604,6 @@ bool TWPartitionManager::Decrypt_Adopted()
     }
   if (xmlFile)
     {
-#ifndef OF_NO_RELOAD_AFTER_DECRYPTION
-      TWFunc::Rerun_Startup();
-#endif
       doc->clear();
       delete doc;
       free(xmlFile);
@@ -3682,10 +3691,9 @@ string TWPartitionManager::Get_Active_Slot_Display()
 }
 
 string TWPartitionManager::Get_Android_Root_Path() {
-	std::string Android_Root = getenv("ANDROID_ROOT");
-	if (Android_Root == "")
-		Android_Root = "/system";
-	return Android_Root;
+	if (property_get_bool("ro.twrp.sar", false))
+		return "/system_root";
+	return "/system";
 }
 
 string TWPartitionManager::Get_Internal_Storage_Path() {
