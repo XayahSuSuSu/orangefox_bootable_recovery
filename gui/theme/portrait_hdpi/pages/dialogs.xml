@@ -186,8 +186,6 @@
 				<text>{@select_storage_hdr}</text>
 			</text>
 
-			<template name="gestures"/>
-
 			<action>
 				<touch key="home"/>
 				<action function="page">main</action>
@@ -229,8 +227,6 @@
 				<placement x="%bg_storage_hdr_x%" y="%bg_storage_hdr_y%"/>
 				<text>{@select_storage_hdr}</text>
 			</text>
-
-			<template name="gestures"/>
 
 			<action>
 				<touch key="home"/>
@@ -295,8 +291,6 @@
 				<action function="key">back</action>
 			</button>
 
-			<template name="gestures_key"/>
-
 			<action>
 				<touch key="home"/>
 				<action function="key">back</action>
@@ -353,8 +347,6 @@
 				<text>{@cancel_btn}</text>
 				<action function="key">back</action>
 			</button>
-			
-			<template name="gestures_key"/>
 
 			<action>
 				<touch key="home"/>
@@ -406,8 +398,6 @@
 				<text>{@cancel_btn}</text>
 				<action function="key">back</action>
 			</button>
-			
-			<template name="gestures_key"/>
 
 			<action>
 				<touch key="home"/>
@@ -479,8 +469,6 @@
 				<action function="set">zone_error=0</action>
 				<action function="overlay"/>
 			</button>
-			
-			<template name="gestures_key"/>
 
 			<action>
 				<touch key="home"/>
@@ -554,8 +542,6 @@
 					<action function="page">mod_magisk</action>
 				</actions>
 			</button>
-			
-			<template name="gestures"/>
 
 			<action>
 				<touch key="home"/>
@@ -611,8 +597,6 @@
 				<action function="set">of_average_ext_file=10</action>
 				<action function="overlay"/>
 			</button>
-			
-			<template name="gestures"/>
 
 			<action>
 				<touch key="home"/>
@@ -669,8 +653,6 @@
 				<text>{@ok_btn}</text>
 				<action function="overlay"/>
 			</button>
-			
-			<template name="gestures"/>
 
 			<action>
 				<touch key="home"/>
@@ -713,8 +695,6 @@
 					<action function="overlay"/>
 				</actions>
 			</button>
-			
-			<template name="gestures"/>
 
 			<action>
 				<touch key="home"/>

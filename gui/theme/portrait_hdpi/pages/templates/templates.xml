@@ -538,8 +538,6 @@
 				<placement x="%ab_menu_x%" y="%ab_menu_inst_3_y%" placement="4"/>
 				<image resource="arrow_d"/>
 			</image>
-			
-			<template name="gestures"/>
 
 			<action>
 				<touch key="home"/>

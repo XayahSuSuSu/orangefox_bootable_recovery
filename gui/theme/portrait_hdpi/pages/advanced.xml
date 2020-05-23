@@ -589,10 +589,10 @@
 				<placement x="%col1_x%" y="%terminal_y%" w="%terminal_width%" h="%terminal_num_height%"/>
 			</terminal>
 
+			<template name="navbar_bkg"/>
 			<template name="keyboardtemplate"/>
 			<template name="keyboardterminaltemplate"/>
 
-			<!--template name="navbar_bkg"/-->
 			<template name="navbar_home"/>
 			<template name="navbar_console"/>
 			<template name="navbar_terminal"/>

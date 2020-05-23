@@ -331,6 +331,7 @@
 			<template name="keys"/>
 			<template name="statusbarinfo"/>
 			<template name="navbar"/>
+			<template name="gestures_line"/>
 		</template>
 		
 		<template name="dialog_body_key">
