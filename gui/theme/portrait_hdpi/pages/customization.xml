@@ -1869,7 +1869,7 @@
 				<text>{@sel_splash_png}</text>
 			</text>
 
-			<text style="text_ab_subtitle">
+			<text style="text_ab_subtitle_lim">
 				<placement x="%col1_x_indent%" y="%row1_2_y%"/>
 				<text>%tw_zip_location%</text>
 			</text>

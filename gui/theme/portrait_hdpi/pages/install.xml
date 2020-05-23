@@ -549,7 +549,7 @@
 				<text>{@zip_add_queue}</text>
 			</text>
 
-			<text style="text_ab_subtitle">
+			<text style="text_ab_subtitle_lim">
 				<placement x="%col1_x_indent%" y="%row1_2_y%"/>
 				<text>%tw_zip_location_tmp%</text>
 			</text>
@@ -593,7 +593,7 @@
 				<text>{@install_zip_count_hdr}</text>
 			</text>
 
-			<text style="text_ab_subtitle">
+			<text style="text_ab_subtitle_lim">
 				<placement x="%col1_x_indent%" y="%row1_2_y%"/>
 				<text>%tw_file%</text>
 			</text>
@@ -621,7 +621,7 @@
 				<text>{@flashing_image}</text>
 			</text>
 
-			<text style="text_ab_subtitle">
+			<text style="text_ab_subtitle_lim">
 				<placement x="%col1_x_indent%" y="%row1_2_y%"/>
 				<text>%tw_file%</text>
 			</text>

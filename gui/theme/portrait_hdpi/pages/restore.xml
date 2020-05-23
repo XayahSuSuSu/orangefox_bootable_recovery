@@ -209,7 +209,7 @@
 				<text>{@restore_backup_hdr}</text>
 			</text>
 
-			<text style="text_ab_subtitle">
+			<text style="text_ab_subtitle_lim">
 				<placement x="%col1_x_indent%" y="%row1_2_y%"/>
 				<text>%tw_restore_name%</text>
 			</text>
@@ -290,7 +290,7 @@
 				<text>{@decrypt_data_trying}</text>
 			</text>
 
-			<text style="text_ab_subtitle">
+			<text style="text_ab_subtitle_lim">
 				<placement x="%col1_x_indent%" y="%row1_2_y%"/>
 				<text>%tw_restore_name%</text>
 			</text>
@@ -333,7 +333,7 @@
 				<text>{@restore_backup_hdr}</text>
 			</text>
 
-			<text style="text_ab_subtitle">
+			<text style="text_ab_subtitle_lim">
 				<placement x="%col1_x_indent%" y="%row1_2_y%"/>
 				<text>%tw_restore_name%</text>
 			</text>
@@ -434,7 +434,7 @@
 				<text>{@rename_backup_hdr}</text>
 			</text>
 
-			<text style="text_ab_subtitle">
+			<text style="text_ab_subtitle_lim">
 				<placement x="%col1_x_indent%" y="%row1_2_y%"/>
 				<text>%tw_restore_name%</text>
 			</text>
@@ -500,7 +500,7 @@
 				<text>%tw_text1%</text>
 			</text>
 
-			<text style="text_ab_subtitle">
+			<text style="text_ab_subtitle_lim">
 				<placement x="%col1_x_indent%" y="%row1_2_y%"/>
 				<text>%tw_text2%</text>
 			</text>
@@ -597,7 +597,7 @@
 				<text>{@rename_backup_confirm}</text>
 			</text>
 
-			<text style="text_ab_subtitle">
+			<text style="text_ab_subtitle_lim">
 				<placement x="%col1_x_indent%" y="%row1_2_y%"/>
 				<text>%tw_backup_rename%</text>
 			</text>

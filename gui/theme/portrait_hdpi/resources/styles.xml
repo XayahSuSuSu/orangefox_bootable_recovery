@@ -36,6 +36,10 @@
 		</style>
 		
 		<style name="text_ab_subtitle">
+			<font resource="Secondary" color="%actbar_color%"/>
+		</style>
+
+		<style name="text_ab_subtitle_lim">
 			<limit length="36"/>
 			<font resource="Secondary" color="%actbar_color%"/>
 		</style>

@@ -225,7 +225,7 @@
 				<text>{@fm_mkdir}</text>
 			</text>
 
-			<text style="text_ab_subtitle">
+			<text style="text_ab_subtitle_lim">
 				<placement x="%col1_x_indent%" y="%row1_2_y%"/>
 				<text>{@in} %tw_file_location1%</text>
 			</text>
@@ -1081,7 +1081,7 @@
 				<text>{@fm_type_folder}</text>
 			</text>
 
-			<text style="text_ab_subtitle">
+			<text style="text_ab_subtitle_lim">
 				<placement x="%col1_x_indent%" y="%row1_2_y%"/>
 				<text>%tw_filename1%</text>
 			</text>
@@ -1152,7 +1152,7 @@
 				<text>{@fm_open}</text>
 			</text>
 
-			<text style="text_ab_subtitle">
+			<text style="text_ab_subtitle_lim">
 				<placement x="%col1_x_indent%" y="%row1_2_y%"/>
 				<text>%tw_filename1%</text>
 			</text>
@@ -1190,7 +1190,7 @@
 				<text>{@fm_sums}</text>
 			</text>
 
-			<text style="text_ab_subtitle">
+			<text style="text_ab_subtitle_lim">
 				<placement x="%col1_x_indent%" y="%row1_2_y%"/>
 				<text>%tw_filename1%</text>
 			</text>
@@ -1376,7 +1376,7 @@
 				<text>{@fm_sel_dest}</text>
 			</text>
 
-			<text style="text_ab_subtitle">
+			<text style="text_ab_subtitle_lim">
 				<placement x="%col1_x_indent%" y="%row1_2_y%"/>
 				<text>%tw_file_location2%</text>
 			</text>
@@ -1425,7 +1425,7 @@
 				<text>{@fm_rename_hdr}</text>
 			</text>
 
-			<text style="text_ab_subtitle">
+			<text style="text_ab_subtitle_lim">
 				<placement x="%col1_x_indent%" y="%row1_2_y%"/>
 				<text>%tw_filename1%</text>
 			</text>
@@ -1477,7 +1477,7 @@
 				<text>{@fm_rename_hdr}</text>
 			</text>
 
-			<text style="text_ab_subtitle">
+			<text style="text_ab_subtitle_lim">
 				<placement x="%col1_x_indent%" y="%row1_2_y%"/>
 				<text>%tw_filename1%</text>
 			</text>
@@ -1529,7 +1529,7 @@
 				<text>{@fm_set_perms_hdr}</text>
 			</text>
 
-			<text style="text_ab_subtitle">
+			<text style="text_ab_subtitle_lim">
 				<placement x="%col1_x_indent%" y="%row1_2_y%"/>
 				<text>%tw_filename1%</text>
 			</text>			
@@ -1695,7 +1695,7 @@
 				<text>{@fm_set_perms_hdr}</text>
 			</text>
 
-			<text style="text_ab_subtitle">
+			<text style="text_ab_subtitle_lim">
 				<placement x="%col1_x_indent%" y="%row1_2_y%"/>
 				<text>%tw_filename1%</text>
 			</text>
@@ -1769,7 +1769,7 @@
 				<text>%tw_fm_text1%</text>
 			</text>
 
-			<text style="text_ab_subtitle">
+			<text style="text_ab_subtitle_lim">
 				<condition var1="of_is_batch" op="!=" var2="1"/>
 				<placement x="%col1_x_indent%" y="%row1_2_y%"/>
 				<text>%tw_filename1%</text>
@@ -1835,7 +1835,7 @@
 				<text>{@fm_open_unpackzip}</text>
 			</text>
 
-			<text style="text_ab_subtitle">
+			<text style="text_ab_subtitle_lim">
 				<placement x="%col1_x_indent%" y="%row1_2_y%"/>
 				<text>%tw_filename1%</text>
 			</text>
@@ -2093,7 +2093,7 @@
 				<text>{@fm_open_unpackzip}</text>
 			</text>
 
-			<text style="text_ab_subtitle">
+			<text style="text_ab_subtitle_lim">
 				<placement x="%col1_x_indent%" y="%row1_2_y%"/>
 				<text>%tw_filename1%</text>
 			</text>
@@ -2112,7 +2112,7 @@
 				<text>%tw_fm_text1%</text>
 			</text>
 			
-			<text style="text_ab_subtitle">
+			<text style="text_ab_subtitle_lim">
 				<placement x="%col1_x_indent%" y="%row1_2_y%"/>
 				<text>%tw_filename1%</text>
 			</text>
@@ -2208,7 +2208,7 @@
 				<text>{@fm_open_text}</text>
 			</text>
 
-			<text style="text_ab_subtitle">
+			<text style="text_ab_subtitle_lim">
 				<placement x="%col1_x_indent%" y="%row1_2_y%"/>
 				<text>%tw_filename1%</text>
 			</text>
