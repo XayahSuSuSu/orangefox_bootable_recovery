@@ -95,10 +95,6 @@
 		<variable name="ft_backup_empty" value="0"/>
 		<variable name="startup" value="0"/>
 		<variable name="tw_backups_folder_fm" value="/tmp"/>
-		
-		<!-- Gesture -->
-		<variable name="gst_keyboard_y" value="%keyboard_y%-%ab_h%"/>
-		<variable name="gst_line_y" value="%screen_h%-123"/>
 
 		<!-- Placement -->
 		<variable name="welcome_text" value="%center_y%+360"/>
@@ -237,8 +233,8 @@
 		<variable name="bl_files_h" value="%screen_min_cut%-600"/>
 		<variable name="input_btn_list_y" value="674+%cutout_w%"/>
 
-		<variable name="down_menu_btn_y" value="%screen_min_cut%-576"/>
-		<variable name="down_menu_y" value="%screen_min_cut%-984"/>
+		<variable name="down_menu_btn_y" value="%screen_h%-576"/>
+		<variable name="down_menu_y" value="%screen_h%-984"/>
 		
 		<!-- chmod -->
 		<variable name="ch_r_x" value="315"/>
@@ -510,6 +506,10 @@
 		<!-- Centered title with icon (for decryption and setup wizard) -->
 		<variable name="centered_title_1" value="222+%cutout_w%"/>
 		<variable name="centered_title_2" value="312+%cutout_w%"/>
+		
+		<!-- Gesture -->
+		<variable name="gst_keyboard_y" value="%keyboard_y%-%ab_h%"/>
+		<variable name="gst_line_y" value="%screen_h%-123"/>
 		
 		<!-- Rows -->
 		<variable name="row0_y" value="240+%cutout_w%"/>

@@ -366,20 +366,15 @@
 		</template>
 		
 		<template name="t_system">
-			<template name="base_ex"/>
+			<template name="body_ct"/>
 
-			<text style="text_ab_title">
-				<placement x="%col1_x_indent%" y="%ab_bc_y%"/>
-				<text>{@mount_hdr}</text>
-			</text>
-
-			<text style="text_ab_title">
-				<placement x="%col1_x_indent%" y="%row1_2_y%" placement="2"/>
-				<text>{@sys_ro}</text>
-			</text>
+			<image>
+				<image resource="actionbar_settings"/>
+				<placement x="%center_x%" y="%centered_title_1%" placement="4"/>
+			</image>
 
 			<text style="text_ab_subtitle">
-				<placement x="%col1_x_indent%" y="%row1_2_y%"/>
+				<placement x="%center_x%" y="%centered_title_2%" placement="4"/>
 				<text>{@sys_ro_hdr}</text>
 			</text>
 
@@ -445,6 +440,9 @@
 				<placement x="%center_x%" y="%slider_text_y%" placement="5"/>
 				<text>{@swipe_allow_mod}</text>
 			</text>
+
+			<template name="navbar"/>
+			<template name="gestures"/>
 			
 			<action>
 				<touch key="home"/>

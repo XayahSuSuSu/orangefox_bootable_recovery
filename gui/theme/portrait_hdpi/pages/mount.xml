@@ -178,8 +178,6 @@
 				<action function="set">tw_page_done=1</action>
 				<action function="page">main</action>
 			</action>
-
-			<template name="gestures"/>
 		</page>
 
 		<page name="system_readonly_mount">
@@ -198,8 +196,6 @@
 				<action function="set">tw_page_done=1</action>
 				<action function="page">ext_general</action>
 			</action>
-
-			<template name="gestures"/>
 		</page>
 
 		<page name="decrypt">
