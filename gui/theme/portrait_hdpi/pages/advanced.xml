@@ -355,21 +355,6 @@
 					<action function="set">tw_existpage=fox_modules_confirm</action>
 					<action function="page">filecheck</action>
 				</listitem>
-				<listitem name="{@module_cam}">
-					<condition var1="fileexists" var2="/sdcard/Fox/FoxFiles/Cam2API.zip"/>
-					<icon res="bs_btn_archive"/>
-					<action function="queueclear"/>
-					<action function="set">fox_m_author=XDA</action>
-					<action function="set">fox_m_name={@module_cam}</action>
-					<action function="set">tw_file=Cam2API.zip</action>
-					<action function="set">tw_filename=/sdcard/Fox/FoxFiles/Cam2API.zip</action>
-					<action function="set">tw_filecheck=%tw_filename%</action>
-					<action function="set">tw_zip_location=/sdcard/Fox/FoxFiles</action>
-					<action function="queuezip"/>
-					<action function="set">tw_notexistpage=fox_modules_confirm</action>
-					<action function="set">tw_existpage=fox_modules_confirm</action>
-					<action function="page">filecheck</action>
-				</listitem>
 				<listitem name="{@module_pass}">
 					<condition var1="fileexists" var2="/FFiles/OF_DelPass/OF_DelPass.zip"/>
 					<icon res="bs_btn_archive"/>
