@@ -711,5 +711,51 @@
 				<placement x="0" y="0" w="%screen_w%" h="%ab_h%"/>
 			</fill>
 		</template>
+
+		<template name="flash_page">
+			<template name="base_ex"/>
+
+			<text style="text_ab_title">
+				<placement x="%col1_x_indent%" y="%ab_bc_y%"/>
+				<text>{@install_image_hdr}</text>
+			</text>
+
+			<text style="text_ab_title">
+				<placement x="%col1_x_indent%" y="%row1_2_y%" placement="2"/>
+				<text>{@flash_img_confirm}</text>
+			</text>
+
+			<text style="caption">
+				<placement x="%col1_x_caption%" y="%row2_1a_y%"/>
+				<text>{@file}</text>
+			</text>
+
+			<text style="text_body1">
+				<placement x="%col1_x_caption%" y="%row2_2a_y%"/>
+				<text>%tw_file%</text>
+			</text>
+
+			<text style="caption">
+				<placement x="%col1_x_caption%" y="%row3_1a_y%"/>
+				<text>{@folder}</text>
+			</text>
+
+			<text style="text_body1">
+				<placement x="%col1_x_caption%" y="%row3_2a_y%"/>
+				<text>%tw_zip_location%</text>
+			</text>
+
+			<text style="caption">
+				<placement x="%center_x%" y="%slider_text_y%" placement="5"/>
+				<text>{@swipe_to_install_img}</text>
+			</text>
+
+			<template name="gestures"/>
+
+			<action>
+				<touch key="home"/>
+				<action function="page">main</action>
+			</action>
+		</template>
 	</templates>
 </recovery>

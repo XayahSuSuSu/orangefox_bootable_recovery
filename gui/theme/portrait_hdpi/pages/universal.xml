@@ -287,6 +287,7 @@
 			<text style="text_ab_title">
 				<condition var1="tw_action" op="!=" var2="adbsideload"/>
 				<condition var1="tw_action" op="!=" var2="openrecoveryscript"/>
+				<condition var1="tw_action" op="!=" var2="repackimage"/>
 				<placement x="%col1_x_indent%" y="%ab_bc_y%"/>
 				<text>OrangeFox</text>
 			</text>
@@ -295,6 +296,12 @@
 				<condition var1="tw_action" var2="adbsideload"/>
 				<placement x="%col1_x_indent%" y="%ab_bc_y%"/>
 				<text>{@adb_sideload_hdr}</text>
+			</text>
+
+			<text style="text_ab_title">
+				<condition var1="tw_action" var2="repackimage"/>
+				<placement x="%col1_x_indent%" y="%ab_bc_y%"/>
+				<text>{@install_image_hdr}</text>
 			</text>
 
 			<text style="text_ab_title">

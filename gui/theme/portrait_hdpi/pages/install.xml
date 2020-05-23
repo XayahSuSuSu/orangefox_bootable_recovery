@@ -418,41 +418,11 @@
 		</page>
 
 		<page name="flash_image_confirm">
-			<template name="base_ex"/>
-
-			<text style="text_ab_title">
-				<placement x="%col1_x_indent%" y="%ab_bc_y%"/>
-				<text>{@install_image_hdr}</text>
-			</text>
-
-			<text style="text_ab_title">
-				<placement x="%col1_x_indent%" y="%row1_2_y%" placement="2"/>
-				<text>{@flash_img_confirm}</text>
-			</text>
+			<template name="flash_page"/>
 
 			<text style="text_ab_subtitle">
 				<placement x="%col1_x_indent%" y="%row1_2_y%"/>
 				<text>{@install_sel_target}</text>
-			</text>
-
-			<text style="caption">
-				<placement x="%col1_x_caption%" y="%row2_1a_y%"/>
-				<text>{@file}</text>
-			</text>
-
-			<text style="text_body1">
-				<placement x="%col1_x_caption%" y="%row2_2a_y%"/>
-				<text>%tw_file%</text>
-			</text>
-
-			<text style="caption">
-				<placement x="%col1_x_caption%" y="%row3_1a_y%"/>
-				<text>{@folder}</text>
-			</text>
-
-			<text style="text_body1">
-				<placement x="%col1_x_caption%" y="%row3_2a_y%"/>
-				<text>%tw_zip_location%</text>
 			</text>
 
 			<text style="caption">
@@ -466,26 +436,78 @@
 				<listtype name="flashimg"/>
 			</partitionlist>
 
-			<text style="caption">
-				<placement x="%center_x%" y="%slider_text_y%" placement="5"/>
-				<text>{@swipe_to_install_img}</text>
-			</text>
+			<button style="btn_raised_hl">
+				<placement x="%btn_raised_right_x%" y="%row_btn2_y%" placement="1"/>
+				<text>{@img_advanced}</text>
+				<condition var1="tw_has_boot_slots" var2="1"/>
+				<condition var1="tw_has_repack_tools" var2="1"/>
+				<action function="set">tw_repack_kernel=0</action>
+				<action function="page">flash_image_ab</action>
+			</button>
 
 			<slider style="slider_action">
 				<placement x="%center_x%" y="%slider_y%" placement="5"/>
 				<action function="page">flash_image</action>
 			</slider>
 
-			<template name="gestures"/>
-
 			<action>
 				<touch key="back"/>
 				<action function="page">%install_back%</action>
 			</action>
+		</page>
+		
+		<page name="flash_image_ab">
+			<template name="flash_page"/>
+
+			<text style="text_ab_subtitle">
+				<placement x="%col1_x_indent%" y="%row1_2_y%"/>
+				<text>{@img_select_type}</text>
+			</text>
+
+			<text style="caption">
+				<placement x="%col1_x_caption%" y="%row4_1a_y%"/>
+				<text>{@img_type}</text>
+			</text>
+
+			<listbox>
+				<placement x="0" y="%row4_2a_y%" w="%screen_w%" h="%lb_l2%"/>
+				<data name="tw_repack_kernel"/>
+				<listitem name="{@recovery_ramdisk}">0</listitem>
+				<listitem name="{@kernel}">1</listitem>
+			</listbox>
+			
+			<text style="caption">
+				<placement x="%col1_x_caption%" y="%row5_3a_y%"/>
+				<text>{@options_cptn}</text>
+			</text>
+
+			<listbox style="settingslist">
+				<placement x="0" y="%row6_1a_y%" w="%screen_w%" h="%lb_l1%"/>
+				<listitem name="{@repack_backup_first}">
+					<data variable="tw_repack_backup_first"/>
+				</listitem>
+			</listbox>
+
+			<button style="btn_raised">
+				<placement x="%btn_raised_left_x%" y="%row_btn2_y%"/>
+				<text>{@back_btn}</text>
+				<action function="page">flash_image_confirm</action>
+			</button>
+
+			<slider style="slider_action">
+				<placement x="%center_x%" y="%slider_y%" placement="5"/>
+				<action function="set">tw_back=advanced</action>
+				<action function="set">tw_action=repackimage</action>
+				<action function="set">tw_action_param=/boot</action>
+				<action function="set">tw_action_text1={@flashing_image}</action>
+				<action function="set">tw_action_text2=%tw_file%</action>
+				<action function="set">tw_complete_text1={@image_flashed}</action>
+				<action function="page">action_page</action>
+			</slider>
 
 			<action>
-				<touch key="home"/>
-				<action function="page">main</action>
+				<touch key="back"/>
+				<action function="page">flash_image_confirm</action>
 			</action>
 		</page>
 

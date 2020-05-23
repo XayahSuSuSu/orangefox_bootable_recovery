@@ -88,6 +88,11 @@
 					<icon res="hide"/>
 					<action function="page">advanced</action>
 				</listitem>
+				<listitem name="{@terminal_btn}">
+					<condition var1="utils_show" var2="1"/>
+					<icon res="bs_adv_term"/>
+					<action function="page">terminal</action>
+				</listitem>
 				<listitem name="{@copy_log_btn}">
 					<condition var1="utils_show" var2="1"/>
 					<icon res="bs_adv_log"/>
@@ -106,15 +111,10 @@
 					<icon res="bs_adv_se"/>
 					<action function="page">fixcontexts</action>
 				</listitem>
-				<listitem name="{@terminal_btn}">
-					<condition var1="utils_show" var2="1"/>
-					<icon res="bs_adv_term"/>
-					<action function="page">terminal</action>
-				</listitem>
 				<listitem name="{@dumlock_hdr}">
 					<condition var1="utils_show" var2="1"/>
 					<condition var1="tw_show_dumlock" var2="1"/>
-					<icon res="bs_adv_term"/>
+					<icon res="bs_adv_se"/>
 					<action function="page">htcdumlock</action>
 				</listitem>
 				<listitem name="{@inject_twrp_btn}">
@@ -126,6 +126,19 @@
 					<action function="set">tw_text1={@inject_twrp_confirm}</action>
 					<action function="set">tw_action_text1={@injecting_twrp}</action>
 					<action function="set">tw_complete_text1={@inject_twrp_complete}</action>
+					<action function="set">tw_slider_text={@swipe_to_confirm}</action>
+					<action function="page">confirm_action</action>
+				</listitem>
+				<listitem name="{@fix_recovery_loop}">
+					<icon res="bs_adv_se"/>
+					<condition var1="utils_show" var2="1"/>
+					<condition var1="tw_has_boot_slots" var2="1"/>
+					<condition var1="tw_has_repack_tools" var2="1"/>
+					<action function="set">tw_back=advanced</action>
+					<action function="set">tw_action=fixabrecoverybootloop</action>
+					<action function="set">tw_text1={@fix_recovery_loop_confirm}</action>
+					<action function="set">tw_action_text1={@fixing_recovery_loop}</action>
+					<action function="set">tw_complete_text1={@fix_recovery_loop_complete}</action>
 					<action function="set">tw_slider_text={@swipe_to_confirm}</action>
 					<action function="page">confirm_action</action>
 				</listitem>
