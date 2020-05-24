@@ -753,5 +753,99 @@
 				<action function="page">main</action>
 			</action>
 		</template>
+	
+		<template name="decrypt_page">
+			<template name="navbar_home"/>
+			<template name="navbar_console"/>
+			<template name="navbar_key"/>
+
+			<image>
+				<image resource="actionbar_encr_ena"/>
+				<placement x="%center_x%" y="%centered_title_1%" placement="4"/>
+			</image>
+
+			<text style="text_ab_subtitle">
+				<placement x="%center_x%" y="%centered_title_2%" placement="4"/>
+				<text>{@decrypt}</text>
+			</text>
+
+			<image>
+				<placement x="%col1_x%" y="%row2_1a_y%"/>
+				<image resource="icon_info"/>
+			</image>
+
+			<text style="text_body2_hl">
+				<placement x="%col1_x_indent%" y="%row2_1a_y%"/>
+				<text>{@encrypt_data_part}</text>
+			</text>
+			
+			<text style="caption_hl">
+				<placement x="%col1_x_caption%" y="%row2_3a_y%"/>
+				<text>{@decrypt_data_enter_pass}</text>
+			</text>
+
+			<input>
+				<placement x="%col1_x_caption%" y="%row3_1a_y%" w="%input_backup_w%" h="%input_height%"/>
+				<text>%tw_crypto_display%</text>
+				<data name="tw_crypto_password" mask="*" maskvariable="tw_crypto_display"/>
+				<restrict minlen="1" maxlen="254"/>
+				<action function="page">trydecrypt</action>
+			</input>
+
+			<input>
+				<condition var1="of_show_pass" var2="1"/>
+				<placement x="%col1_x_caption%" y="%row3_1a_y%" w="%input_backup_w%" h="%input_height%"/>
+				<text>%tw_crypto_password%</text>
+				<data name="tw_crypto_password"/>
+				<cursor color="%transparent%" hasfocus="0" width="0"/>
+				<restrict disable="1"/>
+				<action function="page">trydecrypt</action>
+			</input>
+			
+			<button>
+				<placement x="%ab_btn1_x%" y="%row3_2_y%" placement="4"/>
+				<image resource="actionbar_show"/>
+				<action function="set">of_show_pass=1</action>
+			</button>
+
+			<fill color="%accent%">
+				<condition var1="tw_password_fail" op="!=" var2="1"/>
+				<placement x="%col1_x_caption%" y="%row3_2a_y%" w="%input_backup_w%" h="%input_line_height%" placement="1"/>
+			</fill>
+
+			<fill color="%text_fail%">
+				<condition var1="tw_password_fail" var2="1"/>
+				<placement x="%col1_x_caption%" y="%row3_2a_y%" w="%input_backup_w%" h="%input_line_height%" placement="1"/>
+			</fill>
+
+			<text style="text_input_fail">
+				<condition var1="tw_password_fail" var2="1"/>
+				<placement x="%col1_x_caption%" y="%row3_2a_y%"/>
+				<text>{@restore_dec_fail}</text>
+			</text>
+
+			<template name="gestures"/>
+			
+			<!-- Crutch; TWRP can't focus on right input so just prevent user from tapping anywhere except 
+				 navbar and keyboard switcher -->
+			<button> 
+				<condition var1="of_show_pass" var2="1"/>
+				<fill color="%transparent%"/>
+				<placement x="0" y="0" w="%screen_w%" h="%screen_h%"/>
+				<action function="set">of_show_pass=0</action>
+			</button>
+
+			<action>
+				<touch key="home"/>
+				<action function="set">tw_page_done=1</action>
+				<action function="page">main</action>
+			</action>
+
+			<action>
+				<touch key="back"/>
+				<action function="set">tw_page_done=1</action>
+				<action function="page">main</action>
+			</action>
+		</template>
 	</templates>
 </recovery>

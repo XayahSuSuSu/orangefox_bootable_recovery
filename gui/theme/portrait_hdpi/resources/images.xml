@@ -188,6 +188,7 @@
 		<image name="logo_icon" filename="Default/Icons/logo" retainaspect="1"/>
 		
 		<!-- Other -->
+		<image name="actionbar_show" filename="Default/Other/show" retainaspect="1"/>
 		<image name="actionbar_clear" filename="Default/Other/actionbar_clear" retainaspect="1"/>
 		<image name="empty_folder" filename="Default/FullscreenIcons/empty_folder" retainaspect="1"/>
 		<image name="fox_lock" filename="Default/FullscreenIcons/fox_lock" retainaspect="1"/>

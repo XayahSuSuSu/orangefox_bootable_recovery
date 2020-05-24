@@ -206,83 +206,38 @@
 			
 			<template name="body_ct"/>
 			<template name="keyboardtemplate"/>
+			<template name="decrypt_page"/>
 			<!-- <template name="navbar_bkg"/> -->
-			<template name="navbar_home"/>
-			<template name="navbar_console"/>
-			<template name="navbar_key"/>
 
-			<image>
-				<image resource="actionbar_encr_ena"/>
-				<placement x="%center_x%" y="%centered_title_1%" placement="4"/>
-			</image>
+			<listbox style="btn_list">
+				<placement x="0" y="%row3_3a_y%" w="%screen_w%" h="%bl_h1%"/>
+				<listitem name="{@pass_pin}">
+					<icon res="dialpad"/>
+					<action function="set">of_show_pass=0</action>
+					<action function="page">decrypt_pin</action>
+				</listitem>
+			</listbox>
+		</page>
 
-			<text style="text_ab_subtitle">
-				<placement x="%center_x%" y="%centered_title_2%" placement="4"/>
-				<text>{@decrypt}</text>
-			</text>
-
-			<image>
-				<placement x="%col1_x%" y="%row2_1a_y%"/>
-				<image resource="icon_info"/>
-			</image>
-
-			<text style="text_body2_hl">
-				<placement x="%col1_x_indent%" y="%row2_1a_y%"/>
-				<text>{@encrypt_data_part}</text>
-			</text>
-
-			<text style="text_body2">
-				<placement x="%col1_x_indent%" y="%row2_3a_y%"/>
-				<text>{@decrypt_data_enter_note1}</text>
-			</text>
-
-			<text style="text_body2">
-				<placement x="%col1_x_indent%" y="%row3_1a_y%"/>
-				<text>{@decrypt_data_enter_note2}</text>
-			</text>
-
-			<text style="caption_hl">
-				<placement x="%col1_x_caption%" y="%row4_1_y%"/>
-				<text>{@decrypt_data_enter_pass}</text>
-			</text>
-
-			<input>
-				<placement x="%col1_x_caption%" y="%input_decr_y%" w="%input_w%" h="%input_height%"/>
-				<text>%tw_crypto_display%</text>
-				<data name="tw_crypto_password" mask="*" maskvariable="tw_crypto_display"/>
-				<restrict minlen="1" maxlen="254"/>
-				<action function="page">trydecrypt</action>
-			</input>
-
-			<fill color="%accent%">
-				<condition var1="tw_password_fail" op="!=" var2="1"/>
-				<placement x="%col1_x_caption%" y="%row4_3_y%" w="%input_w%" h="%input_line_height%" placement="1"/>
-			</fill>
-
-			<fill color="%text_fail%">
-				<condition var1="tw_password_fail" var2="1"/>
-				<placement x="%col1_x_caption%" y="%row4_3_y%" w="%input_w%" h="%input_line_height%" placement="1"/>
-			</fill>
-
-			<text style="text_input_fail">
-				<condition var1="tw_password_fail" var2="1"/>
-				<placement x="%col1_x_caption%" y="%row4_3_y%"/>
-				<text>{@restore_dec_fail}</text>
-			</text>
-
-			<template name="gestures"/>
-
+		<page name="decrypt_pin">
 			<action>
-				<touch key="home"/>
-				<action function="set">tw_page_done=1</action>
-				<action function="page">main</action>
+				<condition var1="tw_crypto_pwtype" var2="2"/>
+				<action function="page">decrypt_pattern</action>
 			</action>
+			
+			<template name="body_ct"/>
+			<template name="keyboardnum"/>
+			<template name="decrypt_page"/>
+			<!-- <template name="navbar_bkg"/> -->
 
-			<action>
-				<touch key="back"/>
-				<action function="set">tw_page_done=1</action>
-				<action function="page">main</action>
-			</action>
+			<listbox style="btn_list">
+				<placement x="0" y="%row3_3a_y%" w="%screen_w%" h="%bl_h1%"/>
+				<listitem name="{@pass_classic}">
+					<icon res="pass_classic"/>
+					<action function="set">of_show_pass=0</action>
+					<action function="page">decrypt</action>
+				</listitem>
+			</listbox>
 		</page>
 
 		<page name="decrypt_pattern">
