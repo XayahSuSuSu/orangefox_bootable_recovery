@@ -1756,7 +1756,7 @@
 			<listbox>
 				<placement x="0" y="%row4_3_y%" w="%screen_w%" h="%spl_list_h%"/>
 				<data name="spl_bg_color"/>
-				<iconsize w="%col1_x_caption%" h="136" padding="25"/>
+				<iconsize w="%col1_x_caption%" h="%bl_h1%" padding="25"/>
 				<listitem name="{@spl_accent}"><condition var1="accent" op="!=" var2="#d86100"/><condition var1="accent" op="!=" var2="#ed6f02"/>%accent%</listitem>
 				<listitem name="{@spl_orange}">#ED6F02</listitem>
 				<listitem name="{@spl_white}">#FFFFFF</listitem>
@@ -1801,16 +1801,23 @@
 			</text>
 		
 			<listbox style="settingslist">
-				<placement x="0" y="%row4_3_y%" w="%screen_w%" h="144"/>
-				<iconsize w="%col1_x_caption%" h="144" padding="25"/>
+				<placement x="0" y="%row4_3_y%" w="%screen_w%" h="%bl_h1%"/>
+				<iconsize w="%col1_x_caption%" h="%bl_h1%" padding="25"/>
 				<listitem name="{@spl_ofr}">
+					<condition var1="spl_logo_type" var2="0"/>
+					<icon res="checkbox_false"/>
+					<action function="set">spl_ofr=1</action>
+					<action function="set">spl_logo_type=w</action>
+				</listitem>
+				<listitem name="{@spl_ofr}">
+					<condition var1="spl_logo_type" op="!=" var2="0"/>
 					<data variable="spl_ofr"/>
 				</listitem>
 			</listbox>
 
 			<listbox>
-				<placement x="0" y="%row5_2a_y%" w="%screen_w%" h="%lb_l7%"/>
-				<iconsize w="%col1_x_caption%" h="144" padding="25"/>
+				<placement x="0" y="%row5_2a_y%" w="%screen_w%" h="%bl_h4%"/>
+				<iconsize w="%col1_x_caption%" h="%bl_h1%" padding="25"/>
 				<data name="spl_logo_type"/>
 				<listitem name="{@hidden}"><condition var1="spl_bg_on" var2="1"/>0</listitem>
 				<listitem name="{@spl_white}">w</listitem>

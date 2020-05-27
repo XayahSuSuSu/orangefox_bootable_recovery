@@ -18,8 +18,8 @@
 			</image>
 
 			<listbox style="settingslist">
-				<iconsize w="%col1_x_caption%" h="136" padding="25"/>
-				<placement x="0" y="%down_menu_y%" w="%screen_w%" h="408"/>
+				<iconsize w="%col1_x_caption%" h="%bl_h1%" padding="25"/>
+				<placement x="0" y="%down_menu_y%" w="%screen_w%" h="%bl_h3%"/>
 				<listitem name="{@files_auto_open}">
 					<data variable="fm_auto_open"/>
 				</listitem>
@@ -32,7 +32,7 @@
 			</listbox>
 
 			<listbox style="btn_list">
-				<placement x="0" y="%down_menu_btn_y%" w="%screen_w%" h="432"/>
+				<placement x="0" y="%down_menu_btn_y%" w="%screen_w%" h="%bl_h3%"/>
 				<listitem name="{@batch_title}">
 					<icon res="batch"/>
 					<action function="overlay"/>

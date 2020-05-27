@@ -234,7 +234,7 @@
 		<variable name="input_btn_list_y" value="674+%cutout_w%"/>
 
 		<variable name="down_menu_btn_y" value="%screen_h%-576"/>
-		<variable name="down_menu_y" value="%screen_h%-984"/>
+		<variable name="down_menu_y" value="%screen_h%-1008"/>
 		
 		<!-- chmod -->
 		<variable name="ch_r_x" value="315"/>

@@ -267,7 +267,7 @@
 
 		<page name="fm_multiselection">
 			<fileselector style="fileselector_s">
-				<iconsize w="%col1_x_caption%" h="136" padding="25"/>
+				<iconsize w="%col1_x_caption%" h="%bl_h1%" padding="25"/>
 				<placement x="0" y="%ab_h%" w="%fileselector_width%" h="%bl_fullscreen_h%"/>
 				<sort name="tw_gui_sort_order"/>
 				<exicon select="checkbox_true" unselect="checkbox_false" />
