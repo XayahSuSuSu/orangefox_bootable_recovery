@@ -12,10 +12,10 @@
 		<#LOGO_ON#image name="splash_logo" filename="Splash/logo_#LOGO_TYPE#" retainaspect="1"/#LOGO_ON#>
 		<#BG_IMG#image name="splash_bg" filename="Splash/user" retainaspect="1"/#BG_IMG#>
 		<#SHOWOFR#font name="of" filename="EuclidFlex-Medium.ttf" size="64"/>
-		<font name="recovery" filename="EuclidFlex-Regular.ttf" size="52"/>
+		<font name="recovery" filename="EuclidFlex-Regular.ttf" size="52"/#SHOWOFR#>
 	</resources>
 
-	<variables>
+	<#SHOWOFR#variables>
 		<variable name="of" value="%screen_h%-400"/>
 		<variable name="rec" value="%screen_h%-320"/>
 	</variables#SHOWOFR#>
