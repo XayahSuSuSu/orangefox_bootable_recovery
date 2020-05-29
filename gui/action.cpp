@@ -186,6 +186,7 @@ GUIAction::GUIAction(xml_node <> *node):GUIObject(node)
       ADD_ACTION(key);
       ADD_ACTION(page);
       ADD_ACTION(reload);
+      ADD_ACTION(check_and_reload);
       ADD_ACTION(readBackup);
       ADD_ACTION(set);
       ADD_ACTION(clear);
@@ -679,6 +680,21 @@ int GUIAction::reload(std::string arg __unused)
   // to prevent crashing which could occur when we start deleting
   // GUI resources in the action thread while we attempt to render
   // with those same resources in another thread.
+  return 0;
+}
+
+int GUIAction::check_and_reload(std::string arg __unused)
+{
+  if (!DataManager::GetIntValue("of_decrypt_from_menu")) //int == 0
+    return 0;
+  
+  if (TWFunc::Path_Exists(Fox_Home + "/.theme") || TWFunc::Path_Exists(Fox_Home + "/.navbar")) {
+    PageManager::RequestReload();
+    gui_changePage("reapply_settings");
+  } else {
+    //skip reload, just go to page
+    gui_changePage(DataManager::GetStrValue("of_reload_back"));
+  }
   return 0;
 }
 

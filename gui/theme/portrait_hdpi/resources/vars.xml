@@ -13,6 +13,8 @@
 		<variable name="update_style" value="0"/>
 		<variable name="update_action" value="0"/>
 		
+		<variable name="of_decrypt_from_menu" value="0"/>
+		
 		<variable name="mmgui_path" value="/data/adb/modules"/>
 
 		<!-- Lockscreen -->

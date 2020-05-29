@@ -712,7 +712,7 @@
 		<string name="dumlock_note2">на сайте:</string>
 		<string name="decrypt">Расшифровка</string>
 		<string name="data_part">Раздел зашифрован</string>
-		<string name="encrypt_data_part">Выбранный раздел зашифрован.</string>
+		<string name="encrypt_data_part">Ваши данные зашифрованы</string>
 		<string name="sel_encrypt_backup">Резервная копия зашифрована.</string>
 		<string name="decrypt_data_enter_note1">Введите пароль или нажмите</string>
 		<string name="decrypt_data_enter_note1a">Введите шаблон или нажмите</string>

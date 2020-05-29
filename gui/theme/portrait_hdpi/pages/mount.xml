@@ -375,17 +375,10 @@
 				<condition var1="tw_operation_status" var2="0"/>
 				<action function="set">data_decrypted=1</action>
 				<action function="set">tw_page_done=1</action>
-				<!-- next code will execute after user cancelled decryption at startup
-				     and later selected decrypt menu item
-					 This happens because block of code in twrp.cpp can't execute in this case.
-					 Why I can't remove block of code in twrp.cpp? Because twrp
-					 calls `decrypt` page and if we just reload after
-					 decryption using `action function` we will broke twrp startup code.
-					 We need to exit from `decrypt` page using `tw_page_done`
-					 to continue startup. -->
-				<action function="set">of_reload_back=main</action>
-				<action function="reload"/>
-				<action function="page">reapply_settings</action>
+				<!-- this function will correctly reload theme (or just back to menu)
+				     when user decrypting from menu -->
+				<action function="set">of_reload_back=advanced</action>
+				<action function="check_and_reload"/>
 			</action>
 		</page>
 

@@ -340,7 +340,7 @@
 		<string name="fm_complete">File operation completed</string>
 		<string name="decrypt">Decrypt</string>
 		<string name="data_part">Data Partition</string>
-		<string name="encrypt_data_part">Data Partition is encrypted.</string>
+		<string name="encrypt_data_part">Data Partition is encrypted</string>
 		<string name="sel_encrypt_backup">You have selected an encrypted backup.</string>
 		<string name="decrypt_data_enter_note1">Please enter the password or</string>
 		<string name="decrypt_data_enter_note1a">Please enter the pattern or</string>

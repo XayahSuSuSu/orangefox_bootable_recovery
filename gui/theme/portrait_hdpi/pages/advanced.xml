@@ -14,6 +14,7 @@
 					<condition var1="tw_is_encrypted" var2="1"/>
 					<condition var1="tw_is_decrypted" var2="0"/>
 					<icon res="bs_adv_frp"/>
+					<action function="set">of_decrypt_from_menu=1</action>
 					<action function="page">decrypt</action>
 				</listitem>
 				<listitem name="{@hint_ffiles_missing}">

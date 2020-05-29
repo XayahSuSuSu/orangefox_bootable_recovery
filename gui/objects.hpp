@@ -343,6 +343,7 @@ protected:
 	int key(std::string arg);
 	int page(std::string arg);
 	int reload(std::string arg);
+	int check_and_reload(std::string arg);
 	int readBackup(std::string arg);
 	int calculate_chmod(std::string arg);
 	int get_chmod(std::string arg);
