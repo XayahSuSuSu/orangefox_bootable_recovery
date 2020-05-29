@@ -216,6 +216,9 @@
 			<listbox style="btn_list">
 				<placement x="0" y="%ab_h%" w="%screen_w%" h="%bl_fullscreen_h%"/>
 				<icon selected="bs_adv_se" unselected="bs_adv_se" />
+				<listitem name="Kill recovery">
+					<action function="ftls">pkill recovery</action>
+				</listitem>
 				<listitem name="Theme debug tools">
 					<action function="page">debug</action>
 				</listitem>
