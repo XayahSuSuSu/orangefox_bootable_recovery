@@ -226,7 +226,9 @@ bool is_comment_line(const string Src)
 
 static bool Installing_ROM_Query(const string path, ZipWrap * Zip)
 {
+bool boot_install = false;
 string str = "";
+string tmp = "";
   if (!TWFunc::Path_Exists(path))
      return false;
 
@@ -235,16 +237,21 @@ string str = "";
   	return true;
 
   // check for file-based OTA - make several checks
-  usleep(8192);
+  usleep(1024);
   int i = 0;
-  str = TWFunc::find_phrase(path, "boot.img");
+  tmp = "boot.img";
+  str = TWFunc::find_phrase(path, tmp);
   if (!str.empty() && (!is_comment_line(str))
   	&& str.find("package_extract_file") != string::npos
-  	&& Zip->EntryExists("boot.img"))
-     i++;
+  	&& Zip->EntryExists(tmp))
+  	{
+     	   i++;
+     	   boot_install = true;
+     	}
 
-  usleep(8192);
-  str = TWFunc::find_phrase(path, "/dev/block/bootdevice/by-name/system");
+  usleep(1024);
+  tmp = "/dev/block/bootdevice/by-name/system";
+  str = TWFunc::find_phrase(path, tmp);
   if (!str.empty() && (!is_comment_line(str))
   	&& str.find("mount") != string::npos
   	&& str.find("EMMC") != string::npos
@@ -252,38 +259,96 @@ string str = "";
   	&& Zip->EntryExists("system/build.prop"))
      i++;
 
-  usleep(8192);
-  str = TWFunc::find_phrase(path, "/dev/block/bootdevice/by-name/vendor");
+  usleep(1024);
+  tmp = "/dev/block/bootdevice/by-name/vendor";
+  str = TWFunc::find_phrase(path, tmp);
   if (!str.empty() && (!is_comment_line(str))
   	&& str.find("mount") != string::npos
   	&& str.find("EMMC") != string::npos
   	&& str.find("/vendor") != string::npos
   	&& Zip->EntryExists("vendor/build.prop"))
      i++;
-  
+
   // if all these are true, then no need to go further
-  usleep(8192);
+  usleep(1024);
   if (i > 2)
     return true;
-  
-  // continue
-  usleep(8192);
-  str = TWFunc::find_phrase(path, "package_extract_dir(\"system\"");
+
+  // boot image flash? else return false
+  if (!boot_install)
+     return false;
+
+  // continue 
+  usleep(1024);
+  tmp = "package_extract_dir(\"system\"";
+  str = TWFunc::find_phrase(path, tmp);
   if (!str.empty() && !is_comment_line(str))
      i++;
 
-  usleep(8192);
-  str = TWFunc::find_phrase(path, "package_extract_dir(\"vendor\"");
+  usleep(1024);
+  tmp = "package_extract_dir(\"vendor\"";
+  str = TWFunc::find_phrase(path, tmp);
   if (!str.empty() && !is_comment_line(str))
      i++;
 
-  usleep(8192);
-  str = TWFunc::find_phrase(path, "firmware-update/");
-  if (!str.empty() && !is_comment_line(str) && str.find("package_extract_file") != string::npos)
+  usleep(1024);
+  tmp = "package_extract_file(\"firmware-update";
+  str = TWFunc::find_phrase(path, tmp);
+  if (!str.empty() && !is_comment_line(str))
       i++;
 
-  usleep(8192);
-  if (i > 2)
+  usleep(1024);
+  tmp = "META-INF/com/miui/miui_update";
+  str = TWFunc::find_phrase(path, tmp);
+  if (!str.empty() && !is_comment_line(str) && Zip->EntryExists(tmp))
+      i++;
+
+  if (i > 3)
+      return true;
+
+  // look for other signs of ROM installation
+  usleep(1024);
+  tmp = "/dev/block/bootdevice/by-name/cust";
+  str = TWFunc::find_phrase(path, tmp);
+  if (!str.empty() && (!is_comment_line(str))
+  	&& str.find("mount") != string::npos
+  	&& str.find("EMMC") != string::npos
+  	&& str.find("/cust") != string::npos)
+     i++;
+  
+  usleep(1024);
+  tmp = "/dev/block/bootdevice/by-name/cache";
+  str = TWFunc::find_phrase(path, tmp);
+  if (!str.empty() && (!is_comment_line(str))
+  	&& str.find("mount") != string::npos
+  	&& str.find("EMMC") != string::npos
+  	&& str.find("/cache") != string::npos)
+     i++;
+  
+  usleep(1024);
+  str = TWFunc::find_phrase(path, "format(");
+  if (!str.empty() && (!is_comment_line(str))
+  	&& str.find("EMMC") != string::npos
+  	&& (str.find("/system") != string::npos || str.find("/vendor") != string::npos || str.find("/cache") != string::npos || str.find("/cust") != string::npos)
+  	)
+     i++;
+
+  if (i > 3)
+      return true;
+ 
+  // more checks for old file-based ROM installers
+  usleep(1024);
+  if (Zip->EntryExists("system/bin/sh") && Zip->EntryExists("system/etc/hosts"))
+    i++;
+
+  if (Zip->EntryExists("system/media/bootanimation.zip") && Zip->EntryExists("system/vendor/bin/perfd"))
+    i++;
+
+  if (Zip->EntryExists("system/priv-app/Browser/Browser.apk") && Zip->EntryExists("system/priv-app/FindDevice/FindDevice.apk"))
+    i++;
+ 
+  usleep(1024);
+  if (i > 3)
       return true;
   else
       return false;
@@ -381,14 +446,16 @@ static int Prepare_Update_Binary(const char *path, ZipWrap * Zip,
 		  DataManager::SetValue(FOX_ZIP_INSTALLER_CODE, 1); // standard ROM
 		  
 		  // check for miui entries
-		  if (TWFunc::CheckWord(FOX_TMP_PATH, "miui_update")
-		  ||  TWFunc::CheckWord(FOX_TMP_PATH, "firmware-update")
-		  ||  TWFunc::CheckWord(FOX_TMP_PATH, "ro.build.fingerprint") // OTA
+		  /*
+		  if (
+		      TWFunc::CheckWord(FOX_TMP_PATH, "miui_update")
+		   && (TWFunc::CheckWord(FOX_TMP_PATH, "firmware-update") || TWFunc::CheckWord(FOX_TMP_PATH, "ro.build.fingerprint")) // OTA
 		     )
 		     {
 		        zip_has_miui_stuff = 1;
 		     }
-		     
+		    
+		    */ 
 	          // check for embedded recovery installs
 	          if  (
 	                 (TWFunc::CheckWord(FOX_TMP_PATH, "/dev/block/bootdevice/by-name/recovery")
@@ -429,11 +496,11 @@ static int Prepare_Update_Binary(const char *path, ZipWrap * Zip,
                     {    
                        LOGINFO("OrangeFox: Detected new Xiaomi update-binary [Message=%s]\n", mCheck.c_str());
                        is_new_miui_update_binary = 1;
-                       if (zip_has_miui_stuff == 1)
-                       {
+                       //if (zip_has_miui_stuff == 1)
+                       //{
                           zip_is_survival_trigger = true;
                           support_all_block_ota = true;
-                       }
+                       //}
                     }
                    else 
                      {
@@ -453,13 +520,13 @@ static int Prepare_Update_Binary(const char *path, ZipWrap * Zip,
       if (zip_is_survival_trigger == true)    
 	{
 	  support_all_block_ota = true;
-	  if ((Zip->EntryExists("system.new.dat")) || (Zip->EntryExists("system.new.dat.br"))) // we are installing a MIUI ROM
+	  if ((Zip->EntryExists("system.new.dat")) || (Zip->EntryExists("system.new.dat.br")) || zip_is_rom_package == true) // we are installing a MIUI ROM
 	    {
 	      DataManager::SetValue(FOX_MIUI_ZIP_TMP, 1);
 	      DataManager::SetValue(FOX_CALL_DEACTIVATION, 1);
 	      DataManager::SetValue(FOX_ZIP_INSTALLER_CODE, 2); // MIUI ROM
 	    }
-	  gui_msg ("fox_install_miui_detected=- Detected MIUI Update zip installer");
+	  gui_msg ("fox_install_miui_detected=- Detected MIUI Update Package");
 	}
       else // this is a standard ROM installer
 	{
@@ -659,7 +726,7 @@ static int Prepare_Update_Binary(const char *path, ZipWrap * Zip,
 	    	   	usleep(256);
 	    	   	Zip->Close();
 	    	   	usleep(256);
-	    	   	gui_print("- Rebooting into OTA update mode in 10 seconds. Please wait ...\n\n");
+	    	   	gui_print_color("warning", "\n- Rebooting into OTA install mode in 10 seconds. Please wait ...\n\n");
 	    	   	sleep(10);
 	    	   	TWFunc::tw_reboot(rb_recovery);
 	    	   	return INSTALL_ERROR;
