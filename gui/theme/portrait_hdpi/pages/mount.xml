@@ -525,9 +525,8 @@
 				<!-- Crutch to load settings if data encrypted -->
 				<actions>
 					<action function="set">tw_back=main</action>
-					<action function="set">tw_action_param=bootloader</action>
-					<action function="set">tw_reboot_param=bootloader</action>
-					<action function="page">rebootcheck</action>
+					<action function="set">tw_page_done=1</action>
+					<action function="page">main</action>
 				</actions>
 			</action>
 		</page>
