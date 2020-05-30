@@ -316,6 +316,10 @@ ifeq ($(OF_UNMOUNT_SYSTEM),1)
     LOCAL_CFLAGS += -DOF_UNMOUNT_SYSTEM='"1"'
 endif
 
+ifeq ($(OF_USE_TWRP_SAR_DETECT),1)
+    LOCAL_CFLAGS += -DOF_USE_TWRP_SAR_DETECT='"1"'
+endif
+
 ifeq ($(TW_USE_TOOLBOX), true)
     LOCAL_CFLAGS += -DTW_USE_TOOLBOX='"1"'
 endif
