@@ -4361,9 +4361,10 @@ void TWFunc::Patch_AVB20(bool silent)
 #if defined(OF_PATCH_AVB20) && !defined(OF_SKIP_ORANGEFOX_PROCESS) && !defined(OF_VANILLA_BUILD)
 std::string zipname = FFiles_dir + "/OF_avb20/OF_avb20.zip";
 int res=0, wipe_cache=0;
-  if (!TWFunc::Path_Exists("/sbin/magiskboot"))
+std::string magiskboot = TWFunc::Get_MagiskBoot();
+  if (!TWFunc::Path_Exists(magiskboot))
      {
-        gui_print("ERROR - cannot find /sbin/magiskboot\n");
+        gui_print("ERROR - cannot find magiskboot\n");
   	return;
      }
 
@@ -4392,10 +4393,10 @@ int TWFunc::Patch_DMVerity_ForcedEncryption_Magisk(void)
 std::string keepdmverity, keepforcedencryption;
 std::string zipname = FFiles_dir + "/OF_verity_crypt/OF_verity_crypt.zip";
 int res=0, wipe_cache=0;
-
-  if (!TWFunc::Path_Exists("/sbin/magiskboot"))
+std::string magiskboot = TWFunc::Get_MagiskBoot();
+  if (!TWFunc::Path_Exists(magiskboot))
      {
-        gui_print("ERROR - cannot find /sbin/magiskboot\n");
+        gui_print("ERROR - cannot find magiskboot\n");
   	return 1;
      }
 
