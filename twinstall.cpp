@@ -826,8 +826,8 @@ static int Prepare_Update_Binary(const char *path, ZipWrap * Zip,
          
          if (TWFunc::Exec_Cmd (alt_cmd + " ro.product.device " + assert_device) == 0)
            {
-       	     gui_print_color("warning",
-       	     "\nThe device name has been switched temporarily to \"%s\" (until you reboot OrangeFox).\n\n", assert_device.c_str());
+       	     //gui_print_color("warning",
+       	     LOGINFO("Device name temporarily switched to \"%s\" (until OrangeFox is rebooted).\n\n"
        	     usleep (64000);
            }
        }
