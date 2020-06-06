@@ -2,7 +2,7 @@
 	Copyright 2013 bigbiff/Dees_Troy TeamWin
 	This file is part of TWRP/TeamWin Recovery Project.
 
-	Copyright (C) 2018-2019 OrangeFox Recovery Project
+	Copyright (C) 2018-2020 OrangeFox Recovery Project
 	This file is part of the OrangeFox Recovery Project.
 
 	TWRP is free software: you can redistribute it and/or modify
@@ -424,6 +424,9 @@ int GUIAction::flash_zip(std::string filename, int *wipe_cache)
 
   DataManager::SetValue("ui_progress", 0);
 
+  DataManager::SetValue("ui_portion_size", 0);
+  DataManager::SetValue("ui_portion_start", 0);
+  
   if (filename.empty())
     {
       LOGERR("No file specified.\n");
@@ -503,6 +506,8 @@ int GUIAction::flash_zip(std::string filename, int *wipe_cache)
   // Done
   DataManager::SetValue("ui_progress", 100);
   DataManager::SetValue("ui_progress", 0);
+  DataManager::SetValue("ui_portion_size", 0);
+  DataManager::SetValue("ui_portion_start", 0);
   return ret_val;
 }
 
@@ -594,6 +599,8 @@ void GUIAction::operation_start(const string operation_name)
 	time(&Start);
 	DataManager::SetValue(TW_ACTION_BUSY, 1);
 	DataManager::SetValue("ui_progress", 0);
+	DataManager::SetValue("ui_portion_size", 0);
+	DataManager::SetValue("ui_portion_start", 0);
 	DataManager::SetValue("tw_operation", operation_name);
 	DataManager::SetValue("tw_operation_state", 0);
 	DataManager::SetValue("tw_operation_status", 0);

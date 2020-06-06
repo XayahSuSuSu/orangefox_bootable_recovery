@@ -971,7 +971,7 @@ static int Run_Update_Binary(const char *path, ZipWrap * Zip, int *wipe_cache,
 	{
 	  char *fraction_char = strtok(NULL, " \n");
 	  float fraction_float = strtof(fraction_char, NULL);
-	  DataManager::SetProgress(fraction_float);
+	  DataManager::_SetProgress(fraction_float);
 	}
       else if (strcmp(command, "ui_print") == 0)
 	{
