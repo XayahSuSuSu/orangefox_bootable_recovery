@@ -10,6 +10,13 @@ LOCAL_SRC_FILES := \
     graphics_utils.cpp \
     events.cpp
 
+ifeq ($(TW_SUPPORT_INPUT_1_2_HAPTICS),true)
+    ifeq ($(shell test $(PLATFORM_SDK_VERSION) -ge 28; echo $$?),0)
+        LOCAL_SHARED_LIBRARIES += android.hardware.vibrator@1.2 libhidlbase
+        LOCAL_CFLAGS += -DUSE_QTI_HAPTICS
+    endif
+endif
+
 ifneq ($(TW_BOARD_CUSTOM_GRAPHICS),)
     $(warning ****************************************************************************)
     $(warning * TW_BOARD_CUSTOM_GRAPHICS support has been deprecated in TWRP.            *)
@@ -142,24 +149,6 @@ ifneq ($(TARGET_RECOVERY_OVERSCAN_PERCENT),)
 else
   LOCAL_CFLAGS += -DOVERSCAN_PERCENT=0
 endif
-ifeq ($(TW_NO_SCREEN_BLANK), true)
-  LOCAL_CFLAGS += -DTW_NO_SCREEN_BLANK
-endif
-ifneq ($(TW_BRIGHTNESS_PATH),)
-  LOCAL_CFLAGS += -DTW_BRIGHTNESS_PATH=\"$(TW_BRIGHTNESS_PATH)\"
-endif
-ifneq ($(TW_SECONDARY_BRIGHTNESS_PATH),)
-  LOCAL_CFLAGS += -DTW_SECONDARY_BRIGHTNESS_PATH=\"$(TW_SECONDARY_BRIGHTNESS_PATH)\"
-endif
-ifneq ($(TW_MAX_BRIGHTNESS),)
-  LOCAL_CFLAGS += -DTW_MAX_BRIGHTNESS=$(TW_MAX_BRIGHTNESS)
-else
-  LOCAL_CFLAGS += -DTW_MAX_BRIGHTNESS=255
-endif
-ifneq ($(TW_DEFAULT_BRIGHTNESS),)
-  LOCAL_CFLAGS += -DTW_DEFAULT_BRIGHTNESS=\"$(TW_DEFAULT_BRIGHTNESS)\"
-endif
-
 ifeq ($(TW_FBIOPAN), true)
     LOCAL_CFLAGS += -DTW_FBIOPAN
 endif
@@ -196,6 +185,11 @@ endif
 
 ifneq ($(TW_WHITELIST_INPUT),)
   LOCAL_CFLAGS += -DWHITELIST_INPUT=$(TW_WHITELIST_INPUT)
+endif
+
+ifeq ($(TW_HAPTICS_TSPDRV), true)
+  LOCAL_SRC_FILES += tspdrv.cpp
+  LOCAL_CFLAGS += -DTW_HAPTICS_TSPDRV
 endif
 
 ifeq ($(TW_DISABLE_TTF), true)
