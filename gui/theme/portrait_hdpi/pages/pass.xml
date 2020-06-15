@@ -53,6 +53,7 @@
 			<patternpassword>
 				<placement x="%pattern_x%" y="%row3_2a_y%" w="%pattern_size%" h="%pattern_size%"/>
 				<data name="pass_enter"/>
+				<action function="set">ftls_running=1</action>
 				<action function="page">password_check</action>
 			</patternpassword>
 			
@@ -93,7 +94,17 @@
 
 		<page name="password_check">
 			<action>
-				<condition var1="pass_enter" var2="%pass_true%"/>
+				<action function="ftls">twrp xset pass_hash=$(echo "%pass_enter%" | sha512sum - | head -c 128)</action>
+			</action>
+			<action>
+				<condition var1="ftls_running" var2="0"/>
+				<action function="page">password_check2</action>
+			</action>
+		</page>
+
+		<page name="password_check2">
+			<action>
+				<condition var1="pass_hash" var2="pass_true"/>
 				<condition var1="tw_has_mtp" var2="1"/>
 				<condition var1="adb_startup" var2="1"/>
 				<condition var1="tw_mtp_enabled" op="!=" var2="1"/>
@@ -101,20 +112,20 @@
 			</action>
 
 			<action>
-				<condition var1="pass_enter" var2="%pass_true%"/>
+				<condition var1="pass_hash" var2="pass_true"/>
 				<condition var1="use_pass" var2="0"/>
 				<condition var1="adb_startup" var2="1"/>
 				<action function="adb">enable</action>
 			</action>
 			
 			<action>
-				<condition var1="pass_enter" var2="%pass_true%"/>
+				<condition var1="pass_hash" var2="pass_true"/>
 				<action function="set">pass_open=1</action>
 				<action function="page">main</action>
 			</action>
 			
 			<action>
-				<condition var1="pass_enter" op="!=" var2="%pass_true%"/>
+				<condition var1="pass_hash" op="!=" var2="pass_true"/>
 				<action function="set">pass_govno=1</action>
 				<action function="page">password_enter</action>
 			</action>
@@ -337,8 +348,13 @@
 				<action function="set">use_pass=1</action>
 				<action function="set">pass_notm=0</action>
 				<action function="set">pass_open=1</action>
-				<action function="set">pass_true=%pass_new_1%</action>
 				<action function="set">pass_type=%pass_type_tmp%</action>
+				<action function="ftls">
+					echo "type=%pass_type_tmp%" > "%of_password_file%"
+					hash=$(echo "%pass_new_1%" | sha512sum - | head -c 128)
+					echo "pass=$hash" >> "%of_password_file%"
+					twrp xset pass_true=$hash
+				</action>
 				<action function="page">pass_select</action>
 			</action>
 

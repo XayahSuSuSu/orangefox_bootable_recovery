@@ -680,6 +680,18 @@ void DataManager::SetDefaultValues()
     }
   #endif
 
+  #ifdef OF_CUSTOM_PASS_PARTITION
+    mConst.SetValue("of_password_partition", OF_CUSTOM_PASS_PARTITION);
+  #else
+    mConst.SetValue("of_password_partition", "/persist");
+  #endif
+  
+  #ifdef OF_CUSTOM_PASS_MOUNT
+    mConst.SetValue("of_mount_pass_partition", OF_CUSTOM_PASS_MOUNT);
+  #else
+    mConst.SetValue("of_mount_pass_partition", "1");
+  #endif
+
   mConst.SetValue("fox_build_type1", FOX_BUILD_TYPE);
 
   #if defined(OF_DISABLE_MIUI_SPECIFIC_FEATURES) || defined(OF_TWRP_COMPATIBILITY_MODE)
