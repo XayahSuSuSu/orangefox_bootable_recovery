@@ -1010,7 +1010,7 @@ void DataManager::SetDefaultValues()
   mData.SetValue(TW_RESTORE_FILE_DATE, "0");
   mPersist.SetValue("tw_military_time", "1");
 
-#ifdef OF_UNMOUNT_SYSTEM
+#ifdef OF_USE_TWRP_SAR_DETECT
   mPersist.SetValue(TW_UNMOUNT_SYSTEM, "1");
 #else
   mPersist.SetValue(TW_UNMOUNT_SYSTEM, "0");
