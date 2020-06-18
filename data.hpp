@@ -51,14 +51,14 @@ public:
 	static int SetValue(const string& varName, const float value, const int persist = 0);
 	static int SetValue(const string& varName, const unsigned long long& value, const int persist = 0);
 	static int SetProgress(const float Fraction);
-	static int ShowProgress(const float Portion, const float Seconds);
-
+	static int _SetProgress(float Fraction);
+	static int ShowProgress(float Portion, const float Seconds);
 	static void DumpValues();
 	static void update_tz_environment_variables();
 	static void Vibrate(const string& varName);
 	static void SetBackupFolder();
 	static void SetDefaultValues();
-static void Leds(bool enable);	
+	static void Leds(bool enable);	
 	static void Output_Version(void); // Outputs the version to a file in the TWRP folder
 	static void ReadSettingsFile(void);
 

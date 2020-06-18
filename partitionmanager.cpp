@@ -3691,9 +3691,16 @@ string TWPartitionManager::Get_Active_Slot_Display()
 }
 
 string TWPartitionManager::Get_Android_Root_Path() {
+#ifdef OF_USE_TWRP_SAR_DETECT
 	if (property_get_bool("ro.twrp.sar", false))
 		return "/system_root";
 	return "/system";
+#else
+	std::string Android_Root = getenv("ANDROID_ROOT");
+	if (Android_Root == "")
+		Android_Root = "/system";
+	return Android_Root;
+#endif
 }
 
 string TWPartitionManager::Get_Internal_Storage_Path() {
@@ -4659,6 +4666,7 @@ bool TWPartitionManager::Prepare_Repack(TWPartition* Part, const std::string& Te
 }
 
 bool TWPartitionManager::Prepare_Repack(const std::string& Source_Path, const std::string& Temp_Folder_Destination, const bool Copy_Source, const bool Create_Destination) {
+	std::string magiskboot = TWFunc::Get_MagiskBoot();
 	if (Create_Destination) {
 		if (!Prepare_Empty_Folder(Temp_Folder_Destination))
 			return false;
@@ -4668,8 +4676,7 @@ bool TWPartitionManager::Prepare_Repack(const std::string& Source_Path, const st
 		if (TWFunc::copy_file(Source_Path, destination, 0644))
 			return false;
 	}
-	std::string magiskboot = TWFunc::Get_MagiskBoot();
-	std::string command = "cd " + Temp_Folder_Destination + " && " + magiskboot + " --unpack -h '" + Source_Path +"'";
+	std::string command = "cd " + Temp_Folder_Destination + " && " + magiskboot + " unpack -h '" + Source_Path +"'";
 	if (TWFunc::Exec_Cmd(command) != 0) {
 		LOGINFO("Error unpacking %s!\n", Source_Path.c_str());
 		gui_msg(Msg(msg::kError, "unpack_error=Error unpacking image."));
@@ -4679,7 +4686,8 @@ bool TWPartitionManager::Prepare_Repack(const std::string& Source_Path, const st
 }
 
 bool TWPartitionManager::Repack_Images(const std::string& Target_Image, const struct Repack_Options_struct& Repack_Options) {
-	if (!TWFunc::Path_Exists("/sbin/magiskboot")) {
+	std::string magiskboot = TWFunc::Get_MagiskBoot();
+	if (!TWFunc::Path_Exists(magiskboot)) {
 		LOGERR("Image repacking tool not present in this TWRP build!");
 		return false;
 	}
@@ -4721,8 +4729,7 @@ bool TWPartitionManager::Repack_Images(const std::string& Target_Image, const st
 		LOGERR("Disabling verity is not implemented yet\n");
 	if (Repack_Options.Disable_Force_Encrypt)
 		LOGERR("Disabling force encrypt is not implemented yet\n");
-	std::string magiskboot = TWFunc::Get_MagiskBoot();
-	std::string command = "cd " + path + " && " + magiskboot + " --repack " + path + "boot.img";
+	std::string command = "cd " + path + " && " + magiskboot + " repack " + path + "boot.img";
 	if (TWFunc::Exec_Cmd(command) != 0) {
 		gui_msg(Msg(msg::kError, "repack_error=Error repacking image."));
 		return false;

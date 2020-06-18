@@ -174,6 +174,7 @@ int main(int argc, char **argv)
 		bool fallback_sar = property_get_bool("ro.build.system_root_image", false);
 #endif
 
+#ifdef OF_USE_TWRP_SAR_DETECT
 		if(SarPartitionManager.Mount_By_Path("/s", false)) {
 			if (TWFunc::Path_Exists("/s/build.prop")) {
 				LOGINFO("SAR-DETECT: Non-SAR System detected\n");
@@ -223,6 +224,23 @@ int main(int argc, char **argv)
 		rmdir("/s");
 
 		TWFunc::check_and_run_script("/sbin/sarsetup.sh", "boot");
+
+#else // OF_USE_TWRP_SAR_DETECT
+    if (fallback_sar)
+       {
+	  LOGINFO("FOX-SAR-DETECT: SAR System detected\n");
+	  property_set("ro.twrp.sar", "true");
+       }
+    else
+       {
+	  LOGINFO("FOX-SAR-DETECT: Non-SAR System detected\n");
+	  property_set("ro.twrp.sar", "false");
+	  rmdir("/system_root");
+       }
+    rmdir ("/s");
+    TWFunc::check_and_run_script("/sbin/sarsetup.sh", "boot");
+#endif // OF_USE_TWRP_SAR_DETECT
+
 	}
 	// End SAR detection
 

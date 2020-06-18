@@ -332,8 +332,8 @@ ifeq ($(OF_SKIP_MULTIUSER_FOLDERS_BACKUP),1)
     LOCAL_CFLAGS += -DOF_SKIP_MULTIUSER_FOLDERS_BACKUP='"1"'
 endif
 
-ifeq ($(OF_UNMOUNT_SYSTEM),1)
-    LOCAL_CFLAGS += -DOF_UNMOUNT_SYSTEM='"1"'
+ifeq ($(OF_USE_TWRP_SAR_DETECT),1)
+    LOCAL_CFLAGS += -DOF_USE_TWRP_SAR_DETECT='"1"'
 endif
 
 ifeq ($(TW_USE_TOOLBOX), true)
@@ -467,7 +467,7 @@ ifeq ($(TARGET_USERIMAGES_USE_EXT4), true)
     ifeq ($(shell test $(PLATFORM_SDK_VERSION) -le 28; echo $$?),0)
         LOCAL_C_INCLUDES += system/extras/ext4_utils \
             system/extras/ext4_utils/include \
-            bootable/recovery/crypto/ext4crypt
+            $(commands_TWRP_local_path)/crypto/ext4crypt
         LOCAL_SHARED_LIBRARIES += libext4_utils
         ifneq ($(wildcard external/lz4/Android.mk),)
             #LOCAL_STATIC_LIBRARIES += liblz4

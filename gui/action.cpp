@@ -2,7 +2,7 @@
 	Copyright 2013 bigbiff/Dees_Troy TeamWin
 	This file is part of TWRP/TeamWin Recovery Project.
 
-	Copyright (C) 2018-2019 OrangeFox Recovery Project
+	Copyright (C) 2018-2020 OrangeFox Recovery Project
 	This file is part of the OrangeFox Recovery Project.
 
 	TWRP is free software: you can redistribute it and/or modify
@@ -432,6 +432,9 @@ int GUIAction::flash_zip(std::string filename, int *wipe_cache)
 
   DataManager::SetValue("ui_progress", 0);
 
+  DataManager::SetValue("ui_portion_size", 0);
+  DataManager::SetValue("ui_portion_start", 0);
+  
   if (filename.empty())
     {
       LOGERR("No file specified.\n");
@@ -511,6 +514,8 @@ int GUIAction::flash_zip(std::string filename, int *wipe_cache)
   // Done
   DataManager::SetValue("ui_progress", 100);
   DataManager::SetValue("ui_progress", 0);
+  DataManager::SetValue("ui_portion_size", 0);
+  DataManager::SetValue("ui_portion_start", 0);
   return ret_val;
 }
 
@@ -602,6 +607,8 @@ void GUIAction::operation_start(const string operation_name)
 	time(&Start);
 	DataManager::SetValue(TW_ACTION_BUSY, 1);
 	DataManager::SetValue("ui_progress", 0);
+	DataManager::SetValue("ui_portion_size", 0);
+	DataManager::SetValue("ui_portion_start", 0);
 	DataManager::SetValue("tw_operation", operation_name);
 	DataManager::SetValue("tw_operation_state", 0);
 	DataManager::SetValue("tw_operation_status", 0);
@@ -2705,7 +2712,7 @@ int GUIAction::fixabrecoverybootloop(std::string arg __unused)
 			goto exit;
 		DataManager::SetProgress(.25);
 		gui_msg("fixing_recovery_loop_patch=Patching kernel...");
-		std::string command = "cd " REPACK_ORIG_DIR " && " + magiskboot + " --hexpatch kernel 77616E745F696E697472616D667300 736B69705F696E697472616D667300";
+		std::string command = "cd " REPACK_ORIG_DIR " && " + magiskboot + " hexpatch kernel 77616E745F696E697472616D667300 736B69705F696E697472616D667300";
 		if (TWFunc::Exec_Cmd(command) != 0) {
 			gui_msg(Msg(msg::kError, "fix_recovery_loop_patch_error=Error patching kernel."));
 			goto exit;
@@ -2721,7 +2728,7 @@ int GUIAction::fixabrecoverybootloop(std::string arg __unused)
 		}
 		DataManager::SetProgress(.5);
 		gui_msg(Msg("repacking_image=Repacking {1}...")(part->Display_Name));
-		command = "cd " REPACK_ORIG_DIR " && " + magiskboot + " --repack " REPACK_ORIG_DIR "boot.img";
+		command = "cd " REPACK_ORIG_DIR " && " + magiskboot + " repack " REPACK_ORIG_DIR "boot.img";
 		if (TWFunc::Exec_Cmd(command) != 0) {
 			gui_msg(Msg(msg::kError, "repack_error=Error repacking image."));
 			goto exit;

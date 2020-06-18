@@ -379,6 +379,19 @@
 				     when user decrypting from menu -->
 				<action function="set">of_reload_back=advanced</action>
 				<action function="check_and_reload"/>
+
+				<!-- Old hotfix for reloading there
+				<conditions>
+					<condition var1="tw_operation_state" var2="1"/>
+					<condition var1="tw_operation_status" op="=" var2="0"/>
+				</conditions>
+				<actions>
+					<action function="set">tw_back=main</action>
+					<action function="set">tw_page_done=1</action>
+					<action function="page">main</action>
+				</actions>
+				-->
+
 			</action>
 		</page>
 
