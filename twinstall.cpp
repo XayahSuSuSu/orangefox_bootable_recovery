@@ -1065,7 +1065,7 @@ static int Run_Update_Binary(const char *path, ZipWrap * Zip, int *wipe_cache,
 
 int TWinstall_zip(const char *path, int *wipe_cache)
 {
-  int ret_val, zip_verify = 1, unmount_system = 1;;
+  int ret_val, zip_verify = 1, unmount_system = 1;
 
   if (strcmp(path, "error") == 0)
     {
@@ -1208,6 +1208,9 @@ int TWinstall_zip(const char *path, int *wipe_cache)
       return INSTALL_CORRUPT;
     }
 
+#ifdef OF_USE_TWRP_SAR_DETECT
+	unmount_system = 1;
+#endif
 	if (unmount_system) {
 		gui_msg("unmount_system=Unmounting System...");
 		if(!PartitionManager.UnMount_By_Path(PartitionManager.Get_Android_Root_Path(), true)) {
