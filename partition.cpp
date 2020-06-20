@@ -738,23 +738,26 @@ if (TWFunc::Path_Exists("/data/unencrypted/key/version")) {
 		DataManager::SetValue(TW_IS_FBE, 1);
 		ExcludeAll(Mount_Point + "/convert_fbe");
 		ExcludeAll(Mount_Point + "/unencrypted");
-		//ExcludeAll(Mount_Point + "/system/users/0"); // we WILL need to retain some of this if multiple users are present or we just need to delete more folders for the extra users somewhere else
 		ExcludeAll(Mount_Point + "/misc/vold/user_keys");
-		//ExcludeAll(Mount_Point + "/system_ce");
-		//ExcludeAll(Mount_Point + "/system_de");
-		//ExcludeAll(Mount_Point + "/misc_ce");
-		//ExcludeAll(Mount_Point + "/misc_de");
+		//ExcludeAll(Mount_Point + "/system/users/0"); // we WILL need to retain some of this if multiple users are present or we just need to delete more folders for the extra users somewhere else
+		ExcludeAll(Mount_Point + "/system/users/0/gatekeeper.password.key");
+		ExcludeAll(Mount_Point + "/system/users/0/gatekeeper.pattern.key");
 		ExcludeAll(Mount_Point + "/system/gatekeeper.password.key");
 		ExcludeAll(Mount_Point + "/system/gatekeeper.pattern.key");
-		ExcludeAll(Mount_Point + "/system/locksettings.db");
 		//ExcludeAll(Mount_Point + "/system/locksettings.db-shm"); // don't seem to need this one, but the other 2 are needed
+		ExcludeAll(Mount_Point + "/system/locksettings.db");
 		ExcludeAll(Mount_Point + "/system/locksettings.db-wal");
-		//ExcludeAll(Mount_Point + "/user_de");
-		//ExcludeAll(Mount_Point + "/misc/profiles/cur/0"); // might be important later
 		ExcludeAll(Mount_Point + "/misc/gatekeeper");
 		ExcludeAll(Mount_Point + "/misc/keystore");
 		ExcludeAll(Mount_Point + "/drm/kek.dat");
 		ExcludeAll(Mount_Point + "/system_de/0/spblob"); // contains data needed to decrypt pixel 2
+		ExcludeAll(Mount_Point + "/cache");
+		//ExcludeAll(Mount_Point + "/system_ce");
+		//ExcludeAll(Mount_Point + "/system_de");
+		//ExcludeAll(Mount_Point + "/misc_ce");
+		//ExcludeAll(Mount_Point + "/misc_de");
+		//ExcludeAll(Mount_Point + "/user_de");
+		//ExcludeAll(Mount_Point + "/misc/profiles/cur/0"); // might be important later
 		int retry_count = 3;
 		while (!Decrypt_DE() && --retry_count)
 			usleep(2000);
@@ -769,6 +772,7 @@ if (TWFunc::Path_Exists("/data/unencrypted/key/version")) {
 				LOGERR("This TWRP does not have synthetic password decrypt support\n");
 				pwd_type = 0; // default password
 			}
+			TWPartition::Fox_Add_Backup_Exclusions();
 			DataManager::SetValue(TW_CRYPTO_PWTYPE, pwd_type);
 			DataManager::SetValue(TW_CRYPTO_PASSWORD, "");
 			DataManager::SetValue("tw_crypto_display", "");
@@ -1183,11 +1187,7 @@ void TWPartition::Setup_Data_Media() {
 		DataManager::SetValue("tw_has_internal", 1);
 		DataManager::SetValue("tw_has_data_media", 1);
 		backup_exclusions.add_absolute_dir("/data/data/com.google.android.music/files");
-
-		// DJ9, 18Jan2020 - implement the OrangeFox Backup Exclusions
-		TWPartition::Fox_Add_Backup_Exclusions();
-		// end:  OrangeFox Backup Exclusions
-
+		backup_exclusions.add_absolute_dir("/data/per_boot"); // DJ9,14Jan2020 - exclude this dir to prevent "error 255" on AOSP ROMs that create and lock it
 		wipe_exclusions.add_absolute_dir(Mount_Point + "/misc/vold"); // adopted storage keys
 		ExcludeAll(Mount_Point + "/.layout_version");
 		ExcludeAll(Mount_Point + "/system/storage.xml");
@@ -3491,17 +3491,19 @@ string TWPartition::Get_Backup_Name() {
 }
 
 void TWPartition::Fox_Add_Backup_Exclusions() {
-   backup_exclusions.add_absolute_dir("/data/per_boot");
-
-   // avoid parallel/dual apps or multi-user backup issues
-   #if defined(TW_INCLUDE_FBE) && defined(OF_SKIP_MULTIUSER_FOLDERS_BACKUP)
-   //if (DataManager::GetIntValue(TW_IS_FBE) == 1) {
-	int Users[2] = {10,999};
+#if defined(TW_INCLUDE_FBE) && defined(OF_SKIP_MULTIUSER_FOLDERS_BACKUP)
+  if (DataManager::GetIntValue(TW_IS_FBE) == 1) 
+    {
+	const int num = 2;
+	int Users[num] = {10,999};
 	int i;
 	string user;
-	for (i=0; i<=1; i++)
-	    {
-   	   	user = TWFunc::to_string(Users[i]);
+	for (i=0; i < num; i++)
+	  {
+   	     user = TWFunc::to_string(Users[i]);
+   	     if (TWFunc::Path_Exists("/data/media/" + user) || TWFunc::Path_Exists("/data/user/" + user)) 
+   	      {
+   	   	//LOGINFO("- Avoiding parallel/dual apps/multi-user backup issues for user %i\n", Users[i]);
    	   	backup_exclusions.add_absolute_dir("/data/media/" + user);
    	   	backup_exclusions.add_absolute_dir("/data/user/" + user);
    	   	backup_exclusions.add_absolute_dir("/data/misc/user/" + user);
@@ -3517,7 +3519,12 @@ void TWPartition::Fox_Add_Backup_Exclusions() {
    	   	backup_exclusions.add_absolute_dir("/data/system_de/" + user);
    	   	backup_exclusions.add_absolute_dir("/data/user_de/" + user);
    	   	backup_exclusions.add_absolute_dir("/data/misc_de/" + user);
-	   }
-     //}
-   #endif
+
+		// system/users/x
+   	   	backup_exclusions.add_absolute_dir("/data/system/users/" + user);
+   	     }
+   	     //else LOGINFO("- User %i does not exist ...\n", Users[i]);
+	 }
+    }
+ #endif
 }
