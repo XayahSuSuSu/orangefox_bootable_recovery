@@ -1002,22 +1002,16 @@
 					<condition var1="opts_show" var2="1"/>
 					<condition var1="tw_fm_isfolder" var2="0"/>
 					<icon res="bs_btn_checksum"/>
-					<action function="set">tw_back=filemanageroptions</action>
-					<action function="set">sum=1</action>
-					<action function="ftls">
-					twrp xset ft_inf_md5=$(md5sum '%tw_filename1%' | sed 's*%tw_filename1%**g')
-					twrp xset ft_inf_sha1=$(sha1sum '%tw_filename1%' | sed 's*%tw_filename1%**g')
-					twrp xset ft_inf_sha2=$(sha256sum '%tw_filename1%' | sed 's*%tw_filename1%**g')
-					twrp xset ft_inf_sha5=$(sha512sum '%tw_filename1%' | sed 's*%tw_filename1%**g')
-					</action>
-					<action function="page">checksum_confirm</action>
+					<action function="set">ft_inf_md5={@tap_to_generate}</action>
+					<action function="set">ft_inf_sha1={@tap_to_generate}</action>
+					<action function="set">ft_inf_sha2={@tap_to_generate}</action>
+					<action function="set">ft_inf_sha5={@tap_to_generate}</action>
+					<action function="page">fm_file_checksum</action>
 				</listitem>
 				<listitem name="{@info}">
 					<condition var1="opts_show" var2="1"/>
 					<condition var1="tw_fm_isfolder" var2="0"/>
 					<icon res="info"/>
-					<action function="set">tw_back=filemanageroptions</action>
-					<action function="set">sum=0</action>
 					<action function="ftls">
 					link='%tw_filename1%'
 					[ -L '%tw_filename1%' ] && link=$(readlink '%tw_filename1%')
@@ -1029,7 +1023,7 @@
 					twrp xset ft_inf_mod=$(ls -lset '%tw_filename1%' | awk '{print $7,$8,$9,$10,$11}')
 					twrp xset ft_inf_ch=$(ls -lsec '%tw_filename1%' | awk '{print $7,$8,$9,$10,$11}')
 					</action>
-					<action function="page">checksum_confirm</action>
+					<action function="page">fm_file_info</action>
 				</listitem>
 			</listbox>
 
@@ -1170,7 +1164,75 @@
 			</action>
 		</page>
 		
-		<page name="checksum_confirm">
+		<page name="fm_file_checksum">
+			<template name="checksum_base"/>
+			<template name="navbar_bkg"/>
+			<template name="navbar"/>
+			<template name="actionbar_back"/>
+			
+			<button style="menu_btn">
+				<condition var1="ft_inf_md5" var2="{@tap_to_generate}"/>
+				<placement x="%col1_x_caption%" y="%row2_1a_y%" w="%input_w%" h="%mb_h_hide%"/>
+				<action function="set">ft_inf_md5={@calc_checksum}</action>
+				<action function="set">ft_chsum_calculated=0</action>
+				<action function="page">fm_file_checksum_calc</action>
+				<action function="ftls">twrp xset ft_inf_md5=$(md5sum '%tw_filename1%' | sed 's*%tw_filename1%**g')</action>
+				<action function="set">ft_chsum_calculated=1</action>
+			</button>
+			<button style="menu_btn">
+				<condition var1="ft_inf_sha1" var2="{@tap_to_generate}"/>
+				<placement x="%col1_x_caption%" y="%row3_1a_y%" w="%input_w%" h="%mb_h_hide%"/>
+				<action function="set">ft_chsum_calculated=0</action>
+				<action function="set">ft_inf_sha1={@calc_checksum}</action>
+				<action function="page">fm_file_checksum_calc</action>
+				<action function="ftls">twrp xset ft_inf_sha1=$(sha1sum '%tw_filename1%' | sed 's*%tw_filename1%**g')</action>
+				<action function="set">ft_chsum_calculated=1</action>
+			</button>
+			<button style="menu_btn">
+				<condition var1="ft_inf_sha2" var2="{@tap_to_generate}"/>
+				<placement x="%col1_x_caption%" y="%row4_1a_y%" w="%input_w%" h="%mb_h_hide%"/>
+				<action function="set">ft_chsum_calculated=0</action>
+				<action function="set">ft_inf_sha2={@calc_checksum}</action>
+				<action function="page">fm_file_checksum_calc</action>
+				<action function="ftls">twrp xset ft_inf_sha2=$(sha256sum '%tw_filename1%' | sed 's*%tw_filename1%**g')</action>
+				<action function="set">ft_chsum_calculated=1</action>
+			</button>
+			<button style="menu_btn">
+				<condition var1="ft_inf_sha5" var2="{@tap_to_generate}"/>
+				<placement x="%col1_x_caption%" y="%row5_1a_y%" w="%input_w%" h="%mb_h_hide%"/>
+				<action function="set">ft_chsum_calculated=0</action>
+				<action function="set">ft_inf_sha5={@calc_checksum}</action>
+				<action function="page">fm_file_checksum_calc</action>
+				<action function="ftls">twrp xset ft_inf_sha5=$(sha512sum '%tw_filename1%' | sed 's*%tw_filename1%**g')</action>
+				<action function="set">ft_chsum_calculated=1</action>
+			</button>
+
+			<template name="gestures"/>
+			
+			<action>
+				<touch key="home"/>
+				<action function="page">main</action>
+			</action>
+
+			<action>
+				<touch key="back"/>
+				<action function="page">filemanagerlist</action>
+			</action>
+		</page>
+
+		<page name="fm_file_checksum_calc">
+			<template name="checksum_base"/>
+			<image>
+				<placement x="%ab_back_x%" y="%ab_y%" placement="4"/>
+				<image resource="actionbar_cancel_no"/>
+			</image>
+			<action>
+				<condition var1="ft_chsum_calculated" var2="1"/>
+				<action function="page">fm_file_checksum</action>
+			</action>
+		</page>
+
+		<page name="fm_file_info">
 			<template name="base_ex"/>
 		
 			<text style="text_ab_title">
@@ -1179,15 +1241,8 @@
 			</text>
 
 			<text style="text_ab_title">
-				<condition var1="sum" op="!=" var2="1"/>
 				<placement x="%col1_x_indent%" y="%row1_2_y%" placement="2"/>
 				<text>{@info}</text>
-			</text>
-
-			<text style="text_ab_title">
-				<condition var1="sum" var2="1"/>
-				<placement x="%col1_x_indent%" y="%row1_2_y%" placement="2"/>
-				<text>{@fm_sums}</text>
 			</text>
 
 			<text style="text_ab_subtitle_lim">
@@ -1196,13 +1251,11 @@
 			</text>
 
 			<text style="caption">
-				<condition var1="sum" op="!=" var2="1"/>
 				<placement x="%col1_x_caption%" y="%row2_1a_y%"/>
 				<text>{@name} ({@real})</text>
 			</text>
 
 			<input>
-				<condition var1="sum" op="!=" var2="1"/>
 				<placement x="%col1_x_caption%" y="%row2_2a_y%" w="%input_w%" h="%input_height%"/>
 				<cursor color="%transparent%" hasfocus="0" width="0"/>
 				<data name="ft_inf_real"/>
@@ -1211,121 +1264,54 @@
 			</input>
 
 			<text style="caption">
-				<condition var1="sum" op="!=" var2="1"/>
 				<placement x="%col1_x_caption%" y="%row3_1a_y%"/>
 				<text>{@part_size}</text>
 			</text>
 
 			<text style="text_body1">
-				<condition var1="sum" op="!=" var2="1"/>
 				<placement x="%col1_x_caption%" y="%row3_2a_y%"/>
 				<text>%ft_inf_size%</text>
 			</text>
 
 			<text style="caption">
-				<condition var1="sum" op="!=" var2="1"/>
 				<placement x="%col1_x_caption%" y="%row4_1a_y%"/>
 				<text>{@fm_perms}</text>
 			</text>
 
 			<text style="text_body1">
-				<condition var1="sum" op="!=" var2="1"/>
 				<placement x="%col1_x_caption%" y="%row4_2a_y%"/>
 				<text>%ft_inf_rights%</text>
 			</text>
 
 			<text style="caption">
-				<condition var1="sum" op="!=" var2="1"/>
 				<placement x="%col1_x_caption%" y="%row5_1a_y%"/>
 				<text>{@access}</text>
 			</text>
 
 			<text style="text_body1">
-				<condition var1="sum" op="!=" var2="1"/>
 				<placement x="%col1_x_caption%" y="%row5_2a_y%"/>
 				<text>%ft_inf_acc%</text>
 			</text>
 
 			<text style="caption">
-				<condition var1="sum" op="!=" var2="1"/>
 				<placement x="%col1_x_caption%" y="%row6_1a_y%"/>
 				<text>{@time_m}</text>
 			</text>
 
 			<text style="text_body1">
-				<condition var1="sum" op="!=" var2="1"/>
 				<placement x="%col1_x_caption%" y="%row6_2a_y%"/>
 				<text>%ft_inf_mod%</text>
 			</text>
 
 			<text style="caption">
-				<condition var1="sum" op="!=" var2="1"/>
 				<placement x="%col1_x_caption%" y="%row7_1a_y%"/>
 				<text>{@time_c}</text>
 			</text>
 
 			<text style="text_body1">
-				<condition var1="sum" op="!=" var2="1"/>
 				<placement x="%col1_x_caption%" y="%row7_2a_y%"/>
 				<text>%ft_inf_ch%</text>
 			</text>
-
-			<text style="caption">
-				<condition var1="sum" var2="1"/>
-				<placement x="%col1_x_caption%" y="%row2_1a_y%"/>
-				<text>MD5</text>
-			</text>
-
-			<text style="text_body1">
-				<condition var1="sum" var2="1"/>
-				<placement x="%col1_x_caption%" y="%row2_2a_y%"/>
-				<text>%ft_inf_md5%</text>
-			</text>
-
-			<text style="caption">
-				<condition var1="sum" var2="1"/>
-				<placement x="%col1_x_caption%" y="%row3_1a_y%"/>
-				<text>SHA1</text>
-			</text>
-
-			<input>
-				<condition var1="sum" var2="1"/>
-				<placement x="%col1_x_caption%" y="%row3_2a_y%" w="%input_w%" h="%input_height%"/>
-				<cursor color="%transparent%" hasfocus="0" width="0"/>
-				<data name="ft_inf_sha1"/>
-				<restrict disable="1"/>
-				<text>%ft_inf_sha1%</text>
-			</input>
-
-			<text style="caption">
-				<condition var1="sum" var2="1"/>
-				<placement x="%col1_x_caption%" y="%row4_1a_y%"/>
-				<text>SHA256</text>
-			</text>
-
-			<input>
-				<condition var1="sum" var2="1"/>
-				<placement x="%col1_x_caption%" y="%row4_2a_y%" w="%input_w%" h="%input_height%"/>
-				<cursor color="%transparent%" hasfocus="0" width="0"/>
-				<data name="ft_inf_sha2"/>
-				<restrict disable="1"/>
-				<text>%ft_inf_sha2%</text>
-			</input>
-
-			<text style="caption">
-				<condition var1="sum" var2="1"/>
-				<placement x="%col1_x_caption%" y="%row5_1a_y%"/>
-				<text>SHA512</text>
-			</text>
-			
-			<input>
-				<condition var1="sum" var2="1"/>
-				<placement x="%col1_x_caption%" y="%row5_2a_y%" w="%input_w%" h="%input_height%"/>
-				<cursor color="%transparent%" hasfocus="0" width="0"/>
-				<data name="ft_inf_sha5"/>
-				<restrict disable="1"/>
-				<text>%ft_inf_sha5%</text>
-			</input>
 
 			<template name="gestures"/>
 			

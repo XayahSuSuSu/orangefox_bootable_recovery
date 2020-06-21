@@ -1212,6 +1212,9 @@
 		
 		<string name="fm_action_folder">Действия над этой папкой</string>
 
+		<string name="tap_to_generate">Нажмите здесь, чтобы вычислить</string>
+		<string name="calc_checksum">Вычисление...</string>
+
 		<!-- Missing functions from TWRP -->
 		<string name="img_advanced">Прошить ядро</string>
 		<string name="img_type">Тип образа</string>
