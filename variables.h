@@ -22,7 +22,7 @@
 #define _VARIABLES_HEADER_
 
 #define FOX_RECOVERY_NAME	"OrangeFox"
-#define FOX_CURRENT_DEV_STR 	"2020.06.20"
+#define FOX_CURRENT_DEV_STR 	"2020.06.22"
 #define FOX_MAIN_VERSION_STR    "R11"
 #define TW_MAIN_VERSION_STR     "3.3.9"
 
