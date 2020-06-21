@@ -402,7 +402,6 @@
 					<action function="set">pass_type=0</action>
 					<action function="set">pass_pattern_grid=3</action>
 					<action function="set">use_pass=0</action>
-					<action function="ftls">[ -f "%of_password_file%" ] &amp;&amp; rm -f "%of_password_file%"</action>
 					<action function="page">pass_select</action>
 				</listitem>
 			</listbox>

@@ -197,7 +197,7 @@
 				<image resource="actionbar_btn" highlightresource="actionbar_btn_hl"/>
 				<action function="set">tw_back=password_enter</action>
 				<action function="set">tw_action_param=poweroff</action>
-				<action function="page">navbar</action>
+				<action function="page">rebootcheck</action>
 			</button>
 			
 			<button>
@@ -207,7 +207,7 @@
 				<image resource="actionbar_btn" highlightresource="actionbar_btn_hl"/>
 				<action function="set">tw_back=password_enter</action>
 				<action function="set">tw_action_param=system</action>
-				<action function="page">navbar</action>
+				<action function="page">rebootcheck</action>
 			</button>
 
 			<image>
@@ -277,7 +277,6 @@
 				<text>%pass_enter_mask%</text>
 				<data name="pass_enter" mask="*" maskvariable="pass_enter_mask"/>
 				<restrict minlen="0" maxlen="64" />
-				<action function="set">ftls_running=1</action>
 				<action function="page">password_check</action>
 			</input>
 

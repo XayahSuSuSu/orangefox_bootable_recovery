@@ -44,7 +44,7 @@
 		
 		<!-- FRP -->
 		<variable name="use_pass" value="0" persist="1"/>
-		<variable name="pass_true" value="70e335e5f0695ce01880f096b3097f429fee80e1d146d244c608d5334b66bb63ec4d277fa7d1cce14f235f9fb3288ae78e759caa818afcbbee4a5b884864487d" persist="1"/>
+		<variable name="pass_true" value="qwerty" persist="1"/>
 		<variable name="pass_type" value="0" persist="1"/>
 		
 		<!-- Backups -->
