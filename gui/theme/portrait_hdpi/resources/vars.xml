@@ -489,6 +489,8 @@
 		<variable name="slidervalue_sliderw" value="96"/>
 		<variable name="slidervalue_sliderh" value="96"/>
 		<variable name="slider_y_l" value="%screen_original_h%-176"/>
+
+		<variable name="unlock_gest_y" value="%screen_original_h%-48"/>
 		
 		<!-- Decrypt (gesture key) -->
 		<variable name="pattern_x" value="216"/>
