@@ -45,9 +45,9 @@
 
 			<gesture>
 				<condition var1="lock_btn" var2="0"/>
-				<placement x="0" y="%slider_y_l%" w="%screen_w%" h="176"/>
+				<placement x="0" y="%unlock_gest_y%" w="%screen_w%" h="144"/>
 				<fill color="#00000000"/>
-				<settings side="0" sense="500" />
+				<settings side="0" sense="300" />
 				<action function="overlay"/>
 			</gesture>
 

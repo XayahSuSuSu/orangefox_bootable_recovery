@@ -50,8 +50,6 @@
 
 #define OF_ALLOW_DISABLE_NAVBAR_S  "allow_disable_nav"
 
-#define DEFAULT_OF_PASS            "70e335e5f0695ce01880f096b3097f429fee80e1d146d244c608d5334b66bb63ec4d277fa7d1cce14f235f9fb3288ae78e759caa818afcbbee4a5b884864487d"
-
 // *** OrangeFox - Variables ** //
 #include <stdio.h>
 #include <stdlib.h>

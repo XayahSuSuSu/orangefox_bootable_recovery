@@ -490,21 +490,6 @@ int main(int argc, char **argv)
 // run the postrecoveryboot script here
 TWFunc::RunFoxScript("/sbin/postrecoveryboot.sh");
 
-string passPart = DataManager::GetStrValue("of_password_partition");
-string passFile = passPart + "/.security";
-DataManager::SetValue("of_password_file", passFile);
-
-if (DataManager::GetIntValue("of_mount_pass_partition") && PartitionManager.Mount_By_Path(passPart, true)) {
-	if (TWFunc::Path_Exists(passFile) && DataManager::GetStrValue("pass_true") == DEFAULT_OF_PASS) {
-		DataManager::SetValue("use_pass", "1");
-		DataManager::SetValue("pass_true", TWFunc::File_Property_Get(passFile, "pass"));
-		DataManager::SetValue("pass_type", TWFunc::File_Property_Get(passFile, "type"));
-		LOGINFO("Loaded backup of password\n");
-	}
-}
-
-const char *startup = DataManager::GetIntValue("use_pass") ? "password" : "main";
-
 #ifdef FOX_OLD_DECRYPT_RELOAD
   LOGINFO("Using R10 way to reload theme.\n");
   if (DataManager::GetStrValue("used_custom_encryption") == "1") {
@@ -516,16 +501,16 @@ const char *startup = DataManager::GetIntValue("use_pass") ? "password" : "main"
   {
 	//[f/d] Start UI using reapply_settings page (executed on recovery startup)
 	if (TWFunc::Path_Exists(Fox_Home + "/.theme") || TWFunc::Path_Exists(Fox_Home + "/.navbar")) {
-  		DataManager::SetValue("of_reload_back", startup);
+  		DataManager::SetValue("of_reload_back", "main");
 		PageManager::RequestReload();
     	gui_startPage("reapply_settings", 1, 0);
 	} else {
-		gui_startPage(startup, 1, 0);
+		gui_start();
     }
   }
   else
 #endif
-	gui_startPage(startup, 1, 0); // Launch the main GUI
+	gui_start(); // Launch the main GUI
 
 #ifndef TW_OEM_BUILD
 

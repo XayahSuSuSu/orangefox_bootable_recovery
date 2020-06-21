@@ -197,7 +197,7 @@
 				<image resource="actionbar_btn" highlightresource="actionbar_btn_hl"/>
 				<action function="set">tw_back=password_enter</action>
 				<action function="set">tw_action_param=poweroff</action>
-				<action function="page">navbar</action>
+				<action function="page">rebootcheck</action>
 			</button>
 			
 			<button>
@@ -207,7 +207,7 @@
 				<image resource="actionbar_btn" highlightresource="actionbar_btn_hl"/>
 				<action function="set">tw_back=password_enter</action>
 				<action function="set">tw_action_param=system</action>
-				<action function="page">navbar</action>
+				<action function="page">rebootcheck</action>
 			</button>
 
 			<image>
@@ -277,7 +277,6 @@
 				<text>%pass_enter_mask%</text>
 				<data name="pass_enter" mask="*" maskvariable="pass_enter_mask"/>
 				<restrict minlen="0" maxlen="64" />
-				<action function="set">ftls_running=1</action>
 				<action function="page">password_check</action>
 			</input>
 
@@ -847,6 +846,90 @@
 				<action function="set">tw_page_done=1</action>
 				<action function="page">main</action>
 			</action>
+		</template>
+
+		<template name="checksum_base">
+			<background color="%background%"/>
+			<template name="keys"/>
+
+			<image>
+				<condition var1="show_shadow" var2="1"/>
+				<image resource="actionbar_shadow"/>
+				<placement x="0" y="%ab_ex_h%"/>
+			</image>
+			
+			<fill color="%title_solid_bg%">
+				<condition var1="darker_ui" var2="1"/>
+				<placement x="0" y="0" w="%screen_w%" h="%ab_ex_h%"/>
+			</fill>
+			
+			<template name="status_bg"/>
+			
+			<template name="statusbarinfo"/>
+		
+			<text style="text_ab_title">
+				<placement x="%col1_x_indent%" y="%ab_bc_y%"/>
+				<text>{@fm_hdr}</text>
+			</text>
+
+			<text style="text_ab_title">
+				<placement x="%col1_x_indent%" y="%row1_2_y%" placement="2"/>
+				<text>{@fm_sums}</text>
+			</text>
+
+			<text style="text_ab_subtitle_lim">
+				<placement x="%col1_x_indent%" y="%row1_2_y%"/>
+				<text>%tw_filename1%</text>
+			</text>
+
+			<text style="caption">
+				<placement x="%col1_x_caption%" y="%row2_1a_y%"/>
+				<text>MD5</text>
+			</text>
+
+			<text style="text_body1">
+				<placement x="%col1_x_caption%" y="%row2_2a_y%"/>
+				<text>%ft_inf_md5%</text>
+			</text>
+
+			<text style="caption">
+				<placement x="%col1_x_caption%" y="%row3_1a_y%"/>
+				<text>SHA1</text>
+			</text>
+
+			<input>
+				<placement x="%col1_x_caption%" y="%row3_2a_y%" w="%input_w%" h="%input_height%"/>
+				<cursor color="%transparent%" hasfocus="0" width="0"/>
+				<data name="ft_inf_sha1"/>
+				<restrict disable="1"/>
+				<text>%ft_inf_sha1%</text>
+			</input>
+
+			<text style="caption">
+				<placement x="%col1_x_caption%" y="%row4_1a_y%"/>
+				<text>SHA256</text>
+			</text>
+
+			<input>
+				<placement x="%col1_x_caption%" y="%row4_2a_y%" w="%input_w%" h="%input_height%"/>
+				<cursor color="%transparent%" hasfocus="0" width="0"/>
+				<data name="ft_inf_sha2"/>
+				<restrict disable="1"/>
+				<text>%ft_inf_sha2%</text>
+			</input>
+
+			<text style="caption">
+				<placement x="%col1_x_caption%" y="%row5_1a_y%"/>
+				<text>SHA512</text>
+			</text>
+			
+			<input>
+				<placement x="%col1_x_caption%" y="%row5_2a_y%" w="%input_w%" h="%input_height%"/>
+				<cursor color="%transparent%" hasfocus="0" width="0"/>
+				<data name="ft_inf_sha5"/>
+				<restrict disable="1"/>
+				<text>%ft_inf_sha5%</text>
+			</input>
 		</template>
 	</templates>
 </recovery>
