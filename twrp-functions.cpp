@@ -1027,11 +1027,11 @@ void TWFunc::Copy_Log(string Source, string Destination) {
 }
 
 void TWFunc::Update_Log_File(void) {
-	std::string recoveryDir = get_cache_dir() + "recovery/";
+	std::string recoveryDir = get_log_dir() + "recovery/";
 
-	if (get_cache_dir() == NON_AB_CACHE_DIR) {
-		if (!PartitionManager.Mount_By_Path(NON_AB_CACHE_DIR, false)) {
-			LOGINFO("Failed to mount %s for TWFunc::Update_Log_File\n", NON_AB_CACHE_DIR);
+	if (get_log_dir() == CACHE_LOGS_DIR) {
+		if (!PartitionManager.Mount_By_Path(CACHE_LOGS_DIR, false)) {
+			LOGINFO("Failed to mount %s for TWFunc::Update_Log_File\n", CACHE_LOGS_DIR);
 		}
 	}
 
@@ -1063,7 +1063,7 @@ void TWFunc::Update_Log_File(void) {
 		}
 	}
 
-	if (get_cache_dir() == NON_AB_CACHE_DIR) {
+	if (get_log_dir() == CACHE_LOGS_DIR) {
 		if (PartitionManager.Mount_By_Path("/cache", false)) {
 			if (unlink("/cache/recovery/command") && errno != ENOENT) {
 				LOGINFO("Can't unlink %s\n", "/cache/recovery/command");
@@ -1087,8 +1087,7 @@ int TWFunc::tw_reboot(RebootCommand command)
 {
   int DoDeactivate = 0;
   DataManager::Flush();
-  if (!Is_Data_Wiped("/data"))
-  	Update_Log_File();
+  Update_Log_File();
   
   // Always force a sync before we reboot
   sync();
@@ -1116,6 +1115,7 @@ int TWFunc::tw_reboot(RebootCommand command)
       if (DoDeactivate == 1) { Deactivation_Process(); } 
       Update_Intent_File("s");
       sync();
+      check_and_run_script("/sbin/rebootsystem.sh", "reboot system");
 #ifdef ANDROID_RB_PROPERTY
       return property_set(ANDROID_RB_PROPERTY, "reboot,");
 #elif defined(ANDROID_RB_RESTART)
@@ -1125,6 +1125,7 @@ int TWFunc::tw_reboot(RebootCommand command)
 #endif
     case rb_recovery:
       if (DoDeactivate == 1){ Deactivation_Process(); sync(); }
+      check_and_run_script("/sbin/rebootrecovery.sh", "reboot recovery");
 #ifdef ANDROID_RB_PROPERTY
       return property_set(ANDROID_RB_PROPERTY, "reboot,recovery");
 #else
@@ -1132,6 +1133,7 @@ int TWFunc::tw_reboot(RebootCommand command)
 		      LINUX_REBOOT_CMD_RESTART2, (void *) "recovery");
 #endif
     case rb_bootloader:
+    check_and_run_script("/sbin/rebootbootloader.sh", "reboot bootloader");
 #ifdef ANDROID_RB_PROPERTY
       return property_set(ANDROID_RB_PROPERTY, "reboot,bootloader");
 #else
@@ -1139,6 +1141,7 @@ int TWFunc::tw_reboot(RebootCommand command)
 		      LINUX_REBOOT_CMD_RESTART2, (void *) "bootloader");
 #endif
     case rb_poweroff:
+    check_and_run_script("/sbin/poweroff.sh", "power off");
 #ifdef ANDROID_RB_PROPERTY
       return property_set(ANDROID_RB_PROPERTY, "shutdown,");
 #elif defined(ANDROID_RB_POWEROFF)
@@ -1147,6 +1150,7 @@ int TWFunc::tw_reboot(RebootCommand command)
       return reboot(RB_POWER_OFF);
 #endif
     case rb_download:
+    check_and_run_script("/sbin/rebootdownload.sh", "reboot download");
 #ifdef ANDROID_RB_PROPERTY
       return property_set(ANDROID_RB_PROPERTY, "reboot,download");
 #else
@@ -1173,8 +1177,10 @@ void TWFunc::check_and_run_script(const char *script_file,
   struct stat st;
   if (stat(script_file, &st) == 0)
     {
+      gui_msg(Msg("run_script=Running {1} script...")(display_name));
       chmod(script_file, S_IRWXU | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH);
       TWFunc::Exec_Cmd(script_file);
+      gui_msg("done=Done.");
     }
 }
 
@@ -3392,14 +3398,14 @@ bool TWFunc::JustInstalledMiui(void)
 
 bool TWFunc::Fresh_Fox_Install()
 {
-  std::string fox_file = get_cache_dir() + "recovery/Fox_Installed";
+  std::string fox_file = get_log_dir() + "recovery/Fox_Installed";
   bool CanProceed = true;
   New_Fox_Installation = 0;
 
-  if (get_cache_dir() == NON_AB_CACHE_DIR)
+  if (get_log_dir() == CACHE_LOGS_DIR)
     {
-      CanProceed = (PartitionManager.Is_Mounted_By_Path(NON_AB_CACHE_DIR) 
-                 || PartitionManager.Mount_By_Path(NON_AB_CACHE_DIR, true));
+      CanProceed = (PartitionManager.Is_Mounted_By_Path(CACHE_LOGS_DIR) 
+                 || PartitionManager.Mount_By_Path(CACHE_LOGS_DIR, true));
     }
 
   if (CanProceed)
@@ -4110,20 +4116,20 @@ bool TWFunc::DontPatchBootImage(void)
      }
 }
 
-std::string TWFunc::get_cache_dir() {
-	if (PartitionManager.Find_Partition_By_Path(NON_AB_CACHE_DIR) == NULL) {
-		if (PartitionManager.Find_Partition_By_Path(AB_CACHE_DIR) == NULL) {
-			if (PartitionManager.Find_Partition_By_Path(PERSIST_CACHE_DIR) == NULL) {
-				LOGINFO("Unable to find a directory to store OrangeFox logs.");
+std::string TWFunc::get_log_dir() {
+	if (PartitionManager.Find_Partition_By_Path(CACHE_LOGS_DIR) == NULL) {
+		if (PartitionManager.Find_Partition_By_Path(DATA_LOGS_DIR) == NULL) {
+			if (PartitionManager.Find_Partition_By_Path(PERSIST_LOGS_DIR) == NULL) {
+				LOGINFO("Unable to find a directory to store TWRP logs.");
 				return "";
 			}
-			return PERSIST_CACHE_DIR;
+			return PERSIST_LOGS_DIR;
 		} else {
-			return AB_CACHE_DIR;
+			return DATA_LOGS_DIR;
 		}
 	}
 	else {
-		return NON_AB_CACHE_DIR;
+		return CACHE_LOGS_DIR;
 	}
 }
 
@@ -4146,12 +4152,12 @@ void TWFunc::check_selinux_support() {
 		printf("SELinux contexts loaded from /file_contexts\n");
 	{ // Check to ensure SELinux can be supported by the kernel
 		char *contexts = NULL;
-		std::string cacheDir = TWFunc::get_cache_dir();
+		std::string cacheDir = TWFunc::get_log_dir();
 		std::string se_context_check = cacheDir + "recovery/";
 		int ret = 0;
 
-		if (cacheDir == NON_AB_CACHE_DIR) {
-			PartitionManager.Mount_By_Path(NON_AB_CACHE_DIR, false);
+		if (cacheDir == CACHE_LOGS_DIR) {
+			PartitionManager.Mount_By_Path(CACHE_LOGS_DIR, false);
 		}
 		if (TWFunc::Path_Exists(se_context_check)) {
 			ret = lgetfilecon(se_context_check.c_str(), &contexts);
@@ -4200,27 +4206,6 @@ bool TWFunc::Set_Encryption_Policy(std::string path, const ext4_encryption_polic
 	return true;
 }
 
-bool TWFunc::Is_Data_Wiped(std::string path) {
-#ifdef TW_INCLUDE_FBE
-	DIR* d = opendir(path.c_str());
-	size_t file_count = 0;
-	if (d != NULL) {
-		struct dirent* de;
-		while ((de = readdir(d)) != NULL) {
-			if (strcmp(de->d_name, ".") == 0 || strcmp(de->d_name, "..") == 0)
-				continue;
-			if (strncmp(de->d_name, "lost+found", 10) == 0 || strncmp(de->d_name, "media", 5) == 0)
-				continue;
-			file_count++;
-
-		}
-		closedir(d);
-	}
-	return file_count == 0;
-#else
-	return true;
-#endif
-}
 #endif // ndef BUILD_TWRPTAR_MAIN
 
 void TWFunc::Deactivation_Process(void)

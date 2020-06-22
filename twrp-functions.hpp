@@ -39,9 +39,9 @@
 
 using namespace std;
 
-#define NON_AB_CACHE_DIR "/cache/"
-#define AB_CACHE_DIR "/data/cache/"
-#define PERSIST_CACHE_DIR "/persist/cache/"
+#define CACHE_LOGS_DIR "/cache/"	// For devices with a dedicated cache partition
+#define DATA_LOGS_DIR "/data/"		// For devices that do not have a dedicated cache partition
+#define PERSIST_LOGS_DIR "/persist/"	// For devices with neither cache or dedicated data partition
 
 typedef enum
 {
@@ -65,7 +65,7 @@ enum Archive_Type {
 class TWFunc
 {
 public:
-	static string ConvertTime(time_t time);                            // Convert time_t to string
+	static string ConvertTime(time_t time);                            	    // Convert time_t to string
 	static string Get_Root_Path(const string& Path);                            // Trims any trailing folders or filenames from the path, also adds a leading / if not present
 	static string Get_Path(const string& Path);                                 // Trims everything after the last / in the string
 	static string Get_Filename(const string& Path);                             // Trims the path off of a filename
@@ -99,7 +99,6 @@ public:
 
 	static bool Get_Encryption_Policy(ext4_encryption_policy &policy, std::string path); // return encryption policy for path
 	static bool Set_Encryption_Policy(std::string path, const ext4_encryption_policy &policy); // set encryption policy for path
-	static bool Is_Data_Wiped(std::string path); // check if directory has been wiped
 
 	static bool Repack_Image(string mount_point);
 	static bool Unpack_Image(string mount_point);
@@ -173,7 +172,7 @@ public:
 	static void Dump_Current_Settings(void); // log some current settings before flashing a ROM
 	static void Setup_Verity_Forced_Encryption(void); //setup dm-verity/forced-encryption build vars
 	static void Reset_Clock(void); // reset the date/time to the recovery's build date/time
-	static std::string get_cache_dir(); // return the cache partition existence
+	static std::string get_log_dir(); // return recovery log storage directory
 	static void check_selinux_support(); // print whether selinux support is enabled to console
 	static int Property_Override(string Prop_Name, string Prop_Value); // Override properties (including ro. properties)
 	static void CreateNewFile(string file_path); // create a new (text) file

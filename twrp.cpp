@@ -405,7 +405,9 @@ int main(int argc, char **argv)
   	TWFunc::Setup_Verity_Forced_Encryption();
 
 	// Run any outstanding OpenRecoveryScript
-	std::string cacheDir = TWFunc::get_cache_dir();
+	std::string cacheDir = TWFunc::get_log_dir();
+	if (cacheDir == DATA_LOGS_DIR)
+		cacheDir = "/data/cache";
 	std::string orsFile = cacheDir + "/recovery/openrecoveryscript";
 	
 	if (TWFunc::Path_Exists(SCRIPT_FILE_TMP) || (DataManager::GetIntValue(TW_IS_ENCRYPTED) == 0 && TWFunc::Path_Exists(orsFile))) {
@@ -521,8 +523,7 @@ TWFunc::RunFoxScript("/sbin/postrecoveryboot.sh");
 	// Reboot
 	TWFunc::Update_Intent_File(Send_Intent);
 	delete adb_bu_fifo;
-	if (!TWFunc::Is_Data_Wiped("/data"))
-		TWFunc::Update_Log_File();
+	TWFunc::Update_Log_File();
 	gui_msg(Msg("rebooting=Rebooting..."));
 	string Reboot_Arg;
 	DataManager::GetValue("tw_reboot_arg", Reboot_Arg);
