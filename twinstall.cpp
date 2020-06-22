@@ -1222,7 +1222,7 @@ int TWinstall_zip(const char *path, int *wipe_cache)
 	}
 
    // DJ9, 20200622: try to avoid a situation where blockimg will bomb out when trying to create a stash
-   if (!TWFunc::Path_Exists("/cache/recovery/.")) {
+   if ((TWFunc::Path_Exists("/cache/.")) && (!TWFunc::Path_Exists("/cache/recovery/."))) {
 	LOGINFO("Recreating the /cache/recovery/ folder ...\n");
 	if (!TWFunc::Recursive_Mkdir("/cache/recovery", false))
 	   LOGERR("Could not create /cache/recovery - blockimg may have problems with creating stashes\n");
