@@ -2398,7 +2398,11 @@ void TWFunc::OrangeFox_Startup(void)
   OrangeFox_Startup_Executed++;
   
   DataManager::GetValue(FOX_COMPATIBILITY_DEVICE, Fox_Current_Device);
- 
+
+#ifdef OF_QUICK_BACKUP_LIST
+  DataManager::SetValue("tw_backup_list_quick", OF_QUICK_BACKUP_LIST);
+#endif
+
   if (TWFunc::Path_Exists(FOX_PS_BIN)) 
       chmod (FOX_PS_BIN, 0755);
   
