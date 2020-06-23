@@ -2399,10 +2399,6 @@ void TWFunc::OrangeFox_Startup(void)
   
   DataManager::GetValue(FOX_COMPATIBILITY_DEVICE, Fox_Current_Device);
 
-#ifdef OF_QUICK_BACKUP_LIST
-  DataManager::SetValue("tw_backup_list_quick", OF_QUICK_BACKUP_LIST);
-#endif
-
   if (TWFunc::Path_Exists(FOX_PS_BIN)) 
       chmod (FOX_PS_BIN, 0755);
   
@@ -3420,6 +3416,10 @@ bool TWFunc::Fresh_Fox_Install()
 	unlink(fox_file.c_str());
 	
   	DataManager::SetValue("first_start", "1");
+
+	#ifdef OF_QUICK_BACKUP_LIST
+  	DataManager::SetValue("tw_backup_list_quick", OF_QUICK_BACKUP_LIST);
+	#endif
 
 	#ifdef OF_DONT_PATCH_ON_FRESH_INSTALLATION
 	    gui_print("Fresh OrangeFox installation - not running the dm-verity/forced-encryption patches\n");
