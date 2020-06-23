@@ -48,7 +48,7 @@
 		<variable name="pass_type" value="0" persist="1"/>
 		
 		<!-- Backups -->
-		<variable name="tw_backup_list_quick" value="/system;/data;" persist="1"/>
+		<variable name="tw_backup_list_quick" value="/system_image;/data;/boot;" persist="1"/>
 		<variable name="auto_generate" value="2" persist="1"/>
 		
 		<!-- Design -->
