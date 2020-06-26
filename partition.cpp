@@ -613,6 +613,7 @@ bool TWPartition::Process_Fstab_Line(const char *fstab_line, bool Display_Error,
 		if (mounted || Mount(false)) {
 			// Read the backup settings file
 			DataManager::LoadPersistValues();
+			DataManager::FindPasswordBackup();
 			TWFunc::Fixup_Time_On_Boot("/persist/time/");
 			if (!mounted)
 				UnMount(false);

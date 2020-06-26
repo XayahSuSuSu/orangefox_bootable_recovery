@@ -89,6 +89,8 @@ static int Fox_Current_ROM_IsMIUI = 0; // is the currently installed ROM a MIUI 
 #define FOX_PS_BIN "/FFiles/ps"
 #define FOX_NEW_MAGISKBOOT "/FFiles/magiskboot_new"
 
+#define FOX_PASS_IN_PERSIST "/persist/.fsecurity"
+
 // **** //
 
 #define FOX_SURVIVAL_FOLDER_VAR      	"fox_survival_backup_folder_path"

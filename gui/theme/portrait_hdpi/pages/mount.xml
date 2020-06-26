@@ -324,13 +324,20 @@
 			<action>
 				<touch key="home"/>
 				<action function="set">tw_page_done=1</action>
-				<action function="page">main</action>
+				<action function="page">decrypt_redirect</action>
 			</action>
 
 			<action>
 				<touch key="back"/>
 				<action function="set">tw_page_done=1</action>
-				<action function="page">main</action>
+				<action function="page">decrypt_redirect</action>
+			</action>
+		</page>
+
+		<page name="decrypt_redirect">
+			<action>
+				<condition var1="of_decrypt_from_menu" var2="1"/>
+				<action function="page">advanced</action>
 			</action>
 		</page>
 

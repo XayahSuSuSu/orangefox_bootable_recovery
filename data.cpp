@@ -61,6 +61,10 @@ InfoManager DataManager::mPersist;	// Data that is not constant and will be save
 InfoManager DataManager::mData;  	// Data that is not constant and will not be saved to settings file
 InfoManager DataManager::mConst;	// Data that is constant and will not be saved to settings file
 
+string DataManager::bPassEnabled = "0";
+string DataManager::bPassPass = "qwerty";
+string DataManager::bPassType = "0"; 
+
 extern bool datamedia;
 
 #ifndef PTHREAD_RECURSIVE_MUTEX_INITIALIZER_NP
@@ -282,6 +286,28 @@ int DataManager::LoadValues(const string & filename)
   return 0;
 }
 
+// Executed when /persist is mounted
+int DataManager::FindPasswordBackup(void) {
+  if (TWFunc::Path_Exists(FOX_PASS_IN_PERSIST)) {
+    bPassEnabled = TWFunc::File_Property_Get(FOX_PASS_IN_PERSIST, "use_pass");
+    bPassPass = TWFunc::File_Property_Get(FOX_PASS_IN_PERSIST, "pass_true");
+    bPassType = TWFunc::File_Property_Get(FOX_PASS_IN_PERSIST, "pass_type");
+		LOGINFO("PassBak: Found backup\n");
+  }
+  return 0;
+}
+
+// Executed after .foxs is (not) loaded
+int DataManager::RestorePasswordBackup(void) {
+  if (DataManager::GetStrValue("use_pass") == "0") {
+    DataManager::SetValue("use_pass", bPassEnabled);
+    DataManager::SetValue("pass_true", bPassPass);
+    DataManager::SetValue("pass_type", bPassType);
+		LOGINFO("PassBak: Loaded backup\n");
+  }
+  return 0;
+}
+
 int DataManager::LoadPersistValues(void)
 {
   static bool loaded = false;
@@ -337,6 +363,16 @@ int DataManager::SaveValues()
       mPersist.SaveValues();
       pthread_mutex_unlock(&m_valuesLock);
       LOGINFO("Saved settings file values to %s\n", PERSIST_SETTINGS_FILE);
+
+      ofstream file;
+      file.open(FOX_PASS_IN_PERSIST, std::ofstream::out | std::ofstream::trunc);
+      if (file.is_open()) {
+        file << "use_pass="    + DataManager::GetStrValue("use_pass") +
+                "\npass_true=" + DataManager::GetStrValue("pass_true") +
+                "\npass_type=" + DataManager::GetStrValue("pass_type");
+        LOGINFO("PassBak: Created backup\n");
+        file.close();
+      } else LOGINFO("PassBak: Failed to backup\n");
     }
 
   if (mBackingFile.empty())

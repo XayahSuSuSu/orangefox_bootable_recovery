@@ -33,6 +33,8 @@ public:
 	static int ResetDefaults();
 	static int LoadValues(const string& filename);
 	static int LoadPersistValues(void);
+	static int FindPasswordBackup(void);
+	static int RestorePasswordBackup(void);
 	static int Flush();
 
 	// Core get routines
@@ -72,6 +74,9 @@ protected:
 	static InfoManager mPersist;
 	static InfoManager mData;
 	static InfoManager mConst;
+	static string bPassEnabled;
+	static string bPassPass;
+	static string bPassType; 
 
 	static map<string, string> mConstValues;
 
