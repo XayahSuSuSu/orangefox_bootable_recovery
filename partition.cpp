@@ -3473,8 +3473,8 @@ void TWPartition::Fox_Add_Backup_Exclusions() {
 #if defined(TW_INCLUDE_FBE) && defined(OF_SKIP_MULTIUSER_FOLDERS_BACKUP)
   if (DataManager::GetIntValue(TW_IS_FBE) == 1) 
     {
-	const int num = 2;
-	int Users[num] = {10,999};
+	const int num = 3;
+	int Users[num] = {10,11,999};
 	int i;
 	string user;
 	for (i=0; i < num; i++)
