@@ -229,7 +229,7 @@
 			<action>
 				<action function="queueclear"/>
 				<action function="set">fox_m_author=topjohnwu</action>
-				<action function="set">fox_m_name={@module_install} Magisk 20.2</action>
+				<action function="set">fox_m_name={@module_install} Magisk 20.3</action>
 				<action function="set">tw_file=Magisk.zip</action>
 				<action function="set">tw_filename=/sdcard/Fox/FoxFiles/Magisk.zip</action>
 				<action function="set">tw_filecheck=%tw_filename%</action>
