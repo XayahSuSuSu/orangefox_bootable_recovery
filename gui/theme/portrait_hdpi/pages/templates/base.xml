@@ -57,7 +57,7 @@
 				<condition var1="tw_has_cancel" var2="0"/>
 				<condition var1="tw_busy" var2="1"/>
 				<placement x="%ab_back_x%" y="%ab_y%" placement="4"/>
-				<image resource="actionbar_cancel_no"/>
+				<image resource="actionbar_clear"/>
 			</image>
 		</template>
 

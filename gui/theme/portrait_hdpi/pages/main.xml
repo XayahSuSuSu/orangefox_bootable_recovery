@@ -100,7 +100,7 @@
 
 			<image>
 				<image resource="splash_logo_o"/>
-				<placement x="%center_x%" y="%center_y%" placement="4"/>
+				<placement x="%center_x%" y="%welcome_logo%" placement="4"/>
 			</image>
 
 			<text style="text_ab_title">

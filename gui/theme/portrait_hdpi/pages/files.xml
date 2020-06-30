@@ -1224,7 +1224,7 @@
 			<template name="checksum_base"/>
 			<image>
 				<placement x="%ab_back_x%" y="%ab_y%" placement="4"/>
-				<image resource="actionbar_cancel_no"/>
+				<image resource="actionbar_clear"/>
 			</image>
 			<action>
 				<condition var1="ft_chsum_calculated" var2="1"/>

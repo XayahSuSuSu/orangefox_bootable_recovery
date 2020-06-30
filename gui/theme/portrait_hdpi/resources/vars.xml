@@ -99,8 +99,9 @@
 		<variable name="tw_backups_folder_fm" value="/tmp"/>
 
 		<!-- Placement -->
-		<variable name="welcome_text" value="%center_y%+360"/>
-		<variable name="welcome_text2" value="%center_y%+440"/>
+		<variable name="welcome_logo" value="%center_y%-180"/>
+		<variable name="welcome_text" value="%center_y%+180"/>
+		<variable name="welcome_text2" value="%center_y%+260"/>
 		<variable name="empty_text_y" value="%center_y%+288"/>
 		
 		<!-- Screen size -->
