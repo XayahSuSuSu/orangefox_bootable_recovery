@@ -2363,7 +2363,10 @@ void TWFunc::Welcome_Message(void)
       gui_print_color("warning", "[Build type]: Unofficial\n");
     else
     gui_print("[Build type]: %s\n", FOX_BUILD_TYPE);
-    
+#ifdef FOX_ENABLE_LAB
+    gui_print_color("error", "\n*** CONFIDENTIAL ALPHA. NOT FOR RELEASE!! ***\n\n");
+#endif
+
     #if defined(OF_DISABLE_MIUI_SPECIFIC_FEATURES) || defined(OF_TWRP_COMPATIBILITY_MODE)
     LOGINFO(" [MIUI-specific features not enabled]\n");
     #endif
