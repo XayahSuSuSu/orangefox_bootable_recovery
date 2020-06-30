@@ -1090,7 +1090,7 @@
 		<string name="theme_fweight_reg">Regular</string>
 		<string name="theme_fweight_med">Medium</string>
 
-		<string name="swipe_up_to_unlock">Swipe up to Unlock</string>
+		<string name="swipe_up_to_unlock">Swipe up from the bottom of the screen to Unlock</string>
 
 		<string name="spl_background">Background color</string>
 		<string name="spl_logo">Logo</string>
