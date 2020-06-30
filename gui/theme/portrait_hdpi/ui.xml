@@ -44,4 +44,7 @@
 
 		<xmlfile name="pages/recovery.xml"/>
 	</include>
+	<variables>
+		<variable name="magisk_ver" value="20.3"/>
+	</variables>
 </recovery>
