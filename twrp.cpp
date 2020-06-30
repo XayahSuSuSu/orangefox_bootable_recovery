@@ -491,6 +491,7 @@ int main(int argc, char **argv)
 
 // run the postrecoveryboot script here
 TWFunc::RunFoxScript("/sbin/postrecoveryboot.sh");
+DataManager::RestorePasswordBackup();
 
 #ifdef FOX_OLD_DECRYPT_RELOAD
   LOGINFO("Using R10 way to reload theme.\n");
