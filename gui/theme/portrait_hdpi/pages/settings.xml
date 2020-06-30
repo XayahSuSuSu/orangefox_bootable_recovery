@@ -1136,78 +1136,57 @@
 				<placement x="0" y="%tab_title_h%"/>
 			</image>
 			
-			<button>
+			<button style="tab_btn">
 				<condition var1="credits_page" op="!=" var2="0"/>
-				<highlight color="%highlight_color%"/>
-				<fill color="%transparent%"/>
-				<font resource="Secondary" color="%color_disable%"/>
 				<placement x="0" y="%tab_btn_y%" w="360" h="84"/>
 				<text>{@abt_credits}</text>
 				<action function="set">credits_page=0</action>
 			</button>
 
-			<button>
+			<button style="tab_btn">
 				<condition var1="credits_page" op="!=" var2="1"/>
-				<highlight color="%highlight_color%"/>
-				<fill color="%transparent%"/>
-				<font resource="Secondary" color="%color_disable%"/>
 				<placement x="360" y="%tab_btn_y%" w="360" h="84"/>
 				<text>{@abt_trans}</text>
 				<action function="set">credits_page=1</action>
 			</button>
 
-			<button>
+			<button style="tab_btn">
 				<condition var1="credits_page" op="!=" var2="2"/>
-				<highlight color="%highlight_color%"/>
-				<fill color="%transparent%"/>
-				<font resource="Secondary" color="%color_disable%"/>
 				<placement x="720" y="%tab_btn_y%" w="360" h="84"/>
 				<text>{@abt_changes}</text>
 				<action function="set">credits_page=2</action>
 			</button>
 
-			<button>
+			<button style="tab_btn_hl">
 				<condition var1="credits_page" var2="0"/>
-				<highlight color="%highlight_color%"/>
-				<fill color="%transparent%"/>
-				<font resource="Secondary" color="%accent%"/>
 				<placement x="0" y="%tab_btn_y%" w="360" h="84"/>
 				<text>{@abt_credits}</text>
 			</button>
 
-			<button>
+			<button style="tab_btn_hl">
 				<condition var1="credits_page" var2="1"/>
-				<highlight color="%highlight_color%"/>
-				<fill color="%transparent%"/>
-				<font resource="Secondary" color="%accent%"/>
 				<placement x="360" y="%tab_btn_y%" w="360" h="84"/>
 				<text>{@abt_trans}</text>
 			</button>
 
-			<button>
+			<button style="tab_btn_hl">
 				<condition var1="credits_page" var2="2"/>
-				<highlight color="%highlight_color%"/>
-				<fill color="%transparent%"/>
-				<font resource="Secondary" color="%accent%"/>
 				<placement x="720" y="%tab_btn_y%" w="360" h="84"/>
 				<text>{@abt_changes}</text>
 			</button>
 			
-			<image>
+			<image style="tab">
 				<condition var1="credits_page" var2="0"/>
-				<image resource="tab_hl"/>
 				<placement x="24" y="%tab_title_h%" placement="2"/>
 			</image>
 
-			<image>
+			<image style="tab">
 				<condition var1="credits_page" var2="1"/>
-				<image resource="tab_hl"/>
 				<placement x="384" y="%tab_title_h%" placement="2"/>
 			</image>
 
-			<image>
+			<image style="tab">
 				<condition var1="credits_page" var2="2"/>
-				<image resource="tab_hl"/>
 				<placement x="744" y="%tab_title_h%" placement="2"/>
 			</image>
 

@@ -9,13 +9,11 @@
 		</style>
 		
 		<style name="tab_btn">
-			<highlight color="%highlight_color%"/>
 			<fill color="%transparent%"/>
-			<font resource="Secondary" color="%color_disable%"/>
+			<font resource="Secondary" color="%color_disable%" highlightcolor="#46494C"/>
 		</style>
 
 		<style name="tab_btn_hl">
-			<highlight color="%highlight_color%"/>
 			<fill color="%transparent%"/>
 			<font resource="Secondary" color="%accent%"/>
 		</style>
