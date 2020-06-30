@@ -699,31 +699,31 @@ int GUIAction::setpassword(std::string arg __unused)
   char sum[129];
 
   // string to char
-  string shit2 = DataManager::GetStrValue("pass_new_1");
-  char shit[shit2.length() + 1];
-  strcpy(shit, shit2.c_str());
+  string pass_tmp2 = DataManager::GetStrValue("pass_new_1");
+  char pass_tmp[pass_tmp2.length() + 1];
+  strcpy(pass_tmp, pass_tmp2.c_str());
 
-  sha512sum(shit, sum);
+  sha512sum(pass_tmp, sum);
 
   //char to string
-  string shit3(sum); 
+  string pass_tmp3(sum); 
 
-  DataManager::SetValue("pass_true", shit3);
+  DataManager::SetValue("pass_true", pass_tmp3);
   return 0;
 }
 
 int GUIAction::passwordcheck(std::string arg __unused)
 {
   char sum[129];
-  string shit2 = DataManager::GetStrValue("pass_enter");
-  char shit[shit2.length() + 1];
-  strcpy(shit, shit2.c_str());
+  string pass_tmp2 = DataManager::GetStrValue("pass_enter");
+  char pass_tmp[pass_tmp2.length() + 1];
+  strcpy(pass_tmp, pass_tmp2.c_str());
 
-  sha512sum(shit, sum);
+  sha512sum(pass_tmp, sum);
 
-  string shit3(sum); 
+  string pass_tmp3(sum); 
   
-  DataManager::SetValue("pass_enter_hash", shit3);
+  DataManager::SetValue("pass_enter_hash", pass_tmp3);
   gui_changePage("password_check");
   return 0;
 }
