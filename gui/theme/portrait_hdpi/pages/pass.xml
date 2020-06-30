@@ -115,7 +115,7 @@
 			
 			<action>
 				<condition var1="pass_enter_hash" op="!=" var2="%pass_true%"/>
-				<action function="set">pass_govno=1</action>
+				<action function="set">pass_not_match=1</action>
 				<action function="page">password_enter</action>
 			</action>
 		</page>

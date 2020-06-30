@@ -32,7 +32,7 @@
 				<action function="adb">disable</action>
 				<action function="set">pass_enter=</action>
 				<action function="set">pass_enter_hash=</action>
-				<action function="set">pass_govno=0</action>
+				<action function="set">pass_not_match=0</action>
 				<action function="page">password_enter</action>
 			</action>
 

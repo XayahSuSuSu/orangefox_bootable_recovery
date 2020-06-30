@@ -198,7 +198,7 @@
 		<!-- Password -->
 		<variable name="pass_enter" value=""/>
 		<variable name="pass_enter_hash" value=""/>
-		<variable name="pass_govno" value="0"/>
+		<variable name="pass_not_match" value="0"/>
 		<variable name="pass_open" value="0"/>
 		<variable name="pass_new_1" value=""/>
 		<variable name="pass_new_2" value=""/>
