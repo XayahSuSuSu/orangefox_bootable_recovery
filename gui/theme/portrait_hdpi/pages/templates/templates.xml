@@ -308,8 +308,16 @@
 				<condition var1="needs_repack" var2="1"/>
 				<placement x="0" y="%row_nav_y%" placement="2"/>
 			</image>
-			
+
 			<text style="text_body1">
+				<condition var1="needs_repack" var2="1"/>
+				<condition var1="fileexists" op="!=" var2="/data/media"/>
+				<placement x="%snackbar_text_x%" y="%snackbar_text_y%"/>
+				<text>{@cant_access_data}</text>
+			</text>
+
+			<text style="text_body1">
+				<condition var1="fileexists" var2="/data/media"/>
 				<condition var1="needs_repack" var2="1"/>
 				<condition var1="remove_theme" op="!=" var2="1"/>
 				<placement x="%snackbar_text_x%" y="%snackbar_text_y%"/>
@@ -317,6 +325,7 @@
 			</text>
 			
 			<text style="text_body1">
+				<condition var1="fileexists" var2="/data/media"/>
 				<condition var1="needs_repack" var2="1"/>
 				<condition var1="remove_theme" var2="1"/>
 				<placement x="%snackbar_text_x%" y="%snackbar_text_y%"/>
@@ -324,6 +333,7 @@
 			</text>
 			
 			<button style="btn_dlg_hl">
+				<condition var1="fileexists" var2="/data/media"/>
 				<condition var1="needs_repack" var2="1"/>
 				<condition var1="remove_theme" op="!=" var2="1"/>
 				<placement x="%snackbar_button_x%" y="%snackbar_button_y%"/>
@@ -333,6 +343,7 @@
 			</button>
 			
 			<button style="btn_dlg_hl">
+				<condition var1="fileexists" var2="/data/media"/>
 				<condition var1="needs_repack" var2="1"/>
 				<condition var1="remove_theme" var2="1"/>
 				<placement x="%snackbar_button_x%" y="%snackbar_button_y%"/>

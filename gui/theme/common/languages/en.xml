@@ -1112,6 +1112,7 @@
 
 		<string name="tap_to_generate">Tap here to calculate</string>
 		<string name="calc_checksum">Calculating...</string>
+		<string name="cant_access_data">Can't access data</string>
 		
 		<!-- Missing functions from TWRP -->
 		<string name="img_advanced">Advanced Flashing</string>

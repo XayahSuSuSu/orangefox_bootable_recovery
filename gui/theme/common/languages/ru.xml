@@ -1214,6 +1214,7 @@
 
 		<string name="tap_to_generate">Нажмите здесь, чтобы вычислить</string>
 		<string name="calc_checksum">Вычисление...</string>
+		<string name="cant_access_data">Невозможно получить доступ к /data</string>
 
 		<!-- Missing functions from TWRP -->
 		<string name="img_advanced">Прошить ядро</string>
