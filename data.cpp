@@ -1450,6 +1450,8 @@ void DataManager::ReadSettingsFile(void)
   PartitionManager.Mount_All_Storage();
   update_tz_environment_variables();
   TWFunc::Set_Brightness(GetStrValue("tw_brightness"));
+  
+  DataManager::RestorePasswordBackup();
 }
 
 string DataManager::GetCurrentStoragePath(void)

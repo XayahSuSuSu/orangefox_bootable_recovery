@@ -1570,7 +1570,10 @@ void PageManager::ReleasePackage(std::string name)
 int PageManager::RunReload() 
 {
 	int ret_val = 0;
-	std::string theme_path;
+	std::string theme_path, isPassOpen;
+
+	//[f/d] save pass open var so we don't need to retype pass after theme changing
+	DataManager::GetValue("pass_open", isPassOpen);
 
 	if (!mReloadTheme)
 		return 0;
@@ -1609,7 +1612,7 @@ int PageManager::RunReload()
     gui_forceRender();
 	std::string page_return;
 	DataManager::GetValue("of_reload_back", page_return);
-	DataManager::SetValue("pass_open", "1");
+	DataManager::SetValue("pass_open", isPassOpen);
 	gui_changePage(page_return);
 
 	LOGINFO("Theme reloaded\n");
