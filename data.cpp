@@ -62,7 +62,7 @@ InfoManager DataManager::mData;  	// Data that is not constant and will not be s
 InfoManager DataManager::mConst;	// Data that is constant and will not be saved to settings file
 
 string DataManager::bPassEnabled = "0";
-string DataManager::bPassPass = "qwerty";
+string DataManager::bPassPass = "4ee92c7c7909dc2a1ddaefe93ed97efa27a9b8cab8f1b90c199f917756d00f940155bade0da13e717f0c4a1069de9582e0dd5b1affef427fc7303aa9b593740c";
 string DataManager::bPassType = "0"; 
 
 extern bool datamedia;
@@ -1451,6 +1451,7 @@ void DataManager::ReadSettingsFile(void)
   update_tz_environment_variables();
   TWFunc::Set_Brightness(GetStrValue("tw_brightness"));
   
+  DataManager::FindPasswordBackup();
   DataManager::RestorePasswordBackup();
 }
 

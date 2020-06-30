@@ -48,6 +48,7 @@
 #include "../fuse_sideload.h"
 #include "blanktimer.hpp"
 #include "../twinstall.h"
+#include <openssl/sha.h>
 
 extern "C"
 {
@@ -232,6 +233,8 @@ GUIAction::GUIAction(xml_node <> *node):GUIObject(node)
       ADD_ACTION(calculate_chmod);
       ADD_ACTION(get_chmod);
       ADD_ACTION(set_chmod);
+      ADD_ACTION(setpassword);
+      ADD_ACTION(passwordcheck);
  
       // remember actions that run in the caller thread
       for (mapFunc::const_iterator it = mf.begin(); it != mf.end(); ++it)
@@ -688,6 +691,57 @@ int GUIAction::reload(std::string arg __unused)
   // GUI resources in the action thread while we attempt to render
   // with those same resources in another thread.
   return 0;
+}
+
+// [f/d] pass hashing actions: hash new pass / hash entered pass 
+int GUIAction::setpassword(std::string arg __unused)
+{
+  char sum[129];
+
+  // string to char
+  string shit2 = DataManager::GetStrValue("pass_new_1");
+  char shit[shit2.length() + 1];
+  strcpy(shit, shit2.c_str());
+
+  sha512sum(shit, sum);
+
+  //char to string
+  string shit3(sum); 
+
+  DataManager::SetValue("pass_true", shit3);
+  return 0;
+}
+
+int GUIAction::passwordcheck(std::string arg __unused)
+{
+  char sum[129];
+  string shit2 = DataManager::GetStrValue("pass_enter");
+  char shit[shit2.length() + 1];
+  strcpy(shit, shit2.c_str());
+
+  sha512sum(shit, sum);
+
+  string shit3(sum); 
+  
+  DataManager::SetValue("pass_enter_hash", shit3);
+  gui_changePage("password_check");
+  return 0;
+}
+
+
+void GUIAction::sha512sum(char *string, char outputBuffer[129])
+{
+    unsigned char hash[SHA512_DIGEST_LENGTH];
+    SHA512_CTX sha512;
+    SHA512_Init(&sha512);
+    SHA512_Update(&sha512, string, strlen(string));
+    SHA512_Final(hash, &sha512);
+    int i = 0;
+    for(i = 0; i < SHA512_DIGEST_LENGTH; i++)
+    {
+        sprintf(outputBuffer + (i * 2), "%02x", hash[i]);
+    }
+    outputBuffer[64] = 0;
 }
 
 int GUIAction::check_and_reload(std::string arg __unused)

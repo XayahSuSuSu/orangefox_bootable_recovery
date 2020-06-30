@@ -27,6 +27,7 @@
 #include <map>
 #include <set>
 #include <time.h>
+#include <openssl/sha.h>
 
 using namespace rapidxml;
 
@@ -330,6 +331,8 @@ protected:
 	void operation_start(const string operation_name);
 	void operation_end(const int operation_status);
 	time_t Start;
+	
+	void sha512sum(char *string, char outputBuffer[129]);
 
 	// map action name to function pointer
 	typedef int (GUIAction::*execFunction)(std::string);
@@ -372,6 +375,8 @@ protected:
 	int batchaction(std::string s, std::string arg);
 	int batchfiles(std::string arg);
 	int batchfolders(std::string arg);
+	int passwordcheck(std::string arg);
+	int setpassword(std::string arg);
 
 
 	// (originally) threaded actions

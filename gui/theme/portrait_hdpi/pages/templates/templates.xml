@@ -275,7 +275,7 @@
 				<text>%pass_enter_mask%</text>
 				<data name="pass_enter" mask="*" maskvariable="pass_enter_mask"/>
 				<restrict minlen="0" maxlen="64" />
-				<action function="page">password_check</action>
+				<action function="passwordcheck"/>
 			</input>
 
 			<fill color="%accent%">

@@ -116,7 +116,8 @@ LOCAL_C_INCLUDES += \
     bionic \
     system/core/base/include \
     system/core/include \
-    system/core/libpixelflinger/include
+    system/core/libpixelflinger/include \
+    external/boringssl/src/include
 
 ifeq ($(shell test $(PLATFORM_SDK_VERSION) -lt 23; echo $$?),0)
     LOCAL_C_INCLUDES += external/stlport/stlport

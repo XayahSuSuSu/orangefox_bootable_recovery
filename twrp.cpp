@@ -366,6 +366,11 @@ int main(int argc, char **argv)
 	LOGINFO("Backup of OrangeFox ramdisk done.\n");
 #endif
 
+#ifdef FOX_ADVANCED_SECURITY
+  property_set("ctl.stop", "adbd");
+  property_set("orangefox.adb.status", "0");
+#endif
+
 	// Offer to decrypt if the device is encrypted
 	if (DataManager::GetIntValue(TW_IS_ENCRYPTED) != 0) {
 		LOGINFO("Is encrypted, do decrypt page first\n");

@@ -1216,6 +1216,10 @@
 		<string name="calc_checksum">Вычисление...</string>
 		<string name="cant_access_data">Невозможно получить доступ к /data</string>
 
+		<string name="backup_pass_wait">Изменение пароля...</string>
+		<string name="pass_encrypt_error1">Расшифруйте /data</string>
+		<string name="pass_encrypt_error2">для изменения пароля!</string>
+
 		<!-- Missing functions from TWRP -->
 		<string name="img_advanced">Прошить ядро</string>
 		<string name="img_type">Тип образа</string>
