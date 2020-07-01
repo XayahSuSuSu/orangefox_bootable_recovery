@@ -153,6 +153,7 @@
 		<variable name="row_btn2_np_y" value="%screen_h%-768"/>
 		<variable name="slider_np_y" value="%screen_h%-486"/>
 		<variable name="slider_text_np_y" value="%screen_h%-594"/>
+		<variable name="slider_text_y_l" value="%screen_original_h%-281"/>
 		
 		<!-- NavPanel colors -->
 		<variable name="color_disable" value="#5F6368"/>
