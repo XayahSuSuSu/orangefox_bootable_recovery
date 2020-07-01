@@ -1021,6 +1021,12 @@ void DataManager::SetDefaultValues()
   mPersist.SetValue(FOX_POWERSAVE_CHECK, "0");
   mPersist.SetValue(FOX_PERFORMANCE_CHECK, "0");
 
+#ifdef OF_USE_LOCKSCREEN_BUTTON
+  mPersist.SetValue("lock_btn", "1");
+#else
+  mPersist.SetValue("lock_btn", "0");
+#endif
+
   mConst.SetValue(FOX_SURVIVAL_FOLDER_VAR, FOX_SURVIVAL_FOLDER);
   mConst.SetValue(FOX_SURVIVAL_BACKUP_NAME, FOX_SURVIVAL_BACKUP);
   mConst.SetValue(FOX_ACTUAL_BUILD_VAR, FOX_BUILD);

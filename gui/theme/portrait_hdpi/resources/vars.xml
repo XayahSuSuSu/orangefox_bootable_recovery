@@ -21,7 +21,8 @@
 		<variable name="clock_style" value="0" persist="1"/>
 		<variable name="lock_action" value="1" persist="1"/>
 		<variable name="lock_info" value="1" persist="1"/>
-		<variable name="lock_btn" value="0" persist="1"/>
+		<!--variable name="lock_btn" value="0" persist="1"/-->
+		<variable name="lock_btn" persist="1"/>
 
 		<!-- Device settings -->
 		<variable name="charging_now" value="0"/>
