@@ -138,7 +138,7 @@
 			
 			<text style="text_status">
 				<placement x="%center_x%" y="%center_y%" placement="5"/>
-				<text>{@starting_aroma}</text>
+				<text>{@lang_wait}</text>
 			</text>
 
 			<action>
