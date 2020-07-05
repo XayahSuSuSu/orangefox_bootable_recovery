@@ -1209,7 +1209,7 @@ int TWinstall_zip(const char *path, int *wipe_cache)
     }
 
 #ifdef OF_USE_TWRP_SAR_DETECT
-	unmount_system = 1;
+	//unmount_system = 1;
 #endif
 	if (unmount_system) {
 		gui_msg("unmount_system=Unmounting System...");
