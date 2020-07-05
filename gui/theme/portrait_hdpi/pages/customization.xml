@@ -118,9 +118,6 @@
 
 			<listbox style="settingslist">
 				<placement x="0" y="%row3_3a_y%" w="%screen_w%" h="%lb_l2%"/>
-				<listitem name="{@gst_home_enable}">
-					<data variable="real_gestures_enable_tmp"/>
-				</listitem>
 				<listitem name="{@gst_console_enable}">
 					<data variable="gst_console"/>
 				</listitem>

@@ -1120,7 +1120,6 @@
 		<string name="gst_back_left">Слева</string>
 		<string name="gst_back_right">Справа</string>
 		<string name="gst_console_enable">Открыть консоль, проведя сверху вниз</string>
-		<string name="gst_home_enable">Жест "домой"</string>
 		<string name="gst_navbar_error">Некоторые настройки недоступны.</string>
 		<string name="gst_navbar_error_2">Отключите жесты, чтобы показать их.</string>
 
