@@ -188,11 +188,6 @@
 					<condition var1="general_back" var2="settings"/>
 					<data variable="fox_boot_fastcharge_check"/>
 				</listitem>
-				<listitem name="{@fox_save_load_aromafm_config_chk}">
-					<condition var1="general_back" var2="settings"/>
-					<condition var1="fileexists" var2="/sdcard/Fox/FoxFiles/AromaFM/AromaFM.zip"/>
-					<data variable="fox_reboot_saveload_aromafm_check"/>
-				</listitem>
 				<listitem name="{@files_auto_open}">
 					<data variable="fm_auto_open"/>
 					<condition var1="general_back" var2="settings"/>
@@ -206,11 +201,10 @@
 					<condition var1="general_back" var2="settings"/>
 					<data variable="tw_inject_after_zip"/>
 				</listitem>
-
 				<listitem name="{@unmount_sys_install=Unmount System before installing a ZIP}">
+					<condition var1="general_back" var2="settings"/>
 					<data variable="tw_unmount_system"/>
 				</listitem>
-
 			</listbox>
 			
 			<text style="caption">

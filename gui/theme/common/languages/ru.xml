@@ -1123,7 +1123,7 @@
 		<string name="gst_navbar_error">Некоторые настройки недоступны.</string>
 		<string name="gst_navbar_error_2">Отключите жесты, чтобы показать их.</string>
 
-		<string name="unmount_sys_install">Размонтировать /system перед установкой</string>
+		<string name="unmount_sys_install">Размонтировать /system до установки</string>
 		<string name="unmount_system">Размонтирование /system...</string>
 		<string name="unmount_system_err">Ошибка размонтирования /system</string>		
 		<string name="fbe_wipe_msg">ВНИМАНИЕ: {1} очищен. Устройство FBE должно быть перезагружено в Android, а не в рекавери, чтобы задать изначальные политики FBE после очистки.</string>

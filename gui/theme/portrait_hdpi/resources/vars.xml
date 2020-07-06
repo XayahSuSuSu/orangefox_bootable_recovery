@@ -85,6 +85,7 @@
 		<variable name="fm_auto_open" value="1" persist="1"/>
 		<variable name="tw_hidden_files" value="0" persist="1"/> 
 		<variable name="need_reboot" value="0" /> 
+		<variable name="fox_reboot_saveload_aromafm_check" value="0" /> 
 		
 		<!-- Default values -->
 		<variable name="tw_hide_kb" value="0"/>
