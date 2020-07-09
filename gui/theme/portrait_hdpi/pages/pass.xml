@@ -53,6 +53,7 @@
 			<patternpassword>
 				<placement x="%pattern_x%" y="%row3_2a_y%" w="%pattern_size%" h="%pattern_size%"/>
 				<data name="pass_enter"/>
+				<size name="pass_pattern_grid" default="3"/>
 				<action function="passwordcheck"/>
 			</patternpassword>
 			
@@ -167,6 +168,7 @@
 			<patternpassword>
 				<placement x="%pattern_x%" y="%row3_2a_y%" w="%pattern_size%" h="%pattern_size%"/>
 				<data name="pass_new_1"/>
+				<size name="pass_pattern_grid" default="3"/>
 				<action function="page">pass_pattern_2</action>
 			</patternpassword>
 
@@ -247,6 +249,7 @@
 			<patternpassword>
 				<placement x="%pattern_x%" y="%row3_2a_y%" w="%pattern_size%" h="%pattern_size%"/>
 				<data name="pass_new_2"/>
+				<size name="pass_pattern_grid" default="3"/>
 				<action function="set">pass_type_tmp=1</action>
 				<action function="set">checked_page=pass_pattern</action>
 				<action function="page">pass_check</action>
