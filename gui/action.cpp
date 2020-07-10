@@ -1323,7 +1323,7 @@ int GUIAction::screenshot(std::string arg __unused)
 
 	const std::string storage = DataManager::GetCurrentStoragePath();
 	if (PartitionManager.Is_Mounted_By_Path(storage)) {
-		snprintf(path, sizeof(path), "%s/Pictures/Screenshots/", storage.c_str());
+		snprintf(path, sizeof(path), "%s/Fox/screenshots/", storage.c_str());
 	} else {
 		strcpy(path, "/tmp/");
 	}
