@@ -548,7 +548,6 @@
 			</text>
 
 			<template name="actionbar_sort"/>
-			<template name="actionbar_storage"/>
 
 			<text style="text_ab_title">
 				<placement x="%col1_x_indent%" y="%row1_2_y%" placement="2"/>
