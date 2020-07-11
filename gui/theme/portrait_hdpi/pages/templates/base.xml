@@ -99,6 +99,10 @@
 
         <template name="base_nav">
 			<template name="body_nav"/>
+			<template name="base_nav_basic"/>
+		</template>
+
+        <template name="base_nav_basic">
 			<template name="ab_main"/>
 			<template name="statusbarinfo"/>
 			<fill color="%title_solid_bg%">
@@ -475,16 +479,44 @@
 			</image>
 		</template>
 		
-		<template name="actionbar_storage">
-			<button style="actionbar">
-				<placement x="%ab_btn2_x%" y="%ab_y%" placement="4"/>
-				<action function="overlay">dialog_storage</action>
+		<template name="storage_dialog">
+			<button>
+				<fill color="%background%"/>
+				<condition var1="of_show_storage_selection" var2="1"/>
+				<placement x="0" y="%ab_h%" w="%screen_w%" h="128"/>
+			</button>
+
+			<text style="caption">
+				<condition var1="of_show_storage_selection" var2="1"/>
+				<placement x="%col1_x_caption%" y="%row1_1_y%"/>
+				<text>{@select_storage_hdr}</text>
+			</text>
+
+			<partitionlist style="listbox">
+				<condition var1="of_show_storage_selection" var2="1"/>
+				<placement x="0" y="%row1_2_y%" w="%screen_w%" h="%modern_storage_h%"/>
+				<data name="tw_storage_path"/>
+				<listtype name="storage"/>
+			</partitionlist>
+
+			<button style="btn_dlg_hl">
+				<condition var1="of_show_storage_selection" var2="1"/>
+				<placement x="%btn_raised_right_x%" y="%row3_1_y%" placement="1"/>
+				<text>{@update_btn}</text>
+				<action function="refreshsizes"/>
 			</button>
 
 			<image>
-				<placement x="%ab_btn2_x%" y="%ab_y%" placement="4"/>
-				<image resource="actionbar_storage"/>
+				<condition var1="of_show_storage_selection" var2="1"/>
+				<condition var1="show_shadow" var2="1"/>
+				<image resource="actionbar_shadow"/>
+				<placement x="0" y="%modern_storage_shadow_y%"/>
 			</image>
+
+			<fill color="#5f636844">
+				<condition var1="of_show_storage_selection" var2="1"/>
+				<placement x="0" y="%ab_h%" w="%screen_w%" h="%input_line_height%"/>
+			</fill>
 		</template>
 
         <!-- Action pages -->

@@ -3,16 +3,14 @@
 	<pages>
 		<page name="restore">
 			<action>
+				<action function="set">of_show_storage_selection=0</action>
+				<action function="set">nav_panel_id=1</action>
 				<!-- [f/d] this function creates backup folder and redirects to restore_prep -->
 				<action function="checkbackupfolder"/>
 			</action>
 		</page>
 
 		<page name="restore_prep">
-			<action>
-				<action function="set">nav_panel_id=1</action>
-			</action>
-
 			<fileselector style="fileselector_b">
 				<condition var1="list_font" var2="1"/>
 				<condition var1="of_backup_empty" op="!=" var2="1"/>
@@ -21,7 +19,7 @@
 				<icon folder="bkp_icon" file="bkp_icon" />
 				<filter folders="1" files="1" nav="0" extn=".ab"/>
 				<path name="tw_backups_folder_fm"/>
-				<data name="tw_restore" default=""/>
+				<data name="tw_restore"/>
 				<selection name="tw_restore_name"/>
 			</fileselector>
 
@@ -33,11 +31,13 @@
 				<icon folder="bkp_icon_small" file="bkp_icon_small" />
 				<filter folders="1" files="1" nav="0" extn=".ab"/>
 				<path name="tw_backups_folder_fm"/>
-				<data name="tw_restore" default=""/>
+				<data name="tw_restore"/>
 				<selection name="tw_restore_name"/>
 			</fileselector>
 
-			<template name="base_nav"/>
+			<background color="%background%"/>
+			<template name="keys"/>
+			<template name="base_nav_basic"/>
 
 			<text style="text_ab_subtitle">
 				<placement x="%col1_x%" y="%ab_bc_double_d_y%"/>
@@ -63,8 +63,16 @@
 			
 			<button style="actionbar">
 				<condition var1="of_backup_empty" var2="0"/>
+				<condition var1="of_show_storage_selection" var2="1"/>
 				<placement x="%ab_btn2_x%" y="%ab_y%" placement="4"/>
-				<action function="overlay">dialog_storage_restore</action>
+				<action function="page">restore</action>
+			</button>
+
+			<button style="actionbar">
+				<condition var1="of_backup_empty" var2="0"/>
+				<condition var1="of_show_storage_selection" op="!=" var2="1"/>
+				<placement x="%ab_btn2_x%" y="%ab_y%" placement="4"/>
+				<action function="set">of_show_storage_selection=1</action>
 			</button>
 
 			<image>
@@ -135,7 +143,7 @@
 				<condition var1="of_backup_empty" var2="1"/>
 				<text>{@select_storage_hdr}</text>
 				<placement x="%center_x%" y="%row7_1_y%" placement="4"/>
-				<action function="overlay">dialog_storage_restore</action>
+				<action function="set">of_show_storage_selection=1</action>
 			</button>
 			
 			<image>
@@ -156,6 +164,17 @@
 				<image resource="fab_add"/>
 			</image>
 
+			<template name="navbar_bkg_nobg"/>
+			<button>
+				<condition var1="of_show_storage_selection" var2="1"/>
+				<fill color="%darktransparent%"/>
+				<placement x="0" y="%ab_h%" w="%screen_w%" h="%screen_h%"/>
+				<action function="page">restore</action>
+			</button>
+
+			<template name="storage_dialog"/>
+			<template name="navbar_home"/>
+			<template name="navbar_console"/>
 			<template name="gestures_basic"/>
 
 			<action>

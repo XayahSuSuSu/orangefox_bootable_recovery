@@ -213,8 +213,8 @@
 			<highlight color="%highlight_color_full%"/>
 			<fastscroll rectcolor="%accent%" w="%fastscroll_w%" rectw="%fastscroll_rectw%" recth="%fastscroll_recth%" />
 			<icon selected="radio_true" unselected="radio_false" />
-			<iconsize w="171" h="90" padding="-16"/>
-			<font resource="body1" spacing="%fileselector_spacing%" color="%text%"/>
+			<font resource="body1" spacing="%fileselector_spacing%" color="%text_menu%"/>
+			<iconsize w="216" h="%bl_h1%" padding="24"/>
 		</style>
 
 		<style name="partitionlist_radio">

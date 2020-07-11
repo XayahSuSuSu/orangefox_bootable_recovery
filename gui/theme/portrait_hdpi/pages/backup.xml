@@ -14,12 +14,29 @@
 			
 			<action>
 				<action function="set">tw_fileexists=0</action>
+				<action function="set">of_show_storage_selection=0</action>
+				<action function="page">backup_prep</action>
+			</action>
+		</page>
+
+		<page name="check_storage_back">
+			<action>
+				<condition var1="of_show_storage_selection" op="!=" var2="1"/>
+				<action function="page">restore</action>
+			</action>
+			
+			<action>
+				<condition var1="of_show_storage_selection" var2="1"/>
+				<action function="set">of_show_storage_selection=0</action>
 				<action function="page">backup_prep</action>
 			</action>
 		</page>
 
 		<page name="backup_prep">
-			<template name="base_ex"/>
+			<background color="%background%"/>
+			<template name="keys"/>
+			<template name="ab_ex"/>
+			<template name="statusbarinfo"/>
 
 			<text style="text_ab_title">
 				<placement x="%col1_x_indent%" y="%ab_bc_y%"/>
@@ -107,8 +124,23 @@
 				<placement x="%ab_btn1_x%" y="%ab_y%" placement="4"/>
 				<image resource="actionbar_settings"/>
 			</image>
-			
-			<template name="actionbar_storage"/>
+
+			<button style="actionbar">
+				<condition var1="of_show_storage_selection" var2="1"/>
+				<placement x="%ab_btn2_x%" y="%ab_y%" placement="4"/>
+				<action function="set">of_show_storage_selection=0</action>
+			</button>
+
+			<button style="actionbar">
+				<condition var1="of_show_storage_selection" op="!=" var2="1"/>
+				<placement x="%ab_btn2_x%" y="%ab_y%" placement="4"/>
+				<action function="set">of_show_storage_selection=1</action>
+			</button>
+
+			<image>
+				<placement x="%ab_btn2_x%" y="%ab_y%" placement="4"/>
+				<image resource="actionbar_storage"/>
+			</image>
 
 			<text style="caption">
 				<placement x="%col1_x_caption%" y="%row2_1a_y%"/>
@@ -228,6 +260,16 @@
 				<action function="page">backup_run</action>
 			</slider>
 
+			<template name="navbar_bkg"/>
+			<button>
+				<condition var1="of_show_storage_selection" var2="1"/>
+				<fill color="%darktransparent%"/>
+				<placement x="0" y="%ab_h%" w="%screen_w%" h="%screen_h%"/>
+				<action function="set">of_show_storage_selection=0</action>
+			</button>
+
+			<template name="storage_dialog"/>
+			<template name="navbar"/>
 			<template name="gestures"/>
 
 			<action>
@@ -237,7 +279,7 @@
 
 			<action>
 				<touch key="back"/>
-				<action function="page">restore</action>
+				<action function="page">check_storage_back</action>
 			</action>
 		</page>
 

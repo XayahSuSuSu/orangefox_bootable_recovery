@@ -228,6 +228,8 @@
 		<variable name="listbox_tz_width_2" value="540"/>
 		<variable name="fm_search_h" value="%screen_min_cut%-1028"/>
 		<variable name="fm_search_num_h" value="%screen_min_cut%-1140"/>
+		<variable name="modern_storage_shadow_y" value="%cutout_w%+816"/>
+		<variable name="modern_storage_h" value="456"/>
 		
 		<!-- button list height -->
 		<variable name="bl_h1" value="144"/>
