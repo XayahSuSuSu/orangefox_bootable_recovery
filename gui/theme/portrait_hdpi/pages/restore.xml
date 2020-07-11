@@ -35,9 +35,9 @@
 				<selection name="tw_restore_name"/>
 			</fileselector>
 
-			<background color="%background%"/>
-			<template name="keys"/>
+			<template name="body_nav"/>
 			<template name="base_nav_basic"/>
+			<template name="navbar_bkg_nobg"/>
 
 			<text style="text_ab_subtitle">
 				<placement x="%col1_x%" y="%ab_bc_double_d_y%"/>
@@ -164,7 +164,6 @@
 				<image resource="fab_add"/>
 			</image>
 
-			<template name="navbar_bkg_nobg"/>
 			<button>
 				<condition var1="of_show_storage_selection" var2="1"/>
 				<fill color="%darktransparent%"/>
@@ -175,6 +174,8 @@
 			<template name="storage_dialog"/>
 			<template name="navbar_home"/>
 			<template name="navbar_console"/>
+			<template name="navbar_back_cls"/>
+			<template name="navbar_back_restore"/>
 			<template name="gestures_basic"/>
 
 			<action>

@@ -1144,6 +1144,124 @@
 			</image>
 		</template>
 
+		<template name="navbar_back_restore">
+			<button>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
+				<condition var1="tw_busy" var2="0"/>
+				<condition var1="navbar_sams" var2="0"/>
+				<condition var1="nougat" var2="3"/>
+				<condition var1="of_show_storage_selection" var2="1"/>
+				<placement x="%back_button_x%" y="%row_navbtn_y%" placement="4"/>
+				<image resource="nb_btn" highlightresource="nb_btn_hl"/>
+				<action function="key">back</action>
+			</button>
+			
+			<button>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
+				<condition var1="tw_busy" var2="0"/>
+				<condition var1="navbar_sams" var2="1"/>
+				<condition var1="nougat" var2="3"/>
+				<condition var1="of_show_storage_selection" var2="1"/>
+				<placement x="%slideout_button_x%" y="%row_navbtn_y%" placement="4"/>
+				<image resource="nb_btn" highlightresource="nb_btn_hl"/>
+				<action function="key">back</action>
+			</button>
+			<!-- Pie -->
+			<image>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
+				<condition var1="tw_busy" var2="0"/>
+				<condition var1="navbar_sams" var2="0"/>
+				<condition var1="nougat" var2="3"/>
+				<condition var1="navbar_accent" var2="1"/>
+				<condition var1="navbar_bkg" op="&gt;=" var2="3"/>
+				<condition var1="theme_style" var2="Light"/>
+				<condition var1="of_show_storage_selection" var2="1"/>
+				<placement x="%back_button_x%" y="%row_navbtn_y%" placement="4"/>
+				<image resource="back_white_pie"/>
+			</image>
+			<image>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
+				<condition var1="tw_busy" var2="0"/>
+				<condition var1="navbar_sams" var2="0"/>
+				<condition var1="nougat" var2="3"/>
+				<condition var1="navbar_accent" var2="1"/>
+				<condition var1="theme_style" op="!=" var2="Light"/>
+				<condition var1="of_show_storage_selection" var2="1"/>
+				<placement x="%back_button_x%" y="%row_navbtn_y%" placement="4"/>
+				<image resource="back_white_pie"/>
+			</image>
+			<image>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
+				<condition var1="tw_busy" var2="0"/>
+				<condition var1="navbar_sams" var2="0"/>
+				<condition var1="nougat" var2="3"/>
+				<condition var1="navbar_accent" var2="1"/>
+				<condition var1="navbar_bkg" op="&lt;=" var2="2"/>
+				<condition var1="theme_style" var2="Light"/>
+				<condition var1="of_show_storage_selection" var2="1"/>
+				<placement x="%back_button_x%" y="%row_navbtn_y%" placement="4"/>
+				<image resource="back_dark_pie"/>
+			</image>
+
+			<image>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
+				<condition var1="tw_busy" var2="0"/>
+				<condition var1="navbar_sams" var2="1"/>
+				<condition var1="nougat" var2="3"/>
+				<condition var1="navbar_accent" var2="1"/>
+				<condition var1="navbar_bkg" op="&gt;=" var2="3"/>
+				<condition var1="theme_style" var2="Light"/>
+				<condition var1="of_show_storage_selection" var2="1"/>
+				<placement x="%slideout_button_x%" y="%row_navbtn_y%" placement="4"/>
+				<image resource="back_white_pie"/>
+			</image>
+			<image>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
+				<condition var1="tw_busy" var2="0"/>
+				<condition var1="navbar_sams" var2="1"/>
+				<condition var1="nougat" var2="3"/>
+				<condition var1="navbar_accent" var2="1"/>
+				<condition var1="theme_style" op="!=" var2="Light"/>
+				<condition var1="of_show_storage_selection" var2="1"/>
+				<placement x="%slideout_button_x%" y="%row_navbtn_y%" placement="4"/>
+				<image resource="back_white_pie"/>
+			</image>
+			<image>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
+				<condition var1="tw_busy" var2="0"/>
+				<condition var1="navbar_sams" var2="1"/>
+				<condition var1="nougat" var2="3"/>
+				<condition var1="navbar_accent" var2="1"/>
+				<condition var1="navbar_bkg" op="&lt;=" var2="2"/>
+				<condition var1="theme_style" var2="Light"/>
+				<condition var1="of_show_storage_selection" var2="1"/>
+				<placement x="%slideout_button_x%" y="%row_navbtn_y%" placement="4"/>
+				<image resource="back_dark_pie"/>
+			</image>
+			
+			<image>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
+				<condition var1="tw_busy" var2="0"/>
+				<condition var1="navbar_sams" var2="0"/>
+				<condition var1="nougat" var2="3"/>
+				<condition var1="navbar_accent" var2="0"/>
+				<condition var1="of_show_storage_selection" var2="1"/>
+				<placement x="%back_button_x%" y="%row_navbtn_y%" placement="4"/>
+				<image resource="back_pie"/>
+			</image>
+
+			<image>
+				<condition var1="real_gestures_enable" op="!=" var2="1"/>
+				<condition var1="tw_busy" var2="0"/>
+				<condition var1="navbar_sams" var2="1"/>
+				<condition var1="nougat" var2="3"/>
+				<condition var1="navbar_accent" var2="0"/>
+				<condition var1="of_show_storage_selection" var2="1"/>
+				<placement x="%slideout_button_x%" y="%row_navbtn_y%" placement="4"/>
+				<image resource="back_pie"/>
+			</image>
+		</template>
+
 		<template name="navbar_terminal">
 			<button>
 				<condition var1="real_gestures_enable" op="!=" var2="1"/>
