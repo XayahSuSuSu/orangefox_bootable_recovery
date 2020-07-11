@@ -2042,7 +2042,7 @@
 							[[ '%spl_logo_type%' = 'w' ]] && logo_color=ffffff;
 							[[ '%spl_logo_type%' = 'd' ]] && logo_color=353535;
 
-							if [[ '%spl_log_type%' = '0' ]];
+							if [[ '%spl_logo_type%' = '0' ]];
 								then logo_on=!--;
 								else logo_on=;
 							fi;
@@ -2051,7 +2051,7 @@
 								else logo_ofr=!--;
 							fi;
 
-							[[ '%spl_log_type%' = '0' ]] && logo_ofr=!--;
+							[[ '%spl_logo_type%' = '0' ]] && logo_ofr=!--;
 
 							if [[ '%spl_bg_on%' = '1' ]];
 									then bg_on=;
