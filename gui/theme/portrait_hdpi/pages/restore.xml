@@ -50,33 +50,28 @@
 			</text>
 
 			<button style="actionbar">
-				<condition var1="of_backup_empty" var2="0"/>
 				<placement x="%ab_btn1_x%" y="%ab_y%" placement="4"/>
 				<action function="overlay">menu_sort</action>
 			</button>
 
 			<image>
-				<condition var1="of_backup_empty" var2="0"/>
 				<placement x="%ab_btn1_x%" y="%ab_y%" placement="4"/>
 				<image resource="actionbar_sort"/>
 			</image>
 			
 			<button style="actionbar">
-				<condition var1="of_backup_empty" var2="0"/>
 				<condition var1="of_show_storage_selection" var2="1"/>
 				<placement x="%ab_btn2_x%" y="%ab_y%" placement="4"/>
 				<action function="page">restore</action>
 			</button>
 
 			<button style="actionbar">
-				<condition var1="of_backup_empty" var2="0"/>
 				<condition var1="of_show_storage_selection" op="!=" var2="1"/>
 				<placement x="%ab_btn2_x%" y="%ab_y%" placement="4"/>
 				<action function="set">of_show_storage_selection=1</action>
 			</button>
 
 			<image>
-				<condition var1="of_backup_empty" var2="0"/>
 				<placement x="%ab_btn2_x%" y="%ab_y%" placement="4"/>
 				<image resource="actionbar_storage"/>
 			</image>
@@ -172,11 +167,26 @@
 			</button>
 
 			<template name="storage_dialog"/>
+
+			<button style="btn_dlg_hl">
+				<condition var1="of_show_storage_selection" var2="1"/>
+				<placement x="%btn_raised_right_x%" y="%row3_1_y%" placement="1"/>
+				<text>{@cancel_btn}</text>
+				<action function="set">of_show_storage_selection=0</action>
+				<action function="page">restore</action>
+			</button>
+
 			<template name="navbar_home"/>
 			<template name="navbar_console"/>
 			<template name="navbar_back_cls"/>
 			<template name="navbar_back_restore"/>
 			<template name="gestures_basic"/>
+
+			<action>
+				<condition var1="tw_storage_path" op="modified" />
+				<action function="set">of_show_storage_selection=0</action>
+				<action function="page">restore</action>
+			</action>
 
 			<action>
 				<touch key="back"/>

@@ -523,13 +523,6 @@
 				<listtype name="storage"/>
 			</partitionlist>
 
-			<button style="btn_dlg_hl">
-				<condition var1="of_show_storage_selection" var2="1"/>
-				<placement x="%btn_raised_right_x%" y="%row3_1_y%" placement="1"/>
-				<text>{@update_btn}</text>
-				<action function="refreshsizes"/>
-			</button>
-
 			<image>
 				<condition var1="of_show_storage_selection" var2="1"/>
 				<condition var1="show_shadow" var2="1"/>

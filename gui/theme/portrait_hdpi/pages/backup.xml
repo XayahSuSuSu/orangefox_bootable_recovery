@@ -269,8 +269,29 @@
 			</button>
 
 			<template name="storage_dialog"/>
+
+			<button style="btn_dlg_hl">
+				<condition var1="of_show_storage_selection" var2="1"/>
+				<placement x="%btn_raised_right_x%" y="%row3_1_y%" placement="1"/>
+				<text>{@cancel_btn}</text>
+				<action function="set">of_show_storage_selection=0</action>
+			</button>
+
+			<button style="btn_dlg">
+				<condition var1="of_show_storage_selection" var2="1"/>
+				<placement x="768" y="%row3_1_y%" placement="1"/>
+				<text>{@update_btn}</text>
+				<action function="refreshsizes"/>
+			</button>
+
 			<template name="navbar"/>
 			<template name="gestures"/>
+
+			<action>
+				<condition var1="tw_storage_path" op="modified" />
+				<action function="set">of_show_storage_selection=0</action>
+				<action function="page">backup_prep</action>
+			</action>
 
 			<action>
 				<touch key="home"/>
