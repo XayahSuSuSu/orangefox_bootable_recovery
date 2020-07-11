@@ -478,6 +478,25 @@
 				<image resource="actionbar_sort"/>
 			</image>
 		</template>
+
+		<template name="actionbar_storage">
+			<button style="actionbar">
+				<condition var1="darker_ui" op="!=" var2="1"/>
+				<placement x="%ab_btn2_x%" y="%ab_y%" placement="4"/>
+				<action function="page">select_path</action>
+			</button>
+			
+			<button style="actionbar">
+				<condition var1="darker_ui" var2="1"/>
+				<placement x="%ab_btn2_x%" y="%ab_y%" placement="4"/>
+				<action function="page">select_path_dark</action>
+			</button>
+
+			<image>
+				<placement x="%ab_btn2_x%" y="%ab_y%" placement="4"/>
+				<image resource="actionbar_storage"/>
+			</image>
+		</template>
 		
 		<template name="storage_dialog">
 			<button>

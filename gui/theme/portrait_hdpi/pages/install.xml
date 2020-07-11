@@ -99,6 +99,9 @@
 				<condition var1="tw_zip_queue_count" op="&lt;" var2="10"/>
 				<placement x="%btn_raised_right_x%" y="%row_btn2_y%" placement="1"/>
 				<text>{@zip_add_queue}</text>
+				<action function="set">tw_zip_location_tmp=%tw_file_location1%</action>
+				<action function="set">location_input_tmp=%tw_file_location1%</action>
+				<action function="set">sp_back=add_zip</action>
 				<action function="page">add_zip</action>
 			</button>
 
@@ -548,6 +551,7 @@
 			</text>
 
 			<template name="actionbar_sort"/>
+			<template name="actionbar_storage"/>
 
 			<text style="text_ab_title">
 				<placement x="%col1_x_indent%" y="%row1_2_y%" placement="2"/>

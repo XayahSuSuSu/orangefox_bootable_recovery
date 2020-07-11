@@ -47,6 +47,7 @@
 			</listbox>
 
 			<template name="base_key"/>
+			<template name="gestures_key"/>
 
 			<action>
 				<touch key="home"/>
@@ -56,6 +57,61 @@
 			<action>
 				<touch key="back"/>
 				<action function="page">filemanagerlist</action>
+			</action>
+		</template>
+		
+		<template name="files_sp_base">
+			
+			<listbox style="btn_list">
+				<placement x="0" y="%ab_h%" w="%screen_w%" h="%fm_search_h%"/>
+				<listitem name="{@internal}">
+					<icon res="device"/>
+					<condition var1="fileexists" var2="/sdcard"/>
+					<action function="set">tw_zip_location_tmp=/sdcard</action>
+					<action function="set">tw_reload_fm=1</action>
+					<action function="page">%sp_back%</action>
+				</listitem>
+				<listitem name="{@microsd}">
+					<icon res="sdcard"/>
+					<condition var1="fileexists" var2="/sdcard1"/>
+					<action function="set">tw_zip_location_tmp=/sdcard1</action>
+					<action function="set">tw_reload_fm=1</action>
+					<action function="page">%sp_back%</action>
+				</listitem>
+				<listitem name="{@microsd}">
+					<icon res="sdcard"/>
+					<condition var1="fileexists" var2="/external_sd"/>
+					<action function="set">tw_zip_location_tmp=/external_sd</action>
+					<action function="set">tw_reload_fm=1</action>
+					<action function="page">%sp_back%</action>
+				</listitem>
+				<listitem name="{@usbotg}">
+					<icon res="otg"/>
+					<condition var1="fileexists" var2="/usb-otg"/>
+					<action function="set">tw_zip_location_tmp=/usb-otg</action>
+					<action function="set">tw_reload_fm=1</action>
+					<action function="page">%sp_back%</action>
+				</listitem>
+				<listitem name="{@usbotg}">
+					<icon res="otg"/>
+					<condition var1="fileexists" var2="/usb_otg"/>
+					<action function="set">tw_zip_location_tmp=/usb_otg</action>
+					<action function="set">tw_reload_fm=1</action>
+					<action function="page">%sp_back%</action>
+				</listitem>
+			</listbox>
+
+			<template name="base_key"/>
+			<template name="gestures_key"/>
+
+			<action>
+				<touch key="home"/>
+				<action function="page">%sp_back%</action>
+			</action>
+
+			<action>
+				<touch key="back"/>
+				<action function="page">%sp_back%</action>
 			</action>
 		</template>
 

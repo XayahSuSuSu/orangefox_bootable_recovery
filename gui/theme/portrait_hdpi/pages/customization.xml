@@ -1687,6 +1687,9 @@
 				<listitem name="{@spl_image}">
 					<condition var1="spl_bg_on" var2="0"/>
 					<icon res="add_image"/>
+					<action function="set">tw_zip_location_tmp=%tw_file_location1%</action>
+					<action function="set">location_input_tmp=%tw_file_location1%</action>
+					<action function="set">sp_back=ext_custom_splash_select</action>
 					<action function="page">ext_custom_splash_select</action>
 				</listitem>
 				<listitem name="{@spl_del_img}">
@@ -1842,9 +1845,9 @@
 				<sort name="tw_gui_sort_order"/>
 				<icon folder="folder_icon" file="file_icon" />
 				<filter folders="1" files="1" extn=".png"/>
-				<path name="tw_zip_location" default="/sdcard"/>
+				<path name="tw_zip_location_tmp" default="/sdcard"/>
 				<data name="tw_filename"/>
-				<selection name="tw_file"/>
+				<selection name="tw_splash_png_name"/>
 			</fileselector>
 
 			<fileselector style="fileselector_s">
@@ -1853,14 +1856,15 @@
 				<sort name="tw_gui_sort_order"/>
 				<icon folder="folder_icon_small" file="file_icon_small" />
 				<filter folders="1" files="1" extn=".png"/>
-				<path name="tw_zip_location" default="/sdcard"/>
+				<path name="tw_zip_location_tmp" default="/sdcard"/>
 				<data name="tw_filename"/>
-				<selection name="tw_file"/>
+				<selection name="tw_splash_png_name"/>
 			</fileselector>
 
 			<template name="base_ex"/>
 
 			<template name="actionbar_sort"/>
+			<template name="actionbar_storage"/>
 
 			<text style="text_ab_title">
 				<placement x="%col1_x_indent%" y="%ab_bc_y%"/>
@@ -1874,13 +1878,12 @@
 
 			<text style="text_ab_subtitle_lim">
 				<placement x="%col1_x_indent%" y="%row1_2_y%"/>
-				<text>%tw_zip_location%</text>
+				<text>%tw_zip_location_tmp%</text>
 			</text>
 				
 			<action>
 				<condition var1="tw_filename" op="modified"/>
-				<action function="set">tw_splash_png_name=%tw_file%</action>
-				<action function="set">tw_splash_png_path=%tw_zip_location%</action>
+				<action function="set">tw_splash_png_path=%tw_zip_location_tmp%</action>
 				<action function="set">spl_bg_user=1</action>
 				<action function="set">spl_bg_on=1</action>
 				<action function="page">ext_custom_splash</action>

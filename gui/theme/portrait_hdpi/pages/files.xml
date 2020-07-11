@@ -194,8 +194,6 @@
 				<action function="set">tw_file_location1=tw_file_location1_tmp</action>
 				<action function="page">filemanagerlist</action>
 			</input>
-
-			<template name="gestures_key"/>
 		</page>
 
 		<page name="file_quick_actions_dark">
@@ -208,8 +206,30 @@
 				<action function="set">tw_file_location1=tw_file_location1_tmp</action>
 				<action function="page">filemanagerlist</action>
 			</input>
+		</page>
 
-			<template name="gestures_key"/>
+		<page name="select_path">
+			<template name="files_sp_base"/>
+			<input>
+				<background color="%background%"/>
+				<placement x="%col1_x_indent%" y="%ab_bc_search_y%"  w="816" h="%input_height%"/>
+				<data name="location_input_tmp"/>
+				<text>%location_input_tmp%</text>
+				<action function="set">tw_zip_location_tmp=location_input_tmp</action>
+				<action function="page">%sp_back%</action>
+			</input>
+		</page>
+
+		<page name="select_path_dark">
+			<template name="files_sp_base"/>
+			<input>
+				<background color="%title_solid_bg%"/>
+				<placement x="%col1_x_indent%" y="%ab_bc_search_y%"  w="816" h="%input_height%"/>
+				<data name="location_input_tmp"/>
+				<text>%location_input_tmp%</text>
+				<action function="set">tw_zip_location_tmp=location_input_tmp</action>
+				<action function="page">%sp_back%</action>
+			</input>
 		</page>
 
 		<page name="files_mkdir">
