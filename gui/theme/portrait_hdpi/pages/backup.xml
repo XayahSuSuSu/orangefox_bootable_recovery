@@ -60,9 +60,7 @@
 				<action function="set">tw_password_not_match=0</action>
 				<action function="set">tw_backup_password=</action>
 				<action function="set">tw_backup_password2=</action>
-				<action function="set">tw_backup_encrypt_display=</action>
-				<action function="set">tw_backup_encrypt_display2=</action>
-				<action function="overlay">dialog_encryption1</action>
+				<action function="page">backup_encryption</action>
 			</button>
 			
 			<image>
@@ -75,13 +73,10 @@
 			<button style="actionbar">
 				<condition var1="tw_include_encrypted_backup" var2="1"/>
 				<condition var1="tw_encrypt_backup" var2="1"/>
-				<condition var1="tw_password_not_match" var2="0"/>
 				<placement x="%ab_btn3_x%" y="%ab_y%" placement="4"/>
 				<action function="set">tw_encrypt_backup=0</action>
 				<action function="set">tw_backup_password=</action>
 				<action function="set">tw_backup_password2=</action>
-				<action function="set">tw_backup_encrypt_display=</action>
-				<action function="set">tw_backup_encrypt_display2=</action>
 				<action function="set">tw_password_not_match=0</action>
 			</button>
 			
@@ -91,27 +86,6 @@
 				<condition var1="tw_password_not_match" var2="0"/>
 				<placement x="%ab_btn3_x%" y="%ab_y%" placement="4"/>
 				<image resource="actionbar_encr_ena"/>
-			</image>
-
-			<button style="actionbar">
-				<condition var1="tw_include_encrypted_backup" var2="1"/>
-				<condition var1="tw_encrypt_backup" var2="1"/>
-				<condition var1="tw_password_not_match" var2="1"/>
-				<placement x="%ab_btn3_x%" y="%ab_y%" placement="4"/>
-				<action function="set">tw_encrypt_backup=0</action>
-				<action function="set">tw_backup_password=</action>
-				<action function="set">tw_backup_password2=</action>
-				<action function="set">tw_backup_encrypt_display=</action>
-				<action function="set">tw_backup_encrypt_display2=</action>
-				<action function="set">tw_password_not_match=0</action>
-			</button>
-			
-			<image>
-				<condition var1="tw_include_encrypted_backup" var2="1"/>
-				<condition var1="tw_encrypt_backup" var2="1"/>
-				<condition var1="tw_password_not_match" var2="1"/>
-				<placement x="%ab_btn3_x%" y="%ab_y%" placement="4"/>
-				<image resource="actionbar_encr_dis"/>
 			</image>
 
 			<button style="actionbar">
@@ -282,6 +256,7 @@
 				<placement x="768" y="%row3_1_y%" placement="1"/>
 				<text>{@update_btn}</text>
 				<action function="refreshsizes"/>
+				<action function="page">backup_prep</action>
 			</button>
 
 			<template name="navbar"/>
@@ -460,6 +435,126 @@
 			</action>
 		</page>
 
+		<page name="backup_encryption">
+			<template name="base_ex_key"/>
+
+            <text style="text_ab_title">
+				<placement x="%col1_x_indent%" y="%ab_bc_y%"/>
+				<text>{@backup_short_hdr}</text>
+			</text>
+
+			<text style="text_ab_title">
+				<placement x="%col1_x_indent%" y="%row1_2_y%" placement="2"/>
+				<text>{@encryption_hdr}</text>
+			</text>
+
+			<text style="text_ab_subtitle">
+				<placement x="%col1_x_indent%" y="%row1_2_y%"/>
+				<text>{@backup_encrypt_data_info}</text>
+			</text>
+
+			<text style="caption_hl">
+				<placement x="%col1_x_caption%" y="%row2_1a_y%"/>
+				<text>{@set_password}</text>
+			</text>
+
+			<input>
+				<placement x="%col1_x_caption%" y="%row2_2a_y%" w="%input_w%" h="%input_height%"/>
+				<text>%tw_backup_encrypt_display%</text>
+				<data name="tw_backup_password" mask="*" maskvariable="tw_backup_encrypt_display"/>
+				<restrict minlen="1" maxlen="32" allow="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890_"/>
+				<action function="page">backup_encryption2</action>
+			</input>
+
+			<fill color="%accent%">
+				<condition var1="tw_password_not_match" op="!=" var2="1"/>
+				<placement x="%col1_x_caption%" y="%row2_3a_y%" w="%input_w%" h="%input_line_height%" placement="1"/>
+			</fill>
+
+			<fill color="%text_fail%">
+				<condition var1="tw_password_not_match" var2="1"/>
+				<placement x="%col1_x_caption%" y="%row2_3a_y%" w="%input_w%" h="%input_line_height%" placement="1"/>
+			</fill>
+
+			<text style="text_input_fail">
+				<condition var1="tw_password_not_match" var2="1"/>
+				<placement x="%col1_x_caption%" y="%row2_3a_y%"/>
+				<text>{@pass_not_match}</text>
+			</text>
+
+			<template name="gestures_key"/>
+
+			<action>
+				<touch key="home"/>
+				<action function="set">tw_encrypt_backup=0</action>
+				<action function="set">tw_backup_password=</action>
+				<action function="set">tw_backup_password2=</action>
+				<action function="page">main</action>
+			</action>
+
+			<action>
+				<touch key="back"/>
+				<action function="set">tw_encrypt_backup=0</action>
+				<action function="set">tw_backup_password=</action>
+				<action function="set">tw_backup_password2=</action>
+				<action function="page">backup</action>
+			</action>
+		</page>
+
+		<page name="backup_encryption2">
+			<template name="base_ex_key"/>
+
+            <text style="text_ab_title">
+				<placement x="%col1_x_indent%" y="%ab_bc_y%"/>
+				<text>{@backup_short_hdr}</text>
+			</text>
+
+			<text style="text_ab_title">
+				<placement x="%col1_x_indent%" y="%row1_2_y%" placement="2"/>
+				<text>{@encryption_hdr}</text>
+			</text>
+
+			<text style="text_ab_subtitle">
+				<placement x="%col1_x_indent%" y="%row1_2_y%"/>
+				<text>{@backup_encrypt_data_info}</text>
+			</text>
+
+			<text style="caption_hl">
+				<placement x="%col1_x_caption%" y="%row2_1a_y%"/>
+				<text>{@verifying_pas}</text>
+			</text>
+
+			<input>
+				<placement x="%col1_x_caption%" y="%row2_2a_y%" w="%input_w%" h="%input_height%"/>
+				<text>%tw_backup_encrypt_display2%</text>
+				<data name="tw_backup_password2" mask="*" maskvariable="tw_backup_encrypt_display2"/>
+				<restrict minlen="1" maxlen="32" allow="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890_"/>
+				<action function="page">checkbackuppassword</action>
+			</input>
+
+			<fill color="%accent%">
+				<placement x="%col1_x_caption%" y="%row2_3a_y%" w="%input_w%" h="%input_line_height%" placement="1"/>
+			</fill>
+			
+			<template name="gestures_key"/>
+
+			<action>
+				<touch key="home"/>
+				<action function="set">tw_encrypt_backup=0</action>
+				<action function="set">tw_backup_password=</action>
+				<action function="set">tw_backup_password2=</action>
+				<action function="page">main</action>
+			</action>
+
+			<action>
+				<touch key="back"/>
+				<action function="set">tw_encrypt_backup=0</action>
+				<action function="set">tw_backup_password=</action>
+				<action function="set">tw_backup_password2=</action>
+				<action function="page">backup_encryption</action>
+			</action>
+		</page>
+
 		<page name="checkbackuppassword">
 			<action>
 				<condition var1="tw_backup_password" var2="tw_backup_password2"/>
@@ -478,12 +573,9 @@
 			<action>
 				<action function="set">tw_backup_password=</action>
 				<action function="set">tw_backup_password2=</action>
-				<action function="set">tw_backup_encrypt_display=</action>
-				<action function="set">tw_backup_encrypt_display2=</action>
 				<action function="set">tw_encrypt_backup=0</action>
 				<action function="set">tw_password_not_match=1</action>
-				<action function="page">backup</action>
-				<action function="overlay">dialog_encryption1</action>
+				<action function="page">backup_encryption</action>
 			</action>
 		</page>
 

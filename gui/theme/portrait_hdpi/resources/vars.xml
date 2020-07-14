@@ -164,7 +164,7 @@
 		
 		<!-- AR UI -->
 		<variable name="magisk_list_h" value="%screen_min_cut%-882"/>
-		<variable name="fullscreen_list_h" value="%screen_min_cut%-552"/>
+		<variable name="fullscreen_list_h" value="%screen_min_cut%-504"/>
 		<variable name="fullscreen_list_info_h" value="%screen_min_cut%-732"/>
 		<variable name="part_list_btns_h" value="%screen_min_cut%-1446"/> <!-- Backup parts -->
 		<variable name="part_backup_info_y" value="%screen_h%-678"/>

@@ -32,6 +32,12 @@
 			<template name="statusbarinfo"/>
 		</template>
 
+		<template name="base_num">
+			<template name="body_num"/>
+			<template name="ab"/>
+			<template name="statusbarinfo"/>
+		</template>
+
 		<template name="base_ex">
 			<template name="body"/>
 			<template name="ab_ex"/>
@@ -341,42 +347,6 @@
 			<template name="statusbarinfo"/>
 			<template name="navbar"/>
 			<template name="gestures_line"/>
-		</template>
-		
-		<template name="dialog_body_key">
-			<background color="%transparent%"/>
-			<!-- <template name="navbar_bkg"/> -->
-			
-			<button>
-				<fill color="%darktransparent%"/>
-				<placement x="0" y="0" w="%screen_w%" h="%screen_h%"/>
-				<action function="key">back</action>
-			</button>
-
-			<template name="keys"/>
-			<template name="keyboardtemplate"/>
-			<template name="statusbarinfo"/>
-			<template name="navbar_home"/>
-			<template name="navbar_console"/>
-			<template name="navbar_key"/>
-		</template>
-
-		<template name="dialog_body_num">
-			<background color="%transparent%"/>
-			<!-- <template name="navbar_bkg"/> -->
-			
-			<button>
-				<fill color="%darktransparent%"/>
-				<placement x="0" y="0" w="%screen_w%" h="%screen_h%"/>
-				<action function="key">back</action>
-			</button>
-
-			<template name="keys"/>
-			<template name="keyboardnum"/>
-			<template name="statusbarinfo"/>
-			<template name="navbar_home"/>
-			<template name="navbar_console"/>
-			<template name="navbar_key"/>
 		</template>
 
 		<template name="body_ct">

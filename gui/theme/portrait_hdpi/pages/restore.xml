@@ -96,7 +96,7 @@
 				<condition var1="tw_restore" op="modified"/>
 				<action function="readBackup"/>
 				<action function="set">restore_back=restore</action>
-				<action function="page">restore_select</action>
+				<action function="page">restore_read</action>
 			</action>
 
 			<image>
@@ -131,6 +131,9 @@
 				<condition var1="of_backup_rw" var2="1"/>
 				<placement x="%center_x%" y="%row6_1a_y%" placement="4"/>
 				<text>{@backup_short_hdr}</text>
+				<action function="set">tw_encrypt_backup=0</action>
+				<action function="set">tw_backup_password=</action>
+				<action function="set">tw_backup_password2=</action>
 				<action function="page">backup</action>
 			</button>
 
@@ -150,6 +153,9 @@
 			<button style="floating_btn">
 				<condition var1="of_backup_empty" var2="0"/>
 				<placement x="%btn_float_x%" y="%btn_float_nav_y%" placement="4"/>
+				<action function="set">tw_encrypt_backup=0</action>
+				<action function="set">tw_backup_password=</action>
+				<action function="set">tw_backup_password2=</action>
 				<action function="page">backup</action>
 			</button>
 			
@@ -196,6 +202,19 @@
 			<action>
 				<touch key="home"/>
 				<action function="page">restore</action>
+			</action>
+		</page>
+
+		<page name="restore_read">
+			<action>
+				<condition var1="tw_restore_encrypted" var2="1"/>
+				<action function="set">tw_password_fail=0</action>
+				<action function="page">restore_decrypt</action>
+			</action>
+
+			<action>
+				<condition var1="tw_restore_encrypted" var2="0"/>
+				<action function="page">restore_select</action>
 			</action>
 		</page>
 
@@ -345,12 +364,6 @@
 		</page>
 
 		<page name="restore_select">
-			<action>
-				<condition var1="tw_restore_encrypted" var2="1"/>
-				<action function="set">tw_password_fail=0</action>
-				<action function="page">restore_decrypt</action>
-			</action>
-
 			<template name="base_ex"/>
 
 			<text style="text_ab_title">
@@ -708,7 +721,7 @@
 				<condition var1="fileexists" var2="/FFiles/OF_DelPass/OF_DelPass.zip"/>
 				<placement x="%btn_raised_left_x%" y="%row_btn1_y%"/>
 				<text>{@module_pass}</text>
-				<action function="set">tw_clear_destination=%tw_back%</action>
+				<action function="set">tw_clear_destination=restore</action>
 				<action function="set">install_back=clear_vars</action>
 				<action function="page">mod_pass</action>
 			</button>

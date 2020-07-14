@@ -1116,6 +1116,8 @@
 		<string name="backup_pass_wait">Changing password...</string>
 		<string name="pass_encrypt_error1">You can't change password</string>
 		<string name="pass_encrypt_error2">when Data is encrypted!</string>
+
+		<string name="backup_encrypt_data_info">Only Data partition will be encrypted</string>
 		
 		<!-- Missing functions from TWRP -->
 		<string name="img_advanced">Advanced Flashing</string>

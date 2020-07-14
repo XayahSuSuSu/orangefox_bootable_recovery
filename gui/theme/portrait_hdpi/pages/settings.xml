@@ -754,7 +754,7 @@
 				<placement x="%col1_x_caption%" y="%row6_3a_y%" w="%input_w%" h="%mb_h_hide%"/>
 				<action function="set">zone_temp=%tw_time_zone_guioffset%</action>
 				<action function="set">zone_error=0</action>
-				<action function="overlay">dialog_offset</action>
+				<action function="page">ext_time_offset</action>
 			</button>
 
 			<text style="caption">
@@ -788,6 +788,74 @@
 			<action>
 				<touch key="back"/>
 				<action function="page">settings</action>
+			</action>
+		</page>
+
+		<page name="ext_time_offset">
+			<template name="base_num"/>
+
+            <text style="text_ab_title">
+				<placement x="%col1_x_indent%" y="%ab_bc_y%"/>
+				<text>{@tz_offset}</text>
+			</text>
+
+			<text style="caption_hl">
+				<placement x="%col1_x_caption%" y="%row1_1_y%"/>
+				<text>{@tz_offset_hdr}</text>
+			</text>
+
+			<input>
+				<placement x="%col1_x_caption%" y="%row1_2_y%" w="%input_w%" h="%input_height%"/>
+				<text>%zone_temp%</text>
+				<data name="zone_temp"/>
+				<restrict minlen="1" maxlen="2" allow="1234567890" />
+				<action function="compute">zone_temp+1</action>
+				<action function="compute">zone_temp-1</action>
+				<action function="page">check_zone</action>
+			</input>
+
+			<fill color="%accent%">
+				<condition var1="zone_error" op="!=" var2="1"/>
+				<placement x="%col1_x_caption%" y="%row1_3_y%" w="%input_w%" h="%input_line_height%" placement="1"/>
+			</fill>
+
+			<fill color="%text_fail%">
+				<condition var1="zone_error" var2="1"/>
+				<placement x="%col1_x_caption%" y="%row1_3_y%" w="%input_w%" h="%input_line_height%" placement="1"/>
+			</fill>
+
+			<text style="text_input_fail">
+				<condition var1="zone_error" var2="1"/>
+				<placement x="%col1_x_caption%" y="%row1_3_y%"/>
+				<text>{@offset_wrong}</text>
+			</text>
+
+			<template name="gestures_key"/>
+
+			<action>
+				<touch key="home"/>
+				<action function="page">main</action>
+			</action>
+
+			<action>
+				<touch key="back"/>
+				<action function="page">ext_time</action>
+			</action>
+		</page>
+
+		<page name="check_zone">
+			<action>
+				<condition var1="zone_temp" op="&gt;=" var2="60"/>
+				<action function="set">zone_error=1</action>
+				<action function="page">ext_time_offset</action>
+			</action>
+			
+			<action>
+				<condition var1="zone_temp" op="&lt;" var2="60"/>
+				<action function="set">zone_error=0</action>
+				<action function="set">tw_time_zone_guioffset=%zone_temp%</action>
+				<action function="setguitimezone"/>
+				<action function="page">ext_time</action>
 			</action>
 		</page>
 

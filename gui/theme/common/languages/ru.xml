@@ -1223,6 +1223,8 @@
 		<string name="pass_encrypt_error1">Расшифруйте /data</string>
 		<string name="pass_encrypt_error2">для изменения пароля!</string>
 
+		<string name="backup_encrypt_data_info">Будет зашифрован только раздел /data</string>
+
 		<!-- Missing functions from TWRP -->
 		<string name="img_advanced">Прошить ядро</string>
 		<string name="img_type">Тип образа</string>
