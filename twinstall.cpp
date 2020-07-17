@@ -1031,7 +1031,7 @@ static int Run_Update_Binary(const char *path, ZipWrap * Zip, int *wipe_cache,
   // if updater-script doesn't find the correct device
   if (WEXITSTATUS (status) == TW_ERROR_WRONG_DEVICE)
      {
-       gui_print_color("error", "\nPossible causes of this error:\n  1. Wrong device\n  2. Wrong firmware\n  3. Corrupt zip.\n\nSearch online for \"error %i\". ",
+       gui_print_color("error", "\nPossible causes of this error:\n  1. Wrong device\n  2. Wrong firmware\n  3. Corrupt zip\n  4. System not mounted.\n\nSearch online for \"error %i\". ",
        			TW_ERROR_WRONG_DEVICE);
        gui_print_color("error", "Check \"/tmp/recovery.log\", and look above, for the specific cause of this error.\n\n");
      }
