@@ -1037,7 +1037,7 @@
 		<string name="size_progress_v2">%llu/%llu MB (%i%%)</string>
 
 		<string name="navpan_new_design">New navigation panel design</string>
-		<string name="full_partition_list">Show addition partitions to backup</string>
+		<string name="full_partition_list">Show additional partitions to backup</string>
 
 		<string name="data_decrypted_reload">Successfully decrypted!</string>
 
