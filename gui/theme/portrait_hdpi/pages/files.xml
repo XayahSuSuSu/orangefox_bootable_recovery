@@ -1984,7 +1984,7 @@
 				cd '%tw_filename1%'; [ -x /sbin/zip ] && zip -r%tw_pack_lvl% '%tw_filename1%.zip' . || echo "- Error - zip binary not found";
 				</action>
 				<!--action function="terminalcommand">
-				cd '%tw_filename1%'; [ -x /sbin/zip ] && zip -r%tw_pack_lvl% '%tw_filename1%.zip' '%tw_filename1%' || echo "- Error - zip binary not found";
+				[ -x /sbin/zip ] && zip -r%tw_pack_lvl% '%tw_filename1%.zip' $(basename '%tw_filename1%') || echo "- Error - zip binary not found";
 				</action-->
 				<action function="set">tw_extract_action=0</action>
 			</action>
