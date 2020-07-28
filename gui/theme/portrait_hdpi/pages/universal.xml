@@ -130,7 +130,7 @@
 			</text>
 
 			<listbox style="settingslist">
-				<placement x="0" y="%row6_1_y%" w="%screen_w%" h="%lb_l1%"/>
+				<placement x="0" y="%row3_1_y%" w="%screen_w%" h="%lb_l1%"/>
 				<listitem name="{@sys_ro_never_show_chk}">
 					<data variable="disable_no_os"/>
 				</listitem>
