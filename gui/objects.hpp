@@ -372,9 +372,7 @@ protected:
 	int screenshot(std::string arg);
 	int setbrightness(std::string arg);
 	int cmdf(std::string arg, std::string file);
-	int batchaction(std::string s, std::string arg);
-	int batchfiles(std::string arg);
-	int batchfolders(std::string arg);
+	int batch(std::string arg);
 	int passwordcheck(std::string arg);
 	int setpassword(std::string arg);
 

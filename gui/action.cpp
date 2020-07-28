@@ -277,8 +277,7 @@ GUIAction::GUIAction(xml_node <> *node):GUIObject(node)
       ADD_ACTION(disable_replace);
 
       //[f/d] Threaded actions
-      ADD_ACTION(batchfiles);
-      ADD_ACTION(batchfolders);
+      ADD_ACTION(batch);
       ADD_ACTION(generatedigests);
       ADD_ACTION(ftls); //ftls (foxtools) - silent cmd
    }
@@ -1321,16 +1320,15 @@ int GUIAction::screenshot(std::string arg __unused)
 	uid_t uid = AID_MEDIA_RW;
 	gid_t gid = AID_MEDIA_RW;
 
-	const std::string storage = "/sdcard"; //DataManager::GetCurrentStoragePath();
-	if (PartitionManager.Is_Mounted_By_Path(storage)) {
-		snprintf(path, sizeof(path), "%s/Fox/screenshots/", storage.c_str());
-	} else {
-		strcpy(path, "/sdcard/Fox/screenshots/");
-	}
+	//const std::string storage = DataManager::GetCurrentStoragePath();
+	//if (PartitionManager.Is_Mounted_By_Path(storage)) {
+	//	snprintf(path, sizeof(path), "%s/Fox/screenshots/", storage.c_str());
+	//} else
+	strcpy(path, "/sdcard/Fox/Screenshots/");
 
 	if (!TWFunc::Create_Dir_Recursive(path, 0775, uid, gid))
 		return 0;
-
+  bool hi = "da";
 	tm = time(NULL);
 	path_len = strlen(path);
 
@@ -2003,7 +2001,7 @@ int GUIAction::terminalcommand(std::string arg)
 	    }
 	  fclose(fp);
 	}
-      DataManager::SetValue("tw_operation_status", 0);
+      DataManager::SetValue("tw_operation_status", WEXITSTATUS(pclose(fp)) != 0 ? 1 : 0);
       DataManager::SetValue("tw_operation_state", 1);
       DataManager::SetValue("tw_terminal_state", 0);
       DataManager::SetValue("tw_background_thread_running", 0);
@@ -2805,37 +2803,100 @@ exit:
 	return 0;
 }
 
-int GUIAction::batchfiles(std::string arg)
-{
-  return batchaction("of_batch_files", arg);
-}
-
-int GUIAction::batchfolders(std::string arg)
-{
-  return batchaction("of_batch_folders", arg);
-}
-
 int GUIAction::cmdf(std::string arg, std::string file)
 {
   char buff[1024];
   sprintf(buff, gui_parse_text(arg).c_str(), file.c_str());
-  return terminalcommand(std::string(buff));
+
+   int op_status = 0;
+  string cmdpath, command;
+
+  //begin terminal
+  DataManager::GetValue("tw_terminal_location", cmdpath);
+  command = "cd \"" + cmdpath + "\" && " + std::string(buff) + " 2>&1";
+  LOGINFO("Actual command is: '%s'\n", command.c_str());
+  DataManager::SetValue("tw_terminal_state", 1);
+  DataManager::SetValue("tw_background_thread_running", 1);
+  FILE* fp;
+  char line[512];
+
+  fp = popen(command.c_str(), "r");
+  if (fp == NULL) {
+    LOGERR("Error opening command to run (%s).\n", strerror(errno));
+    return 1;
+  }
+
+  int fd = fileno(fp), has_data = 0, check = 0, keep_going = -1;
+  struct timeval timeout;
+  fd_set fdset;
+
+  while (keep_going) {
+    FD_ZERO(&fdset);
+    FD_SET(fd, &fdset);
+    timeout.tv_sec = 0;
+    timeout.tv_usec = 400000;
+    has_data = select(fd + 1, &fdset, NULL, NULL, &timeout);
+    if (has_data == 0) {
+      DataManager::GetValue("tw_terminal_state", check);
+      if (check == 0) {
+        keep_going = 0;
+      }
+    } else if (has_data < 0) {
+      keep_going = 0;
+    } else {
+      if (fgets(line, sizeof(line), fp) != NULL)
+        gui_print("%s", line);
+      else
+        keep_going = 0;
+    }
+  }
+  fclose(fp);
+  DataManager::SetValue("tw_terminal_state", 0);
+  DataManager::SetValue("tw_background_thread_running", 0);
+  return WEXITSTATUS(pclose(fp)) != 0 ? 1 : 0;
 }
 
-int GUIAction::batchaction(std::string s, std::string arg)
+int GUIAction::batch(std::string arg __unused)
 {
-  DataManager::GetValue(s, s);
-  if (s.empty()) return 0;
-  s = s.substr(0, s.size()-1); //remove last delimiter ("/")
-  std::string delimiter = "/";
+  operation_start("BatchCommandOutput");
+  int op_status = 0;
+  std::string list, cmd;
 
-  size_t pos = 0;
-  std::string token;
-  while ((pos = s.find(delimiter)) != std::string::npos) {
-      token = s.substr(0, pos);
-      cmdf(arg, token);
-      s.erase(0, pos + delimiter.length());
+  if (simulate) {
+    simulate_progress_bar();
+    operation_end(op_status);
+  } else {
+
+    DataManager::GetValue("of_batch_files", list);
+    DataManager::GetValue("of_batch_files_cmd", cmd);
+  
+    for (int i = 0; i <= 1; i++) {
+      LOGINFO("Process list: %s\n", list.c_str());
+      if (!cmd.empty() && !list.empty()) {
+        list = list.substr(0, list.size()-1); //remove last delimiter ("/")
+        std::string delimiter = "/";
+
+        size_t pos = 0;
+        std::string token;
+        while ((pos = list.find(delimiter)) != std::string::npos) {
+            token = list.substr(0, pos);
+            op_status = cmdf(cmd, token);
+            if (op_status == 1) break;
+            list.erase(0, pos + delimiter.length());
+        }
+        if (op_status == 0) cmdf(cmd, list);
+      }
+
+      //repeat code with new vars
+      DataManager::GetValue("of_batch_folders", list);
+      DataManager::GetValue("of_batch_folders_cmd", cmd);
+    }
+
   }
-  cmdf(arg, s);
+  
+  DataManager::SetValue("tw_operation_status", op_status);
+  DataManager::SetValue("tw_operation_state", 1);
+  DataManager::SetValue(TW_ACTION_BUSY, 0);
+  
   return 0;
 }

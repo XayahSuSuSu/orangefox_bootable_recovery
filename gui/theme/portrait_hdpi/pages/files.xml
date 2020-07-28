@@ -2134,6 +2134,13 @@
 			</text>
 			
 			<text style="text_ab_subtitle_lim">
+				<condition var1="of_is_batch" var2="1"/>
+				<placement x="%col1_x_indent%" y="%row1_2_y%"/>
+				<text>{@batch_files_folders}</text>
+			</text>
+			
+			<text style="text_ab_subtitle_lim">			
+				<condition var1="of_is_batch" op="!=" var2="1"/>
 				<placement x="%col1_x_indent%" y="%row1_2_y%"/>
 				<text>%tw_filename1%</text>
 			</text>
@@ -2160,15 +2167,17 @@
 			<action>
 				<condition var1="of_is_batch" var2="1"/>
 				<condition var1="tw_include_text3" var2="0"/>
-				<action function="batchfiles"  >%of_batch_cmd_f% '%tw_file_location1%/%%s'</action>
-				<action function="batchfolders">%of_batch_cmd_d% '%tw_file_location1%/%%s'</action>
+				<action function="set">of_batch_files_cmd=%of_batch_cmd_f% '%tw_file_location1%/%%s'</action>
+				<action function="set">of_batch_folders_cmd=%of_batch_cmd_d% '%tw_file_location1%/%%s'</action>
+				<action function="batch"/>
 			</action>
 
 			<action>
 				<condition var1="of_is_batch" var2="1"/>
 				<condition var1="tw_include_text3" var2="1"/>
-				<action function="batchfiles"  >%of_batch_cmd_f% '%tw_file_location1%/%%s' '%tw_fm_text3%'</action>
-				<action function="batchfolders">%of_batch_cmd_d% '%tw_file_location1%/%%s' '%tw_fm_text3%'</action>
+				<action function="set">of_batch_files_cmd=%of_batch_cmd_f% '%tw_file_location1%/%%s' '%tw_fm_text3%'</action>
+				<action function="set">of_batch_folders_cmd=%of_batch_cmd_d% '%tw_file_location1%/%%s' '%tw_fm_text3%'</action>
+				<action function="batch"/>
 			</action>
 		</page>
 
