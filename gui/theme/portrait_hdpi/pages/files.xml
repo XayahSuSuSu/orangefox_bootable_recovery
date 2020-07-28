@@ -1993,7 +1993,7 @@
 				<condition var1="tw_artype" var2="0"/>
 				<condition var1="tw_extract_action" var2="1"/>
 				<condition var1="tw_fm_isfolder" op="!=" var2="1"/>
-				<action function="terminalcommand">[ -x /sbin/zip ] && zip -%tw_pack_lvl% '%tw_filename1%.zip' '%tw_filename1%' || pigz -%tw_pack_lvl%vkKf '%tw_filename1%';</action>
+				<action function="terminalcommand">[ -x /sbin/zip ] && zip -j -%tw_pack_lvl% '%tw_filename1%.zip' '%tw_filename1%' || pigz -%tw_pack_lvl%vkKf '%tw_filename1%';</action>
 				<action function="set">tw_extract_action=0</action>
 			</action>
 
