@@ -1328,7 +1328,7 @@ int GUIAction::screenshot(std::string arg __unused)
 
 	if (!TWFunc::Create_Dir_Recursive(path, 0775, uid, gid))
 		return 0;
-  bool hi = "da";
+
 	tm = time(NULL);
 	path_len = strlen(path);
 
