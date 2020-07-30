@@ -1243,5 +1243,10 @@
 		<string name="fix_recovery_loop_complete">Исправление Bootloop'a завершено</string>
 		<string name="fixing_recovery_loop_patch">Исправление ядра...</string>
 		<string name="fix_recovery_loop_patch_error">Ошибка исправления ядра.</string>
+
+		<!-- R11.1 -->
+		<string name="custom_settings">Настройки для %fox_compatibility_fox_device%</string>
+		<string name="custom_settings_title">Настройки для %fox_compatibility_fox_device%</string>
+		<string name="tap_to_show">Нажмите, чтобы показать</string>
 	</resources>
 </language>

@@ -1140,5 +1140,10 @@
 		<string name="fix_recovery_loop_complete">Fix Recovery Bootloop Complete</string>
 		<string name="fixing_recovery_loop_patch">Patching kernel...</string>
 		<string name="fix_recovery_loop_patch_error">Error patching kernel.</string>
+
+		<!-- R11.1 -->
+		<string name="custom_settings">Custom settings for %fox_compatibility_fox_device%</string>
+		<string name="custom_settings_title">Custom settings</string>
+		<string name="tap_to_show">Tap to show</string>
 	</resources>
 </language>

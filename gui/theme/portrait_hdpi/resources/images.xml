@@ -155,6 +155,7 @@
 		<!-- Pdoor icons -->
 		<image name="bs_adv_term" filename="Default/Icons/term" retainaspect="1"/>
 		<image name="bs_adv_se" filename="Default/Icons/se" retainaspect="1"/>
+		<image name="maintainer" filename="Default/Icons/maintainer" retainaspect="1"/>
 		<image name="bs_adv_mount" filename="Default/Icons/mount" retainaspect="1"/>
 		<image name="bs_adv_reboot" filename="Default/Icons/reboot" retainaspect="1"/>
 		<image name="bs_adv_log" filename="Default/Icons/log" retainaspect="1"/>

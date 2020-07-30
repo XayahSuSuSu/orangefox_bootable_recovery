@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<recovery>
+	<pages>
+		<page name="maintainer">
+			<action>
+				<action function="page">advanced</action>
+			</action>
+		</page>
+	</pages>
+</recovery>
