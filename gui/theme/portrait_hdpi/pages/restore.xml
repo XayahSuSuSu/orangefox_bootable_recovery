@@ -36,6 +36,7 @@
 			</fileselector>
 
 			<template name="body_nav"/>
+			<template name="ab_main"/>
 			<template name="base_nav_basic"/>
 			<template name="navbar_bkg_nobg"/>
 

@@ -8,8 +8,7 @@
 			<template name="statusbarinfo"/>
 		</template>
 
-        <template name="base_tabs">
-			<template name="body"/>
+        <template name="tabs">
 			<fill color="%title_solid_bg%">
 				<condition var1="darker_ui" var2="1"/>
 				<placement x="0" y="0" w="%screen_w%" h="%tab_title_h%"/>
@@ -22,7 +21,6 @@
 			</image>
 
 			<template name="status_bg"/>
-			<template name="actionbar_back"/>
 			<template name="statusbarinfo"/>
 		</template>
 
@@ -105,6 +103,7 @@
 
         <template name="base_nav">
 			<template name="body_nav"/>
+			<template name="ab_main"/>
 			<template name="base_nav_basic"/>
 			
 			<template name="navbar_bkg_nobg"/>
@@ -114,7 +113,6 @@
 		</template>
 
         <template name="base_nav_basic">
-			<template name="ab_main"/>
 			<template name="statusbarinfo"/>
 			<fill color="%title_solid_bg%">
 				<condition var1="darker_ui" var2="1"/>

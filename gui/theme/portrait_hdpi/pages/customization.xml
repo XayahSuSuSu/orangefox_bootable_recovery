@@ -887,7 +887,9 @@
 				<action function="set">of_reload_back=ext_custom_fonts</action>
 			</action>
 			
-			<template name="base_tabs"/>
+			<template name="base"/>
+			<template name="tabs"/>
+			<template name="actionbar_back"/>
 
 			<text style="text_ab_title">
 				<placement x="%col1_x_indent%" y="%ab_bc_y%"/>
@@ -1009,7 +1011,9 @@
 				<action function="set">of_reload_back=ext_custom_fonts_sec</action>
 			</action>
 			
-			<template name="base_tabs"/>
+			<template name="base"/>
+			<template name="tabs"/>
+			<template name="actionbar_back"/>
 
 			<text style="text_ab_title">
 				<placement x="%col1_x_indent%" y="%ab_bc_y%"/>
@@ -1131,7 +1135,9 @@
 				<action function="set">of_reload_back=ext_custom_fonts_size</action>
 			</action>
 			
-			<template name="base_tabs"/>
+			<template name="base"/>
+			<template name="tabs"/>
+			<template name="actionbar_back"/>
 
 			<text style="text_ab_title">
 				<placement x="%col1_x_indent%" y="%ab_bc_y%"/>

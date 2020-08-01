@@ -7,7 +7,29 @@
 				<action function="set">nav_panel_id=2</action>
 			</action>
 
-			<template name="base_nav"/>
+			<template name="body_nav"/>
+			<template name="base_nav_basic"/>
+			
+			<template name="navbar_bkg_nobg"/>
+			<template name="navbar_home"/>
+			<template name="navbar_console"/>
+			<template name="navbar_back_cls"/>
+			<template name="tabs"/>
+			
+			<button style="tab_btn_hl">
+				<placement x="156" y="%tab_btn_y%" w="360" h="84"/>
+				<text>{@wipe_hdr}</text>
+			</button>
+
+			<button style="tab_btn">
+				<placement x="564" y="%tab_btn_y%" w="360" h="84"/>
+				<text>{@format_data_hdr}</text>
+				<action function="page">formatdata</action>
+			</button>
+			
+			<image style="tab">
+				<placement x="180" y="%tab_title_h%" placement="2"/>
+			</image>
 
 			<text style="text_ab_title">
 				<placement x="%col1_x%" y="%ab_bc_y%"/>
@@ -15,27 +37,12 @@
 			</text>
 
 			<text style="caption">
-				<placement x="%col1_x_caption%" y="%row2_1_y%"/>
+				<placement x="%col1_x_caption%" y="%row1_3_y%"/>
 				<text>{@partitions}</text>
 			</text>
 
-			<image>
-				<placement x="%col1_x%" y="%row1_1_y%"/>
-				<image resource="info"/>
-			</image>
-
-			<text style="text_body2_dark">
-				<placement x="%col1_x_indent%" y="%row1_1_y%"/>
-				<text>{@wipe_format_moved_info1}</text>
-			</text>
-
-			<text style="text_body2_dark">
-				<placement x="%col1_x_indent%" y="%row1_2_y%"/>
-				<text>{@wipe_format_moved_info2}</text>
-			</text>
-
 			<partitionlist>
-				<placement x="0" y="%row2_2_y%" w="%screen_w%" h="%part_list_btns_9_h%"/>
+				<placement x="0" y="%row2_1_y%" w="%screen_w%" h="%part_list_btns_9_h%"/>
 				<data name="tw_wipe_list"/>
 				<listtype name="wipe"/>
 			</partitionlist>
@@ -82,61 +89,79 @@
 		</page>
 
 		<page name="formatdata">
-			<template name="base_ex_key"/>
+			<template name="body_key"/>
+			<template name="statusbarinfo"/>
+			<template name="tabs"/>
+			
+			<button style="tab_btn">
+				<placement x="156" y="%tab_btn_y%" w="360" h="84"/>
+				<text>{@wipe_hdr}</text>
+				<action function="page">wipe</action>
+			</button>
+
+			<button style="tab_btn_hl">
+				<placement x="564" y="%tab_btn_y%" w="360" h="84"/>
+				<text>{@format_data_hdr}</text>
+			</button>
+			
+			<image style="tab">
+				<placement x="588" y="%tab_title_h%" placement="2"/>
+			</image>
 
 			<text style="text_ab_title">
-				<placement x="%col1_x_indent%" y="%ab_bc_y%"/>
+				<placement x="%col1_x%" y="%ab_bc_y%"/>
 				<text>{@wipe_hdr}</text>
 			</text>
 
-			<text style="text_ab_title">
-				<placement x="%col1_x_indent%" y="%row1_2_y%" placement="2"/>
-				<text>{@factory_reset_hdr}</text>
-			</text>
-
-			<text style="text_ab_subtitle">
-				<placement x="%col1_x_indent%" y="%row1_2_y%"/>
-				<text>{@format_data_hdr}</text>
-			</text>
+			<button style="actionbar">
+				<placement x="%ab_btn1_x%" y="%ab_y%" placement="4"/>
+				<action function="set">general_back=wipe</action>
+				<action function="page">ext_general</action>
+			</button>
 
 			<image>
-				<placement x="%col1_x%" y="%row2_1a_y%"/>
+				<placement x="%ab_btn1_x%" y="%ab_y%" placement="4"/>
+				<image resource="actionbar_settings"/>
+			</image>
+
+			<image>
+				<placement x="%col1_x%" y="%row1_3_y%"/>
 				<image resource="icon_warning"/>
 			</image>
 
 			<text style="text_body2_fail">
-				<placement x="%col1_x_indent%" y="%row2_1a_y%"/>
+				<placement x="%col1_x_indent%" y="%row1_3_y%"/>
 				<text>{@format_data_ptr1}</text>
 			</text>
 
 			<text style="text_body2_fail">
-				<placement x="%col1_x_indent%" y="%row2_2a_y%"/>
+				<placement x="%col1_x_indent%" y="%row2_1_y%"/>
 				<text>{@format_data_ptr2}</text>
 			</text>
 
 			<text style="text_body2_fail">
-				<placement x="%col1_x_indent%" y="%row2_3a_y%"/>
+				<placement x="%col1_x_indent%" y="%row2_2_y%"/>
 				<text>{@format_data_ptr3}</text>
 			</text>
 
 			<text style="text_body2_fail">
 				<condition var1="tw_has_adopted_storage" var2="1"/>
-				<placement x="%col1_x_indent%" y="%row3_1a_y%"/>
+				<placement x="%col1_x_indent%" y="%row2_3_y%"/>
 				<text>{@also_wipes} {@adopted_storage}</text>
 			</text>
 
 			<text style="text_body2">
-				<placement x="%col1_x_indent%" y="%row3_2a_y%"/>
+				<placement x="%col1_x_indent%" y="%row3_1_y%"/>
 				<text>{@yes_continue}</text>
 			</text>
 
 			<text style="caption_hl">
-				<placement x="%col1_x_caption%" y="%row4_2_y%"/>
+				<placement x="%col1_x_caption%" y="%row3_3a_y%"/>
 				<text>{@confirm_wipe_cptn}</text>
 			</text>
 
 			<input>
-				<placement x="%col1_x_caption%" y="%input_format_y%" w="%input_w%" h="%input_height%"/>
+				<placement x="%col1_x_caption%" y="%row4_1a_y%" w="%input_w%" h="%input_height%"/>
 				<text>%tw_confirm_formatdata%</text>
 				<data name="tw_confirm_formatdata"/>
 				<restrict minlen="3" maxlen="3" allow="yes"/>
@@ -144,19 +169,19 @@
 			</input>
 
 			<fill color="%accent%">
-				<placement x="%col1_x_caption%" y="%row5_1_y%" w="%input_w%" h="%input_line_height%" placement="1"/>
+				<placement x="%col1_x_caption%" y="%row4_2a_y%" w="%input_w%" h="%input_line_height%" placement="1"/>
 			</fill>
 
 			<template name="gestures_key"/>
 
 			<action>
 				<touch key="home"/>
-				<action function="page">main</action>
+				<action function="page">wipe</action>
 			</action>
 
 			<action>
 				<touch key="back"/>
-				<action function="page">partitionoptions</action>
+				<action function="page">wipe</action>
 			</action>
 		</page>
 
@@ -634,12 +659,12 @@
 
 				<action>
 					<touch key="home"/>
-					<action function="page">main</action>
+					<action function="page">wipe</action>
 				</action>
 
 				<action>
 					<touch key="back"/>
-					<action function="page">advanced</action>
+					<action function="page">wipe</action>
 				</action>
 			</page>
 	</pages>

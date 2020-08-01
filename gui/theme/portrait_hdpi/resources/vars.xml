@@ -169,7 +169,7 @@
 		<variable name="part_list_btns_h" value="%screen_min_cut%-1446"/> <!-- Backup parts -->
 		<variable name="part_backup_info_y" value="%screen_h%-678"/>
 		<variable name="part_backup_line_y" value="%screen_h%-696"/>
-		<variable name="part_list_btns_9_h" value="%screen_min_cut%-1200"/> <!-- Mount parts -->
+		<variable name="part_list_btns_9_h" value="%screen_min_cut%-1140"/> <!-- Mount parts -->
 		<variable name="part_list_mount_h" value="%screen_min_cut%-654"/> <!-- Wipe parts -->
 		
 		<!--variable name="flash_img_part_expanded" value="%screen_min_cut%-1122"/-->
