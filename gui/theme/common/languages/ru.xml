@@ -1268,5 +1268,7 @@
 		<string name="enable_fastboot">Включить Fastboot</string>
 		<string name="fastboot_console_msg">Вход в режим Fastboot...</string>
 		<string name="tap_to_show">Нажмите, чтобы показать</string>
+		
+		<string name="batch_progress">Выполнено</string>
 	</resources>
 </language>

@@ -1173,5 +1173,7 @@
 		<string name="rescue_party4">The reported problem is:</string>
 
 		<string name="restore_system_context">Unable to get default context for {1} -- Android may not boot.</string>
+		
+		<string name="batch_progress">Progress</string>
 	</resources>
 </language>
