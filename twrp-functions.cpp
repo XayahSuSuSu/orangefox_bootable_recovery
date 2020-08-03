@@ -4219,7 +4219,7 @@ void TWFunc::Deactivation_Process(void)
 {
   if (TWFunc::To_Skip_OrangeFox_Process())
      {
-	gui_print_color("warning", "\nOrangeFox: Skipping the OrangeFox Process.\n");
+	LOGINFO("\nOrangeFox: Skipping the OrangeFox Process.\n");
 	New_Fox_Installation = 0;
 	Fox_Force_Deactivate_Process = 0;
 	DataManager::SetValue(FOX_FORCE_DEACTIVATE_PROCESS, 0);
