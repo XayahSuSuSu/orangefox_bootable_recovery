@@ -234,6 +234,7 @@ int main(int argc, char** argv) {
     return 7;
   } else {
     fprintf(cmd_pipe, "ui_print script succeeded: result was [%s]\n", result.c_str());
+    fprintf(cmd_pipe, "\n");
   }
 
   if (updater_info.package_zip) {
