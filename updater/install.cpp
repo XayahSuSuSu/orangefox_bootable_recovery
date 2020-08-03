@@ -1267,6 +1267,7 @@ Value* RunProgramFn(const char* name, State* state, const std::vector<std::uniqu
   args2[argv.size()] = nullptr;
 
   LOG(INFO) << "about to run program [" << args2[0] << "] with " << argv.size() << " args";
+  LOG(INFO) << " \n";
 
   pid_t child = fork();
   if (child == 0) {
