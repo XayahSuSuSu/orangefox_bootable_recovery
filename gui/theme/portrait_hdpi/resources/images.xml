@@ -34,6 +34,7 @@
 		<font name="font8" filename="MILanPro-Regular.ttf" size="42"/>
 		<font name="font9" filename="Amatic.ttf" size="42"/>
 		
+		<font name="orangefont" filename="EuclidFlex-Regular.ttf" size="42"/>
 		<font name="about" filename="EuclidFlex-Medium.ttf" size="58"/>
 		
 		<!-- Splash Preview -->

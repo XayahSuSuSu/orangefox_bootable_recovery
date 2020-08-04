@@ -955,13 +955,13 @@
 			</text>
 			
 			<text>
-				<font resource="font4" color="#ffffff"/>
+				<font resource="orangefont" color="#ffffff"/>
 				<placement x="%about_txt_x%" y="%about_txt2_y%"/>
 				<text>{@version}: %fox_actual_build%</text>
 			</text>
 
 			<text>
-				<font resource="font4" color="#ffffff"/>
+				<font resource="orangefont" color="#ffffff"/>
 				<placement x="%about_txt_x%" y="%about_txt3_y%"/>
 				<text>{@build_type}: %fox_build_type1%</text>
 			</text>
