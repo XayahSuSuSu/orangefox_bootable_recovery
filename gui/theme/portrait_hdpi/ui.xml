@@ -41,7 +41,7 @@
 		<xml name="/twres/pages/customization.xml"/>
 
 		<xml name="/twres/pages/fox.xml"/>
-		<xml name="/twres/maintainer.xml" default="/twres/pages/dummy.xml"/>
+		<xml name="/sbin/maintainer.xml" default="/twres/pages/dummy.xml"/>
 
 		<xmlfile name="pages/recovery.xml"/>
 	</include>

@@ -75,7 +75,7 @@
 					<action function="page">fox_modules</action>
 				</listitem>
 				<listitem name="{@custom_settings}">
-					<condition var1="fileexists" var2="/twres/maintainer.xml"/>
+					<condition var1="fileexists" var2="/sbin/maintainer.xml"/>
 					<icon res="maintainer"/>
 					<action function="page">maintainer</action>
 				</listitem>
