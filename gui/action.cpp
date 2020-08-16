@@ -1324,7 +1324,7 @@ int GUIAction::screenshot(std::string arg __unused)
 	//if (PartitionManager.Is_Mounted_By_Path(storage)) {
 	//	snprintf(path, sizeof(path), "%s/Fox/screenshots/", storage.c_str());
 	//} else
-	strcpy(path, "/sdcard/Fox/Screenshots/");
+	strcpy(path, "/sdcard/Fox/screenshots/");
 
 	if (!TWFunc::Create_Dir_Recursive(path, 0775, uid, gid))
 		return 0;
