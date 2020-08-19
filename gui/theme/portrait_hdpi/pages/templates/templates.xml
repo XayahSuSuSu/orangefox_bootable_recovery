@@ -285,33 +285,33 @@
 			</text>
 				
 			<text style="text_body2_hl">
-				<condition var1="pass_type" op="!=" var2="1"/>
+				<condition var1="fox_pass_type" op="!=" var2="1"/>
 				<placement x="%col1_x_indent%" y="%row1_3_y%"/>
 				<text>{@locked_info_3}</text>
 			</text>
 				
 			<text style="text_body2_hl">
-				<condition var1="pass_type" var2="1"/>
+				<condition var1="fox_pass_type" var2="1"/>
 				<condition var1="pass_not_match" op="!=" var2="1"/>
 				<placement x="%col1_x_indent%" y="%row1_3_y%"/>
 				<text>{@locked_info_3}</text>
 			</text>
 			
 			<text style="text_body2_hl">
-				<condition var1="pass_type" op="!=" var2="1"/>
+				<condition var1="fox_pass_type" op="!=" var2="1"/>
 				<placement x="%col1_x_indent%" y="%row2_1_y%"/>
 				<text>{@locked_info_4}</text>
 			</text>
 			
 			<text style="text_body2_hl">
-				<condition var1="pass_type" var2="1"/>
+				<condition var1="fox_pass_type" var2="1"/>
 				<condition var1="pass_not_match" op="!=" var2="1"/>
 				<placement x="%col1_x_indent%" y="%row2_1_y%"/>
 				<text>{@locked_info_4_gk}</text>
 			</text>
 			
 			<text style="text_body2_fail">
-				<condition var1="pass_type" var2="1"/>
+				<condition var1="fox_pass_type" var2="1"/>
 				<condition var1="pass_not_match" var2="1"/>
 				<placement x="%col1_x_indent%" y="%row2_1_y%"/>
 				<text>{@pass_not_match}</text>

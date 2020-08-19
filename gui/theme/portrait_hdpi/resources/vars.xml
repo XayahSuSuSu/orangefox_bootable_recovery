@@ -44,9 +44,9 @@
 		<variable name="book_9" value="notset" persist="1"/>
 		
 		<!-- Lock -->
-		<variable name="use_pass" value="0" persist="1"/>
-		<variable name="pass_true" value="4ee92c7c7909dc2a1ddaefe93ed97efa27a9b8cab8f1b90c199f917756d00f940155bade0da13e717f0c4a1069de9582e0dd5b1affef427fc7303aa9b593740c" persist="1"/> <!-- qwerty -->
-		<variable name="pass_type" value="0" persist="1"/>
+		<variable name="fox_use_pass" value="0" persist="1"/>
+		<variable name="fox_pass_true" value="4ee92c7c7909dc2a1ddaefe93ed97efa27a9b8cab8f1b90c199f917756d00f940155bade0da13e717f0c4a1069de9582e0dd5b1affef427fc7303aa9b593740c" persist="1"/> <!-- qwerty -->
+		<variable name="fox_pass_type" value="0" persist="1"/>
 		
 		<!-- Backups -->
 		<variable name="tw_backup_list_quick" value="/system_image;/data;/boot;" persist="1"/>

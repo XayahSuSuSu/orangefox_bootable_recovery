@@ -707,7 +707,7 @@ int GUIAction::setpassword(std::string arg __unused)
   //char to string
   string pass_tmp3(sum); 
 
-  DataManager::SetValue("pass_true", pass_tmp3);
+  DataManager::SetValue("fox_pass_true", pass_tmp3);
   return 0;
 }
 
