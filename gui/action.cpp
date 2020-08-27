@@ -49,6 +49,7 @@
 #include "blanktimer.hpp"
 #include "../twinstall.h"
 #include <openssl/sha.h>
+#include "../twrpDigest/twrpSHA.hpp"
 
 extern "C"
 {
@@ -727,19 +728,25 @@ int GUIAction::passwordcheck(std::string arg __unused)
   return 0;
 }
 
-
 void GUIAction::sha512sum(char *string, char outputBuffer[129])
 {
+    #ifdef OF_LEGACY_SHAR512
+    twrpSHA512 myshar;
+    myshar.update((const unsigned char *)string, strlen(string));
+    std::string s = myshar.return_digest_string();
+    strcpy(outputBuffer, s.c_str());
+    #else
+    int i = 0;
     unsigned char hash[SHA512_DIGEST_LENGTH];
     SHA512_CTX sha512;
     SHA512_Init(&sha512);
     SHA512_Update(&sha512, string, strlen(string));
     SHA512_Final(hash, &sha512);
-    int i = 0;
     for(i = 0; i < SHA512_DIGEST_LENGTH; i++)
     {
         sprintf(outputBuffer + (i * 2), "%02x", hash[i]);
     }
+    #endif
     outputBuffer[64] = 0;
 }
 
