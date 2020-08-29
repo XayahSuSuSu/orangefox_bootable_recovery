@@ -14,6 +14,10 @@ ifeq ($(shell test $(PLATFORM_SDK_VERSION) -lt 23; echo $$?),0)
     LOCAL_CPPFLAGS := -std=c++11
 endif
 
+ifeq ($(OF_DISABLE_KEYMASTER2),1)
+    LOCAL_CFLAGS += -DOF_DISABLE_KEYMASTER2='"1"'
+endif
+
 ifeq ($(shell test $(PLATFORM_SDK_VERSION) -ge 26; echo $$?),0)
     #8.0 or higher
     LOCAL_C_INCLUDES +=  external/boringssl/src/include

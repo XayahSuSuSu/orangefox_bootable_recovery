@@ -80,6 +80,10 @@ else
 endif
 endif
 
+ifeq ($(OF_LEGACY_SHAR512),1)
+    LOCAL_CFLAGS += -DOF_LEGACY_SHAR512=1
+endif
+
 ifeq ($(FOX_ENABLE_LAB),1)
     LOCAL_CFLAGS += -DFOX_ENABLE_LAB='"1"'
 endif
