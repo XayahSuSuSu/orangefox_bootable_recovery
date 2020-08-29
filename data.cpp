@@ -288,23 +288,27 @@ int DataManager::LoadValues(const string & filename)
 
 // Executed when /persist is mounted
 int DataManager::FindPasswordBackup(void) {
+  #ifndef FOX_PERSIST_PASS_DISABLE
   if (TWFunc::Path_Exists(FOX_PASS_IN_PERSIST)) {
     bPassEnabled = TWFunc::File_Property_Get(FOX_PASS_IN_PERSIST, "fox_use_pass");
     bPassPass = TWFunc::File_Property_Get(FOX_PASS_IN_PERSIST, "fox_pass_true");
     bPassType = TWFunc::File_Property_Get(FOX_PASS_IN_PERSIST, "fox_pass_type");
 		LOGINFO("PassBak: Found backup\n");
   }
+  #endif
   return 0;
 }
 
 // Executed after .foxs is (not) loaded
 int DataManager::RestorePasswordBackup(void) {
+  #ifndef FOX_PERSIST_PASS_DISABLE
   if (DataManager::GetStrValue("fox_use_pass") == "0") {
     DataManager::SetValue("fox_use_pass", bPassEnabled);
     DataManager::SetValue("fox_pass_true", bPassPass);
     DataManager::SetValue("fox_pass_type", bPassType);
 		LOGINFO("PassBak: Loaded backup\n");
   }
+  #endif
   return 0;
 }
 
@@ -365,6 +369,8 @@ int DataManager::SaveValues()
       LOGINFO("Saved settings file values to %s\n", PERSIST_SETTINGS_FILE);
 
       ofstream file;
+
+      #ifndef FOX_PERSIST_PASS_DISABLE
       file.open(FOX_PASS_IN_PERSIST, std::ofstream::out | std::ofstream::trunc);
       if (file.is_open()) {
         file << "fox_use_pass="    + DataManager::GetStrValue("fox_use_pass") +
@@ -373,6 +379,7 @@ int DataManager::SaveValues()
         LOGINFO("PassBak: Created backup\n");
         file.close();
       } else LOGINFO("PassBak: Failed to backup\n");
+      #endif
     }
 
   if (mBackingFile.empty())
