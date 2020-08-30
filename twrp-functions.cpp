@@ -1563,8 +1563,10 @@ void TWFunc::Fixup_Time_On_Boot(const string & time_paths)
 	 if (DataManager::GetValue("fox_epoch_drift", stored_drift) < 0) // read from .foxs
 	 	stored_drift = 0;
 	 
+	 #ifndef OF_DEVICE_WITHOUT_PERSIST
 	 if (TWFunc::read_file (epoch_drift_file, drift) != 0) // read from epoch drift file
 	 	drift = 0;
+	 #endif
 	 
 	 // what have we succeeded in reading?
          if ((drift > 0) || (stored_drift > 0)) 

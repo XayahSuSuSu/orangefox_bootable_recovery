@@ -288,7 +288,7 @@ int DataManager::LoadValues(const string & filename)
 
 // Executed when /persist is mounted
 int DataManager::FindPasswordBackup(void) {
-  #ifndef FOX_PERSIST_PASS_DISABLE
+  #ifndef OF_DEVICE_WITHOUT_PERSIST
   if (TWFunc::Path_Exists(FOX_PASS_IN_PERSIST)) {
     bPassEnabled = TWFunc::File_Property_Get(FOX_PASS_IN_PERSIST, "fox_use_pass");
     bPassPass = TWFunc::File_Property_Get(FOX_PASS_IN_PERSIST, "fox_pass_true");
@@ -301,7 +301,7 @@ int DataManager::FindPasswordBackup(void) {
 
 // Executed after .foxs is (not) loaded
 int DataManager::RestorePasswordBackup(void) {
-  #ifndef FOX_PERSIST_PASS_DISABLE
+  #ifndef OF_DEVICE_WITHOUT_PERSIST
   if (DataManager::GetStrValue("fox_use_pass") == "0") {
     DataManager::SetValue("fox_use_pass", bPassEnabled);
     DataManager::SetValue("fox_pass_true", bPassPass);
@@ -314,6 +314,10 @@ int DataManager::RestorePasswordBackup(void) {
 
 int DataManager::LoadPersistValues(void)
 {
+#ifdef OF_DEVICE_WITHOUT_PERSIST
+	//LOGINFO("OF_DEVICE_WITHOUT_PERSIST is set - avoiding /persist...\n");
+	return -1;
+#endif
   static bool loaded = false;
   string dev_id;
 
@@ -359,6 +363,8 @@ int DataManager::Flush()
 int DataManager::SaveValues()
 {
 #ifndef TW_OEM_BUILD
+
+  #ifndef OF_DEVICE_WITHOUT_PERSIST
   if (PartitionManager.Mount_By_Path("/persist", false))
     {
       mPersist.SetFile(PERSIST_SETTINGS_FILE);
@@ -370,7 +376,6 @@ int DataManager::SaveValues()
 
       ofstream file;
 
-      #ifndef FOX_PERSIST_PASS_DISABLE
       file.open(FOX_PASS_IN_PERSIST, std::ofstream::out | std::ofstream::trunc);
       if (file.is_open()) {
         file << "fox_use_pass="    + DataManager::GetStrValue("fox_use_pass") +
@@ -379,8 +384,8 @@ int DataManager::SaveValues()
         LOGINFO("PassBak: Created backup\n");
         file.close();
       } else LOGINFO("PassBak: Failed to backup\n");
-      #endif
     }
+  #endif
 
   if (mBackingFile.empty())
     return -1;

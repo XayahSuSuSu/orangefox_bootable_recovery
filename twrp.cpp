@@ -496,7 +496,7 @@ int main(int argc, char **argv)
 
 // run the postrecoveryboot script here
 TWFunc::RunFoxScript("/sbin/postrecoveryboot.sh");
-#ifndef FOX_PERSIST_PASS_DISABLE
+#ifndef OF_DEVICE_WITHOUT_PERSIST
 DataManager::RestorePasswordBackup();
 #endif
 
