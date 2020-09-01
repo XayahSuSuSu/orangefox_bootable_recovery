@@ -3240,7 +3240,7 @@ bool TWFunc::Repack_Image(string mount_point)
   else if (result == "0221")
     local = "lz4 -9";
   else if (result == "5d00" || result == "5d0")
-    local = "lzma -2c";
+    local = "lzma -6c";
   else if (result == "894c")
     local = "lzop -9c";
   else if (result == "fd37")
