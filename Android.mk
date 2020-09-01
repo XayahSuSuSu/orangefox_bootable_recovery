@@ -63,6 +63,8 @@ DEVICE := $(subst omni_,,$(TARGET_PRODUCT))
 
 ifeq ($(FOX_DEVICE_MODEL),)
     LOCAL_CFLAGS += -DFOX_DEVICE_MODEL='"$(DEVICE)"'
+else
+    LOCAL_CFLAGS += -DFOX_DEVICE_MODEL='"$(FOX_DEVICE_MODEL)"'
 endif
 
 ifeq ($(OF_AB_DEVICE),1)
