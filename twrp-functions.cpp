@@ -4128,11 +4128,20 @@ bool TWFunc::DontPatchBootImage(void)
 std::string TWFunc::get_log_dir() {
 	if (PartitionManager.Find_Partition_By_Path(CACHE_LOGS_DIR) == NULL) {
 		if (PartitionManager.Find_Partition_By_Path(DATA_LOGS_DIR) == NULL) {
-			if (PartitionManager.Find_Partition_By_Path(PERSIST_LOGS_DIR) == NULL) {
-				LOGINFO("Unable to find a directory to store TWRP logs.");
-				return "";
-			}
-			return PERSIST_LOGS_DIR;
+                       /*
+                       #findef OF_DEVICE_WITHOUT_PERSIST
+                       if (PartitionManager.Find_Partition_By_Path(PERSIST_LOGS_DIR) == NULL) {
+                               LOGINFO("Unable to find a directory to store OrangeFox logs.");
+                               return "";
+                       }
+                       return PERSIST_LOGS_DIR;
+                       #else
+			LOGINFO("Unable to find a directory to store OrangeFox logs.");
+			return "";
+                       #endif
+                       */
+			LOGINFO("Unable to find a directory to store OrangeFox logs.");
+			return "";
 		} else {
 			return DATA_LOGS_DIR;
 		}
