@@ -2,7 +2,7 @@
 	Copyright 2014 to 2017 TeamWin
 	This file is part of TWRP/TeamWin Recovery Project.
 
-	Copyright (C) 2018-2019 OrangeFox Recovery Project
+	Copyright (C) 2018-2020 OrangeFox Recovery Project
 	This file is part of the OrangeFox Recovery Project.
 
 	TWRP is free software: you can redistribute it and/or modify
@@ -561,6 +561,11 @@ int TWPartitionManager::Mount_By_Path(string Path, bool Display_Error)
   if (Local_Path == "/tmp" || Local_Path == "/" || Local_Path == "/etc")
     return true;
 
+  #ifdef OF_DEVICE_WITHOUT_PERSIST
+  if (Local_Path == "/persist")
+      return false;
+  #endif
+
   // Iterate through all partitions
   for (iter = Partitions.begin(); iter != Partitions.end(); iter++)
     {
@@ -591,8 +596,10 @@ int TWPartitionManager::Mount_By_Path(string Path, bool Display_Error)
   else
     {
       if (Local_Path != "/etc") // don't spam us about "/etc", since it will always exist
-         LOGINFO("Mount: Unable to find partition for path '%s'\n",
+        {
+           LOGINFO("Mount: Unable to find partition for path '%s'\n",
 	        Local_Path.c_str());
+	}
     }
   return false;
 }
@@ -604,6 +611,11 @@ int TWPartitionManager::UnMount_By_Path(string Path, bool Display_Error)
   bool found = false;
   string Local_Path = TWFunc::Get_Root_Path(Path);
 
+  #ifdef OF_DEVICE_WITHOUT_PERSIST
+  if (Local_Path == "/persist")
+      return false;
+  #endif
+ 
   // Iterate through all partitions
   for (iter = Partitions.begin(); iter != Partitions.end(); iter++)
     {
@@ -676,6 +688,11 @@ TWPartition *TWPartitionManager::Find_Partition_By_Path(const string & Path)
   std::vector < TWPartition * >::iterator iter;
   string Local_Path = TWFunc::Get_Root_Path(Path);
 
+  #ifdef OF_DEVICE_WITHOUT_PERSIST
+  if (Local_Path == "/persist")
+      return NULL;
+  #endif
+ 
   if (Local_Path == "/system")
 	Local_Path = Get_Android_Root_Path();
 
