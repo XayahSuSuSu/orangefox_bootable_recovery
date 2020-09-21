@@ -100,71 +100,73 @@ void DataManager::sanitize_device_id(char *device_id)
 #define CPUINFO_HARDWARE		"Hardware"
 #define CPUINFO_HARDWARE_LEN	(strlen(CPUINFO_HARDWARE))
 
-void DataManager::get_device_id(void)
-{
-  FILE *fp;
-  char line[2048];
-  char hardware_id[HWID_MAX] = { 0 };
-  char device_id[DEVID_MAX] = { 0 };
-  char *token;
+void DataManager::get_device_id(void) {
+	FILE *fp;
+	char line[2048];
+	char hardware_id[HWID_MAX] = { 0 };
+	char device_id[DEVID_MAX] = { 0 };
+	char* token;
 
 #ifdef TW_USE_MODEL_HARDWARE_ID_FOR_DEVICE_ID
-  // Use (product_model)_(hardware_id) as device id
-  char model_id[PROPERTY_VALUE_MAX];
-  property_get("ro.product.model", model_id, "error");
-  if (strcmp(model_id, "error") != 0)
-    {
-      LOGINFO("=> product model: '%s'\n", model_id);
-      // Replace spaces with underscores
-      for (size_t i = 0; i < strlen(model_id); i++)
-	{
-	  if (model_id[i] == ' ')
-	    model_id[i] = '_';
-	}
-      snprintf(device_id, DEVID_MAX, "%s", model_id);
-
-      if (strlen(device_id) < DEVID_MAX)
-	{
-	  fp = fopen("proc_cpuinfo.txt", "rt");
-	  if (fp != NULL)
-	    {
-	      while (fgets(line, sizeof(line), fp) != NULL)
-		{
-		  if (memcmp(line, CPUINFO_HARDWARE, CPUINFO_HARDWARE_LEN) ==
-		      0)
-		    {
-		      // skip past "Hardware", spaces, and colon
-		      token = line + CPUINFO_HARDWARE_LEN;
-		      while (*token && (!isgraph(*token) || *token == ':'))
-			token++;
-
-		      if (*token && *token != '\n'
-			  && strcmp("UNKNOWN\n", token))
-			{
-			  snprintf(hardware_id, HWID_MAX, "%s", token);
-			  if (hardware_id[strlen(hardware_id) - 1] == '\n')
-			    hardware_id[strlen(hardware_id) - 1] = 0;
-			  LOGINFO("=> hardware id from cpuinfo: '%s'\n",
-				  hardware_id);
-			}
-		      break;
-		    }
+	// Use (product_model)_(hardware_id) as device id
+	char model_id[PROPERTY_VALUE_MAX];
+	property_get("ro.product.model", model_id, "error");
+	if (strcmp(model_id, "error") != 0) {
+		LOGINFO("=> product model: '%s'\n", model_id);
+		// Replace spaces with underscores
+		for (size_t i = 0; i < strlen(model_id); i++) {
+			if (model_id[i] == ' ')
+				model_id[i] = '_';
 		}
-	      fclose(fp);
-	    }
+		snprintf(device_id, DEVID_MAX, "%s", model_id);
+
+		if (strlen(device_id) < DEVID_MAX) {
+			fp = fopen("proc_cpuinfo.txt", "rt");
+			if (fp != NULL) {
+				while (fgets(line, sizeof(line), fp) != NULL) {
+					if (memcmp(line, CPUINFO_HARDWARE,
+							CPUINFO_HARDWARE_LEN) == 0) {
+						// skip past "Hardware", spaces, and colon
+						token = line + CPUINFO_HARDWARE_LEN;
+						while (*token && (!isgraph(*token) || *token == ':'))
+							token++;
+
+						if (*token && *token != '\n'
+								&& strcmp("UNKNOWN\n", token)) {
+							snprintf(hardware_id, HWID_MAX, "%s", token);
+							if (hardware_id[strlen(hardware_id)-1] == '\n')
+								hardware_id[strlen(hardware_id)-1] = 0;
+							LOGINFO("=> hardware id from cpuinfo: '%s'\n",
+									hardware_id);
+						}
+						break;
+					}
+				}
+				fclose(fp);
+			}
+		}
+
+		if (hardware_id[0] != 0)
+			snprintf(device_id, DEVID_MAX, "%s_%s", model_id, hardware_id);
+
+		sanitize_device_id(device_id);
+		mConst.SetValue("device_id", device_id);
+		LOGINFO("=> using device id: '%s'\n", device_id);
+		return;
 	}
-
-      if (hardware_id[0] != 0)
-	snprintf(device_id, DEVID_MAX, "%s_%s", model_id, hardware_id);
-
-      sanitize_device_id(device_id);
-      mConst.SetValue("device_id", device_id);
-      LOGINFO("=> using device id: '%s'\n", device_id);
-      return;
-    }
 #endif
 
 #ifndef TW_FORCE_CPUINFO_FOR_DEVICE_ID
+#ifdef TW_USE_SERIALNO_PROPERTY_FOR_DEVICE_ID
+	// Check serial number system property
+	if (property_get("ro.serialno", line, "")) {
+		snprintf(device_id, DEVID_MAX, "%s", line);
+		sanitize_device_id(device_id);
+		mConst.SetValue("device_id", device_id);
+		return;
+	}
+#endif
+
 	// Check the cmdline to see if the serial number was supplied
 	fp = fopen("/proc/cmdline", "rt");
 	if (fp != NULL) {
@@ -782,7 +784,7 @@ void DataManager::SetDefaultValues()
 #ifndef TW_NO_HAPTICS
 	mPersist.SetValue("tw_button_vibrate", "40");
 	mPersist.SetValue("tw_keyboard_vibrate", "40");
-	mPersist.SetValue("tw_action_vibrate", "250");
+	mPersist.SetValue("tw_action_vibrate", "160");
 	mConst.SetValue("tw_disable_haptics", "0");
 #else
 	LOGINFO("TW_NO_HAPTICS := true\n");
@@ -1076,6 +1078,7 @@ void DataManager::SetDefaultValues()
   mData.SetValue("tw_background_thread_running", "0");
   mData.SetValue(TW_RESTORE_FILE_DATE, "0");
   mPersist.SetValue("tw_military_time", "1");
+  mData.SetValue(TW_IS_SUPER, "0");
 
 #ifdef OF_USE_TWRP_SAR_DETECT
   mPersist.SetValue(TW_UNMOUNT_SYSTEM, "1");
@@ -1240,7 +1243,7 @@ void DataManager::SetDefaultValues()
 
 	mData.SetValue("tw_enable_adb_backup", "0");
 
-	if (TWFunc::Path_Exists("/sbin/magiskboot"))
+	if (TWFunc::Path_Exists(TWFunc::Get_MagiskBoot()))
 		mConst.SetValue("tw_has_repack_tools", "1");
 	else
 		mConst.SetValue("tw_has_repack_tools", "0");

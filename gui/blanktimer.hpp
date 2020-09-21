@@ -42,11 +42,10 @@ public:
 
 	bool isScreenOff();
 
-	void blank(void);
-
 private:
 	void setTimer(void);
 	string getBrightness(void);
+	void blank(void);
 
 	pthread_mutex_t mutex;
 	enum State { kOn = 0, kDim = 1, kOff = 2, kBlanked = 3 };

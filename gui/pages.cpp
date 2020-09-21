@@ -45,14 +45,18 @@
 #ifdef USE_MINZIP
 #include "../minzip/SysUtil.h"
 #else
+#ifdef USE_OTAUTIL_ZIPARCHIVE
 #include <otautil/SysUtil.h>
+#else
+#include <ziparchive/zip_archive.h>
+#endif
 #endif
 
 extern "C" {
 #include "../twcommon.h"
 #include "gui.h"
 }
-#include "../zipwrap.hpp"
+#include "zipwrap.hpp"
 #include "../minuitwrp/minui.h"
 
 #include "rapidxml.hpp"
@@ -355,6 +359,7 @@ bool Page::ProcessNode(xml_node<>* page, std::vector<xml_node<>*> *templates, in
 			mRenders.push_back(element);
 			mActions.push_back(element);
 		}
+/*
 		else if (type == "gesture")
 		{
 			GUIGesture* element = new GUIGesture(child);
@@ -368,6 +373,7 @@ bool Page::ProcessNode(xml_node<>* page, std::vector<xml_node<>*> *templates, in
 			mObjects.push_back(element);
 			mRenders.push_back(element);
 		}
+*/
 		else if (type == "image")
 		{
 			GUIImage* element = new GUIImage(child);
@@ -771,12 +777,10 @@ int PageSet::Load(LoadingContext& ctx, const std::string& filename)
 	if (child)
 		LoadVariables(child);
 
-/*
 	LOGINFO("Loading mouse cursor...\n");
 	child = root->first_node("mousecursor");
 	if (child)
 		PageManager::LoadCursorData(child);
-*/
 
 	LOGINFO("Loading pages...\n");
 	child = root->first_node("templates");
@@ -796,11 +800,10 @@ int PageSet::Load(LoadingContext& ctx, const std::string& filename)
 		}
 	}
 
-	//[f/d] Change theme accent/style w/o repacking recovery
 	// process includes recursively
 	child = root->first_node("include");
 	if (child) {
-		xml_node<>* include = child->first_node("xml");
+		xml_node<>* include = child->first_node("xmlfile");
 		while (include != NULL) {
 			xml_attribute<>* attr = include->first_attribute("name");
 			if (!attr) {
@@ -808,22 +811,13 @@ int PageSet::Load(LoadingContext& ctx, const std::string& filename)
 				continue;
 			}
 
-			string filename = attr->value();
+			string filename = ctx.basepath + attr->value();
 			LOGINFO("Including file: %s...\n", filename.c_str());
 			int rc = Load(ctx, filename);
-			if (rc != 0) {
-				attr = include->first_attribute("default");
-				if (attr) {
-					string filename = attr->value();
-					int rc = Load(ctx, filename);
-					if (rc != 0)
-						return rc;
-				} else {
-					return rc;
-				}
-			}
+			if (rc != 0)
+				return rc;
 
-			include = include->next_sibling("xml");
+			include = include->next_sibling("xmlfile");
 		}
 	}
 
@@ -906,18 +900,11 @@ int PageSet::LoadDetails(LoadingContext& ctx, xml_node<>* root)
 		if (resolution) {
 			LOGINFO("Checking resolution...\n");
 			xml_attribute<>* width_attr = resolution->first_attribute("width");
-			xml_attribute<>* resize_attr = resolution->first_attribute("resizing");
-			int height_attr;
-			if (resize_attr) {
-				xml_attribute<>* height_res_attr = resolution->first_attribute("height");
-				height_attr = atoi(height_res_attr->value());
-			} else {
-				DataManager::GetValue("screen_original_h", height_attr);
-			}
+			xml_attribute<>* height_attr = resolution->first_attribute("height");
 			xml_attribute<>* noscale_attr = resolution->first_attribute("noscaling");
 			if (width_attr && height_attr && !noscale_attr) {
 				int width = atoi(width_attr->value());
-				int height = height_attr;
+				int height = atoi(height_attr->value());
 				int offx = 0, offy = 0;
 #ifdef TW_ROUND_SCREEN
 				xml_node<>* roundscreen = child->first_node("roundscreen");
@@ -938,7 +925,7 @@ int PageSet::LoadDetails(LoadingContext& ctx, xml_node<>* root)
 					float scale_w, scale_h;
 					//[f/d] Custom scaling for testing, wew
 					//      I used file because DataManager not loaded user vars at this moment
-					//      Someone may fuck up recovery using this file so just remove code when OF lab disabled
+					//      Someone may mess up recovery using this file so just remove code when OF lab disabled
 #ifdef FOX_ENABLE_LAB
 					if (TWFunc::read_file("/sdcard/Fox/scaling", num) == 0) {
 							LOGERR("Custom scaling: %s\n", num.c_str());
@@ -957,7 +944,6 @@ int PageSet::LoadDetails(LoadingContext& ctx, xml_node<>* root)
 					tw_x_offset = offx * scale_off_w;
 					tw_y_offset = offy * scale_off_h;
 #endif
-					
 					if (scale_w != 1 || scale_h != 1) {
 						LOGINFO("Scaling theme width %fx and height %fx, offsets x: %i y: %i w: %i h: %i\n",
 							scale_w, scale_h, tw_x_offset, tw_y_offset, tw_w_offset, tw_h_offset);
@@ -1567,8 +1553,7 @@ void PageManager::ReleasePackage(std::string name)
 	return;
 }
 
-int PageManager::RunReload() 
-{
+int PageManager::RunReload() {
 	int ret_val = 0;
 	std::string theme_path, isPassOpen;
 
@@ -1580,8 +1565,7 @@ int PageManager::RunReload()
 
 	mReloadTheme = false;
 	theme_path = DataManager::GetSettingsStoragePath();
-	if (PartitionManager.Mount_By_Path(theme_path.c_str(), 1) < 0) 
-	{
+	if (PartitionManager.Mount_By_Path(theme_path.c_str(), 1) < 0) {
 		LOGERR("Unable to mount %s during gui_reload_theme function.\n", theme_path.c_str());
 		ret_val = 1;
 	}
@@ -1591,17 +1575,14 @@ int PageManager::RunReload()
 	{
 		// Loading the custom theme failed - try loading the stock theme
 		LOGINFO("Attempting to reload stock theme...\n");
-		if (ReloadPackage("OrangeFox", TWRES "ui.xml"))
+		if (ReloadPackage("TWRP", TWRES "ui.xml"))
 		{
 			LOGERR("Failed to load base packages.\n");
 			ret_val = 1;
 		}
 	}
-
-	if (ret_val == 0) 
-	{
-		if (DataManager::GetStrValue("tw_language") != "en.xml") 
-		{
+	if (ret_val == 0) {
+		if (DataManager::GetStrValue("tw_language") != "en.xml") {
 			LOGINFO("Loading language '%s'\n", DataManager::GetStrValue("tw_language").c_str());
 			LoadLanguage(DataManager::GetStrValue("tw_language"));
 		}
@@ -1609,7 +1590,7 @@ int PageManager::RunReload()
 
 	//[f/d] Load settings file
 	DataManager::ReadSettingsFile();
-    gui_forceRender();
+    	gui_forceRender();
 	std::string page_return;
 	DataManager::GetValue("of_reload_back", page_return);
 	DataManager::SetValue("pass_open", isPassOpen);
@@ -1623,14 +1604,11 @@ int PageManager::RunReload()
 	return ret_val;
 }
 
-void PageManager::RequestReload()
-{
-	DataManager::Flush();
+void PageManager::RequestReload() {
 	mReloadTheme = true;
 }
 
-void PageManager::SetStartPage(const std::string& page_name) 
-{
+void PageManager::SetStartPage(const std::string& page_name) {
 	mStartPage = page_name;
 }
 
@@ -1696,8 +1674,7 @@ xml_node<>* PageManager::FindStyle(std::string name)
 	for (std::vector<xml_node<>*>::iterator itr = currentLoadingContext->styles.begin(); itr != currentLoadingContext->styles.end(); itr++) {
 		xml_node<>* node = (*itr)->first_node("style");
 
-		while (node) 
-		{
+		while (node) {
 			if (!node->first_attribute("name"))
 				continue;
 

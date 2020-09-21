@@ -84,20 +84,12 @@ void ProgressTracking::UpdateDisplayDetails(const bool force) {
 	}
 	clock_gettime(CLOCK_MONOTONIC, &last_update);
 	double display_percent = 0.0, progress_percent;
-	string size_prog = gui_lookup("size_progress_v2", "%lluMB of %lluMB (%i%%)");
+	string size_prog = gui_lookup("size_progress", "%lluMB of %lluMB, %i%%");
 	char size_progress[1024];
 
 	if (total_backup_size != 0) // prevent division by 0
 		display_percent = (double)(current_size + previous_partitions_size) / (double)(total_backup_size) * 100;
-	if (display_percent > 100.0) //prevent displaying 146% in gui
-		display_percent = 100.0;
-	unsigned long backuped_size_mb = (current_size + previous_partitions_size) / 1048576,
-	total_size_mb = total_backup_size / 1048576;
-
-	if (backuped_size_mb > total_size_mb)
-		total_size_mb = backuped_size_mb;
-
-	sprintf(size_progress, size_prog.c_str(), backuped_size_mb, total_size_mb, (int)(display_percent));
+	sprintf(size_progress, size_prog.c_str(), (current_size + previous_partitions_size) / 1048576, total_backup_size / 1048576, (int)(display_percent));
 	DataManager::SetValue("tw_size_progress", size_progress);
 	progress_percent = (display_percent / 100);
 	DataManager::SetProgress((float)(progress_percent));
@@ -105,11 +97,11 @@ void ProgressTracking::UpdateDisplayDetails(const bool force) {
 	if (!display_file_count || file_count == 0) {
 		DataManager::SetValue("tw_file_progress", "");
 	} else {
-		string file_prog = gui_lookup("file_progress_v2", "%llu of %llu files, ");
+		string file_prog = gui_lookup("file_progress", "%llu of %llu files, %i%%");
 		char file_progress[1024];
-		if (current_count > file_count)
-			file_count = current_count;
-		sprintf(file_progress, file_prog.c_str(), current_count, file_count);
+
+		display_percent = (double)(current_count) / (double)(file_count) * 100;
+		sprintf(file_progress, file_prog.c_str(), current_count, file_count, (int)(display_percent));
 		DataManager::SetValue("tw_file_progress", file_progress);
 	}
 #endif

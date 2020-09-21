@@ -1,7 +1,9 @@
 LOCAL_PATH := $(call my-dir)
 include $(CLEAR_VARS)
 
-LOCAL_CFLAGS := -fno-strict-aliasing -Wno-unused-variable
+LOCAL_CFLAGS := -fno-strict-aliasing -Wno-implicit-fallthrough
+
+include $(LOCAL_PATH)/../Fox.mk
 
 LOCAL_SRC_FILES := \
     gui.cpp \
@@ -45,9 +47,25 @@ else
 endif
 
 LOCAL_SHARED_LIBRARIES += libminuitwrp libc libstdc++ libaosprecovery libselinux
+LOCAL_C_INCLUDES += $(LOCAL_PATH)/../otautil/include
+LOCAL_C_INCLUDES += external/boringssl/src/include
 ifeq ($(shell test $(PLATFORM_SDK_VERSION) -ge 26; echo $$?),0)
-    LOCAL_SHARED_LIBRARIES += libziparchive
-    LOCAL_C_INCLUDES += $(LOCAL_PATH)/../otautil/include
+    LOCAL_SHARED_LIBRARIES += libziparchive 
+    LOCAL_STATIC_LIBRARIES += libotautil
+    ifneq ($(TW_INCLUDE_CRYPTO),)
+        LOCAL_C_INCLUDES += bootable/recovery/crypto/fscrypt
+    endif
+    ifeq ($(shell test $(PLATFORM_SDK_VERSION) -gt 28; echo $$?),0)
+        LOCAL_C_INCLUDES += $(LOCAL_PATH)/../install/include \
+            system/core/libziparchive/include/ \
+            $(LOCAL_PATH)/../recovery_ui/include \
+            $(LOCAL_PATH)/../fuse_sideload/include
+        LOCAL_CFLAGS += -D_USE_SYSTEM_ZIPARCHIVE
+    else
+        LOCAL_C_INCLUDES += $(LOCAL_PATH)/../install28/ \
+            $(LOCAL_PATH)/../fuse_sideload28/
+        LOCAL_CFLAGS += -DUSE_28_INSTALL -DUSE_OTAUTIL_ZIPARCHIVE
+    endif
 else
     LOCAL_SHARED_LIBRARIES += libminzip
     LOCAL_CFLAGS += -DUSE_MINZIP
@@ -70,22 +88,10 @@ endif
 ifneq ($(TW_USE_KEY_CODE_TOUCH_SYNC),)
     LOCAL_CFLAGS += -DTW_USE_KEY_CODE_TOUCH_SYNC=$(TW_USE_KEY_CODE_TOUCH_SYNC)
 endif
-
-ifeq ($(OF_SUPPORT_OZIP_DECRYPTION),1)
-LOCAL_CFLAGS += -DOF_SUPPORT_OZIP_DECRYPTION='"1"'
 ifneq ($(TW_OZIP_DECRYPT_KEY),)
     LOCAL_CFLAGS += -DTW_OZIP_DECRYPT_KEY=\"$(TW_OZIP_DECRYPT_KEY)\"
 else
     LOCAL_CFLAGS += -DTW_OZIP_DECRYPT_KEY=0
-endif
-endif
-
-ifeq ($(OF_LEGACY_SHAR512),1)
-    LOCAL_CFLAGS += -DOF_LEGACY_SHAR512=1
-endif
-
-ifeq ($(FOX_ENABLE_LAB),1)
-    LOCAL_CFLAGS += -DFOX_ENABLE_LAB='"1"'
 endif
 ifneq ($(TW_NO_SCREEN_BLANK),)
     LOCAL_CFLAGS += -DTW_NO_SCREEN_BLANK
@@ -111,17 +117,13 @@ endif
 ifeq ($(TW_ROUND_SCREEN), true)
     LOCAL_CFLAGS += -DTW_ROUND_SCREEN
 endif
-ifeq ($(TW_SCREEN_BLANK_ON_BOOT), true)
-    LOCAL_CFLAGS += -DTW_SCREEN_BLANK_ON_BOOT
-endif
-
 
 LOCAL_C_INCLUDES += \
     bionic \
     system/core/base/include \
     system/core/include \
     system/core/libpixelflinger/include \
-    external/boringssl/src/include
+    external/freetype/include
 
 ifeq ($(shell test $(PLATFORM_SDK_VERSION) -lt 23; echo $$?),0)
     LOCAL_C_INCLUDES += external/stlport/stlport
@@ -135,7 +137,7 @@ include $(BUILD_STATIC_LIBRARY)
 # Transfer in the resources for the device
 include $(CLEAR_VARS)
 LOCAL_MODULE := twrp
-LOCAL_MODULE_TAGS := eng
+LOCAL_MODULE_TAGS := optional
 LOCAL_MODULE_CLASS := RECOVERY_EXECUTABLES
 LOCAL_MODULE_PATH := $(TARGET_RECOVERY_ROOT_OUT)$(TWRES_PATH)
 

@@ -51,11 +51,7 @@
 #include "gui/gui.hpp"
 #include "adbbu/libtwadbbu.hpp"
 #ifdef TW_INCLUDE_CRYPTO
-	#ifdef OF_USE_LEGACY_CRYPTO
-	#include "crypto/lollipop/cryptfs.h"
-	#else
 	#include "crypto/fde/cryptfs.h"
-	#endif
 	#ifdef TW_INCLUDE_FBE
 		#include "crypto/ext4crypt/Decrypt.h"
 	#endif
@@ -281,13 +277,15 @@ TWPartition::TWPartition() {
 	Adopted_GUID = "";
 	SlotSelect = false;
 	Key_Directory = "";
+	Is_Super = false;
 }
 
 TWPartition::~TWPartition(void) {
 	// Do nothing
 }
 
-bool TWPartition::Process_Fstab_Line(const char *fstab_line, bool Display_Error, std::map<string, Flags_Map> *twrp_flags, bool Sar_Detect) {
+
+bool TWPartition::Process_Fstab_Line(const char *fstab_line, bool Display_Error, std::map<string, Flags_Map> *twrp_flags) {
 	char full_line[MAX_FSTAB_LINE_LENGTH];
 	char twflags[MAX_FSTAB_LINE_LENGTH] = "";
 	char* ptr;
@@ -298,6 +296,7 @@ bool TWPartition::Process_Fstab_Line(const char *fstab_line, bool Display_Error,
 	std::map<string, Flags_Map>::iterator it;
 
 	strlcpy(full_line, fstab_line, sizeof(full_line));
+
 	for (index = 0; index < line_len; index++) {
 		if (full_line[index] == 34)
 			skip = !skip;
@@ -313,6 +312,14 @@ bool TWPartition::Process_Fstab_Line(const char *fstab_line, bool Display_Error,
 		fs_index = 2;
 	}
 
+	Is_Super = PartitionManager.Is_Super_Partition(fstab_line);
+	if (Is_Super) {
+		block_device_index = 0;
+		fstab_version = 2;
+		mount_point_index = 1;
+		fs_index = 2;
+	}
+
 	index = 0;
 	while (index < line_len) {
 		while (index < line_len && full_line[index] == '\0')
@@ -322,14 +329,13 @@ bool TWPartition::Process_Fstab_Line(const char *fstab_line, bool Display_Error,
 		ptr = full_line + index;
 		if (item_index == mount_point_index) {
 			Mount_Point = ptr;
-			if (fstab_version == 2) {
+			if (fstab_version == 2 && Is_Super == false) {
 				additional_entry = PartitionManager.Find_Partition_By_Path(Mount_Point);
-				if (!Sar_Detect && additional_entry) {
+				if (additional_entry) {
 					LOGINFO("Found an additional entry for '%s'\n", Mount_Point.c_str());
 				}
 			}
-			if(!Sar_Detect)
-				LOGINFO("Processing '%s'\n", Mount_Point.c_str());
+			LOGINFO("Processing '%s'\n", Mount_Point.c_str());
 			Backup_Path = Mount_Point;
 			Storage_Path = Mount_Point;
 			Display_Name = ptr + 1;
@@ -355,11 +361,13 @@ bool TWPartition::Process_Fstab_Line(const char *fstab_line, bool Display_Error,
 				if (*ptr != '/')
 					LOGERR("Until we get better BML support, you will have to find and provide the full block device path to the BML devices e.g. /dev/block/bml9 instead of the partition name\n");
 			} else if (*ptr != '/') {
-				if (Display_Error)
-					LOGERR("Invalid block device '%s' in fstab line '%s'", ptr, fstab_line);
-				else
-					LOGINFO("Invalid block device '%s' in fstab line '%s'", ptr, fstab_line);
-				return false;
+				if (!Is_Super) {
+					if (Display_Error)
+						LOGERR("Invalid block device '%s' in fstab line '%s'", ptr, fstab_line);
+					else
+						LOGINFO("Invalid block device '%s' in fstab line '%s'", ptr, fstab_line);
+					return false;
+				}
 			} else {
 				Primary_Block_Device = ptr;
 				Find_Real_Block_Device(Primary_Block_Device, Display_Error);
@@ -426,16 +434,14 @@ bool TWPartition::Process_Fstab_Line(const char *fstab_line, bool Display_Error,
 	if (Primary_Block_Device.find("*") != string::npos)
 		Wildcard_Block_Device = true;
 
-	if (Sar_Detect) {
-		if(Is_File_System(Fstab_File_System) && (Mount_Point == "/" || Mount_Point == "/system" || Mount_Point == "/system_root"))
-			Find_Actual_Block_Device();
-		else
-			return true;
-	} else if (Mount_Point == "auto") {
-		Mount_Point = "/auto" + to_string(auto_index);
+	if (Mount_Point == "auto") {
+		Mount_Point = "/auto";
+		char autoi[5];
+		sprintf(autoi, "%i", auto_index);
+		Mount_Point += autoi;
 		Backup_Path = Mount_Point;
 		Storage_Path = Mount_Point;
-		Backup_Name = Mount_Point.substr(1);		
+		Backup_Name = Mount_Point.substr(1);
 		auto_index++;
 		Setup_File_System(Display_Error);
 		Display_Name = "Storage";
@@ -457,12 +463,31 @@ bool TWPartition::Process_Fstab_Line(const char *fstab_line, bool Display_Error,
 		Setup_File_System(Display_Error);
 		Backup_Name = Display_Name = Mount_Point.substr(1, Mount_Point.size() - 1);
 		if (Mount_Point == "/" || Mount_Point == "/system" || Mount_Point == "/system_root") {
+			Mount_Point = PartitionManager.Get_Android_Root_Path();
+			Backup_Path = Mount_Point;
+			Storage_Path = Mount_Point;
 			Display_Name = "System";
 			Backup_Name = "system";
 			Backup_Display_Name = Display_Name;
 			Storage_Name = Display_Name;
-			Wipe_Available_in_GUI = true;
-			Can_Be_Backed_Up = true;
+			Wipe_Available_in_GUI = false;
+			Can_Be_Backed_Up = false;
+			Can_Be_Wiped = false;
+			Mount_Read_Only = true;
+			Make_Dir(PartitionManager.Get_Android_Root_Path(), true);
+		} else if (Mount_Point == "/product") {
+			Display_Name = "Product";
+			Backup_Name = "Product";
+			Backup_Display_Name = Display_Name;
+			Storage_Name = Display_Name;
+			Can_Be_Backed_Up = Wipe_Available_in_GUI = Is_Super ? false : true;
+			Mount_Read_Only = true;
+		} else if (Mount_Point == "/odm") {
+			Display_Name = "ODM";
+			Backup_Name = "ODM";
+			Backup_Display_Name = Display_Name;
+			Storage_Name = Display_Name;
+			Can_Be_Backed_Up = Wipe_Available_in_GUI = Is_Super ? false : true;
 			Mount_Read_Only = true;
 		} else if (Mount_Point == "/data") {
 			Display_Name = "Data";
@@ -622,19 +647,6 @@ bool TWPartition::Process_Fstab_Line(const char *fstab_line, bool Display_Error,
 		}
 	}
 
-	if (Is_File_System(Fstab_File_System) && (Mount_Point == "/" || Mount_Point == "/system" || Mount_Point == "/system_root")) {
-		if (Sar_Detect) {
-			Mount_Point = "/s";
-			Mount_Read_Only = true;
-			Can_Be_Mounted = true;
-		} else {
-			Mount_Point = PartitionManager.Get_Android_Root_Path();
-			Backup_Path = Mount_Point;
-			Storage_Path = Mount_Point;
-			Make_Dir(Mount_Point, Display_Error);
-		}
-	}
-
 	return true;
 }
 
@@ -664,18 +676,10 @@ void TWPartition::Setup_Data_Partition(bool Display_Error) {
 	char crypto_blkdev[255];
 	property_get("ro.crypto.fs_crypto_blkdev", crypto_blkdev, "error");
 	if (strcmp(crypto_blkdev, "error") != 0) {
-		DataManager::SetValue(TW_IS_DECRYPTED, 1);
-		Is_Encrypted = true;
-		Is_Decrypted = true;
-		if (Key_Directory.empty()) {
-			Is_FBE = false;
-			DataManager::SetValue(TW_IS_FBE, 0);
-		} else {
-			Is_FBE = true;
-			DataManager::SetValue(TW_IS_FBE, 1);
-		}
+		Set_FBE_Status();
 		Decrypted_Block_Device = crypto_blkdev;
 		LOGINFO("Data already decrypted, new block device: '%s'\n", crypto_blkdev);
+		DataManager::SetValue(TW_IS_ENCRYPTED, 0);
 	} else if (!Mount(false)) {
 		if (Is_Present) {
 			if (Key_Directory.empty()) {
@@ -686,7 +690,6 @@ void TWPartition::Setup_Data_Partition(bool Display_Error) {
 					Can_Be_Mounted = false;
 					Current_File_System = "emmc";
 					Setup_Image();
-					DataManager::SetValue(TW_IS_ENCRYPTED, 1);
 					DataManager::SetValue(TW_CRYPTO_PWTYPE, cryptfs_get_password_type());
 					DataManager::SetValue(TW_CRYPTO_PASSWORD, "");
 					DataManager::SetValue("tw_crypto_display", "");
@@ -701,21 +704,22 @@ void TWPartition::Setup_Data_Partition(bool Display_Error) {
 			LOGERR("Primary block device '%s' for mount point '%s' is not present!\n", Primary_Block_Device.c_str(), Mount_Point.c_str());
 		}
 	} else {
-
+		Set_FBE_Status();
 		if (!Decrypt_FBE_DE()) {
 			char wrappedvalue[PROPERTY_VALUE_MAX];
 			property_get("fbe.data.wrappedkey", wrappedvalue, "");
 			std::string wrappedkeyvalue(wrappedvalue);
 			if (wrappedkeyvalue == "true") {
-				gui_print("Device not encrypted/Unable to decrypt FBE device\n");
+				LOGERR("Unable to decrypt FBE device\n");
 			} else {
 				LOGINFO("Trying wrapped key.\n");
 				property_set("fbe.data.wrappedkey", "true");
 				if (!Decrypt_FBE_DE()) {
-					LOGINFO("Device not encrypted/Unable to decrypt FBE device\n");
+					LOGERR("Unable to decrypt FBE device\n");
 				}
 			}
 		}
+		DataManager::SetValue(TW_IS_ENCRYPTED, 0);
 	}
 	if (datamedia && (!Is_Encrypted || (Is_Encrypted && Is_Decrypted))) {
 		Setup_Data_Media();
@@ -729,8 +733,24 @@ void TWPartition::Setup_Data_Partition(bool Display_Error) {
 #endif
 }
 
+void TWPartition::Set_FBE_Status() {
+	DataManager::SetValue(TW_IS_DECRYPTED, 1);
+	Is_Encrypted = true;
+	Is_Decrypted = true;
+	LOGINFO("Setup_Data_Partition::Key_Directory::%s\n", Key_Directory.c_str());
+	if (Key_Directory.empty()) {
+		Is_FBE = false;
+		DataManager::SetValue(TW_IS_FBE, 0);
+	} else {
+		Is_FBE = true;
+		DataManager::SetValue(TW_IS_FBE, 1);
+	}
+}
+
 bool TWPartition::Decrypt_FBE_DE() {
 if (TWFunc::Path_Exists("/data/unencrypted/key/version")) {
+		DataManager::SetValue(TW_IS_FBE, 1);
+		DataManager::SetValue(TW_CRYPTO_PWTYPE, "0"); //Set initial value so that recovery will not be confused when using unencrypted data or failed to decryot data
 		LOGINFO("File Based Encryption is present\n");
 #ifdef TW_INCLUDE_FBE
 		#ifdef OF_SKIP_FBE_DECRYPTION
@@ -768,6 +788,8 @@ if (TWFunc::Path_Exists("/data/unencrypted/key/version")) {
 			Is_Encrypted = true;
 			Is_Decrypted = false;
 			DataManager::SetValue(TW_IS_ENCRYPTED, 1);
+			Is_FBE = true;
+			DataManager::SetValue(TW_IS_FBE, 1);
 			string filename;
 			int pwd_type = Get_Password_Type(0, filename);
 			if (pwd_type < 0) {
@@ -784,6 +806,7 @@ if (TWFunc::Path_Exists("/data/unencrypted/key/version")) {
 		LOGERR("FBE found but FBE support not present in TWRP\n");
 #endif
 	}
+	DataManager::SetValue(TW_IS_FBE, 0);
 	return false;
 }
 
@@ -995,6 +1018,7 @@ void TWPartition::Apply_TW_Flag(const unsigned flag, const char* str, const bool
 			break;
 		case TWFLAG_KEYDIRECTORY:
 			Key_Directory = str;
+			break;
 		default:
 			// Should not get here
 			LOGINFO("Flag identified for processing, but later unmatched: %i\n", flag);
@@ -1470,8 +1494,8 @@ bool TWPartition::Mount(bool Display_Error) {
 
 	// Check the current file system before mounting
 	Check_FS_Type();
-	if (Current_File_System == "exfat" && TWFunc::Path_Exists("/sbin/exfat-fuse")) {
-		string cmd = "/sbin/exfat-fuse -o big_writes,max_read=131072,max_write=131072 " + Actual_Block_Device + " " + Mount_Point;
+	if (Current_File_System == "exfat" && TWFunc::Path_Exists("system/bin/exfat-fuse")) {
+		string cmd = "/system/bin/exfat-fuse -o big_writes,max_read=131072,max_write=131072 " + Actual_Block_Device + " " + Mount_Point;
 		LOGINFO("cmd: %s\n", cmd.c_str());
 		string result;
 		if (TWFunc::Exec_Cmd(cmd, result) != 0) {
@@ -1488,19 +1512,19 @@ bool TWPartition::Mount(bool Display_Error) {
 		}
 	}
 
-	if (Current_File_System == "ntfs" && (TWFunc::Path_Exists("/sbin/ntfs-3g") || TWFunc::Path_Exists("/sbin/mount.ntfs"))) {
+	if (Current_File_System == "ntfs" && (TWFunc::Path_Exists("/system/bin/ntfs-3g") || TWFunc::Path_Exists("/system/bin/mount.ntfs"))) {
 		string cmd;
 		string Ntfsmount_Binary = "";
 
-		if (TWFunc::Path_Exists("/sbin/ntfs-3g"))
+		if (TWFunc::Path_Exists("/system/bin/ntfs-3g"))
 			Ntfsmount_Binary = "ntfs-3g";
-		else if (TWFunc::Path_Exists("/sbin/mount.ntfs"))
+		else if (TWFunc::Path_Exists("/system/bin/mount.ntfs"))
 			Ntfsmount_Binary = "mount.ntfs";
 
 		if (Mount_Read_Only)
-			cmd = "/sbin/" + Ntfsmount_Binary + " -o ro " + Actual_Block_Device + " " + Mount_Point;
+			cmd = "/system/bin/" + Ntfsmount_Binary + " -o ro " + Actual_Block_Device + " " + Mount_Point;
 		else
-			cmd = "/sbin/" + Ntfsmount_Binary + " " + Actual_Block_Device + " " + Mount_Point;
+			cmd = "/system/bin/" + Ntfsmount_Binary + " " + Actual_Block_Device + " " + Mount_Point;
 		LOGINFO("cmd: '%s'\n", cmd.c_str());
 
 		if (TWFunc::Exec_Cmd(cmd) == 0) {
@@ -1595,27 +1619,13 @@ bool TWPartition::Mount(bool Display_Error) {
 		Update_Size(Display_Error);
 
 	if (!Symlink_Mount_Point.empty() && TWFunc::Path_Exists(Symlink_Path)) {
-		string Command = "mount -o bind '" + Symlink_Path + "' '" + Symlink_Mount_Point + "'";
+		string Command = "/system/bin/mount -o bind '" + Symlink_Path + "' '" + Symlink_Mount_Point + "'";
 		TWFunc::Exec_Cmd(Command);
 	}
-
-	if (Mount_Point == "/system_root") {
-		unlink("/system");
-		mkdir("/system", 0755);
-		mount("/system_root/system", "/system", "auto", MS_BIND, NULL);
-	}
-
 	return true;
 }
 
 bool TWPartition::UnMount(bool Display_Error) {
-	if (Mount_Point == "/system_root") {
-		if (umount("/system") == -1)
-			umount2("/system", MNT_DETACH);
-		rmdir("/system");
-		symlink("/system_root/system", "/system");
-	}	
-	
 	if (Is_Mounted()) {
 		int never_unmount_system;
 
@@ -1691,7 +1701,7 @@ bool TWPartition::Wipe(string New_File_System) {
 		wiped = Wipe_Data_Without_Wiping_Media();
 
 		if (Mount_Point == "/data" && TWFunc::get_log_dir() == DATA_LOGS_DIR) {
-			bool created = Recreate_Logs_Dir();
+			bool created = PartitionManager.Recreate_Logs_Dir();
 			if (!created)
 				LOGERR("Unable to create log directory\n");
 		}
@@ -1725,7 +1735,7 @@ bool TWPartition::Wipe(string New_File_System) {
 			unlink("/.layout_version");
 			return false;
 		}
-		update_crypt = wiped;
+		update_crypt = false;
 	}
 
 	if (wiped) {
@@ -1781,15 +1791,15 @@ bool TWPartition::Wipe_AndSec(void) {
 bool TWPartition::Can_Repair() {
 	if (Mount_Read_Only)
 		return false;
-	if (Current_File_System == "vfat" && TWFunc::Path_Exists("/sbin/fsck.fat"))
+	if (Current_File_System == "vfat" && TWFunc::Path_Exists("/system/bin/fsck.fat"))
 		return true;
-	else if ((Current_File_System == "ext2" || Current_File_System == "ext3" || Current_File_System == "ext4") && TWFunc::Path_Exists("/sbin/e2fsck"))
+	else if ((Current_File_System == "ext2" || Current_File_System == "ext3" || Current_File_System == "ext4") && TWFunc::Path_Exists("/system/bin/e2fsck"))
 		return true;
-	else if (Current_File_System == "exfat" && TWFunc::Path_Exists("/sbin/fsck.exfat"))
+	else if (Current_File_System == "exfat" && TWFunc::Path_Exists("/system/bin/fsck.exfat"))
 		return true;
-	else if (Current_File_System == "f2fs" && TWFunc::Path_Exists("/sbin/fsck.f2fs"))
+	else if (Current_File_System == "f2fs" && TWFunc::Path_Exists("/system/bin/fsck.f2fs"))
 		return true;
-	else if (Current_File_System == "ntfs" && (TWFunc::Path_Exists("/sbin/ntfsfix") || TWFunc::Path_Exists("/sbin/fsck.ntfs")))
+	else if (Current_File_System == "ntfs" && (TWFunc::Path_Exists("/system/bin/ntfsfix") || TWFunc::Path_Exists("/system/bin/fsck.ntfs")))
 		return true;
 	return false;
 }
@@ -1798,7 +1808,7 @@ bool TWPartition::Repair() {
 	string command;
 
 	if (Current_File_System == "vfat") {
-		if (!TWFunc::Path_Exists("/sbin/fsck.fat")) {
+		if (!TWFunc::Path_Exists("/system/bin/fsck.fat")) {
 			gui_msg(Msg(msg::kError, "repair_not_exist={1} does not exist! Cannot repair!")("fsck.fat"));
 			return false;
 		}
@@ -1806,7 +1816,7 @@ bool TWPartition::Repair() {
 			return false;
 		gui_msg(Msg("repairing_using=Repairing {1} using {2}...")(Display_Name)("fsck.fat"));
 		Find_Actual_Block_Device();
-		command = "/sbin/fsck.fat -y " + Actual_Block_Device;
+		command = "/system/bin/fsck.fat -y " + Actual_Block_Device;
 		LOGINFO("Repair command: %s\n", command.c_str());
 		if (TWFunc::Exec_Cmd(command) == 0) {
 			gui_msg("done=Done.");
@@ -1817,7 +1827,7 @@ bool TWPartition::Repair() {
 		}
 	}
 	if (Current_File_System == "ext2" || Current_File_System == "ext3" || Current_File_System == "ext4") {
-		if (!TWFunc::Path_Exists("/sbin/e2fsck")) {
+		if (!TWFunc::Path_Exists("/system/bin/e2fsck")) {
 			gui_msg(Msg(msg::kError, "repair_not_exist={1} does not exist! Cannot repair!")("e2fsck"));
 			return false;
 		}
@@ -1825,7 +1835,7 @@ bool TWPartition::Repair() {
 			return false;
 		gui_msg(Msg("repairing_using=Repairing {1} using {2}...")(Display_Name)("e2fsck"));
 		Find_Actual_Block_Device();
-		command = "/sbin/e2fsck -fp " + Actual_Block_Device;
+		command = "/system/bin/e2fsck -fp " + Actual_Block_Device;
 		LOGINFO("Repair command: %s\n", command.c_str());
 		if (TWFunc::Exec_Cmd(command) == 0) {
 			gui_msg("done=Done.");
@@ -1836,7 +1846,7 @@ bool TWPartition::Repair() {
 		}
 	}
 	if (Current_File_System == "exfat") {
-		if (!TWFunc::Path_Exists("/sbin/fsck.exfat")) {
+		if (!TWFunc::Path_Exists("/system/bin/fsck.exfat")) {
 			gui_msg(Msg(msg::kError, "repair_not_exist={1} does not exist! Cannot repair!")("fsck.exfat"));
 			return false;
 		}
@@ -1844,7 +1854,7 @@ bool TWPartition::Repair() {
 			return false;
 		gui_msg(Msg("repairing_using=Repairing {1} using {2}...")(Display_Name)("fsck.exfat"));
 		Find_Actual_Block_Device();
-		command = "/sbin/fsck.exfat " + Actual_Block_Device;
+		command = "/system/bin/fsck.exfat " + Actual_Block_Device;
 		LOGINFO("Repair command: %s\n", command.c_str());
 		if (TWFunc::Exec_Cmd(command) == 0) {
 			gui_msg("done=Done.");
@@ -1855,7 +1865,7 @@ bool TWPartition::Repair() {
 		}
 	}
 	if (Current_File_System == "f2fs") {
-		if (!TWFunc::Path_Exists("/sbin/fsck.f2fs")) {
+		if (!TWFunc::Path_Exists("/system/bin/fsck.f2fs")) {
 			gui_msg(Msg(msg::kError, "repair_not_exist={1} does not exist! Cannot repair!")("fsck.f2fs"));
 			return false;
 		}
@@ -1863,7 +1873,7 @@ bool TWPartition::Repair() {
 			return false;
 		gui_msg(Msg("repairing_using=Repairing {1} using {2}...")(Display_Name)("fsck.f2fs"));
 		Find_Actual_Block_Device();
-		command = "/sbin/fsck.f2fs " + Actual_Block_Device;
+		command = "/system/bin/fsck.f2fs " + Actual_Block_Device;
 		LOGINFO("Repair command: %s\n", command.c_str());
 		if (TWFunc::Exec_Cmd(command) == 0) {
 			gui_msg("done=Done.");
@@ -1875,9 +1885,9 @@ bool TWPartition::Repair() {
 	}
 	if (Current_File_System == "ntfs") {
 		string Ntfsfix_Binary;
-		if (TWFunc::Path_Exists("/sbin/ntfsfix"))
+		if (TWFunc::Path_Exists("/system/bin/ntfsfix"))
 			Ntfsfix_Binary = "ntfsfix";
-		else if (TWFunc::Path_Exists("/sbin/fsck.ntfs"))
+		else if (TWFunc::Path_Exists("/system/bin/fsck.ntfs"))
 			Ntfsfix_Binary = "fsck.ntfs";
 		else {
 			gui_msg(Msg(msg::kError, "repair_not_exist={1} does not exist! Cannot repair!")("ntfsfix"));
@@ -1887,7 +1897,7 @@ bool TWPartition::Repair() {
 			return false;
 		gui_msg(Msg("repairing_using=Repairing {1} using {2}...")(Display_Name)(Ntfsfix_Binary));
 		Find_Actual_Block_Device();
-		command = "/sbin/" + Ntfsfix_Binary + " " + Actual_Block_Device;
+		command = "/system/bin/" + Ntfsfix_Binary + " " + Actual_Block_Device;
 		LOGINFO("Repair command: %s\n", command.c_str());
 		if (TWFunc::Exec_Cmd(command) == 0) {
 			gui_msg("done=Done.");
@@ -1903,7 +1913,7 @@ bool TWPartition::Repair() {
 bool TWPartition::Can_Resize() {
 	if (Mount_Read_Only)
 		return false;
-	if ((Current_File_System == "ext2" || Current_File_System == "ext3" || Current_File_System == "ext4") && TWFunc::Path_Exists("/sbin/resize2fs"))
+	if ((Current_File_System == "ext2" || Current_File_System == "ext3" || Current_File_System == "ext4") && TWFunc::Path_Exists("/system/bin/resize2fs"))
 		return true;
 	return false;
 }
@@ -1917,7 +1927,7 @@ bool TWPartition::Resize() {
 			gui_msg(Msg(msg::kError, "cannot_resize=Cannot resize {1}.")(Display_Name));
 			return false;
 		}
-		if (!TWFunc::Path_Exists("/sbin/resize2fs")) {
+		if (!TWFunc::Path_Exists("/system/bin/resize2fs")) {
 			LOGINFO("resize2fs does not exist! Cannot resize!\n");
 			gui_msg(Msg(msg::kError, "cannot_resize=Cannot resize {1}.")(Display_Name));
 			return false;
@@ -1928,7 +1938,7 @@ bool TWPartition::Resize() {
 			return false;
 		gui_msg(Msg("resizing=Resizing {1} using {2}...")(Display_Name)("resize2fs"));
 		Find_Actual_Block_Device();
-		command = "/sbin/resize2fs " + Actual_Block_Device;
+		command = "/system/bin/resize2fs " + Actual_Block_Device;
 		if (Length != 0) {
 			unsigned long long Actual_Size = IOCTL_Get_Block_Size();
 			if (Actual_Size == 0)
@@ -2060,11 +2070,11 @@ bool TWPartition::Wipe_Encryption() {
 	Is_Encrypted = false;
 	if (Wipe(Fstab_File_System)) {
 		Has_Data_Media = Save_Data_Media;
-		if (Has_Data_Media && !Symlink_Mount_Point.empty()) {
-			Recreate_Media_Folder();
-			if (Mount(false))
-				PartitionManager.Add_MTP_Storage(MTP_Storage_ID);
-		}
+		//if (Has_Data_Media && !Symlink_Mount_Point.empty()) {
+		//	Recreate_Media_Folder();
+		//	if (Mount(false))
+		//		PartitionManager.Add_MTP_Storage(MTP_Storage_ID);
+		//}
 		DataManager::SetValue(TW_IS_ENCRYPTED, 0);
 #ifndef TW_OEM_BUILD
 		gui_msg("format_data_msg=You may need to reboot recovery to be able to use /data again.");
@@ -2137,9 +2147,9 @@ bool TWPartition::Wipe_EXTFS(string File_System) {
 		return false;
 
 #if PLATFORM_SDK_VERSION < 28
-	if (!TWFunc::Path_Exists("/sbin/mke2fs"))
+	if (!TWFunc::Path_Exists("/system/bin/mke2fs"))
 #else
-	if (!TWFunc::Path_Exists("/sbin/mke2fs") || !TWFunc::Path_Exists("/sbin/e2fsdroid"))
+	if (!TWFunc::Path_Exists("/system/bin/mke2fs") || !TWFunc::Path_Exists("/system/bin/e2fsdroid"))
 #endif
 		return Wipe_RMRF();
 
@@ -2189,13 +2199,18 @@ bool TWPartition::Wipe_EXTFS(string File_System) {
 		return false;
 	}
 
-	if (TWFunc::Path_Exists("/sbin/e2fsdroid")) {
+	if (TWFunc::Path_Exists("/system/bin/e2fsdroid")) {
 		const string& File_Contexts_Entry = (Mount_Point == "/system_root" ? "/" : Mount_Point);
 		char *secontext = NULL;
 		if (!selinux_handle || selabel_lookup(selinux_handle, &secontext, File_Contexts_Entry.c_str(), S_IFDIR) < 0) {
 			LOGINFO("Cannot lookup security context for '%s'\n", Mount_Point.c_str());
 		} else {
 			// Execute e2fsdroid to initialize selinux context
+			if (Mount_Point == "/persist") {
+				Mount(true);
+				TWFunc::removeDir("/persist/lost+found", false);
+				UnMount(true);
+			}
 			Command = "e2fsdroid -e -S /file_contexts -a " + File_Contexts_Entry + " " + Actual_Block_Device;
 			LOGINFO("e2fsdroid command: %s\n", Command.c_str());
 			ret = TWFunc::Exec_Cmd(Command);
@@ -2221,14 +2236,15 @@ bool TWPartition::Wipe_EXT4() {
 	int ret;
 	bool NeedPreserveFooter = true;
 
+	if (!UnMount(true))
+		return false;
+
 	Find_Actual_Block_Device();
 	if (!Is_Present) {
 		LOGINFO("Block device not present, cannot wipe %s.\n", Display_Name.c_str());
 		gui_msg(Msg(msg::kError, "unable_to_wipe=Unable to wipe {1}.")(Display_Name));
 		return false;
 	}
-	if (!UnMount(true))
-		return false;
 
 	/**
 	 * On decrypted devices, IOCTL_Get_Block_Size calculates size on device mapper,
@@ -2278,7 +2294,7 @@ bool TWPartition::Wipe_FAT() {
 	if (!UnMount(true))
 		return false;
 
-	if (TWFunc::Path_Exists("/sbin/mkfs.fat")) {
+	if (TWFunc::Path_Exists("/system/bin/mkfs.fat")) {
 		gui_msg(Msg("formatting_using=Formatting {1} using {2}...")(Display_Name)("mkfs.fat"));
 		Find_Actual_Block_Device();
 		command = "mkfs.fat " + Actual_Block_Device;
@@ -2302,7 +2318,7 @@ bool TWPartition::Wipe_FAT() {
 bool TWPartition::Wipe_EXFAT() {
 	string command;
 
-	if (TWFunc::Path_Exists("/sbin/mkexfatfs")) {
+	if (TWFunc::Path_Exists("/system/bin/mkexfatfs")) {
 		if (!UnMount(true))
 			return false;
 
@@ -2371,85 +2387,64 @@ bool TWPartition::Wipe_RMRF() {
 }
 
 bool TWPartition::Wipe_F2FS() {
-	string command;
+	std::string command;
+	std::string f2fs_bin;
+
 	if (!UnMount(true))
 		return false;
 
-	if (TWFunc::Path_Exists("/sbin/mkfs.f2fs")) {
-		bool NeedPreserveFooter = true;
-
-		Find_Actual_Block_Device();
-		if (!Is_Present) {
-			LOGINFO("Block device not present, cannot wipe %s.\n", Display_Name.c_str());
-			gui_msg(Msg(msg::kError, "unable_to_wipe=Unable to wipe {1}.")(Display_Name));
-			return false;
-		}
-		/**
-		 * On decrypted devices, IOCTL_Get_Block_Size calculates size on device mapper,
-		 * so there's no need to preserve footer.
-		 */
-		if ((Is_Decrypted && !Decrypted_Block_Device.empty()) ||
-				Crypto_Key_Location != "footer") {
-			NeedPreserveFooter = false;
-		}
-
-		gui_msg(Msg("formatting_using=Formatting {1} using {2}...")(Display_Name)("mkfs.f2fs"));
-		// First determine if we have the old mkfs.f2fs that uses "-r reserved_bytes"
-		// or the new mkfs.f2fs that expects the number of sectors as the optional last argument
-		// Note: some 7.1 trees have the old and some have the new.
-		command = "mkfs.f2fs | grep \"reserved\" > /tmp/f2fsversiontest";
-		TWFunc::Exec_Cmd(command, false); // no help argument so printing usage exits with an error code
-		if (!TWFunc::Path_Exists("/tmp/f2fsversiontest")) {
-			LOGINFO("Error determining mkfs.f2fs version\n");
-			return false;
-		}
-		if (TWFunc::Get_File_Size("/tmp/f2fsversiontest") <= 0) {
-			LOGINFO("Using newer mkfs.f2fs\n");
-			unsigned long long dev_sz = TWFunc::IOCTL_Get_Block_Size(Actual_Block_Device.c_str());
-			if (!dev_sz)
-				return false;
-
-			if (NeedPreserveFooter)
-				Length < 0 ? dev_sz += Length : dev_sz -= CRYPT_FOOTER_OFFSET;
-
-			char dev_sz_str[48];
-			sprintf(dev_sz_str, "%llu", (dev_sz / 4096));
-			command = "mkfs.f2fs -d1 -f -O encrypt -O quota -O verity -w 4096 " + Actual_Block_Device + " " + dev_sz_str;
-			if (TWFunc::Path_Exists("/sbin/sload.f2fs")) {
-				command += " && sload.f2fs -t /data " + Actual_Block_Device;
-			}
-		} else {
-			LOGINFO("Using older mkfs.f2fs\n");
-			command = "mkfs.f2fs -t 0";
-			if (NeedPreserveFooter) {
-				// Only use length if we're not decrypted
-				char len[32];
-				int mod_length = Length;
-				if (Length < 0)
-					mod_length *= -1;
-				sprintf(len, "%i", mod_length);
-				command += " -r ";
-				command += len;
-			}
-			command += " " + Actual_Block_Device;
-		}
-		LOGINFO("mkfs.f2fs command: %s\n", command.c_str());
-		if (TWFunc::Exec_Cmd(command) == 0) {
-			if (NeedPreserveFooter)
-				Wipe_Crypto_Key();
-			Recreate_AndSec_Folder();
-			gui_msg("done=Done.");
-			return true;
-		} else {
-			gui_msg(Msg(msg::kError, "unable_to_wipe=Unable to wipe {1}.")(Display_Name));
-			return false;
-		}
-		return true;
-	} else {
+	if (TWFunc::Path_Exists("/system/bin/mkfs.f2fs"))
+		f2fs_bin = "/system/bin/mkfs.f2fs";
+	else if (TWFunc::Path_Exists("/system/bin/make_f2fs"))
+		f2fs_bin = "/system/bin/make_f2fs";
+	else {
 		LOGINFO("mkfs.f2fs binary not found, using rm -rf to wipe.\n");
 		return Wipe_RMRF();
 	}
-	return false;
+
+	bool NeedPreserveFooter = true;
+
+	Find_Actual_Block_Device();
+	if (!Is_Present) {
+		LOGINFO("Block device not present, cannot wipe %s.\n", Display_Name.c_str());
+		gui_msg(Msg(msg::kError, "unable_to_wipe=Unable to wipe {1}.")(Display_Name));
+		return false;
+	}
+	
+	unsigned long long dev_sz = TWFunc::IOCTL_Get_Block_Size(Actual_Block_Device.c_str());
+	if (!dev_sz)
+		return false;
+
+	if (NeedPreserveFooter)
+		Length < 0 ? dev_sz += Length : dev_sz -= CRYPT_FOOTER_OFFSET;
+
+	char dev_sz_str[48];
+	sprintf(dev_sz_str, "%llu", (dev_sz / 4096));
+	command = f2fs_bin + " -d1 -f -O encrypt -O quota -O verity -w 4096 " + Actual_Block_Device + " " + dev_sz_str;
+	if (TWFunc::Path_Exists("/system/bin/sload.f2fs")) {
+		command += " && sload.f2fs -t /data " + Actual_Block_Device;
+	}
+
+	/**
+	 * On decrypted devices, IOCTL_Get_Block_Size calculates size on device mapper,
+	 * so there's no need to preserve footer.
+	 */
+	if ((Is_Decrypted && !Decrypted_Block_Device.empty()) ||
+			Crypto_Key_Location != "footer") {
+		NeedPreserveFooter = false;
+	}
+	LOGINFO("mkfs.f2fs command: %s\n", f2fs_bin.c_str());
+	if (TWFunc::Exec_Cmd(command) == 0) {
+		if (NeedPreserveFooter)
+			Wipe_Crypto_Key();
+		Recreate_AndSec_Folder();
+		gui_msg("done=Done.");
+		return true;
+	} else {
+		gui_msg(Msg(msg::kError, "unable_to_wipe=Unable to wipe {1}.")(Display_Name));
+		return false;
+	}
+	return true;
 }
 
 bool TWPartition::Wipe_NTFS() {
@@ -2459,16 +2454,16 @@ bool TWPartition::Wipe_NTFS() {
 	if (!UnMount(true))
 		return false;
 
-	if (TWFunc::Path_Exists("/sbin/mkntfs"))
+	if (TWFunc::Path_Exists("/system/bin/mkntfs"))
 		Ntfsmake_Binary = "mkntfs";
-	else if (TWFunc::Path_Exists("/sbin/mkfs.ntfs"))
+	else if (TWFunc::Path_Exists("/system/bin/mkfs.ntfs"))
 		Ntfsmake_Binary = "mkfs.ntfs";
 	else
 		return false;
 
 	gui_msg(Msg("formatting_using=Formatting {1} using {2}...")(Display_Name)(Ntfsmake_Binary));
 	Find_Actual_Block_Device();
-	command = "/sbin/" + Ntfsmake_Binary + " " + Actual_Block_Device;
+	command = "/system/bin/" + Ntfsmake_Binary + " " + Actual_Block_Device;
 	if (TWFunc::Exec_Cmd(command) == 0) {
 		Recreate_AndSec_Folder();
 		gui_msg("done=Done.");
@@ -2969,6 +2964,9 @@ bool TWPartition::Update_Size(bool Display_Error) {
 
 	Find_Actual_Block_Device();
 
+	if (Actual_Block_Device.empty())
+		return false;
+
 	if (!Can_Be_Mounted && !Is_Encrypted) {
 		if (TWFunc::Path_Exists(Actual_Block_Device) && Find_Partition_Size()) {
 			Used = Size;
@@ -2979,6 +2977,7 @@ bool TWPartition::Update_Size(bool Display_Error) {
 	}
 
 	Was_Already_Mounted = Is_Mounted();
+
 	if (Removable || Is_Encrypted) {
 		if (!Mount(false))
 			return true;
@@ -3045,7 +3044,7 @@ bool TWPartition::Find_Wildcard_Block_Devices(const string& Device) {
 		TWPartition *part = new TWPartition;
 		char buffer[MAX_FSTAB_LINE_LENGTH];
 		sprintf(buffer, "%s %s-%i auto defaults defaults", item.c_str(), Mount_Point.c_str(), ++mount_point_index);
-		part->Process_Fstab_Line(buffer, false, NULL, false);
+		part->Process_Fstab_Line(buffer, false, NULL);
 		char display[MAX_FSTAB_LINE_LENGTH];
 		sprintf(display, "%s %i", Storage_Name.c_str(), mount_point_index);
 		part->Storage_Name = display;
@@ -3517,3 +3516,39 @@ void TWPartition::Fox_Add_Backup_Exclusions() {
     }
  #endif
 }
+
+bool TWPartition::Get_Super_Status() {
+	return Is_Super;
+}
+
+void TWPartition::Set_Can_Be_Backed_Up(bool val) {
+	Can_Be_Backed_Up = val;
+}
+
+void TWPartition::Set_Can_Be_Wiped(bool val) {
+	Can_Be_Wiped = val;
+	Wipe_Available_in_GUI = val;
+}
+
+void TWPartition::Set_Block_Device(std::string block_device) {
+	Primary_Block_Device = Actual_Block_Device = block_device;
+}
+
+std::string TWPartition::Get_Backup_FileName() {
+	return Backup_FileName;
+}
+
+std::string TWPartition::Get_Display_Name() {
+	return Display_Name;
+}
+
+bool TWPartition::Is_SlotSelect() {
+	return SlotSelect;
+}
+
+string TWPartition::Get_Mount_Point() {
+	return Mount_Point;
+}
+
+
+//* 

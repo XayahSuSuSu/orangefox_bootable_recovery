@@ -1,14 +1,17 @@
 /*
-	Copyright 2017 TeamWin
+    Copyright 2012 to 2020 TeamWin
 	This file is part of TWRP/TeamWin Recovery Project.
+
 	TWRP is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
 	the Free Software Foundation, either version 3 of the License, or
 	(at your option) any later version.
+
 	TWRP is distributed in the hope that it will be useful,
 	but WITHOUT ANY WARRANTY; without even the implied warranty of
 	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 	GNU General Public License for more details.
+
 	You should have received a copy of the GNU General Public License
 	along with TWRP.  If not, see <http://www.gnu.org/licenses/>.
 */
@@ -36,6 +39,7 @@ extern "C" {
 #include "../twcommon.h"
 }
 #include "../minuitwrp/minui.h"
+#include "../minuitwrp/truetype.hpp"
 
 #include "rapidxml.hpp"
 #include "objects.hpp"
@@ -267,7 +271,7 @@ int GUISliderValue::measureText(const std::string& str)
 	void* fontResource = NULL;
 	if (mFont)  fontResource = mFont->GetResource();
 
-	return gr_ttf_measureEx(str.c_str(), fontResource);
+	return twrpTruetype::gr_ttf_measureEx(str.c_str(), fontResource);
 }
 
 int GUISliderValue::Render(void)

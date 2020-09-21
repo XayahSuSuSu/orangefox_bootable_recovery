@@ -34,6 +34,8 @@ extern "C" {
 #include "../twcommon.h"
 }
 #include "../minuitwrp/minui.h"
+#include "../minuitwrp/truetype.hpp"
+
 #include "gui.hpp"
 
 #include "rapidxml.hpp"
@@ -114,7 +116,7 @@ public:
 		// (Mandatory for programs like the shell to make them manage correctly their outputs)
 		ioctl(0, TIOCSCTTY, 1);
 
-		execl("/sbin/sh", "sh", NULL);
+		execl("/system/bin/sh", "sh", NULL);
 		_exit(127);
 	}
 
@@ -904,10 +906,10 @@ void GUITerminal::RenderItem(size_t itemindex, int yPos, bool selected __unused)
 		// render cursor
 		int cursorX = engine->getCursorX();
 		std::string leftOfCursor = line.substr(0, cursorX);
-		int x = gr_ttf_measureEx(leftOfCursor.c_str(), mFont->GetResource());
+		int x = twrpTruetype::gr_ttf_measureEx(leftOfCursor.c_str(), mFont->GetResource());
 		// note that this single character can be a UTF-8 sequence
 		std::string atCursor = (size_t)cursorX < line.length() ? line.substr(cursorX, 1) : " ";
-		int w = gr_ttf_measureEx(atCursor.c_str(), mFont->GetResource());
+		int w = twrpTruetype::gr_ttf_measureEx(atCursor.c_str(), mFont->GetResource());
 		gr_color(mFontColor.red, mFontColor.green, mFontColor.blue, mFontColor.alpha);
 		gr_fill(mRenderX + x, yPos, w, actualItemHeight);
 		gr_color(mBackgroundColor.red, mBackgroundColor.green, mBackgroundColor.blue, mBackgroundColor.alpha);
@@ -926,7 +928,7 @@ void GUITerminal::InitAndResize()
 	engine->initPty();
 	// send window resize
 	if (mFont && mFont->GetResource()) {
-		int charWidth = gr_ttf_measureEx("N", mFont->GetResource());
+		int charWidth = twrpTruetype::gr_ttf_measureEx("N", mFont->GetResource());
 		engine->setSize(mRenderW / charWidth, GetDisplayItemCount(), mRenderW, mRenderH);
 	}
 }

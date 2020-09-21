@@ -129,7 +129,7 @@ static int New_Magiskboot_Binary(void)
    string cmd_script = "/tmp/tmp_0tm.sh";
    TWFunc::CreateNewFile(cmd_script);
    chmod (cmd_script.c_str(), 0755);
-   TWFunc::AppendLineToFile (cmd_script, "#!/sbin/sh");
+   TWFunc::AppendLineToFile (cmd_script, "#!/system/bin/sh");
    TWFunc::AppendLineToFile (cmd_script, "abort() { echo \"$1\"; exit $1; }");
    TWFunc::AppendLineToFile (cmd_script, "[ -z \"$1\" -o ! -x \"$1\" ] && abort \"2\"");
    TWFunc::AppendLineToFile (cmd_script, "tmp=/tmp/chk_mgsk_01.txt");
@@ -313,7 +313,7 @@ string res = "0";
 string cmd = "/sbin/resetprop";
 bool ret = false;
     
-    if (!Path_Exists(cmd)) cmd = "/sbin/setprop";
+    if (!Path_Exists(cmd)) cmd = Fox_Bin_Dir + "/setprop";
 
     if (code != 0) // whether a ROM was installed, and it is MIUI
       {
@@ -381,9 +381,9 @@ void TWFunc::Run_Before_Reboot(void)
 
    log_file = Fox_Logs_Dir + log_file;
    copy_file("/tmp/recovery.log", log_file, 0644);
-   if (Path_Exists("/sbin/pigz"))
+   if (Path_Exists(Fox_Bin_Dir + "/pigz"))
      {
-        string cmd = "/sbin/pigz -K --best " + log_file;
+        string cmd = Fox_Bin_Dir + "/pigz -K --best " + log_file;
         Exec_Cmd (cmd);
      }
 }
@@ -407,13 +407,17 @@ int TWFunc::Exec_Cmd(const string& cmd, string &result) {
 int TWFunc::Exec_Cmd(const string& cmd, bool Show_Errors) {
 	pid_t pid;
 	int status;
+	string tmp = "/sbin/sh";
+	if (!Path_Exists(tmp))
+	   tmp = "/system/bin/sh";
+	
 	switch(pid = fork())
 	{
 		case -1:
 			LOGERR("Exec_Cmd(): vfork failed: %d!\n", errno);
 			return -1;
 		case 0: // child
-			execl("/sbin/sh", "sh", "-c", cmd.c_str(), NULL);
+			execl(tmp.c_str(), "sh", "-c", cmd.c_str(), NULL);
 			_exit(127);
 			break;
 		default:
@@ -424,6 +428,24 @@ int TWFunc::Exec_Cmd(const string& cmd, bool Show_Errors) {
 				return 0;
 		}
 	}
+}
+
+int TWFunc::Exec_Cmd(const string& cmd, string &result, bool combine_stderr) {
+	FILE* exec;
+	char buffer[130];
+	int ret = 0;
+	std::string popen_cmd = cmd;
+	if (combine_stderr)
+		popen_cmd = cmd + " 2>&1";
+	exec = __popen(popen_cmd.c_str(), "r");
+
+	while (!feof(exec)) {
+		if (fgets(buffer, 128, exec) != NULL) {
+			result += buffer;
+		}
+	}
+	ret = __pclose(exec);
+	return ret;
 }
 
 // Returns "file.name" from a full /path/to/file.name
@@ -1115,7 +1137,7 @@ int TWFunc::tw_reboot(RebootCommand command)
       if (DoDeactivate == 1) { Deactivation_Process(); } 
       Update_Intent_File("s");
       sync();
-      check_and_run_script("/sbin/rebootsystem.sh", "reboot system");
+      check_and_run_script("/system/bin/rebootsystem.sh", "reboot system");
 #ifdef ANDROID_RB_PROPERTY
       return property_set(ANDROID_RB_PROPERTY, "reboot,");
 #elif defined(ANDROID_RB_RESTART)
@@ -1125,7 +1147,7 @@ int TWFunc::tw_reboot(RebootCommand command)
 #endif
     case rb_recovery:
       if (DoDeactivate == 1){ Deactivation_Process(); sync(); }
-      check_and_run_script("/sbin/rebootrecovery.sh", "reboot recovery");
+      check_and_run_script("/system/bin/rebootrecovery.sh", "reboot recovery");
 #ifdef ANDROID_RB_PROPERTY
       return property_set(ANDROID_RB_PROPERTY, "reboot,recovery");
 #else
@@ -1133,7 +1155,7 @@ int TWFunc::tw_reboot(RebootCommand command)
 		      LINUX_REBOOT_CMD_RESTART2, (void *) "recovery");
 #endif
     case rb_bootloader:
-    check_and_run_script("/sbin/rebootbootloader.sh", "reboot bootloader");
+    check_and_run_script("/system/bin/rebootbootloader.sh", "reboot bootloader");
 #ifdef ANDROID_RB_PROPERTY
       return property_set(ANDROID_RB_PROPERTY, "reboot,bootloader");
 #else
@@ -1141,7 +1163,7 @@ int TWFunc::tw_reboot(RebootCommand command)
 		      LINUX_REBOOT_CMD_RESTART2, (void *) "bootloader");
 #endif
     case rb_poweroff:
-    check_and_run_script("/sbin/poweroff.sh", "power off");
+    check_and_run_script("/system/bin/poweroff.sh", "power off");
 #ifdef ANDROID_RB_PROPERTY
       return property_set(ANDROID_RB_PROPERTY, "shutdown,");
 #elif defined(ANDROID_RB_POWEROFF)
@@ -1150,7 +1172,7 @@ int TWFunc::tw_reboot(RebootCommand command)
       return reboot(RB_POWER_OFF);
 #endif
     case rb_download:
-    check_and_run_script("/sbin/rebootdownload.sh", "reboot download");
+    check_and_run_script("/system/bin/rebootdownload.sh", "reboot download");
 #ifdef ANDROID_RB_PROPERTY
       return property_set(ANDROID_RB_PROPERTY, "reboot,download");
 #else
@@ -1158,7 +1180,7 @@ int TWFunc::tw_reboot(RebootCommand command)
 		      LINUX_REBOOT_CMD_RESTART2, (void *) "download");
 #endif
 		case rb_edl:
-			check_and_run_script("/sbin/rebootedl.sh", "reboot edl");
+			check_and_run_script("/system/bin/rebootedl.sh", "reboot edl");
 #ifdef ANDROID_RB_PROPERTY
 			return property_set(ANDROID_RB_PROPERTY, "reboot,edl");
 #else
@@ -1462,6 +1484,45 @@ string TWFunc::System_Property_Get(string Prop_Name) {
 	if (reloaded)  //***
 		PartitionManager.UnMount_By_Path("/system", false);
 
+	return propvalue;
+}
+/*
+string TWFunc::System_Property_Get(string Prop_Name) {
+	return System_Property_Get(Prop_Name, PartitionManager, PartitionManager.Get_Android_Root_Path());
+}
+*/
+string TWFunc::System_Property_Get(string Prop_Name, TWPartitionManager &PartitionManager, string Mount_Point) {
+	bool mount_state = PartitionManager.Is_Mounted_By_Path(Mount_Point);
+	std::vector<string> buildprop;
+	string propvalue;
+	if (!PartitionManager.Mount_By_Path(Mount_Point, true))
+		return propvalue;
+	string prop_file = Mount_Point + "/build.prop";
+	if (!TWFunc::Path_Exists(prop_file))
+		prop_file = Mount_Point + "/system/build.prop"; // for devices with system as a root file system (e.g. Pixel)
+	if (TWFunc::read_file(prop_file, buildprop) != 0) {
+		LOGINFO("Unable to open build.prop for getting '%s'.\n", Prop_Name.c_str());
+		DataManager::SetValue(TW_BACKUP_NAME, Get_Current_Date());
+		if (!mount_state)
+			PartitionManager.UnMount_By_Path(Mount_Point, false);
+		return propvalue;
+	}
+	int line_count = buildprop.size();
+	int index;
+	size_t start_pos = 0, end_pos;
+	string propname;
+	for (index = 0; index < line_count; index++) {
+		end_pos = buildprop.at(index).find("=", start_pos);
+		propname = buildprop.at(index).substr(start_pos, end_pos);
+		if (propname == Prop_Name) {
+			propvalue = buildprop.at(index).substr(end_pos + 1, buildprop.at(index).size());
+			if (!mount_state)
+				PartitionManager.UnMount_By_Path(Mount_Point, false);
+			return propvalue;
+		}
+	}
+	if (!mount_state)
+		PartitionManager.UnMount_By_Path(Mount_Point, false);
 	return propvalue;
 }
 
@@ -2538,7 +2599,7 @@ void TWFunc::OrangeFox_Startup(void)
 void TWFunc::copy_kernel_log(string curr_storage)
 {
   std::string dmesgDst = curr_storage + "/dmesg.log";
-  std::string dmesgCmd = "/sbin/dmesg";
+  std::string dmesgCmd = "/system/bin/dmesg";
 
   std::string result;
   Exec_Cmd(dmesgCmd, result);
@@ -2836,7 +2897,7 @@ bool TWFunc::PackRepackImage_MagiskBoot(bool do_unpack, bool is_boot)
 	    {
 	        CreateNewFile (cmd_script);
 	        chmod (cmd_script.c_str(), 0755);
-	        AppendLineToFile (cmd_script, "#!/sbin/sh");
+	        AppendLineToFile (cmd_script, "#!/system/bin/sh");
 	        AppendLineToFile (cmd_script, "LOGINFO() { echo \"$1\"; echo \"$1\" >> /tmp/recovery.log;}");
 	        // if we need to backup the script, for debugging
 	        if (New_Fox_Installation == 1) 
@@ -2919,7 +2980,7 @@ bool TWFunc::PackRepackImage_MagiskBoot(bool do_unpack, bool is_boot)
 	{
 	  	CreateNewFile (cmd_script2);
 	  	chmod (cmd_script2.c_str(), 0755);
-	        AppendLineToFile (cmd_script2, "#!/sbin/sh");
+	        AppendLineToFile (cmd_script2, "#!/system/bin/sh");
 	        AppendLineToFile (cmd_script2, "LOGINFO() { echo \"$1\"; echo \"$1\" >> /tmp/recovery.log;}");
 	        // if we need to backup the script, for debugging	        
 	        if (New_Fox_Installation == 1) 
@@ -2980,7 +3041,7 @@ bool TWFunc::isNumber(string strtocheck)
 }
 
 int TWFunc::stream_adb_backup(string &Restore_Name) {
-	string cmd = "/sbin/bu --twrp stream " + Restore_Name;
+	string cmd = "/system/bin/bu --twrp stream " + Restore_Name;
 	LOGINFO("stream_adb_backup: %s\n", cmd.c_str());
 	int ret = TWFunc::Exec_Cmd(cmd);
 	if (ret != 0)
@@ -3463,7 +3524,7 @@ bool TWFunc::Patch_DM_Verity(void)
   DIR *d = NULL;
   struct dirent *de = NULL;
   string path, cmp;
-  string firmware_key = ramdisk + "/sbin/firmware_key.cer";
+  string firmware_key = ramdisk + Fox_Bin_Dir + "/firmware_key.cer";
   string remove = "verify,;,verify;verify;avb,;,avb;avb;support_scfs,;,support_scfs;support_scfs;";
 
   LOGINFO("OrangeFox: entering Patch_DM_Verity()\n");
@@ -3578,7 +3639,7 @@ void TWFunc::Patch_Verity_Flags(string path)
 	string cmd_script = "/tmp/dmver.sh";
    	CreateNewFile (cmd_script);
    	chmod (cmd_script.c_str(), 0755);
-   	AppendLineToFile (cmd_script, "#!/sbin/sh");
+   	AppendLineToFile (cmd_script, "#!/system/bin/sh");
    	AppendLineToFile (cmd_script, "mount -o rw,remount " + root);
    	AppendLineToFile (cmd_script, "mount -o rw,remount " + root + " " + root);
    	AppendLineToFile (cmd_script, "sed -i -e \"s|ro.config.dmverity=true|ro.config.dmverity=false|g\" " + path);
@@ -3629,7 +3690,7 @@ bool Patch_DM_Verity_In_System_Fstab(void)
   DIR *d1 = NULL;
   struct dirent *de = NULL;
   string path, cmp, command;
-  string firmware_key = ramdisk + "/sbin/firmware_key.cer";
+  string firmware_key = ramdisk + Fox_Bin_Dir + "/firmware_key.cer";
   string remove = "verify,;,verify;verify;avb,;,avb;avb;support_scfs,;,support_scfs;support_scfs;";
 
       DataManager::GetValue(FOX_DISABLE_DM_VERITY, verity);
@@ -3800,7 +3861,7 @@ void TWFunc::Patch_Encryption_Flags(std::string path)
 	string cmd_script = "/tmp/fenc.sh";
    	CreateNewFile (cmd_script);
    	chmod (cmd_script.c_str(), 0755);
-   	AppendLineToFile (cmd_script, "#!/sbin/sh");
+   	AppendLineToFile (cmd_script, "#!/system/bin/sh");
    	AppendLineToFile (cmd_script, "mount -o rw,remount " + root);
    	AppendLineToFile (cmd_script, "mount -o rw,remount " + root + " " + root);
    	AppendLineToFile (cmd_script, "sed -i -e \"s|fileencryption=ice|encryptable=footer|g\" " + path);
@@ -4180,8 +4241,8 @@ void TWFunc::check_selinux_support() {
 		if (TWFunc::Path_Exists(se_context_check)) {
 			ret = lgetfilecon(se_context_check.c_str(), &contexts);
 			if (ret < 0) {
-				LOGINFO("Could not check %s SELinux contexts, using /sbin/teamwin instead which may be inaccurate.\n", se_context_check.c_str());
-				lgetfilecon("/sbin/teamwin", &contexts);
+				LOGINFO("Could not check %s SELinux contexts, using /system/bin/teamwin instead which may be inaccurate.\n", se_context_check.c_str());
+				lgetfilecon("/system/bin/teamwin", &contexts);
 			}
 		}
 		if (ret < 0) {
@@ -4193,34 +4254,39 @@ void TWFunc::check_selinux_support() {
 	}
 }
 
-bool TWFunc::Get_Encryption_Policy(ext4_encryption_policy &policy, std::string path) {
-#ifdef TW_INCLUDE_FBE
+void TWFunc::List_Mounts() {
+	std::vector<std::string> mounts;
+	read_file("/proc/mounts", mounts);
+	LOGINFO("Mounts:\n");
+	for (auto&& mount: mounts) {
+		LOGINFO("%s\n", mount.c_str());
+	}
+}
+
+bool TWFunc::Get_Encryption_Policy(fscrypt_encryption_policy &policy, std::string path) {
 	if (!TWFunc::Path_Exists(path)) {
 		LOGERR("Unable to find %s to get policy\n", path.c_str());
 		return false;
 	}
-	if (!e4crypt_policy_get_struct(path.c_str(), &policy)) {
+	if (!fscrypt_policy_get_struct(path.c_str(), &policy)) {
 		LOGERR("No policy set for path %s\n", path.c_str());
 		return false;
 	}
-#endif
 	return true;
 }
 
-bool TWFunc::Set_Encryption_Policy(std::string path, const ext4_encryption_policy &policy) {
-#ifdef TW_INCLUDE_FBE
+bool TWFunc::Set_Encryption_Policy(std::string path, const fscrypt_encryption_policy &policy) {
 	if (!TWFunc::Path_Exists(path)) {
 		LOGERR("unable to find %s to set policy\n", path.c_str());
 		return false;
 	}
-	char binary_policy[EXT4_KEY_DESCRIPTOR_SIZE];
-	char policy_hex[EXT4_KEY_DESCRIPTOR_SIZE_HEX];
+	uint8_t binary_policy[FS_KEY_DESCRIPTOR_SIZE];
+	char policy_hex[FS_KEY_DESCRIPTOR_SIZE_HEX];
 	policy_to_hex(binary_policy, policy_hex);
-	if (!e4crypt_policy_set_struct(path.c_str(), &policy)) {
+	if (!fscrypt_policy_set_struct(path.c_str(), &policy)) {
 		LOGERR("unable to set policy for path: %s\n", path.c_str());
 		return false;
 	}
-#endif
 	return true;
 }
 
@@ -4506,13 +4572,14 @@ string sdkverstr = TWFunc::System_Property_Get("ro.build.version.sdk");
 
 string TWFunc::Get_MagiskBoot(void)
 {
-  /*
-  #ifdef OF_USE_NEW_MAGISKBOOT
-  if (Get_Android_SDK_Version() > 25 && TWFunc::Path_Exists(FOX_NEW_MAGISKBOOT))
-     return FOX_NEW_MAGISKBOOT;
-  #endif
-  */
-  return "/sbin/magiskboot";
+string s = Fox_Bin_Dir + "/magiskboot";
+  if (TWFunc::Path_Exists(s))
+     return s;
+  s = "/sbin/magiskboot";
+  if (TWFunc::Path_Exists(s))
+     return s;
+  else
+     return "magiskboot";
 }
 
 // hopefully, this function will be obsolete one day ... //
@@ -4686,7 +4753,7 @@ void TWFunc::UseSystemFingerprint(void)
 string rom_finger_print = "";
   if (!Path_Exists("/sbin/resetprop"))
      {
-        LOGINFO("\n- I cannot find /sbin/resetprop, therefore I cannot use the system fingerprint\n");
+        LOGINFO("\n- I cannot find resetprop, therefore I cannot use the system fingerprint\n");
         return;
      }
 
@@ -4850,4 +4917,15 @@ string TWFunc::find_phrase(std::string filename, std::string search)
     }
   return str;
 }
+
+std::string TWFunc::Remove_Beginning_Slash(const std::string& path) {
+	std::string res;
+	size_t pos = path.find_first_of("/");
+	if (pos != std::string::npos) {
+		res = path.substr(pos+1);
+	}
+	return res;
+}
+
+
 //

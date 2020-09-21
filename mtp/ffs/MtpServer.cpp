@@ -288,7 +288,7 @@ void MtpServer::sendEvent(MtpEventCode code, uint32_t param1) {
 		mEvent.setEventCode(code);
 		mEvent.setTransactionID(mRequest.getTransactionID());
 		mEvent.setParameter(1, param1);
-		if (mEvent.write(mHandle) && errno != EBUSY)
+		if (mEvent.write(mHandle))
 			MTPE("Mtp send event failed: %s\n", strerror(errno));
 	}
 }

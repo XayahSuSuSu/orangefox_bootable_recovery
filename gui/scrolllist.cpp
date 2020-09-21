@@ -1,5 +1,5 @@
 /*
-	Copyright 2013 bigbiff/Dees_Troy TeamWin
+    Copyright 2012 to 2020 TeamWin
 	This file is part of TWRP/TeamWin Recovery Project.
 
 	TWRP is free software: you can redistribute it and/or modify
@@ -22,6 +22,7 @@ extern "C" {
 #include "../twcommon.h"
 }
 #include "../minuitwrp/minui.h"
+#include "../minuitwrp/truetype.hpp"
 
 #include "rapidxml.hpp"
 #include "objects.hpp"
@@ -75,7 +76,7 @@ GUIScrollList::GUIScrollList(xml_node<>* node) : GUIObject(node)
 			itemHold = "";
 		}
 	}
-	
+
 	// Load header text
 	// note: node can be NULL for the emergency console
 	child = node ? node->first_node("text") : NULL;
@@ -337,6 +338,7 @@ void GUIScrollList::RenderItem(size_t itemindex __unused, int yPos, bool selecte
 }
 
 void GUIScrollList::RenderStdItem(int yPos, bool selected, ImageResource* icon, const char* text, const char* addtext)
+//void GUIScrollList::RenderStdItem(int yPos, bool selected, ImageResource* icon, const char* text, int iconAndTextH)
 {
 	if (hasHighlightColor && selected) {
 		// Highlight the item background of the selected item
@@ -353,14 +355,14 @@ void GUIScrollList::RenderStdItem(int yPos, bool selected, ImageResource* icon, 
 	}
 
 	//if (!iconAndTextH)
-	int	iconAndTextH = actualItemHeight;
+		int iconAndTextH = actualItemHeight;
 
 	// render icon
 	if (icon && icon->GetResource()) {
 		int iconH = icon->GetHeight();
 		int iconW = icon->GetWidth();
 		int iconY = yPos + (iconAndTextH - iconH) / 2;
-		int iconX = mRenderX + (maxIconWidth - iconW) / 2 - mPadding; //[f/d] right icon padding
+		int iconX = mRenderX + (maxIconWidth - iconW) / 2; // - mPadding; //[f/d] right icon padding
 		gr_blit(icon->GetResource(), 0, 0, iconW, iconH, iconX, iconY);
 	}
 
@@ -531,7 +533,7 @@ int GUIScrollList::NotifyTouch(TOUCH_STATE state, int x, int y)
 			DataManager::SetValue(itemHold, "1");
 		else
 			break;
-		
+
 	case TOUCH_RELEASE:
 		if (fastScroll)
 			mUpdate = 1; // get rid of touch effects on the fastscroll bar
@@ -553,6 +555,7 @@ int GUIScrollList::NotifyTouch(TOUCH_STATE state, int x, int y)
 				scrollingSpeed = 0;
 		}
 	case TOUCH_REPEAT:
+	//case TOUCH_HOLD:
 		break;
 	}
 	return 0;
@@ -665,7 +668,7 @@ bool GUIScrollList::AddLines(std::vector<std::string>* origText, std::vector<std
 		if (origColor)
 			curr_color = origColor->at(i);
 		for (;;) {
-			size_t line_char_width = gr_ttf_maxExW(curr_line.c_str(), mFont->GetResource(), mRenderW);
+			size_t line_char_width = twrpTruetype::gr_ttf_maxExW(curr_line.c_str(), mFont->GetResource(), mRenderW);
 			if (line_char_width < curr_line.size()) {
 				//string left = curr_line.substr(0, line_char_width);
 				size_t wrap_pos = curr_line.find_last_of(" ,./:-_;", line_char_width - 1);

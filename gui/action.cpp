@@ -41,29 +41,29 @@
 #include <sstream>
 #include "../partitions.hpp"
 #include "../twrp-functions.hpp"
+#include "../twrpRepacker.hpp"
 #include "../openrecoveryscript.hpp"
-#include "../twrpDigestDriver.hpp"
 
-#include "../adb_install.h"
-#include "../fuse_sideload.h"
+#include "install/adb_install.h"
+
+#include "fuse_sideload.h"
 #include "blanktimer.hpp"
 #include "../twinstall.h"
-#include <openssl/sha.h>
 #include "../twrpDigest/twrpSHA.hpp"
+#include "../twrpDigestDriver.hpp"
 
-extern "C"
-{
+extern "C" {
 #include "../twcommon.h"
 #include "../variables.h"
 #include "cutils/properties.h"
-#include "../adb_install.h"
+#include "install/adb_install.h"
 };
-#include "../set_metadata.h"
+#include "set_metadata.h"
 #include "../minuitwrp/minui.h"
 
 #include "rapidxml.hpp"
 #include "objects.hpp"
-#include "../tw_atomic.hpp"
+#include "tw_atomic.hpp"
 
 GUIAction::mapFunc GUIAction::mf;
 std::set < string > GUIAction::setActionsRunningInCallerThread;
@@ -468,12 +468,12 @@ int GUIAction::flash_zip(std::string filename, int *wipe_cache)
 
       // Now, check if we need to ensure TWRP remains installed...
       struct stat st;
-      if (stat("/sbin/installTwrp", &st) == 0)
+      if (stat("/system/bin/installTwrp", &st) == 0)
 	{
 	  DataManager::SetValue("tw_operation", "Configuring TWRP");
 	  DataManager::SetValue("tw_partition", "");
 	  gui_msg("config_twrp=Configuring TWRP...");
-	  if (TWFunc::Exec_Cmd("/sbin/installTwrp reinstall") < 0)
+	  if (TWFunc::Exec_Cmd("/system/bin/installTwrp reinstall") < 0)
 	    {
 	      gui_msg
 		("config_twrp_err=Unable to configure TWRP with this kernel.");
@@ -1288,19 +1288,19 @@ int GUIAction::getpartitiondetails(std::string arg)
 		DataManager::SetValue("tw_partition_can_resize", 1);
 	      else
 		DataManager::SetValue("tw_partition_can_resize", 0);
-	      if (TWFunc::Path_Exists("/sbin/mkfs.fat"))
+	      if (TWFunc::Path_Exists(Fox_Bin_Dir + "/mkfs.fat"))
 		DataManager::SetValue("tw_partition_vfat", 1);
 	      else
 		DataManager::SetValue("tw_partition_vfat", 0);
-	      if (TWFunc::Path_Exists("/sbin/mkexfatfs"))
+	      if (TWFunc::Path_Exists(Fox_Bin_Dir + "/mkexfatfs"))
 		DataManager::SetValue("tw_partition_exfat", 1);
 	      else
 		DataManager::SetValue("tw_partition_exfat", 0);
-	      if (TWFunc::Path_Exists("/sbin/mkfs.f2fs"))
+	      if (TWFunc::Path_Exists(Fox_Bin_Dir + "/mkfs.f2fs"))
 		DataManager::SetValue("tw_partition_f2fs", 1);
 	      else
 		DataManager::SetValue("tw_partition_f2fs", 0);
-	      if (TWFunc::Path_Exists("/sbin/mke2fs"))
+	      if (TWFunc::Path_Exists(Fox_Bin_Dir + "/mke2fs"))
 		DataManager::SetValue("tw_partition_ext", 1);
 	      else
 		DataManager::SetValue("tw_partition_ext", 0);
@@ -1410,12 +1410,12 @@ void GUIAction::reinject_after_flash()
 #ifdef OF_SUPPORT_OZIP_DECRYPTION
 int GUIAction::ozip_decrypt(string zip_path)
 {
-   if (!TWFunc::Path_Exists("/sbin/ozip_decrypt")) 
+   if (!TWFunc::Path_Exists(Fox_Bin_Dir + "/ozip_decrypt")) 
       {
          return 1;
       }
    gui_msg("ozip_decrypt_decryption=Starting Ozip Decryption...");
-   TWFunc::Exec_Cmd("ozip_decrypt " + (string)TW_OZIP_DECRYPT_KEY + " '" + zip_path + "'");
+   TWFunc::Exec_Cmd(Fox_Bin_Dir + "/ozip_decrypt " + (string)TW_OZIP_DECRYPT_KEY + " '" + zip_path + "'");
    gui_msg("ozip_decrypt_finish=Ozip Decryption Finished!");
    return 0;
 }
@@ -2119,67 +2119,54 @@ int GUIAction::decrypt(std::string arg __unused)
 
 int GUIAction::adbsideload(std::string arg __unused)
 {
-  int ret_val = 0;
-  operation_start("Sideload");
-  if (simulate)
-    {
-      simulate_progress_bar();
-      operation_end(0);
-    }
-  else
-    {
-      gui_msg("start_sideload=Starting ADB sideload feature...");
-      bool mtp_was_enabled = TWFunc::Toggle_MTP(false);
+	operation_start("Sideload");
+	if (simulate) {
+		simulate_progress_bar();
+		operation_end(0);
+	} else {
+		gui_msg("start_sideload=Starting ADB sideload feature...");
+		bool mtp_was_enabled = TWFunc::Toggle_MTP(false);
 
-      // wait for the adb connection
-      int ret = apply_from_adb("/", &sideload_child_pid);
-      DataManager::SetValue("tw_has_cancel", 0);	// Remove cancel button from gui now that the zip install is going to start
+		// wait for the adb connection
+		// int ret = apply_from_adb("/", &sideload_child_pid);
+		Device::BuiltinAction reboot_action = Device::REBOOT_BOOTLOADER;
+		int ret = ApplyFromAdb("/", &reboot_action);
+		DataManager::SetValue("tw_has_cancel", 0); // Remove cancel button from gui now that the zip install is going to start
 
-      if (ret != 0)
-	{
-	  if (ret == -2)
-	    gui_msg
-	      ("need_new_adb=You need adb 1.0.32 or newer to sideload to this device.");
-	  ret = 1;		// failure
+		if (ret != 0) {
+			if (ret == -2)
+				gui_msg("need_new_adb=You need adb 1.0.32 or newer to sideload to this device.");
+			ret = 1; // failure
+		} else {
+			int wipe_cache = 0;
+			int wipe_dalvik = 0;
+			DataManager::GetValue("tw_wipe_dalvik", wipe_dalvik);
+
+			if (TWinstall_zip(FUSE_SIDELOAD_HOST_PATHNAME, &wipe_cache) == 0) {
+				if (wipe_cache || DataManager::GetIntValue("tw_wipe_cache"))
+					PartitionManager.Wipe_By_Path("/cache");
+				if (wipe_dalvik)
+					PartitionManager.Wipe_Dalvik_Cache();
+			} else {
+				ret = 1; // failure
+			}
+		}
+		if (sideload_child_pid) {
+			LOGINFO("Signaling child sideload process to exit.\n");
+			struct stat st;
+			// Calling stat() on this magic filename signals the minadbd
+			// subprocess to shut down.
+			stat(FUSE_SIDELOAD_HOST_EXIT_PATHNAME, &st);
+			int status;
+			LOGINFO("Waiting for child sideload process to exit.\n");
+			waitpid(sideload_child_pid, &status, 0);
+		}
+		property_set("ctl.start", "adbd");
+		TWFunc::Toggle_MTP(mtp_was_enabled);
+		reinject_after_flash();
+		operation_end(ret);
 	}
-      else
-	{
-	  int wipe_cache = 0;
-	  int wipe_dalvik = 0;
-	  DataManager::GetValue("tw_wipe_dalvik", wipe_dalvik);
-	  ret_val = TWinstall_zip(FUSE_SIDELOAD_HOST_PATHNAME, &wipe_cache);
-	  if (ret_val == 0)
-	    {
-	      if (wipe_cache || DataManager::GetIntValue("tw_wipe_cache"))
-		PartitionManager.Wipe_By_Path("/cache");
-	      if (wipe_dalvik)
-		PartitionManager.Wipe_Dalvik_Cache();
-	    }
-	  else
-	    {
-	      ret = 1;		// failure
-	    }
-	}
-      if (sideload_child_pid)
-	{
-	  LOGINFO("Signaling child sideload process to exit.\n");
-	  struct stat st;
-	  // Calling stat() on this magic filename signals the minadbd
-	  // subprocess to shut down.
-	  stat(FUSE_SIDELOAD_HOST_EXIT_PATHNAME, &st);
-	  int status;
-	  LOGINFO("Waiting for child sideload process to exit.\n");
-	  waitpid(sideload_child_pid, &status, 0);
-	}
-      property_set("ctl.start", "adbd");
-      TWFunc::Toggle_MTP(mtp_was_enabled);
-
-      DataManager::Leds(true);
-
-      reinject_after_flash();
-      operation_end(ret);
-    }
-  return 0;
+	return 0;
 }
 
 int GUIAction::adbsideloadcancel(std::string arg __unused)

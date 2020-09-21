@@ -47,14 +47,14 @@
 #include "openrecoveryscript.hpp"
 #include "progresstracking.hpp"
 #include "variables.h"
-#include "adb_install.h"
+#include "install/adb_install.h"
 #include "data.hpp"
-#include "adb_install.h"
 #include "fuse_sideload.h"
 #include "gui/gui.hpp"
 #include "gui/pages.hpp"
 #include "orscmd/orscmd.h"
 #include "twinstall.h"
+#include "install/adb_install.h"
 extern "C" {
 	#include "gui/gui.h"
 	#include "cutils/properties.h"
@@ -377,10 +377,13 @@ int OpenRecoveryScript::run_script_file(void) {
 
 				int wipe_cache = 0;
 				string result;
-				pid_t sideload_child_pid;
+				// pid_t sideload_child_pid;
 
 				gui_msg("start_sideload=Starting ADB sideload feature...");
-				ret_val = apply_from_adb("/", &sideload_child_pid);
+
+				// ret_val = apply_from_adb("/", &sideload_child_pid);
+				Device::BuiltinAction reboot_action = Device::REBOOT_BOOTLOADER;
+				ret_val = ApplyFromAdb("/", &reboot_action);
 				if (ret_val != 0) {
 					if (ret_val == -2)
 						gui_err("need_new_adb=You need adb 1.0.32 or newer to sideload to this device.");
@@ -392,6 +395,7 @@ int OpenRecoveryScript::run_script_file(void) {
 					ret_val = 1; // failure
 				}
 				sideload = 1; // Causes device to go to the home screen afterwards
+#ifdef USE_28_INSTALL 
 				if (sideload_child_pid != 0) {
 					LOGINFO("Signaling child sideload process to exit.\n");
 					struct stat st;
@@ -402,6 +406,7 @@ int OpenRecoveryScript::run_script_file(void) {
 					LOGINFO("Waiting for child sideload process to exit.\n");
 					waitpid(sideload_child_pid, &status, 0);
 				}
+#endif
 				property_set("ctl.start", "adbd");
 				gui_msg("done=Done.");
 			} else if (strcmp(command, "fixperms") == 0 || strcmp(command, "fixpermissions") == 0 || strcmp(command, "fixcontexts") == 0) {
@@ -417,6 +422,8 @@ int OpenRecoveryScript::run_script_file(void) {
 					gui_err("no_pwd=No password provided.");
 					ret_val = 1; // failure
 				}
+			} else if (strcmp(command, "listmounts") == 0) {
+				TWFunc::List_Mounts();
 			} else {
 				LOGERR("Unrecognized script command: '%s'\n", command);
 				ret_val = 1;
@@ -701,10 +708,7 @@ void OpenRecoveryScript::Run_CLI_Command(const char* command) {
 		gui_msg("decrypt_cmd=Attempting to decrypt data partition via command line.");
 		if (PartitionManager.Decrypt_Device(pass) == 0) {
 			// set_page_done = 1;  // done by singleaction_page anyway
-			std::string logDir = TWFunc::get_log_dir();
-			if (logDir == DATA_LOGS_DIR)
-				logDir = "/data/cache";
-			std::string orsFile = logDir + "/openrecoveryscript";
+			std::string orsFile = TWFunc::get_log_dir() + "/openrecoveryscript";
 			if (TWFunc::Path_Exists(orsFile)) {
 				Run_OpenRecoveryScript_Action();
 			}

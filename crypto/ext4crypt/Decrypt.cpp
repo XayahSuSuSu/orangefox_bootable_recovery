@@ -52,10 +52,12 @@
 #include <sys/types.h>
 #include <fstream>
 
-#include <ext4_utils/ext4_crypt.h>
+#include "ext4_crypt.h"
 
 #ifdef USE_KEYSTORAGE_4
-#include <android/security/IKeystoreService.h>
+#include <android/hardware/confirmationui/1.0/types.h>
+#include <android/security/BnConfirmationPromptCallback.h>
+#include <android/security/keystore/IKeystoreService.h>
 #else
 #include <keystore/IKeystoreService.h>
 #include <keystore/authorization_set.h>
@@ -81,6 +83,10 @@ extern "C" {
 #include "HashPassword.h"
 
 #include <android-base/file.h>
+
+#ifdef USE_KEYSTORAGE_4
+using android::security::keystore::IKeystoreService;
+#endif
 
 // Store main DE raw ref / policy
 extern std::string de_raw_ref;
@@ -551,7 +557,7 @@ std::string unwrapSyntheticPasswordBlob(const std::string& spblob_path, const st
 	// First get the keystore service
     sp<IBinder> binder = getKeystoreBinderRetry();
 #ifdef USE_KEYSTORAGE_4
-	sp<security::IKeystoreService> service = interface_cast<security::IKeystoreService>(binder);
+	sp<IKeystoreService> service = interface_cast<IKeystoreService>(binder);
 #else
 	sp<IKeystoreService> service = interface_cast<IKeystoreService>(binder);
 #endif
@@ -653,7 +659,7 @@ std::string unwrapSyntheticPasswordBlob(const std::string& spblob_path, const st
 			if (auth_wait_count == 0 || access("/auth_error", F_OK) == 0) {
 				printf("error during keymaster_auth service\n");
 				/* If you are getting this error, make sure that you have the keymaster_auth service defined in your init scripts, preferrably in init.recovery.{ro.hardware}.rc
-				 * service keystore_auth /sbin/keystore_auth
+				 * service keystore_auth /system/bin/keystore_auth
 				 *     disabled
 				 *     oneshot
 				 *     user system
@@ -798,7 +804,7 @@ std::string unwrapSyntheticPasswordBlob(const std::string& spblob_path, const st
 			if (auth_wait_count == 0 || access("/auth_error", F_OK) == 0) {
 				printf("error during keymaster_auth service\n");
 				/* If you are getting this error, make sure that you have the keymaster_auth service defined in your init scripts, preferrably in init.recovery.{ro.hardware}.rc
-				 * service keystore_auth /sbin/keystore_auth
+				 * service keystore_auth /system/bin/keystore_auth
 				 *     disabled
 				 *     oneshot
 				 *     user system

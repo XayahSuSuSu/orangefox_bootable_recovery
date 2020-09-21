@@ -5,6 +5,7 @@ LOCAL_MODULE := libtwrpdigest
 LOCAL_MODULE_TAGS := optional
 LOCAL_CFLAGS = -fno-strict-aliasing
 LOCAL_C_INCLUDES := external/openssl/include bionic
+LOCAL_C_INCLUDES += external/boringssl/src/include
 
 LOCAL_SRC_FILES = \
         twrpDigest.cpp \
@@ -25,8 +26,5 @@ else
         	twrpSHA.cpp
 endif
 
-ifeq ($(OF_LEGACY_SHAR512),1)
-    LOCAL_CFLAGS += -DOF_LEGACY_SHAR512=1
-endif
 
 include $(BUILD_SHARED_LIBRARY)

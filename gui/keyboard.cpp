@@ -28,6 +28,7 @@ extern "C" {
 #include "gui.h"
 }
 #include "../minuitwrp/minui.h"
+#include "../minuitwrp/truetype.hpp"
 
 #include "rapidxml.hpp"
 #include "objects.hpp"
@@ -336,7 +337,7 @@ void GUIKeyboard::DrawKey(Key& key, int keyX, int keyY, int keyW, int keyH)
 	if (!labelText.empty() && labelFont && labelFont->GetResource())
 	{
 		void* fontResource = labelFont->GetResource();
-		int textW = gr_ttf_measureEx(labelText.c_str(), fontResource);
+		int textW = twrpTruetype::gr_ttf_measureEx(labelText.c_str(), fontResource);
 		int textH = labelFont->GetHeight();
 		int textX = keyX + (keyW - textW) / 2;
 		int textY = keyY + (keyH - textH) / 2;
@@ -349,7 +350,7 @@ void GUIKeyboard::DrawKey(Key& key, int keyX, int keyY, int keyW, int keyH)
 		void* fontResource = mLongpressFont->GetResource();
 		gr_color(mLongpressFontColor.red, mLongpressFontColor.green, mLongpressFontColor.blue, mLongpressFontColor.alpha);
 		string text(1, keychar);
-		int textW = gr_ttf_measureEx(text.c_str(), fontResource);
+		int textW = twrpTruetype::gr_ttf_measureEx(text.c_str(), fontResource);
 		int textX = keyX + keyW - longpressOffsetX - textW;
 		int textY = keyY + longpressOffsetY;
 		gr_textEx_scaleW(textX, textY, text.c_str(), fontResource, keyW, TOP_LEFT, 0);
@@ -650,3 +651,4 @@ void GUIKeyboard::SetPageFocus(int inFocus)
 	if (inFocus)
 		CtrlActive = false;
 }
+

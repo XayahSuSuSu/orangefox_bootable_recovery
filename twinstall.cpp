@@ -44,7 +44,7 @@
 #ifdef USE_MINZIP
 #include "minzip/SysUtil.h"
 #else
-#include "otautil/SysUtil.h"
+#include "otautil/sysutil.h"
 #include <ziparchive/zip_archive.h>
 #endif
 #include "zipwrap.hpp"
@@ -819,7 +819,7 @@ static int Prepare_Update_Binary(const char *path, ZipWrap * Zip,
        {
          string alt_cmd = "/sbin/resetprop";
          if (!TWFunc::Path_Exists(alt_cmd))
-              	alt_cmd = "/sbin/setprop";
+              	alt_cmd = Fox_Bin_Dir + "/setprop";
          
          if (!TWFunc::Path_Exists(alt_cmd))
          	return INSTALL_SUCCESS;
@@ -1277,7 +1277,7 @@ int TWinstall_zip(const char *path, int *wipe_cache)
 		bool vendor_mount_state = PartitionManager.Is_Mounted_By_Path("/vendor");
 		PartitionManager.Mount_By_Path(PartitionManager.Get_Android_Root_Path(), true);
 		PartitionManager.Mount_By_Path("/vendor", true);
-		TWFunc::Exec_Cmd("cp -f /sbin/sh /tmp/sh");
+		TWFunc::Exec_Cmd("cp -f /system/bin/sh /tmp/sh");
 		mount("/tmp/sh", "/system/bin/sh", "auto", MS_BIND, NULL);
 		ret_val = Run_Update_Binary(path, &Zip, wipe_cache, AB_OTA_ZIP_TYPE);
 		umount("/system/bin/sh");

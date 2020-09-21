@@ -149,6 +149,9 @@ ifneq ($(TARGET_RECOVERY_OVERSCAN_PERCENT),)
 else
   LOCAL_CFLAGS += -DOVERSCAN_PERCENT=0
 endif
+ifeq ($(TW_SCREEN_BLANK_ON_BOOT), true)
+    LOCAL_CFLAGS += -DTW_SCREEN_BLANK_ON_BOOT
+endif
 ifeq ($(TW_FBIOPAN), true)
     LOCAL_CFLAGS += -DTW_FBIOPAN
 endif
@@ -210,7 +213,7 @@ LOCAL_STATIC_LIBRARIES += libpixelflinger_twrp
 ifeq ($(shell test $(PLATFORM_SDK_VERSION) -gt 25; echo $$?),0)
 LOCAL_SHARED_LIBRARIES += libcutils liblog libutils
 endif
-LOCAL_MODULE_TAGS := eng
+LOCAL_MODULE_TAGS := optional
 LOCAL_MODULE := libminuitwrp
 
 include $(BUILD_SHARED_LIBRARY)

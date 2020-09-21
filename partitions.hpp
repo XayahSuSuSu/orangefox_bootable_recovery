@@ -26,7 +26,8 @@
 #include "exclude.hpp"
 #include "tw_atomic.hpp"
 #include "progresstracking.hpp"
-#include "ext4crypt_tar.h"
+#include "crypto/fscrypt/fscrypt_policy.h"
+#include "twrpApex.hpp"
 
 #define MAX_FSTAB_LINE_LENGTH 2048
 
@@ -77,7 +78,7 @@ struct Flags_Map {
 	std::string Flags;
 	char* fstab_line;
 };
-
+/*
 enum Repack_Type {
 	REPLACE_NONE = 0,
 	REPLACE_RAMDISK = 1,
@@ -90,7 +91,7 @@ struct Repack_Options_struct {
 	bool Disable_Verity;
 	bool Disable_Force_Encrypt;
 };
-
+*/
 enum PartitionManager_Op {                                                    // PartitionManager Restore Mode for Raw_Read_Write()
 	PM_BACKUP = 0,
 	PM_RESTORE = 1,
@@ -164,8 +165,15 @@ public:
 	void Revert_Adopted();
 	void Partition_Post_Processing(bool Display_Error);                       // Apply partition specific settings after fstab processed
 	void Set_Backup_FileName(string fname);                                   // Set Backup_FileName for partition
+	std::string Get_Backup_FileName();                                        // Get the backup filename for the partition
 	string Get_Backup_Name();                                                 // Get Backup_Name for partition
 	bool Decrypt_FBE_DE();                                                    // If FBE is present, backup exclusions are set up and DE decrypt is attempted
+	std::string Get_Display_Name();                                           // Get the display name in the gui for the partition
+	bool Is_SlotSelect();                                                     // Return whether the partition is a slot partition or not
+	bool Get_Super_Status();						  // Returns true if partition is a super volume mounted partitions
+	string Get_Mount_Point();												  // Return Mount_Point or directory the current partition is mounted on
+	void Set_Can_Be_Backed_Up(bool val);									  // Update whether the partition can be backed up or not
+	void Set_Can_Be_Wiped(bool val);										  // Update whether the partition can be wiped or not
 
 public:
 	string Current_File_System;                                               // Current file system
@@ -180,9 +188,11 @@ public:
 protected:
 	bool Has_Data_Media;                                                      // Indicates presence of /data/media, may affect wiping and backup methods
 	void Setup_Data_Media();                                                  // Sets up a partition as a /data/media emulated storage partition
-
+	void Set_Block_Device(std::string block_device);						  // Allow super partition setup to change block device
 private:
-	bool Process_Fstab_Line(const char *fstab_line, bool Display_Error, std::map<string, Flags_Map> *twrp_flags, bool Sar_Detect); // Processes a fstab line
+	bool Process_Fstab_Line(const char *fstab_line, bool Display_Error, std::map<string, Flags_Map> *twrp_flags); // Processes a fstab line
+	void Set_FBE_Status();													  // Set FBE status of partition
+
 	void Setup_Data_Partition(bool Display_Error);                            // Setup data partition after fstab processed
 	void Setup_Cache_Partition(bool Display_Error);                           // Setup cache partition after fstab processed
 	bool Find_Wildcard_Block_Devices(const string& Device);                   // Searches for and finds wildcard block devices
@@ -297,6 +307,7 @@ private:
 	};
 
 	std::vector<partition_fs_flags_struct> fs_flags;                          // This vector stores mount flags and options for different file systems for the same partition
+	bool Is_Super;															  // States whether partition should be loaded from the super partition
 
 friend class TWPartitionManager;
 friend class DataManager;
@@ -312,8 +323,9 @@ public:
 	~TWPartitionManager() {}
 
 public:
-	int Process_Fstab(string Fstab_Filename, bool Display_Error, bool Sar_Detect); // Parses the fstab and populates the partitions
+	int Process_Fstab(string Fstab_Filename, bool Display_Error);             // Parses the fstab and populates the partitions
 	int Write_Fstab();                                                        // Creates /etc/fstab file that's used by the command line for mount commands
+	void Decrypt_Data();													  // Decrypt Data if enabled
 	void Output_Partition_Logging();                                          // Outputs partition information to the log
 	void Output_Partition(TWPartition* Part);                                 // Outputs partition details to the log
 	int Mount_By_Path(string Path, bool Display_Error);                       // Mounts partition based on path (e.g. /system)
@@ -327,8 +339,16 @@ public:
 	int Run_Backup(bool adbbackup);                                           // Initiates a backup in the current storage
 	int Run_OTA_Survival_Backup(bool adbbackup);                              // Create backup for OTA survival in the internal storage
     int Run_OTA_Survival_Restore(const string& Restore_Name);                 // Restore OTA survival
-    
-    
+ 	bool Prepare_All_Super_Volumes();										  // Prepare all known super volumes from super partition
+	bool Is_Super_Partition(const char* fstab_line);						  // Checks if partition entry is a super partition
+   
+     bool Prepare_Super_Volume(TWPartition* twrpPart);					  	  // Prepare logical super partition volume for mounting
+	std::string Get_Super_Partition();										  // Get Super Partition block device path
+	void Setup_Super_Devices();												  // Setup logical dm devices on super partition
+	bool Get_Super_Status();												  // Return whether device has a super partition
+	void Setup_Super_Partition();											  // Setup the super partition for backup and restore
+	bool Recreate_Logs_Dir();                                                 // Recreate TWRP_AB_LOGS_DIR after wipe
+   
     int Run_Restore(const string& Restore_Name);                              // Restores a backup
 	bool Write_ADB_Stream_Header(uint64_t partition_count);                   // Write ADB header over twrpbu FIFO
 	bool Write_ADB_Stream_Trailer();                                          // Write ADB trailer over twrpbu FIFO

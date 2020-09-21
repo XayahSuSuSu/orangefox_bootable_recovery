@@ -25,17 +25,21 @@
 #include <string>
 #include <vector>
 
-#ifdef USE_FSCRYPT
-#include <ext4_utils/ext4_crypt.h>
-#else
-#include "ext4crypt_tar.h"
-#endif
-
 #include "twrpDigest/twrpDigest.hpp"
 
 #ifndef BUILD_TWRPTAR_MAIN
 #include "partitions.hpp"
 #endif
+
+#ifdef HAVE_EXT4_CRYPT
+# include "crypto/ext4crypt/ext4crypt_tar.h"
+#endif
+
+#ifdef USE_FSCRYPT
+#include "fscrypt_policy.h"
+#endif
+
+//#include "crypto/ext4crypt/ext4crypt_tar.h"
 
 using namespace std;
 
@@ -71,6 +75,7 @@ public:
 	static string Get_Filename(const string& Path);                             // Trims the path off of a filename
 	static string Exec_With_Output(const string &cmd);			    // Run a command & capture the output
 
+	static int Exec_Cmd(const string& cmd, string &result, bool combine_stderr);     //execute a command and return the result as a string by reference, set combined_stderror to add stderr
 	static int Exec_Cmd(const string& cmd, string &result);                     //execute a command and return the result as a string by reference
 	static int Exec_Cmd(const string& cmd, bool Show_Errors = true);                   //execute a command, displays an error to the GUI if Show_Errors is true, Show_Errors is true by default
 	static int Wait_For_Child(pid_t pid, int *status, string Child_Name, bool Show_Errors = true); // Waits for pid to exit and checks exit status, displays an error to the GUI if Show_Errors is true which is the default
@@ -81,6 +86,7 @@ public:
 	static int Try_Decrypting_File(string fn, string password); 		    // -1 for some error, 0 for failed to decrypt, 1 for decrypted, 3 for decrypted and found gzip format
 	static unsigned long Get_File_Size(const string& Path);                     // Returns the size of a file
 	static std::string Remove_Trailing_Slashes(const std::string& path, bool leaveLast = false); // Normalizes the path, e.g /data//media/ -> /data/media
+	static std::string Remove_Beginning_Slash(const std::string& path);         // Remove the beginning slash of a path
 	static void Strip_Quotes(char* &str);                                       // Remove leading & trailing double-quotes from a string
 	static vector<string> split_string(const string &in, char del, bool skip_empty);
 	static timespec timespec_diff(timespec& start, timespec& end);	            // Return a diff for 2 times
@@ -97,8 +103,9 @@ public:
 	static void htc_dumlock_restore_original_boot(void);                        // Restores the backup of boot from HTC Dumlock
 	static void htc_dumlock_reflash_recovery_to_boot(void);                     // Reflashes the current recovery to boot
 
-	static bool Get_Encryption_Policy(ext4_encryption_policy &policy, std::string path); // return encryption policy for path
-	static bool Set_Encryption_Policy(std::string path, const ext4_encryption_policy &policy); // set encryption policy for path
+	static bool Get_Encryption_Policy(fscrypt_encryption_policy &policy, std::string path); // return encryption policy for path
+	static bool Set_Encryption_Policy(std::string path, const fscrypt_encryption_policy &policy); // set encryption policy for path
+	static void List_Mounts();
 
 	static bool Repack_Image(string mount_point);
 	static bool Unpack_Image(string mount_point);
@@ -125,6 +132,7 @@ public:
 	static int write_to_file(const string& fn, const string& line);             //write to file
 	static bool Try_Decrypting_Backup(string Restore_Path, string Password); // true for success, false for failed to decrypt
 	static string System_Property_Get(string Prop_Name);                // Returns value of Prop_Name from reading /system/build.prop
+	static string System_Property_Get(string Prop_Name, TWPartitionManager &PartitionManager, string Mount_Point);                // Returns value of Prop_Name from reading /system/build.prop	
   	static bool CheckWord(std::string filename, std::string search); // Check if the word exist in the txt file and then return true or false 
 	static string File_Property_Get(string File_Path, string Prop_Name);                // Returns specified property value from the file
 	static string Get_Current_Date(void);                               // Returns the current date in ccyy-m-dd--hh-nn-ss format

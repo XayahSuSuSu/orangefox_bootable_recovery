@@ -53,6 +53,7 @@
 #include <stdlib.h>
 #include <string>
 #include <unistd.h>
+static const std::string Fox_Bin_Dir = "/system/bin";
 static const std::string Fox_Tmp = "/tmp";
 static const std::string Fox_Home = "/sdcard/Fox";
 static const std::string Fox_Home_Files = Fox_Home + "/FoxFiles";
@@ -60,7 +61,6 @@ static const std::string Fox_Logs_Dir = Fox_Home + "/logs";
 static const std::string Fox_sdcard_aroma_cfg = Fox_Home + "/aromafm.cfg";
 static const std::string Fox_Themes_Dir = "/Fox/theme";
 static const std::string FFiles_dir = "/FFiles";
-//static const std::string Fox_aroma_cfg = FFiles_dir + "/AromaFM/AromaFM.zip.cfg";
 static const std::string Fox_aroma_cfg = Fox_Home_Files + "/AromaFM/AromaFM.zip.cfg";
 static const std::string Fox_tmp_dir = Fox_Tmp + "/orangefox";
 static const std::string Fox_ramdisk_dir = Fox_tmp_dir + "/ramdisk"; 
@@ -118,7 +118,6 @@ static int Fox_Current_ROM_IsMIUI = 0; // is the currently installed ROM a MIUI 
 #define FOX_REBOOT_AFTER_RESTORE        "fox_reboot_after_restore"
 #define FOX_COMPATIBILITY_DEVICE        "fox_compatibility_fox_device"
 #define FOX_MAIN_SURVIVAL_TRIGGER       "fox_main_survival_trigger"
-//#define FOX_SUPERSU_CONFIG           	"fox_supersu_config_chk"
 #define FOX_NO_OS_SEARCH_ENGINE         "fox_noos_engine"
 #define FOX_TMP_SCRIPT_DIR       	"fox_tmp_script_directory"
 #define FOX_STATUSBAR_ON_LOCK       	"fox_statusbar_on_lockpass"
@@ -292,5 +291,7 @@ static int Fox_Current_ROM_IsMIUI = 0; // is the currently installed ROM a MIUI 
 
 #define SCRIPT_FILE_TMP "/tmp/openrecoveryscript"
 #define TMP_LOG_FILE "/tmp/recovery.log"
-
+#define UPDATER_SCRIPT  "META-INF/com/google/android/updater-script"
+#define AROMA_CONFIG "META-INF/com/google/android/aroma-config"
+#define TW_IS_SUPER                 "tw_is_super"
 #endif  // _VARIABLES_HEADER_

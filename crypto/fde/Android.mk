@@ -3,7 +3,7 @@ ifeq ($(TW_INCLUDE_CRYPTO), true)
 include $(CLEAR_VARS)
 
 LOCAL_MODULE := libcryptfsfde
-LOCAL_MODULE_TAGS := eng optional
+LOCAL_MODULE_TAGS := optional
 LOCAL_SRC_FILES := cryptfs.cpp
 LOCAL_SHARED_LIBRARIES := libcrypto libhardware libcutils libstdc++
 LOCAL_STATIC_LIBRARIES := libscrypttwrp_static
@@ -14,14 +14,16 @@ ifeq ($(shell test $(PLATFORM_SDK_VERSION) -lt 23; echo $$?),0)
     LOCAL_CPPFLAGS := -std=c++11
 endif
 
-ifeq ($(OF_DISABLE_KEYMASTER2),1)
-    LOCAL_CFLAGS += -DOF_DISABLE_KEYMASTER2='"1"'
-endif
-
 ifeq ($(shell test $(PLATFORM_SDK_VERSION) -ge 26; echo $$?),0)
     #8.0 or higher
     LOCAL_C_INCLUDES +=  external/boringssl/src/include
-    LOCAL_SHARED_LIBRARIES += libselinux libc libc++ libbase libcrypto libcutils libkeymaster_messages libhardware libprotobuf-cpp-lite libe4crypt android.hardware.keymaster@3.0 libkeystore_binder libhidlbase libutils libbinder
+    ifeq ($(shell test $(PLATFORM_SDK_VERSION) -ge 29; echo $$?),0)
+        LOCAL_SHARED_LIBRARIES += libtwrpfscrypt
+    else
+        LOCAL_SHARED_LIBRARIES += libe4crypt
+    endif
+    LOCAL_SHARED_LIBRARIES += libselinux libc libc++ libbase libcrypto libcutils libkeymaster_messages libhardware libprotobuf-cpp-lite \
+        android.hardware.keymaster@3.0 libkeystore_binder libhidlbase libutils libbinder
     ifeq ($(shell test $(PLATFORM_SDK_VERSION) -ge 28; echo $$?),0)
         #9.0 rules
         LOCAL_CFLAGS += -Wno-unused-variable -Wno-sign-compare -Wno-unused-parameter -Wno-comment
@@ -63,7 +65,7 @@ include $(CLEAR_VARS)
 LOCAL_MODULE := twrpdec
 LOCAL_MODULE_TAGS := optional
 LOCAL_MODULE_CLASS := RECOVERY_EXECUTABLES
-LOCAL_MODULE_PATH := $(TARGET_RECOVERY_ROOT_OUT)/sbin
+LOCAL_MODULE_PATH := $(TARGET_RECOVERY_ROOT_OUT)/
 LOCAL_SRC_FILES := main.cpp cryptfs.cpp
 LOCAL_SHARED_LIBRARIES := libcrypto libhardware libcutils libc libstdc++
 LOCAL_C_INCLUDES := external/openssl/include $(commands_recovery_local_path)/crypto/scrypt/lib/crypto
@@ -76,7 +78,13 @@ endif
 ifeq ($(shell test $(PLATFORM_SDK_VERSION) -ge 26; echo $$?),0)
     #8.0 or higher
     LOCAL_C_INCLUDES +=  external/boringssl/src/include
-    LOCAL_SHARED_LIBRARIES += libselinux libc libc++ libbase libcrypto libcutils libkeymaster_messages libhardware libprotobuf-cpp-lite libe4crypt android.hardware.keymaster@3.0 libkeystore_binder libhidlbase libutils libbinder
+    ifeq ($(shell test $(PLATFORM_SDK_VERSION) -ge 29; echo $$?),0)
+        LOCAL_SHARED_LIBRARIES += libtwrpfscrypt
+    else
+        LOCAL_SHARED_LIBRARIES += libe4crypt
+    endif
+    LOCAL_SHARED_LIBRARIES += libselinux libc libc++ libbase libcrypto libcutils libkeymaster_messages libhardware libprotobuf-cpp-lite \
+    android.hardware.keymaster@3.0 libkeystore_binder libhidlbase libutils libbinder
     ifeq ($(shell test $(PLATFORM_SDK_VERSION) -ge 28; echo $$?),0)
         #9.0 rules
         LOCAL_CFLAGS += -Wno-unused-variable -Wno-sign-compare -Wno-unused-parameter -Wno-comment

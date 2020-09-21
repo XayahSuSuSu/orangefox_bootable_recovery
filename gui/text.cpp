@@ -1,5 +1,5 @@
 /*
-        Copyright 2012 to 2016 bigbiff/Dees_Troy TeamWin
+        Copyright 2012 to 2020 TeamWin
         This file is part of TWRP/TeamWin Recovery Project.
 
         TWRP is free software: you can redistribute it and/or modify
@@ -39,6 +39,7 @@ extern "C" {
 #include "../twcommon.h"
 }
 #include "../minuitwrp/minui.h"
+#include "../minuitwrp/truetype.hpp"
 
 #include "rapidxml.hpp"
 #include "objects.hpp"
@@ -52,10 +53,8 @@ GUIText::GUIText(xml_node<>* node)
 	mFontHeight = 0;
 	maxWidth = 0;
 	scaleWidth = true;
-	mLimit = isHighlighted = false;
-	mLength = 0;
+	isHighlighted = false;
 	mText = "";
-	xml_node<>* child;
 
 	if (!node)
 		return;
@@ -74,14 +73,8 @@ GUIText::GUIText(xml_node<>* node)
 	// Load the placement
 	LoadPlacement(FindNode(node, "placement"), &mRenderX, &mRenderY, &mRenderW, &mRenderH, &mPlacement);
 
-	child = FindNode(node, "text");
+	xml_node<>* child = FindNode(node, "text");
 	if (child)  mText = child->value();
-
-	child = FindNode(node, "limit");
-	if (child) {
-		mLimit = true;
-		mLength = LoadAttrInt(child, "length", mLength);
-	}
 
 	child = FindNode(node, "noscaling");
 	if (child) {
@@ -119,11 +112,6 @@ int GUIText::Render(void)
 		return -1;
 
 	mLastValue = gui_parse_text(mText);
-	if (mLimit) {
-		int valLeng = mLastValue.length();
-		if (valLeng > mLength)
-			mLastValue = "..." + mLastValue.substr(valLeng - mLength, valLeng);
-	}
 
 	mVarChanged = 0;
 
@@ -172,7 +160,7 @@ int GUIText::GetCurrentBounds(int& w, int& h)
 
 	h = mFontHeight;
 	mLastValue = gui_parse_text(mText);
-	w = gr_ttf_measureEx(mLastValue.c_str(), fontResource);
+	w = twrpTruetype::gr_ttf_measureEx(mLastValue.c_str(), fontResource);
 	return 0;
 }
 

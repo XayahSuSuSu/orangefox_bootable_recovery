@@ -27,7 +27,7 @@
 #include <map>
 #include <set>
 #include <time.h>
-#include <openssl/sha.h>
+//#include <openssl/sha.h>
 
 using namespace rapidxml;
 
@@ -569,6 +569,7 @@ protected:
 
 	// render a standard-layout list item with optional icon and text
 	void RenderStdItem(int yPos, bool selected, ImageResource* icon, const char* text, const char* addtext = NULL);
+	//void RenderStdItem(int yPos, bool selected, ImageResource* icon, const char* text, int iconAndTextH = 0);
 
 	enum { NO_ITEM = (size_t)-1 };
 	// returns item index at coordinates or NO_ITEM if there is no item there
