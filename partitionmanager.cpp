@@ -475,10 +475,30 @@ void TWPartitionManager::Setup_Android_Secure_Location(TWPartition * Part)
 void TWPartitionManager::Output_Partition_Logging(void)
 {
   std::vector < TWPartition * >::iterator iter;
+  if (Get_Super_Status())
+  	property_set("orangefox.super.partition", "true");
+  else
+  	property_set("orangefox.super.partition", "false");
 
   printf("\n\nPartition Logs:\n");
+  TWPartition* Part;
   for (iter = Partitions.begin(); iter != Partitions.end(); iter++)
-    Output_Partition((*iter));
+    {
+       	Output_Partition((*iter));
+       	Part = *iter;
+       	if (Part->Mount_Point == "/vendor") {
+	   property_set("orangefox.vendor.mount_point", Part->Mount_Point.c_str());
+	   property_set("orangefox.vendor.block_device", Part->Actual_Block_Device.c_str());
+	}
+	else if (Part->Mount_Point == Get_Android_Root_Path()) {
+	   property_set("orangefox.system.mount_point", Part->Mount_Point.c_str());
+	   property_set("orangefox.system.block_device", Part->Actual_Block_Device.c_str());
+	}
+	else if (Part->Mount_Point == "/super") {
+	   property_set("orangefox.super.mount_point", Part->Mount_Point.c_str());
+	   property_set("orangefox.super.block_device", Part->Actual_Block_Device.c_str());
+	}
+    }
 }
 
 void TWPartitionManager::Output_Partition(TWPartition* Part) {
