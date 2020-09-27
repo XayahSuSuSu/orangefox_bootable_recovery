@@ -140,7 +140,7 @@ int GUIBattery::Render(void)
 	mBatteryPercentStr = mBatteryIcon == 0 ? DataManager::GetStrValue("tw_battery_charge") :
 											 DataManager::GetStrValue("tw_battery") + "%" ;
 	
-	int textW = gr_ttf_measureEx(mBatteryPercentStr.c_str(), fontResource);
+	int textW = twrpTruetype::gr_ttf_measureEx(mBatteryPercentStr.c_str(), fontResource);
 	
 	if (mBatteryIcon == 1) {
 		int iconRealX = textW + mPadding + mRenderW;
