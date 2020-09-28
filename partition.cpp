@@ -680,8 +680,10 @@ void TWPartition::Setup_Data_Partition(bool Display_Error) {
 		Decrypted_Block_Device = crypto_blkdev;
 		LOGINFO("Data already decrypted, new block device: '%s'\n", crypto_blkdev);
 		DataManager::SetValue(TW_IS_ENCRYPTED, 0);
+		DataManager::SetValue(FOX_ENCRYPTED_DEVICE, "1");
 	} else if (!Mount(false)) {
 		if (Is_Present) {
+			DataManager::SetValue(FOX_ENCRYPTED_DEVICE, "1");
 			if (Key_Directory.empty()) {
 				set_partition_data(Actual_Block_Device.c_str(), Crypto_Key_Location.c_str(), Fstab_File_System.c_str());
 				if (cryptfs_check_footer() == 0) {
@@ -710,12 +712,12 @@ void TWPartition::Setup_Data_Partition(bool Display_Error) {
 			property_get("fbe.data.wrappedkey", wrappedvalue, "");
 			std::string wrappedkeyvalue(wrappedvalue);
 			if (wrappedkeyvalue == "true") {
-				LOGERR("Unable to decrypt FBE device\n");
+				gui_print("Device not encrypted/Unable to decrypt FBE device\n");
 			} else {
 				LOGINFO("Trying wrapped key.\n");
 				property_set("fbe.data.wrappedkey", "true");
 				if (!Decrypt_FBE_DE()) {
-					LOGERR("Unable to decrypt FBE device\n");
+					LOGINFO("Device not encrypted/Unable to decrypt FBE device\n");
 				}
 			}
 		}

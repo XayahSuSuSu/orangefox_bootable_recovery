@@ -384,6 +384,7 @@ void TWPartitionManager::Decrypt_Data() {
 	#ifdef TW_INCLUDE_CRYPTO
 	TWPartition* Decrypt_Data = Find_Partition_By_Path("/data");
 	if (Decrypt_Data && Decrypt_Data->Is_Encrypted && !Decrypt_Data->Is_Decrypted) {
+		DataManager::SetValue(FOX_ENCRYPTED_DEVICE, "1");
 		if (!Decrypt_Data->Key_Directory.empty() && Mount_By_Path(Decrypt_Data->Key_Directory, false)) {
 #ifdef TW_INCLUDE_FBE_METADATA_DECRYPT
 #ifdef USE_FSCRYPT
@@ -4603,8 +4604,11 @@ void TWPartitionManager::Update_System_Details_OTA_Survival(void)
 
 bool TWPartitionManager::Partition_Is_Encrypted(const string Path)
 {
-  TWPartition *Part = Find_Partition_By_Path(Path);
-  return (Part && Part->Is_Encrypted);
+  return (DataManager::GetIntValue(FOX_ENCRYPTED_DEVICE) == 1 || DataManager::GetIntValue(TW_IS_FBE) == 1);
+  /*
+  TWPartition* Decrypt_Data = Find_Partition_By_Path(Path);
+  return (Decrypt_Data && Decrypt_Data->Is_Encrypted && !Decrypt_Data->Is_Decrypted);
+  */
 }
 
 bool TWPartitionManager::Prepare_Empty_Folder(const std::string& Folder) {

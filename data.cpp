@@ -973,6 +973,7 @@ void DataManager::SetDefaultValues()
   mPersist.SetValue(FOX_DISABLE_DEBUGGING, "0");
   mPersist.SetValue(FOX_ENABLE_DEBUGGING, "1");
   mPersist.SetValue(FOX_DISABLE_OTA_AUTO_REBOOT, "0");
+  mData.SetValue(FOX_ENCRYPTED_DEVICE, "0"); //assume that the device is not encrypted
 
   // { MIUI
   string incremental_ota = "1";    // enable by default, unless turned off below
@@ -1440,12 +1441,13 @@ void DataManager::ReadSettingsFile(void)
 
   GetValue(TW_IS_ENCRYPTED, is_enc);
   GetValue(TW_HAS_DATA_MEDIA, has_data_media);
+/*
   if (is_enc == 1 && has_data_media == 1)
     {
       LOGINFO("Cannot load settings -- encrypted.\n");
       return;
     }
-
+*/
   memset(mkdir_path, 0, sizeof(mkdir_path));
   memset(settings_file, 0, sizeof(settings_file));
   sprintf(mkdir_path, "%s/Fox", GetSettingsStoragePath().c_str());

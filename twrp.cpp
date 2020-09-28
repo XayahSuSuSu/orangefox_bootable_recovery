@@ -80,7 +80,10 @@ static void Decrypt_Page(bool SkipDecryption, bool datamedia) {
 		if (SkipDecryption) {
 			LOGINFO("Skipping decryption\n");
 		} else if (DataManager::GetIntValue(TW_CRYPTO_PWTYPE) != 0) {
+			DataManager::SetValue(FOX_ENCRYPTED_DEVICE, "1");
 			LOGINFO("Is encrypted, do decrypt page first\n");
+			if (DataManager::GetIntValue(TW_IS_FBE))
+				DataManager::SetValue("tw_crypto_user_id", "0");
 			if (gui_startPage("decrypt", 1, 1) != 0) {
 				LOGERR("Failed to start decrypt GUI page.\n");
 			} else {
@@ -462,16 +465,16 @@ DataManager::RestorePasswordBackup();
          PageManager::RequestReload();
   }
 #else
-  if (DataManager::GetStrValue("data_decrypted") == "1")
-  {
+  if (DataManager::GetStrValue("data_decrypted") == "1") {
+	DataManager::SetValue(FOX_ENCRYPTED_DEVICE, "1");
 	//[f/d] Start UI using reapply_settings page (executed on recovery startup)
 	if (TWFunc::Path_Exists(Fox_Home + "/.theme") || TWFunc::Path_Exists(Fox_Home + "/.navbar")) {
   		DataManager::SetValue("of_reload_back", "main");
 		PageManager::RequestReload();
-    	gui_startPage("reapply_settings", 1, 0);
-	} else {
-		gui_start();
-    }
+    		gui_startPage("reapply_settings", 1, 0);
+	} else 	{
+		   gui_start();
+    		}
   }
   else
 #endif
