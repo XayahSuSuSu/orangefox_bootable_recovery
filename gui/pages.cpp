@@ -801,7 +801,7 @@ int PageSet::Load(LoadingContext& ctx, const std::string& filename)
 	// process includes recursively
 	child = root->first_node("include");
 	if (child) {
-		xml_node<>* include = child->first_node("xmlfile");
+		xml_node<>* include = child->first_node("xml");
 		while (include != NULL) {
 			xml_attribute<>* attr = include->first_attribute("name");
 			if (!attr) {
@@ -809,13 +809,22 @@ int PageSet::Load(LoadingContext& ctx, const std::string& filename)
 				continue;
 			}
 
-			string filename = ctx.basepath + attr->value();
+			string filename = attr->value();
 			LOGINFO("Including file: %s...\n", filename.c_str());
 			int rc = Load(ctx, filename);
-			if (rc != 0)
-				return rc;
+			if (rc != 0) {
+				attr = include->first_attribute("default");
+				if (attr) {
+					string filename = attr->value();
+					int rc = Load(ctx, filename);
+					if (rc != 0)
+						return rc;
+				} else {
+					return rc;
+				}
+			}
 
-			include = include->next_sibling("xmlfile");
+			include = include->next_sibling("xml");
 		}
 	}
 
@@ -898,11 +907,17 @@ int PageSet::LoadDetails(LoadingContext& ctx, xml_node<>* root)
 		if (resolution) {
 			LOGINFO("Checking resolution...\n");
 			xml_attribute<>* width_attr = resolution->first_attribute("width");
-			xml_attribute<>* height_attr = resolution->first_attribute("height");
+			xml_attribute<>* resize_attr = resolution->first_attribute("resizing");
+			int height;
+			if (resize_attr) {
+				xml_attribute<>* height_res_attr = resolution->first_attribute("height");
+				height = atoi(height_res_attr->value());
+			} else {
+				DataManager::GetValue("screen_original_h", height);
+			}
 			xml_attribute<>* noscale_attr = resolution->first_attribute("noscaling");
-			if (width_attr && height_attr && !noscale_attr) {
+			if (width_attr && !noscale_attr) {
 				int width = atoi(width_attr->value());
-				int height = atoi(height_attr->value());
 				int offx = 0, offy = 0;
 #ifdef TW_ROUND_SCREEN
 				xml_node<>* roundscreen = child->first_node("roundscreen");
