@@ -68,7 +68,7 @@ GUIAnimation::GUIAnimation(xml_node<>* node) : GUIObject(node)
 		mFPS = LoadAttrInt(child, "fps", mFPS);
 		mRender = LoadAttrInt(child, "render", mRender);
 	}
-	if (mFPS > 30)  mFPS = 30;
+	if (mFPS > 60)  mFPS = 60;
 
 	child = FindNode(node, "loop");
 	if (child)
