@@ -362,7 +362,7 @@ void GUIScrollList::RenderStdItem(int yPos, bool selected, ImageResource* icon, 
 		int iconH = icon->GetHeight();
 		int iconW = icon->GetWidth();
 		int iconY = yPos + (iconAndTextH - iconH) / 2;
-		int iconX = mRenderX + (maxIconWidth - iconW) / 2; // - mPadding; //[f/d] right icon padding
+		int iconX = mRenderX + (maxIconWidth - iconW) / 2 - mPadding; //[f/d] right icon padding
 		gr_blit(icon->GetResource(), 0, 0, iconW, iconH, iconX, iconY);
 	}
 
