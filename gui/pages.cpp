@@ -1588,7 +1588,7 @@ int PageManager::RunReload() {
 	{
 		// Loading the custom theme failed - try loading the stock theme
 		LOGINFO("Attempting to reload stock theme...\n");
-		if (ReloadPackage("TWRP", TWRES "ui.xml"))
+		if (ReloadPackage("OrangeFox", TWRES "ui.xml"))
 		{
 			LOGERR("Failed to load base packages.\n");
 			ret_val = 1;
