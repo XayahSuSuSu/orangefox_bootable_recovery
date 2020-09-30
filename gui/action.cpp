@@ -2008,7 +2008,7 @@ int GUIAction::terminalcommand(std::string arg)
 	    }
 	  fclose(fp);
 	}
-      DataManager::SetValue("tw_operation_status", WEXITSTATUS(pclose(fp)) != 0 ? 1 : 0);
+      DataManager::SetValue("tw_operation_status", 0); //WEXITSTATUS(pclose(fp)) != 0 ? 1 : 0
       DataManager::SetValue("tw_operation_state", 1);
       DataManager::SetValue("tw_terminal_state", 0);
       DataManager::SetValue("tw_background_thread_running", 0);
@@ -2802,6 +2802,8 @@ int GUIAction::cmdf(std::string arg, std::string file)
   char buff[1024];
   sprintf(buff, gui_parse_text(arg).c_str(), file.c_str());
 
+  gui_print( std::string(DataManager::GetStrValue("tw_fm_text1") + ": %s").c_str() , file.c_str());
+
    int op_status = 0;
   string cmdpath, command;
 
@@ -2847,7 +2849,7 @@ int GUIAction::cmdf(std::string arg, std::string file)
   fclose(fp);
   DataManager::SetValue("tw_terminal_state", 0);
   DataManager::SetValue("tw_background_thread_running", 0);
-  return WEXITSTATUS(pclose(fp)) != 0 ? 1 : 0;
+  return 0; //WEXITSTATUS(pclose(fp)) != 0 ? 1 : 0
 }
 
 int GUIAction::batch(std::string arg __unused)
