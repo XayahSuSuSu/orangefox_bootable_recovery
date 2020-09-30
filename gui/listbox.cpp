@@ -114,15 +114,23 @@ GUIListBox::GUIListBox(xml_node<>* node) : GUIScrollList(node)
 					ListItem item;
 					item.displayName = lines[i];
 					item.selected = false;
+					item.action = NULL;
+					item.hasicon = false;
+					item.variableValue = "";
 
 					mListItems.push_back(item);
+					mVisibleItems.push_back(mListItems.size()-1);
 				}
 			} else {
 				ListItem item;
 				item.displayName = gui_parse_text("{@file_read_error=Unable to open file!}");
 				item.selected = false;
+				item.action = NULL;
+				item.hasicon = false;
+				item.variableValue = "";
 				
 				mListItems.push_back(item);
+				mVisibleItems.push_back(mListItems.size()-1);
 			}
 			return;
 		}
