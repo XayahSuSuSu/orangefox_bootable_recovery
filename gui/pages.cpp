@@ -1618,6 +1618,7 @@ int PageManager::RunReload() {
 }
 
 void PageManager::RequestReload() {
+	DataManager::Flush();
 	mReloadTheme = true;
 }
 
