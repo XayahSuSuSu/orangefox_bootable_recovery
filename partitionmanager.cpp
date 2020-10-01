@@ -3685,7 +3685,8 @@ string TWPartitionManager::Get_Active_Slot_Display()
 }
 
 string TWPartitionManager::Get_Android_Root_Path() {
-#ifdef OF_USE_TWRP_SAR_DETECT
+   return "/system_root";
+/*#ifdef OF_USE_TWRP_SAR_DETECT
 	if (property_get_bool("ro.twrp.sar", false))
 		return "/system_root";
 	return "/system";
@@ -3694,7 +3695,7 @@ string TWPartitionManager::Get_Android_Root_Path() {
 	if (Android_Root == "")
 		Android_Root = "/system";
 	return Android_Root;
-#endif
+#endif*/
 }
 
 string TWPartitionManager::Get_Internal_Storage_Path() {
