@@ -4751,6 +4751,7 @@ string TWFunc::ConvertTime(time_t time)
 void TWFunc::UseSystemFingerprint(void)
 {
 string rom_finger_print = "";
+string tmp = "\"";
   if (!Path_Exists("/sbin/resetprop"))
      {
         LOGINFO("\n- I cannot find resetprop, therefore I cannot use the system fingerprint\n");
@@ -4771,7 +4772,7 @@ string rom_finger_print = "";
   if (!rom_finger_print.empty())
      {
   	LOGINFO("- Using the ROM's fingerprint (%s)\n", rom_finger_print.c_str());
-  	Exec_Cmd("/sbin/resetprop ro.build.fingerprint " + rom_finger_print);
+  	Exec_Cmd("/sbin/resetprop ro.build.fingerprint " + tmp + rom_finger_print + tmp);
      }
   else LOGINFO("- ROM fingerprint not available\n");
 }
