@@ -940,9 +940,9 @@ void DataManager::SetDefaultValues()
 #endif
 
 #ifdef TW_HAS_NO_BOOT_PARTITION
-  mPersist.SetValue("tw_backup_list", "/system_image;/data;");
+  mPersist.SetValue("tw_backup_list", "/data;");
 #else
-  mPersist.SetValue("tw_backup_list", "/system_image;/data;/boot;");
+  mPersist.SetValue("tw_backup_list", "/data;/boot;");
 #endif
   mConst.SetValue(TW_MIN_SYSTEM_VAR, TW_MIN_SYSTEM_SIZE);
   mData.SetValue(TW_BACKUP_NAME, "(Auto Generate)");
