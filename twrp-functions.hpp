@@ -160,6 +160,7 @@ public:
 	static bool RunStartupScript(void); // run startup script if not already run by init
 	static void Welcome_Message(void); // provide the welcome message
 	static void Run_Before_Reboot(void); // run this just before rebooting
+	static string Fox_Property_Get(string Prop_Name); // get a recovery property that would be returned by getprop
 	//
 	static bool Fstab_Has_Encryption_Flag(string path); // does the fstab file have encryption flags?
 	static void Patch_Encryption_Flags(string path); // patch the fstab's encryption flags

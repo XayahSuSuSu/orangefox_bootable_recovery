@@ -1424,78 +1424,14 @@ string TWFunc::Get_Current_Date()
 }
 
 string TWFunc::System_Property_Get(string Prop_Name) {
-	bool mount_state = PartitionManager.Is_Mounted_By_Path(PartitionManager.Get_Android_Root_Path());
-	std::vector<string> buildprop;
-	string propvalue;
-	if (!PartitionManager.Mount_By_Path(PartitionManager.Get_Android_Root_Path(), true))
-		return propvalue;
-	string prop_file = "/system/build.prop";
-//***
-	bool reloaded = false;
-	string root_path = PartitionManager.Get_Android_Root_Path();
-	if (root_path == "/")
-	   {
-	     if (!PartitionManager.Is_Mounted_By_Path("/system"))
-	        {
-	           if (PartitionManager.Mount_By_Path("/system", true))
-	           reloaded = true;
-	        }
-	   } 
-	else
-	   {
-	      if (root_path != "/system")
-	         prop_file = root_path + "/build.prop";
-	   }
-//***
-	if (!TWFunc::Path_Exists(prop_file))
-		prop_file = PartitionManager.Get_Android_Root_Path() + "/system/build.prop"; // for devices with system as a root file system (e.g. Pixel)
-	if (TWFunc::read_file(prop_file, buildprop) != 0) {
-		LOGINFO("Unable to open build.prop for getting '%s'.\n", Prop_Name.c_str());
-		DataManager::SetValue(TW_BACKUP_NAME, Get_Current_Date());
-		if (!mount_state)
-			PartitionManager.UnMount_By_Path(PartitionManager.Get_Android_Root_Path(), false);
-		
-		if (reloaded) //***
-		    	PartitionManager.UnMount_By_Path("/system", false);
-		
-		return propvalue;
-	}
-	int line_count = buildprop.size();
-	int index;
-	size_t start_pos = 0, end_pos;
-	string propname;
-	for (index = 0; index < line_count; index++) {
-		end_pos = buildprop.at(index).find("=", start_pos);
-		propname = buildprop.at(index).substr(start_pos, end_pos);
-		if (propname == Prop_Name) {
-			propvalue = buildprop.at(index).substr(end_pos + 1, buildprop.at(index).size());
-			if (!mount_state)
-				PartitionManager.UnMount_By_Path(PartitionManager.Get_Android_Root_Path(), false);
-
-			if (reloaded)  //***
-		    		PartitionManager.UnMount_By_Path("/system", false);
-
-			return propvalue;
-		}
-	}
-	if (!mount_state)
-		PartitionManager.UnMount_By_Path(PartitionManager.Get_Android_Root_Path(), false);
-
-	if (reloaded)  //***
-		PartitionManager.UnMount_By_Path("/system", false);
-
-	return propvalue;
-}
-/*
-string TWFunc::System_Property_Get(string Prop_Name) {
 	return System_Property_Get(Prop_Name, PartitionManager, PartitionManager.Get_Android_Root_Path());
 }
-*/
+
 string TWFunc::System_Property_Get(string Prop_Name, TWPartitionManager &PartitionManager, string Mount_Point) {
 	bool mount_state = PartitionManager.Is_Mounted_By_Path(Mount_Point);
 	std::vector<string> buildprop;
 	string propvalue;
-	if (!PartitionManager.Mount_By_Path(Mount_Point, true))
+	if (!PartitionManager.Mount_By_Path(Mount_Point, true) && !mount_state)
 		return propvalue;
 	string prop_file = Mount_Point + "/build.prop";
 	if (!TWFunc::Path_Exists(prop_file))
@@ -2334,6 +2270,8 @@ int TWFunc::Check_MIUI_Treble(void)
   RunStartupScript();
   // *
   
+  finger_print = TWFunc::Fox_Property_Get("orangefox.system.fingerprint");
+  
   if (TWFunc::Path_Exists(orangefox_cfg)) 
     {
   	fox_is_miui_rom_installed = TWFunc::File_Property_Get (orangefox_cfg, "MIUI");
@@ -2342,7 +2280,8 @@ int TWFunc::Check_MIUI_Treble(void)
   	display_panel = TWFunc::File_Property_Get (orangefox_cfg, "panel_name");	
   	Fox_Current_ROM = TWFunc::File_Property_Get (orangefox_cfg, "ROM");
   	incr_version = TWFunc::File_Property_Get (orangefox_cfg, "INCREMENTAL_VERSION");
-  	finger_print = TWFunc::File_Property_Get (orangefox_cfg, "ROM_FINGERPRINT");
+  	if (finger_print.empty())
+  	  finger_print = TWFunc::File_Property_Get (orangefox_cfg, "ROM_FINGERPRINT");
     }
 
    // Treble ?
@@ -4758,10 +4697,14 @@ string tmp = "\"";
         return;
      }
 
-  if (TWFunc::Path_Exists(orangefox_cfg))
-     {
+  rom_finger_print = TWFunc::Fox_Property_Get("orangefox.system.fingerprint");
+
+  if (rom_finger_print.empty()) {
+     if (TWFunc::Path_Exists(orangefox_cfg))
+       {
 	rom_finger_print = File_Property_Get(orangefox_cfg, "ROM_FINGERPRINT");
-     }
+       }
+   }
 
   if (rom_finger_print.empty())
  	rom_finger_print = System_Property_Get("ro.system.build.fingerprint");
@@ -4928,5 +4871,10 @@ std::string TWFunc::Remove_Beginning_Slash(const std::string& path) {
 	return res;
 }
 
-
+string TWFunc::Fox_Property_Get(string Prop_Name) {
+char ret[1024]; // TODO - what is the maximum size of props?
+   property_get(Prop_Name.c_str(), ret, "");
+   std::string res = ret;
+   return res;
+}
 //
