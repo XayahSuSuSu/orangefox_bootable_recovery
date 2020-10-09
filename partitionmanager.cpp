@@ -4031,26 +4031,17 @@ int TWPartitionManager::Run_OTA_Survival_Backup(bool adbbackup)
   part_settings.Backup_Folder =
     part_settings.Backup_Folder + "/" + Backup_Name;
 
+#ifdef OF_INCREMENTAL_OTA_BACKUP_SUPER
   TWPartition *sys_image =
-    PartitionManager.Find_Partition_By_Path("/system_image");
-
-  #ifdef OF_NO_MIUI_OTA_VENDOR_BACKUP
-    // (old Xiaomi devices) - we are not going to backup vendor_image/vendor
-  #else
-  TWPartition *vend_image =
-    PartitionManager.Find_Partition_By_Path("/vendor_image");
-     if (vend_image != NULL)
-        Backup_List += "/vendor_image;";
-     else
-        Backup_List += "/vendor;";
-  #endif
+    PartitionManager.Find_Partition_By_Path("/super_image");
 
   if (DoSystemOnOTA && sys_image != NULL)
-       Backup_List += "/system_image;/boot;";
-  else if (DoSystemOnOTA)
-       Backup_List += "/system;/boot;";
+       Backup_List += "/super_image;/boot;";
   else
        Backup_List += "/boot;";
+#else
+       Backup_List += "/boot;";
+#endif
 
   if (!Backup_List.empty())
     {
