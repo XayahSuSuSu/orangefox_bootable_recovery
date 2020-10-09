@@ -607,7 +607,7 @@ static int Prepare_Update_Binary(const char *path, ZipWrap * Zip,
 		  string metadata_fingerprint = TWFunc::File_Property_Get(take_out_metadata, pre_build); // look for "pre-build"
 		  string metadata_device = TWFunc::File_Property_Get(take_out_metadata, pre_device);  // look for "pre-device"
 		  string fingerprint = TWFunc::System_Property_Get(fingerprint_property); // try to get system fingerprint - ro.build.fingerprint
-		    
+
 		  // appropriate "pre-build" entry in META-INF/com/android/metadata ? == incremental block-based OTA zip installer
 		  if (metadata_fingerprint.size() > FOX_MIN_EXPECTED_FP_SIZE) 
 		    {
@@ -622,7 +622,34 @@ static int Prepare_Update_Binary(const char *path, ZipWrap * Zip,
 		  	set_miui_install_status(OTA_ERROR, false);
 		  	return INSTALL_ERROR; 
 		      }
-		      
+
+		      // --- check for mismatching fingerprints when they should match
+		      string metadata_prebuild_incremental = TWFunc::File_Property_Get(take_out_metadata, "pre-build-incremental");
+		      string metadata_ota_type = TWFunc::File_Property_Get(take_out_metadata, "ota-type");
+		      string orangefox_incremental = TWFunc::File_Property_Get(orangefox_cfg, "INCREMENTAL_VERSION");
+
+		      if (fingerprint.empty())  {
+   			   fingerprint = TWFunc::Fox_Property_Get("orangefox.system.fingerprint");
+   			   if (fingerprint.empty())  {
+      			       fingerprint = TWFunc::File_Property_Get(orangefox_cfg, "ROM_FINGERPRINT");
+   			   }
+			}
+
+		      if (metadata_fingerprint != fingerprint) {
+    			    DataManager::GetValue(FOX_COMPATIBILITY_DEVICE, Fox_Current_Device);
+   			    if (metadata_device == Fox_Current_Device && metadata_prebuild_incremental == orangefox_incremental) {
+       				LOGINFO("- DEBUG: OrangeFox: metadata_fingerprint != system_fingerprint. Trying to fix it.\n- Changing [%s] to [%s]\n",
+           				fingerprint.c_str(), metadata_fingerprint.c_str());
+       				string atmp = "\"";
+       				usleep(4096);
+       				TWFunc::Exec_Cmd("/sbin/resetprop ro.build.fingerprint " + atmp + metadata_fingerprint + atmp);
+       				usleep(250000);
+       				TWFunc::Exec_Cmd("/sbin/resetprop orangefox.system.fingerprint " + atmp + metadata_fingerprint + atmp);
+       				usleep(100000);
+   			     }
+		        }
+			// ---
+
 		      zip_is_for_specific_build = true;
 		      
 		      DataManager::SetValue(FOX_METADATA_PRE_BUILD, 1);
@@ -716,7 +743,11 @@ static int Prepare_Update_Binary(const char *path, ZipWrap * Zip,
 	      && DataManager::GetIntValue(FOX_MIUI_ZIP_TMP) != 0)
 	    {
 		#ifdef OF_FIX_OTA_UPDATE_MANUAL_FLASH_ERROR
-	    	std::string cachefile = "/cache/recovery/openrecoveryscript";
+	    	std::string cachefile = TWFunc::get_log_dir(); //"/cache/recovery/openrecoveryscript";
+	    	if (cachefile == DATA_LOGS_DIR)
+		   cachefile = "/data/cache";
+		cachefile = cachefile + "/recovery/openrecoveryscript";
+
 	    	gui_print_color("warning", "\n\n- You tried to flash OTA zip (%s) manually. Attempting to recover the situation...\n\n", path);
 	    	TWFunc::CreateNewFile(cachefile);
 	    	usleep(256);
