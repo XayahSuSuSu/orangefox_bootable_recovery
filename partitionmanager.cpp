@@ -3974,7 +3974,7 @@ void TWPartitionManager::Coldboot()
 int TWPartitionManager::Run_OTA_Survival_Backup(bool adbbackup)
 {
 #ifdef OF_VANILLA_BUILD
-   LOGINFO("- OrangeFox: DEBUG: skipping the OTA_RES process...\n");
+   LOGINFO("- OrangeFox: DEBUG: skipping the OTA_BAK process...\n");
    return 0;
 #endif
 
