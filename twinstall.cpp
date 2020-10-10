@@ -606,7 +606,14 @@ static int Prepare_Update_Binary(const char *path, ZipWrap * Zip,
 		{
 		  string metadata_fingerprint = TWFunc::File_Property_Get(take_out_metadata, pre_build); // look for "pre-build"
 		  string metadata_device = TWFunc::File_Property_Get(take_out_metadata, pre_device);  // look for "pre-device"
+
 		  string fingerprint = TWFunc::System_Property_Get(fingerprint_property); // try to get system fingerprint - ro.build.fingerprint
+		  if (fingerprint.empty()) {
+   			fingerprint = TWFunc::Fox_Property_Get("orangefox.system.fingerprint");
+   			if (fingerprint.empty()) {
+      			    fingerprint = TWFunc::File_Property_Get(orangefox_cfg, "ROM_FINGERPRINT");
+   			}
+		  }
 
 		  // appropriate "pre-build" entry in META-INF/com/android/metadata ? == incremental block-based OTA zip installer
 		  if (metadata_fingerprint.size() > FOX_MIN_EXPECTED_FP_SIZE) 
@@ -627,13 +634,6 @@ static int Prepare_Update_Binary(const char *path, ZipWrap * Zip,
 		      string metadata_prebuild_incremental = TWFunc::File_Property_Get(take_out_metadata, "pre-build-incremental");
 		      string metadata_ota_type = TWFunc::File_Property_Get(take_out_metadata, "ota-type");
 		      string orangefox_incremental = TWFunc::File_Property_Get(orangefox_cfg, "INCREMENTAL_VERSION");
-
-		      if (fingerprint.empty())  {
-   			   fingerprint = TWFunc::Fox_Property_Get("orangefox.system.fingerprint");
-   			   if (fingerprint.empty())  {
-      			       fingerprint = TWFunc::File_Property_Get(orangefox_cfg, "ROM_FINGERPRINT");
-   			   }
-			}
 
 		      if (metadata_fingerprint != fingerprint) {
     			    DataManager::GetValue(FOX_COMPATIBILITY_DEVICE, Fox_Current_Device);
