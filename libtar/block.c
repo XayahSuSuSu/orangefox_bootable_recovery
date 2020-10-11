@@ -18,7 +18,9 @@
 # include <stdlib.h>
 #endif
 
+#ifdef TW_LIBTAR_DEBUG
 #define DEBUG 1
+#endif
 
 #ifdef HAVE_EXT4_CRYPT
 #include "ext4crypt_tar.h"
