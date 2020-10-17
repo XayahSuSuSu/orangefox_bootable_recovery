@@ -233,11 +233,16 @@ int main(int argc, char **argv)
 	bool Shutdown = false;
 	bool SkipDecryption = false;
 
+	//----
         // use the ROM's fingerprint?
-	#ifdef OF_USE_SYSTEM_FINGERPRINT
+	//#ifdef OF_USE_SYSTEM_FINGERPRINT
         TWFunc::RunStartupScript(); // run the startup script early
         TWFunc::UseSystemFingerprint();
-	#endif
+	//#endif
+	
+	// Check for and run startup script if script exists
+	TWFunc::RunFoxScript("/sbin/runatboot.sh");
+	//----
 
 	string Send_Intent = "";
 	{
@@ -332,7 +337,7 @@ int main(int argc, char **argv)
 	}
 
 	// Check for and run startup script if script exists
-	TWFunc::RunFoxScript("/sbin/runatboot.sh");
+	// TWFunc::RunFoxScript("/sbin/runatboot.sh");
 
 #ifdef TW_INCLUDE_INJECTTWRP
 	// Back up OrangeFox Ramdisk if needed:
