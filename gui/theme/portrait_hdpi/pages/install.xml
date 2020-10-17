@@ -46,15 +46,18 @@
 
 			<listbox style="settingslist">
 				<placement x="0" y="%row4_2a_y%" w="%screen_w%" h="%lb_l4%"/>
-				<listitem name="{@zip_sig_chk}">
-					<data variable="tw_signed_zip_verify"/>
-				</listitem>
 				<listitem name="{@install_reboot_chk}">
 					<condition var1="tw_reboot_system" var2="1"/>
 					<data variable="tw_install_reboot"/>
 				</listitem>
+				<listitem name="{@zip_sig_chk}">
+					<data variable="tw_signed_zip_verify"/>
+				</listitem>
 				<listitem name="{@unmount_sys_install=Unmount System before installing a ZIP}">
 					<data variable="tw_unmount_system"/>
+				</listitem>
+				<listitem name="{@unmount_vendor_install=Unmount Vendor before installing a ZIP}">
+					<data variable="tw_unmount_vendor"/>
 				</listitem>
 				<listitem name="{@inject_twrp_chk}">
 					<condition var1="tw_has_injecttwrp" var2="1"/>
@@ -200,17 +203,22 @@
 
 			<listbox style="settingslist">
 				<condition var1="tw_fileexists" var2="1"/>
-				<placement x="0" y="%row3_2a_y%" w="%screen_w%" h="%lb_l4%"/>
-				<listitem name="{@zip_sig_chk}">
-					<data variable="tw_signed_zip_verify"/>
-				</listitem>
+				<placement x="0" y="%row3_2a_y%" w="%screen_w%" h="%lb_l4%"/>				
 				<listitem name="{@install_reboot_chk}">
 					<condition var1="tw_reboot_system" var2="1"/>
 					<data variable="tw_install_reboot"/>
 				</listitem>
+				<listitem name="{@zip_sig_chk}">
+					<data variable="tw_signed_zip_verify"/>
+				</listitem>
 				<listitem name="{@unmount_sys_install=Unmount System before installing a ZIP}">
 					<data variable="tw_unmount_system"/>
 				</listitem>
+
+				<listitem name="{@unmount_vendor_install=Unmount Vendor before installing a ZIP}">
+					<data variable="tw_unmount_vendor"/>
+				</listitem>
+
 				<listitem name="{@inject_twrp_chk}">
 					<condition var1="tw_has_injecttwrp" var2="1"/>
 					<data variable="tw_inject_after_zip"/>

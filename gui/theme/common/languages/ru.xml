@@ -1125,7 +1125,12 @@
 
 		<string name="unmount_sys_install">Размонтировать /system до установки</string>
 		<string name="unmount_system">Размонтирование /system...</string>
-		<string name="unmount_system_err">Ошибка размонтирования /system</string>		
+		<string name="unmount_system_err">Ошибка размонтирования /system</string>
+		
+		<string name="unmount_vendor_install">Размонтировать /vendor до установки</string>
+		<string name="unmount_vendor">Размонтирование /vendor...</string>
+		<string name="unmount_vendor_err">Ошибка размонтирования /vendor</string>
+		
 		<string name="fbe_wipe_msg">ВНИМАНИЕ: {1} очищен. Устройство FBE должно быть перезагружено в Android, а не в рекавери, чтобы задать изначальные политики FBE после очистки.</string>
 		
 		<string name="in">в</string>

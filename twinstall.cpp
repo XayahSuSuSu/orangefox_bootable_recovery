@@ -1096,7 +1096,7 @@ static int Run_Update_Binary(const char *path, ZipWrap * Zip, int *wipe_cache,
 
 int TWinstall_zip(const char *path, int *wipe_cache)
 {
-  int ret_val, zip_verify = 1, unmount_system = 1;
+  int ret_val, zip_verify = 1, unmount_system = 1, unmount_vendor = 1;
 
   if (strcmp(path, "error") == 0)
     {
@@ -1169,6 +1169,7 @@ int TWinstall_zip(const char *path, int *wipe_cache)
     }
 
   DataManager::GetValue(TW_UNMOUNT_SYSTEM, unmount_system);
+  DataManager::GetValue(TW_UNMOUNT_VENDOR, unmount_vendor);
 
 #ifndef TW_OEM_BUILD
   DataManager::GetValue(TW_SIGNED_ZIP_VERIFY_VAR, zip_verify);
@@ -1239,18 +1240,26 @@ int TWinstall_zip(const char *path, int *wipe_cache)
       return INSTALL_CORRUPT;
     }
 
-#ifdef OF_USE_TWRP_SAR_DETECT
-	//unmount_system = 1;
-#endif
-	if (unmount_system) {
+    if (unmount_system) {
+	if (PartitionManager.Is_Mounted_By_Path(PartitionManager.Get_Android_Root_Path())) {
 		gui_msg("unmount_system=Unmounting System...");
-		if(!PartitionManager.UnMount_By_Path(PartitionManager.Get_Android_Root_Path(), true)) {
-			gui_err("unmount_system_err=Failed unmounting System");
-			return -1;
+		if (!PartitionManager.UnMount_By_Path(PartitionManager.Get_Android_Root_Path(), false)) {
+			gui_msg("unmount_system_err=Failed to unmount System");
+		       //return -1;
 		}
-		unlink("/system");
-		mkdir("/system", 0755);
 	}
+   }
+
+   if (unmount_vendor) {
+	if (PartitionManager.Is_Mounted_By_Path("/vendor")) {
+		gui_msg("unmount_vendor=Unmounting Vendor...");
+		if (!PartitionManager.UnMount_By_Path("/vendor", false)) {
+			gui_msg("unmount_vendor_err=Failed to unmount Vendor");
+			// return -1;
+		}
+	}
+   }
+
 
    // DJ9, 20200622: try to avoid a situation where blockimg will bomb out when trying to create a stash
    if ((TWFunc::Path_Exists("/cache/.")) && (!TWFunc::Path_Exists("/cache/recovery/."))) {

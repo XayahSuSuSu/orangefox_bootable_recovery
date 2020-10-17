@@ -265,6 +265,7 @@ static int Fox_Current_ROM_IsMIUI = 0; // is the currently installed ROM a MIUI 
 #define TW_USE_SHA2                 "tw_use_sha2"
 #define TW_NO_SHA2                  "tw_no_sha2"
 #define TW_UNMOUNT_SYSTEM           "tw_unmount_system"
+#define TW_UNMOUNT_VENDOR           "tw_unmount_vendor"
 
 // Also used:
 //   tw_boot_is_mountable
