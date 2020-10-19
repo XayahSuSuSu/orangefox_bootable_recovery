@@ -330,6 +330,10 @@ ifeq ($(OF_INCREMENTAL_OTA_BACKUP_SUPER),1)
     LOCAL_CFLAGS += -DOF_INCREMENTAL_OTA_BACKUP_SUPER='"1"'
 endif
 
+ifeq ($(OF_SILENCE_MIUI_MOUNT_COMPLAINTS),1)
+    LOCAL_CFLAGS += -DOF_SILENCE_MIUI_MOUNT_COMPLAINTS='"1"'
+endif
+
 ################################
 # from gui/Android.mk
 ifeq ($(OF_SUPPORT_OZIP_DECRYPTION),1)
