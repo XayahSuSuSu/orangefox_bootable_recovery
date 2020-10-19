@@ -1243,9 +1243,13 @@ int TWinstall_zip(const char *path, int *wipe_cache)
     if (unmount_system) {
 	if (PartitionManager.Is_Mounted_By_Path(PartitionManager.Get_Android_Root_Path())) {
 		gui_msg("unmount_system=Unmounting System...");
-		if (!PartitionManager.UnMount_By_Path(PartitionManager.Get_Android_Root_Path(), false)) {
+		if (PartitionManager.UnMount_By_Path(PartitionManager.Get_Android_Root_Path(), false)) {
+			//unlink(PartitionManager.Get_Android_Root_Path().c_str());
+			//mkdir(PartitionManager.Get_Android_Root_Path().c_str(), 0755);
+		}
+		else {
 			gui_msg("unmount_system_err=Failed to unmount System");
-		       //return -1;
+		        return -1;
 		}
 	}
    }
@@ -1253,13 +1257,15 @@ int TWinstall_zip(const char *path, int *wipe_cache)
    if (unmount_vendor) {
 	if (PartitionManager.Is_Mounted_By_Path("/vendor")) {
 		gui_msg("unmount_vendor=Unmounting Vendor...");
-		if (!PartitionManager.UnMount_By_Path("/vendor", false)) {
+		if (PartitionManager.UnMount_By_Path("/vendor", false)) {
+		   	//unlink("/vendor");
+		   	//mkdir("/vendor", 0755);
+		} else {
 			gui_msg("unmount_vendor_err=Failed to unmount Vendor");
-			// return -1;
+			return -1;
 		}
 	}
    }
-
 
    // DJ9, 20200622: try to avoid a situation where blockimg will bomb out when trying to create a stash
    if ((TWFunc::Path_Exists("/cache/.")) && (!TWFunc::Path_Exists("/cache/recovery/."))) {
