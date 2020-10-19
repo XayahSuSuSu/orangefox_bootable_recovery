@@ -240,10 +240,6 @@ int main(int argc, char **argv)
         TWFunc::UseSystemFingerprint();
 	//#endif
 	
-	// Check for and run startup script if script exists
-	TWFunc::RunFoxScript("/sbin/runatboot.sh");
-	//----
-
 	string Send_Intent = "";
 	{
 		TWPartition* misc = PartitionManager.Find_Partition_By_Path("/misc");
@@ -337,7 +333,7 @@ int main(int argc, char **argv)
 	}
 
 	// Check for and run startup script if script exists
-	// TWFunc::RunFoxScript("/sbin/runatboot.sh");
+	TWFunc::RunFoxScript("/sbin/runatboot.sh");
 
 #ifdef TW_INCLUDE_INJECTTWRP
 	// Back up OrangeFox Ramdisk if needed:
