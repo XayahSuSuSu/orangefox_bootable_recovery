@@ -238,6 +238,8 @@ int main(int argc, char **argv)
 	//#ifdef OF_USE_SYSTEM_FINGERPRINT
         TWFunc::RunStartupScript(); // run the startup script early
         TWFunc::UseSystemFingerprint();
+	TWFunc::RunFoxScript("/sbin/runatboot.sh");
+
 	//#endif
 	
 	string Send_Intent = "";
@@ -333,7 +335,7 @@ int main(int argc, char **argv)
 	}
 
 	// Check for and run startup script if script exists
-	TWFunc::RunFoxScript("/sbin/runatboot.sh");
+	// TWFunc::RunFoxScript("/sbin/runatboot.sh");
 
 #ifdef TW_INCLUDE_INJECTTWRP
 	// Back up OrangeFox Ramdisk if needed:
