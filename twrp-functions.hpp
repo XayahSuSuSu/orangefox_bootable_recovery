@@ -161,6 +161,8 @@ public:
 	static void Welcome_Message(void); // provide the welcome message
 	static void Run_Before_Reboot(void); // run this just before rebooting
 	static string Fox_Property_Get(string Prop_Name); // get a recovery property that would be returned by getprop
+	static int Fox_Property_Set(const std::string Prop_Name, const std::string Value); // set a recovery property that would be set by setprop
+
 	//
 	static bool Fstab_Has_Encryption_Flag(string path); // does the fstab file have encryption flags?
 	static void Patch_Encryption_Flags(string path); // patch the fstab's encryption flags

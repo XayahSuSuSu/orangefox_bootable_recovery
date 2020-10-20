@@ -310,11 +310,8 @@ bool i = Path_Exists(orangefox_cfg);
 bool TWFunc::MIUI_ROM_SetProperty(const int code)
 {
 string res = "0";
-string cmd = "/sbin/resetprop";
 bool ret = false;
-    
-    if (!Path_Exists(cmd)) cmd = Fox_Bin_Dir + "/setprop";
-
+	
     if (code != 0) // whether a ROM was installed, and it is MIUI
       {
     	ret = (code == 2 || code == 3 || code == 22 || code == 23);
@@ -327,9 +324,8 @@ bool ret = false;
     if (ret)
        res = "1";
 
-    Exec_Cmd(cmd + " orangefox.miui.rom " + res);
-    usleep(4096);
-
+    //Exec_Cmd(cmd + " orangefox.miui.rom " + res);
+    Fox_Property_Set("orangefox.miui.rom", res);
     return ret;
 }
 
@@ -2260,16 +2256,20 @@ int TWFunc::Check_MIUI_Treble(void)
   Fox_Current_ROM_IsTreble = 0;
   ROM_IsRealTreble = 0;
   bool treble = false;
-  Fox_Current_ROM_IsMIUI = 0;
   string display_panel = "";
   string rom_desc = "";
   string incr_version = "";
   string finger_print = "";
-  
+  	
   // * run startup script
   RunStartupScript();
   // *
-  
+
+  if (TWFunc::Fox_Property_Get("orangefox.miui.rom") == "1")
+  	Fox_Current_ROM_IsMIUI = 1;
+  else
+  	Fox_Current_ROM_IsMIUI = 0;
+  	
   finger_print = TWFunc::Fox_Property_Get("orangefox.system.fingerprint");
   
   if (TWFunc::Path_Exists(orangefox_cfg)) 
@@ -2321,7 +2321,7 @@ int TWFunc::Check_MIUI_Treble(void)
         if (treble)
            tmp = "(Treble)";
   	
-  	if (strncmp(fox_is_miui_rom_installed.c_str(), "1", 1) == 0)
+  	if (fox_is_miui_rom_installed == "1" || TWFunc::Fox_Property_Get("orangefox.miui.rom") == "1")
      	  {
   	     Fox_Current_ROM_IsMIUI = 1;
   	     gui_print("* MIUI ROM %s", tmp.c_str());
@@ -3395,8 +3395,11 @@ bool TWFunc::Repack_Image(string mount_point)
 bool TWFunc::JustInstalledMiui(void)
 {
   Fox_Zip_Installer_Code = DataManager::GetIntValue(FOX_ZIP_INSTALLER_CODE);
-  if ((Fox_Zip_Installer_Code == 22) || (Fox_Zip_Installer_Code == 23) || (Fox_Zip_Installer_Code == 3) || (Fox_Zip_Installer_Code == 2))
-      return true;
+  if ((Fox_Zip_Installer_Code == 22) || (Fox_Zip_Installer_Code == 23) 
+  || (Fox_Zip_Installer_Code == 3) || (Fox_Zip_Installer_Code == 2)) {
+      	
+      	return true;
+      }
   else
       return false;
 }
@@ -4481,7 +4484,7 @@ void TWFunc::Run_Post_Flash_Protocol(void)
 
 bool TWFunc::MIUI_Is_Running(void)
 {
-   if (Fox_Current_ROM_IsMIUI == 1 || TWFunc::JustInstalledMiui())
+   if (Fox_Current_ROM_IsMIUI == 1 || TWFunc::JustInstalledMiui() || TWFunc::Fox_Property_Get("orangefox.miui.rom") == "1")
       return true;
    else
       return false; 
@@ -4881,5 +4884,12 @@ char ret[1024]; // TODO - what is the maximum size of props?
    property_get(Prop_Name.c_str(), ret, "");
    std::string res = ret;
    return res;
+}
+
+int TWFunc::Fox_Property_Set(const std::string Prop_Name, const std::string Value) {
+    usleep(1024);
+    int i = property_set(Prop_Name.c_str(), Value.c_str());
+    usleep(1024);
+    return i;
 }
 //
