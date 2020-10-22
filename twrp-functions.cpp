@@ -324,7 +324,6 @@ bool ret = false;
     if (ret)
        res = "1";
 
-    //Exec_Cmd(cmd + " orangefox.miui.rom " + res);
     Fox_Property_Set("orangefox.miui.rom", res);
     return ret;
 }
@@ -4694,16 +4693,6 @@ void TWFunc::UseSystemFingerprint(void)
 {
 string rom_finger_print = "";
 string tmp = "\"";
-string cmd = "/sbin/resetprop";
-
-  if (!Path_Exists(cmd))
-    cmd = Fox_Bin_Dir + "/setprop";
-
-  if (!Path_Exists(cmd))
-     {
-        LOGINFO("\n- I cannot find resetprop, therefore I cannot use the system fingerprint\n");
-        return;
-     }
 
   rom_finger_print = TWFunc::Fox_Property_Get("orangefox.system.fingerprint");
 
@@ -4723,7 +4712,7 @@ string cmd = "/sbin/resetprop";
   if (!rom_finger_print.empty())
      {
   	LOGINFO("- Using the ROM's fingerprint (%s)\n", rom_finger_print.c_str());
-  	Exec_Cmd(cmd + " ro.build.fingerprint " + tmp + rom_finger_print + tmp);
+  	TWFunc::Fox_Property_Set("ro.build.fingerprint", tmp + rom_finger_print + tmp);
      }
   else LOGINFO("- ROM fingerprint not available\n");
 }
@@ -4887,9 +4876,27 @@ char ret[1024]; // TODO - what is the maximum size of props?
 }
 
 int TWFunc::Fox_Property_Set(const std::string Prop_Name, const std::string Value) {
-    usleep(1024);
-    int i = property_set(Prop_Name.c_str(), Value.c_str());
-    usleep(1024);
-    return i;
+    usleep(128);
+
+    int ret = property_set(Prop_Name.c_str(), Value.c_str());
+    usleep(128);
+
+    // if that fails, try using resetprop
+    if (ret) {
+ 	string tmp = "\"";
+	string cmd = "/sbin/resetprop";
+
+  	if (!Path_Exists(cmd))
+    		cmd = Fox_Bin_Dir + "/resetprop";
+
+  	if (!Path_Exists(cmd))
+    		cmd = Fox_Bin_Dir + "/setprop";
+
+    	if (Path_Exists(cmd)) {
+  		ret = Exec_Cmd(cmd + " " + Prop_Name + " " + tmp + Value + tmp);
+    		usleep(4096);
+    	}
+    }
+    return ret;
 }
 //
