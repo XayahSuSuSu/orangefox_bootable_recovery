@@ -50,7 +50,7 @@
 #include "data.hpp"
 #include "partitions.hpp"
 #include "variables.h"
-#include "bootloader_message_twrp/include/bootloader_message_twrp/bootloader_message.h"
+#include "bootloader_message/include/bootloader_message/bootloader_message.h"
 #include "cutils/properties.h"
 #include "cutils/android_reboot.h"
 #include <sys/reboot.h>
@@ -1067,19 +1067,6 @@ void TWFunc::Update_Log_File(void) {
 	chmod(logCopy.c_str(), 0600);
 	chmod(lastLogCopy.c_str(), 0640);
 
-	// Reset bootloader message
-	TWPartition* Part = PartitionManager.Find_Partition_By_Path("/misc");
-	if (Part != NULL) {
-		std::string err;
-		if (!clear_bootloader_message((void*)&err)) {
-			if (err == "no misc device set") {
-				LOGINFO("%s\n", err.c_str());
-			} else {
-				LOGERR("%s\n", err.c_str());
-			}
-		}
-	}
-
 	if (get_log_dir() == CACHE_LOGS_DIR) {
 		if (PartitionManager.Mount_By_Path("/cache", false)) {
 			if (unlink("/cache/recovery/command") && errno != ENOENT) {
@@ -1090,6 +1077,17 @@ void TWFunc::Update_Log_File(void) {
 	sync();
 }
 
+void TWFunc::Clear_Bootloader_Message() {
+	std::string err;
+	if (!clear_bootloader_message(&err)) {
+		if (err == "no misc device set") {
+			LOGINFO("%s\n", err.c_str());
+		} else {
+			LOGERR("%s\n", err.c_str());
+		}
+	}
+}
+
 void TWFunc::Update_Intent_File(string Intent)
 {
   if (PartitionManager.Mount_By_Path("/cache", false) && !Intent.empty())
@@ -1098,94 +1096,72 @@ void TWFunc::Update_Intent_File(string Intent)
     }
 }
 
-
 // reboot: Reboot the system. Return -1 on error, no return on success
 int TWFunc::tw_reboot(RebootCommand command)
 {
-  int DoDeactivate = 0;
-  DataManager::Flush();
-  Update_Log_File();
-  
-  // Always force a sync before we reboot
-  sync();
+	DataManager::Flush();
+	Update_Log_File();
 
-  // if we haven't called Deactivation_Process before, check whether to call it now 
-  // This code is currently disabled - Fox_AutoDeactivate_OnReboot is never set to 1
-  if ((Fox_AutoDeactivate_OnReboot == 1) && (Fox_IsDeactivation_Process_Called == 0))
-    {
-      if (
-	   (DataManager::GetIntValue(FOX_DISABLE_DM_VERITY) == 1)       
-	   || (DataManager::GetIntValue(FOX_DISABLE_FORCED_ENCRYPTION) == 1)
-         ) 
-        { 
-           DoDeactivate = 1;
-        }
-    }
-  //***//
+	// Always force a sync before we reboot
+	sync();
 
-  TWFunc::Run_Before_Reboot();
+  	// if we haven't called Deactivation_Process before, check whether to call it now 
+  	// This code is currently disabled - Fox_AutoDeactivate_OnReboot is never set to 1
+  	int DoDeactivate = 0;
+  	if ((Fox_AutoDeactivate_OnReboot == 1) && (Fox_IsDeactivation_Process_Called == 0)) {
+      	if ((DataManager::GetIntValue(FOX_DISABLE_DM_VERITY) == 1)       
+	   || (DataManager::GetIntValue(FOX_DISABLE_FORCED_ENCRYPTION) == 1)) { 
+           	DoDeactivate = 1;
+           }
+    	}
+    	
+  	TWFunc::Run_Before_Reboot();
+  	// ----
    
-  switch (command)
-    {
-    case rb_current:
-    case rb_system:
-      if (DoDeactivate == 1) { Deactivation_Process(); } 
-      Update_Intent_File("s");
-      sync();
-      check_and_run_script("/system/bin/rebootsystem.sh", "reboot system");
+	switch (command) {
+		case rb_current:
+		case rb_system:
+      			if (DoDeactivate == 1) { Deactivation_Process(); } 
+			Update_Intent_File("s");
+			sync();
+			check_and_run_script("/system/bin/rebootsystem.sh", "reboot system");
 #ifdef ANDROID_RB_PROPERTY
-      return property_set(ANDROID_RB_PROPERTY, "reboot,");
+			return property_set(ANDROID_RB_PROPERTY, "reboot,");
 #elif defined(ANDROID_RB_RESTART)
-      return android_reboot(ANDROID_RB_RESTART, 0, 0);
+			return android_reboot(ANDROID_RB_RESTART, 0, 0);
 #else
-      return reboot(RB_AUTOBOOT);
+			return reboot(RB_AUTOBOOT);
 #endif
-    case rb_recovery:
-      if (DoDeactivate == 1){ Deactivation_Process(); sync(); }
-      check_and_run_script("/system/bin/rebootrecovery.sh", "reboot recovery");
+		case rb_recovery:
+      			if (DoDeactivate == 1) { Deactivation_Process(); } 
+			check_and_run_script("/system/bin/rebootrecovery.sh", "reboot recovery");
+			return property_set(ANDROID_RB_PROPERTY, "reboot,recovery");
+		case rb_bootloader:
+			check_and_run_script("/system/bin/rebootbootloader.sh", "reboot bootloader");
+			return property_set(ANDROID_RB_PROPERTY, "reboot,bootloader");
+		case rb_poweroff:
+			check_and_run_script("/system/bin/poweroff.sh", "power off");
 #ifdef ANDROID_RB_PROPERTY
-      return property_set(ANDROID_RB_PROPERTY, "reboot,recovery");
-#else
-      return __reboot(LINUX_REBOOT_MAGIC1, LINUX_REBOOT_MAGIC2,
-		      LINUX_REBOOT_CMD_RESTART2, (void *) "recovery");
-#endif
-    case rb_bootloader:
-    check_and_run_script("/system/bin/rebootbootloader.sh", "reboot bootloader");
-#ifdef ANDROID_RB_PROPERTY
-      return property_set(ANDROID_RB_PROPERTY, "reboot,bootloader");
-#else
-      return __reboot(LINUX_REBOOT_MAGIC1, LINUX_REBOOT_MAGIC2,
-		      LINUX_REBOOT_CMD_RESTART2, (void *) "bootloader");
-#endif
-    case rb_poweroff:
-    check_and_run_script("/system/bin/poweroff.sh", "power off");
-#ifdef ANDROID_RB_PROPERTY
-      return property_set(ANDROID_RB_PROPERTY, "shutdown,");
+			return property_set(ANDROID_RB_PROPERTY, "shutdown,");
 #elif defined(ANDROID_RB_POWEROFF)
-      return android_reboot(ANDROID_RB_POWEROFF, 0, 0);
+			return android_reboot(ANDROID_RB_POWEROFF, 0, 0);
 #else
-      return reboot(RB_POWER_OFF);
+			return reboot(RB_POWER_OFF);
 #endif
-    case rb_download:
-    check_and_run_script("/system/bin/rebootdownload.sh", "reboot download");
-#ifdef ANDROID_RB_PROPERTY
-      return property_set(ANDROID_RB_PROPERTY, "reboot,download");
-#else
-      return __reboot(LINUX_REBOOT_MAGIC1, LINUX_REBOOT_MAGIC2,
-		      LINUX_REBOOT_CMD_RESTART2, (void *) "download");
-#endif
+		case rb_download:
+			check_and_run_script("/system/bin/rebootdownload.sh", "reboot download");
+			return property_set(ANDROID_RB_PROPERTY, "reboot,download");
 		case rb_edl:
 			check_and_run_script("/system/bin/rebootedl.sh", "reboot edl");
-#ifdef ANDROID_RB_PROPERTY
 			return property_set(ANDROID_RB_PROPERTY, "reboot,edl");
-#else
-			return __reboot(LINUX_REBOOT_MAGIC1, LINUX_REBOOT_MAGIC2, LINUX_REBOOT_CMD_RESTART2, (void*) "edl");
-#endif
+		case rb_fastboot:
+			return property_set(ANDROID_RB_PROPERTY, "reboot,fastboot");
 		default:
 			return -1;
 	}
 	return -1;
 }
+
 
 void TWFunc::check_and_run_script(const char *script_file,
 				  const char *display_name)
@@ -4876,14 +4852,10 @@ char ret[1024]; // TODO - what is the maximum size of props?
 }
 
 int TWFunc::Fox_Property_Set(const std::string Prop_Name, const std::string Value) {
-    usleep(128);
-
-    int ret = property_set(Prop_Name.c_str(), Value.c_str());
-    usleep(128);
-
-    // if that fails, try using resetprop
-    if (ret) {
- 	string tmp = "\"";
+ int ret;
+    	
+    	usleep(128);
+	string tmp = "\"";
 	string cmd = "/sbin/resetprop";
 
   	if (!Path_Exists(cmd))
@@ -4893,10 +4865,13 @@ int TWFunc::Fox_Property_Set(const std::string Prop_Name, const std::string Valu
     		cmd = Fox_Bin_Dir + "/setprop";
 
     	if (Path_Exists(cmd)) {
-  		ret = Exec_Cmd(cmd + " " + Prop_Name + " " + tmp + Value + tmp);
-    		usleep(4096);
+  	    ret = Exec_Cmd(cmd + " " + Prop_Name + " " + tmp + Value + tmp);
     	}
-    }
-    return ret;
+    	else
+    	   ret = property_set(Prop_Name.c_str(), Value.c_str());
+
+    	usleep(4096);
+
+    	return ret;
 }
 //

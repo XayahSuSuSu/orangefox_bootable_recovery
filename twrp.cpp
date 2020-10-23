@@ -1,8 +1,6 @@
 /*
+	Copyright 2012-2020 TeamWin
 	This file is part of TWRP/TeamWin Recovery Project.
-
-	Copyright (C) 2018-2020 OrangeFox Recovery Project
-	This file is part of the OrangeFox Recovery Project.
 
 	TWRP is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -29,7 +27,6 @@
 #include "gui/twmsg.h"
 
 #include "cutils/properties.h"
-#include "bootloader_message_twrp/include/bootloader_message_twrp/bootloader_message.h"
 
 #ifdef ANDROID_RB_RESTART
 #include "cutils/android_reboot.h"
@@ -55,6 +52,7 @@ extern "C" {
 #endif
 #include "openrecoveryscript.hpp"
 #include "variables.h"
+#include "startupArgs.hpp"
 #include "twrpAdbBuFifo.hpp"
 #ifdef TW_USE_NEW_MINADBD
 // #include "minadbd/minadbd.h"
@@ -108,80 +106,21 @@ static void Decrypt_Page(bool SkipDecryption, bool datamedia) {
 	}
 }
 
-int main(int argc, char **argv)
-{
-  //[f/d] Disable LED as early as possible
-  DataManager::Leds(false);
+static void process_recovery_mode(twrpAdbBuFifo* adb_bu_fifo, bool skip_decryption) {
+	char crash_prop_val[PROPERTY_VALUE_MAX];
+	int crash_counter;
+	property_get("orangefox.crash_counter", crash_prop_val, "-1");
+	crash_counter = atoi(crash_prop_val) + 1;
+	snprintf(crash_prop_val, sizeof(crash_prop_val), "%d", crash_counter);
+	property_set("orangefox.crash_counter", crash_prop_val);
 
- //Also disable adbd
- #ifdef FOX_ADVANCED_SECURITY
-  property_set("ctl.stop", "adbd");
-  property_set("orangefox.adb.status", "0");
-  #endif
+	if (crash_counter == 0) {
+		property_list(Print_Prop, NULL);
+		printf("\n");
+	} else {
+		printf("orangefox.crash_counter=%d\n", crash_counter);
+	}
 
-  // Recovery needs to install world-readable files, so clear umask
-  // set by init
-  umask(0);
-
-  Log_Offset = 0;
-
-  // Set up temporary log file (/tmp/recovery.log)
-  freopen(TMP_LOG_FILE, "a", stdout);
-  setbuf(stdout, NULL);
-  freopen(TMP_LOG_FILE, "a", stderr);
-  setbuf(stderr, NULL);
-
-  signal(SIGPIPE, SIG_IGN);
-
-  // Handle ADB sideload
-  if (argc == 3 && strcmp(argv[1], "--adbd") == 0)
-    {
-      property_set("ctl.stop", "adbd");
-#ifdef TW_USE_NEW_MINADBD
-      ///adb_server_main(0, DEFAULT_ADB_PORT, -1); TODO fix this for android8
-#else
-      adb_main(argv[2]);
-#endif
-      return 0;
-    }
-
-#ifdef RECOVERY_SDCARD_ON_DATA
-  datamedia = true;
-#endif
-
-  char crash_prop_val[PROPERTY_VALUE_MAX];
-  int crash_counter;
-  property_get("orangefox.crash_counter", crash_prop_val, "-1");
-  crash_counter = atoi(crash_prop_val) + 1;
-  snprintf(crash_prop_val, sizeof(crash_prop_val), "%d", crash_counter);
-  property_set("orangefox.crash_counter", crash_prop_val);
-  property_set("ro.orangefox.boot", "1");
-  property_set("ro.orangefox.build", "orangefox");
-  property_set("ro.orangefox.version", FOX_VERSION);
-  
-  string fox_build_date = TWFunc::File_Property_Get ("/etc/fox.cfg", "FOX_BUILD_DATE");
-  if (fox_build_date == "")
-     {
-        fox_build_date = TWFunc::File_Property_Get ("/default.prop", "ro.bootimage.build.date");
-        if (fox_build_date == "")
-          {
-              fox_build_date = TWFunc::File_Property_Get ("/default.prop", "ro.build.date");
-              if (fox_build_date == "")
-                 fox_build_date = "[no date!]";
-         }
-     }
-
-  // set the start date to the recovery's build date
-  TWFunc::Reset_Clock();
-
-  DataManager::GetValue(FOX_COMPATIBILITY_DEVICE, Fox_Current_Device);
-  printf("Starting OrangeFox Recovery %s (built on %s for %s [dev_ver: %s]; pid %d)\n",
-  	FOX_BUILD, fox_build_date.c_str(), Fox_Current_Device.c_str(), FOX_CURRENT_DEV_STR, getpid());
-
-  // Load default values to set DataManager constants and handle ifdefs
-	DataManager::SetDefaultValues();
-	printf("Starting the UI...\n");
-	gui_init();
 	printf("=> Linking mtab\n");
 	symlink("/proc/mounts", "/etc/mtab");
 	std::string fstab_filename = "/etc/twrp.fstab";
@@ -191,7 +130,7 @@ int main(int argc, char **argv)
 	printf("=> Processing %s\n", fstab_filename.c_str());
 	if (!PartitionManager.Process_Fstab(fstab_filename, 1)) {
 		LOGERR("Failing out of recovery due to problem with fstab.\n");
-		return -1;
+		return;
 	}
 	PartitionManager.Output_Partition_Logging();
 
@@ -227,120 +166,15 @@ int main(int argc, char **argv)
 	}
 #endif
 
-	// Load up all the resources
-	gui_loadResources();
-
-	bool Shutdown = false;
-	bool SkipDecryption = false;
-
-	//----
         // use the ROM's fingerprint?
-	//#ifdef OF_USE_SYSTEM_FINGERPRINT
         TWFunc::RunStartupScript(); // run the startup script early
         TWFunc::UseSystemFingerprint();
 	TWFunc::RunFoxScript("/sbin/runatboot.sh");
 
-	//#endif
-	
-	string Send_Intent = "";
-	{
-		TWPartition* misc = PartitionManager.Find_Partition_By_Path("/misc");
-		if (misc != NULL) {
-			if (misc->Current_File_System == "emmc") {
-				set_misc_device(misc->Actual_Block_Device.c_str());
-			} else {
-				LOGERR("Only emmc /misc is supported\n");
-			}
-		}
-		get_args(&argc, &argv);
-
-		int index, index2, len;
-		char* argptr;
-		char* ptr;
-		printf("Startup Commands: ");
-		for (index = 1; index < argc; index++) {
-			if (strcmp(argv[index], "--prompt_and_wipe_data") == 0) // Rescue Party ?
-			   {
-			      gui_print_color("error",
-			      "\nOrangeFox: Android Rescue Party trigger! Possible solutions? Either: \n  1. Wipe data and caches, or\n  2. Format data, and/or\n  3. Clean-flash your ROM.\n\n");
-			   }
-
-			argptr = argv[index];
-			printf(" '%s'", argv[index]);
-			len = strlen(argv[index]);
-			if (*argptr == '-') {argptr++; len--;}
-			if (*argptr == '-') {argptr++; len--;}
-			if (*argptr == 'u') {
-				ptr = argptr;
-				index2 = 0;
-				while (*ptr != '=' && *ptr != '\n')
-					ptr++;
-				// skip the = before grabbing Zip_File
-				while (*ptr == '=')
-					ptr++;
-				if (*ptr) {
-					string ORSCommand = "install ";
-					ORSCommand.append(ptr);
-
-					// If we have a map of blocks we don't need to mount data.
-					SkipDecryption = *ptr == '@';
-
-					if (!OpenRecoveryScript::Insert_ORS_Command(ORSCommand))
-						break;
-				} else
-					LOGERR("argument error specifying zip file\n");
-			} else if (*argptr == 'w') {
-				if (len == 9) {
-					if (!OpenRecoveryScript::Insert_ORS_Command("wipe data\n"))
-						break;
-				} else if (len == 10) {
-					if (!OpenRecoveryScript::Insert_ORS_Command("wipe cache\n"))
-						break;
-				}
-				// Other 'w' items are wipe_ab and wipe_package_size which are related to bricking the device remotely. 
-				// We will not bother to support these as having TWRP probably makes "bricking" the device in this manner useless
-			} else if (*argptr == 'n') {
-				DataManager::SetValue(TW_BACKUP_NAME, gui_parse_text("{@auto_generate}"));
-				if (!OpenRecoveryScript::Insert_ORS_Command("backup BSDCAE\n"))
-					break;
-			} else if (*argptr == 'p') {
-				Shutdown = true;
-			} else if (*argptr == 's') {
-				if (strncmp(argptr, "send_intent", strlen("send_intent")) == 0) {
-					ptr = argptr + strlen("send_intent") + 1;
-					Send_Intent = *ptr;
-				} else if (strncmp(argptr, "security", strlen("security")) == 0) {
-					LOGINFO("Security update\n");
-				} else if (strncmp(argptr, "sideload", strlen("sideload")) == 0) {
-					if (!OpenRecoveryScript::Insert_ORS_Command("sideload\n"))
-						break;
-				} else if (strncmp(argptr, "stages", strlen("stages")) == 0) {
-					LOGINFO("ignoring stages command\n");
-				}
-			} else if (*argptr == 'r') {
-				if (strncmp(argptr, "reason", strlen("reason")) == 0) {
-					ptr = argptr + strlen("reason") + 1;
-					gui_print("%s\n", ptr);
-				}
-			}
-		}
-		printf("\n");
-	}
-
-	if (crash_counter == 0) {
-		property_list(Print_Prop, NULL);
-		printf("\n");
-	} else {
-		printf("orangefox.crash_counter=%d\n", crash_counter);
-	}
-
-	// Check for and run startup script if script exists
-	// TWFunc::RunFoxScript("/sbin/runatboot.sh");
-
 #ifdef TW_INCLUDE_INJECTTWRP
-	// Back up OrangeFox Ramdisk if needed:
+	// Back up TWRP Ramdisk if needed:
 	TWPartition* Boot = PartitionManager.Find_Partition_By_Path("/boot");
-	LOGINFO("Backing up OrangeFox ramdisk...\n");
+	LOGINFO("Backing up TWRP ramdisk...\n");
 	if (Boot == NULL || Boot->Current_File_System != "emmc")
 		TWFunc::Exec_Cmd("injecttwrp --backup /tmp/backup_recovery_ramdisk.img");
 	else {
@@ -355,29 +189,20 @@ int main(int argc, char **argv)
   	property_set("orangefox.adb.status", "0");
 #endif
 
-       Decrypt_Page(SkipDecryption, datamedia);
+	Decrypt_Page(skip_decryption, datamedia);
 
 	// Fixup the RTC clock on devices which require it
 	if (crash_counter == 0)
 		TWFunc::Fixup_Time_On_Boot();
 
-	// Read the settings file
 	TWFunc::Update_Log_File();
 	DataManager::ReadSettingsFile();
-	PageManager::LoadLanguage(DataManager::GetStrValue("tw_language"));
-	GUIConsole::Translate_Now();
 
-  	// implement any relevant dm-verity/forced-encryption build vars
-  	TWFunc::Setup_Verity_Forced_Encryption();
-
-	// Run any outstanding OpenRecoveryScript
 	std::string cacheDir = TWFunc::get_log_dir();
 	if (cacheDir == DATA_LOGS_DIR)
 		cacheDir = "/data/cache";
 	std::string orsFile = cacheDir + "/recovery/openrecoveryscript";
-
-	if ((DataManager::GetIntValue(TW_IS_ENCRYPTED) == 0 || SkipDecryption) && (TWFunc::Path_Exists(SCRIPT_FILE_TMP) || TWFunc::Path_Exists(orsFile))) {	
-	//if (TWFunc::Path_Exists(SCRIPT_FILE_TMP) || (DataManager::GetIntValue(TW_IS_ENCRYPTED) == 0 && TWFunc::Path_Exists(orsFile))) {
+	if ((DataManager::GetIntValue(TW_IS_ENCRYPTED) == 0 || skip_decryption) && (TWFunc::Path_Exists(SCRIPT_FILE_TMP) || TWFunc::Path_Exists(orsFile))) {
 		OpenRecoveryScript::Run_OpenRecoveryScript();
 	}
 
@@ -387,7 +212,7 @@ int main(int argc, char **argv)
 #ifdef FOX_ADVANCED_SECURITY
 	LOGINFO("ADB & MTP disabled by maintainer\n");
 	DataManager::SetValue("fox_advanced_security", "1");
-  DataManager::SetValue("tw_mtp_enabled", 0);
+  	DataManager::SetValue("tw_mtp_enabled", 0);
 #else
 #ifdef TW_HAS_MTP
 	char mtp_crash_check[PROPERTY_VALUE_MAX];
@@ -417,7 +242,6 @@ int main(int argc, char **argv)
 	// Check if system has never been changed
 	TWPartition* sys = PartitionManager.Find_Partition_By_Path(PartitionManager.Get_Android_Root_Path());
 	TWPartition* ven = PartitionManager.Find_Partition_By_Path("/vendor");
-
 	if (sys) {
 		if (sys->Get_Super_Status()) {
 #ifdef TW_INCLUDE_CRYPTO
@@ -452,48 +276,46 @@ int main(int argc, char **argv)
 		}
 	}
 #endif
-  twrpAdbBuFifo *adb_bu_fifo = new twrpAdbBuFifo();
-  adb_bu_fifo->threadAdbBuFifo();
 
-// run the postrecoveryboot script here
-TWFunc::RunFoxScript("/sbin/postrecoveryboot.sh");
+	TWFunc::Update_Log_File();
+
+	adb_bu_fifo->threadAdbBuFifo();
+
+	// run the postrecoveryboot script here
+	TWFunc::RunFoxScript("/sbin/postrecoveryboot.sh");
 #ifndef OF_DEVICE_WITHOUT_PERSIST
-DataManager::RestorePasswordBackup();
+	DataManager::RestorePasswordBackup();
 #endif
 
 #ifdef FOX_OLD_DECRYPT_RELOAD
-  LOGINFO("Using R10 way to reload theme.\n");
-  if (DataManager::GetStrValue("used_custom_encryption") == "1") {
-     if (TWFunc::Path_Exists(Fox_Home + "/.theme") || TWFunc::Path_Exists(Fox_Home + "/.navbar")) // using custom themes
-         PageManager::RequestReload();
-  }
+  	LOGINFO("Using R10 way to reload theme.\n");
+  	if (DataManager::GetStrValue("used_custom_encryption") == "1") {
+     	    if (TWFunc::Path_Exists(Fox_Home + "/.theme") || TWFunc::Path_Exists(Fox_Home + "/.navbar")) // using custom themes
+         	PageManager::RequestReload();
+  	}
 #else
-  if (DataManager::GetStrValue("data_decrypted") == "1") {
+  	if (DataManager::GetStrValue("data_decrypted") == "1") {
 	DataManager::SetValue(FOX_ENCRYPTED_DEVICE, "1");
 	//[f/d] Start UI using reapply_settings page (executed on recovery startup)
 	if (TWFunc::Path_Exists(Fox_Home + "/.theme") || TWFunc::Path_Exists(Fox_Home + "/.navbar")) {
   		DataManager::SetValue("of_reload_back", "main");
 		PageManager::RequestReload();
     		gui_startPage("reapply_settings", 1, 0);
-	} else 	{
-		   gui_start();
-    		}
+	} 
   }
-  else
 #endif
-	gui_start(); // Launch the main GUI
 
 #ifndef TW_OEM_BUILD
-  // Disable flashing of stock recovery
-  TWFunc::Disable_Stock_Recovery_Replace();
+	// Disable flashing of stock recovery
+	TWFunc::Disable_Stock_Recovery_Replace();
 #endif
+}
 
-	// Reboot
-	TWFunc::Update_Intent_File(Send_Intent);
-	delete adb_bu_fifo;
-	TWFunc::Update_Log_File();
+static void reboot() {
 	gui_msg(Msg("rebooting=Rebooting..."));
+	TWFunc::Update_Log_File();
 	string Reboot_Arg;
+
 	DataManager::GetValue("tw_reboot_arg", Reboot_Arg);
 	if (Reboot_Arg == "recovery")
 		TWFunc::tw_reboot(rb_recovery);
@@ -505,9 +327,106 @@ DataManager::RestorePasswordBackup();
 		TWFunc::tw_reboot(rb_download);
 	else if (Reboot_Arg == "edl")
 		TWFunc::tw_reboot(rb_edl);
+	else if (Reboot_Arg == "fastboot")
+		TWFunc::tw_reboot(rb_fastboot);
 	else
 		TWFunc::tw_reboot(rb_system);
-
-  return 0;
 }
 
+int main(int argc, char **argv) {
+	// Recovery needs to install world-readable files, so clear umask
+	// set by init
+	umask(0);
+
+	Log_Offset = 0;
+
+	// Set up temporary log file (/tmp/recovery.log)
+	freopen(TMP_LOG_FILE, "a", stdout);
+	setbuf(stdout, NULL);
+	freopen(TMP_LOG_FILE, "a", stderr);
+	setbuf(stderr, NULL);
+
+	signal(SIGPIPE, SIG_IGN);
+
+	// Handle ADB sideload
+	if (argc == 3 && strcmp(argv[1], "--adbd") == 0) {
+		property_set("ctl.stop", "adbd");
+#ifdef TW_USE_NEW_MINADBD
+		//adb_server_main(0, DEFAULT_ADB_PORT, -1); TODO fix this for android8
+		// minadbd_main();
+#else
+		adb_main(argv[2]);
+#endif
+		return 0;
+	}
+
+#ifdef RECOVERY_SDCARD_ON_DATA
+	datamedia = true;
+#endif
+
+	// ---
+  	property_set("ro.orangefox.boot", "1");
+  	property_set("ro.orangefox.build", "orangefox");
+  	property_set("ro.orangefox.version", FOX_VERSION);
+  
+  	string fox_build_date = TWFunc::File_Property_Get ("/etc/fox.cfg", "FOX_BUILD_DATE");
+  	if (fox_build_date == "") {
+        	fox_build_date = TWFunc::File_Property_Get ("/default.prop", "ro.bootimage.build.date");
+        	if (fox_build_date == "") {
+              		fox_build_date = TWFunc::File_Property_Get ("/default.prop", "ro.build.date");
+              		if (fox_build_date == "")
+                 		fox_build_date = "[no date!]";
+         	}
+     	}
+
+  	// set the start date to the recovery's build date
+  	TWFunc::Reset_Clock();
+
+  	DataManager::GetValue(FOX_COMPATIBILITY_DEVICE, Fox_Current_Device);
+  	printf("Starting OrangeFox Recovery %s (built on %s for %s [dev_ver: %s]; pid %d)\n",
+  		FOX_BUILD, fox_build_date.c_str(), Fox_Current_Device.c_str(), FOX_CURRENT_DEV_STR, getpid());
+	//----
+
+	// Load default values to set DataManager constants and handle ifdefs
+	DataManager::SetDefaultValues();
+	printf("Starting the UI...\n");
+	gui_init();
+
+	// Load up all the resources
+	gui_loadResources();
+
+	PageManager::LoadLanguage(DataManager::GetStrValue("tw_language"));
+	GUIConsole::Translate_Now();
+
+	// Run any outstanding OpenRecoveryScript
+  	TWFunc::Setup_Verity_Forced_Encryption();
+
+	startupArgs startup;
+	startup.parse(&argc, &argv);
+	twrpAdbBuFifo *adb_bu_fifo = new twrpAdbBuFifo();
+	TWFunc::Clear_Bootloader_Message();
+
+	if (startup.Get_Fastboot_Mode()) {
+		LOGINFO("starting fastboot\n");
+		gui_msg(Msg("fastboot_console_msg=Entered Fastboot mode..."));
+		if (gui_startPage("fastboot", 1, 1) != 0) {
+			LOGERR("Failed to start fastbootd page.\n");
+		}
+		delete adb_bu_fifo;
+		TWFunc::Update_Intent_File(startup.Get_Intent());
+
+		reboot();
+		return 0;
+	} else {
+		process_recovery_mode(adb_bu_fifo, startup.Should_Skip_Decryption());
+	}
+
+	// Launch the main GUI
+	gui_start();
+	delete adb_bu_fifo;
+	TWFunc::Update_Intent_File(startup.Get_Intent());
+
+	reboot();
+
+	return 0;
+}
