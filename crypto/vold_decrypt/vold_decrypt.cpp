@@ -1283,9 +1283,9 @@ int Vold_Decrypt_Core(const string& Password) {
 	Symlink_Firmware_Files(is_vendor_symlinked, is_firmware_symlinked);
 
 	Set_Needed_Properties();
-#ifdef TW_INCLUDE_LIBRESETPROP
+//#ifdef TW_INCLUDE_LIBRESETPROP
 	Update_Patch_Level();
-#endif
+//#endif
 
 	// Start services needed for vold decrypt
 	LOGINFO("Starting services...\n");
@@ -1350,9 +1350,9 @@ int Vold_Decrypt_Core(const string& Password) {
 		LOGINFO("Failed to start vold\n");
 		res = VD_ERR_VOLD_FAILED_TO_START;
 	}
-#ifdef TW_INCLUDE_LIBRESETPROP
+//#ifdef TW_INCLUDE_LIBRESETPROP
 	Revert_Patch_Level();
-#endif
+//#endif
 	// Stop services needed for vold decrypt so /system can be unmounted
 	LOGINFO("Stopping services...\n");
 	Stop_Service("sys_vold");

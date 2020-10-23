@@ -138,7 +138,8 @@ static void process_recovery_mode(twrpAdbBuFifo* adb_bu_fifo, bool skip_decrypti
 	PartitionManager.Output_Partition_Logging();
 
 // We are doing this here to allow super partition to be set up prior to overriding properties
-#if defined(TW_INCLUDE_LIBRESETPROP) && defined(TW_OVERRIDE_SYSTEM_PROPS)
+// #if defined(TW_INCLUDE_LIBRESETPROP) && defined(TW_OVERRIDE_SYSTEM_PROPS)
+#if defined(TW_OVERRIDE_SYSTEM_PROPS) // OrangeFox has its own resetprop, so we don't need libresetprop
 	if (!PartitionManager.Mount_By_Path(PartitionManager.Get_Android_Root_Path(), true)) {
 		LOGERR("Unable to mount %s\n", PartitionManager.Get_Android_Root_Path().c_str());
 	} else {
@@ -201,6 +202,7 @@ static void process_recovery_mode(twrpAdbBuFifo* adb_bu_fifo, bool skip_decrypti
 	TWFunc::Update_Log_File();
 	DataManager::ReadSettingsFile();
 
+	// Run any outstanding OpenRecoveryScript
 	std::string cacheDir = TWFunc::get_log_dir();
 	if (cacheDir == DATA_LOGS_DIR)
 		cacheDir = "/data/cache";
@@ -304,7 +306,7 @@ static void process_recovery_mode(twrpAdbBuFifo* adb_bu_fifo, bool skip_decrypti
   		DataManager::SetValue("of_reload_back", "main");
 		PageManager::RequestReload();
     		gui_startPage("reapply_settings", 1, 0);
-	} 
+	}
   }
 #endif
 
@@ -397,11 +399,8 @@ int main(int argc, char **argv) {
 
 	// Load up all the resources
 	gui_loadResources();
-
 	PageManager::LoadLanguage(DataManager::GetStrValue("tw_language"));
 	GUIConsole::Translate_Now();
-
-	// Run any outstanding OpenRecoveryScript
   	TWFunc::Setup_Verity_Forced_Encryption();
 
 	startupArgs startup;

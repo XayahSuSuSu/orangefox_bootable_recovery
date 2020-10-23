@@ -1495,7 +1495,7 @@ int TWFunc::Property_Override(string Prop_Name, string Prop_Value) {
 #ifdef TW_INCLUDE_LIBRESETPROP
     return setprop(Prop_Name.c_str(), Prop_Value.c_str(), false);
 #else
-    return -2;
+    return TWFunc::Fox_Property_Set(Prop_Name, Prop_Value);
 #endif
 }
 
