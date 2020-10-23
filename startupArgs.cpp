@@ -2,6 +2,9 @@
 	Copyright 2012-2020 TeamWin
 	This file is part of TWRP/TeamWin Recovery Project.
 
+	Copyright (C) 2018-2020 OrangeFox Recovery Project
+	This file is part of the OrangeFox Recovery Project.
+
 	TWRP is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
 	the Free Software Foundation, either version 3 of the License, or
@@ -24,6 +27,13 @@ void startupArgs::parse(int *argc, char ***argv) {
 
 	LOGINFO("Startup Commands: ");
 	for (index = 1; index < args.size(); index++) {
+		// DJ9: Capture Android Rescue Party messages and report something to the user
+		if (args[index].find("--prompt_and_wipe_data") != std::string::npos) {
+		      gui_print("\n");
+		      gui_print_color("error",
+		      "\nAndroid Rescue Party trigger! Possible solutions? Either: \n  1. Wipe caches, and/or\n  2. Format data, and/or\n  3. Clean-flash your ROM.\n\n");
+		      gui_print_color("error", "Problem='%s'\n\n", args[index+1].c_str());
+		} else
 		printf("'%s'", args[index].c_str());
 		if (args[index] == FASTBOOT) {
 			fastboot_mode = true;
