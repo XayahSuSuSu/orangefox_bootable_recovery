@@ -53,9 +53,10 @@ typedef enum
 	rb_system,
 	rb_recovery,
 	rb_poweroff,
-	rb_bootloader,     // May also be fastboot
+	rb_bootloader,
 	rb_download,
 	rb_edl,
+	rb_fastboot
 } RebootCommand;
 
 enum Archive_Type {
@@ -106,6 +107,7 @@ public:
 	static bool Get_Encryption_Policy(fscrypt_encryption_policy &policy, std::string path); // return encryption policy for path
 	static bool Set_Encryption_Policy(std::string path, const fscrypt_encryption_policy &policy); // set encryption policy for path
 	static void List_Mounts();
+	static void Clear_Bootloader_Message();
 
 	static bool Repack_Image(string mount_point);
 	static bool Unpack_Image(string mount_point);

@@ -430,6 +430,9 @@ protected:
 	int fixabrecoverybootloop(std::string arg);
 	int ftls(std::string arg);
 
+	int enableadb(std::string arg);
+	int enablefastboot(std::string arg);
+
 	int simulate;
 };
 
