@@ -478,9 +478,9 @@ void TWPartitionManager::Output_Partition_Logging(void)
 {
   std::vector < TWPartition * >::iterator iter;
   if (Get_Super_Status())
-  	property_set("orangefox.super.partition", "true");
+  	TWFunc::Fox_Property_Set("orangefox.super.partition", "true");
   else
-  	property_set("orangefox.super.partition", "false");
+  	TWFunc::Fox_Property_Set("orangefox.super.partition", "false");
 
   printf("\n\nPartition Logs:\n");
   TWPartition* Part;
@@ -489,16 +489,16 @@ void TWPartitionManager::Output_Partition_Logging(void)
        	Output_Partition((*iter));
        	Part = *iter;
        	if (Part->Mount_Point == "/vendor") {
-	   property_set("orangefox.vendor.mount_point", Part->Mount_Point.c_str());
-	   property_set("orangefox.vendor.block_device", Part->Actual_Block_Device.c_str());
+	   TWFunc::Fox_Property_Set("orangefox.vendor.mount_point", Part->Mount_Point);
+	   TWFunc::Fox_Property_Set("orangefox.vendor.block_device", Part->Actual_Block_Device);
 	}
 	else if (Part->Mount_Point == Get_Android_Root_Path()) {
-	   property_set("orangefox.system.mount_point", Part->Mount_Point.c_str());
-	   property_set("orangefox.system.block_device", Part->Actual_Block_Device.c_str());
+	   TWFunc::Fox_Property_Set("orangefox.system.mount_point", Part->Mount_Point);
+	   TWFunc::Fox_Property_Set("orangefox.system.block_device", Part->Actual_Block_Device);
 	}
 	else if (Part->Mount_Point == "/super") {
-	   property_set("orangefox.super.mount_point", Part->Mount_Point.c_str());
-	   property_set("orangefox.super.block_device", Part->Actual_Block_Device.c_str());
+	   TWFunc::Fox_Property_Set("orangefox.super.mount_point", Part->Mount_Point);
+	   TWFunc::Fox_Property_Set("orangefox.super.block_device", Part->Actual_Block_Device);
 	}
     }
 }
