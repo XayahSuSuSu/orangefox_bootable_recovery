@@ -1252,6 +1252,11 @@
 		<!-- R11.1 -->
 		<string name="custom_settings">Настройки для %fox_compatibility_fox_device%</string>
 		<string name="custom_settings_title">Настройки для %fox_compatibility_fox_device%</string>
-		<string name="tap_to_show">Нажмите, чтобы показать</string>
+		<string name="tap_to_show">Нажмите, чтобы показать</string>	
+
+		<string name="fastboot_button">Fastboot</string>
+		<string name="enable_adb">Включить ADB</string>
+		<string name="enable_fastboot">Включить Fastboot</string>
+		<string name="fastboot_console_msg">Вход в режим Fastboot...</string>
 	</resources>
 </language>

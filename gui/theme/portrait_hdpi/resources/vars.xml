@@ -406,6 +406,7 @@
 		<variable name="ab_menu_inst_6_text_y" value="%ab_menu_inst_6_y%-%ab_menu_text_offset%"/>
 		
 		<!-- Bottom buttons -->
+		<variable name="row_btn_bottom_y" value="%screen_h%-156"/>
 		<variable name="row_btn_y" value="%screen_h%-450"/>
 		<variable name="row_btn1_y" value="%screen_h%-300"/>
 		<variable name="row_btn2_y" value="%screen_h%-579"/>
@@ -437,10 +438,12 @@
 		<variable name="console_width" value="984"/>
 		<variable name="console_height" value="%screen_min_cut%-475"/>
 		<variable name="console_action_height" value="%screen_min_cut%-852"/>
+		<variable name="console_fastboot_height" value="%screen_min_cut%-492"/>
 		<variable name="prep" value="%screen_original_h%-%cutout_w%"/>
 		<variable name="console_action_height_big" value="%prep%-552"/>
 		<variable name="console_action_height_fm" value="%screen_min_cut%-696"/>
 		<variable name="console_y" value="504+%cutout_w%"/>
+		<variable name="console_ab_y" value="288+%cutout_w%"/>
 		<variable name="terminal_y" value="280+%cutout_w%"/>
 		<variable name="terminal_width" value="1032"/>
 		<variable name="terminal_height" value="%screen_min_cut%-1210"/>

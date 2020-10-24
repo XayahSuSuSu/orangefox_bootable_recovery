@@ -22,8 +22,21 @@
 		</page>
 
 		<page name="rebootcheck">
+			 <action> <!-- Always show confirmation when user is in fastboot mode -->
+				<condition var1="tw_back" var2="fastbootreboot"/>
+				<action function="disableled"/>
+				<action function="set">tw_action=reboot</action>
+				<action function="set">tw_text1={@reboot_btn}</action>
+				<action function="set">tw_action_text1={@reboot_btn}</action>
+				<action function="set">tw_action_text2={@rebooting}</action>
+				<action function="set">tw_complete_text1={@reboot_btn}</action>
+				<action function="set">tw_slider_text={@swipe_reboot}</action>
+				<action function="page">confirm_action</action>
+			</action>
+
 			<action>
 				<condition var1="disable_no_os" var2="1"/>
+				<condition var1="tw_back" op="!=" var2="fastbootreboot"/>
 				<action function="set">need_reboot=1</action>
 				<action function="set">tw_reboot_param=%tw_action_param%</action>
 				<action function="reboot">%tw_action_param%</action>
@@ -32,6 +45,7 @@
 			<action>
 				<condition var1="tw_backup_system_size" op="&gt;=" var2="%tw_min_system%"/>
 				<condition var1="disable_no_os" var2="0"/>
+				<condition var1="tw_back" op="!=" var2="fastbootreboot"/>
 				<action function="set">need_reboot=1</action>
 				<action function="set">tw_reboot_param=%tw_action_param%</action>
 				<action function="reboot">%tw_action_param%</action>
@@ -40,6 +54,7 @@
 			<action>
 				<condition var1="tw_backup_system_size" op="&lt;" var2="%tw_min_system%"/>
 				<condition var1="disable_no_os" var2="0"/>
+				<condition var1="tw_back" op="!=" var2="fastbootreboot"/>
 				<action function="disableled"/>
 				<action function="page">no_os_warning</action>
 			</action>
@@ -47,6 +62,7 @@
 			<action>
 				<condition var1="tw_backup_system_size" op="&gt;=" var2="%tw_min_system%"/>
 				<condition var1="disable_no_os" var2="2"/>
+				<condition var1="tw_back" op="!=" var2="fastbootreboot"/>
 				<action function="disableled"/>
 				<action function="set">tw_action=reboot</action>
 				<action function="set">tw_text1={@reboot_btn}</action>
@@ -60,6 +76,7 @@
 			<action>
 				<condition var1="tw_backup_system_size" op="&lt;" var2="%tw_min_system%"/>
 				<condition var1="disable_no_os" var2="2"/>
+				<condition var1="tw_back" op="!=" var2="fastbootreboot"/>
 				<action function="disableled"/>
 				<action function="page">no_os_warning</action>
 			</action>

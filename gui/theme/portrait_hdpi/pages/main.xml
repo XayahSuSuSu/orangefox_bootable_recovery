@@ -75,6 +75,73 @@
 			</action>
 		</page>
 
+		<page name="fastboot">
+			<background color="%background%"/>
+			<template name="keys"/>
+
+			<console>
+				<placement x="%col1_x%" y="%console_ab_y%" w="%console_width%" h="%console_fastboot_height%"/> 
+				<condition var1="use_fixed_font" var2="0"/>
+			</console>
+			
+			<console>
+				<placement x="%col1_x%" y="%console_ab_y%" w="%console_width%" h="%console_fastboot_height%"/> 
+				<condition var1="use_fixed_font" var2="1"/>
+				<font resource="fixed"/>
+			</console>
+
+			<progressbar>
+				<condition var1="ui_progress" op="&lt;" var2="100"/>
+				<condition var1="ui_progress" op="&gt;" var2="0"/>
+				<placement x="%progressbar_x%" y="%ab_h%"/>
+				<resource empty="progress_empty" full="progress_fill"/>
+				<data name="ui_progress"/>
+			</progressbar>
+			
+			<animation>
+				<condition var1="ui_progress" var2="100"/>
+				<placement x="%progressbar_x%" y="%ab_h%"/>
+				<resource name="progress"/>
+				<speed fps="30" render="1"/>
+				<loop frame="1"/>
+			</animation>
+
+			<template name="ab_main"/>
+			<template name="statusbarinfo"/>
+
+			<text style="text_ab_title">
+				<placement x="%col1_x%" y="%ab_bc_y%"/>
+				<text>{@fastboot_button=Fastboot}</text>
+			</text>
+
+			<button style="actionbar">
+				<placement x="%ab_btn1_x%" y="%ab_y%" placement="4"/>
+				<action function="page">fastbootreboot</action>
+			</button>
+
+			<image>
+				<placement x="%ab_btn1_x%" y="%ab_y%" placement="4"/>
+				<image resource="actionbar_reset"/>
+			</image>
+
+			<button style="btn_raised">
+				<condition var1="tw_enable_fastboot" op="=" var2="1" />
+				<placement x="%btn_raised_left_x%" y="%row_btn_bottom_y%"/>
+				<text>{@enable_fastboot=Enable Fastboot}</text>
+				<action function="enablefastboot"/>
+				<action function="set">tw_enable_fastboot=1</action>
+				<action function="set">tw_enable_adb=0</action>
+			</button>
+
+			<button style="btn_raised">
+				<condition var1="tw_enable_adb" op="=" var2="1" />
+				<placement x="%btn_raised_right_x%" y="%row_btn_bottom_y%" placement="1"/>
+				<text>{@enable_adb=Enable ADB}</text>
+				<action function="enableadb"/>
+				<action function="set">tw_enable_adb=1</action>
+				<action function="set">tw_enable_fastboot=0</action>
+			</button>
+		</page>
 
 		<page name="navbar">
 			<action>
