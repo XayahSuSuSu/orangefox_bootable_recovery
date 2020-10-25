@@ -111,7 +111,7 @@
 
 			<text style="text_ab_title">
 				<placement x="%col1_x%" y="%ab_bc_y%"/>
-				<text>{@fastboot_button=Fastboot}</text>
+				<text>{@fastboot_button}</text>
 			</text>
 
 			<button style="actionbar">
@@ -127,7 +127,7 @@
 			<button style="btn_raised">
 				<condition var1="tw_enable_fastboot" op="=" var2="1" />
 				<placement x="%btn_raised_left_x%" y="%row_btn_bottom_y%"/>
-				<text>{@enable_fastboot=Enable Fastboot}</text>
+				<text>{@enable_fastboot}</text>
 				<action function="enablefastboot"/>
 				<action function="set">tw_enable_fastboot=1</action>
 				<action function="set">tw_enable_adb=0</action>
@@ -136,7 +136,7 @@
 			<button style="btn_raised">
 				<condition var1="tw_enable_adb" op="=" var2="1" />
 				<placement x="%btn_raised_right_x%" y="%row_btn_bottom_y%" placement="1"/>
-				<text>{@enable_adb=Enable ADB}</text>
+				<text>{@enable_adb}</text>
 				<action function="enableadb"/>
 				<action function="set">tw_enable_adb=1</action>
 				<action function="set">tw_enable_fastboot=0</action>

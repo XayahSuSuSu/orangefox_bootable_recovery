@@ -1024,6 +1024,12 @@
 					<action function="set">tw_action_param=download</action>
 					<action function="page">rebootcheck</action>
 				</listitem>
+				<listitem name="{@fastboot_button}">
+					<condition var1="tw_fastboot_mode" var2="1"/>
+					<icon res="reboot_bootloader"/>
+					<action function="set">tw_action_param=fastboot</action>
+					<action function="page">rebootcheck</action>
+				</listitem>
 				<listitem name="EDL">
 					<condition var1="tw_edl_mode" var2="1"/>
 					<icon res="chip"/>
