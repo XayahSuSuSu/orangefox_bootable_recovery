@@ -27,7 +27,7 @@ void startupArgs::parse(int *argc, char ***argv) {
 
 	LOGINFO("Startup Commands: ");
 	for (index = 1; index < args.size(); index++) {
-		if (args[index].find("--prompt_and_wipe_data") != std::string::npos) {
+		if (args[index].find(RESCUE_PARTY) != std::string::npos) {
 		      gui_print("\n\n");
 		      gui_msg(Msg(msg::kError, "rescue_party0=Android Rescue Party trigger! Possible solutions? Either:"));
 		      gui_msg(Msg(msg::kError, "rescue_party1= 1. Wipe caches, and/or"));
