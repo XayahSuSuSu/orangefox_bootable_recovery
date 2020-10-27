@@ -390,7 +390,6 @@ int main(int argc, char **argv) {
   	DataManager::GetValue(FOX_COMPATIBILITY_DEVICE, Fox_Current_Device);
   	printf("Starting OrangeFox Recovery %s (built on %s for %s [dev_ver: %s]; pid %d)\n",
   		FOX_BUILD, fox_build_date.c_str(), Fox_Current_Device.c_str(), FOX_CURRENT_DEV_STR, getpid());
-	//----
 
 	// Load default values to set DataManager constants and handle ifdefs
 	DataManager::SetDefaultValues();
@@ -399,9 +398,6 @@ int main(int argc, char **argv) {
 
 	// Load up all the resources
 	gui_loadResources();
-	PageManager::LoadLanguage(DataManager::GetStrValue("tw_language"));
-	GUIConsole::Translate_Now();
-  	TWFunc::Setup_Verity_Forced_Encryption();
 
 	startupArgs startup;
 	startup.parse(&argc, &argv);
@@ -422,6 +418,13 @@ int main(int argc, char **argv) {
 	} else {
 		process_recovery_mode(adb_bu_fifo, startup.Should_Skip_Decryption());
 	}
+
+	// Language
+	PageManager::LoadLanguage(DataManager::GetStrValue("tw_language"));
+	GUIConsole::Translate_Now();
+
+	// Fox extra setup
+  	TWFunc::Setup_Verity_Forced_Encryption();
 
 	// Launch the main GUI
 	gui_start();
