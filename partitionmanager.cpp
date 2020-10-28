@@ -2161,6 +2161,7 @@ int TWPartitionManager::Decrypt_Device(string Password)
   if (strcmp(crypto_state, "error") == 0)
     {
       property_set("ro.crypto.state", "encrypted");
+      property_set("ro.crypto.type", "block");
       // Sleep for a bit so that services can start if needed
       sleep(1);
     }
