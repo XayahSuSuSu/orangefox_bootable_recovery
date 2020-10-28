@@ -756,7 +756,7 @@ if (TWFunc::Path_Exists("/data/unencrypted/key/version")) {
 		LOGINFO("File Based Encryption is present\n");
 #ifdef TW_INCLUDE_FBE
 		#ifdef OF_SKIP_FBE_DECRYPTION
-		    LOGINFO("Skip FBE decryption is triggered. I will not try to decrypt ...\n");
+		    LOGINFO("Skip FBE decryption is triggered. I will not try to decrypt ...\n"); // TODO: perhaps this is no longer required?
 		    return false;
 		#endif
 		Is_FBE = true;
@@ -764,24 +764,16 @@ if (TWFunc::Path_Exists("/data/unencrypted/key/version")) {
 		ExcludeAll(Mount_Point + "/convert_fbe");
 		ExcludeAll(Mount_Point + "/unencrypted");
 		ExcludeAll(Mount_Point + "/misc/vold/user_keys");
-		//ExcludeAll(Mount_Point + "/system/users/0"); // we WILL need to retain some of this if multiple users are present or we just need to delete more folders for the extra users somewhere else
 		ExcludeAll(Mount_Point + "/system/users/0/gatekeeper.password.key");
 		ExcludeAll(Mount_Point + "/system/users/0/gatekeeper.pattern.key");
 		ExcludeAll(Mount_Point + "/system/gatekeeper.password.key");
 		ExcludeAll(Mount_Point + "/system/gatekeeper.pattern.key");
-		//ExcludeAll(Mount_Point + "/system/locksettings.db-shm"); // don't seem to need this one, but the other 2 are needed
 		ExcludeAll(Mount_Point + "/system/locksettings.db");
 		ExcludeAll(Mount_Point + "/system/locksettings.db-wal");
 		ExcludeAll(Mount_Point + "/misc/gatekeeper");
 		ExcludeAll(Mount_Point + "/misc/keystore");
 		ExcludeAll(Mount_Point + "/drm/kek.dat");
-		ExcludeAll(Mount_Point + "/system_de/0/spblob"); // contains data needed to decrypt pixel 2
-		//ExcludeAll(Mount_Point + "/system_ce");
-		//ExcludeAll(Mount_Point + "/system_de");
-		//ExcludeAll(Mount_Point + "/misc_ce");
-		//ExcludeAll(Mount_Point + "/misc_de");
-		//ExcludeAll(Mount_Point + "/user_de");
-		//ExcludeAll(Mount_Point + "/misc/profiles/cur/0"); // might be important later
+		ExcludeAll(Mount_Point + "/system_de/0/spblob");
 		int retry_count = 3;
 		while (!Decrypt_DE() && --retry_count)
 			usleep(2000);
@@ -795,7 +787,7 @@ if (TWFunc::Path_Exists("/data/unencrypted/key/version")) {
 			string filename;
 			int pwd_type = Get_Password_Type(0, filename);
 			if (pwd_type < 0) {
-				LOGERR("This TWRP does not have synthetic password decrypt support\n");
+				LOGERR("This build does not have synthetic password decrypt support\n");
 				pwd_type = 0; // default password
 			}
 			TWPartition::Fox_Add_Backup_Exclusions();
@@ -805,7 +797,7 @@ if (TWFunc::Path_Exists("/data/unencrypted/key/version")) {
 			return true;
 		}
 #else
-		LOGERR("FBE found but FBE support not present in TWRP\n");
+		LOGERR("FBE found but FBE support not present!\n");
 #endif
 	}
 	DataManager::SetValue(TW_IS_FBE, 0);
