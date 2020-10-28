@@ -11,6 +11,8 @@
 : ${TMPDIR:=/tmp}
 export HOSTNAME TMPDIR
 
+alias dir="ls -all"
+
 if (( USER_ID )); then PS1='$'; else PS1='#'; fi
 PS4='[$EPOCHREALTIME] '; PS1='${|
 	local e=$?
