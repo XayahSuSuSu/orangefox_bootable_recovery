@@ -71,6 +71,18 @@ TWPartitionManager PartitionManager;
 int Log_Offset;
 bool datamedia;
 
+static void mapper_to_bootdevice() {
+	char ret[PROPERTY_VALUE_MAX];
+	property_get("ro.boot.dynamic_partitions", ret, "");
+	if (strncmp (ret, "true", 4) == 0) {
+ 		printf("=> Linking dynamic partitions...\n");
+ 		sleep(2);
+		symlink("/dev/block/mapper/product", "/dev/block/bootdevice/by-name/product");
+		symlink("/dev/block/mapper/vendor", "/dev/block/bootdevice/by-name/vendor");
+		symlink("/dev/block/mapper/system", "/dev/block/bootdevice/by-name/system");
+	}
+}
+
 static void Print_Prop(const char *key, const char *name, void *cookie) {
 	printf("%s=%s\n", key, name);
 }
@@ -171,7 +183,7 @@ static void process_recovery_mode(twrpAdbBuFifo* adb_bu_fifo, bool skip_decrypti
 #endif
 
         // use the ROM's fingerprint?
-        TWFunc::RunStartupScript(); // run the startup script early
+        TWFunc::RunStartupScript();
         TWFunc::UseSystemFingerprint();
 	TWFunc::RunFoxScript("/sbin/runatboot.sh");
 
@@ -369,7 +381,7 @@ int main(int argc, char **argv) {
 	datamedia = true;
 #endif
 
-	// ---
+	// Fox stuff
   	property_set("ro.orangefox.boot", "1");
   	property_set("ro.orangefox.build", "orangefox");
   	property_set("ro.orangefox.version", FOX_VERSION);
@@ -384,7 +396,7 @@ int main(int argc, char **argv) {
          	}
      	}
 
-  	// set the start date to the recovery's build date
+  	// Set the start date to the recovery's build date
   	TWFunc::Reset_Clock();
 
   	DataManager::GetValue(FOX_COMPATIBILITY_DEVICE, Fox_Current_Device);
@@ -393,6 +405,11 @@ int main(int argc, char **argv) {
 
 	// Load default values to set DataManager constants and handle ifdefs
 	DataManager::SetDefaultValues();
+
+	// Symlink mapper to bootdevice if we have dynamic partitions
+	mapper_to_bootdevice();
+
+	// start the UI
 	printf("Starting the UI...\n");
 	gui_init();
 
