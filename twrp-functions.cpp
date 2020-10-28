@@ -4845,7 +4845,7 @@ std::string TWFunc::Remove_Beginning_Slash(const std::string& path) {
 }
 
 string TWFunc::Fox_Property_Get(string Prop_Name) {
-char ret[1024]; // TODO - what is the maximum size of props?
+char ret[PROPERTY_VALUE_MAX + PROPERTY_VALUE_MAX]; // allow some extra room
    property_get(Prop_Name.c_str(), ret, "");
    std::string res = ret;
    return res;
