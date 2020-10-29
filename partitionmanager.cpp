@@ -347,6 +347,10 @@ int TWPartitionManager::Process_Fstab(string Fstab_Filename, bool Display_Error)
 	Decrypt_Data();
 #endif
 
+#ifdef OF_RELOAD_FSTAB_DYNAMIC_PARTITIONS
+if (TWFunc::Fox_Property_Get("orangefox.fstab.reload") != "true")
+{
+#endif
 	Update_System_Details();
 	if (Get_Super_Status())
 		Setup_Super_Partition();
@@ -355,6 +359,10 @@ int TWPartitionManager::Process_Fstab(string Fstab_Filename, bool Display_Error)
 	DataManager::SetValue("tw_active_slot", Get_Active_Slot_Display());
 #endif
 	setup_uevent();
+
+#ifdef OF_RELOAD_FSTAB_DYNAMIC_PARTITIONS
+}
+#endif
 	return true;
 }
 
