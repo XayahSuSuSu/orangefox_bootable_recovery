@@ -71,18 +71,6 @@ TWPartitionManager PartitionManager;
 int Log_Offset;
 bool datamedia;
 
-static void mapper_to_bootdevice() {
-	char ret[PROPERTY_VALUE_MAX];
-	property_get("ro.boot.dynamic_partitions", ret, "");
-	if (strncmp (ret, "true", 4) == 0) {
- 		printf("=> Linking dynamic partitions...\n");
- 		sleep(2);
-		symlink("/dev/block/mapper/product", "/dev/block/bootdevice/by-name/product");
-		symlink("/dev/block/mapper/vendor", "/dev/block/bootdevice/by-name/vendor");
-		symlink("/dev/block/mapper/system", "/dev/block/bootdevice/by-name/system");
-	}
-}
-
 static void Print_Prop(const char *key, const char *name, void *cookie) {
 	printf("%s=%s\n", key, name);
 }
@@ -225,7 +213,7 @@ static void process_recovery_mode(twrpAdbBuFifo* adb_bu_fifo, bool skip_decrypti
 
   	// call OrangeFox startup code
   	TWFunc::OrangeFox_Startup();
-
+  	
 #ifdef FOX_ADVANCED_SECURITY
 	LOGINFO("ADB & MTP disabled by maintainer\n");
 	DataManager::SetValue("fox_advanced_security", "1");
@@ -407,7 +395,7 @@ int main(int argc, char **argv) {
 	DataManager::SetDefaultValues();
 
 	// Symlink mapper to bootdevice if we have dynamic partitions
-	mapper_to_bootdevice();
+	TWFunc::Mapper_to_BootDevice();
 
 	// start the UI
 	printf("Starting the UI...\n");

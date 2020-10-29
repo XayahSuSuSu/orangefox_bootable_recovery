@@ -4256,11 +4256,11 @@ void TWFunc::Deactivation_Process(void)
 	            if (JustInstalledMiui())
 	              {
 	            #ifdef OF_NO_MIUI_PATCH_WARNING
-	              	LOGINFO("OrangeFox: Not patching boot image. Some ROMs will need you to flash magisk, or the ROM might not boot.\n");
+	              	LOGINFO("OrangeFox: Not patching boot image. The ROM might not boot.\n");
 	            	LOGINFO("NOTE: It is possible that MIUI will replace OrangeFox with the stock MIUI recovery.\n");
 	            #else
 	              	gui_print_color("warning", 
-	              	"\nOrangeFox: WARNING! Not patching boot image.\nSome ROMs will need you to flash\nmagisk *now*, or the ROM might not boot.\n");
+	              	"\nOrangeFox: WARNING! Not patching boot image.The ROM might not boot.\n");
 	            	
 	            	gui_print_color("warning", 
 	            	"\nNOTE: It is possible that booting MIUI now will replace OrangeFox with the stock MIUI recovery.\n");
@@ -4845,15 +4845,15 @@ std::string TWFunc::Remove_Beginning_Slash(const std::string& path) {
 }
 
 string TWFunc::Fox_Property_Get(string Prop_Name) {
-char ret[PROPERTY_VALUE_MAX + PROPERTY_VALUE_MAX]; // allow some extra room
-   property_get(Prop_Name.c_str(), ret, "");
-   std::string res = ret;
-   return res;
+	char ret[PROPERTY_VALUE_MAX + PROPERTY_VALUE_MAX]; // allow some extra room
+	memset(ret, 0, sizeof(ret));
+	property_get(Prop_Name.c_str(), ret, "");
+   	std::string res = ret;
+   	return res;
 }
 
 int TWFunc::Fox_Property_Set(const std::string Prop_Name, const std::string Value) {
- int ret;
-    	
+	int ret;
     	usleep(128);
 	string tmp = "\"";
 	string cmd = "/sbin/resetprop";
@@ -4873,5 +4873,23 @@ int TWFunc::Fox_Property_Set(const std::string Prop_Name, const std::string Valu
     	usleep(4096);
 
     	return ret;
+}
+
+bool TWFunc::Has_Dynamic_Partitions(void) {
+	return (Fox_Property_Get("ro.boot.dynamic_partitions") == "true");
+}
+
+void TWFunc::Mapper_to_BootDevice(void) {
+	if (Has_Dynamic_Partitions()) {
+ 		printf("=> Linking dynamic partitions...\n");
+ 		sleep(1);
+		symlink("/dev/block/mapper/product", "/dev/block/bootdevice/by-name/product");
+		symlink("/dev/block/mapper/vendor", "/dev/block/bootdevice/by-name/vendor");
+		symlink("/dev/block/mapper/system", "/dev/block/bootdevice/by-name/system");
+
+		symlink("/dev/block/mapper/product", "/dev/block/by-name/product");
+		symlink("/dev/block/mapper/vendor", "/dev/block/by-name/vendor");
+		symlink("/dev/block/mapper/system", "/dev/block/by-name/system");
+	}
 }
 //
