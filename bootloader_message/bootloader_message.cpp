@@ -46,7 +46,7 @@ static std::string get_misc_blk_device(std::string* err) {
   }
   Fstab fstab;
   if (!ReadDefaultFstab(&fstab)) {
-    printf("failed to read default fstab\n");
+  /*  printf("failed to read default fstab\n"); */
     *err = "failed to read default fstab";
     return "";
   }
@@ -57,7 +57,7 @@ static std::string get_misc_blk_device(std::string* err) {
   }
 
   *err = "failed to find /misc partition";
-  printf("failed to find misc partition\n");
+/*  printf("failed to find misc partition\n"); */
   return "";
 }
 
