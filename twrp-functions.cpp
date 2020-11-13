@@ -2397,6 +2397,12 @@ void TWFunc::OrangeFox_Startup(void)
   OrangeFox_Startup_Executed++;
   
   DataManager::GetValue(FOX_COMPATIBILITY_DEVICE, Fox_Current_Device);
+  string tmp01 = Fox_Property_Get("ro.product.device");
+  if (!tmp01.empty() && tmp01 != Fox_Current_Device) {
+     LOGINFO("- OrangeFox: changing device name: %s ==> %s\n", Fox_Current_Device.c_str(), tmp01.c_str());
+     Fox_Current_Device = tmp01;
+     DataManager::SetValue(FOX_COMPATIBILITY_DEVICE, Fox_Current_Device);
+  }
 
   if (TWFunc::Path_Exists(FOX_PS_BIN)) 
       chmod (FOX_PS_BIN, 0755);
