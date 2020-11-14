@@ -1604,17 +1604,8 @@ bool TWPartition::Mount(bool Display_Error) {
 			   #endif
 			   )
 			   {
-			   	#ifdef OF_SILENCE_MIUI_MOUNT_COMPLAINTS
-				    if (TWFunc::MIUI_Is_Running() && TWFunc::Has_Dynamic_Partitions()) {
-					if (Mount_Point == "/vendor" || Mount_Point == "/system_root" || Mount_Point == "/system")
-						gui_print("- MIUI: ignore %s mount issue\n", Mount_Point.c_str());
-				    } 
-				    else
-					gui_msg(Msg(msg::kError, "fail_mount=Failed to mount '{1}' ({2})")(Mount_Point)(strerror(errno)));
-			  	#else
-				    gui_msg(Msg(msg::kError, "fail_mount=Failed to mount '{1}' ({2})")(Mount_Point)(strerror(errno)));
-			   	#endif 
-			     }
+			      	gui_msg(Msg(msg::kError, "fail_mount=Failed to mount '{1}' ({2})")(Mount_Point)(strerror(errno)));
+			   }
 			else
 				LOGINFO("Unable to mount '%s'\n", Mount_Point.c_str());
 			LOGINFO("Actual block device: '%s', current file system: '%s'\n", Actual_Block_Device.c_str(), Current_File_System.c_str());
