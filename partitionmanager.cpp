@@ -506,6 +506,10 @@ void TWPartitionManager::Output_Partition_Logging(void)
 	   TWFunc::Fox_Property_Set("orangefox.vendor.mount_point", Part->Mount_Point);
 	   TWFunc::Fox_Property_Set("orangefox.vendor.block_device", Part->Actual_Block_Device);
 	}
+	else if (Part->Mount_Point == "/product") {
+	   TWFunc::Fox_Property_Set("orangefox.product.mount_point", Part->Mount_Point);
+	   TWFunc::Fox_Property_Set("orangefox.product.block_device", Part->Actual_Block_Device);
+	}
 	else if (Part->Mount_Point == Get_Android_Root_Path()) {
 	   TWFunc::Fox_Property_Set("orangefox.system.mount_point", Part->Mount_Point);
 	   TWFunc::Fox_Property_Set("orangefox.system.block_device", Part->Actual_Block_Device);
