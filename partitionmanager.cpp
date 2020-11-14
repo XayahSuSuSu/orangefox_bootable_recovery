@@ -1972,12 +1972,17 @@ void TWPartitionManager::Update_System_Details(void)
 {
   std::vector < TWPartition * >::iterator iter;
   int data_size = 0;
+  #ifdef OF_REPORT_HARMLESS_MOUNT_ISSUES
+  bool reporter = true;
+  #else
+  bool reporter = false;
+  #endif
   if (DataManager::GetIntValue(FOX_RUN_SURVIVAL_BACKUP) != 1)
      gui_msg("update_part_details=Updating partition details...");
   TWFunc::SetPerformanceMode(true);
   for (iter = Partitions.begin(); iter != Partitions.end(); iter++)
     {
-      (*iter)->Update_Size(true);
+      (*iter)->Update_Size(reporter);
       if ((*iter)->Can_Be_Mounted)
 	{
 	  if ((*iter)->Mount_Point == Get_Android_Root_Path())
@@ -4478,10 +4483,15 @@ void TWPartitionManager::Update_System_Details_OTA_Survival(void)
 {
   std::vector < TWPartition * >::iterator iter;
   int data_size = 0;
+  #ifdef OF_REPORT_HARMLESS_MOUNT_ISSUES
+  bool reporter = true;
+  #else
+  bool reporter = false;
+  #endif
 
   for (iter = Partitions.begin(); iter != Partitions.end(); iter++)
     {
-      (*iter)->Update_Size(true);
+      (*iter)->Update_Size(reporter);
       if ((*iter)->Can_Be_Mounted)
 	{
 	  if ((*iter)->Mount_Point == Get_Android_Root_Path())

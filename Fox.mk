@@ -338,6 +338,10 @@ ifeq ($(OF_RELOAD_FSTAB_DYNAMIC_PARTITIONS),1)
     LOCAL_CFLAGS += -DOF_RELOAD_FSTAB_DYNAMIC_PARTITIONS='"1"'
 endif
 
+ifeq ($(OF_REPORT_HARMLESS_MOUNT_ISSUES),1)
+    LOCAL_CFLAGS += -DOF_REPORT_HARMLESS_MOUNT_ISSUES='"1"'
+endif
+
 ################################
 # from gui/Android.mk
 ifeq ($(OF_SUPPORT_OZIP_DECRYPTION),1)
