@@ -3397,7 +3397,7 @@ bool TWFunc::JustInstalledMiui(void)
   Fox_Zip_Installer_Code = DataManager::GetIntValue(FOX_ZIP_INSTALLER_CODE);
   if ((Fox_Zip_Installer_Code == 22) || (Fox_Zip_Installer_Code == 23) 
   || (Fox_Zip_Installer_Code == 3) || (Fox_Zip_Installer_Code == 2)) {
-      	
+      	TWFunc::Fox_Property_Set("orangefox.miui.rom", "1");
       	return true;
       }
   else
