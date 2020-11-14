@@ -1604,7 +1604,11 @@ bool TWPartition::Mount(bool Display_Error) {
 			   #endif
 			   )
 			   {
+			    #ifdef OF_REPORT_HARMLESS_MOUNT_ISSUES
 			      	gui_msg(Msg(msg::kError, "fail_mount=Failed to mount '{1}' ({2})")(Mount_Point)(strerror(errno)));
+			    #else
+			      	gui_msg(Msg("fail_mount=Failed to mount '{1}' ({2})")(Mount_Point)(strerror(errno)));
+			    #endif
 			   }
 			else
 				LOGINFO("Unable to mount '%s'\n", Mount_Point.c_str());
