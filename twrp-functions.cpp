@@ -4722,6 +4722,10 @@ string TWFunc::get_assert_device(const string filename)
 {
 string str = "";
 string temp = find_phrase(filename, "ro.product.device");
+
+   if (temp.empty())
+	temp = find_phrase(filename, "ro.build.product");
+
    if (temp.empty())
       return str;
    
