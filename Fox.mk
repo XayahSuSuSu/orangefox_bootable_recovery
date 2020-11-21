@@ -334,6 +334,10 @@ ifeq ($(OF_REPORT_HARMLESS_MOUNT_ISSUES),1)
     LOCAL_CFLAGS += -DOF_REPORT_HARMLESS_MOUNT_ISSUES='"1"'
 endif
 
+ifeq ($(OF_OTA_RES_CHECK_MICROSD),1)
+    LOCAL_CFLAGS += -DOF_OTA_RES_CHECK_MICROSD='"1"'
+endif
+
 ################################
 # from gui/Android.mk
 ifeq ($(OF_SUPPORT_OZIP_DECRYPTION),1)

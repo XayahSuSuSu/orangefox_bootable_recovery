@@ -772,6 +772,16 @@ static int Prepare_Update_Binary(const char *path, ZipWrap * Zip,
 	     (!storage_is_encrypted()) || (TWFunc::Path_Exists(Boot_File)) || (DataManager::GetIntValue("OTA_decrypted") == 1)
 	     )
 	    {
+	#ifdef OF_OTA_RES_CHECK_MICROSD
+	      	if (!TWFunc::Path_Exists(Boot_File)) {
+		    string atmp_ota = "/sdcard1/Fox/OTA/boot.emmc.win";
+		    if (TWFunc::Path_Exists(atmp_ota)) {
+		    	Boot_File = atmp_ota;
+		    	ota_location_folder = "/sdcard1/Fox/OTA";
+		    	gui_print("- OTA backup found in /sdcard1/Fox/OTA/ - trying that instead.\n");
+		    }
+	      	}
+	#endif
 	      if (TWFunc::Path_Exists(Boot_File))
 		{
 		  gui_msg
