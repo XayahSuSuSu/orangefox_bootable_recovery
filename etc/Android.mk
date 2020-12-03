@@ -19,7 +19,7 @@ ifneq ($(TW_EXCLUDE_DEFAULT_USB_INIT), true)
 include $(CLEAR_VARS)
 LOCAL_MODULE := init.recovery.usb.rc
 LOCAL_MODULE_TAGS := optional
-LOCAL_MODULE_CLASS := RECOVERY_EXECUTABLES
+LOCAL_MODULE_CLASS := EXECUTABLES
 
 # Cannot send to TARGET_RECOVERY_ROOT_OUT since build system wipes init*.rc
 # during ramdisk creation and only allows init.recovery.*.rc files to be copied
@@ -34,7 +34,7 @@ endif
 include $(CLEAR_VARS)
 LOCAL_MODULE := init.recovery.service.rc
 LOCAL_MODULE_TAGS := optional
-LOCAL_MODULE_CLASS := RECOVERY_EXECUTABLES
+LOCAL_MODULE_CLASS := EXECUTABLES
 LOCAL_MODULE_PATH := $(TARGET_ROOT_OUT)
 
 LOCAL_SRC_FILES := init.recovery.service22.rc
@@ -43,7 +43,7 @@ include $(BUILD_PREBUILT)
 include $(CLEAR_VARS)
 LOCAL_MODULE := init.recovery.hlthchrg.rc
 LOCAL_MODULE_TAGS := optional
-LOCAL_MODULE_CLASS := RECOVERY_EXECUTABLES
+LOCAL_MODULE_CLASS := EXECUTABLES
 LOCAL_MODULE_PATH := $(TARGET_ROOT_OUT)
 
 LOCAL_SRC_FILES := init.recovery.hlthchrg26.rc
@@ -52,7 +52,7 @@ include $(BUILD_PREBUILT)
 include $(CLEAR_VARS)
 LOCAL_MODULE := init.recovery.ldconfig.rc
 LOCAL_MODULE_TAGS := optional
-LOCAL_MODULE_CLASS := RECOVERY_EXECUTABLES
+LOCAL_MODULE_CLASS := EXECUTABLES
 LOCAL_MODULE_PATH := $(TARGET_ROOT_OUT)
 
 LOCAL_SRC_FILES := init.recovery.ldconfig.rc
@@ -73,7 +73,7 @@ ifeq ($(AB_OTA_UPDATER),true)
 	include $(CLEAR_VARS)
 	LOCAL_MODULE := android.hardware.boot@1.0-service.rc
 	LOCAL_MODULE_TAGS := optional
-	LOCAL_MODULE_CLASS := RECOVERY_EXECUTABLES
+	LOCAL_MODULE_CLASS := EXECUTABLES
 	LOCAL_MODULE_PATH := $(TARGET_RECOVERY_ROOT_OUT)/system/etc/init
 
 	LOCAL_SRC_FILES := init/$(LOCAL_MODULE)
@@ -84,7 +84,7 @@ ifeq ($(PRODUCT_USE_DYNAMIC_PARTITIONS),true)
 	include $(CLEAR_VARS)
 	LOCAL_MODULE := android.hardware.health@2.0-service.rc
 	LOCAL_MODULE_TAGS := optional
-	LOCAL_MODULE_CLASS := RECOVERY_EXECUTABLES
+	LOCAL_MODULE_CLASS := EXECUTABLES
 	LOCAL_MODULE_PATH := $(TARGET_RECOVERY_ROOT_OUT)/system/etc/init
 
 	LOCAL_SRC_FILES := init/$(LOCAL_MODULE)
@@ -95,7 +95,7 @@ ifneq ($(TW_INCLUDE_CRYPTO),)
 	include $(CLEAR_VARS)
 	LOCAL_MODULE := hwservicemanager.rc
 	LOCAL_MODULE_TAGS := optional
-	LOCAL_MODULE_CLASS := RECOVERY_EXECUTABLES
+	LOCAL_MODULE_CLASS := EXECUTABLES
 	LOCAL_MODULE_PATH := $(TARGET_RECOVERY_ROOT_OUT)/system/etc/init
 
 	LOCAL_SRC_FILES := init/$(LOCAL_MODULE)
@@ -104,7 +104,7 @@ ifneq ($(TW_INCLUDE_CRYPTO),)
 	include $(CLEAR_VARS)
 	LOCAL_MODULE := vndservicemanager.rc
 	LOCAL_MODULE_TAGS := optional
-	LOCAL_MODULE_CLASS := RECOVERY_EXECUTABLES
+	LOCAL_MODULE_CLASS := EXECUTABLES
 	LOCAL_MODULE_PATH := $(TARGET_RECOVERY_ROOT_OUT)/system/etc/init
 
 	LOCAL_SRC_FILES := init/$(LOCAL_MODULE)
@@ -114,7 +114,7 @@ ifneq ($(TW_INCLUDE_CRYPTO),)
 		include $(CLEAR_VARS)
 		LOCAL_MODULE := servicemanager.rc
 		LOCAL_MODULE_TAGS := optional
-		LOCAL_MODULE_CLASS := RECOVERY_EXECUTABLES
+		LOCAL_MODULE_CLASS := EXECUTABLES
 		LOCAL_MODULE_PATH := $(TARGET_RECOVERY_ROOT_OUT)/system/etc/init
 
 		LOCAL_SRC_FILES := init/$(LOCAL_MODULE)
@@ -128,7 +128,7 @@ ifeq ($(TWRP_INCLUDE_LOGCAT), true)
         include $(CLEAR_VARS)
         LOCAL_MODULE := init.recovery.logd.rc
         LOCAL_MODULE_TAGS := optional
-        LOCAL_MODULE_CLASS := RECOVERY_EXECUTABLES
+        LOCAL_MODULE_CLASS := EXECUTABLES
 
         # Cannot send to TARGET_RECOVERY_ROOT_OUT since build system wipes init*.rc
         # during ramdisk creation and only allows init.recovery.*.rc files to be copied
@@ -144,7 +144,7 @@ ifeq ($(TW_USE_TOOLBOX), true)
     include $(CLEAR_VARS)
     LOCAL_MODULE := init.recovery.mksh.rc
     LOCAL_MODULE_TAGS := optional
-    LOCAL_MODULE_CLASS := RECOVERY_EXECUTABLES
+    LOCAL_MODULE_CLASS := EXECUTABLES
 
     # Cannot send to TARGET_RECOVERY_ROOT_OUT since build system wipes init*.rc
     # during ramdisk creation and only allows init.recovery.*.rc files to be copied
