@@ -137,6 +137,14 @@ TWPartitionManager::TWPartitionManager(void) {
 #endif
 }
 
+int TWPartitionManager::Set_FDE_Encrypt_Status(void) {
+	property_set("ro.crypto.state", "encrypted");
+	property_set("ro.crypto.type", "block");
+	// Sleep for a bit so that services can start if needed
+	sleep(1);
+	return 0;
+}
+
 int TWPartitionManager::Process_Fstab(string Fstab_Filename, bool Display_Error) {
 	FILE *fstabFile;
 	char fstab_line[MAX_FSTAB_LINE_LENGTH];
@@ -454,6 +462,7 @@ void TWPartitionManager::Decrypt_Data() {
 				}
 			}
 		} else {
+			Set_FDE_Encrypt_Status();
 			int password_type = cryptfs_get_password_type();
 			if (password_type == CRYPT_TYPE_DEFAULT) {
 				LOGINFO("Device is encrypted with the default password, attempting to decrypt.\n");
@@ -2176,12 +2185,10 @@ int TWPartitionManager::Decrypt_Device(string Password)
 
   property_set("orangefox.mount_to_decrypt", "1");
   property_get("ro.crypto.state", crypto_state, "error");
-  if (strcmp(crypto_state, "error") == 0)
-    {
-      property_set("ro.crypto.state", "encrypted");
-      property_set("ro.crypto.type", "block");
-      // Sleep for a bit so that services can start if needed
-      sleep(1);
+  if (strcmp(crypto_state, "error") == 0) {
+	Set_FDE_Encrypt_Status();
+        // Sleep for a bit so that services can start if needed
+        sleep(1);
     }
 
   if (DataManager::GetIntValue(TW_IS_FBE))
@@ -3287,6 +3294,8 @@ bool TWPartitionManager::Flash_Image(string& path, string& filename) {
 	size_t start_pos = 0, end_pos = 0;
 
 	full_filename = path + "/" + filename;
+
+	Unlock_Block_Partitions();
 
 	gui_msg("image_flash_start=[IMAGE FLASH STARTED]");
 	gui_msg(Msg("img_to_flash=Image to flash: '{1}'")(full_filename));
@@ -4931,5 +4940,31 @@ bool TWPartitionManager::Recreate_Logs_Dir() {
 	}
 #endif
 	return true;
+}
+
+void TWPartitionManager::Unlock_Block_Partitions() {
+	int fd, OFF = 0;
+
+	const std::string block_path = "/dev/block/";
+	DIR* d = opendir(block_path.c_str());
+	if (d != NULL) {
+		struct dirent* de;
+		while ((de = readdir(d)) != NULL) {
+			if (de->d_type == DT_BLK) {
+				std::string block_device = block_path + de->d_name;
+				// LOGINFO("block_Device: %s\n", block_device.c_str()); // DJ9 - creates too much noise in the log
+				if ((fd = open(block_device.c_str(), O_RDONLY | O_CLOEXEC)) < 0) {
+					LOGERR("unable to open block device %s: %s\n", block_device.c_str(), strerror(errno));
+					continue;
+				}
+				if (ioctl(fd, BLKROSET, &OFF) == -1) {
+					LOGERR("Unable to unlock %s for flashing: %s\n", block_device.c_str());
+					continue;
+				}
+				close(fd);
+			}
+		}
+		closedir(d);
+	}
 }
 //*
