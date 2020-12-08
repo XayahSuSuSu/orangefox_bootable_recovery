@@ -115,7 +115,7 @@
 			</text>
 
             <listbox style="settingslist">
-				<placement x="0" y="%row2_3a_y%" w="%screen_w%" h="%lb_l4%"/>
+				<placement x="0" y="%row2_3a_y%" w="%screen_w%" h="%lb_l5%"/>
 				<listitem name="{@fox_support_miui_ota_chk}">
 					<data variable="fox_support_miui_ota"/>
 				</listitem>	
@@ -128,15 +128,18 @@
 				<listitem name="{@FOX_DISABLE_OTA_AUTO_REBOOT_chk}">
 					<data variable="fox_disable_ota_auto_reboot_check"/>
 				</listitem>
+				<listitem name="{@cust_new_ota_screen}">
+					<data variable="ota_new_screen"/>
+				</listitem>
 			</listbox>
 
 			<text style="caption">
-				<placement x="%col1_x_caption%" y="%row5_1a_y%"/>
+				<placement x="%col1_x_caption%" y="%row6_1a_y%"/>
 				<text>{@fox_patch_rom}</text>
 			</text>
 
 			<listbox style="settingslist">
-				<placement x="0" y="%row5_2a_y%" w="%screen_w%" h="%lb_l3%"/>
+				<placement x="0" y="%row6_2a_y%" w="%screen_w%" h="%lb_l3%"/>
 				<listitem name="{@fox_dmverity_chk}">
 					<data variable="fox_reboot_dm_verity_check"/>
 				</listitem>
