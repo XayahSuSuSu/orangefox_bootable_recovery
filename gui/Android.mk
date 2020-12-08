@@ -3,7 +3,7 @@ include $(CLEAR_VARS)
 
 LOCAL_CFLAGS := -fno-strict-aliasing -Wno-implicit-fallthrough
 
-include $(LOCAL_PATH)/../Fox.mk
+include $(LOCAL_PATH)/../orangefox.mk
 
 LOCAL_SRC_FILES := \
     gui.cpp \
