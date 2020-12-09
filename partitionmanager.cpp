@@ -4016,7 +4016,7 @@ int TWPartitionManager::Run_OTA_Survival_Backup(bool adbbackup)
   PartitionSettings part_settings;
   int partition_count = 0, disable_free_space_check = 0, skip_digest = 1;
   int gui_adb_backup;
-  string Backup_Name, backup_path, Backup_List;
+  string Backup_Name, backup_path, Backup_List, theSystem;
   unsigned long long total_bytes = 0, free_space = 0;
   TWPartition *storage = NULL;
   std::vector < TWPartition * >::iterator subpart;
@@ -4066,17 +4066,43 @@ int TWPartitionManager::Run_OTA_Survival_Backup(bool adbbackup)
   part_settings.Backup_Folder =
     part_settings.Backup_Folder + "/" + Backup_Name;
 
-#ifdef OF_INCREMENTAL_OTA_BACKUP_SUPER
-  TWPartition *sys_image =
-    PartitionManager.Find_Partition_By_Path("/super_image");
-
-  if (DoSystemOnOTA && sys_image != NULL)
-       Backup_List += "/super_image;/boot;";
+  if (TWFunc::Has_Dynamic_Partitions()) 
+  	theSystem = "/super_image";
   else
-       Backup_List += "/boot;";
-#else
-       Backup_List += "/boot;";
-#endif
+  	theSystem = "/system_image";
+    
+  TWPartition *sys_image = PartitionManager.Find_Partition_By_Path(theSystem);
+
+  if (TWFunc::Has_Dynamic_Partitions()) 
+  {
+  	#ifdef OF_INCREMENTAL_OTA_BACKUP_SUPER
+  	if (DoSystemOnOTA && sys_image != NULL)
+       		Backup_List += theSystem + ";" + "/boot;";
+  	else
+       		Backup_List += "/boot;";
+	#else
+       		Backup_List += "/boot;";
+	#endif
+  } 
+  else 
+  {
+  	#ifdef OF_NO_MIUI_OTA_VENDOR_BACKUP
+    	// (old Xiaomi devices) - we are not going to backup vendor_image/vendor
+  	#else
+  	TWPartition *vend_image = PartitionManager.Find_Partition_By_Path("/vendor_image");
+     	if (vend_image != NULL)
+        	Backup_List += "/vendor_image;";
+     	else
+        	Backup_List += "/vendor;";
+  	#endif
+
+  	if (DoSystemOnOTA && sys_image != NULL)
+       		Backup_List += theSystem + ";" + "/boot;";
+  	else if (DoSystemOnOTA)
+       		Backup_List += "/system;/boot;";
+  	else
+       		Backup_List += "/boot;";
+  }
 
   if (!Backup_List.empty())
     {
