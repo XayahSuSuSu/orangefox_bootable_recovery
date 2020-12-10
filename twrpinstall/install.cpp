@@ -290,14 +290,14 @@ int SetUpNonAbUpdateCommands(const std::string& package, ZipArchiveHandle zip, i
     PLOG(ERROR) << "Failed to create " << binary_path;
     return INSTALL_ERROR;
   }
-  LOG(ERROR) << "SetupNonAbUpdateCommands::here3";
+//  LOG(ERROR) << "SetupNonAbUpdateCommands::here3";
 
   int32_t error = ExtractEntryToFile(zip, &binary_entry, fd);
   if (error != 0) {
     LOG(ERROR) << "Failed to extract " << UPDATE_BINARY_NAME << ": " << ErrorCodeString(error);
     return INSTALL_ERROR;
   }
-  LOG(ERROR) << "SetupNonAbUpdateCommands::here4";
+//  LOG(ERROR) << "SetupNonAbUpdateCommands::here4";
 
   // When executing the update binary contained in the package, the arguments passed are:
   //   - the version number for this interface
