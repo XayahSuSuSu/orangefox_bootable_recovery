@@ -65,5 +65,5 @@ bool zip_ExtractEntry(ZipArchiveHandle Zip, const string& source_file, const str
 #endif
 
 bool Installing_ROM_Query(const string path, ZipArchiveHandle Zip); // check for ROM installs, and return true if we are installing a ROM
-
+int Fox_Prepare_Update_Binary(const char *path, ZipArchiveHandle Zip); // OrangeFox extensions to Prepare_Update_Binary() 
 #endif
