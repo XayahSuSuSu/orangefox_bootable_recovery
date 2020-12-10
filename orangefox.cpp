@@ -511,10 +511,8 @@ string tmp = "";
       return false;
 }
 
-// ##################################################################
 int Fox_Prepare_Update_Binary(const char *path, ZipArchiveHandle Zip) 
 {
-  string bootloader = "firmware-update/emmc_appsboot.mbn";
   string metadata_sg_path = "META-INF/com/android/metadata";
   string fingerprint_property = "ro.build.fingerprint";
   string pre_device = "pre-device";
@@ -904,12 +902,7 @@ int Fox_Prepare_Update_Binary(const char *path, ZipArchiveHandle Zip)
 	}
     } // Fox_Skip_OTA()
     
-    if (zip_EntryExists(Zip, bootloader))
-	gui_msg(Msg
-		(msg::kWarning,
-		 "fox_zip_have_bootloader=Warning: OrangeFox detected bootloader inside of the {1}")
-		(path));
-    }
+    } // (DataManager::GetIntValue(FOX_INSTALL_PREBUILT_ZIP) != 1)
 
   if (blankTimer.isScreenOff())
     {
@@ -924,7 +917,4 @@ int Fox_Prepare_Update_Binary(const char *path, ZipArchiveHandle Zip)
 
     return INSTALL_SUCCESS;
 }
-
-
-// ##################################################################
 // ------------------- end ----------------
