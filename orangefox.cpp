@@ -240,14 +240,8 @@ int result = 0;
    LOGINFO("- OrangeFox: DEBUG: skipping the OTA_BAK process...\n");
    return result;
 #endif
-//gui_print("DEBUG: OTA: OTA_BAK - 000\n");
-//int miui_tmp=DataManager::GetIntValue(FOX_MIUI_ZIP_TMP);
-//int meta_tmp=DataManager::GetIntValue(FOX_METADATA_PRE_BUILD);
-//gui_print("DEBUG: OTA: OTA_BAK - 000 miui_tmp=%i, and meta_tmp=%i\n", miui_tmp, meta_tmp);
-
       if ((DataManager::GetIntValue(FOX_MIUI_ZIP_TMP) != 0) || (DataManager::GetIntValue(FOX_METADATA_PRE_BUILD) != 0))
       {
-//gui_print("DEBUG: OTA: OTA_BAK - 001\n");
 	  string ota_folder, ota_backup, loadedfp;
 	  DataManager::GetValue(FOX_SURVIVAL_FOLDER_VAR, ota_folder);
 	  DataManager::GetValue(FOX_SURVIVAL_BACKUP_NAME, ota_backup);
@@ -917,4 +911,3 @@ int Fox_Prepare_Update_Binary(const char *path, ZipArchiveHandle Zip)
 
     return INSTALL_SUCCESS;
 }
-// ------------------- end ----------------
