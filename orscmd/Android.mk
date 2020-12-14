@@ -1,11 +1,7 @@
 LOCAL_PATH:= $(call my-dir)
 include $(CLEAR_VARS)
 
-ifneq ($(FOX_VERSION),)
-    LOCAL_CFLAGS += -DFOX_VERSION='"-$(FOX_VERSION)"'
-else
-    LOCAL_CFLAGS += -DFOX_VERSION='"-Unofficial"'
-endif
+include $(LOCAL_PATH)/../orangefox.mk
 
 LOCAL_SRC_FILES:= \
 	orscmd.cpp
