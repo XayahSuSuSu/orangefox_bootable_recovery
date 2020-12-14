@@ -1492,14 +1492,15 @@ string DataManager::GetSettingsStoragePath(void)
   return GetStrValue("tw_settings_path");
 }
 
-void DataManager::Vibrate(const string & varName)
+void DataManager::Vibrate(const string& varName)
 {
-  int vib_value = 0;
-  GetValue(varName, vib_value);
-  if (vib_value)
-    {
-      vibrate(vib_value);
-    }
+#ifndef TW_NO_HAPTICS
+	int vib_value = 0;
+	GetValue(varName, vib_value);
+	if (vib_value) {
+		vibrate(vib_value);
+	}
+#endif
 }
 
 #ifdef OF_CLASSIC_LEDS_FUNCTION
