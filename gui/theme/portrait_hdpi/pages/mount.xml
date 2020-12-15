@@ -203,6 +203,11 @@
 				<condition var1="tw_crypto_pwtype" var2="2"/>
 				<action function="page">decrypt_pattern</action>
 			</action>
+
+			<action>
+				<condition var1="tw_crypto_pwtype" var2="3"/>
+				<action function="page">decrypt_pin</action>
+			</action>
 			
 			<template name="body_ct"/>
 			<template name="keyboardtemplate"/>
@@ -231,6 +236,7 @@
 			<!-- <template name="navbar_bkg"/> -->
 
 			<listbox style="btn_list">
+				<condition var1="tw_crypto_pwtype" op="!=" var2="3"/>
 				<placement x="0" y="%row3_3a_y%" w="%screen_w%" h="%bl_h1%"/>
 				<listitem name="{@pass_classic}">
 					<icon res="pass_classic"/>
