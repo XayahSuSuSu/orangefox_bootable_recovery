@@ -1042,9 +1042,11 @@ int Get_Password_Type(const userid_t user_id, std::string& filename) {
                 // In Android 11 type 3 is PIN and type 4 is password
 		else if (pwd.password_type == 3) {
 			printf("password type: pin\n");
+			printf("OrangeFox: Get_Password_Type(), crypto/fscrypt/Decrypt.cpp\n");
 			return 3; // In OrangeFox this means PIN
 		} else if (pwd.password_type == 2 || pwd.password_type == 4) {
 			printf("password type: password\n");
+			printf("OrangeFox: Get_Password_Type(), crypto/fscrypt/Decrypt.cpp\n");
 			return 1; // In OrangeFox this means password
 		}
 		printf("using default password\n");
