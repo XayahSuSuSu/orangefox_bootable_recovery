@@ -762,9 +762,11 @@ if (TWFunc::Path_Exists("/data/unencrypted/key/version")) {
 		#endif
 		Is_FBE = true;
 		DataManager::SetValue(TW_IS_FBE, 1);
+		ExcludeAll(Mount_Point + "/cache");
 		ExcludeAll(Mount_Point + "/convert_fbe");
 		ExcludeAll(Mount_Point + "/unencrypted");
 		ExcludeAll(Mount_Point + "/misc/vold/user_keys");
+		ExcludeAll(Mount_Point + "/misc/vold/volume_keys");
 		ExcludeAll(Mount_Point + "/system/users/0/gatekeeper.password.key");
 		ExcludeAll(Mount_Point + "/system/users/0/gatekeeper.pattern.key");
 		ExcludeAll(Mount_Point + "/system/gatekeeper.password.key");
@@ -775,6 +777,7 @@ if (TWFunc::Path_Exists("/data/unencrypted/key/version")) {
 		ExcludeAll(Mount_Point + "/misc/keystore");
 		ExcludeAll(Mount_Point + "/drm/kek.dat");
 		ExcludeAll(Mount_Point + "/system_de/0/spblob");
+		ExcludeAll(Mount_Point + "/per_boot");
 		int retry_count = 3;
 		while (!Decrypt_DE() && --retry_count)
 			usleep(2000);
