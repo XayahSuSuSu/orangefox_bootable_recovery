@@ -4895,18 +4895,17 @@ bool TWFunc::Has_Dynamic_Partitions(void) {
 void TWFunc::Mapper_to_BootDevice(void) {
 	if (Has_Dynamic_Partitions()) {
  		printf("=> Linking dynamic partitions (%s)\n", DYNAMIC_PARTITIONS_LIST_FOR_SYMLINK);
- 		sleep(1);
-  		std::vector <std::string> parts = TWFunc::Split_String(DYNAMIC_PARTITIONS_LIST_FOR_SYMLINK, " ");
   		string src, dest, dest2;
-  		for (size_t i = 0; i < parts.size(); ++i) {
-   		   	src = "/dev/block/mapper/" + parts[i];
-   		   	dest = "/dev/block/by-name/" + parts[i];
-   		   	dest2 = "/dev/block/bootdevice/by-name/" + parts[i];
- 			printf("=> Symlink %s => %s\n", src.c_str(), dest.c_str());
+  		std::vector <std::string> partitions = TWFunc::Split_String(DYNAMIC_PARTITIONS_LIST_FOR_SYMLINK, " ");
+		for (auto&& part : partitions) {
+   		   	src = "/dev/block/mapper/" + part;
+   		   	dest = "/dev/block/by-name/" + part;
+   		   	dest2 = "/dev/block/bootdevice/by-name/" + part;
+ 			LOGINFO("=> Symlink %s => %s\n", src.c_str(), dest.c_str());
 		   	symlink(src.c_str(), dest.c_str());
- 			printf("=> Symlink %s => %s\n", src.c_str(), dest2.c_str());
+ 			LOGINFO("=> Symlink %s => %s\n", src.c_str(), dest2.c_str());
 		   	symlink(src.c_str(), dest2.c_str());
-    		}
+		}
 	}
 }
 //
