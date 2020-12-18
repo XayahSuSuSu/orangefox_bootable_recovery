@@ -292,24 +292,6 @@ static void process_recovery_mode(twrpAdbBuFifo* adb_bu_fifo, bool skip_decrypti
 	DataManager::RestorePasswordBackup();
 #endif
 
-#ifdef FOX_OLD_DECRYPT_RELOAD
-  	LOGINFO("Using R10 way to reload theme.\n");
-  	if (DataManager::GetStrValue("used_custom_encryption") == "1") {
-     	    if (TWFunc::Path_Exists(Fox_Home + "/.theme") || TWFunc::Path_Exists(Fox_Home + "/.navbar")) // using custom themes
-         	PageManager::RequestReload();
-  	}
-#else
-  	if (DataManager::GetStrValue("data_decrypted") == "1") {
-	DataManager::SetValue(FOX_ENCRYPTED_DEVICE, "1");
-	//[f/d] Start UI using reapply_settings page (executed on recovery startup)
-	if (TWFunc::Path_Exists(Fox_Home + "/.theme") || TWFunc::Path_Exists(Fox_Home + "/.navbar")) {
-  		DataManager::SetValue("of_reload_back", "main");
-		PageManager::RequestReload();
-    		gui_startPage("reapply_settings", 1, 0);
-	}
-  }
-#endif
-
 #ifndef TW_OEM_BUILD
 	// Disable flashing of stock recovery
 	TWFunc::Disable_Stock_Recovery_Replace();
@@ -432,7 +414,25 @@ int main(int argc, char **argv) {
   	TWFunc::Setup_Verity_Forced_Encryption();
 
 	// Launch the main GUI
+	#ifdef FOX_OLD_DECRYPT_RELOAD
+	LOGINFO("Using R10 way to reload theme.\n");
+	if (DataManager::GetStrValue("used_custom_encryption") == "1") {
+		if (TWFunc::Path_Exists(Fox_Home + "/.theme") || TWFunc::Path_Exists(Fox_Home + "/.navbar")) // using custom themes
+			PageManager::RequestReload();
+	}
+	#else
+	if (DataManager::GetStrValue("data_decrypted") == "1") {
+		DataManager::SetValue(FOX_ENCRYPTED_DEVICE, "1");
+		//[f/d] Start UI using reapply_settings page (executed on recovery startup)
+		if (TWFunc::Path_Exists(Fox_Home + "/.theme") || TWFunc::Path_Exists(Fox_Home + "/.navbar")) {
+			DataManager::SetValue("of_reload_back", "main");
+			PageManager::RequestReload();
+			gui_startPage("reapply_settings", 1, 0);
+		}
+	} else
+	#endif
 	gui_start();
+
 	delete adb_bu_fifo;
 	TWFunc::Update_Intent_File(startup.Get_Intent());
 
