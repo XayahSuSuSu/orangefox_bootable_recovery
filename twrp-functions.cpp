@@ -4893,7 +4893,12 @@ bool TWFunc::Has_Dynamic_Partitions(void) {
 }
 
 void TWFunc::Mapper_to_BootDevice(void) {
+    	#if defined(AB_OTA_UPDATER) || defined(OF_AB_DEVICE)
+    	return;
+    	#endif
+
 	if (Has_Dynamic_Partitions()) {
+ 		#ifdef DYNAMIC_PARTITIONS_LIST_FOR_SYMLINK
  		printf("=> Linking dynamic partitions (%s)\n", DYNAMIC_PARTITIONS_LIST_FOR_SYMLINK);
   		string src, dest, dest2;
   		std::vector <std::string> partitions = TWFunc::Split_String(DYNAMIC_PARTITIONS_LIST_FOR_SYMLINK, " ");
@@ -4906,6 +4911,7 @@ void TWFunc::Mapper_to_BootDevice(void) {
  			LOGINFO("=> Symlink %s => %s\n", src.c_str(), dest2.c_str());
 		   	symlink(src.c_str(), dest2.c_str());
 		}
+		#endif
 	}
 }
 //
