@@ -414,7 +414,8 @@ int main(int argc, char **argv) {
   	TWFunc::Setup_Verity_Forced_Encryption();
 
 	// Launch the main GUI
-	if (DataManager::GetStrValue("data_decrypted") == "1") {
+	if (DataManager::GetStrValue("data_decrypted") == "1" || DataManager::GetIntValue(TW_IS_FBE) == 1
+	|| TWFunc::Fox_Property_Get("orangefox.mount_to_decrypt") == "1") {
 		DataManager::SetValue(FOX_ENCRYPTED_DEVICE, "1");
 		//[f/d] Start UI using reapply_settings page (executed on recovery startup)
 		if (TWFunc::Path_Exists(Fox_Home + "/.theme") || TWFunc::Path_Exists(Fox_Home + "/.navbar")) {
