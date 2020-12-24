@@ -373,6 +373,9 @@ int main(int argc, char **argv) {
   	printf("Starting OrangeFox Recovery %s (built on %s for %s [dev_ver: %s]; pid %d)\n",
   		FOX_BUILD, fox_build_date.c_str(), Fox_Current_Device.c_str(), FOX_CURRENT_DEV_STR, getpid());
 
+	// refresh the specific device codename if we have a generic unified codename
+	TWFunc::Fox_Set_Current_Device_CodeName();
+
 	// Load default values to set DataManager constants and handle ifdefs
 	DataManager::SetDefaultValues();
 

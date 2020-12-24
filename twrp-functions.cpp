@@ -2367,6 +2367,18 @@ void TWFunc::Welcome_Message(void)
     Fox_Has_Welcomed++;
 }
 
+void TWFunc::Fox_Set_Current_Device_CodeName(void)
+{
+  string tmp01 = TWFunc::Fox_Property_Get("ro.product.device");
+  string currdev = DataManager::GetStrValue(FOX_COMPATIBILITY_DEVICE);
+  if (!tmp01.empty() && tmp01 != currdev) {
+     Fox_Current_Device = tmp01;
+  }
+  else Fox_Current_Device = currdev;
+
+  DataManager::SetValue(FOX_COMPATIBILITY_DEVICE, Fox_Current_Device);
+}
+
 void TWFunc::OrangeFox_Startup(void)
 {
   int i;
@@ -2386,19 +2398,12 @@ void TWFunc::OrangeFox_Startup(void)
   std::string device_two = kernel_proc_check + "disable";
 
   //gui_print("DEBUG: - OrangeFox_Startup_Executed=%i\n", OrangeFox_Startup_Executed);
+  
   // don't repeat this
   if (OrangeFox_Startup_Executed > 0)
      return;
   
   OrangeFox_Startup_Executed++;
-  
-  DataManager::GetValue(FOX_COMPATIBILITY_DEVICE, Fox_Current_Device);
-  string tmp01 = Fox_Property_Get("ro.product.device");
-  if (!tmp01.empty() && tmp01 != Fox_Current_Device) {
-     LOGINFO("- OrangeFox: changing device name: %s ==> %s\n", Fox_Current_Device.c_str(), tmp01.c_str());
-     Fox_Current_Device = tmp01;
-     DataManager::SetValue(FOX_COMPATIBILITY_DEVICE, Fox_Current_Device);
-  }
 
   if (TWFunc::Path_Exists(FOX_PS_BIN)) 
       chmod (FOX_PS_BIN, 0755);

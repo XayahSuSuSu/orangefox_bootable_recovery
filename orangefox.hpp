@@ -53,7 +53,6 @@ bool Fox_OTA_Backup_Stock_Boot_Image(); // whether to make a separate backup of 
 bool Fox_Fix_OTA_Update_Manual_Flash_Error(); // whether to try and recover from a situation where people try to flash a block-based OTA zip manually
 bool Fox_OTA_RES_Check_MicroSD(); // whether to check the external MicroSD (if any) for the OTA backup files
 bool is_comment_line(const string Src);
-
 bool verify_incremental_package(string fingerprint, string metadatafp,string metadatadevice);
 
 #ifdef USE_MINZIP
