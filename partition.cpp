@@ -712,12 +712,18 @@ void TWPartition::Setup_Data_Partition(bool Display_Error) {
 			property_get("fbe.data.wrappedkey", wrappedvalue, "");
 			std::string wrappedkeyvalue(wrappedvalue);
 			if (wrappedkeyvalue == "true") {
-				gui_print("Device not encrypted/Unable to decrypt FBE device\n");
+				if (TWFunc::Path_Exists("/data/unencrypted/key/version"))
+					gui_print("Unable to decrypt FBE device\n");
+				else
+					gui_print("The device is not encrypted\n");
 			} else {
 				LOGINFO("Trying wrapped key.\n");
 				property_set("fbe.data.wrappedkey", "true");
 				if (!Decrypt_FBE_DE()) {
-					LOGINFO("Device not encrypted/Unable to decrypt FBE device\n");
+				   if (TWFunc::Path_Exists("/data/unencrypted/key/version"))
+					LOGINFO("Unable to decrypt FBE device\n");
+				   else
+					LOGINFO("The device is not encrypted\n");
 				}
 			}
 		}
