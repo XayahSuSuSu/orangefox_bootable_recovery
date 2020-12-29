@@ -242,20 +242,7 @@ static bool Treble_Is_Running(void)
 /* Return whether the device's storage is encrypted */
 static bool StorageIsEncrypted(void)
 {
-  if (TWFunc::Path_Exists("/data/unencrypted/key/version"))
-  	return true;
-
-  if (PartitionManager.Partition_Is_Encrypted("/data"))
-  	return true;
-
-  string res = "";
-  string cmd = "cat /proc/mounts | grep /data | grep dm-";
-  TWFunc::Exec_Cmd(cmd, res);
-  //gui_print("RESULT of command:\n|%s|\n is |%s|\n", cmd.c_str(), res.c_str());
-  if (res.empty())
-     return false;
-  else
-     return true;
+  return (PartitionManager.Storage_Is_Encrypted());
 }
 
 std::string strReturnCurrentTime()

@@ -4094,13 +4094,29 @@ void TWPartitionManager::Update_System_Details_OTA_Survival(void)
   return;
 }
 
-bool TWPartitionManager::Partition_Is_Encrypted(const string Path)
+bool TWPartitionManager::Storage_Is_Encrypted(void)
 {
-  return (DataManager::GetIntValue(FOX_ENCRYPTED_DEVICE) == 1 || DataManager::GetIntValue(TW_IS_FBE) == 1);
-  /*
-  TWPartition* Decrypt_Data = Find_Partition_By_Path(Path);
-  return (Decrypt_Data && Decrypt_Data->Is_Encrypted && !Decrypt_Data->Is_Decrypted);
-  */
+  // FBE only
+  if (TWFunc::Path_Exists("/data/unencrypted/key/version") || DataManager::GetIntValue(TW_IS_FBE) == 1)
+ 	return true;
+
+  // Generic
+  if (DataManager::GetIntValue(FOX_ENCRYPTED_DEVICE) == 1)
+ 	return true;
+
+  // FDE
+  string res = "";
+  string cmd = "cat /proc/mounts | grep /data | grep dm-";
+  TWFunc::Exec_Cmd(cmd, res);
+  //gui_print("RESULT of command:\n|%s|\n is |%s|\n", cmd.c_str(), res.c_str());
+  if (res.empty())
+     return false;
+  else
+     return true;
+/*
+  TWPartition *Part = Find_Partition_By_Path("/data");
+  return (Part && Part->Is_Encrypted && !Part->Is_Decrypted);
+*/
 }
 
 bool TWPartitionManager::Prepare_Empty_Folder(const std::string& Folder) {
