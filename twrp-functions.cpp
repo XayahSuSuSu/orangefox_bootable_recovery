@@ -119,6 +119,7 @@ static bool New_Fox_On_Treble(void)
  return ((Fox_Current_ROM_IsTreble == 1 || ROM_IsRealTreble == 1) && (New_Fox_Installation == 1));
 } */
 
+/*
 static void Reload_Dynamic_Fstab(const std::string fstab) {
 // TODO: this is a kludge - still WiP
 #ifdef OF_RELOAD_FSTAB_DYNAMIC_PARTITIONS
@@ -136,6 +137,7 @@ static void Reload_Dynamic_Fstab(const std::string fstab) {
 	}
 #endif
 }
+*/
 
 /* whether we have a new (20.x) magiskboot binary */
 static int New_Magiskboot_Binary(void)
@@ -309,7 +311,7 @@ bool i = Path_Exists(orangefox_cfg);
    
    LOGINFO("DEBUG: OrangeFox: running the startup script...\n");
    Exec_Cmd(FOX_STARTUP_SCRIPT);
-   Reload_Dynamic_Fstab("/etc/logical.fstab");
+   //Reload_Dynamic_Fstab("/etc/logical.fstab");
    return true;
 }
 
