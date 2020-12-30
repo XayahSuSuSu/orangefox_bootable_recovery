@@ -90,26 +90,14 @@ int OrangeFox_Startup_Executed = 0;
 int Fox_Has_Welcomed = 0;
 string Fox_Current_ROM = "";
 
-/*
-static const bool Is_AB_Device =
-  #ifdef OF_AB_DEVICE
-  	true;
-  #else
-  	false;
-  #endif
-*/
-
 /* is this an A/B device? */
 static bool Is_AB_Device() 
 {
-  #ifdef OF_AB_DEVICE
+  #if defined(AB_OTA_UPDATER) || defined(OF_AB_DEVICE)
      return true;
   #endif
-  string propfile = "/default.prop";
-  if (!TWFunc::Path_Exists(propfile))
-     propfile = "/prop.default";  
-  string s = TWFunc::File_Property_Get(propfile, "ro.boot.slot_suffix");
-  string u = TWFunc::File_Property_Get(propfile, "ro.build.ab_update");
+  string s = TWFunc::Fox_Property_Get("ro.boot.slot_suffix");
+  string u = TWFunc::Fox_Property_Get("ro.build.ab_update");
   return (!s.empty() && u == "true");
 }
 
