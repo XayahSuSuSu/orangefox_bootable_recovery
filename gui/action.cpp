@@ -53,6 +53,8 @@
 #include "../twrpDigest/twrpSHA.hpp"
 #include "../twrpDigestDriver.hpp"
 
+#include "../orangefox.hpp"
+
 extern "C" {
 #include "../twcommon.h"
 #include "../variables.h"
@@ -1430,7 +1432,6 @@ int GUIAction::ozip_decrypt(string zip_path)
 int GUIAction::flash(std::string arg)
 {
   int i, ret_val = 0, wipe_cache = 0;
-  int has_installed_rom = 0;
 
   // We're going to jump to this page first, like a loading page
   gui_changePage(arg);
@@ -1482,21 +1483,7 @@ int GUIAction::flash(std::string arg)
       // success - but what have we just installed?
       if (Fox_Zip_Installer_Code != 0) // we have just installed a ROM - ideally, the user should reboot the recovery
        {
-          has_installed_rom++;
-          usleep(32768);
-	  TWFunc::Deactivation_Process();
-	  DataManager::SetValue(FOX_CALL_DEACTIVATION, 0);
-          usleep(32768);
-          TWFunc::Patch_AVB20(false);
-          usleep(32768);
-
-    	  // Run any custom script after ROM flashing
-    	  TWFunc::MIUI_ROM_SetProperty(Fox_Zip_Installer_Code);
-    	  TWFunc::RunFoxScript("/sbin/afterromflash.sh");
-          usleep(4096);
-
-    	  //
-	  PartitionManager.Update_System_Details();
+          Fox_Post_Zip_Install(INSTALL_SUCCESS);
        }
 
        usleep(250000);

@@ -911,3 +911,29 @@ int Fox_Prepare_Update_Binary(const char *path, ZipArchiveHandle Zip)
 
     return INSTALL_SUCCESS;
 }
+
+void Fox_Post_Zip_Install(const int result)
+{
+   if (result != INSTALL_SUCCESS)
+   	return;
+
+   Fox_Zip_Installer_Code = DataManager::GetIntValue(FOX_ZIP_INSTALLER_CODE);
+   if (Fox_Zip_Installer_Code != 0) // a ROM was installed
+     {
+         usleep(16384);
+         TWFunc::Deactivation_Process();
+         DataManager::SetValue(FOX_CALL_DEACTIVATION, 0);
+         
+         usleep(16384);
+         TWFunc::Patch_AVB20(false);
+         usleep(16384);
+
+    	 // Run any custom script after ROM flashing
+    	 TWFunc::MIUI_ROM_SetProperty(Fox_Zip_Installer_Code);
+     	 TWFunc::RunFoxScript("/sbin/afterromflash.sh");
+         usleep(16384);
+         
+         //
+         PartitionManager.Update_System_Details();
+     }
+}
