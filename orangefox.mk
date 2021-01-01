@@ -311,13 +311,6 @@ ifeq ($(FOX_USE_LZMA_COMPRESSION),1)
     endif
 endif
 
-ifeq ($(OF_SUPPORT_OZIP_DECRYPTION),1)
-ifneq ($(TW_OZIP_DECRYPT_KEY),)
-    TWRP_REQUIRED_MODULES += ozip_decrypt
-    include $(commands_TWRP_local_path)/ozip_decrypt/Android.mk
-endif
-endif
-
 ifeq ($(OF_NO_TREBLE_COMPATIBILITY_CHECK),1)
     LOCAL_CFLAGS += -DOF_NO_TREBLE_COMPATIBILITY_CHECK='"1"'
 endif
@@ -334,19 +327,8 @@ ifeq ($(OF_OTA_RES_CHECK_MICROSD),1)
     LOCAL_CFLAGS += -DOF_OTA_RES_CHECK_MICROSD='"1"'
 endif
 
-################################
 # from gui/Android.mk
-ifeq ($(OF_SUPPORT_OZIP_DECRYPTION),1)
-LOCAL_CFLAGS += -DOF_SUPPORT_OZIP_DECRYPTION='"1"'
-ifneq ($(TW_OZIP_DECRYPT_KEY),)
-    LOCAL_CFLAGS += -DTW_OZIP_DECRYPT_KEY=\"$(TW_OZIP_DECRYPT_KEY)\"
-else
-    LOCAL_CFLAGS += -DTW_OZIP_DECRYPT_KEY=0
-endif
-endif
-
 ifeq ($(FOX_ENABLE_LAB),1)
     LOCAL_CFLAGS += -DFOX_ENABLE_LAB='"1"'
 endif
-#############################
-
+#
