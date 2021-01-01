@@ -2,7 +2,7 @@
 	Copyright 2013 bigbiff/Dees_Troy TeamWin
 	This file is part of TWRP/TeamWin Recovery Project.
 
-	Copyright (C) 2018-2020 OrangeFox Recovery Project
+	Copyright (C) 2018-2021 OrangeFox Recovery Project
 	This file is part of the OrangeFox Recovery Project.
 
 	TWRP is free software: you can redistribute it and/or modify
@@ -506,11 +506,13 @@ int GUIAction::flash_zip(std::string filename, int *wipe_cache)
           else
           if (Fox_Zip_Installer_Code == 11) LOGINFO("OrangeFox: installed Treble (Custom) ROM: %s\n",filename.c_str());
           else
+          if (Fox_Zip_Installer_Code == 12) LOGINFO("OrangeFox: installed Treble (Custom) ROM and OTA_BAK: %s\n",filename.c_str());
+          else
           if (Fox_Zip_Installer_Code == 22) LOGINFO("OrangeFox: installed Treble (MIUI) ROM: %s\n",filename.c_str());
           else
           if (Fox_Zip_Installer_Code == 23) LOGINFO("OrangeFox: installed Treble (MIUI) ROM and OTA_BAK: %s\n",filename.c_str());
           else
-             LOGINFO("OrangeFox: installed MIUI ROM: %s\n",filename.c_str());
+             LOGINFO("OrangeFox: installed Custom ROM: %s\n",filename.c_str());
           
           TWFunc::Dump_Current_Settings();
         }
