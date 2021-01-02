@@ -1,6 +1,6 @@
 #
 #	This file is part of the OrangeFox Recovery Project
-# 	Copyright (C) 2018-2020 The OrangeFox Recovery Project
+# 	Copyright (C) 2018-2021 The OrangeFox Recovery Project
 #	
 #	OrangeFox is free software: you can redistribute it and/or modify
 #	it under the terms of the GNU General Public License as published by
@@ -199,8 +199,13 @@ ifeq ($(OF_SUPPORT_PRE_FLASH_SCRIPT),1)
     LOCAL_CFLAGS += -DOF_SUPPORT_PRE_FLASH_SCRIPT='"1"'
 endif
 
+ifneq ($(TW_OZIP_DECRYPT_KEY),)
+    OF_SUPPORT_OZIP_DECRYPTION := 1
+endif
+
 ifeq ($(OF_SUPPORT_OZIP_DECRYPTION),1)
     LOCAL_CFLAGS += -DOF_SUPPORT_OZIP_DECRYPTION='"1"'
+    RECOVERY_BINARY_SOURCE_FILES += $(TARGET_RECOVERY_ROOT_OUT)/system/bin/ozip_decrypt
 endif
 
 ifeq ($(OF_KEEP_DM_VERITY_FORCED_ENCRYPTION),1)
