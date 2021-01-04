@@ -1,7 +1,7 @@
 /*
 	Copyright 2012 to 2017 bigbiff/Dees_Troy TeamWin
 	
-	Copyright (C) 2018-2020 OrangeFox Recovery Project
+	Copyright (C) 2018-2021 OrangeFox Recovery Project
 	This file is part of the OrangeFox Recovery Project.
 	
 	This file is part of TWRP/TeamWin Recovery Project.
@@ -509,7 +509,7 @@ int TWinstall_zip(const char *path, int *wipe_cache)
   if (FindEntry(Zip, update_binary_name, &update_binary_entry) == 0) {
 		LOGINFO("Update binary zip\n");
 		// Additionally verify the compatibility of the package.
-		if (!verify_package_compatibility(Zip)) {
+		if (!Fox_Skip_Treble_Compatibility_Check() && !verify_package_compatibility(Zip)) {
 			gui_err("zip_compatible_err=Zip Treble compatibility error!");
 			CloseArchive(Zip);
 			ret_val = INSTALL_CORRUPT;
