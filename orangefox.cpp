@@ -937,3 +937,14 @@ void Fox_Post_Zip_Install(const int result)
          PartitionManager.Update_System_Details();
      }
 }
+
+bool Fox_Skip_Treble_Compatibility_Check()
+{
+   #ifdef OF_NO_TREBLE_COMPATIBILITY_CHECK
+   return true;
+   #else
+   return false;
+   #endif
+}
+
+//

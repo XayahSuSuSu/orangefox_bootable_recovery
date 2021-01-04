@@ -55,6 +55,7 @@ bool Fox_OTA_RES_Check_MicroSD(); // whether to check the external MicroSD (if a
 void Fox_Post_Zip_Install(const int result); // check after zip install, to see whether it is a ROM and whether to run the OrangeFox processes after flashing a ROM
 bool is_comment_line(const std::string Src);
 bool verify_incremental_package(std::string fingerprint, std::string metadatafp, std::string metadatadevice);
+bool Fox_Skip_Treble_Compatibility_Check(void); // whether to skip the Treble compatibility checks
 
 #ifdef USE_MINZIP
 bool zip_EntryExists(ZipArchive Zip, const std::string& filename);
