@@ -131,7 +131,7 @@ void Fox_ProcessAsserts(string assert_device)
   #ifdef OF_TARGET_DEVICES
     if (!assert_device.empty())
        {
-         if (TWFunc::Fox_Property_Set("ro.product.device", assert_device) == 0)
+         if (TWFunc::Fox_Property_Set("ro.product.device", assert_device))
            {
        	     //gui_print_color("warning",
        	     LOGINFO("\nDevice name temporarily switched to \"%s\" until OrangeFox is rebooted.\n\n", assert_device.c_str());

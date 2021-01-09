@@ -2,7 +2,7 @@
 	Copyright 2012 bigbiff/Dees_Troy TeamWin
 	This file is part of TWRP/TeamWin Recovery Project.
 
-	Copyright (C) 2018-2020 OrangeFox Recovery Project
+	Copyright (C) 2018-2021 OrangeFox Recovery Project
 	This file is part of the OrangeFox Recovery Project.
 
 	TWRP is free software: you can redistribute it and/or modify
@@ -43,6 +43,8 @@
 #include <algorithm>
 #include <ctime>
 #include <selinux/label.h>
+#include <android-base/properties.h>
+
 #include "twrp-functions.hpp"
 #include "twcommon.h"
 #include "gui/gui.hpp"
@@ -1487,7 +1489,10 @@ int TWFunc::Property_Override(string Prop_Name, string Prop_Value) {
 #ifdef TW_INCLUDE_LIBRESETPROP
     return setprop(Prop_Name.c_str(), Prop_Value.c_str(), false);
 #else
-    return TWFunc::Fox_Property_Set(Prop_Name, Prop_Value);
+    if (TWFunc::Fox_Property_Set(Prop_Name, Prop_Value))
+    	return 0;
+    else
+    	return -1;
 #endif
 }
 
@@ -4840,16 +4845,14 @@ std::string TWFunc::Remove_Beginning_Slash(const std::string& path) {
 }
 
 string TWFunc::Fox_Property_Get(string Prop_Name) {
-	char ret[PROPERTY_VALUE_MAX + PROPERTY_VALUE_MAX]; // allow some extra room
-	memset(ret, 0, sizeof(ret));
-	property_get(Prop_Name.c_str(), ret, "");
-   	std::string res = ret;
-   	return res;
+	return android::base::GetProperty(Prop_Name, "");
 }
 
-int TWFunc::Fox_Property_Set(const std::string Prop_Name, const std::string Value) {
-	int ret;
-    	usleep(128);
+bool TWFunc::Fox_Property_Set(const std::string Prop_Name, const std::string Value) {
+  usleep(2048);
+  bool res = android::base::SetProperty(Prop_Name, Value);
+  if (!res && Fox_Property_Get(Prop_Name) != Value) {
+    	usleep(1028);
 	string tmp = "\"";
 	string cmd = "/sbin/resetprop";
 
@@ -4860,14 +4863,13 @@ int TWFunc::Fox_Property_Set(const std::string Prop_Name, const std::string Valu
     		cmd = Fox_Bin_Dir + "/setprop";
 
     	if (Path_Exists(cmd)) {
-  	    ret = Exec_Cmd(cmd + " " + Prop_Name + " " + tmp + Value + tmp);
+  	    int ret = Exec_Cmd(cmd + " " + Prop_Name + " " + tmp + Value + tmp);
+  	    //gui_print("DEBUG rerun TWFunc::Fox_Property_Set() - return value of property_set of (%s => %s)=%i\n", Prop_Name.c_str(), Value.c_str(), ret);
+  	    res = (ret == 0);
     	}
-    	else
-    	   ret = property_set(Prop_Name.c_str(), Value.c_str());
-
-    	usleep(4096);
-
-    	return ret;
+  }
+  usleep(2048);
+  return res;
 }
 
 bool TWFunc::Has_Dynamic_Partitions(void) {
