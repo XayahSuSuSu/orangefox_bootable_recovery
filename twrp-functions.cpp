@@ -2798,7 +2798,7 @@ bool TWFunc::PackRepackImage_MagiskBoot(bool do_unpack, bool is_boot)
   TWPartition *Boot = PartitionManager.Find_Partition_By_Path("/boot");
   TWPartition *Recovery = PartitionManager.Find_Partition_By_Path("/recovery");
 
-#ifdef OF_AB_DEVICE
+#if defined(AB_OTA_UPDATER) || defined(OF_AB_DEVICE)
   if (Boot != NULL)
     {
        tmpstr = Boot->Actual_Block_Device;
@@ -2924,7 +2924,7 @@ bool TWFunc::PackRepackImage_MagiskBoot(bool do_unpack, bool is_boot)
 	        AppendLineToFile (cmd_script2, magiskboot_sbin + " repack \"" + tmpstr + "\" > /dev/null 2>&1");
 	        AppendLineToFile (cmd_script2, "[ $? == 0 ] && LOGINFO \"- Succeeded.\" || abort \"- Repacking of image failed.\"");
 	        AppendLineToFile (cmd_script2, "LOGINFO \"- Flashing repacked image ...\"");
-	        #ifdef OF_AB_DEVICE
+	        #if defined(AB_OTA_UPDATER) || defined(OF_AB_DEVICE)
 	        AppendLineToFile (cmd_script2, "dd if=new-boot.img of=" + tmpstr + " > /dev/null 2>&1");
 	        #else
 	        AppendLineToFile (cmd_script2, "flash_image \"" +  tmpstr + "\" new-boot.img");

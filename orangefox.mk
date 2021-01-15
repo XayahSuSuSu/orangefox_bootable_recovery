@@ -97,6 +97,11 @@ ifeq ($(OF_AB_DEVICE),1)
     LOCAL_CFLAGS += -DOF_AB_DEVICE='"1"'
     LOCAL_CFLAGS += -DOF_USE_MAGISKBOOT_FOR_ALL_PATCHES='"1"'
     LOCAL_CFLAGS += -DOF_USE_MAGISKBOOT='"1"'
+    ifneq ($(AB_OTA_UPDATER),true)
+    	LOCAL_CFLAGS += -DAB_OTA_UPDATER=1
+    	LOCAL_SHARED_LIBRARIES += libhardware android.hardware.boot@1.0
+    	TWRP_REQUIRED_MODULES += libhardware android.hardware.boot@1.0-service android.hardware.boot@1.0-service.rc
+    endif
 endif
 
 ifeq ($(OF_DONT_PATCH_ENCRYPTED_DEVICE),1)
