@@ -62,7 +62,7 @@ extern "C" {
 #include "twinstall/adb_install.h"
 };
 #include "set_metadata.h"
-#include "../minuitwrp/minui.h"
+#include "minuitwrp/minui.h"
 
 #include "rapidxml.hpp"
 #include "objects.hpp"
@@ -257,9 +257,6 @@ GUIAction::GUIAction(xml_node <> *node):GUIObject(node)
       ADD_ACTION(fixpermissions);
       ADD_ACTION(dd);
       ADD_ACTION(partitionsd);
-      ADD_ACTION(installhtcdumlock);
-      ADD_ACTION(htcdumlockrestoreboot);
-      ADD_ACTION(htcdumlockreflashrecovery);
       ADD_ACTION(cmd);
       ADD_ACTION(terminalcommand);
       ADD_ACTION(reinjecttwrp);
@@ -356,13 +353,7 @@ GUIAction::GUIAction(xml_node <> *node):GUIObject(node)
     }
 }
 
-int GUIAction::NotifyTouch(TOUCH_STATE state, int x __unused, int y __unused)
-{
-  if (state == TOUCH_RELEASE)
-    doActions();
 
-  return 0;
-}
 
 int GUIAction::NotifyKey(int key, bool down)
 {
@@ -1873,48 +1864,6 @@ int GUIAction::partitionsd(std::string arg __unused)
   operation_end(ret_val);
   return 0;
 
-}
-
-int GUIAction::installhtcdumlock(std::string arg __unused)
-{
-  operation_start("Install HTC Dumlock");
-  if (simulate)
-    {
-      simulate_progress_bar();
-    }
-  else
-    TWFunc::install_htc_dumlock();
-
-  operation_end(0);
-  return 0;
-}
-
-int GUIAction::htcdumlockrestoreboot(std::string arg __unused)
-{
-  operation_start("HTC Dumlock Restore Boot");
-  if (simulate)
-    {
-      simulate_progress_bar();
-    }
-  else
-    TWFunc::htc_dumlock_restore_original_boot();
-
-  operation_end(0);
-  return 0;
-}
-
-int GUIAction::htcdumlockreflashrecovery(std::string arg __unused)
-{
-  operation_start("HTC Dumlock Reflash Recovery");
-  if (simulate)
-    {
-      simulate_progress_bar();
-    }
-  else
-    TWFunc::htc_dumlock_reflash_recovery_to_boot();
-
-  operation_end(0);
-  return 0;
 }
 
 int GUIAction::cmd(std::string arg)
