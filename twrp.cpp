@@ -2,7 +2,7 @@
 	Copyright 2012-2020 TeamWin
 	This file is part of TWRP/TeamWin Recovery Project.
 
-	Copyright (C) 2018-2020 OrangeFox Recovery Project
+	Copyright (C) 2018-2021 OrangeFox Recovery Project
 	This file is part of the OrangeFox Recovery Project.
 
 	TWRP is free software: you can redistribute it and/or modify
@@ -320,6 +320,33 @@ static void reboot() {
 		TWFunc::tw_reboot(rb_system);
 }
 
+// check whether we should reload the themes
+// TODO - is this check even needed?
+static bool Fox_CheckReload_Themes() {
+  bool found = false; 
+  
+  if (DataManager::GetStrValue("data_decrypted") == "1" 
+  || DataManager::GetIntValue(TW_IS_FBE) == 1 
+  || TWFunc::Fox_Property_Get("orangefox.mount_to_decrypt") == "1") {
+	DataManager::SetValue(FOX_ENCRYPTED_DEVICE, "1");
+	found = true;
+    }
+
+  if ((TWFunc::Fox_Property_Get("fbe.data.wrappedkey") == "true") ||
+	(TWFunc::Fox_Property_Get("fbe.metadata.wrappedkey") == "true") ||
+	(!TWFunc::Fox_Property_Get("fbe.filenames").empty()) ||
+	(!TWFunc::Fox_Property_Get("fbe.contents").empty())) 
+     found = true;
+
+  if (!found)
+     return false;
+  
+  if (TWFunc::Path_Exists(Fox_Home + "/.theme") || TWFunc::Path_Exists(Fox_Home + "/.navbar"))
+     return true;
+  else
+     return false;
+}
+
 int main(int argc, char **argv) {
 	// Recovery needs to install world-readable files, so clear umask
 	// set by init
@@ -417,15 +444,11 @@ int main(int argc, char **argv) {
   	TWFunc::Setup_Verity_Forced_Encryption();
 
 	// Launch the main GUI
-	if (DataManager::GetStrValue("data_decrypted") == "1" || DataManager::GetIntValue(TW_IS_FBE) == 1
-	|| TWFunc::Fox_Property_Get("orangefox.mount_to_decrypt") == "1") {
-		DataManager::SetValue(FOX_ENCRYPTED_DEVICE, "1");
+	if (Fox_CheckReload_Themes()) {
 		//[f/d] Start UI using reapply_settings page (executed on recovery startup)
-		if (TWFunc::Path_Exists(Fox_Home + "/.theme") || TWFunc::Path_Exists(Fox_Home + "/.navbar")) {
-			DataManager::SetValue("of_reload_back", "main");
-			PageManager::RequestReload();
-			gui_startPage("reapply_settings", 1, 0);
-		} else gui_start();
+		DataManager::SetValue("of_reload_back", "main");
+		PageManager::RequestReload();
+		gui_startPage("reapply_settings", 1, 0);
 	} else gui_start();
 
 	delete adb_bu_fifo;
