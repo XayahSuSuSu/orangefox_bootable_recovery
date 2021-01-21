@@ -4375,6 +4375,11 @@ std::string keepdmverity, keepforcedencryption;
 std::string zipname = FFiles_dir + "/OF_verity_crypt/OF_verity_crypt.zip";
 int res=0, wipe_cache=0;
 std::string magiskboot = TWFunc::Get_MagiskBoot();
+
+  if (DataManager::GetIntValue(FOX_DISABLE_FORCED_ENCRYPTION) != 1 
+   && DataManager::GetIntValue(FOX_DISABLE_DM_VERITY) != 1)
+     return 0;
+
   if (!TWFunc::Path_Exists(magiskboot))
      {
         gui_print("ERROR - cannot find magiskboot\n");
@@ -4387,12 +4392,12 @@ std::string magiskboot = TWFunc::Get_MagiskBoot();
   	return 1;
      }
 
-    if ((DataManager::GetIntValue(FOX_DISABLE_DM_VERITY) == 1)/* || (Fox_Force_Deactivate_Process == 1)*/)
+    if (DataManager::GetIntValue(FOX_DISABLE_DM_VERITY) == 1)
 	keepdmverity = "false";
     else
 	keepdmverity = "true";
 	
-    if ((DataManager::GetIntValue(FOX_DISABLE_FORCED_ENCRYPTION) == 1)/* || (Fox_Force_Deactivate_Process == 1)*/)
+    if (DataManager::GetIntValue(FOX_DISABLE_FORCED_ENCRYPTION) == 1)
 	{
 	#ifdef OF_DONT_PATCH_ENCRYPTED_DEVICE
 	   if (StorageIsEncrypted())
