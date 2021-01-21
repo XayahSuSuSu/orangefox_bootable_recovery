@@ -4391,12 +4391,12 @@ std::string magiskboot = TWFunc::Get_MagiskBoot();
         gui_print("ERROR - cannot find %s\n", zipname.c_str());
   	return 1;
      }
-
+     /*
     if (DataManager::GetIntValue(FOX_DISABLE_DM_VERITY) == 1)
 	keepdmverity = "false";
-    else
+    else */
 	keepdmverity = "true";
-	
+
     if (DataManager::GetIntValue(FOX_DISABLE_FORCED_ENCRYPTION) == 1)
 	{
 	#ifdef OF_DONT_PATCH_ENCRYPTED_DEVICE
