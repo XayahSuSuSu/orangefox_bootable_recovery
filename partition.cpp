@@ -2,7 +2,7 @@
 	Copyright 2013 to 2020 TeamWin
 	This file is part of TWRP/TeamWin Recovery Project.
 
-	Copyright (C) 2018-2020 OrangeFox Recovery Project
+	Copyright (C) 2018-2021 OrangeFox Recovery Project
 	This file is part of the OrangeFox Recovery Project.
 	
 	TWRP is free software: you can redistribute it and/or modify
@@ -2454,7 +2454,7 @@ bool TWPartition::Wipe_F2FS() {
 			Crypto_Key_Location != "footer") {
 		NeedPreserveFooter = false;
 	}
-	LOGINFO("mkfs.f2fs command: %s\n", f2fs_bin.c_str());
+	LOGINFO("mkfs.f2fs command: %s [full command=%s]\n", f2fs_bin.c_str(), command.c_str());
 	if (TWFunc::Exec_Cmd(command) == 0) {
 		if (NeedPreserveFooter)
 			Wipe_Crypto_Key();
