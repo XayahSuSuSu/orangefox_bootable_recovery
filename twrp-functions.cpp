@@ -2789,7 +2789,8 @@ bool TWFunc::PackRepackImage_MagiskBoot(bool do_unpack, bool is_boot)
   	TWFunc::tw_reboot(rb_recovery);
      }
  
-  if (!PartitionManager.Mount_By_Path(PartitionManager.Get_Android_Root_Path(), false))
+  if ( (!PartitionManager.Is_Mounted_By_Path(PartitionManager.Get_Android_Root_Path())) 
+    && (!PartitionManager.Mount_By_Path(PartitionManager.Get_Android_Root_Path(), false)))
      {
      	LOGERR("TWFunc::PackRepackImage_MagiskBoot: Failed to mount system!");
         return false;
