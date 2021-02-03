@@ -256,7 +256,7 @@
 			</text>
 
 			<input>
-				<placement x="%col1_x_caption%" y="%input_rename_y%" w="%input_w%" h="%input_height%"/>
+				<placement x="%col1_x_caption%" y="%row2_2a_y%" w="%input_w%" h="%input_height%"/>
 				<text>%tw_filemanager_rename%</text>
 				<data name="mkdir_folder"/>
 				<restrict minlen="1" maxlen="32" allow="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890-_.{}[]() " />
@@ -1442,7 +1442,7 @@
 			</text>
 
 			<input>
-				<placement x="%col1_x_caption%" y="%input_rename_y%" w="%input_w%" h="%input_height%"/>
+				<placement x="%col1_x_caption%" y="%row2_2a_y%" w="%input_w%" h="%input_height%"/>
 				<text>%tw_filemanager_rename%</text>
 				<data name="tw_filemanager_rename"/>
 				<restrict minlen="1" maxlen="64" allow="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890-_.{}[]() "/>
@@ -1494,7 +1494,7 @@
 			</text>
 
 			<input>
-				<placement x="%col1_x_caption%" y="%input_rename_y%" w="%input_w%" h="%input_height%"/>
+				<placement x="%col1_x_caption%" y="%row2_2a_y%" w="%input_w%" h="%input_height%"/>
 				<text>%tw_filemanager_rename%</text>
 				<data name="tw_filemanager_rename"/>
 				<restrict minlen="1" maxlen="64" allow="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890-_.{}[]() "/>
@@ -1723,7 +1723,7 @@
 			</text>
 			
 			<input>
-				<placement x="%col1_x_caption%" y="%input_rename_y%" w="%input_w%" h="%input_height%"/>
+				<placement x="%col1_x_caption%" y="%row2_2a_y%" w="%input_w%" h="%input_height%"/>
 				<text>%tw_filemanager_rename%</text>
 				<data name="tw_filemanager_rename"/>
 				<restrict minlen="3" maxlen="4" allow="01234567"/>

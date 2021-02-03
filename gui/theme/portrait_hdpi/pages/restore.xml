@@ -290,7 +290,7 @@
 			</text>
 
 			<input>
-				<placement x="%col1_x_caption%" y="%input_decr_y%" w="%input_w%" h="%input_height%"/>
+				<placement x="%col1_x_caption%" y="%row4_2_y%" w="%input_w%" h="%input_height%"/>
 				<text>%tw_restore_display%</text>
 				<data name="tw_restore_password" mask="*" maskvariable="tw_restore_display"/>
 				<restrict minlen="1" maxlen="32" allow="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890_"/>
@@ -489,7 +489,7 @@
 			</text>
 
 			<input>
-				<placement x="%col1_x_caption%" y="%input_rename_y%" w="%input_w%" h="%input_height%"/>
+				<placement x="%col1_x_caption%" y="%row2_2a_y%" w="%input_w%" h="%input_height%"/>
 				<text>%tw_backup_rename%</text>
 				<data name="tw_backup_rename"/>
 				<restrict minlen="1" maxlen="64" allow="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890-_.{}[]() "/>
