@@ -163,7 +163,7 @@ public:
 	static void Welcome_Message(void); // provide the welcome message
 	static void Run_Before_Reboot(void); // run this just before rebooting
 	static string Fox_Property_Get(string Prop_Name); // get a recovery property that would be returned by getprop
-	static int Fox_Property_Set(const std::string Prop_Name, const std::string Value); // set a recovery property that would be set by setprop
+	static bool Fox_Property_Set(const std::string Prop_Name, const std::string Value); // set a recovery property that would be set by setprop
 	static bool Has_Dynamic_Partitions(void); // does the device have dynamic partitions?
 	static void Mapper_to_BootDevice(void); // provide symlinks to /dev/mapper/* for dynamic partitions
 	static void Fox_Set_Current_Device_CodeName(void); // set and save the current device codename (esp. where the product.device is different from a unified codename)

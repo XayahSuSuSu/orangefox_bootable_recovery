@@ -2,7 +2,7 @@
 	Copyright 2003 to 2017 TeamWin
 	This file is part of TWRP/TeamWin Recovery Project.
 
-	Copyright (C) 2018-2020 OrangeFox Recovery Project
+	Copyright (C) 2018-2021 OrangeFox Recovery Project
 	This file is part of the OrangeFox Recovery Project.
 
 	TWRP is free software: you can redistribute it and/or modify
@@ -46,6 +46,7 @@
 #include "twcommon.h"
 #include "openrecoveryscript.hpp"
 #include "progresstracking.hpp"
+#include "orangefox.hpp"
 #include "variables.h"
 #include "install/adb_install.h"
 #include "data.hpp"
@@ -160,6 +161,7 @@ int OpenRecoveryScript::run_script_file(void) {
 					PartitionManager.Wipe_By_Path("/cache");
 				} else if (strcmp(value, "system") == 0 || strcmp(value, "/system") == 0 || strcmp(value, PartitionManager.Get_Android_Root_Path().c_str()) == 0) {
 					PartitionManager.Wipe_By_Path("/system");
+					PartitionManager.Update_System_Details();
 				} else if (strcmp(value, "dalvik") == 0 || strcmp(value, "dalvick") == 0 || strcmp(value, "dalvikcache") == 0 || strcmp(value, "dalvickcache") == 0) {
 					PartitionManager.Wipe_Dalvik_Cache();
 				} else if (strcmp(value, "data") == 0 || strcmp(value, "/data") == 0 || strcmp(value, "factory") == 0 || strcmp(value, "factoryreset") == 0) {
@@ -395,6 +397,7 @@ int OpenRecoveryScript::run_script_file(void) {
 					ret_val = 1; // failure
 				}
 				PartitionManager.Unlock_Block_Partitions();
+				PartitionManager.Update_System_Details();
 				sideload = 1; // Causes device to go to the home screen afterwards
 
 				pid_t sideload_child_pid = GetMiniAdbdPid();
@@ -469,7 +472,7 @@ int OpenRecoveryScript::run_script_file(void) {
 
 	// DJ9
 	if (tmp_tmp == 0)
-	   Run_Fox_Process_After_ORS();
+	   Run_Fox_Process_After_ORS(tmp_tmp);
 	// DJ9
 	
 	if (sideload)
@@ -480,8 +483,6 @@ int OpenRecoveryScript::run_script_file(void) {
 int OpenRecoveryScript::Insert_ORS_Command(string Command) {
 	ofstream ORSfile(SCRIPT_FILE_TMP, ios_base::app | ios_base::out);
 	if (ORSfile.is_open()) {
-		//if (Command.substr(Command.size() - 1, 1) != "\n")
-		//	Command += "\n";
 		LOGINFO("Inserting '%s'\n", Command.c_str());
 		ORSfile << Command.c_str() << endl;
 		ORSfile.close();
@@ -779,35 +780,14 @@ int OpenRecoveryScript::remountrw(void)
 	return op_status;
 }
 
-int OpenRecoveryScript::Run_Fox_Process_After_ORS(void)
+void OpenRecoveryScript::Run_Fox_Process_After_ORS(int result)
 {
 #ifdef OF_VANILLA_BUILD
    LOGINFO("- OrangeFox: DEBUG: skipping the Run_Fox_Process_After_ORS process...\n");
-   return 0;
+#else
+   if (TWFunc::JustInstalledMiui())
+   	DataManager::SetValue(FOX_FORCE_DEACTIVATE_PROCESS, 1);
+   Fox_Post_Zip_Install(result);
 #endif
-   Fox_Zip_Installer_Code = DataManager::GetIntValue(FOX_ZIP_INSTALLER_CODE);
-   if (Fox_Zip_Installer_Code != 0) // a ROM was installed
-     {
-         if (
-            (DataManager::GetIntValue(FOX_DISABLE_DM_VERITY) == 1) 
-         || (DataManager::GetIntValue(FOX_DISABLE_FORCED_ENCRYPTION) == 1)
-         || (TWFunc::JustInstalledMiui())
-            )
-            {
-         	DataManager::SetValue(FOX_FORCE_DEACTIVATE_PROCESS, 1);
-         	Fox_Force_Deactivate_Process = DataManager::GetIntValue(FOX_FORCE_DEACTIVATE_PROCESS);
-         	usleep(2048);
-         	TWFunc::Deactivation_Process();
-            }
-         usleep(32768);
-         TWFunc::Patch_AVB20(false);
-         usleep(32768);
-
-    	 // Run any custom script after ROM flashing
-    	 TWFunc::MIUI_ROM_SetProperty(Fox_Zip_Installer_Code);
-     	 TWFunc::RunFoxScript("/sbin/afterromflash.sh");
-         usleep(4096);
-     }
-   return 0;
 }
 //

@@ -2,7 +2,7 @@
 	Copyright 2012 bigbiff/Dees_Troy TeamWin
 	This file is part of TWRP/TeamWin Recovery Project.
 
-	Copyright (C) 2018-2020 OrangeFox Recovery Project
+	Copyright (C) 2018-2021 OrangeFox Recovery Project
 	This file is part of the OrangeFox Recovery Project.
 
 	TWRP is free software: you can redistribute it and/or modify
@@ -43,6 +43,8 @@
 #include <algorithm>
 #include <ctime>
 #include <selinux/label.h>
+#include <android-base/properties.h>
+
 #include "twrp-functions.hpp"
 #include "twcommon.h"
 #include "gui/gui.hpp"
@@ -1487,7 +1489,10 @@ int TWFunc::Property_Override(string Prop_Name, string Prop_Value) {
 #ifdef TW_INCLUDE_LIBRESETPROP
     return setprop(Prop_Name.c_str(), Prop_Value.c_str(), false);
 #else
-    return TWFunc::Fox_Property_Set(Prop_Name, Prop_Value);
+    if (TWFunc::Fox_Property_Set(Prop_Name, Prop_Value))
+    	return 0;
+    else
+    	return -1;
 #endif
 }
 
@@ -2784,7 +2789,8 @@ bool TWFunc::PackRepackImage_MagiskBoot(bool do_unpack, bool is_boot)
   	TWFunc::tw_reboot(rb_recovery);
      }
  
-  if (!PartitionManager.Mount_By_Path(PartitionManager.Get_Android_Root_Path(), false))
+  if ( (!PartitionManager.Is_Mounted_By_Path(PartitionManager.Get_Android_Root_Path())) 
+    && (!PartitionManager.Mount_By_Path(PartitionManager.Get_Android_Root_Path(), false)))
      {
      	LOGERR("TWFunc::PackRepackImage_MagiskBoot: Failed to mount system!");
         return false;
@@ -2793,7 +2799,7 @@ bool TWFunc::PackRepackImage_MagiskBoot(bool do_unpack, bool is_boot)
   TWPartition *Boot = PartitionManager.Find_Partition_By_Path("/boot");
   TWPartition *Recovery = PartitionManager.Find_Partition_By_Path("/recovery");
 
-#ifdef OF_AB_DEVICE
+#if defined(AB_OTA_UPDATER) || defined(OF_AB_DEVICE)
   if (Boot != NULL)
     {
        tmpstr = Boot->Actual_Block_Device;
@@ -2919,7 +2925,7 @@ bool TWFunc::PackRepackImage_MagiskBoot(bool do_unpack, bool is_boot)
 	        AppendLineToFile (cmd_script2, magiskboot_sbin + " repack \"" + tmpstr + "\" > /dev/null 2>&1");
 	        AppendLineToFile (cmd_script2, "[ $? == 0 ] && LOGINFO \"- Succeeded.\" || abort \"- Repacking of image failed.\"");
 	        AppendLineToFile (cmd_script2, "LOGINFO \"- Flashing repacked image ...\"");
-	        #ifdef OF_AB_DEVICE
+	        #if defined(AB_OTA_UPDATER) || defined(OF_AB_DEVICE)
 	        AppendLineToFile (cmd_script2, "dd if=new-boot.img of=" + tmpstr + " > /dev/null 2>&1");
 	        #else
 	        AppendLineToFile (cmd_script2, "flash_image \"" +  tmpstr + "\" new-boot.img");
@@ -4370,6 +4376,11 @@ std::string keepdmverity, keepforcedencryption;
 std::string zipname = FFiles_dir + "/OF_verity_crypt/OF_verity_crypt.zip";
 int res=0, wipe_cache=0;
 std::string magiskboot = TWFunc::Get_MagiskBoot();
+
+  if (DataManager::GetIntValue(FOX_DISABLE_FORCED_ENCRYPTION) != 1 
+   && DataManager::GetIntValue(FOX_DISABLE_DM_VERITY) != 1)
+     return 0;
+
   if (!TWFunc::Path_Exists(magiskboot))
      {
         gui_print("ERROR - cannot find magiskboot\n");
@@ -4381,13 +4392,13 @@ std::string magiskboot = TWFunc::Get_MagiskBoot();
         gui_print("ERROR - cannot find %s\n", zipname.c_str());
   	return 1;
      }
-
-    if ((DataManager::GetIntValue(FOX_DISABLE_DM_VERITY) == 1)/* || (Fox_Force_Deactivate_Process == 1)*/)
+     /*
+    if (DataManager::GetIntValue(FOX_DISABLE_DM_VERITY) == 1)
 	keepdmverity = "false";
-    else
+    else */
 	keepdmverity = "true";
-	
-    if ((DataManager::GetIntValue(FOX_DISABLE_FORCED_ENCRYPTION) == 1)/* || (Fox_Force_Deactivate_Process == 1)*/)
+
+    if (DataManager::GetIntValue(FOX_DISABLE_FORCED_ENCRYPTION) == 1)
 	{
 	#ifdef OF_DONT_PATCH_ENCRYPTED_DEVICE
 	   if (StorageIsEncrypted())
@@ -4840,16 +4851,14 @@ std::string TWFunc::Remove_Beginning_Slash(const std::string& path) {
 }
 
 string TWFunc::Fox_Property_Get(string Prop_Name) {
-	char ret[PROPERTY_VALUE_MAX + PROPERTY_VALUE_MAX]; // allow some extra room
-	memset(ret, 0, sizeof(ret));
-	property_get(Prop_Name.c_str(), ret, "");
-   	std::string res = ret;
-   	return res;
+	return android::base::GetProperty(Prop_Name, "");
 }
 
-int TWFunc::Fox_Property_Set(const std::string Prop_Name, const std::string Value) {
-	int ret;
-    	usleep(128);
+bool TWFunc::Fox_Property_Set(const std::string Prop_Name, const std::string Value) {
+  usleep(2048);
+  bool res = android::base::SetProperty(Prop_Name, Value);
+  if (!res && Fox_Property_Get(Prop_Name) != Value) {
+    	usleep(1028);
 	string tmp = "\"";
 	string cmd = "/sbin/resetprop";
 
@@ -4860,14 +4869,13 @@ int TWFunc::Fox_Property_Set(const std::string Prop_Name, const std::string Valu
     		cmd = Fox_Bin_Dir + "/setprop";
 
     	if (Path_Exists(cmd)) {
-  	    ret = Exec_Cmd(cmd + " " + Prop_Name + " " + tmp + Value + tmp);
+  	    int ret = Exec_Cmd(cmd + " " + Prop_Name + " " + tmp + Value + tmp);
+  	    //gui_print("DEBUG rerun TWFunc::Fox_Property_Set() - return value of property_set of (%s => %s)=%i\n", Prop_Name.c_str(), Value.c_str(), ret);
+  	    res = (ret == 0);
     	}
-    	else
-    	   ret = property_set(Prop_Name.c_str(), Value.c_str());
-
-    	usleep(4096);
-
-    	return ret;
+  }
+  usleep(2048);
+  return res;
 }
 
 bool TWFunc::Has_Dynamic_Partitions(void) {

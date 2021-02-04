@@ -44,7 +44,7 @@ public:
 	static void Call_After_CLI_Command(VoidFunction fn) { call_after_cli_command = fn; }
 	static void Run_CLI_Command(const char* command);                              // Runs a command for orscmd (twrp binary)
 	static int remountrw();                                                        // Remount system and vendor rw
-	static int Run_Fox_Process_After_ORS();					       // Runs the Deactivation_Process after standard ORS script (non-MIUI OTA)
+	static void Run_Fox_Process_After_ORS(int result);			       // Runs the Deactivation_Process after standard ORS script (non-MIUI OTA)
 };
 
 #endif // _OPENRECOVERYSCRIPT_HPP

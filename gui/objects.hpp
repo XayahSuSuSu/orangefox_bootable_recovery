@@ -323,9 +323,7 @@ protected:
 	void simulate_progress_bar(void);
 	void find_magisk(void);
 	int flash_zip(std::string filename, int* wipe_cache);
-	#ifdef OF_SUPPORT_OZIP_DECRYPTION
 	int ozip_decrypt(std::string zip_path);
-	#endif
 	void reinject_after_flash();
 	void notify_after_install();
 	void operation_start(const string operation_name);

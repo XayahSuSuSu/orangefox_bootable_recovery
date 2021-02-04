@@ -2,7 +2,7 @@
 	Copyright 2013 bigbiff/Dees_Troy TeamWin
 	This file is part of TWRP/TeamWin Recovery Project.
 
-	Copyright (C) 2018-2020 OrangeFox Recovery Project
+	Copyright (C) 2018-2021 OrangeFox Recovery Project
 	This file is part of the OrangeFox Recovery Project.
 
 	TWRP is free software: you can redistribute it and/or modify
@@ -52,6 +52,8 @@
 #include "twinstall.h"
 #include "../twrpDigest/twrpSHA.hpp"
 #include "../twrpDigestDriver.hpp"
+
+#include "../orangefox.hpp"
 
 extern "C" {
 #include "../twcommon.h"
@@ -506,11 +508,13 @@ int GUIAction::flash_zip(std::string filename, int *wipe_cache)
           else
           if (Fox_Zip_Installer_Code == 11) LOGINFO("OrangeFox: installed Treble (Custom) ROM: %s\n",filename.c_str());
           else
+          if (Fox_Zip_Installer_Code == 12) LOGINFO("OrangeFox: installed Treble (Custom) ROM and OTA_BAK: %s\n",filename.c_str());
+          else
           if (Fox_Zip_Installer_Code == 22) LOGINFO("OrangeFox: installed Treble (MIUI) ROM: %s\n",filename.c_str());
           else
           if (Fox_Zip_Installer_Code == 23) LOGINFO("OrangeFox: installed Treble (MIUI) ROM and OTA_BAK: %s\n",filename.c_str());
           else
-             LOGINFO("OrangeFox: installed MIUI ROM: %s\n",filename.c_str());
+             LOGINFO("OrangeFox: installed Custom ROM: %s\n",filename.c_str());
           
           TWFunc::Dump_Current_Settings();
         }
@@ -1411,24 +1415,21 @@ void GUIAction::reinject_after_flash()
     }
 }
 
-#ifdef OF_SUPPORT_OZIP_DECRYPTION
 int GUIAction::ozip_decrypt(string zip_path)
 {
-   if (!TWFunc::Path_Exists(Fox_Bin_Dir + "/ozip_decrypt")) 
+   if (!TWFunc::Path_Exists(Fox_Bin_Dir + "/ozip_decrypt"))
       {
          return 1;
       }
    gui_msg("ozip_decrypt_decryption=Starting Ozip Decryption...");
-   TWFunc::Exec_Cmd(Fox_Bin_Dir + "/ozip_decrypt " + (string)TW_OZIP_DECRYPT_KEY + " '" + zip_path + "'");
+   TWFunc::Exec_Cmd("ozip_decrypt " + (string)TW_OZIP_DECRYPT_KEY + " '" + zip_path + "'");
    gui_msg("ozip_decrypt_finish=Ozip Decryption Finished!");
    return 0;
 }
-#endif
 
 int GUIAction::flash(std::string arg)
 {
   int i, ret_val = 0, wipe_cache = 0;
-  int has_installed_rom = 0;
 
   // We're going to jump to this page first, like a loading page
   gui_changePage(arg);
@@ -1441,7 +1442,6 @@ int GUIAction::flash(std::string arg)
       string zip_filename = (slashpos == string::npos) ? zip_path : zip_path.substr(slashpos + 1);
       operation_start("Flashing");
 
-      #ifdef OF_SUPPORT_OZIP_DECRYPTION
       if ((zip_path.substr(zip_path.size() - 4, 4)) == "ozip")
 	{
 		if ((ozip_decrypt(zip_path)) != 0)
@@ -1456,7 +1456,6 @@ int GUIAction::flash(std::string arg)
 			break;
 		}
 	}
-      #endif
 
       DataManager::SetValue("tw_filename", zip_path);
       DataManager::SetValue("tw_file", zip_filename);
@@ -1480,21 +1479,7 @@ int GUIAction::flash(std::string arg)
       // success - but what have we just installed?
       if (Fox_Zip_Installer_Code != 0) // we have just installed a ROM - ideally, the user should reboot the recovery
        {
-          has_installed_rom++;
-          usleep(32768);
-	  TWFunc::Deactivation_Process();
-	  DataManager::SetValue(FOX_CALL_DEACTIVATION, 0);
-          usleep(32768);
-          TWFunc::Patch_AVB20(false);
-          usleep(32768);
-
-    	  // Run any custom script after ROM flashing
-    	  TWFunc::MIUI_ROM_SetProperty(Fox_Zip_Installer_Code);
-    	  TWFunc::RunFoxScript("/sbin/afterromflash.sh");
-          usleep(4096);
-
-    	  //
-	  PartitionManager.Update_System_Details();
+          Fox_Post_Zip_Install(INSTALL_SUCCESS);
        }
 
        usleep(250000);
@@ -2710,6 +2695,8 @@ int GUIAction::adb(std::string arg)
 int GUIAction::repackimage(std::string arg __unused)
 {
 	int op_status = 1;
+	twrpRepacker repacker;
+
 	operation_start("Repack Image");
 	if (!simulate)
 	{
@@ -2722,7 +2709,7 @@ int GUIAction::repackimage(std::string arg __unused)
 			Repack_Options.Type = REPLACE_KERNEL;
 		else
 			Repack_Options.Type = REPLACE_RAMDISK;
-		if (!PartitionManager.Repack_Images(path, Repack_Options))
+		if (!repacker.Repack_Image_And_Flash(path, Repack_Options))
 			goto exit;
 	} else
 		simulate_progress_bar();
@@ -2735,6 +2722,7 @@ exit:
 int GUIAction::fixabrecoverybootloop(std::string arg __unused)
 {
 	int op_status = 1;
+	twrpRepacker repacker;
 	std::string magiskboot = TWFunc::Get_MagiskBoot();
 	operation_start("Repack Image");
 	if (!simulate)
@@ -2751,7 +2739,7 @@ int GUIAction::fixabrecoverybootloop(std::string arg __unused)
 			gui_msg(Msg(msg::kError, "unable_to_locate=Unable to locate {1}.")("/boot"));
 			goto exit;
 		}
-		if (!PartitionManager.Prepare_Repack(part, REPACK_ORIG_DIR, DataManager::GetIntValue("tw_repack_backup_first") != 0, gui_lookup("repack", "Repack")))
+		if (!repacker.Backup_Image_For_Repack(part, REPACK_ORIG_DIR, DataManager::GetIntValue("tw_repack_backup_first") != 0, gui_lookup("repack", "Repack")))
 			goto exit;
 		DataManager::SetProgress(.25);
 		gui_msg("fixing_recovery_loop_patch=Patching kernel...");

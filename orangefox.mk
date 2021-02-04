@@ -1,6 +1,6 @@
 #
 #	This file is part of the OrangeFox Recovery Project
-# 	Copyright (C) 2018-2020 The OrangeFox Recovery Project
+# 	Copyright (C) 2018-2021 The OrangeFox Recovery Project
 #	
 #	OrangeFox is free software: you can redistribute it and/or modify
 #	it under the terms of the GNU General Public License as published by
@@ -97,6 +97,11 @@ ifeq ($(OF_AB_DEVICE),1)
     LOCAL_CFLAGS += -DOF_AB_DEVICE='"1"'
     LOCAL_CFLAGS += -DOF_USE_MAGISKBOOT_FOR_ALL_PATCHES='"1"'
     LOCAL_CFLAGS += -DOF_USE_MAGISKBOOT='"1"'
+    ifneq ($(AB_OTA_UPDATER),true)
+    	LOCAL_CFLAGS += -DAB_OTA_UPDATER=1
+    	LOCAL_SHARED_LIBRARIES += libhardware android.hardware.boot@1.0
+    	TWRP_REQUIRED_MODULES += libhardware android.hardware.boot@1.0-service android.hardware.boot@1.0-service.rc
+    endif
 endif
 
 ifeq ($(OF_DONT_PATCH_ENCRYPTED_DEVICE),1)
@@ -199,8 +204,13 @@ ifeq ($(OF_SUPPORT_PRE_FLASH_SCRIPT),1)
     LOCAL_CFLAGS += -DOF_SUPPORT_PRE_FLASH_SCRIPT='"1"'
 endif
 
+ifneq ($(TW_OZIP_DECRYPT_KEY),)
+    OF_SUPPORT_OZIP_DECRYPTION := 1
+endif
+
 ifeq ($(OF_SUPPORT_OZIP_DECRYPTION),1)
     LOCAL_CFLAGS += -DOF_SUPPORT_OZIP_DECRYPTION='"1"'
+    RECOVERY_BINARY_SOURCE_FILES += $(TARGET_RECOVERY_ROOT_OUT)/system/bin/ozip_decrypt
 endif
 
 ifeq ($(OF_KEEP_DM_VERITY_FORCED_ENCRYPTION),1)
@@ -311,13 +321,6 @@ ifeq ($(FOX_USE_LZMA_COMPRESSION),1)
     endif
 endif
 
-ifeq ($(OF_SUPPORT_OZIP_DECRYPTION),1)
-ifneq ($(TW_OZIP_DECRYPT_KEY),)
-    TWRP_REQUIRED_MODULES += ozip_decrypt
-    include $(commands_TWRP_local_path)/ozip_decrypt/Android.mk
-endif
-endif
-
 ifeq ($(OF_NO_TREBLE_COMPATIBILITY_CHECK),1)
     LOCAL_CFLAGS += -DOF_NO_TREBLE_COMPATIBILITY_CHECK='"1"'
 endif
@@ -334,19 +337,8 @@ ifeq ($(OF_OTA_RES_CHECK_MICROSD),1)
     LOCAL_CFLAGS += -DOF_OTA_RES_CHECK_MICROSD='"1"'
 endif
 
-################################
 # from gui/Android.mk
-ifeq ($(OF_SUPPORT_OZIP_DECRYPTION),1)
-LOCAL_CFLAGS += -DOF_SUPPORT_OZIP_DECRYPTION='"1"'
-ifneq ($(TW_OZIP_DECRYPT_KEY),)
-    LOCAL_CFLAGS += -DTW_OZIP_DECRYPT_KEY=\"$(TW_OZIP_DECRYPT_KEY)\"
-else
-    LOCAL_CFLAGS += -DTW_OZIP_DECRYPT_KEY=0
-endif
-endif
-
 ifeq ($(FOX_ENABLE_LAB),1)
     LOCAL_CFLAGS += -DFOX_ENABLE_LAB='"1"'
 endif
-#############################
-
+#

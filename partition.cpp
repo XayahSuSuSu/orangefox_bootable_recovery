@@ -2,7 +2,7 @@
 	Copyright 2013 to 2020 TeamWin
 	This file is part of TWRP/TeamWin Recovery Project.
 
-	Copyright (C) 2018-2020 OrangeFox Recovery Project
+	Copyright (C) 2018-2021 OrangeFox Recovery Project
 	This file is part of the OrangeFox Recovery Project.
 	
 	TWRP is free software: you can redistribute it and/or modify
@@ -707,7 +707,9 @@ void TWPartition::Setup_Data_Partition(bool Display_Error) {
 		}
 	} else {
 		Set_FBE_Status();
-		if (!Decrypt_FBE_DE()) {
+		int is_device_fbe;
+		DataManager::GetValue(TW_IS_FBE, is_device_fbe);
+		if (!Decrypt_FBE_DE() && is_device_fbe == 1) {
 			char wrappedvalue[PROPERTY_VALUE_MAX];
 			property_get("fbe.data.wrappedkey", wrappedvalue, "");
 			std::string wrappedkeyvalue(wrappedvalue);
@@ -745,11 +747,11 @@ void TWPartition::Set_FBE_Status() {
 	DataManager::SetValue(TW_IS_DECRYPTED, 1);
 	Is_Encrypted = true;
 	Is_Decrypted = true;
-	LOGINFO("Setup_Data_Partition::Key_Directory::%s\n", Key_Directory.c_str());
 	if (Key_Directory.empty()) {
 		Is_FBE = false;
 		DataManager::SetValue(TW_IS_FBE, 0);
 	} else {
+		LOGINFO("Setup_Data_Partition::Key_Directory::%s\n", Key_Directory.c_str());
 		Is_FBE = true;
 		DataManager::SetValue(TW_IS_FBE, 1);
 	}
@@ -949,12 +951,16 @@ void TWPartition::Apply_TW_Flag(const unsigned flag, const char* str, const bool
 			}
 			break;
 		case TWFLAG_WRAPPEDKEY:
-			// Set fbe.data.wrappedkey to true
+			// Set wrappedkey props to true for data and/or metadata
 			{
-				property_set("fbe.data.wrappedkey", "true");
-				LOGINFO("FBE wrapped key enabled\n");
+				size_t slash_loc = Mount_Point.find('/');
+				std::string partition = Mount_Point.substr(slash_loc + 1);
+				if (Mount_Point == "/data" || Mount_Point == "/metadata") {
+					std::string wrapped_prop = "fbe." + partition + ".wrappedkey";
+					property_set(wrapped_prop.c_str(), "true");
+					LOGINFO("FBE wrapped key enabled for %s\n", Mount_Point.c_str());
+				}
 			}
-			break;
 		case TWFLAG_FLASHIMG:
 			Can_Flash_Img = val;
 			break;
@@ -2448,7 +2454,7 @@ bool TWPartition::Wipe_F2FS() {
 			Crypto_Key_Location != "footer") {
 		NeedPreserveFooter = false;
 	}
-	LOGINFO("mkfs.f2fs command: %s\n", f2fs_bin.c_str());
+	LOGINFO("mkfs.f2fs command: %s [full command=%s]\n", f2fs_bin.c_str(), command.c_str());
 	if (TWFunc::Exec_Cmd(command) == 0) {
 		if (NeedPreserveFooter)
 			Wipe_Crypto_Key();
