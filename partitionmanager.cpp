@@ -1883,9 +1883,11 @@ int TWPartitionManager::Decrypt_Device(string Password)
       while (!TWFunc::Path_Exists("/data/system/users/gatekeeper.password.key") && --retry_count)
 		usleep(2000);	// A small sleep is needed after mounting /data to ensure reliable decrypt... maybe because of DE?
       int user_id = DataManager::GetIntValue("tw_decrypt_user_id");
-      LOGINFO("Decrypting FBE for user %i\n", user_id);
+      gui_print("Attempting to decrypt FBE for user %i\n", user_id);
       if (Decrypt_User(user_id, Password))
 	{
+	  gui_print("User %i Decrypted Successfully\n", user_id);
+	  property_set("twrp.all.users.decrypted", "true");
 	  Post_Decrypt("");
 	  return 0;
 	}
