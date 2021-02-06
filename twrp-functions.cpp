@@ -2788,14 +2788,14 @@ bool TWFunc::PackRepackImage_MagiskBoot(bool do_unpack, bool is_boot)
      	LOGERR("TWFunc::PackRepackImage_MagiskBoot: Cannot find magiskboot!");
   	TWFunc::tw_reboot(rb_recovery);
      }
- 
+ /*
   if ( (!PartitionManager.Is_Mounted_By_Path(PartitionManager.Get_Android_Root_Path())) 
     && (!PartitionManager.Mount_By_Path(PartitionManager.Get_Android_Root_Path(), false)))
      {
      	LOGERR("TWFunc::PackRepackImage_MagiskBoot: Failed to mount system!");
         return false;
      }
- 
+ */
   TWPartition *Boot = PartitionManager.Find_Partition_By_Path("/boot");
   TWPartition *Recovery = PartitionManager.Find_Partition_By_Path("/recovery");
 
@@ -2924,6 +2924,12 @@ bool TWFunc::PackRepackImage_MagiskBoot(bool do_unpack, bool is_boot)
 	        AppendLineToFile (cmd_script2, "LOGINFO \"- Repacking boot/recovery image ...\"");
 	        AppendLineToFile (cmd_script2, magiskboot_sbin + " repack \"" + tmpstr + "\" > /dev/null 2>&1");
 	        AppendLineToFile (cmd_script2, "[ $? == 0 ] && LOGINFO \"- Succeeded.\" || abort \"- Repacking of image failed.\"");
+		/*
+		AppendLineToFile (cmd_script2, "LOGINFO \"- Verifying the partition and repacked image sizes...\"");
+		AppendLineToFile (cmd_script2, "partsize=$(blockdev --getsize64 " + tmpstr + ")");
+		AppendLineToFile (cmd_script2, "filesize=$(stat -c %s new-boot.img)");
+		AppendLineToFile (cmd_script2, "[ $filesize -gt $partsize ] && abort \"- The repacked image is bigger than the target partition!\"");
+		*/
 	        AppendLineToFile (cmd_script2, "LOGINFO \"- Flashing repacked image ...\"");
 	        #if defined(AB_OTA_UPDATER) || defined(OF_AB_DEVICE)
 	        AppendLineToFile (cmd_script2, "dd if=new-boot.img of=" + tmpstr + " > /dev/null 2>&1");
