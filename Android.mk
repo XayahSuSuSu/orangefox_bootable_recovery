@@ -138,6 +138,7 @@ ifeq ($(TW_OEM_BUILD),true)
     BOARD_HAS_NO_REAL_SDCARD := true
     TW_USE_TOOLBOX := true
     TW_EXCLUDE_MTP := true
+    TW_EXCLUDE_TZDATA := true
 endif
 
 ifeq ($(AB_OTA_UPDATER),true)
@@ -404,6 +405,11 @@ TWRP_REQUIRED_MODULES += \
     vendor_hwservice_contexts \
     minadbd \
     twrpbu
+
+ifneq ($(TW_EXCLUDE_TZDATA), true)
+TWRP_REQUIRED_MODULES += \
+    tzdata_twrp
+endif
 
 ifneq ($(TW_INCLUDE_CRYPTO),)
 TWRP_REQUIRED_MODULES += \
