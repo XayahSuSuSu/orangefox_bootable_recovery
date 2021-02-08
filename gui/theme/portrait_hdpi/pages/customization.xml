@@ -2066,6 +2066,9 @@
 									else bg_on=!--;
 										cp "/twres/images/Splash/empty.png" "/tmp/orangefox/ramdisk/twres/images/Splash/user.png";
 										cp "/twres/images/Splash/empty.png" "/twres/images/Splash/user.png";
+										if [[ "$(du -s "%tw_splash_png_path%/%tw_splash_png_name%" | cut -f1)" -gt "%of_splash_max_size%" ]];
+										   then echo "I:The splash image must not be bigger than %of_splash_max_size% Kb. The splash image will not be changed." >> /tmp/recovery.log;
+										fi;
 							fi;
 							cat "/twres/themes/sed/splash.xml" | sed -e "
 							s/#SHOWOFR#/${logo_ofr}/g;
