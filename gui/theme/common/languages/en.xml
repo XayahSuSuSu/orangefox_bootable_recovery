@@ -1161,11 +1161,5 @@
 		<string name="rescue_party2"> 2. Format data, and/or</string>
 		<string name="rescue_party3"> 3. Clean-flash your ROM.</string>
 		<string name="rescue_party4">The reported problem is:</string>
-
-		<string name="spl_big">Image is too big</string>
-		<string name="spl_big1">You selected image that's</string>
-		<string name="spl_big2">too big.</string>
-		<string name="spl_big3">Maximum size is: %of_splash_max_size%KB</string>
-
 	</resources>
 </language>

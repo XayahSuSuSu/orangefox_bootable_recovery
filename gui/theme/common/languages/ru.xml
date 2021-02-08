@@ -1258,10 +1258,5 @@
 		<string name="enable_adb">Включить ADB</string>
 		<string name="enable_fastboot">Включить Fastboot</string>
 		<string name="fastboot_console_msg">Вход в режим Fastboot...</string>
-
-		<string name="spl_big">Ошибка</string>
-		<string name="spl_big1">Вы выбрали картинку слишком</string>
-		<string name="spl_big2">большого размера.</string>
-		<string name="spl_big3">Макс. размер: %of_splash_max_size%КБ</string>
 	</resources>
 </language>

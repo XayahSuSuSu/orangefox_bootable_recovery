@@ -1722,7 +1722,7 @@
 
 			<button style="floating_btn">
 				<placement x="%btn_float_x%" y="%btn_float_y%" placement="4"/>
-				<action function="overlay">apply_splash_check</action>
+				<action function="overlay">apply_splash</action>
 			</button>
 			
 			<image>
@@ -2027,29 +2027,6 @@
 			</text>
 		</page>
 
-		<page name="apply_splash_check">
-			<action>
-				<action function="ftls">
-						s_size=$(du -s "%tw_splash_png_path%/%tw_splash_png_name%" | cut -f1);
-
-						if [ $(s_size) -gt %of_splash_max_size% ]
-							then twrp xset of_splash_big_size=1
-							else twrp xset of_splash_big_size=0
-						fi;
-				</action>
-			</action>
-			<action>
-				<condition var1="of_splash_big_size" var2="1"/>
-				<action function="overlay"/>
-				<action function="overlay">dialog_splash_big</action>
-			</action>
-			<action>
-				<condition var1="of_splash_big_size" var2="0"/>
-				<action function="overlay"/>
-				<action function="overlay">apply_splash</action>
-			</action>
-		</page>
-
 		<page name="apply_splash">
 			<template name="dialog_body"/>
 
@@ -2082,7 +2059,7 @@
 
 							[[ '%spl_logo_type%' = '0' ]] && logo_ofr=!--;
 
-							if [[ '%spl_bg_on%' = '1' ]];
+							if [[ '%spl_bg_on%' = '1' ]] && [ "$(du -s "%tw_splash_png_path%/%tw_splash_png_name%" | cut -f1)" -lt "%of_splash_max_size%" ];
 									then bg_on=;
 										 cp "%tw_splash_png_path%/%tw_splash_png_name%" "/tmp/orangefox/ramdisk/twres/images/Splash/user.png";
 										 cp "%tw_splash_png_path%/%tw_splash_png_name%" "/twres/images/Splash/user.png";
