@@ -2924,12 +2924,6 @@ bool TWFunc::PackRepackImage_MagiskBoot(bool do_unpack, bool is_boot)
 	        AppendLineToFile (cmd_script2, "LOGINFO \"- Repacking boot/recovery image ...\"");
 	        AppendLineToFile (cmd_script2, magiskboot_sbin + " repack \"" + tmpstr + "\" > /dev/null 2>&1");
 	        AppendLineToFile (cmd_script2, "[ $? == 0 ] && LOGINFO \"- Succeeded.\" || abort \"- Repacking of image failed.\"");
-		/*
-		AppendLineToFile (cmd_script2, "LOGINFO \"- Verifying the partition and repacked image sizes...\"");
-		AppendLineToFile (cmd_script2, "partsize=$(blockdev --getsize64 " + tmpstr + ")");
-		AppendLineToFile (cmd_script2, "filesize=$(stat -c %s new-boot.img)");
-		AppendLineToFile (cmd_script2, "[ $filesize -gt $partsize ] && abort \"- The repacked image is bigger than the target partition!\"");
-		*/
 	        AppendLineToFile (cmd_script2, "LOGINFO \"- Flashing repacked image ...\"");
 	        #if defined(AB_OTA_UPDATER) || defined(OF_AB_DEVICE)
 	        AppendLineToFile (cmd_script2, "dd if=new-boot.img of=" + tmpstr + " > /dev/null 2>&1");
@@ -3241,10 +3235,7 @@ bool TWFunc::Repack_Image(string mount_point)
     return false;
   }
   
-  string repack =
-    "cd " + ramdisk + "; find | cpio -o -H newc | " + local + " > " + tmp +
-    "/ramdisk-new";
-
+  string repack = "cd " + ramdisk + "; find | cpio -o -H newc | " + local + " > " + tmp + "/ramdisk-new";
   //LOGINFO("TWFunc::Repack_Image: Running Command: '%s'\n", repack.c_str());  // !!
   TWFunc::Exec_Cmd(repack, null);
   if (null == exec_error_str)
@@ -3277,20 +3268,19 @@ bool TWFunc::Repack_Image(string mount_point)
 	  Command += " --ramdisk " + tmp + "/ramdisk-new";
 	  continue;
 	}
-      if (local.find("-dtb") != string::npos
-	  || local.find("-dt") != string::npos)
+      if (local.find("-dtboff") != string::npos)
 	{
-	  Command += " --dt " + split_img + "/" + local;
+	  Command += " --dtb_offset 0x" + TWFunc::Load_File(local);
+	  continue;
+	}
+      if (local.find("-dtb") != string::npos)
+	{
+	  Command += " --dtb " + split_img + "/" + local;
 	  continue;
 	}
       if (local == "boot.img-second")
 	{
 	  Command += " --second " + split_img + "/" + local;
-	  continue;
-	}
-      if (local.find("-secondoff") != string::npos)
-	{
-	  Command += " --second_offset " + TWFunc::Load_File(local);
 	  continue;
 	}
       if (local.find("-cmdline") != string::npos)
@@ -3303,29 +3293,39 @@ bool TWFunc::Repack_Image(string mount_point)
 	  Command += " --board \"" + TWFunc::Load_File(local) + "\"";
 	  continue;
 	}
-      if (local.find("-base") != string::npos)
-	{
-	  Command += " --base " + TWFunc::Load_File(local);
-	  continue;
-	}
       if (local.find("-pagesize") != string::npos)
 	{
 	  Command += " --pagesize " + TWFunc::Load_File(local);
 	  continue;
 	}
+      if (local.find("-headerversion") != string::npos)
+	{
+	  Command += " --header_version " + TWFunc::Load_File(local);
+	  continue;
+	}
+      if (local.find("-base") != string::npos)
+	{
+	  Command += " --base 0x" + TWFunc::Load_File(local);
+	  continue;
+	}
+      if (local.find("-secondoff") != string::npos)
+	{
+	  Command += " --second_offset 0x" + TWFunc::Load_File(local);
+	  continue;
+	}
       if (local.find("-kerneloff") != string::npos)
 	{
-	  Command += " --kernel_offset " + TWFunc::Load_File(local);
+	  Command += " --kernel_offset 0x" + TWFunc::Load_File(local);
 	  continue;
 	}
       if (local.find("-ramdiskoff") != string::npos)
 	{
-	  Command += " --ramdisk_offset " + TWFunc::Load_File(local);
+	  Command += " --ramdisk_offset 0x" + TWFunc::Load_File(local);
 	  continue;
 	}
       if (local.find("-tagsoff") != string::npos)
 	{
-	  Command += " --tags_offset \"" + TWFunc::Load_File(local) + "\"";
+	  Command += " --tags_offset 0x" + TWFunc::Load_File(local);
 	  continue;
 	}
       if (local.find("-hash") != string::npos)
@@ -3336,6 +3336,18 @@ bool TWFunc::Repack_Image(string mount_point)
 	    Command += " --hash " + Load_File(local);
 	  continue;
 	}
+      if (local.find("-recoverydtbo") != string::npos)
+	{
+	  Command += " --recovery_dtbo " + split_img + "/" + local;
+	  continue;
+	}
+
+      if (local.find("-recoveryacpio") != string::npos)
+	{
+	  Command += " --recovery_acpio " + split_img + "/" + local;
+	  continue;
+	}
+
       if (local.find("-osversion") != string::npos)
 	{
 	  Command += " --os_version \"" + Load_File(local) + "\"";
