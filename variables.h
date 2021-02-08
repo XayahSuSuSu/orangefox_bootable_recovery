@@ -48,6 +48,8 @@
 
 #define OF_ALLOW_DISABLE_NAVBAR_S  "allow_disable_nav"
 
+#define OF_SPLASH_MAX_SIZE_STR "of_splash_max_size"
+
 // *** OrangeFox - Variables ** //
 #include <stdio.h>
 #include <stdlib.h>
