@@ -4432,12 +4432,20 @@ std::string magiskboot = TWFunc::Get_MagiskBoot();
    setenv("KEEP_FORCEENCRYPT", keepforcedencryption.c_str(), 1);
    DataManager::SetValue(FOX_INSTALL_PREBUILT_ZIP, "1");
 
+   // see whether we have just installed a MIUI ROM or a custom ROM
+   if (TWFunc::JustInstalledMiui())
+      TWFunc::Fox_Property_Set("orangefox.miui.rom", "1");
+    else
+      TWFunc::Fox_Property_Set("orangefox.miui.rom", "0"); // if we have just installed a custom ROM, don't abandon the DFE process
+
+   usleep(4096);
+
    res = TWinstall_zip(zipname.c_str(), &wipe_cache);
 
    setenv ("KEEP_VERITY", "", 1);
    setenv ("KEEP_FORCEENCRYPT", "", 1);
    DataManager::SetValue(FOX_INSTALL_PREBUILT_ZIP, "0");
- 
+
    return res;
 }
 
