@@ -383,7 +383,10 @@ int main(int argc, char **argv) {
   	property_set("ro.orangefox.build", "orangefox");
   	property_set("ro.orangefox.version", FOX_VERSION);
   
-  	string fox_build_date = TWFunc::File_Property_Get ("/etc/fox.cfg", "FOX_BUILD_DATE");
+    	string fox_cfg = "/etc/fox.cfg";
+    	if (!TWFunc::Path_Exists(fox_cfg))
+    	    fox_cfg = "/system/etc/fox.cfg";
+  	string fox_build_date = TWFunc::File_Property_Get (fox_cfg, "FOX_BUILD_DATE");
   	if (fox_build_date == "") {
         	fox_build_date = TWFunc::File_Property_Get ("/default.prop", "ro.bootimage.build.date");
         	if (fox_build_date == "") {
