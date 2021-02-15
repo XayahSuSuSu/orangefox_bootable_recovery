@@ -173,7 +173,7 @@ static void process_recovery_mode(twrpAdbBuFifo* adb_bu_fifo, bool skip_decrypti
         // use the ROM's fingerprint?
         TWFunc::RunStartupScript();
         TWFunc::UseSystemFingerprint();
-	TWFunc::RunFoxScript("/sbin/runatboot.sh");
+	TWFunc::RunFoxScript("/system/bin/runatboot.sh");
 
 #ifdef TW_INCLUDE_INJECTTWRP
 	// Back up TWRP Ramdisk if needed:
@@ -287,7 +287,7 @@ static void process_recovery_mode(twrpAdbBuFifo* adb_bu_fifo, bool skip_decrypti
 	adb_bu_fifo->threadAdbBuFifo();
 
 	// run the postrecoveryboot script here
-	TWFunc::RunFoxScript("/sbin/postrecoveryboot.sh");
+	TWFunc::RunFoxScript("/system/bin/postrecoveryboot.sh");
 #ifndef OF_DEVICE_WITHOUT_PERSIST
 	DataManager::RestorePasswordBackup();
 #endif
