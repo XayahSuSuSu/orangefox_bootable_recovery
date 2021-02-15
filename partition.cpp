@@ -1718,6 +1718,12 @@ bool TWPartition::Wipe(string New_File_System) {
 	else
 		unlink("/.layout_version");
 
+	if (Mount_Point == PartitionManager.Get_Android_Root_Path()) {
+		if (tw_get_default_metadata(PartitionManager.Get_Android_Root_Path().c_str()) != 0) {
+			gui_msg(Msg(msg::kWarning, "restore_system_context=Unable to get default context for {1} -- Android may not boot.")(PartitionManager.Get_Android_Root_Path()));
+		}
+	}
+
 	if (Has_Data_Media && Current_File_System == New_File_System) {
 		wiped = Wipe_Data_Without_Wiping_Media();
 
@@ -1766,6 +1772,9 @@ bool TWPartition::Wipe(string New_File_System) {
 		if (TWFunc::Path_Exists("/.layout_version") && Mount(false))
 			TWFunc::copy_file("/.layout_version", Layout_Filename, 0600);
 
+		if (Mount_Point == PartitionManager.Get_Android_Root_Path()) {
+			tw_set_default_metadata(PartitionManager.Get_Android_Root_Path().c_str());
+		}
 		if (update_crypt) {
 			Setup_File_System(false);
 			if (Is_Encrypted && !Is_Decrypted) {
