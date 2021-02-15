@@ -2,7 +2,7 @@
 	Copyright 2014 to 2020 TeamWin
 	This file is part of TWRP/TeamWin Recovery Project.
 
-	Copyright (C) 2018-2020 OrangeFox Recovery Project
+	Copyright (C) 2018-2021 OrangeFox Recovery Project
 	This file is part of the OrangeFox Recovery Project.
 
 	TWRP is free software: you can redistribute it and/or modify
@@ -3091,6 +3091,17 @@ bool TWPartitionManager::Decrypt_Adopted()
   std::vector < TWPartition * >::iterator adopt;
   for (adopt = Partitions.begin(); adopt != Partitions.end(); adopt++)
     {
+
+	if ((*adopt)->Removable && !(*adopt)->Is_Present && (*adopt)->Adopted_Mount_Delay > 0) {
+			// On some devices, the external mmc driver takes some time
+			// to recognize the card, in which case the "actual block device"
+			// would not have been found yet. We wait the specified delay
+			// and then try again.
+			LOGINFO("Sleeping %d seconds for adopted storage.\n", (*adopt)->Adopted_Mount_Delay);
+			sleep((*adopt)->Adopted_Mount_Delay);
+			(*adopt)->Find_Actual_Block_Device();
+	}
+
       if ((*adopt)->Removable && (*adopt)->Is_Present)
 	{
 	  if ((*adopt)->Decrypt_Adopted() == 0)
