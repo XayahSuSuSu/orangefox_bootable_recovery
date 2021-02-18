@@ -348,3 +348,13 @@ ifeq ($(FOX_ENABLE_LAB),1)
     LOCAL_CFLAGS += -DFOX_ENABLE_LAB='"1"'
 endif
 #
+
+# nano
+ifeq ($(FOX_EXCLUDE_NANO_EDITOR),1)
+    TW_EXCLUDE_NANO := true
+endif
+
+ifeq ($(FOX_USE_NANO_EDITOR),1)
+    TW_EXCLUDE_NANO := true
+endif
+#
