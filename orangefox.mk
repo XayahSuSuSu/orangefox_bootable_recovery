@@ -358,6 +358,14 @@ ifeq ($(FOX_USE_NANO_EDITOR),1)
     TW_EXCLUDE_NANO := true
 endif
 
+ifneq ($(TW_EXCLUDE_NANO), true)
+    ifeq ($(wildcard external/nano/Android.mk),)
+        $(warning Nano sources not found! You need to clone the sources.)
+        $(warning Please run: "git clone --depth=1 https://github.com/LineageOS/android_external_nano -b lineage-17.1 external/nano")
+        $(error Nano sources not present; exiting)
+    endif
+endif
+
 # bash
 ifeq ($(FOX_BUILD_BASH),1)
   ifeq ($(wildcard external/bash/Android.mk),)
