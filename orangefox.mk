@@ -120,6 +120,12 @@ else
     LOCAL_CFLAGS += -DOF_FLASHLIGHT_ENABLE='"1"'
 endif
 
+ifneq ($(OF_SPLASH_MAX_SIZE),)
+    LOCAL_CFLAGS += -DOF_SPLASH_MAX_SIZE='"$(OF_SPLASH_MAX_SIZE)"'
+else
+    LOCAL_CFLAGS += -DOF_SPLASH_MAX_SIZE='"4096"'
+endif
+
 ifneq ($(FOX_ADVANCED_SECURITY),)
     LOCAL_CFLAGS += -DFOX_ADVANCED_SECURITY='"$(FOX_ADVANCED_SECURITY)"'
 endif
@@ -303,10 +309,6 @@ ifeq ($(OF_SKIP_MULTIUSER_FOLDERS_BACKUP),1)
     LOCAL_CFLAGS += -DOF_SKIP_MULTIUSER_FOLDERS_BACKUP='"1"'
 endif
 
-ifeq ($(OF_USE_TWRP_SAR_DETECT),1)
-    LOCAL_CFLAGS += -DOF_USE_TWRP_SAR_DETECT='"1"'
-endif
-
 ifneq ($(OF_QUICK_BACKUP_LIST),)
     LOCAL_CFLAGS += -DOF_QUICK_BACKUP_LIST='"$(OF_QUICK_BACKUP_LIST)"'
 endif
@@ -340,5 +342,37 @@ endif
 # from gui/Android.mk
 ifeq ($(FOX_ENABLE_LAB),1)
     LOCAL_CFLAGS += -DFOX_ENABLE_LAB='"1"'
+endif
+#
+
+# nano
+ifeq ($(FOX_EXCLUDE_NANO_EDITOR),1)
+    TW_EXCLUDE_NANO := true
+endif
+
+ifeq ($(FOX_USE_NANO_EDITOR),1)
+    TW_EXCLUDE_NANO := true
+endif
+
+ifneq ($(TW_EXCLUDE_NANO), true)
+    ifeq ($(wildcard external/nano/Android.mk),)
+        $(warning Nano sources not found! You need to clone the sources.)
+        $(warning Please run: "git clone --depth=1 https://github.com/LineageOS/android_external_nano -b lineage-17.1 external/nano")
+        $(error Nano sources not present; exiting)
+    endif
+endif
+
+# bash
+ifeq ($(FOX_BUILD_BASH),1)
+  ifeq ($(wildcard external/bash/Android.mk),)
+        $(warning Bash sources not found! You need to clone the sources.)
+        $(warning Please run: "git clone --depth=1 https://github.com/LineageOS/android_external_bash -b lineage-17.1 external/bash")
+        $(error Bash sources not present; exiting)
+  endif
+  RECOVERY_BINARY_SOURCE_FILES += $(TARGET_OUT_OPTIONAL_EXECUTABLES)/bash
+  TWRP_REQUIRED_MODULES += bash
+
+  TWRP_REQUIRED_MODULES += \
+    bash_fox
 endif
 #

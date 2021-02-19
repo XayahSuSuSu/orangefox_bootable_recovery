@@ -842,6 +842,7 @@
 		<string name="module_initd">Enable init.d support</string>
 		<string name="module_cam">Enable Camera2API</string>
 		<string name="module_pass">Remove password</string>
+		<string name="module_remove_survival">Remove all survival scripts</string>
 		<string name="fox_files_not_exist_1">File doesn't exist!</string>
 		<string name="fox_files_not_exist_2">Please reflash recovery</string>
 		<string name="fox_files_not_exist_3">using the installation zip.</string>
@@ -1162,5 +1163,6 @@
 		<string name="rescue_party3"> 3. Clean-flash your ROM.</string>
 		<string name="rescue_party4">The reported problem is:</string>
 
+		<string name="restore_system_context">Unable to get default context for {1} -- Android may not boot.</string>
 	</resources>
 </language>

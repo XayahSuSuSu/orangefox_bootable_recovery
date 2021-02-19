@@ -173,7 +173,7 @@ static void process_recovery_mode(twrpAdbBuFifo* adb_bu_fifo, bool skip_decrypti
         // use the ROM's fingerprint?
         TWFunc::RunStartupScript();
         TWFunc::UseSystemFingerprint();
-	TWFunc::RunFoxScript("/sbin/runatboot.sh");
+	TWFunc::RunFoxScript("/system/bin/runatboot.sh");
 
 #ifdef TW_INCLUDE_INJECTTWRP
 	// Back up TWRP Ramdisk if needed:
@@ -287,7 +287,7 @@ static void process_recovery_mode(twrpAdbBuFifo* adb_bu_fifo, bool skip_decrypti
 	adb_bu_fifo->threadAdbBuFifo();
 
 	// run the postrecoveryboot script here
-	TWFunc::RunFoxScript("/sbin/postrecoveryboot.sh");
+	TWFunc::RunFoxScript("/system/bin/postrecoveryboot.sh");
 #ifndef OF_DEVICE_WITHOUT_PERSIST
 	DataManager::RestorePasswordBackup();
 #endif
@@ -383,7 +383,10 @@ int main(int argc, char **argv) {
   	property_set("ro.orangefox.build", "orangefox");
   	property_set("ro.orangefox.version", FOX_VERSION);
   
-  	string fox_build_date = TWFunc::File_Property_Get ("/etc/fox.cfg", "FOX_BUILD_DATE");
+    	string fox_cfg = "/etc/fox.cfg";
+    	if (!TWFunc::Path_Exists(fox_cfg))
+    	    fox_cfg = "/system/etc/fox.cfg";
+  	string fox_build_date = TWFunc::File_Property_Get (fox_cfg, "FOX_BUILD_DATE");
   	if (fox_build_date == "") {
         	fox_build_date = TWFunc::File_Property_Get ("/default.prop", "ro.bootimage.build.date");
         	if (fox_build_date == "") {

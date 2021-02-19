@@ -2788,14 +2788,14 @@ bool TWFunc::PackRepackImage_MagiskBoot(bool do_unpack, bool is_boot)
      	LOGERR("TWFunc::PackRepackImage_MagiskBoot: Cannot find magiskboot!");
   	TWFunc::tw_reboot(rb_recovery);
      }
- 
+ /*
   if ( (!PartitionManager.Is_Mounted_By_Path(PartitionManager.Get_Android_Root_Path())) 
     && (!PartitionManager.Mount_By_Path(PartitionManager.Get_Android_Root_Path(), false)))
      {
      	LOGERR("TWFunc::PackRepackImage_MagiskBoot: Failed to mount system!");
         return false;
      }
- 
+ */
   TWPartition *Boot = PartitionManager.Find_Partition_By_Path("/boot");
   TWPartition *Recovery = PartitionManager.Find_Partition_By_Path("/recovery");
 
@@ -3235,10 +3235,7 @@ bool TWFunc::Repack_Image(string mount_point)
     return false;
   }
   
-  string repack =
-    "cd " + ramdisk + "; find | cpio -o -H newc | " + local + " > " + tmp +
-    "/ramdisk-new";
-
+  string repack = "cd " + ramdisk + "; find | cpio -o -H newc | " + local + " > " + tmp + "/ramdisk-new";
   //LOGINFO("TWFunc::Repack_Image: Running Command: '%s'\n", repack.c_str());  // !!
   TWFunc::Exec_Cmd(repack, null);
   if (null == exec_error_str)
@@ -3271,20 +3268,19 @@ bool TWFunc::Repack_Image(string mount_point)
 	  Command += " --ramdisk " + tmp + "/ramdisk-new";
 	  continue;
 	}
-      if (local.find("-dtb") != string::npos
-	  || local.find("-dt") != string::npos)
+      if (local.find("-dtboff") != string::npos)
 	{
-	  Command += " --dt " + split_img + "/" + local;
+	  Command += " --dtb_offset 0x" + TWFunc::Load_File(local);
+	  continue;
+	}
+      if (local.find("-dtb") != string::npos)
+	{
+	  Command += " --dtb " + split_img + "/" + local;
 	  continue;
 	}
       if (local == "boot.img-second")
 	{
 	  Command += " --second " + split_img + "/" + local;
-	  continue;
-	}
-      if (local.find("-secondoff") != string::npos)
-	{
-	  Command += " --second_offset " + TWFunc::Load_File(local);
 	  continue;
 	}
       if (local.find("-cmdline") != string::npos)
@@ -3297,29 +3293,39 @@ bool TWFunc::Repack_Image(string mount_point)
 	  Command += " --board \"" + TWFunc::Load_File(local) + "\"";
 	  continue;
 	}
-      if (local.find("-base") != string::npos)
-	{
-	  Command += " --base " + TWFunc::Load_File(local);
-	  continue;
-	}
       if (local.find("-pagesize") != string::npos)
 	{
 	  Command += " --pagesize " + TWFunc::Load_File(local);
 	  continue;
 	}
+      if (local.find("-headerversion") != string::npos)
+	{
+	  Command += " --header_version " + TWFunc::Load_File(local);
+	  continue;
+	}
+      if (local.find("-base") != string::npos)
+	{
+	  Command += " --base 0x" + TWFunc::Load_File(local);
+	  continue;
+	}
+      if (local.find("-secondoff") != string::npos)
+	{
+	  Command += " --second_offset 0x" + TWFunc::Load_File(local);
+	  continue;
+	}
       if (local.find("-kerneloff") != string::npos)
 	{
-	  Command += " --kernel_offset " + TWFunc::Load_File(local);
+	  Command += " --kernel_offset 0x" + TWFunc::Load_File(local);
 	  continue;
 	}
       if (local.find("-ramdiskoff") != string::npos)
 	{
-	  Command += " --ramdisk_offset " + TWFunc::Load_File(local);
+	  Command += " --ramdisk_offset 0x" + TWFunc::Load_File(local);
 	  continue;
 	}
       if (local.find("-tagsoff") != string::npos)
 	{
-	  Command += " --tags_offset \"" + TWFunc::Load_File(local) + "\"";
+	  Command += " --tags_offset 0x" + TWFunc::Load_File(local);
 	  continue;
 	}
       if (local.find("-hash") != string::npos)
@@ -3330,6 +3336,18 @@ bool TWFunc::Repack_Image(string mount_point)
 	    Command += " --hash " + Load_File(local);
 	  continue;
 	}
+      if (local.find("-recoverydtbo") != string::npos)
+	{
+	  Command += " --recovery_dtbo " + split_img + "/" + local;
+	  continue;
+	}
+
+      if (local.find("-recoveryacpio") != string::npos)
+	{
+	  Command += " --recovery_acpio " + split_img + "/" + local;
+	  continue;
+	}
+
       if (local.find("-osversion") != string::npos)
 	{
 	  Command += " --os_version \"" + Load_File(local) + "\"";
@@ -4414,12 +4432,20 @@ std::string magiskboot = TWFunc::Get_MagiskBoot();
    setenv("KEEP_FORCEENCRYPT", keepforcedencryption.c_str(), 1);
    DataManager::SetValue(FOX_INSTALL_PREBUILT_ZIP, "1");
 
+   // see whether we have just installed a MIUI ROM or a custom ROM
+   if (TWFunc::JustInstalledMiui())
+      TWFunc::Fox_Property_Set("orangefox.miui.rom", "1");
+    else
+      TWFunc::Fox_Property_Set("orangefox.miui.rom", "0"); // if we have just installed a custom ROM, don't abandon the DFE process
+
+   usleep(4096);
+
    res = TWinstall_zip(zipname.c_str(), &wipe_cache);
 
    setenv ("KEEP_VERITY", "", 1);
    setenv ("KEEP_FORCEENCRYPT", "", 1);
    DataManager::SetValue(FOX_INSTALL_PREBUILT_ZIP, "0");
- 
+
    return res;
 }
 

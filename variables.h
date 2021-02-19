@@ -1,7 +1,7 @@
 /*
  * Copyright (C) 2007 The Android Open Source Project
  *
- * Copyright (C) 2018-2020 OrangeFox Recovery Project
+ * Copyright (C) 2018-2021 OrangeFox Recovery Project
  * This file is part of the OrangeFox Recovery Project.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -47,6 +47,8 @@
 #define OF_CLOCK_POS_S             "cutout_clock"
 
 #define OF_ALLOW_DISABLE_NAVBAR_S  "allow_disable_nav"
+
+#define OF_SPLASH_MAX_SIZE_STR "of_splash_max_size"
 
 // *** OrangeFox - Variables ** //
 #include <stdio.h>
@@ -289,7 +291,7 @@ static int Fox_Current_ROM_IsMIUI = 0; // is the currently installed ROM a MIUI 
 //#define MAX_ARCHIVE_SIZE 52428800LLU // 50MB split for testing
 
 #ifndef CUSTOM_LUN_FILE
-#define CUSTOM_LUN_FILE "/sys/class/android_usb/android0/f_mass_storage/lun%d/file"
+#define CUSTOM_LUN_FILE "/config/usb_gadget/g1/functions/mass_storage.0/lun.%d/file"
 #endif
 
 #define SCRIPT_FILE_TMP "/tmp/openrecoveryscript"

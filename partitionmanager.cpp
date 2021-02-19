@@ -2,7 +2,7 @@
 	Copyright 2014 to 2020 TeamWin
 	This file is part of TWRP/TeamWin Recovery Project.
 
-	Copyright (C) 2018-2020 OrangeFox Recovery Project
+	Copyright (C) 2018-2021 OrangeFox Recovery Project
 	This file is part of the OrangeFox Recovery Project.
 
 	TWRP is free software: you can redistribute it and/or modify
@@ -1268,6 +1268,10 @@ int TWPartitionManager::Run_Restore(const string& Restore_Name) {
 
 				string Full_Filename = part_settings.Backup_Folder + "/" + part_settings.Part->Backup_FileName;
 
+				if (tw_get_default_metadata(Get_Android_Root_Path().c_str()) != 0) {
+					gui_msg(Msg(msg::kWarning, "restore_system_context=Unable to get default context for {1} -- Android may not boot.")(Get_Android_Root_Path()));
+				}
+
 				if (check_digest > 0 && !twrpDigestDriver::Check_Digest(Full_Filename))
 					return false;
 				part_settings.partition_count++;
@@ -1323,6 +1327,7 @@ int TWPartitionManager::Run_Restore(const string& Restore_Name) {
 		}
 	}
 	TWFunc::GUI_Operation_Text(TW_UPDATE_SYSTEM_DETAILS_TEXT, gui_parse_text("{@updating_system_details}"));
+	tw_set_default_metadata(Get_Android_Root_Path().c_str());
 	UnMount_By_Path(Get_Android_Root_Path(), false);
 	Update_System_Details();
 	UnMount_Main_Partitions();
@@ -1883,9 +1888,11 @@ int TWPartitionManager::Decrypt_Device(string Password)
       while (!TWFunc::Path_Exists("/data/system/users/gatekeeper.password.key") && --retry_count)
 		usleep(2000);	// A small sleep is needed after mounting /data to ensure reliable decrypt... maybe because of DE?
       int user_id = DataManager::GetIntValue("tw_decrypt_user_id");
-      LOGINFO("Decrypting FBE for user %i\n", user_id);
+      gui_print("Attempting to decrypt FBE for user %i\n", user_id);
       if (Decrypt_User(user_id, Password))
 	{
+	  gui_print("User %i Decrypted Successfully\n", user_id);
+	  property_set("twrp.all.users.decrypted", "true");
 	  Post_Decrypt("");
 	  return 0;
 	}
@@ -3084,6 +3091,17 @@ bool TWPartitionManager::Decrypt_Adopted()
   std::vector < TWPartition * >::iterator adopt;
   for (adopt = Partitions.begin(); adopt != Partitions.end(); adopt++)
     {
+
+	if ((*adopt)->Removable && !(*adopt)->Is_Present && (*adopt)->Adopted_Mount_Delay > 0) {
+			// On some devices, the external mmc driver takes some time
+			// to recognize the card, in which case the "actual block device"
+			// would not have been found yet. We wait the specified delay
+			// and then try again.
+			LOGINFO("Sleeping %d seconds for adopted storage.\n", (*adopt)->Adopted_Mount_Delay);
+			sleep((*adopt)->Adopted_Mount_Delay);
+			(*adopt)->Find_Actual_Block_Device();
+	}
+
       if ((*adopt)->Removable && (*adopt)->Is_Present)
 	{
 	  if ((*adopt)->Decrypt_Adopted() == 0)

@@ -184,6 +184,7 @@ public:
 	string Crypto_Key_Location;                                               // Location of the crypto key used for decrypting encrypted data partitions
 	unsigned int MTP_Storage_ID;
 	string Adopted_GUID;
+	unsigned int Adopted_Mount_Delay;
 
 protected:
 	bool Has_Data_Media;                                                      // Indicates presence of /data/media, may affect wiping and backup methods
@@ -299,6 +300,8 @@ private:
 	TWExclude backup_exclusions;                                              // Exclusions for file based backups
 	TWExclude wipe_exclusions;                                                // Exclusions for file based wipes (data/media devices only)
 	string Key_Directory;                                                     // Metadata key directory needed for mounting FBE encrypted data partitions using metadata encryption
+	string Original_Path;
+	bool Use_Original_Path;
 
 	struct partition_fs_flags_struct {                                        // This struct is used to store mount flags and options for different file systems for the same partition
 		string File_System;
