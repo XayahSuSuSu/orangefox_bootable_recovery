@@ -542,4 +542,18 @@ ifneq ($(TW_EXCLUDE_NANO), true)
 
 	include $(BUILD_PHONY_PACKAGE)
 endif
+
+ifeq ($(FOX_BUILD_BASH),1)
+	include $(CLEAR_VARS)
+	LOCAL_MODULE := bash_fox
+	LOCAL_MODULE_TAGS := optional
+	LOCAL_MODULE_CLASS := ETC
+	LOCAL_MODULE_PATH := $(TARGET_ROOT_OUT)/system/bin
+	LOCAL_REQUIRED_MODULES := bash
+
+	LOCAL_POST_INSTALL_CMD += \
+    	 	mkdir -p $(TARGET_RECOVERY_ROOT_OUT)/system/etc/bash/; \
+    	 	cp -rf external/bash/etc/ $(TARGET_RECOVERY_ROOT_OUT)/system/etc/bash;
+	include $(BUILD_PHONY_PACKAGE)
+endif
 #
