@@ -289,7 +289,7 @@ void TWFunc::Run_Before_Reboot(void)
 
     // Run any custom script before rebooting
     TWFunc::MIUI_ROM_SetProperty(0);
-    TWFunc::RunFoxScript("/sbin/beforereboot.sh");
+    TWFunc::RunFoxScript("/system/bin/beforereboot.sh");
 
     // logs & stuff
     if (!Path_Exists(Fox_Logs_Dir))
