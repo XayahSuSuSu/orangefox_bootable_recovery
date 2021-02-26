@@ -18,7 +18,7 @@ export HOSTNAME TMPDIR
 InitFox() {
   alias dir="ls -all";
   [ -z "$HOME" ] && export HOME=/sdcard;
-  [ -z "$HELP" ] && export SHELL=/sbin/sh;
+  [ -z "$SHELL" ] && export SHELL=/sbin/sh;
   [ -z "$LINES" ] && export LINES=21;
   [ -z "$COLUMNS" ] && export COLUMNS=44;
 
