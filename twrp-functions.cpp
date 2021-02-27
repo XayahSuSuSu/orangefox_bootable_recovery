@@ -103,63 +103,6 @@ static bool Is_AB_Device()
   return (!s.empty() && u == "true");
 }
 
-/* Have we just installed OrangeFox on a device with a Treble ROM?
-static bool New_Fox_On_Treble(void)
-{
- return ((Fox_Current_ROM_IsTreble == 1 || ROM_IsRealTreble == 1) && (New_Fox_Installation == 1));
-} */
-
-/*
-static void Reload_Dynamic_Fstab(const std::string fstab) {
-// TODO: this is a kludge - still WiP
-#ifdef OF_RELOAD_FSTAB_DYNAMIC_PARTITIONS
-	if (!TWFunc::Has_Dynamic_Partitions() || !TWFunc::MIUI_Is_Running() || !TWFunc::Path_Exists(fstab)) 
-		return;
-	else {
-		printf("=> Processing fstab again (%s)\n", fstab.c_str());
-		PartitionManager.Remove_Partition_By_Path("/system_root");
-		PartitionManager.Remove_Partition_By_Path("/system");
-		PartitionManager.Remove_Partition_By_Path("/vendor");
-		PartitionManager.Remove_Partition_By_Path("/product");
-		TWFunc::Fox_Property_Set("orangefox.fstab.reload", "true");
-		PartitionManager.Process_Fstab(fstab, 0);
-		TWFunc::Fox_Property_Set("orangefox.fstab.reload", "false");
-	}
-#endif
-}
-*/
-
-/* whether we have a new (20.x) magiskboot binary */
-static int New_Magiskboot_Binary(void)
-{
-   string magiskboot = TWFunc::Get_MagiskBoot();
-   if (!TWFunc::Path_Exists(magiskboot))
-     return -2; // magiskboot can't be found
-
-   string cmd_script = "/tmp/tmp_0tm.sh";
-   TWFunc::CreateNewFile(cmd_script);
-   chmod (cmd_script.c_str(), 0755);
-   TWFunc::AppendLineToFile (cmd_script, "#!/system/bin/sh");
-   TWFunc::AppendLineToFile (cmd_script, "abort() { echo \"$1\"; exit $1; }");
-   TWFunc::AppendLineToFile (cmd_script, "[ -z \"$1\" -o ! -x \"$1\" ] && abort \"2\"");
-   TWFunc::AppendLineToFile (cmd_script, "tmp=/tmp/chk_mgsk_01.txt");
-   TWFunc::AppendLineToFile (cmd_script, "$1 &> $tmp");
-   TWFunc::AppendLineToFile (cmd_script, "F=$(cat $tmp | grep \"dtb-<cmd> <dtb>\")");
-   TWFunc::AppendLineToFile (cmd_script, "rm -f $tmp");
-   TWFunc::AppendLineToFile (cmd_script, "[ -z \"$F\" ] && abort \"0\" || abort \"1\"");
-
-   if (!TWFunc::Path_Exists(cmd_script))
-     return -3; // failure to create the script
-
-   usleep(128);
-   string mCheck = TWFunc::Exec_With_Output(cmd_script + " " + magiskboot);        
-   unlink(cmd_script.c_str());
-   if (mCheck == "0") // this is a new magiskboot binary
-   	return 1;
-   else 
-   	return 0;
-}
-
 /* Get the display ID of the installed ROM */
 static string GetInstalledRom(void)
 {
@@ -346,7 +289,7 @@ void TWFunc::Run_Before_Reboot(void)
 
     // Run any custom script before rebooting
     TWFunc::MIUI_ROM_SetProperty(0);
-    TWFunc::RunFoxScript("/sbin/beforereboot.sh");
+    TWFunc::RunFoxScript("/system/bin/beforereboot.sh");
 
     // logs & stuff
     if (!Path_Exists(Fox_Logs_Dir))

@@ -5,13 +5,36 @@
 # Minimal /system/etc/mkshrc for Android
 #
 # Support: https://launchpad.net/mksh
+#
+# Copyright (c) 2021, The OrangeFox Recovery Project
+#
 
 : ${HOSTNAME:=$(getprop ro.product.device)}
 : ${HOSTNAME:=android}
 : ${TMPDIR:=/tmp}
 export HOSTNAME TMPDIR
 
-alias dir="ls -all"
+# OrangeFox
+InitFox() {
+  alias dir="ls -all";
+  [ -z "$HOME" ] && export HOME=/sdcard;
+  [ -z "$SHELL" ] && export SHELL=/sbin/sh;
+  [ -z "$LINES" ] && export LINES=21;
+  [ -z "$COLUMNS" ] && export COLUMNS=44;
+
+  if [ -f /sdcard/Fox/fox.mkshrc ]; then
+     source /sdcard/Fox/fox.mkshrc;
+  fi
+
+  if [ -f $HOME/.mkshrc ]; then
+     source $HOME/.mkshrc;
+  elif [ -f /sdcard/.mkshrc ]; then
+     source /sdcard/.mkshrc;
+  fi
+}
+
+InitFox;
+# OrangeFox
 
 if (( USER_ID )); then PS1='$'; else PS1='#'; fi
 PS4='[$EPOCHREALTIME] '; PS1='${|
