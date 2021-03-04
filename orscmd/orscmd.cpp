@@ -1,4 +1,5 @@
-/*		Copyright (C) 2018-2020 OrangeFox Recovery Project
+/*
+		Copyright (C) 2018-2021 OrangeFox Recovery Project
 		This file is part of the OrangeFox Recovery Project.
 
 		TWRP is free software: you can redistribute it and/or modify
@@ -56,7 +57,7 @@ void print_usage(void) {
 	printf("  listmounts\n");
 	printf("  print <value>\n");
 	printf("  mkdir <directory>\n");
-	printf("  reboot [recovery|poweroff|bootloader|download|edl]\n");
+	printf("  reboot [recovery|poweroff|bootloader|download|fastboot|edl]\n");
 	printf("\nSee more documentation at https://twrp.me/faq/openrecoveryscript.html\n");
 }
 
