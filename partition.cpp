@@ -52,9 +52,7 @@
 #include "adbbu/libtwadbbu.hpp"
 #ifdef TW_INCLUDE_CRYPTO
 	#include "crypto/fde/cryptfs.h"
-	#ifdef TW_INCLUDE_FBE
-		#include "crypto/ext4crypt/Decrypt.h"
-	#endif
+	#include "Decrypt.h"
 #else
 	#define CRYPT_FOOTER_OFFSET 0x4000
 #endif
@@ -772,52 +770,63 @@ if (TWFunc::Path_Exists("/data/unencrypted/key/version")) {
 		property_set("ro.crypto.type", "file");
 		LOGINFO("File Based Encryption is present\n");
 #ifdef TW_INCLUDE_FBE
-		#ifdef OF_SKIP_FBE_DECRYPTION
-		    LOGINFO("Skip FBE decryption is triggered. I will not try to decrypt ...\n"); // TODO: perhaps this is no longer required?
-		    return false;
-		#endif
-		Is_FBE = true;
-		ExcludeAll(Mount_Point + "/cache");
-		ExcludeAll(Mount_Point + "/convert_fbe");
-		ExcludeAll(Mount_Point + "/unencrypted");
-		ExcludeAll(Mount_Point + "/misc/vold/user_keys");
-		ExcludeAll(Mount_Point + "/misc/vold/volume_keys");
-		ExcludeAll(Mount_Point + "/system/users/0/gatekeeper.password.key");
-		ExcludeAll(Mount_Point + "/system/users/0/gatekeeper.pattern.key");
-		ExcludeAll(Mount_Point + "/system/gatekeeper.password.key");
-		ExcludeAll(Mount_Point + "/system/gatekeeper.pattern.key");
-		ExcludeAll(Mount_Point + "/system/locksettings.db");
-		ExcludeAll(Mount_Point + "/system/locksettings.db-wal");
-		ExcludeAll(Mount_Point + "/misc/gatekeeper");
-		ExcludeAll(Mount_Point + "/misc/keystore");
-		ExcludeAll(Mount_Point + "/drm/kek.dat");
-		ExcludeAll(Mount_Point + "/system_de/0/spblob");
-		ExcludeAll(Mount_Point + "/per_boot");
-		int retry_count = 3;
-		while (!Decrypt_DE() && --retry_count)
-			usleep(2000);
-		if (retry_count > 0) {
-			property_set("ro.crypto.type", "file");
-			property_set("ro.crypto.state", "encrypted");
-			Is_Encrypted = true;
-			Is_Decrypted = false;
-			DataManager::SetValue(TW_IS_ENCRYPTED, 1);
-			Is_FBE = true;
-			DataManager::SetValue(TW_IS_FBE, 1);
-			string filename;
-			int pwd_type = Get_Password_Type(0, filename);
-			if (pwd_type < 0) {
-				LOGERR("This build does not have synthetic password decrypt support\n");
-				pwd_type = 0; // default password
-			}
-			TWPartition::Fox_Add_Backup_Exclusions();
-			DataManager::SetValue(TW_CRYPTO_PWTYPE, pwd_type);
-			DataManager::SetValue(TW_CRYPTO_PASSWORD, "");
-			DataManager::SetValue("tw_crypto_display", "");
-			return true;
+	#ifdef OF_SKIP_FBE_DECRYPTION
+		LOGINFO("Skip FBE decryption is triggered. I will not try to decrypt ...\n"); // TODO: perhaps this is no longer required?
+		return false;
+	#endif
+	Is_FBE = true;
+	ExcludeAll(Mount_Point + "/convert_fbe");
+	ExcludeAll(Mount_Point + "/unencrypted");
+	ExcludeAll(Mount_Point + "/misc/vold/user_keys");
+	ExcludeAll(Mount_Point + "/misc/vold/volume_keys");
+	ExcludeAll(Mount_Point + "/system/gatekeeper.password.key");
+	ExcludeAll(Mount_Point + "/system/gatekeeper.pattern.key");
+	ExcludeAll(Mount_Point + "/system/locksettings.db");
+	ExcludeAll(Mount_Point + "/system/locksettings.db-wal");
+	ExcludeAll(Mount_Point + "/misc/gatekeeper");
+	ExcludeAll(Mount_Point + "/misc/keystore");
+	ExcludeAll(Mount_Point + "/drm/kek.dat");
+	ExcludeAll(Mount_Point + "/system_de/0/spblob");  // contains data needed to decrypt synthetic password
+	// ExcludeAll(Mount_Point + "/system/users/0/gatekeeper.password.key");
+	// ExcludeAll(Mount_Point + "/system/users/0/gatekeeper.pattern.key");
+	ExcludeAll(Mount_Point + "/cache");
+	ExcludeAll(Mount_Point + "/system/users/0");
+	ExcludeAll(Mount_Point + "/per_boot"); // removed each boot by init
+	
+	int retry_count = 3;
+	while (!Decrypt_DE() && --retry_count)
+		usleep(2000);
+	if (retry_count > 0) {
+		property_set("ro.crypto.state", "encrypted");
+		Is_Encrypted = true;
+		Is_Decrypted = false;
+		DataManager::SetValue(TW_IS_ENCRYPTED, 1);
+		string filename;
+		int pwd_type = Get_Password_Type(0, filename);
+		if (pwd_type < 0) {
+			LOGERR("This TWRP does not have synthetic password decrypt support\n");
+			pwd_type = 0;  // default password
 		}
+		PartitionManager.Parse_Users();  // after load_all_de_keys() to parse_users
+		std::vector<users_struct>::iterator iter;
+		std::vector<users_struct>* userList = PartitionManager.Get_Users_List();
+		for (iter = userList->begin(); iter != userList->end(); iter++) {
+			if (atoi((*iter).userId.c_str()) != 0) {
+				ExcludeAll(Mount_Point + "/system_de/" + (*iter).userId + "/spblob");
+				ExcludeAll(Mount_Point + "/system/users/" + (*iter).userId + "/gatekeeper.password.key");
+				ExcludeAll(Mount_Point + "/system/users/" + (*iter).userId + "/gatekeeper.pattern.key");
+				ExcludeAll(Mount_Point + "/system/users/" + (*iter).userId + "/locksettings.db");
+				ExcludeAll(Mount_Point + "/system/users/" + (*iter).userId + "/locksettings.db-wal");
+			}
+		}
+		TWPartition::Fox_Add_Backup_Exclusions();
+		DataManager::SetValue(TW_CRYPTO_PWTYPE, pwd_type);
+		DataManager::SetValue(TW_CRYPTO_PASSWORD, "");
+		DataManager::SetValue("tw_crypto_display", "");
+		return true;
+	}
 #else
-		LOGERR("FBE found but FBE support not present!\n");
+	LOGERR("FBE found but FBE support not present!\n");
 #endif
 	}
 	DataManager::SetValue(TW_IS_FBE, 0);
@@ -1039,6 +1048,7 @@ void TWPartition::Apply_TW_Flag(const unsigned flag, const char* str, const bool
 			break;
 		case TWFLAG_KEYDIRECTORY:
 			Key_Directory = str;
+			LOGINFO("setting Key_Directory to: %s\n", Key_Directory.c_str());
 			break;
 		case TWFLAG_DM_USE_ORIGINAL_PATH:
 			Use_Original_Path = true;

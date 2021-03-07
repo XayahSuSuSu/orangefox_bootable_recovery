@@ -1,8 +1,6 @@
 /*
  * Copyright (C) 2012 The Android Open Source Project
  *
- * Copyright (C) 2018-2021 OrangeFox Recovery Project
- *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -14,7 +12,6 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *
  */
 
 #include "twinstall/adb_install.h"
@@ -52,7 +49,6 @@
 #include "otautil/sysutil.h"
 #include "recovery_ui/device.h"
 #include "recovery_ui/ui.h"
-#include "orangefox.hpp"
 
 // A CommandFunction returns a pair of (result, should_continue), which indicates the command
 // execution result and whether it should proceed to the next iteration. The execution result will
@@ -121,9 +117,8 @@ static auto AdbInstallPackageHandler(int* result) {
         break;
       }
     }
-    int dummy = 0;
+    int dummy;
     *result = TWinstall_zip(FUSE_SIDELOAD_HOST_PATHNAME, &dummy);
-    Fox_Post_Zip_Install(*result);
     break;
   }
 

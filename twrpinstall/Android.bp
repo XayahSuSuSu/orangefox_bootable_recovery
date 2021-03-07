@@ -58,16 +58,14 @@ cc_library_static {
     ],
 
     cflags: [
-        "-DAB_OTA_UPDATER=1",
-        "-Wno-unused-parameter", 
-        "-Wno-unused-function",
-        "-Wno-unused-variable", 
+        "-DAB_OTA_UPDATER=1"
     ],
 
     include_dirs: [
         "bootable/recovery",
         "bootable/recovery/install/include",
-        "bootable/recovery/recovery_utils/include"
+        "bootable/recovery/recovery_utils/include",
+        "bootable/recovery/crypto/fscrypt"
     ],
 
     srcs: [

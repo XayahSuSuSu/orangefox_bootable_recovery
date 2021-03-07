@@ -1,21 +1,21 @@
 /*
 	Copyright 2012 to 2017 bigbiff/Dees_Troy TeamWin
-	
-	Copyright (C) 2018-2021 OrangeFox Recovery Project
-	This file is part of the OrangeFox Recovery Project.
-	
 	This file is part of TWRP/TeamWin Recovery Project.
+
 	TWRP is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
 	the Free Software Foundation, either version 3 of the License, or
 	(at your option) any later version.
+
 	TWRP is distributed in the hope that it will be useful,
 	but WITHOUT ANY WARRANTY; without even the implied warranty of
 	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 	GNU General Public License for more details.
+
 	You should have received a copy of the GNU General Public License
 	along with TWRP.  If not, see <http://www.gnu.org/licenses/>.
 */
+
 
 #ifndef _GNU_SOURCE
 #define _GNU_SOURCE
@@ -29,8 +29,6 @@
 #include <sys/stat.h>
 #include <sys/wait.h>
 #include <unistd.h>
-#include <iostream>
-#include <fstream>
 
 #include <string.h>
 #include <stdio.h>
@@ -53,11 +51,8 @@
 #include "twrpDigest/twrpDigest.hpp"
 #include "twrpDigest/twrpMD5.hpp"
 #include "twrp-functions.hpp"
-#include "orangefox.hpp"
 #include "gui/gui.hpp"
 #include "gui/pages.hpp"
-#include "gui/blanktimer.hpp"
-#include "legacy_property_service.h"
 #include "twinstall.h"
 #include "installcommand.h"
 extern "C" {
@@ -65,7 +60,6 @@ extern "C" {
 }
 
 #define AB_OTA "payload_properties.txt"
-
 
 enum zip_type {
 	UNKNOWN_ZIP_TYPE = 0,
@@ -88,7 +82,7 @@ static int Install_Theme(const char* path, ZipArchiveHandle Zip) {
 	if (!PartitionManager.Mount_Settings_Storage(true))
 		return INSTALL_ERROR;
 	string theme_path = DataManager::GetSettingsStoragePath();
-	theme_path += Fox_Themes_Dir;
+	theme_path += "/TWRP/theme";
 	if (!TWFunc::Path_Exists(theme_path)) {
 		if (!TWFunc::Recursive_Mkdir(theme_path)) {
 			return INSTALL_ERROR;
@@ -104,7 +98,7 @@ static int Install_Theme(const char* path, ZipArchiveHandle Zip) {
 #endif
 }
 
-static int Prepare_Update_Binary(const char *path, ZipArchiveHandle Zip) {
+static int Prepare_Update_Binary(ZipArchiveHandle Zip) {
 	char arches[PATH_MAX];
 	property_get("ro.product.cpu.abilist", arches, "error");
 	if (strcmp(arches, "error") == 0)
@@ -139,14 +133,6 @@ static int Prepare_Update_Binary(const char *path, ZipArchiveHandle Zip) {
 		return INSTALL_ERROR;
 	}
 
-
-	// -------------- OrangeFox: start ---------------- //
-	int Fox_Ret = Fox_Prepare_Update_Binary(path, Zip);
-	if (Fox_Ret != INSTALL_SUCCESS) {
-	   return Fox_Ret;
-	}
-	// -------------- OrangeFox: end ---------------- //
-
 	// If exists, extract file_contexts from the zip file
 	std::string file_contexts("file_contexts");
 	ZipEntry file_contexts_entry;
@@ -166,15 +152,12 @@ static int Prepare_Update_Binary(const char *path, ZipArchiveHandle Zip) {
 			return INSTALL_ERROR;
 		}
 	}
-
-  	//Fox_ProcessAsserts(assert_device);
-  	
 	return INSTALL_SUCCESS;
 }
 
 
 static int Run_Update_Binary(const char *path, int* wipe_cache, zip_type ztype) {
-	int ret_val, pipe_fd[2], status, zip_verify, aroma_running;;
+	int ret_val, pipe_fd[2], status, zip_verify;
 	char buffer[1024];
 	FILE* child_data;
 	pipe(pipe_fd);
@@ -209,7 +192,6 @@ static int Run_Update_Binary(const char *path, int* wipe_cache, zip_type ztype) 
 	}
 	close(pipe_fd[1]);
 
-  	aroma_running = 0;
 	*wipe_cache = 0;
 
 	DataManager::GetValue(TW_SIGNED_ZIP_VERIFY_VAR, zip_verify);
@@ -235,22 +217,11 @@ static int Run_Update_Binary(const char *path, int* wipe_cache, zip_type ztype) 
 			DataManager::_SetProgress(fraction_float);
 		} else if (strcmp(command, "ui_print") == 0) {
 			char* display_value = strtok(NULL, "\n");
-	  		if (display_value) {
-	      		     if (strcmp(display_value, "AROMA Filemanager Finished...") == 0 && (aroma_running == 1)) {
-		  		aroma_running = 0;
-		  		gui_changeOverlay("");
-		  		TWFunc::copy_file(Fox_aroma_cfg, Fox_sdcard_aroma_cfg, 0644);
-			     }
-	      		    gui_print("%s", display_value);
-	      		    if (strcmp(display_value, "(c) 2013-2015 by amarullz.com") == 0 && (aroma_running == 0)) {
-		  		aroma_running = 1;
-		  		gui_changeOverlay("black_out");
-		  		TWFunc::copy_file(Fox_aroma_cfg, Fox_sdcard_aroma_cfg, 0644);
-			     }
-	    		}
-	  		else {
-	      			gui_print("\n");
-	    		}
+			if (display_value) {
+				gui_print("%s", display_value);
+			} else {
+				gui_print("\n");
+			}
 		} else if (strcmp(command, "wipe_cache") == 0) {
 			*wipe_cache = 1;
 		} else if (strcmp(command, "clear_display") == 0) {
@@ -270,23 +241,9 @@ static int Run_Update_Binary(const char *path, int* wipe_cache, zip_type ztype) 
 	return INSTALL_SUCCESS;
 }
 
-int TWinstall_zip(const char *path, int *wipe_cache, bool check_for_digest)
-{
-  int ret_val, zip_verify = 1, unmount_system = 1, unmount_vendor = 1;
+int TWinstall_zip(const char* path, int* wipe_cache, bool check_for_digest) {
+	int ret_val, zip_verify = 1, unmount_system = 1;
 
-  if (strcmp(path, "error") == 0)
-    {
-      LOGERR("Failed to get adb sideload file: '%s'\n", path);
-      return INSTALL_CORRUPT;
-    }
-
-  if (DataManager::GetIntValue(FOX_INSTALL_PREBUILT_ZIP) == 1)
-     {
-         DataManager::SetValue(FOX_ZIP_INSTALLER_CODE, 0); // internal zip = standard zip installer
-         DataManager::SetValue(FOX_ZIP_INSTALLER_TREBLE, 0);
-     }    
-  else   
-    {
 	gui_msg(Msg("installing_zip=Installing zip file '{1}'")(path));
 	if (strlen(path) < 9 || strncmp(path, "/sideload", 9) != 0) {
 		string digest_str;
@@ -300,16 +257,13 @@ int TWinstall_zip(const char *path, int *wipe_cache, bool check_for_digest)
 			}
 		}
 	}
-    }
 
-  DataManager::GetValue(TW_UNMOUNT_SYSTEM, unmount_system);
-  DataManager::GetValue(TW_UNMOUNT_VENDOR, unmount_vendor);
+	DataManager::GetValue(TW_UNMOUNT_SYSTEM, unmount_system);
 
 #ifndef TW_OEM_BUILD
-  DataManager::GetValue(TW_SIGNED_ZIP_VERIFY_VAR, zip_verify);
+	DataManager::GetValue(TW_SIGNED_ZIP_VERIFY_VAR, zip_verify);
 #endif
-
-  DataManager::SetProgress(0);
+	DataManager::SetProgress(0);
 
 	auto package = Package::CreateMemoryPackage(path);
 	if (!package) {
@@ -330,68 +284,44 @@ int TWinstall_zip(const char *path, int *wipe_cache, bool check_for_digest)
 		if (ret_val != VERIFY_SUCCESS) {
 			LOGINFO("Zip signature verification failed: %i\n", ret_val);
 			gui_err("verify_zip_fail=Zip signature verification failed!");
+#ifdef USE_MINZIP
+			sysReleaseMap(&map);
+#endif
 			return -1;
 		} else {
 			gui_msg("verify_zip_done=Zip signature verified successfully.");
 		}
-    }
-    
-    ZipArchiveHandle Zip = package->GetZipArchiveHandle();
-    if (!Zip) {
-      set_miui_install_status(OTA_CORRUPT, true);
-      gui_err("zip_corrupt=Zip file is corrupt!");
-      return INSTALL_CORRUPT;
-    }
-
-    if (unmount_system) {
-	if (PartitionManager.Is_Mounted_By_Path(PartitionManager.Get_Android_Root_Path())) {
-		gui_msg("unmount_system=Unmounting System...");
-		if (PartitionManager.UnMount_By_Path(PartitionManager.Get_Android_Root_Path(), false)) {
-			//unlink(PartitionManager.Get_Android_Root_Path().c_str());
-			//mkdir(PartitionManager.Get_Android_Root_Path().c_str(), 0755);
-		}
-		else {
-			gui_msg("unmount_system_err=Failed to unmount System");
-		        return -1;
-		}
 	}
-   }
 
-   if (unmount_vendor) {
-	if (PartitionManager.Is_Mounted_By_Path("/vendor")) {
-		gui_msg("unmount_vendor=Unmounting Vendor...");
-		if (PartitionManager.UnMount_By_Path("/vendor", false)) {
-		   	//unlink("/vendor");
-		   	//mkdir("/vendor", 0755);
-		} else {
-			gui_msg("unmount_vendor_err=Failed to unmount Vendor");
+	ZipArchiveHandle Zip = package->GetZipArchiveHandle();
+	if (!Zip) {
+		return INSTALL_CORRUPT;
+	}
+
+	if (unmount_system) {
+		gui_msg("unmount_system=Unmounting System...");
+		if(!PartitionManager.UnMount_By_Path(PartitionManager.Get_Android_Root_Path(), true)) {
+			gui_err("unmount_system_err=Failed unmounting System");
 			return -1;
 		}
+		unlink("/system");
+		mkdir("/system", 0755);
 	}
-   }
 
-   // DJ9, 20200622: try to avoid a situation where blockimg will bomb out when trying to create a stash
-   if ((TWFunc::Path_Exists("/cache/.")) && (!TWFunc::Path_Exists("/cache/recovery/."))) {
-	LOGINFO("Recreating the /cache/recovery/ folder ...\n");
-	if (!TWFunc::Recursive_Mkdir("/cache/recovery", false))
-	   LOGERR("Could not create /cache/recovery - blockimg may have problems with creating stashes\n");
-   }
-   // DJ9
+	time_t start, stop;
+	time(&start);
 
-  time_t start, stop;
-  time(&start);
- 
-  ZipString update_binary_name(UPDATE_BINARY_NAME);
-  ZipEntry update_binary_entry;
-  if (FindEntry(Zip, update_binary_name, &update_binary_entry) == 0) {
+	std::string update_binary_name(UPDATE_BINARY_NAME);
+	ZipEntry update_binary_entry;
+	if (FindEntry(Zip, update_binary_name, &update_binary_entry) == 0) {
 		LOGINFO("Update binary zip\n");
 		// Additionally verify the compatibility of the package.
-		if (!Fox_Skip_Treble_Compatibility_Check() && !verify_package_compatibility(Zip)) {
+		if (!verify_package_compatibility(Zip)) {
 			gui_err("zip_compatible_err=Zip Treble compatibility error!");
 			CloseArchive(Zip);
 			ret_val = INSTALL_CORRUPT;
 		} else {
-			ret_val = Prepare_Update_Binary(path, Zip);
+			ret_val = Prepare_Update_Binary(Zip);
 			if (ret_val == INSTALL_SUCCESS)
 				ret_val = Run_Update_Binary(path, wipe_cache, UPDATE_BINARY_ZIP_TYPE);
 		}
@@ -420,81 +350,20 @@ int TWinstall_zip(const char *path, int *wipe_cache, bool check_for_digest)
 			std::string binary_name("ui.xml");
 			ZipEntry binary_entry;
 			if (FindEntry(Zip, binary_name, &binary_entry) != 0) {
-				LOGINFO("OrangeFox theme zip\n");
+				LOGINFO("TWRP theme zip\n");
 				ret_val = Install_Theme(path, Zip);
 			} else {
 				CloseArchive(Zip);
 				ret_val = INSTALL_CORRUPT;
 			}
 		}
-   }
-
-  time(&stop);
-  int total_time = (int) difftime(stop, start);
-  
-  if (ret_val == INSTALL_CORRUPT)
-    {
-        set_miui_install_status(OTA_CORRUPT, true);
-        gui_err("invalid_zip_format=Invalid zip file format!");
-    }
-  else
-  if (ret_val == INSTALL_ERROR)
-     {
-	set_miui_install_status(OTA_ERROR, false);
-     }
-  else // success - so let us see whether we need to run OTA_BAK
-  {
-     // if MIUI-specific features have been disabled
-     if (Fox_Skip_OTA()) // yes
-     {
-         //LOGINFO("OrangeFox: not running the incremental OTA backup (OTA_BAK).\n");
-     }  
-     else // else let us proceed with the OTA stuff
-     if (DataManager::GetIntValue(FOX_INCREMENTAL_OTA_FAIL) != 1)
-     {
-      	if (DataManager::GetIntValue(FOX_INCREMENTAL_PACKAGE) == 1 && DataManager::GetIntValue(FOX_ZIP_INSTALLER_CODE) != 0)
-      	  {
-      	    if (TWinstall_Run_OTA_BAK (true)) // true, because the value of Fox_Zip_Installer_Code to be set
-      	      {
-	        if (Fox_OTA_Backup_Stock_Boot_Image()) // whether to create an additional backup of the stock boot image
-	           {
-	      		usleep(2048);
-	      		string ota_folder = DataManager::GetStrValue("ota_bak_folder");
-	      		usleep(2048);
-	      		if (ota_folder.empty())
-	      		   ota_folder = "/sdcard/Fox/OTA";
-			string ota_bootimg = ota_folder + "/boot.img";		
-			if (TWFunc::Path_Exists(boot_bak_img)) 
-			 {
-			   if (TWFunc::copy_file(boot_bak_img, ota_bootimg, 0644) == 0) 
-			     {
-			   	LOGINFO("OrangeFox: stock boot image extracted into the OTA directory.\n");
-			     }
-			   unlink(boot_bak_img.c_str());
-		 	}
-	           }
-      	      }
-      	  }
-      	
-      	DataManager::SetValue(FOX_METADATA_PRE_BUILD, 0);
-      	DataManager::SetValue(FOX_MIUI_ZIP_TMP, 0);
-      	DataManager::SetValue(FOX_INCREMENTAL_OTA_FAIL, 0);
-      	DataManager::SetValue(FOX_LOADED_FINGERPRINT, 0);
-      	DataManager::SetValue(FOX_RUN_SURVIVAL_BACKUP, 0);
-      
-     } // end of OTA stuff
-    LOGINFO("Install took %i second(s).\n", total_time);
-   }
-
-   if (ret_val == INSTALL_SUCCESS)
-      set_miui_install_status(OTA_SUCCESS, false);
-
-   usleep(32);
-   if (DataManager::GetIntValue(FOX_ZIP_INSTALLER_CODE) != 0) // just flashed a ROM
-   {
-      usleep(16);
-      TWFunc::Check_OrangeFox_Overwrite_FromROM(false, path);
-   }
- 
-  return ret_val;
+	}
+	time(&stop);
+	int total_time = (int) difftime(stop, start);
+	if (ret_val == INSTALL_CORRUPT) {
+		gui_err("invalid_zip_format=Invalid zip file format!");
+	} else {
+		LOGINFO("Install took %i second(s).\n", total_time);
+	}
+	return ret_val;
 }

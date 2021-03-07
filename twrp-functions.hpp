@@ -104,8 +104,6 @@ public:
 	static void htc_dumlock_restore_original_boot(void);                        // Restores the backup of boot from HTC Dumlock
 	static void htc_dumlock_reflash_recovery_to_boot(void);                     // Reflashes the current recovery to boot
 
-	static bool Get_Encryption_Policy(fscrypt_encryption_policy &policy, std::string path); // return encryption policy for path
-	static bool Set_Encryption_Policy(std::string path, const fscrypt_encryption_policy &policy); // set encryption policy for path
 	static void List_Mounts();
 	static void Clear_Bootloader_Message();
 
@@ -191,6 +189,17 @@ public:
 	static std::string get_log_dir(); // return recovery log storage directory
 	static void check_selinux_support(); // print whether selinux support is enabled to console
 	static int Property_Override(string Prop_Name, string Prop_Value); // Override properties (including ro. properties)
+
+#ifdef TW_INCLUDE_CRYPTO
+#ifdef USE_FSCRYPT_POLICY_V1
+	static bool Get_Encryption_Policy(struct fscrypt_policy_v1 &policy, std::string path); // return encryption policy for path
+	static bool Set_Encryption_Policy(std::string path, struct fscrypt_policy_v1 &policy); // set encryption policy for path
+#else
+	static bool Get_Encryption_Policy(struct fscrypt_policy_v2 &policy, std::string path); // return encryption policy for path
+	static bool Set_Encryption_Policy(std::string path, struct fscrypt_policy_v2 &policy); // set encryption policy for path
+#endif
+#endif
+
 	static void CreateNewFile(string file_path); // create a new (text) file
 	static void AppendLineToFile(string file_path, string line); // append a line to a text file
 	static void PostWipeEncryption(void); // run after formatting data to recreate /data/media/0/ + /sdcard/Fox/logs/ automatically
@@ -213,6 +222,8 @@ public:
 	static int string_to_int(string String, int def_value);
 	static long string_to_long(string String, long def_value);
 	static uint64_t string_to_long(string String, uint64_t def_value);
+
+	static string Check_For_TwrpFolder();
 
 private:
 	static void Copy_Log(string Source, string Destination);

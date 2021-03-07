@@ -353,6 +353,13 @@ GUIAction::GUIAction(xml_node <> *node):GUIObject(node)
     }
 }
 
+int GUIAction::NotifyTouch(TOUCH_STATE state, int x __unused, int y __unused)
+{
+  if (state == TOUCH_RELEASE)
+    doActions();
+
+  return 0;
+}
 
 
 int GUIAction::NotifyKey(int key, bool down)
