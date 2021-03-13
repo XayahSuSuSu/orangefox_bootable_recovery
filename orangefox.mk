@@ -344,6 +344,12 @@ ifeq ($(FOX_ENABLE_LAB),1)
 endif
 #
 
+# samsung dynamic issues
+ifeq ($(FOX_DYNAMIC_SAMSUNG_FIX),1)
+    FOX_BUILD_BASH := 0
+    FOX_EXCLUDE_NANO_EDITOR := 1
+endif
+
 # nano
 ifeq ($(FOX_EXCLUDE_NANO_EDITOR),1)
     TW_EXCLUDE_NANO := true
