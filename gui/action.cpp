@@ -469,7 +469,7 @@ int GUIAction::flash_zip(std::string filename, int *wipe_cache)
     }
   else
     {
-      ret_val = TWinstall_zip(filename.c_str(), wipe_cache, (bool) DataManager::GetIntValue(TW_SKIP_DIGEST_CHECK_VAR));
+      ret_val = TWinstall_zip(filename.c_str(), wipe_cache);
       PartitionManager.Unlock_Block_Partitions();
 
       // Now, check if we need to ensure TWRP remains installed...
