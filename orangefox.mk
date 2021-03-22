@@ -388,4 +388,9 @@ ifeq ($(OF_SUPPORT_ALL_BLOCK_OTA_UPDATES),1)
         $(error Fix your build vars!; exiting)
    endif
 endif
+
+# disable by default the USB storage button on the "Mount" menu
+ifneq ($(OF_ENABLE_USB_STORAGE),1)
+    TW_NO_USB_STORAGE := true
+endif
 #
