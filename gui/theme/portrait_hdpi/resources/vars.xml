@@ -81,6 +81,7 @@
 		
 		<!-- Other... -->
 		<variable name="of_hide_data_hint" value="0" persist="1"/>
+		<variable name="of_hide_app_hint" value="0" persist="1"/>
 		<variable name="disable_no_os" value="0" persist="1"/>
 		<variable name="fm_auto_open" value="1" persist="1"/>
 		<variable name="tw_hidden_files" value="0" persist="1"/> 

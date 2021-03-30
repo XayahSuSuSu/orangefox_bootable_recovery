@@ -1164,5 +1164,11 @@
 		<string name="rescue_party4">The reported problem is:</string>
 
 		<string name="restore_system_context">Unable to get default context for {1} -- Android may not boot.</string>
+		
+		<string name="try_app">Try our app!</string>
+		<string name="try_app_2">Check recovery updates using our</string>
+		<string name="try_app_3">new app! </string>
+		<string name="try_app_4">Download link:</string>
+		<string name="try_app_5">https://orangefox.tech</string>
 	</resources>
 </language>

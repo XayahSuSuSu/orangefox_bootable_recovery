@@ -1258,5 +1258,12 @@
 		<string name="enable_adb">Включить ADB</string>
 		<string name="enable_fastboot">Включить Fastboot</string>
 		<string name="fastboot_console_msg">Вход в режим Fastboot...</string>
+		<string name="tap_to_show">Нажмите, чтобы показать</string>
+
+		<string name="try_app">Скачайте приложение!</string>
+		<string name="try_app_2">Устанавливайте обновления</string>
+		<string name="try_app_3">OrangeFox c помощью нового</string>
+		<string name="try_app_4">приложения. Скачать:</string>
+		<string name="try_app_5">https://orangefox.tech</string>
 	</resources>
 </language>
