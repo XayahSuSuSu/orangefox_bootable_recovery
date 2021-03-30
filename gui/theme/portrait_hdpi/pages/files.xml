@@ -673,7 +673,7 @@
 				<data requireReload="1"/>
 				<extra hold="book_hold"/>
 				<listitem name="{@fm_books_edit}">
-					<icon res="bs_btn_rename"/>
+					<icon res="edit"/>
 					<condition var1="book_edit" var2="0"/>
 					<condition var1="book_1" var2="{@fm_books_empty}"/>
 					<condition var1="book_2" var2="{@fm_books_empty}"/>
@@ -693,7 +693,7 @@
 					<action function="set">book_id=1</action>
 				</listitem>
 				<listitem name="%book_1%">
-					<icon res="bs_btn_rename"/>
+					<icon res="edit"/>
 					<condition var1="book_edit" var2="1"/>
 					<action function="set">book_id=1</action>
 				</listitem>
@@ -704,7 +704,7 @@
 					<action function="set">book_id=2</action>
 				</listitem>
 				<listitem name="%book_2%">
-					<icon res="bs_btn_rename"/>
+					<icon res="edit"/>
 					<condition var1="book_edit" var2="1"/>
 					<action function="set">book_id=2</action>
 				</listitem>
@@ -715,7 +715,7 @@
 					<action function="set">book_id=3</action>
 				</listitem>
 				<listitem name="%book_3%">
-					<icon res="bs_btn_rename"/>
+					<icon res="edit"/>
 					<condition var1="book_edit" var2="1"/>
 					<action function="set">book_id=3</action>
 				</listitem>
@@ -726,7 +726,7 @@
 					<action function="set">book_id=4</action>
 				</listitem>
 				<listitem name="%book_4%">
-					<icon res="bs_btn_rename"/>
+					<icon res="edit"/>
 					<condition var1="book_edit" var2="1"/>
 					<action function="set">book_id=4</action>
 				</listitem>
@@ -737,7 +737,7 @@
 					<action function="set">book_id=5</action>
 				</listitem>
 				<listitem name="%book_5%">
-					<icon res="bs_btn_rename"/>
+					<icon res="edit"/>
 					<condition var1="book_edit" var2="1"/>
 					<action function="set">book_id=5</action>
 				</listitem>
@@ -748,7 +748,7 @@
 					<action function="set">book_id=6</action>
 				</listitem>
 				<listitem name="%book_6%">
-					<icon res="bs_btn_rename"/>
+					<icon res="edit"/>
 					<condition var1="book_edit" var2="1"/>
 					<action function="set">book_id=6</action>
 				</listitem>
@@ -759,7 +759,7 @@
 					<action function="set">book_id=7</action>
 				</listitem>
 				<listitem name="%book_7%">
-					<icon res="bs_btn_rename"/>
+					<icon res="edit"/>
 					<condition var1="book_edit" var2="1"/>
 					<action function="set">book_id=7</action>
 				</listitem>
@@ -770,7 +770,7 @@
 					<action function="set">book_id=8</action>
 				</listitem>
 				<listitem name="%book_8%">
-					<icon res="bs_btn_rename"/>
+					<icon res="edit"/>
 					<condition var1="book_edit" var2="1"/>
 					<action function="set">book_id=8</action>
 				</listitem>
@@ -781,7 +781,7 @@
 					<action function="set">book_id=9</action>
 				</listitem>
 				<listitem name="%book_9%">
-					<icon res="bs_btn_rename"/>
+					<icon res="edit"/>
 					<condition var1="book_edit" var2="1"/>
 					<action function="set">book_id=9</action>
 				</listitem>
@@ -904,6 +904,13 @@
 				<listitem name="{@fm_open}">
 					<icon res="bs_btn_open"/>
 					<action function="page">openas</action>
+				</listitem>
+				<listitem name="{@fm_edit_file}">
+					<condition var1="tw_fm_isfolder" var2="0"/>
+					<condition var1="fox_use_nano_editor" var2="1"/>
+					<icon res="edit"/>
+					<action function="editfile">nano "%tw_filename1%"</action>
+					<action function="page">terminalcommand</action>
 				</listitem>
 				<listitem name="{@fm_copy_btn}">
 					<condition var1="tw_fm_isfolder" var2="1"/>

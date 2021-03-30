@@ -281,6 +281,9 @@ GUIAction::GUIAction(xml_node <> *node):GUIObject(node)
       ADD_ACTION(wlfx);
       ADD_ACTION(calldeactivateprocess);
       ADD_ACTION(disable_replace);
+      #ifdef FOX_USE_NANO_EDITOR
+          ADD_ACTION(editfile);
+      #endif
 
       //[f/d] Threaded actions
       ADD_ACTION(batch);
@@ -2900,3 +2903,16 @@ int GUIAction::enablefastboot(std::string arg __unused) {
 	android::base::SetProperty("sys.usb.config", "fastboot");
 	return 0;
 }
+
+#ifdef FOX_USE_NANO_EDITOR
+int GUIAction::editfile(std::string arg) {
+	if (term != NULL) {
+		for (uint8_t iter = 0; iter < arg.size(); iter++)
+			term->NotifyCharInput(arg.at(iter));
+		term->NotifyCharInput(13);
+	}
+	else
+		LOGINFO("Unable to switch to Terminal\n");
+	return 0;
+}
+#endif

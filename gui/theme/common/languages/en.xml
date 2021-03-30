@@ -1170,5 +1170,8 @@
 		<string name="try_app_3">new app! </string>
 		<string name="try_app_4">Download link:</string>
 		<string name="try_app_5">https://app.orangefox.download</string>
+
+		
+		<string name="fm_edit_file">Edit File</string>
 	</resources>
 </language>
