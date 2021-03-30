@@ -73,6 +73,7 @@ std::set < string > GUIAction::setActionsRunningInCallerThread;
 static string zip_queue[10];
 static int zip_queue_index;
 pid_t sideload_child_pid;
+extern GUITerminal* term;
 
 static void *ActionThread_work_wrapper(void *data);
 
@@ -229,6 +230,7 @@ GUIAction::GUIAction(xml_node <> *node):GUIObject(node)
       ADD_ACTION(togglebacklight);
       ADD_ACTION(enableadb);
       ADD_ACTION(enablefastboot);
+		  ADD_ACTION(changeterminal);
       ADD_ACTION(disableled);
       ADD_ACTION(flashlight);
 
@@ -2916,3 +2918,36 @@ int GUIAction::editfile(std::string arg) {
 	return 0;
 }
 #endif
+
+int GUIAction::changeterminal(std::string arg) {
+	bool res = true;
+	std::string resp, cmd = "cd " + arg;
+	DataManager::GetValue("tw_terminal_location", resp);
+	if (arg.empty() && !resp.empty()) {
+		cmd = "cd /";
+		for (uint8_t iter = 0; iter < cmd.size(); iter++)
+			term->NotifyCharInput(cmd.at(iter));
+		term->NotifyCharInput(13);
+		DataManager::SetValue("tw_terminal_location", "");
+		return 0;
+	}
+	if (term != NULL && !arg.empty()) {
+		DataManager::SetValue("tw_terminal_location", arg);
+		if (term->status()) {
+			for (uint8_t iter = 0; iter < cmd.size(); iter++)
+				term->NotifyCharInput(cmd.at(iter));
+			term->NotifyCharInput(13);
+		}
+		else if (chdir(arg.c_str()) != 0) {
+			LOGINFO("Unable to change dir to %s\n", arg.c_str());
+			res = false;
+		}
+	}
+	else {
+		res = false;
+		LOGINFO("Unable to switch to Terminal\n");
+	}
+	if (res)
+		gui_changePage("terminal");
+	return 0;
+}

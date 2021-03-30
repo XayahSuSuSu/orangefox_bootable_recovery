@@ -1265,5 +1265,8 @@
 		<string name="try_app_3">OrangeFox c помощью нового</string>
 		<string name="try_app_4">приложения. Скачать:</string>
 		<string name="try_app_5">https://app.orangefox.download</string>
+
+		<string name="fm_edit_file">Редактировать в nano</string>
+		<string name="fm_open_terminal_btn">Открыть терминал</string>
 	</resources>
 </language>

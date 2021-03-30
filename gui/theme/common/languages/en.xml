@@ -1172,6 +1172,7 @@
 		<string name="try_app_5">https://app.orangefox.download</string>
 
 		
-		<string name="fm_edit_file">Edit File</string>
+		<string name="fm_edit_file">Edit File in nano</string>
+		<string name="fm_open_terminal_btn">Open Terminal Here</string>
 	</resources>
 </language>

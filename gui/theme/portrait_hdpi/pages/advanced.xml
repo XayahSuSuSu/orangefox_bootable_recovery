@@ -657,14 +657,16 @@
 
 			<action>
 				<touch key="home"/>
+				<action function="changeterminal"/>
 				<action function="set">tw_hide_kb=0</action>
 				<action function="page">main</action>
 			</action>
 
 			<action>
 				<touch key="back"/>
+				<action function="changeterminal"/>
 				<action function="set">tw_hide_kb=0</action>
-				<action function="page">advanced</action>
+				<action function="page">main</action>
 			</action>
 		</page>
 

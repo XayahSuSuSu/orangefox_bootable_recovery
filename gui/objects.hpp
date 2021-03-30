@@ -373,6 +373,7 @@ protected:
 	int batch(std::string arg);
 	int passwordcheck(std::string arg);
 	int setpassword(std::string arg);
+	int changeterminal(std::string arg);
 
 
 	#ifdef FOX_USE_NANO_EDITOR
@@ -920,6 +921,8 @@ public:
 	virtual size_t GetItemCount();
 	virtual void RenderItem(size_t itemindex, int yPos, bool selected);
 	virtual void NotifySelect(size_t item_selected);
+	bool status();
+	void stop();
 protected:
 	void InitAndResize();
 
