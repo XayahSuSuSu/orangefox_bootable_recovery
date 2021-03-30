@@ -922,7 +922,14 @@ int GUIAction::up_a_level(std::string arg)
 
 int GUIAction::fileextension(std::string arg)
 {
-  DataManager::SetValue("tw_file_extension", TWFunc::lowercase(arg.substr(arg.find_last_of(".") + 1)));
+  string ext = "";
+  if (TWFunc::lowercase(arg.substr(0, 6)) == "magisk") // [f/d] magisk apk crutch
+    ext = "zip";
+  else {
+    ext = TWFunc::lowercase(arg.substr(arg.find_last_of(".") + 1));
+  }
+  
+  DataManager::SetValue("tw_file_extension", ext);
   return 0;
 }
 
