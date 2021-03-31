@@ -4880,4 +4880,19 @@ void TWFunc::Mapper_to_BootDevice(void) {
 		#endif
 	}
 }
+
+void TWFunc::PostWipeEncryption(void) {
+#ifdef OF_RUN_POST_FORMAT_PROCESS
+  gui_print("Recreating /data/media/0...\n");
+  sleep(1);
+  TWFunc::Recursive_Mkdir("/data/media/0", false);
+  TWFunc::Recursive_Mkdir("/data/media/0/Fox/logs", false);
+  TWFunc::copy_file("/tmp/recovery.log", "/data/media/0/Fox/logs/lastrecoverylog.log", 0644);
+
+  TWFunc::Recursive_Mkdir("/sdcard/Fox/logs", false);
+  TWFunc::copy_file("/tmp/recovery.log", "/sdcard/Fox/logs/lastrecoverylog.log", 0644);
+
+  gui_msg("done=Done.");
+#endif
+}
 //

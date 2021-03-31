@@ -397,4 +397,9 @@ endif
 ifneq ($(OF_ENABLE_USB_STORAGE),1)
     TW_NO_USB_STORAGE := true
 endif
+
+# post-format
+ifeq ($(OF_RUN_POST_FORMAT_PROCESS),1)
+    LOCAL_CFLAGS += -DOF_RUN_POST_FORMAT_PROCESS='"1"'
+endif
 #
