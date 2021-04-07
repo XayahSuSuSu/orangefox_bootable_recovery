@@ -64,7 +64,6 @@
 		<image name="btn_raised_warn" filename="Default/Controls/btn_raised_warn"/>
 		<image name="checkbox_false" filename="Default/Controls/checkbox_false_d" retainaspect="1"/>
 		<image name="radio_false" filename="Default/Controls/radio_false_d" retainaspect="1"/>
-		<image name="progress_empty_small" filename="Default/Progress/progress_empty_small"/>
 		
 		<!-- Icons -->
 		<image name="bs_btn_open" filename="Default/Icons/bs_btn_open" retainaspect="1"/>
