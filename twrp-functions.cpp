@@ -4892,6 +4892,9 @@ void TWFunc::PostWipeEncryption(void) {
   TWFunc::Recursive_Mkdir("/sdcard/Fox/logs", false);
   TWFunc::copy_file("/tmp/recovery.log", "/sdcard/Fox/logs/lastrecoverylog.log", 0644);
 
+  sleep(1);
+  TWFunc::Exec_Cmd("/system/bin/mount -o bind /data/media/0 /sdcard");
+ 
   gui_msg("done=Done.");
 #endif
 }
