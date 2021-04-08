@@ -323,6 +323,7 @@ GUIAction::GUIAction(xml_node <> *node):GUIObject(node)
   if (child)
     {
       attr = child->first_attribute("key");
+		  if (!attr) attr = child->first_attribute("hkey");
       if (attr)
 	{
 	  std::vector < std::string > keys =
@@ -330,7 +331,7 @@ GUIAction::GUIAction(xml_node <> *node):GUIObject(node)
 	  for (size_t i = 0; i < keys.size(); ++i)
 	    {
 	      const int key = getKeyByName(keys[i]);
-	      mKeys[key] = false;
+	      mKeys[std::string(attr->name()) == "hkey" ? key + 200 : key] = false;
 	    }
 	}
       else
@@ -378,9 +379,15 @@ int GUIAction::NotifyKey(int key, bool down)
   // so they don't trigger one-button actions and reset mKeys pressed status
   if (mKeys.size() == 1)
     {
-      if (!down && prevState)
+		  if ((!down && prevState) || mime > 500)
 	{
 	  doActions();
+			if (mime) {
+#ifndef TW_NO_HAPTICS
+				DataManager::Vibrate("tw_button_vibrate");
+#endif
+				mime = 0;
+			}
 	  return 0;
 	}
     }
@@ -401,6 +408,12 @@ int GUIAction::NotifyKey(int key, bool down)
 	}
 
       doActions();
+      if (mime) {
+#ifndef TW_NO_HAPTICS
+			  DataManager::Vibrate("tw_button_vibrate");
+#endif
+			  mime = 0;
+		  }
       return 0;
     }
 
@@ -2505,7 +2518,8 @@ int GUIAction::setlanguage(std::string arg __unused)
 
 int GUIAction::togglebacklight(std::string arg __unused)
 {
-  blankTimer.toggleBlank();
+	if (!mime)
+    blankTimer.toggleBlank();
   return 0;
 }
 
@@ -2854,6 +2868,8 @@ int GUIAction::batch(std::string arg __unused)
   operation_start("BatchCommandOutput");
   int op_status = 0;
   std::string list, cmd;
+  int fileCount =  DataManager::GetIntValue("of_batch_count"),
+      filesDone = 0;
 
   if (simulate) {
     simulate_progress_bar();
@@ -2862,6 +2878,8 @@ int GUIAction::batch(std::string arg __unused)
 
     DataManager::GetValue("of_batch_files", list);
     DataManager::GetValue("of_batch_files_cmd", cmd);
+    DataManager::SetValue("of_batch_done", "0");
+    DataManager::SetValue("ui_progress", "0");
   
     for (int i = 0; i <= 1; i++) {
       LOGINFO("Process list: %s\n", list.c_str());
@@ -2875,9 +2893,17 @@ int GUIAction::batch(std::string arg __unused)
             token = list.substr(0, pos);
             op_status = cmdf(cmd, token);
             if (op_status == 1) break;
+            filesDone++;
+            DataManager::SetValue("ui_progress", (100 / fileCount) * filesDone);
+            DataManager::SetValue("of_batch_done", filesDone);
             list.erase(0, pos + delimiter.length());
         }
-        if (op_status == 0) cmdf(cmd, list);
+        if (op_status == 0) { //repeat again
+          op_status = cmdf(cmd, list);
+          filesDone++;
+          DataManager::SetValue("ui_progress", (100 / fileCount) * filesDone);
+          DataManager::SetValue("of_batch_done", filesDone);
+        }
       }
 
       //repeat code with new vars

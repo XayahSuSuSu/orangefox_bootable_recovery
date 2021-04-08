@@ -169,28 +169,28 @@
 
 			<button style="actionbar">
 				<condition var1="of_flashlight_enable" var2="1"/>
-				<placement x="%ab_btn2_x%" y="%ab_y%" placement="4"/>
+				<placement x="%ab_back_x%" y="%ab_y%" placement="4"/>
 				<action function="flashlight"/>
 			</button>
 
 			<image>
 				<condition var1="of_flashlight_enable" var2="1"/>
 				<condition var1="of_flash_on" op="!=" var2="1"/>
-				<placement x="%ab_btn2_x%" y="%ab_y%" placement="4"/>
+				<placement x="%ab_back_x%" y="%ab_y%" placement="4"/>
 				<image resource="actionbar_flash"/>
 			</image>
 
 			<image>
 				<condition var1="of_flashlight_enable" var2="1"/>
 				<condition var1="of_flash_on" var2="1"/>
-				<placement x="%ab_btn2_x%" y="%ab_y%" placement="4"/>
+				<placement x="%ab_back_x%" y="%ab_y%" placement="4"/>
 				<image resource="actionbar_flash_on"/>
 			</image>
 
 			<button style="actionbar">
 				<condition var1="of_flashlight_enable" var2="1"/>
 				<condition var1="fox_use_pass" var2="1"/>
-				<placement x="%ab_btn3_x%" y="%ab_y%" placement="4"/>
+				<placement x="%ab_btn2_x%" y="%ab_y%" placement="4"/>
 				<action function="set">pass_open=0</action>
 				<action function="page">main</action>
 			</button>
@@ -198,28 +198,18 @@
 			<image>
 				<condition var1="of_flashlight_enable" var2="1"/>
 				<condition var1="fox_use_pass" var2="1"/>
-				<placement x="%ab_btn3_x%" y="%ab_y%" placement="4"/>
-				<image resource="actionbar_encr_ena"/>
-			</image>
-
-			<button style="actionbar">
-				<condition var1="of_flashlight_enable" op="!=" var2="1"/>
-				<condition var1="fox_use_pass" var2="1"/>
-				<placement x="%ab_btn2_x%" y="%ab_y%" placement="4"/>
-				<action function="set">pass_open=0</action>
-				<action function="page">main</action>
-			</button>
-
-			<image>
-				<condition var1="of_flashlight_enable" op="!=" var2="1"/>
-				<condition var1="fox_use_pass" var2="1"/>
 				<placement x="%ab_btn2_x%" y="%ab_y%" placement="4"/>
 				<image resource="actionbar_encr_ena"/>
 			</image>
 
 			<text style="text_ab_title">
-				<placement x="%col1_x%" y="%ab_bc_y%"/>
-				<text>{@menu_btn}</text>
+				<placement x="%center_x%" y="%ab_bc_double_u_y%" placement="5"/>
+				<text>OrangeFox</text>
+			</text>
+
+			<text style="text_ab_subtitle">
+				<placement x="%center_x%" y="%ab_bc_double_d_y%" placement="5"/>
+				<text>Recovery</text>
 			</text>
 			
 			<template name="gestures_basic"/>
@@ -641,6 +631,11 @@
 			<action>
 				<touch key="power"/>
 				<action function="togglebacklight"/>
+			</action>
+
+			<action>
+				<touch hkey="power"/>
+				<action function="overlay">reboot</action>
 			</action>
 			
 			<action>

@@ -78,6 +78,7 @@ HardwareKeyboard *PageManager::mHardwareKeyboard = NULL;
 bool PageManager::mReloadTheme = false;
 std::string PageManager::mStartPage = "main";
 std::vector<language_struct> Language_List;
+long mime;
 
 int tw_x_offset = 0;
 int tw_y_offset = 0;
@@ -623,7 +624,7 @@ int Page::NotifyKey(int key, bool down)
 	// We work backwards, from top-most element to bottom-most element
 	for (iter = mActions.rbegin(); iter != mActions.rend(); iter++)
 	{
-		ret = (*iter)->NotifyKey(key, down);
+		ret = (*iter)->NotifyKey(mime > 500 ? key + 200 : key, down);
 		if (ret == 0)
 			return 0;
 		if (ret < 0) {

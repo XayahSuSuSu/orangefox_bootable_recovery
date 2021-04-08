@@ -43,13 +43,13 @@
 			<template name="base_nav"/>
 
 			<text style="text_ab_subtitle">
-				<placement x="%col1_x%" y="%ab_bc_double_d_y%"/>
+				<placement x="%center_x%" y="%ab_bc_double_d_y%" placement="5"/>
 				<limit length="18"/>
 				<text>%tw_file_location1%</text>
 			</text>
 
 			<text style="text_ab_title">
-				<placement x="%col1_x%" y="%ab_bc_double_u_y%" placement="2"/>
+				<placement x="%center_x%" y="%ab_bc_double_u_y%" placement="5"/>
 				<text>{@fm_hdr}</text>
 			</text>
 			
@@ -64,21 +64,21 @@
 			</image>
 			
 			<button style="actionbar">
-				<placement x="%ab_btn3_x%" y="%ab_y%" placement="4"/>
+				<placement x="%ab_back_x%" y="%ab_y%" placement="4"/>
 				<condition var1="darker_ui" op="!=" var2="1"/>
 				<action function="set">tw_name_filter=</action>
 				<action function="page">file_search</action>
 			</button>
 			
 			<button style="actionbar">
-				<placement x="%ab_btn3_x%" y="%ab_y%" placement="4"/>
+				<placement x="%ab_back_x%" y="%ab_y%" placement="4"/>
 				<condition var1="darker_ui" var2="1"/>
 				<action function="set">tw_name_filter=</action>
 				<action function="page">file_dark_search</action>
 			</button>
 
 			<image>
-				<placement x="%ab_btn3_x%" y="%ab_y%" placement="4"/>
+				<placement x="%ab_back_x%" y="%ab_y%" placement="4"/>
 				<image resource="actionbar_search"/>
 			</image>
 
@@ -135,7 +135,7 @@
 			</action>
 			
 			<!-- Quick Actions menu -->
-			<image>
+			<!--image>
 				<condition var1="theme_pie" var2="1"/>
 				<placement x="600" y="%ab_y%" placement="4"/>
 				<image resource="back_key_pie"/>
@@ -151,10 +151,10 @@
 				<condition var1="theme_style" var2="Light"/>
 				<placement x="600" y="%ab_y%" placement="4"/>
 				<image resource="quick_arrow_black"/>
-			</image>
+			</image-->
 			<button style="menu_btn">
 				<condition var1="darker_ui" op="!=" var2="1"/>
-				<placement x="0" y="%status_h%" w="636" h="168"/>
+				<placement x="336" y="%status_h%" w="408" h="168" />
 				<action function="set">tw_filename1=tw_file_location1</action>
 				<action function="set">tw_file_location1_tmp=tw_file_location1</action>
 				<action function="set">tw_fm_isfolder=1</action>
@@ -162,7 +162,7 @@
 			</button>
 			<button style="menu_btn">
 				<condition var1="darker_ui" var2="1"/>
-				<placement x="0" y="%status_h%" w="636" h="168"/>
+				<placement x="336" y="%status_h%" w="408" h="168" />
 				<action function="set">tw_filename1=tw_file_location1</action>
 				<action function="set">tw_file_location1_tmp=tw_file_location1</action>
 				<action function="set">tw_fm_isfolder=1</action>
@@ -1952,7 +1952,6 @@
 			<action>
 				<condition var1="tw_operation_state" var2="1"/>
 				<action function="set">tw_back=filemanagerlist</action>
-				<action function="set">tw_complete_text1={@fm_complete}</action>
 				<action function="page">filemanagercomplete</action>
 			</action>
 			
@@ -2146,10 +2145,10 @@
 				<text>%tw_fm_text1%</text>
 			</text>
 			
-			<text style="text_ab_subtitle_lim">
+			<text style="text_ab_subtitle">
 				<condition var1="of_is_batch" var2="1"/>
 				<placement x="%col1_x_indent%" y="%row1_2_y%"/>
-				<text>{@batch_files_folders}</text>
+				<text>{@batch_progress}: %of_batch_done%/%of_batch_count%</text>
 			</text>
 			
 			<text style="text_ab_subtitle_lim">			
@@ -2161,7 +2160,6 @@
 			<action>
 				<condition var1="tw_operation_state" var2="1"/>
 				<action function="set">tw_back=filemanagerlist</action>
-				<action function="set">tw_complete_text1={@fm_complete}</action>
 				<action function="page">filemanagercomplete</action>
 			</action>
 
@@ -2203,8 +2201,15 @@
 			</text>
 
 			<text style="text_ab_subtitle">
+				<condition var1="of_is_batch" op="!=" var2="1"/>
 				<placement x="%col1_x_indent%" y="%row1_2_y%"/>
-				<text>%tw_complete_text1%</text>
+				<text>{@fm_complete}</text>
+			</text>
+			
+			<text style="text_ab_subtitle">
+				<condition var1="of_is_batch" var2="1"/>
+				<placement x="%col1_x_indent%" y="%row1_2_y%"/>
+				<text>{@batch_progress}: %of_batch_done%/%of_batch_count%</text>
 			</text>
 
 			<template name="back_btn"/>

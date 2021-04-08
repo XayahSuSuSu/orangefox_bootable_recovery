@@ -376,6 +376,11 @@
 				<touch key="power"/>
 				<action function="togglebacklight"/>
 			</action>
+
+			<action>
+				<touch hkey="power"/>
+				<action function="overlay">reboot</action>
+			</action>
 			
 			<action>
 				<touch key="power+voldown"/>

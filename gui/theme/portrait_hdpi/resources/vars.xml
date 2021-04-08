@@ -360,8 +360,8 @@
 		<variable name="fileselector_spacing" value="0"/>
 		
 		<!-- Title / Title buttons -->
-		<variable name="ab_bc_double_u_y" value="165+%cutout_w%"/>
-		<variable name="ab_bc_double_d_y" value="155+%cutout_w%"/>
+		<variable name="ab_bc_double_u_y" value="90+%cutout_w%"/>
+		<variable name="ab_bc_double_d_y" value="158+%cutout_w%"/>
 		<variable name="ab0_y" value="84+%cutout_w%"/>
 		<variable name="ab_y" value="156+%cutout_w%"/>
 		<variable name="ab2_y" value="324+%cutout_w%"/>
