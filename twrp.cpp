@@ -402,8 +402,8 @@ int main(int argc, char **argv) {
   	TWFunc::Reset_Clock();
 
   	DataManager::GetValue(FOX_COMPATIBILITY_DEVICE, Fox_Current_Device);
-  	printf("Starting OrangeFox Recovery %s (built on %s for %s [dev_ver: %s]; pid %d)\n",
-  		FOX_BUILD, fox_build_date.c_str(), Fox_Current_Device.c_str(), FOX_CURRENT_DEV_STR, getpid());
+  	printf("Starting OrangeFox Recovery %s [core: %s] (built on %s for %s [dev_ver: %s]; pid %d)\n",
+  		FOX_BUILD, FOX_MAIN_VERSION_STR, fox_build_date.c_str(), Fox_Current_Device.c_str(), FOX_CURRENT_DEV_STR, getpid());
 
 	// refresh the specific device codename if we have a generic unified codename
 	TWFunc::Fox_Set_Current_Device_CodeName();
