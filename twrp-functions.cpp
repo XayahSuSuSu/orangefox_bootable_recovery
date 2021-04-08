@@ -4893,8 +4893,15 @@ void TWFunc::PostWipeEncryption(void) {
   TWFunc::copy_file("/tmp/recovery.log", "/sdcard/Fox/logs/lastrecoverylog.log", 0644);
 
   sleep(1);
-  TWFunc::Exec_Cmd("/system/bin/mount -o bind /data/media/0 /sdcard");
- 
+
+  string cmd = "/system/bin/mount";
+  if (!TWFunc::Path_Exists(cmd))
+     cmd = "/sbin/mount";
+
+  cmd = cmd + " -o bind /data/media/0 /sdcard";
+  TWFunc::Exec_Cmd(cmd);
+  sleep(1);
+  sync();
   gui_msg("done=Done.");
 #endif
 }
