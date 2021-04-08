@@ -32,7 +32,7 @@
 			</image>
 
 			<text style="text_ab_title">
-				<placement x="%col1_x%" y="%ab_bc_y%"/>
+				<placement x="%center_x%" y="%ab_bc_y%" placement="5"/>
 				<text>{@wipe_hdr}</text>
 			</text>
 
@@ -109,7 +109,7 @@
 			</image>
 
 			<text style="text_ab_title">
-				<placement x="%col1_x%" y="%ab_bc_y%"/>
+				<placement x="%center_x%" y="%ab_bc_y%" placement="5"/>
 				<text>{@wipe_hdr}</text>
 			</text>
 

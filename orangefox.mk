@@ -272,6 +272,10 @@ ifeq ($(FOX_ENABLE_LAB),1)
     LOCAL_CFLAGS += -DFOX_ENABLE_LAB='"1"'
 endif
 
+ifeq ($(FOX_USE_NANO_EDITOR), 1)
+    LOCAL_CFLAGS += -DFOX_USE_NANO_EDITOR='"1"'
+endif
+
 ifeq ($(OF_NO_MIUI_OTA_VENDOR_BACKUP),1)
     LOCAL_CFLAGS += -DOF_NO_MIUI_OTA_VENDOR_BACKUP='"1"'
 endif
@@ -344,6 +348,12 @@ ifeq ($(FOX_ENABLE_LAB),1)
 endif
 #
 
+# samsung dynamic issues
+ifeq ($(FOX_DYNAMIC_SAMSUNG_FIX),1)
+    FOX_BUILD_BASH := 0
+    FOX_EXCLUDE_NANO_EDITOR := 1
+endif
+
 # nano
 ifeq ($(FOX_EXCLUDE_NANO_EDITOR),1)
     TW_EXCLUDE_NANO := true
@@ -381,5 +391,15 @@ ifeq ($(OF_SUPPORT_ALL_BLOCK_OTA_UPDATES),1)
         $(warning You cannot use "OF_SUPPORT_ALL_BLOCK_OTA_UPDATES" with "OF_DISABLE_MIUI_SPECIFIC_FEATURES"/"OF_TWRP_COMPATIBILITY_MODE")
         $(error Fix your build vars!; exiting)
    endif
+endif
+
+# disable by default the USB storage button on the "Mount" menu
+ifneq ($(OF_ENABLE_USB_STORAGE),1)
+    TW_NO_USB_STORAGE := true
+endif
+
+# post-format
+ifeq ($(OF_RUN_POST_FORMAT_PROCESS),1)
+    LOCAL_CFLAGS += -DOF_RUN_POST_FORMAT_PROCESS='"1"'
 endif
 #

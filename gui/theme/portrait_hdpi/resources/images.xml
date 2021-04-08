@@ -64,7 +64,6 @@
 		<image name="btn_raised_warn" filename="Default/Controls/btn_raised_warn"/>
 		<image name="checkbox_false" filename="Default/Controls/checkbox_false_d" retainaspect="1"/>
 		<image name="radio_false" filename="Default/Controls/radio_false_d" retainaspect="1"/>
-		<image name="progress_empty_small" filename="Default/Progress/progress_empty_small"/>
 		
 		<!-- Icons -->
 		<image name="bs_btn_open" filename="Default/Icons/bs_btn_open" retainaspect="1"/>
@@ -90,7 +89,7 @@
 		<image name="bs_btn_cut" filename="Default/Icons/bs_btn_cut" retainaspect="1"/>
 		<image name="bs_btn_chmod" filename="Default/Icons/bs_btn_chmod" retainaspect="1"/>
 		<image name="bs_btn_delete" filename="Default/Icons/bs_btn_delete" retainaspect="1"/>
-		<image name="bs_btn_rename" filename="Default/Icons/bs_btn_rename" retainaspect="1"/>
+		<image name="bs_btn_rename" filename="Default/Icons/rename" retainaspect="1"/>
 		<image name="reboot_sys" filename="Default/Icons/reboot_sys" retainaspect="1"/>
 		<image name="reboot_bootloader" filename="Default/Icons/reboot_bootloader" retainaspect="1"/>
 		<image name="reboot_power" filename="Default/Icons/reboot_power" retainaspect="1"/>
@@ -103,6 +102,7 @@
 		<image name="device" filename="Default/Icons/device" retainaspect="1"/>
 		<image name="sdcard" filename="Default/Icons/sdcard" retainaspect="1"/>
 		<image name="batch" filename="Default/Icons/batch" retainaspect="1"/>
+		<image name="edit" filename="Default/Icons/edit" retainaspect="1"/>
 		
 		<!-- Info -->
 		<image name="icon_warning" filename="Default/Info/icon_warning" retainaspect="1"/>

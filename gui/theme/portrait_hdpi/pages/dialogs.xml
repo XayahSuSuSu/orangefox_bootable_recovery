@@ -323,6 +323,63 @@
 			</action>
 		</page>
 
+		<page name="dialog_app">
+			<template name="dialog_body"/>
+
+			<button>
+				<placement x="%bg_storage_x%" y="%bg_storage_y%"/>
+				<image resource="dialog_bg"/>
+			</button>
+
+			<text style="text_dlg_title">
+				<placement x="%bg_storage_hdr_x%" y="%bg_storage_hdr_y%"/>
+				<text>{@try_app}</text>
+			</text>
+
+			<text style="text_body1">
+				<placement x="%bg_storage_hdr_x%" y="%db_text1_y%"/>
+				<text>{@try_app_2}</text>
+			</text>
+
+			<text style="text_body1">
+				<placement x="%bg_storage_hdr_x%" y="%db_text2_y%"/>
+				<text>{@try_app_3}</text>
+			</text>
+
+			<text style="text_body1">
+				<placement x="%bg_storage_hdr_x%" y="%db_text3_y%"/>
+				<text>{@try_app_4}</text>
+			</text>
+
+			<text style="text_body1">
+				<placement x="%bg_storage_hdr_x%" y="%db_text4_y%"/>
+				<text>{@try_app_5}</text>
+			</text>
+
+			<button style="btn_dlg">
+				<placement x="%db_left_x%" y="%db_y%"/>
+				<text>{@hide_btn}</text>
+				<action function="set">of_hide_app_hint=1</action>
+				<action function="overlay"/>
+			</button>
+
+			<button style="btn_dlg_hl">
+				<placement x="%db_right_x%" y="%db_y%"/>
+				<text>{@ok_btn}</text>
+				<action function="overlay"/>
+			</button>
+
+			<action>
+				<touch key="home"/>
+				<action function="page">main</action>
+			</action>
+
+			<action>
+				<touch key="back"/>
+				<action function="overlay"/>
+			</action>
+		</page>
+
 		<page name="dialog_error_partition">
 			<template name="dialog_body"/>
 

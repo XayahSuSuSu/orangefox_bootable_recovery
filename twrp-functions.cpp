@@ -297,6 +297,13 @@ void TWFunc::Run_Before_Reboot(void)
 	  TWFunc::Recursive_Mkdir(Fox_Logs_Dir, false);
        }
 
+    //[f/d] release info json for app
+    string Fox_Current_Device = DataManager::GetStrValue(FOX_COMPATIBILITY_DEVICE);
+    string build_date = DataManager::GetStrValue("FOX_BUILD_DATE_REAL");
+    TWFunc::write_to_file(Fox_Logs_Dir + "/releaseinfo.json", "{\"codename\":\""+Fox_Current_Device+
+      "\", \"type\":\""+ FOX_BUILD_TYPE +"\",\"version\":\""+ FOX_BUILD +"\",\"commit\":\""+
+      FOX_CURRENT_DEV_STR+"\",\"date\":\""+build_date+"\"}");
+    
     copy_file("/tmp/recovery.log", Fox_Logs_Dir + "/lastrecoverylog.log", 0644);
 
 #ifdef OF_DONT_KEEP_LOG_HISTORY
@@ -4872,5 +4879,30 @@ void TWFunc::Mapper_to_BootDevice(void) {
 		}
 		#endif
 	}
+}
+
+void TWFunc::PostWipeEncryption(void) {
+#ifdef OF_RUN_POST_FORMAT_PROCESS
+  gui_print("Recreating /data/media/0...\n");
+  sleep(1);
+  TWFunc::Recursive_Mkdir("/data/media/0", false);
+  TWFunc::Recursive_Mkdir("/data/media/0/Fox/logs", false);
+  TWFunc::copy_file("/tmp/recovery.log", "/data/media/0/Fox/logs/lastrecoverylog.log", 0644);
+
+  TWFunc::Recursive_Mkdir("/sdcard/Fox/logs", false);
+  TWFunc::copy_file("/tmp/recovery.log", "/sdcard/Fox/logs/lastrecoverylog.log", 0644);
+
+  sleep(1);
+
+  string cmd = "/system/bin/mount";
+  if (!TWFunc::Path_Exists(cmd))
+     cmd = "/sbin/mount";
+
+  cmd = cmd + " -o bind /data/media/0 /sdcard";
+  TWFunc::Exec_Cmd(cmd);
+  sleep(1);
+  sync();
+  gui_msg("done=Done.");
+#endif
 }
 //

@@ -1150,6 +1150,14 @@
 		<string name="fix_recovery_loop_complete">Fix Recovery Bootloop Complete</string>
 		<string name="fixing_recovery_loop_patch">Patching kernel...</string>
 		<string name="fix_recovery_loop_patch_error">Error patching kernel.</string>
+		<string name="try_app">Try our app!</string>
+		<string name="try_app_2">Check recovery updates using our</string>
+		<string name="try_app_3">new app! </string>
+		<string name="try_app_4">Download link:</string>
+		<string name="try_app_5">https://app.orangefox.download</string>
+		<string name="fm_edit_file">Edit File in nano</string>
+		<string name="fm_open_terminal_btn">Open Terminal Here</string>
+		<string name="batch_progress">Progress</string>
 
 		<!-- R11.1 -->
 		<string name="custom_settings">Custom settings for %fox_compatibility_fox_device%</string>

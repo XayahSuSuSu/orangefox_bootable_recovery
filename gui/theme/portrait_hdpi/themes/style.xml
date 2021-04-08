@@ -30,6 +30,7 @@
 		<animation name="progress" filename="Default/Progress/indeterminate"/>
 		<image name="progress_empty" filename="Default/Progress/progress_empty"/>
 		<image name="progress_fill" filename="Default/Progress/progress_fill"/>
+		<image name="progress_empty_small" filename="Default/Progress/progress_empty_small"/>
 		
 		<!-- Controls -->
 		<image name="slider_classic" filename="Night/Controls/slider_classic" retainaspect="1"/>

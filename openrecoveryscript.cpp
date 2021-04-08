@@ -170,6 +170,14 @@ int OpenRecoveryScript::run_script_file(void) {
 					LOGERR("Error with wipe command value: '%s'\n", value);
 					ret_val = 1;
 				}
+			} else if (strcmp(command, "format") == 0) {
+				// Format
+				if (strcmp(value, "data") == 0 || strcmp(value, "/data") == 0 || strcmp(value, "factory") == 0 || strcmp(value, "factoryreset") == 0) {
+					PartitionManager.Format_Data();
+				} else {
+					LOGERR("Error with format command value: '%s'\n", value);
+					ret_val = 1;
+				}
 			} else if (strcmp(command, "backup") == 0) {
 				// Backup
 				DataManager::SetValue("tw_action_text2", gui_parse_text("{@backing}"));
@@ -361,6 +369,8 @@ int OpenRecoveryScript::run_script_file(void) {
 					TWFunc::tw_reboot(rb_download);
 				else if (strlen(value) && strcmp(value, "edl") == 0)
 					TWFunc::tw_reboot(rb_edl);
+				else if (strlen(value) && strcmp(value, "fastboot") == 0)
+					TWFunc::tw_reboot(rb_fastboot);
 				else
 					TWFunc::tw_reboot(rb_system);
 			} else if (strcmp(command, "cmd") == 0) {

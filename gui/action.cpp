@@ -73,6 +73,7 @@ std::set < string > GUIAction::setActionsRunningInCallerThread;
 static string zip_queue[10];
 static int zip_queue_index;
 pid_t sideload_child_pid;
+extern GUITerminal* term;
 
 static void *ActionThread_work_wrapper(void *data);
 
@@ -229,6 +230,7 @@ GUIAction::GUIAction(xml_node <> *node):GUIObject(node)
       ADD_ACTION(togglebacklight);
       ADD_ACTION(enableadb);
       ADD_ACTION(enablefastboot);
+		  ADD_ACTION(changeterminal);
       ADD_ACTION(disableled);
       ADD_ACTION(flashlight);
 
@@ -281,6 +283,9 @@ GUIAction::GUIAction(xml_node <> *node):GUIObject(node)
       ADD_ACTION(wlfx);
       ADD_ACTION(calldeactivateprocess);
       ADD_ACTION(disable_replace);
+      #ifdef FOX_USE_NANO_EDITOR
+          ADD_ACTION(editfile);
+      #endif
 
       //[f/d] Threaded actions
       ADD_ACTION(batch);
@@ -318,6 +323,7 @@ GUIAction::GUIAction(xml_node <> *node):GUIObject(node)
   if (child)
     {
       attr = child->first_attribute("key");
+		  if (!attr) attr = child->first_attribute("hkey");
       if (attr)
 	{
 	  std::vector < std::string > keys =
@@ -325,7 +331,7 @@ GUIAction::GUIAction(xml_node <> *node):GUIObject(node)
 	  for (size_t i = 0; i < keys.size(); ++i)
 	    {
 	      const int key = getKeyByName(keys[i]);
-	      mKeys[key] = false;
+	      mKeys[std::string(attr->name()) == "hkey" ? key + 200 : key] = false;
 	    }
 	}
       else
@@ -373,9 +379,15 @@ int GUIAction::NotifyKey(int key, bool down)
   // so they don't trigger one-button actions and reset mKeys pressed status
   if (mKeys.size() == 1)
     {
-      if (!down && prevState)
+		  if ((!down && prevState) || mime > 500)
 	{
 	  doActions();
+			if (mime) {
+#ifndef TW_NO_HAPTICS
+				DataManager::Vibrate("tw_button_vibrate");
+#endif
+				mime = 0;
+			}
 	  return 0;
 	}
     }
@@ -396,6 +408,12 @@ int GUIAction::NotifyKey(int key, bool down)
 	}
 
       doActions();
+      if (mime) {
+#ifndef TW_NO_HAPTICS
+			  DataManager::Vibrate("tw_button_vibrate");
+#endif
+			  mime = 0;
+		  }
       return 0;
     }
 
@@ -922,7 +940,14 @@ int GUIAction::up_a_level(std::string arg)
 
 int GUIAction::fileextension(std::string arg)
 {
-  DataManager::SetValue("tw_file_extension", TWFunc::lowercase(arg.substr(arg.find_last_of(".") + 1)));
+  string ext = "";
+  if (TWFunc::lowercase(arg.substr(0, 6)) == "magisk") // [f/d] magisk apk crutch
+    ext = "zip";
+  else {
+    ext = TWFunc::lowercase(arg.substr(arg.find_last_of(".") + 1));
+  }
+  
+  DataManager::SetValue("tw_file_extension", ext);
   return 0;
 }
 
@@ -2493,7 +2518,8 @@ int GUIAction::setlanguage(std::string arg __unused)
 
 int GUIAction::togglebacklight(std::string arg __unused)
 {
-  blankTimer.toggleBlank();
+	if (!mime)
+    blankTimer.toggleBlank();
   return 0;
 }
 
@@ -2842,6 +2868,8 @@ int GUIAction::batch(std::string arg __unused)
   operation_start("BatchCommandOutput");
   int op_status = 0;
   std::string list, cmd;
+  int fileCount =  DataManager::GetIntValue("of_batch_count"),
+      filesDone = 0;
 
   if (simulate) {
     simulate_progress_bar();
@@ -2850,6 +2878,8 @@ int GUIAction::batch(std::string arg __unused)
 
     DataManager::GetValue("of_batch_files", list);
     DataManager::GetValue("of_batch_files_cmd", cmd);
+    DataManager::SetValue("of_batch_done", "0");
+    DataManager::SetValue("ui_progress", "0");
   
     for (int i = 0; i <= 1; i++) {
       LOGINFO("Process list: %s\n", list.c_str());
@@ -2863,9 +2893,17 @@ int GUIAction::batch(std::string arg __unused)
             token = list.substr(0, pos);
             op_status = cmdf(cmd, token);
             if (op_status == 1) break;
+            filesDone++;
+            DataManager::SetValue("ui_progress", (100 / fileCount) * filesDone);
+            DataManager::SetValue("of_batch_done", filesDone);
             list.erase(0, pos + delimiter.length());
         }
-        if (op_status == 0) cmdf(cmd, list);
+        if (op_status == 0) { //repeat again
+          op_status = cmdf(cmd, list);
+          filesDone++;
+          DataManager::SetValue("ui_progress", (100 / fileCount) * filesDone);
+          DataManager::SetValue("of_batch_done", filesDone);
+        }
       }
 
       //repeat code with new vars
@@ -2891,5 +2929,51 @@ int GUIAction::enableadb(std::string arg __unused) {
 int GUIAction::enablefastboot(std::string arg __unused) {
 	android::base::SetProperty("sys.usb.config", "none");
 	android::base::SetProperty("sys.usb.config", "fastboot");
+	return 0;
+}
+
+#ifdef FOX_USE_NANO_EDITOR
+int GUIAction::editfile(std::string arg) {
+	if (term != NULL) {
+		for (uint8_t iter = 0; iter < arg.size(); iter++)
+			term->NotifyCharInput(arg.at(iter));
+		term->NotifyCharInput(13);
+	}
+	else
+		LOGINFO("Unable to switch to Terminal\n");
+	return 0;
+}
+#endif
+
+int GUIAction::changeterminal(std::string arg) {
+	bool res = true;
+	std::string resp, cmd = "cd " + arg;
+	DataManager::GetValue("tw_terminal_location", resp);
+	if (arg.empty() && !resp.empty()) {
+		cmd = "cd /";
+		for (uint8_t iter = 0; iter < cmd.size(); iter++)
+			term->NotifyCharInput(cmd.at(iter));
+		term->NotifyCharInput(13);
+		DataManager::SetValue("tw_terminal_location", "");
+		return 0;
+	}
+	if (term != NULL && !arg.empty()) {
+		DataManager::SetValue("tw_terminal_location", arg);
+		if (term->status()) {
+			for (uint8_t iter = 0; iter < cmd.size(); iter++)
+				term->NotifyCharInput(cmd.at(iter));
+			term->NotifyCharInput(13);
+		}
+		else if (chdir(arg.c_str()) != 0) {
+			LOGINFO("Unable to change dir to %s\n", arg.c_str());
+			res = false;
+		}
+	}
+	else {
+		res = false;
+		LOGINFO("Unable to switch to Terminal\n");
+	}
+	if (res)
+		gui_changePage("terminal");
 	return 0;
 }

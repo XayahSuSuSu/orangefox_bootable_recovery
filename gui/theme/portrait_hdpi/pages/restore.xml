@@ -41,12 +41,12 @@
 			<template name="navbar_bkg_nobg"/>
 
 			<text style="text_ab_subtitle">
-				<placement x="%col1_x%" y="%ab_bc_double_d_y%"/>
+				<placement x="%center_x%" y="%ab_bc_double_d_y%" placement="5"/>
 				<text>%tw_storage_display_name% (%tw_storage_free_size%{@mbyte})</text>
 			</text>
 
 			<text style="text_ab_title">
-				<placement x="%col1_x%" y="%ab_bc_double_u_y%" placement="2"/>
+				<placement x="%center_x%" y="%ab_bc_double_u_y%" placement="5"/>
 				<text>{@restore_hdr}</text>
 			</text>
 
@@ -60,7 +60,7 @@
 				<image resource="actionbar_sort"/>
 			</image>
 			
-			<button style="actionbar">
+			<!--button style="actionbar">
 				<condition var1="of_show_storage_selection" var2="1"/>
 				<placement x="%ab_btn2_x%" y="%ab_y%" placement="4"/>
 				<action function="page">restore</action>
@@ -75,11 +75,23 @@
 			<image>
 				<placement x="%ab_btn2_x%" y="%ab_y%" placement="4"/>
 				<image resource="actionbar_storage"/>
-			</image>
+			</image-->
+
+			
+			<button style="menu_btn">
+				<condition var1="of_show_storage_selection" op="!=" var2="1"/>
+				<placement x="336" y="%status_h%" w="408" h="168" />
+				<action function="set">of_show_storage_selection=1</action>
+			</button>
+			<button style="menu_btn">
+				<condition var1="of_show_storage_selection" var2="1"/>
+				<placement x="336" y="%status_h%" w="408" h="168" />
+				<action function="page">restore</action>
+			</button>
 
 			<button style="actionbar">
 				<condition var1="of_backup_empty" var2="0"/>
-				<placement x="%ab_btn3_x%" y="%ab_y%" placement="4"/>
+				<placement x="%ab_back_x%" y="%ab_y%" placement="4"/>
 				<action function="set">tw_back=restore</action>
 				<action function="set">tw_action_param=if [ -d "%tw_backups_folder%" ]; then rm -rf %tw_backups_folder%/*; fi;</action>
 				<action function="set">tw_text1={@backups_remove}</action>
@@ -89,7 +101,7 @@
 
 			<image>
 				<condition var1="of_backup_empty" var2="0"/>
-				<placement x="%ab_btn3_x%" y="%ab_y%" placement="4"/>
+				<placement x="%ab_back_x%" y="%ab_y%" placement="4"/>
 				<image resource="actionbar_delete"/>
 			</image>
 			
