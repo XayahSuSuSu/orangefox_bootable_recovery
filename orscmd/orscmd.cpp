@@ -52,6 +52,7 @@ void print_usage(void) {
 	printf("  decrypt <password>\n");
 	printf("  remountrw\n");
 	printf("  fixperms\n");
+	printf("  set_active [slot]\n");
 	printf("  mount <path>\n");
 	printf("  unmount <path>\n");
 	printf("  listmounts\n");
