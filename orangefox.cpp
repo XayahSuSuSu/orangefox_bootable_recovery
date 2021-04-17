@@ -44,8 +44,8 @@
 
 #include "otautil/sysutil.h"
 #include <ziparchive/zip_archive.h>
-#include "twinstall/install.h"
-#include "twinstall/verifier.h"
+#include "install/include/install/install.h"
+#include "install/include/install/verifier.h"
 #include "variables.h"
 #include "data.hpp"
 #include "partitions.hpp"
@@ -57,7 +57,8 @@
 #include "gui/pages.hpp"
 #include "gui/blanktimer.hpp"
 #include "orangefox.hpp"
-#include "legacy_property_service.h"
+// #include "legacy_property_service.h"
+
 #include "twinstall.h"
 #include "installcommand.h"
 extern "C" {
