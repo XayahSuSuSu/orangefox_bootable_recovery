@@ -1291,7 +1291,7 @@
 			</action>
 		</page>
 		
-		<!-- Fox perfomance -->
+		<!-- Fox performance -->
 		<page name="ext_gov">
 			<template name="base"/>
 

@@ -996,11 +996,11 @@
 		<string name="appmgr_apps">Apps</string>
 		<string name="appmgr_title">App Manager</string>
 
-		<!-- Perfomance -->
-		<string name="perf_title">Perfomance</string>
-		<string name="perf_conf_mode">Recovery perfomance mode</string>
+		<!-- performance -->
+		<string name="perf_title">performance</string>
+		<string name="perf_conf_mode">Recovery performance mode</string>
 		<string name="perf_conf_balance">Balanced</string>
-		<string name="perf_conf_high">High perfomance</string>
+		<string name="perf_conf_high">High performance</string>
 		<string name="perf_conf_batt">Power save</string>
 
 		<string name="fox_led_title">LED Settings</string>

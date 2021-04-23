@@ -978,11 +978,11 @@
 		<string name="appmgr_apps">Apps</string>
 		<string name="appmgr_title">App Manager</string>
 
-		<!-- Perfomance -->
+		<!-- performance -->
 		<string name="perf_title">Vynutit rychlé nabíjení</string>
-		<string name="perf_conf_mode">Recovery perfomance mode</string>
+		<string name="perf_conf_mode">Recovery performance mode</string>
 		<string name="perf_conf_balance">Balanced</string>
-		<string name="perf_conf_high">High perfomance</string>
+		<string name="perf_conf_high">High performance</string>
 		<string name="perf_conf_batt">Agresivní deaktivace základních obnov</string>
 
 		<string name="fox_led_title">Podpora MIUI přírůstkové OTA</string>
