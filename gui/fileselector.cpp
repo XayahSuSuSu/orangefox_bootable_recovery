@@ -501,7 +501,7 @@ void GUIFileSelector::RenderItem(size_t itemindex, int yPos, bool selected)
 					icon = mExImgIcon;
 				} else if (ext == "png" || ext == "jpg" || ext == "bmp" || ext == "gif") {
 					icon = mExPngIcon;
-				} else if (ext == "txt" || ext == "log" || ext == "cfg" || ext == "prop" || ext == "xml" || ext == "sh" || ext == "rc" || ext == "conf" || ext == "fstab" || ext == "default") {
+				} else if (ext == "txt" || ext == "log"  || ext == "json" || ext == "cfg" || ext == "prop" || ext == "xml" || ext == "sh" || ext == "rc" || ext == "conf" || ext == "fstab" || ext == "default") {
 					icon = mExTxtIcon;
 				} 
 				#ifdef OF_SUPPORT_OZIP_DECRYPTION

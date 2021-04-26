@@ -534,6 +534,12 @@
 			</action>
 
 			<action>
+				<condition var1="tw_file_extension" var2="json"/>
+				<action function="set">fex_found=1</action>
+				<action function="page">cat_file</action>
+			</action>
+
+			<action>
 				<condition var1="tw_file_extension" var2="log"/>
 				<condition var1="tw_filename1" op="!=" var2="/tmp/recovery.log"/>
 				<action function="set">fex_found=1</action>
