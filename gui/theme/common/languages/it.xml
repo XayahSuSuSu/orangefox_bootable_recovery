@@ -978,9 +978,9 @@
 		<string name="appmgr_apps">Applicazioni</string>
 		<string name="appmgr_title">Gestore Applicazioni</string>
 
-		<!-- Perfomance -->
-		<string name="perf_title">Perfomance</string>
-		<string name="perf_conf_mode">Modalità delle perfomance della recovery</string>
+		<!-- performance -->
+		<string name="perf_title">performance</string>
+		<string name="perf_conf_mode">Modalità delle performance della recovery</string>
 		<string name="perf_conf_balance">Bilanciato</string>
 		<string name="perf_conf_high">Alte Prestazioni</string>
 		<string name="perf_conf_batt">Risparmio energetico</string>
