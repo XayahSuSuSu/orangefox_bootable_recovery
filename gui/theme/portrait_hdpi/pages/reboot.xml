@@ -4,7 +4,7 @@
 		<page name="reboot">
 			<background color="#000000"/>
 			<button>
-				<fill color="%black%"/>
+				<fill color="#000000"/>
 				<placement x="0" y="0" w="%screen_w%" h="%screen_h%"/>
 				<action function="key">back</action>
 			</button>
@@ -137,13 +137,6 @@
 				<placement x="876" y="%pc_text_y%" placement="5"/>
 				<text>{@rb_recovery_btn}</text>
 			</text>
-
-			<button>
-				<background color="#000000"/>
-				<placement x="0" y="0" w="%screen_w%" h="%screen_h%"/>
-				<action function="overaly"/>
-			</button>
-
 			<action>
 				<touch key="home"/>
 				<action function="overlay"/>
