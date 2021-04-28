@@ -86,7 +86,7 @@
 				</listitem>
 				<listitem name="{@reboot_btn}">
 					<icon res="bs_adv_reboot"/>
-					<action function="page">reboot</action>
+					<action function="overlay">reboot</action>
 				</listitem>
 				<listitem name="{@more}">
 					<condition var1="utils_show" op="!=" var2="1"/>

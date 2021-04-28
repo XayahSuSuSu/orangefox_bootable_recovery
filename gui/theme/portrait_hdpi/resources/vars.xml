@@ -210,6 +210,11 @@
 		<!-- Debug -->
 		<variable name="dbg" value="page"/>
 		<variable name="dbg_b" value="main"/>
+
+		<!-- Power Menu -->
+		<variable name="pc_y" value="%cutout_w%+108"/>
+		<variable name="pc_icon_y" value="%cutout_w%+240"/>
+		<variable name="pc_text_y" value="%cutout_w%+320"/>
 		
 		<!-- Content placement -->
 		<variable name="col1_x" value="48"/>
@@ -506,6 +511,7 @@
 		<variable name="pattern_size" value="648"/>
 		
 		<!-- Colors -->
+		<variable name="black" value="#000000"/>
 		<variable name="transparent" value="#00000000"/>
 		<variable name="text_success" value="#68B60B"/>
 		<variable name="text_fail" value="#FF0101"/>

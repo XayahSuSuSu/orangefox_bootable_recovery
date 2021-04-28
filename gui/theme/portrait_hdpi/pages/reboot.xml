@@ -2,51 +2,156 @@
 <recovery>
 	<pages>
 		<page name="reboot">
+			<background color="#000000"/>
+			<button>
+				<fill color="%black%"/>
+				<placement x="0" y="0" w="%screen_w%" h="%screen_h%"/>
+				<action function="key">back</action>
+			</button>
+			
+			<template name="keys"/>
+			<template name="statusbarinfo"/>
+
 			<action>
 				<action function="set">tw_back=reboot</action>
 				<action function="set">bslots_show=%auto_show_btns%%tw_has_boot_slots%</action>
 			</action>
 			
-			<template name="reboot_base"/>
+			<listbox style="btn_list">
+				<background color="#000000"/>
+				<font resource="Secondary" spacing="%fileselector_spacing%" color="#ffffff"/>
+				<placement x="0" y="%row1_3a_y%" w="%screen_w%" h="%bl_h5%"/>
+				<listitem name="{@rb_bootloader_btn}">
+					<condition var1="tw_reboot_bootloader" var2="1"/>
+					<icon res="reboot_bootloader"/>
+					<action function="set">tw_action_param=bootloader</action>
+					<action function="page">rebootcheck</action>
+				</listitem>
+				<listitem name="{@rb_download_btn}">
+					<condition var1="tw_download_mode" var2="1"/>
+					<icon res="reboot_bootloader"/>
+					<action function="set">tw_action_param=download</action>
+					<action function="page">rebootcheck</action>
+				</listitem>
+				<listitem name="{@fastboot_button}">
+					<condition var1="tw_fastboot_mode" var2="1"/>
+					<icon res="reboot_bootloader"/>
+					<action function="set">tw_action_param=fastboot</action>
+					<action function="page">rebootcheck</action>
+				</listitem>
+				<listitem name="EDL">
+					<condition var1="tw_edl_mode" var2="1"/>
+					<icon res="chip"/>
+					<action function="set">tw_action_param=edl</action>
+					<action function="page">rebootcheck</action>
+				</listitem>
+				<listitem name="{@slot_show}">
+					<condition var1="tw_has_boot_slots" var2="1"/>
+					<condition var1="bslots_show" op="!=" var2="11"/>
+					<icon res="utils"/>
+					<action function="set">bslots_show=11</action>
+				</listitem>
+				<listitem name="{@hide}">
+					<condition var1="bslots_show" var2="11"/>
+					<condition var1="auto_show_btns" op="!=" var2="1"/>
+					<icon res="hide"/>
+					<action function="page">advanced</action>
+				</listitem>
+				<listitem name="{@slot_switch_a}">
+					<condition var1="bslots_show" var2="11"/>
+					<condition var1="tw_active_slot" var2="B"/>
+					<icon res="a_off"/>
+					<action function="set">tw_action_param=A</action>
+					<action function="page">set_slot</action>
+				</listitem>
+				<listitem name="{@slot_active_a}">
+					<condition var1="bslots_show" var2="11"/>
+					<condition var1="tw_active_slot" var2="A"/>
+					<icon res="a_on"/>
+					<action function="set">tw_action_param=A</action>
+					<action function="page">set_slot</action>
+				</listitem>
+				<listitem name="{@slot_switch_b}">
+					<condition var1="bslots_show" var2="11"/>
+					<condition var1="tw_active_slot" var2="A"/>
+					<icon res="b_off"/>
+					<action function="set">tw_action_param=B</action>
+					<action function="page">set_slot</action>
+				</listitem>
+				<listitem name="{@slot_active_b}">
+					<condition var1="bslots_show" var2="11"/>
+					<condition var1="tw_active_slot" var2="B"/>
+					<icon res="b_on"/>
+					<action function="set">tw_action_param=B</action>
+					<action function="page">set_slot</action>
+				</listitem>
+			</listbox>
 
-			<button style="actionbar">
-				<placement x="%ab_btn1_x%" y="%ab_y%" placement="4"/>
-				<action function="set">general_back=reboot</action>
-				<action function="page">ext_general</action>
+			<button style="power_card">
+				<condition var1="tw_reboot_poweroff" var2="1"/>
+				<placement x="42" y="%pc_y%" />
+				<action function="set">tw_action_param=poweroff</action>
+				<action function="page">rebootcheck</action>
+			</button>
+			<image>
+				<condition var1="tw_reboot_poweroff" var2="1"/>
+				<image resource="reboot_power"/>
+				<placement x="204" y="%pc_icon_y%" placement="4"/>
+			</image>
+			<text style="text_power_card">
+				<condition var1="tw_reboot_poweroff" var2="1"/>
+				<placement x="204" y="%pc_text_y%" placement="5"/>
+				<text>{@rb_poweroff_btn}</text>
+			</text>
+
+			<button style="power_card">
+				<condition var1="tw_reboot_system" var2="1"/>
+				<placement x="378" y="%pc_y%" />
+				<action function="set">tw_action_param=system</action>
+				<action function="page">rebootcheck</action>
+			</button>
+			<image>
+				<condition var1="tw_reboot_system" var2="1"/>
+				<image resource="reboot_sys"/>
+				<placement x="540" y="%pc_icon_y%" placement="4"/>
+			</image>
+			<text style="text_power_card">
+				<condition var1="tw_reboot_system" var2="1"/>
+				<placement x="540" y="%pc_text_y%" placement="5"/>
+				<text>{@rb_system_btn}</text>
+			</text>
+
+			<button style="power_card">
+				<condition var1="tw_reboot_recovery" var2="1"/>
+				<placement x="714" y="%pc_y%" />
+				<action function="set">tw_action_param=recovery</action>
+				<action function="page">rebootcheck</action>
+			</button>
+			<image>
+				<condition var1="tw_reboot_recovery" var2="1"/>
+				<image resource="reboot_recovery"/>
+				<placement x="876" y="%pc_icon_y%" placement="4"/>
+			</image>
+			<text style="text_power_card">
+				<condition var1="tw_reboot_recovery" var2="1"/>
+				<placement x="876" y="%pc_text_y%" placement="5"/>
+				<text>{@rb_recovery_btn}</text>
+			</text>
+
+			<button>
+				<background color="#000000"/>
+				<placement x="0" y="0" w="%screen_w%" h="%screen_h%"/>
+				<action function="overaly"/>
 			</button>
 
-			<image>
-				<placement x="%ab_btn1_x%" y="%ab_y%" placement="4"/>
-				<image resource="actionbar_settings"/>
-			</image>
-
 			<action>
 				<touch key="home"/>
-				<action function="page">main</action>
+				<action function="overlay"/>
 			</action>
 
 			<action>
 				<touch key="back"/>
-				<action function="page">advanced</action>
-			</action>
-		</page>
-
-		<page name="fastbootreboot">
-			<action>
-				<action function="set">tw_back=fastbootreboot</action>
-				<action function="set">bslots_show=0</action>
-			</action>
-			
-			<template name="reboot_base"/>
-
-			<action>
-				<touch key="home"/>
-				<action function="page">fastboot</action>
-			</action>
-
-			<action>
-				<touch key="back"/>
-				<action function="page">fastboot</action>
+				<action function="overlay"/>
 			</action>
 		</page>
 
