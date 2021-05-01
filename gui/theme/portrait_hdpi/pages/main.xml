@@ -117,7 +117,7 @@
 			<button style="btn_raised">
 				<placement x="%btn_raised_left_x%" y="%row_btn_bottom_y%"/>
 				<text>{@reboot_btn}</text>
-				<action function="page">fastbootreboot</action>
+				<action function="overlay">reboot</action>
 			</button>
 
 			<button style="btn_raised_hl">
