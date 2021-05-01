@@ -379,6 +379,7 @@
 
 			<action>
 				<touch hkey="power"/>
+				<action function="set">tw_back=main</action>
 				<action function="overlay">reboot</action>
 			</action>
 			

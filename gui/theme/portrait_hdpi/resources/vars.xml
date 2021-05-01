@@ -82,7 +82,6 @@
 		<!-- Other... -->
 		<variable name="of_hide_data_hint" value="0" persist="1"/>
 		<variable name="of_hide_app_hint" value="0" persist="1"/>
-		<variable name="disable_no_os" value="0" persist="1"/>
 		<variable name="fm_auto_open" value="1" persist="1"/>
 		<variable name="tw_hidden_files" value="0" persist="1"/> 
 		<variable name="need_reboot" value="0" /> 
@@ -411,6 +410,10 @@
 		<variable name="ab_menu_inst_5_text_y" value="%ab_menu_inst_5_y%-%ab_menu_text_offset%"/>
 		<variable name="ab_menu_inst_6_text_y" value="%ab_menu_inst_6_y%-%ab_menu_text_offset%"/>
 		
+		<!-- Bottom Warning -->
+		<variable name="row_warn_y" value="%screen_h%-380"/>
+		<variable name="row_warn2_y" value="%screen_h%-300"/>
+
 		<!-- Bottom buttons -->
 		<variable name="row_btn_bottom_y" value="%screen_h%-156"/>
 		<variable name="row_btn_y" value="%screen_h%-450"/>

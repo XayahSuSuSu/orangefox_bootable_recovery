@@ -117,6 +117,7 @@
 			<button style="btn_raised">
 				<placement x="%btn_raised_left_x%" y="%row_btn_bottom_y%"/>
 				<text>{@reboot_btn}</text>
+				<action function="set">tw_back=main</action>
 				<action function="overlay">reboot</action>
 			</button>
 

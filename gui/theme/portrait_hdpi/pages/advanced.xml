@@ -86,6 +86,7 @@
 				</listitem>
 				<listitem name="{@reboot_btn}">
 					<icon res="bs_adv_reboot"/>
+					<action function="set">tw_back=advanced</action>
 					<action function="overlay">reboot</action>
 				</listitem>
 				<listitem name="{@more}">
@@ -650,6 +651,7 @@
 
 			<action>
 				<touch hkey="power"/>
+				<action function="set">tw_back=main</action>
 				<action function="overlay">reboot</action>
 			</action>
 			

@@ -13,7 +13,6 @@
 			<template name="statusbarinfo"/>
 
 			<action>
-				<action function="set">tw_back=reboot</action>
 				<action function="set">bslots_show=%auto_show_btns%%tw_has_boot_slots%</action>
 			</action>
 			
@@ -25,29 +24,30 @@
 					<condition var1="tw_reboot_bootloader" var2="1"/>
 					<icon res="reboot_bootloader"/>
 					<action function="set">tw_action_param=bootloader</action>
-					<action function="page">rebootcheck</action>
+					<action function="page">rebootcheckoverlay</action>
 				</listitem>
 				<listitem name="{@rb_download_btn}">
 					<condition var1="tw_download_mode" var2="1"/>
 					<icon res="reboot_bootloader"/>
 					<action function="set">tw_action_param=download</action>
-					<action function="page">rebootcheck</action>
+					<action function="page">rebootcheckoverlay</action>
 				</listitem>
 				<listitem name="{@fastboot_button}">
 					<condition var1="tw_fastboot_mode" var2="1"/>
 					<icon res="reboot_bootloader"/>
 					<action function="set">tw_action_param=fastboot</action>
-					<action function="page">rebootcheck</action>
+					<action function="page">rebootcheckoverlay</action>
 				</listitem>
 				<listitem name="EDL">
 					<condition var1="tw_edl_mode" var2="1"/>
 					<icon res="chip"/>
 					<action function="set">tw_action_param=edl</action>
-					<action function="page">rebootcheck</action>
+					<action function="page">rebootcheckoverlay</action>
 				</listitem>
 				<listitem name="{@slot_show}">
 					<condition var1="tw_has_boot_slots" var2="1"/>
 					<condition var1="bslots_show" op="!=" var2="11"/>
+					<condition var1="tw_back" var2="advanced"/>
 					<icon res="utils"/>
 					<action function="set">bslots_show=11</action>
 				</listitem>
@@ -55,7 +55,8 @@
 					<condition var1="bslots_show" var2="11"/>
 					<condition var1="auto_show_btns" op="!=" var2="1"/>
 					<icon res="hide"/>
-					<action function="page">advanced</action>
+					<action function="overlay"/>
+					<action function="overlay">reboot</action>
 				</listitem>
 				<listitem name="{@slot_switch_a}">
 					<condition var1="bslots_show" var2="11"/>
@@ -91,7 +92,7 @@
 				<condition var1="tw_reboot_poweroff" var2="1"/>
 				<placement x="42" y="%pc_y%" />
 				<action function="set">tw_action_param=poweroff</action>
-				<action function="page">rebootcheck</action>
+				<action function="page">rebootcheckoverlay</action>
 			</button>
 			<image>
 				<condition var1="tw_reboot_poweroff" var2="1"/>
@@ -108,7 +109,7 @@
 				<condition var1="tw_reboot_system" var2="1"/>
 				<placement x="378" y="%pc_y%" />
 				<action function="set">tw_action_param=system</action>
-				<action function="page">rebootcheck</action>
+				<action function="page">rebootcheckoverlay</action>
 			</button>
 			<image>
 				<condition var1="tw_reboot_system" var2="1"/>
@@ -125,7 +126,7 @@
 				<condition var1="tw_reboot_recovery" var2="1"/>
 				<placement x="714" y="%pc_y%" />
 				<action function="set">tw_action_param=recovery</action>
-				<action function="page">rebootcheck</action>
+				<action function="page">rebootcheckoverlay</action>
 			</button>
 			<image>
 				<condition var1="tw_reboot_recovery" var2="1"/>
@@ -137,6 +138,19 @@
 				<placement x="876" y="%pc_text_y%" placement="5"/>
 				<text>{@rb_recovery_btn}</text>
 			</text>
+
+			<image>
+				<condition var1="tw_backup_system_size" op="&lt;" var2="%tw_min_system%"/>
+				<placement x="%center_x%" y="%row_warn_y%" placement="4"/>
+				<image resource="icon_warning"/>
+			</image>
+
+			<text style="text_body2_fail">
+				<condition var1="tw_backup_system_size" op="&lt;" var2="%tw_min_system%"/>
+				<placement x="%center_x%" y="%row_warn2_y%" placement="5"/>
+				<text>{@no_os_subtitle}</text>
+			</text>
+
 			<action>
 				<touch key="home"/>
 				<action function="overlay"/>
@@ -150,6 +164,7 @@
 
 		<page name="set_slot">
 			<action>
+				<action function="overlay"/>
 				<action function="set">tw_action=setbootslot</action>
 				<action function="set">tw_has_action2=0</action>
 				<action function="set">tw_action_text1={@changing_boot_slot}</action>

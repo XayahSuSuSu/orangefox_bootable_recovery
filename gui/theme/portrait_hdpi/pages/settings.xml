@@ -196,16 +196,16 @@
 					<data variable="tw_hidden_files"/>
 					<condition var1="general_back" var2="settings"/>
 				</listitem>
-				<!--listitem name="{@unmount_sys_install=Unmount System before installing a ZIP}">
+				<listitem name="{@unmount_sys_install=Unmount System before installing a ZIP}">
 					<condition var1="general_back" op="!=" var2="wipe"/>
 					<condition var1="general_back" op="!=" var2="reboot"/>
 					<data variable="tw_unmount_system"/>
-				</listitem-->
-				<!--listitem name="{@unmount_vendor_install=Unmount Vendor before installing a ZIP}">
+				</listitem>
+				<listitem name="{@unmount_vendor_install=Unmount Vendor before installing a ZIP}">
 					<condition var1="general_back" op="!=" var2="wipe"/>
 					<condition var1="general_back" op="!=" var2="reboot"/>
 					<data variable="tw_unmount_vendor"/>
-				</listitem-->
+				</listitem>
 				<listitem name="{@inject_twrp_chk}">
 					<condition var1="tw_has_injecttwrp" var2="1"/>
 					<condition var1="general_back" var2="settings"/>
@@ -214,7 +214,7 @@
 			</listbox>
 			
 			<text style="caption">
-				<placement x="%col1_x_caption%" y="%row7_3a_y%"/>
+				<placement x="%col1_x_caption%" y="%row6_1a_y%"/>
 				<condition var1="general_back" var2="settings"/>
 				<text>{@perf_conf_mode}</text>
 			</text>
@@ -222,27 +222,27 @@
 			<text style="text_body1">
 				<condition var1="general_back" var2="settings"/>
 				<condition var1="fox_boot_performance_check" var2="1"/>
-				<placement x="%col1_x_caption%" y="%row8_1a_y%"/>
+				<placement x="%col1_x_caption%" y="%row6_2a_y%"/>
 				<text>{@perf_conf_high}</text>
 			</text>
 			
 			<text style="text_body1">
 				<condition var1="general_back" var2="settings"/>
 				<condition var1="fox_boot_powersave_check" var2="1"/>
-				<placement x="%col1_x_caption%" y="%row8_1a_y%"/>
+				<placement x="%col1_x_caption%" y="%row6_2a_y%"/>
 				<text>{@perf_conf_batt}</text>
 			</text>
 			
 			<text style="text_body1">
 				<condition var1="general_back" var2="settings"/>
 				<condition var1="fox_boot_balance_check" var2="1"/>
-				<placement x="%col1_x_caption%" y="%row8_1a_y%"/>
+				<placement x="%col1_x_caption%" y="%row6_2a_y%"/>
 				<text>{@perf_conf_balance}</text>
 			</text>
 
 			<button style="menu_btn">
 				<condition var1="general_back" var2="settings"/>
-				<placement x="%col1_x_caption%" y="%row7_3a_y%" w="%input_w%" h="%mb_h_hide%"/>
+				<placement x="%col1_x_caption%" y="%row6_1a_y%" w="%input_w%" h="%mb_h_hide%"/>
 				<action function="page">ext_gov</action>
 			</button>
 			
@@ -253,36 +253,6 @@
 				<condition var1="fox_boot_powersave_check" op="!=" var2="1"/>
 				<action function="set">fox_boot_balance_check=1</action>
 			</action>
-
-			<text style="caption">
-				<placement x="%col1_x_caption%" y="%row5_3_y%"/>
-				<condition var1="general_back" var2="settings"/>
-				<text>{@areb_confirm}</text>
-			</text>
-
-			<listbox>
-				<placement x="0" y="%row6_1_y%" w="%screen_w%" h="%lb_l3%"/>
-				<condition var1="general_back" var2="settings"/>
-				<data name="disable_no_os"/>
-				<listitem name="{@otp_never}">1</listitem>
-				<listitem name="{@opt_always}">2</listitem>
-				<listitem name="{@areb_noos}">0</listitem>
-			</listbox>
-
-			<text style="caption">
-				<placement x="%col1_x_caption%" y="%row1_1_y%"/>
-				<condition var1="general_back" var2="reboot"/>
-				<text>{@areb_confirm}</text>
-			</text>
-
-			<listbox>
-				<placement x="0" y="%row1_2_y%" w="%screen_w%" h="%lb_l3%"/>
-				<condition var1="general_back" var2="reboot"/>
-				<data name="disable_no_os"/>
-				<listitem name="{@otp_never}">1</listitem>
-				<listitem name="{@opt_always}">2</listitem>
-				<listitem name="{@areb_noos}">0</listitem>
-			</listbox>
 
 			<template name="gestures"/>
 
