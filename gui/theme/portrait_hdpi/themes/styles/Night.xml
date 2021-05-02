@@ -94,6 +94,8 @@
 		<image name="block_icon" filename="Default/FileManager/block" retainaspect="1"/>
 		<image name="link_icon_small" filename="Default/FileManager/link_small" retainaspect="1"/>
 		<image name="link_icon" filename="Default/FileManager/link" retainaspect="1"/>
+
+		<image name="search_bar" filename="Night/Controls/search" retainaspect="1"/>
 	</resources>
 	<variables>
 		<variable name="background" value="#1e1f22"/>

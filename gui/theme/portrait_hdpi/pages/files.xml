@@ -18,7 +18,7 @@
 			<!-- All files -->
 			<fileselector style="fileselector_b">
 				<condition var1="list_font" var2="1"/>
-				<placement x="0" y="%ab_h%" w="%fileselector_width%" h="%files_np_w%"/>
+				<placement x="0" y="%search_files_y%" w="%fileselector_width%" h="%search_files_h%"/>
 				<sort name="tw_gui_sort_order"/>
 				<icon folder="folder_icon" file="file_icon" />
 				<filter folders="1" files="1" extnvar="fm_type_sort"/>
@@ -30,7 +30,7 @@
 
 			<fileselector style="fileselector_s">
 				<condition var1="list_font" op="!=" var2="1"/>
-				<placement x="0" y="%ab_h%" w="%fileselector_width%" h="%files_np_w%"/>
+				<placement x="0" y="%search_files_y%" w="%fileselector_width%" h="%search_files_h%"/>
 				<sort name="tw_gui_sort_order"/>
 				<icon folder="folder_icon_small" file="file_icon_small"/>
 				<filter folders="1" files="1" extnvar="fm_type_sort"/>
@@ -39,56 +39,88 @@
 				<selection name="tw_selection1"/>
 				<extra hold="tw_hold" double="1"/>
 			</fileselector>
-			
-			<template name="base_nav"/>
 
-			<text style="text_ab_subtitle">
-				<placement x="%center_x%" y="%ab_bc_double_d_y%" placement="5"/>
-				<limit length="18"/>
-				<text>%tw_file_location1%</text>
-			</text>
-
-			<text style="text_ab_title">
-				<placement x="%center_x%" y="%ab_bc_double_u_y%" placement="5"/>
-				<text>{@fm_hdr}</text>
-			</text>
+			<fill color="%linecolor%">
+				<placement x="0" y="%search_files_y%" w="1080" h="1"/>
+			</fill>
 			
-			<button style="actionbar">
-				<placement x="%ab_btn2_x%" y="%ab_y%" placement="4"/>
-				<action function="overlay">fm_sort</action>
-			</button>
+			<template name="body_nav"/>
+			<template name="base_nav_basic"/>
 
-			<image>
-				<placement x="%ab_btn2_x%" y="%ab_y%" placement="4"/>
-				<image resource="actionbar_sort"/>
-			</image>
 			
-			<button style="actionbar">
-				<placement x="%ab_back_x%" y="%ab_y%" placement="4"/>
+			<template name="navbar_bkg_nobg"/>
+			<template name="navbar_home"/>
+			<template name="navbar_console"/>
+			<template name="navbar_back_cls"/>
+			
+			<button>
+				<placement x="0" y="%search_bar_y%" />
+				<image resource="search_bar"/>
 				<condition var1="darker_ui" op="!=" var2="1"/>
 				<action function="set">tw_name_filter=</action>
 				<action function="page">file_search</action>
 			</button>
 			
-			<button style="actionbar">
-				<placement x="%ab_back_x%" y="%ab_y%" placement="4"/>
+			<button>
+				<placement x="0" y="%search_bar_y%" />
+				<image resource="search_bar"/>
 				<condition var1="darker_ui" var2="1"/>
 				<action function="set">tw_name_filter=</action>
 				<action function="page">file_dark_search</action>
 			</button>
 
+			<text>
+				<font resource="body1" color="%color_disable%"/>
+				<placement x="%col1_x_indent%" y="%ab_search_text_y%" />
+				<text>{@search_help}</text>
+			</text>
+
+			<text>
+				<font resource="body1" color="%color_disable%"/>
+				<placement x="48" y="%path_y%"/>
+				<limit length="42"/>
+				<text>%tw_file_location1%</text>
+			</text>
+
+			<button style="menu_btn">
+				<condition var1="darker_ui" op="!=" var2="1"/>
+				<placement x="0" y="%path_y%" w="1080" h="92" />
+				<action function="set">tw_filename1=tw_file_location1</action>
+				<action function="set">tw_file_location1_tmp=tw_file_location1</action>
+				<action function="set">tw_fm_isfolder=1</action>
+				<action function="page">file_quick_actions</action>
+			</button>
+			<button style="menu_btn">
+				<condition var1="darker_ui" var2="1"/>
+				<placement x="0" y="%path_y%" w="1080" h="92" />
+				<action function="set">tw_filename1=tw_file_location1</action>
+				<action function="set">tw_file_location1_tmp=tw_file_location1</action>
+				<action function="set">tw_fm_isfolder=1</action>
+				<action function="page">file_quick_actions_dark</action>
+			</button>
+			
+			<button style="actionbar">
+				<placement x="816" y="%ab_search_y%" placement="4"/>
+				<action function="overlay">fm_sort</action>
+			</button>
+
 			<image>
-				<placement x="%ab_back_x%" y="%ab_y%" placement="4"/>
+				<placement x="816" y="%ab_search_y%" placement="4"/>
+				<image resource="actionbar_sort"/>
+			</image>
+
+			<image>
+				<placement x="132" y="%ab_search_y%" placement="4"/>
 				<image resource="actionbar_search"/>
 			</image>
 
 			<button style="actionbar">
-				<placement x="%ab_btn1_x%" y="%ab_y%" placement="4"/>
+				<placement x="954" y="%ab_search_y%" placement="4"/>
 				<action function="page">menu</action>
 			</button>
 
 			<image>
-				<placement x="%ab_btn1_x%" y="%ab_y%" placement="4"/>
+				<placement x="954" y="%ab_search_y%" placement="4"/>
 				<image resource="actionbar_menu"/>
 			</image>
 			
@@ -152,22 +184,6 @@
 				<placement x="600" y="%ab_y%" placement="4"/>
 				<image resource="quick_arrow_black"/>
 			</image-->
-			<button style="menu_btn">
-				<condition var1="darker_ui" op="!=" var2="1"/>
-				<placement x="336" y="%status_h%" w="408" h="168" />
-				<action function="set">tw_filename1=tw_file_location1</action>
-				<action function="set">tw_file_location1_tmp=tw_file_location1</action>
-				<action function="set">tw_fm_isfolder=1</action>
-				<action function="page">file_quick_actions</action>
-			</button>
-			<button style="menu_btn">
-				<condition var1="darker_ui" var2="1"/>
-				<placement x="336" y="%status_h%" w="408" h="168" />
-				<action function="set">tw_filename1=tw_file_location1</action>
-				<action function="set">tw_file_location1_tmp=tw_file_location1</action>
-				<action function="set">tw_fm_isfolder=1</action>
-				<action function="page">file_quick_actions_dark</action>
-			</button>
 
 			<template name="navbar_back_fm"/>
 
