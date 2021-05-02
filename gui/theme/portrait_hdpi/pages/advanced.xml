@@ -375,13 +375,13 @@
 			<listbox style="btn_list">
 				<placement x="0" y="%row5_3_y%" w="%screen_w%" h="%bl_h4%"/>
 				<listitem name="{@module_of_set}">
-					<condition var1="fileexists" var2="/sdcard/Fox/FoxFiles/OF_backup_settings.zip"/>
+					<condition var1="fileexists" var2="/FFiles/OF_backup_settings/OF_backup_settings.zip"/>
 					<icon res="bs_btn_archive"/>
 					<action function="queueclear"/>
 					<action function="set">fox_m_author=DarthJabba9</action>
 					<action function="set">fox_m_name={@module_of_set}</action>
 					<action function="set">tw_file=OF_backup_settings.zip</action>
-					<action function="set">tw_filename=/sdcard/Fox/FoxFiles/OF_backup_settings.zip</action>
+					<action function="set">tw_filename=/FFiles/OF_backup_settings/OF_backup_settings.zip</action>
 					<action function="set">tw_filecheck=%tw_filename%</action>
 					<action function="set">tw_zip_location=/sdcard/Fox/FoxFiles</action>
 					<action function="queuezip"/>
