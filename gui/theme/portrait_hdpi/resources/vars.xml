@@ -235,6 +235,9 @@
 		<variable name="fm_search_num_h" value="%screen_min_cut%-1140"/>
 		<variable name="modern_storage_shadow_y" value="%cutout_w%+816"/>
 		<variable name="modern_storage_h" value="456"/>
+
+		<variable name="warn_center_y" value="%center_y%-40"/>
+		<variable name="warn_center2_y" value="%center_y%+40"/>
 		
 		<!-- button list height -->
 		<variable name="bl_h1" value="144"/>

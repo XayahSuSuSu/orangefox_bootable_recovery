@@ -1270,5 +1270,6 @@
 		<string name="tap_to_show">Нажмите, чтобы показать</string>
 		
 		<string name="batch_progress">Выполнено</string>
+		<string name="recovery_busy">OrangeFox выполняет операцию</string>
 	</resources>
 </language>

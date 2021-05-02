@@ -17,6 +17,7 @@
 			</action>
 			
 			<listbox style="btn_list">
+				<condition var1="tw_busy" op="!=" var2="1"/>
 				<background color="#000000"/>
 				<font resource="Secondary" spacing="%fileselector_spacing%" color="#ffffff"/>
 				<placement x="0" y="%row1_3a_y%" w="%screen_w%" h="%bl_h5%"/>
@@ -89,66 +90,89 @@
 			</listbox>
 
 			<button style="power_card">
+				<condition var1="tw_busy" op="!=" var2="1"/>
 				<condition var1="tw_reboot_poweroff" var2="1"/>
 				<placement x="42" y="%pc_y%" />
 				<action function="set">tw_action_param=poweroff</action>
 				<action function="page">rebootcheckoverlay</action>
 			</button>
 			<image>
+				<condition var1="tw_busy" op="!=" var2="1"/>
 				<condition var1="tw_reboot_poweroff" var2="1"/>
 				<image resource="reboot_power"/>
 				<placement x="204" y="%pc_icon_y%" placement="4"/>
 			</image>
 			<text style="text_power_card">
+				<condition var1="tw_busy" op="!=" var2="1"/>
 				<condition var1="tw_reboot_poweroff" var2="1"/>
 				<placement x="204" y="%pc_text_y%" placement="5"/>
 				<text>{@rb_poweroff_btn}</text>
 			</text>
 
 			<button style="power_card">
+				<condition var1="tw_busy" op="!=" var2="1"/>
 				<condition var1="tw_reboot_system" var2="1"/>
 				<placement x="378" y="%pc_y%" />
 				<action function="set">tw_action_param=system</action>
 				<action function="page">rebootcheckoverlay</action>
 			</button>
 			<image>
+				<condition var1="tw_busy" op="!=" var2="1"/>
 				<condition var1="tw_reboot_system" var2="1"/>
 				<image resource="reboot_sys"/>
 				<placement x="540" y="%pc_icon_y%" placement="4"/>
 			</image>
 			<text style="text_power_card">
+				<condition var1="tw_busy" op="!=" var2="1"/>
 				<condition var1="tw_reboot_system" var2="1"/>
 				<placement x="540" y="%pc_text_y%" placement="5"/>
 				<text>{@rb_system_btn}</text>
 			</text>
 
 			<button style="power_card">
+				<condition var1="tw_busy" op="!=" var2="1"/>
 				<condition var1="tw_reboot_recovery" var2="1"/>
 				<placement x="714" y="%pc_y%" />
 				<action function="set">tw_action_param=recovery</action>
 				<action function="page">rebootcheckoverlay</action>
 			</button>
 			<image>
+				<condition var1="tw_busy" op="!=" var2="1"/>
 				<condition var1="tw_reboot_recovery" var2="1"/>
 				<image resource="reboot_recovery"/>
 				<placement x="876" y="%pc_icon_y%" placement="4"/>
 			</image>
 			<text style="text_power_card">
+				<condition var1="tw_busy" op="!=" var2="1"/>
 				<condition var1="tw_reboot_recovery" var2="1"/>
 				<placement x="876" y="%pc_text_y%" placement="5"/>
 				<text>{@rb_recovery_btn}</text>
 			</text>
 
 			<image>
+				<condition var1="tw_busy" op="!=" var2="1"/>
 				<condition var1="tw_backup_system_size" op="&lt;" var2="%tw_min_system%"/>
 				<placement x="%center_x%" y="%row_warn_y%" placement="4"/>
 				<image resource="icon_warning"/>
 			</image>
 
 			<text style="text_body2_fail">
+				<condition var1="tw_busy" op="!=" var2="1"/>
 				<condition var1="tw_backup_system_size" op="&lt;" var2="%tw_min_system%"/>
 				<placement x="%center_x%" y="%row_warn2_y%" placement="5"/>
 				<text>{@no_os_subtitle}</text>
+			</text>
+
+			<image>
+				<condition var1="tw_busy" var2="1"/>
+				<placement x="%center_x%" y="%warn_center_y%" placement="4"/>
+				<image resource="icon_warning"/>
+			</image>
+
+			<text style="text_body2_fail">
+				<condition var1="tw_busy" var2="1"/>
+				<placement x="%center_x%" y="%warn_center2_y%" placement="4"/>
+				<text>{@recovery_busy}</text>
 			</text>
 
 			<action>
