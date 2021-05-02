@@ -383,7 +383,7 @@
 					<action function="set">tw_file=OF_backup_settings.zip</action>
 					<action function="set">tw_filename=/FFiles/OF_backup_settings/OF_backup_settings.zip</action>
 					<action function="set">tw_filecheck=%tw_filename%</action>
-					<action function="set">tw_zip_location=/sdcard/Fox/FoxFiles</action>
+					<action function="set">tw_zip_location=/FFiles/OF_backup_settings</action>
 					<action function="queuezip"/>
 					<action function="set">tw_notexistpage=fox_modules_confirm</action>
 					<action function="set">tw_existpage=fox_modules_confirm</action>
