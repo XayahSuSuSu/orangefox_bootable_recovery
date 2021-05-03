@@ -4864,11 +4864,14 @@ void TWFunc::Mapper_to_BootDevice(void) {
     	#endif
 
 	if (Has_Dynamic_Partitions()) {
- 		#ifdef DYNAMIC_PARTITIONS_LIST_FOR_SYMLINK
- 		printf("=> Linking dynamic partitions (%s)\n", DYNAMIC_PARTITIONS_LIST_FOR_SYMLINK);
+ 		#ifdef BOARD_SUPER_PARTITION_PARTITION_LIST
+ 		string list = BOARD_SUPER_PARTITION_PARTITION_LIST;
+ 		string delim = ",";
+  		std::vector <std::string> partitions = TWFunc::Split_String(list, delim);
+ 		printf("=> Linking dynamic partitions (%s)\n", list.c_str());
   		string src, dest, dest2;
-  		std::vector <std::string> partitions = TWFunc::Split_String(DYNAMIC_PARTITIONS_LIST_FOR_SYMLINK, " ");
 		for (auto&& part : partitions) {
+		        part = lowercase(trim(part));
    		   	src = "/dev/block/mapper/" + part;
    		   	dest = "/dev/block/by-name/" + part;
    		   	dest2 = "/dev/block/bootdevice/by-name/" + part;
