@@ -1271,5 +1271,8 @@
 		
 		<string name="batch_progress">Выполнено</string>
 		<string name="recovery_busy">OrangeFox выполняет операцию</string>
+
+		<string name="status_delimeter">Разделитель заголовка</string>
+		<string name="status_delimeter_shadow">Тень</string>
 	</resources>
 </language>

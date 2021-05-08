@@ -339,6 +339,11 @@
 				<condition var1="show_shadow" var2="1"/>
 				<placement x="0" y="%row4_1_y%"/>
 			</image>
+			
+			<fill color="%linecolor%">
+				<condition var1="show_shadow" var2="2"/>
+				<placement x="0" y="%row4_1_y%" w="1080" h="2"/>
+			</fill>
 
 			<text style="caption">
 				<placement x="%col1_x_caption%" y="%row4_2_y%"/>
@@ -907,6 +912,11 @@
 				<placement x="0" y="%row3_2_y%" w="%screen_w%" h="%spl_preview_bg%" placement="2"/>
 				<image resource="nav_shadow"/>
 			</image>
+			
+			<fill color="%linecolor%">
+				<condition var1="show_shadow" var2="2"/>
+				<placement x="0" y="%row3_2_y%" w="1080" h="2"/>
+			</fill>
 
 			<template name="body"/>
 
@@ -1193,6 +1203,11 @@
 				<condition var1="show_shadow" var2="1"/>
 				<placement x="0" y="%tab_title_h%"/>
 			</image>
+
+			<fill color="%linecolor%">
+				<condition var1="show_shadow" var2="2"/>
+				<placement x="0" y="%tab_title_h%" w="1080" h="2"/>
+			</fill>
 			
 			<button style="tab_btn">
 				<condition var1="credits_page" op="!=" var2="0"/>

@@ -341,6 +341,7 @@
 		<variable name="lb_l1" value="90"/>
 		<variable name="lb_l2" value="180"/>
 		<variable name="lb_l3" value="270"/>
+		<variable name="lb_l3_dynamic" value="%screen_min_cut%-1650"/>
 		<variable name="lb_l4" value="360"/>
 		<variable name="lb_l5" value="450"/>
 		<variable name="lb_l6" value="540"/>

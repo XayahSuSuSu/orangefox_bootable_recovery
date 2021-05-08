@@ -1176,5 +1176,7 @@
 		
 		<string name="batch_progress">Progress</string>
 		<string name="recovery_busy">Recovery is busy</string>
+		<string name="status_delimeter">Status bar delimiter</string>
+		<string name="status_delimeter_shadow">Shadow</string>
 	</resources>
 </language>

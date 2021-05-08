@@ -109,7 +109,7 @@
 		<variable name="text_menu" value="#FFFFFF"/>
 		<variable name="text_light" value="#5F6368"/>
 		<variable name="text_hl_btn" value="#202124"/>
-		<variable name="linecolor" value="#333333"/>
+		<variable name="linecolor" value="#222222"/>
 		<variable name="darktransparent" value="#0A0A0ABB"/>
 		<variable name="theme_style" value="Black"/>
 		<variable name="theme_style_act" value="Default"/>

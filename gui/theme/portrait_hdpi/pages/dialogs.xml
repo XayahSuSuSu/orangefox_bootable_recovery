@@ -16,6 +16,11 @@
 				<placement x="0" y="%down_menu_y%" placement="2"/>
 				<image resource="nav_shadow"/>
 			</image>
+			
+			<fill color="%linecolor%">
+				<condition var1="show_shadow" var2="2"/>
+				<placement x="0" y="%down_menu_y%" w="1080" h="2"/>
+			</fill>
 
 			<listbox style="settingslist">
 				<background color="%title_solid_bg%"/>
@@ -60,7 +65,7 @@
 				</listitem>
 			</listbox>
 
-			<fill color="#5f636844">
+			<fill color="%linecolor%">
 				<placement x="%col1_x_caption%" y="%down_menu_btn_y%" w="%content_w%" h="%input_line_height%"/>
 			</fill>
 

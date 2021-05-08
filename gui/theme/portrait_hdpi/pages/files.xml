@@ -40,8 +40,15 @@
 				<extra hold="tw_hold" double="1"/>
 			</fileselector>
 
+			<image>
+				<condition var1="show_shadow" var2="1"/>
+				<placement x="0" y="%search_files_y%"/>
+				<image resource="actionbar_shadow"/>
+			</image>
+
 			<fill color="%linecolor%">
-				<placement x="0" y="%search_files_y%" w="1080" h="1"/>
+				<condition var1="show_shadow" var2="2"/>
+				<placement x="0" y="%search_files_y%" w="1080" h="2" />
 			</fill>
 			
 			<template name="body_nav"/>
