@@ -84,10 +84,30 @@
 
 			<text>
 				<font resource="body1" color="%color_disable%"/>
-				<placement x="48" y="%path_y%"/>
-				<limit length="42"/>
+				<placement x="136" y="%path_y%"/>
+				<limit length="38"/>
 				<text>%tw_file_location1%</text>
 			</text>
+
+			<!--arrow-->
+			<image>
+				<condition var1="theme_pie" var2="1"/>
+				<placement x="68" y="%path_arrow_y%" placement="4"/>
+				<image resource="back_key_pie"/>
+			</image>
+			<image>
+				<condition var1="theme_pie" op="!=" var2="1"/>
+				<condition var1="theme_style" op="!=" var2="Light"/>
+				<placement x="68" y="%path_arrow_y%" placement="4"/>
+				<image resource="back_white_key_pie"/>
+			</image>
+			<image>
+				<condition var1="theme_pie" op="!=" var2="1"/>
+				<condition var1="theme_style" var2="Light"/>
+				<placement x="68" y="%path_arrow_y%" placement="4"/>
+				<image resource="quick_arrow_black"/>
+			</image>
+			<!--arrow-->
 
 			<button style="menu_btn">
 				<condition var1="darker_ui" op="!=" var2="1"/>

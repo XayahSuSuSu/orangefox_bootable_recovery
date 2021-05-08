@@ -372,6 +372,7 @@
 		<variable name="search_files_y" value="360+%cutout_w%"/>
 		<variable name="search_bar_y" value="72+%cutout_w%"/>
 		<variable name="path_y" value="268+%cutout_w%"/>
+		<variable name="path_arrow_y" value="300+%cutout_w%"/>
 		<variable name="ab_search_y" value="168+%cutout_w%"/>
 		<variable name="ab_search_text_y" value="138+%cutout_w%"/>
 
