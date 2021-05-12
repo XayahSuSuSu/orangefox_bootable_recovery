@@ -2280,9 +2280,10 @@ void TWFunc::Welcome_Message(void)
     return;
     gui_print("--------------------------\n");
     gui_print("Welcome to OrangeFox Recovery!\n");
-    gui_print("[Release]   : %s\n", FOX_BUILD);
-    gui_print("[Codebase]  : %s\n", FOX_CURRENT_DEV_STR);
     gui_print("[Platform]  : %s\n", DataManager::GetStrValue(FOX_COMPATIBILITY_DEVICE).c_str());
+    gui_print("[Release]   : %s\n", FOX_BUILD);
+    gui_print("[Build date]: %s\n", DataManager::GetStrValue("FOX_BUILD_DATE_REAL").c_str());
+    gui_print("[Codebase]  : %s\n", FOX_CURRENT_DEV_STR);
     
     if (FOX_BUILD == "Unofficial")
       gui_print_color("warning", "[Build type]: Unofficial\n");
