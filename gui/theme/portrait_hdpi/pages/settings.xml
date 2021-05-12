@@ -950,6 +950,12 @@
 				<placement x="%about_txt_x%" y="%about_txt3_y%"/>
 				<text>{@build_type}: %fox_build_type1%</text>
 			</text>
+
+			<text>
+				<font resource="orangefont" color="#ffffff"/>
+				<placement x="%about_txt_x%" y="%about_txt4_y%"/>
+				<text>{@abt_device}: %fox_compatibility_fox_device%</text>
+			</text>
 			
 			<!-- Yan's Card -->
 			
