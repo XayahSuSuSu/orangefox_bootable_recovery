@@ -150,6 +150,7 @@
 			</text>
 
 			<image>
+				<condition var1="tw_back" op="!=" var2="fastboot"/>
 				<condition var1="tw_busy" op="!=" var2="1"/>
 				<condition var1="tw_backup_system_size" op="&lt;" var2="%tw_min_system%"/>
 				<placement x="%center_x%" y="%row_warn_y%" placement="4"/>
@@ -157,6 +158,7 @@
 			</image>
 
 			<text style="text_body2_fail">
+				<condition var1="tw_back" op="!=" var2="fastboot"/>
 				<condition var1="tw_busy" op="!=" var2="1"/>
 				<condition var1="tw_backup_system_size" op="&lt;" var2="%tw_min_system%"/>
 				<placement x="%center_x%" y="%row_warn2_y%" placement="5"/>

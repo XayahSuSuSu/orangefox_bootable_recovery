@@ -78,6 +78,9 @@
 		<page name="fastboot">
 			<background color="%background%"/>
 			<template name="keys"/>
+			<action>
+				<action function="set">tw_back=fastboot</action>
+			</action>
 
 			<console>
 				<placement x="%col1_x%" y="%console_ab_y%" w="%console_width%" h="%console_fastboot_height%"/> 
@@ -117,7 +120,6 @@
 			<button style="btn_raised">
 				<placement x="%btn_raised_left_x%" y="%row_btn_bottom_y%"/>
 				<text>{@reboot_btn}</text>
-				<action function="set">tw_back=main</action>
 				<action function="overlay">reboot</action>
 			</button>
 
