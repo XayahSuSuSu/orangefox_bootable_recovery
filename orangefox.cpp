@@ -569,6 +569,13 @@ int Fox_Prepare_Update_Binary(const char *path, ZipArchiveHandle Zip)
                 support_all_block_ota = true;
                 LOGINFO("OrangeFox: Detected miui_update file [%s]\n", FOX_MIUI_UPDATE_PATH);
               }
+            else
+            if (zip_EntryExists(Zip, FOX_MIUI_UPDATE_PATH_EU)) // META-INF/com/xiaomieu/xiaomieu.sh - if found, then this is a xiaomi.eu zip installer
+              {
+                zip_is_survival_trigger = true;
+                support_all_block_ota = true;
+                LOGINFO("OrangeFox: Detected xiaomi.eu file [%s]\n", FOX_MIUI_UPDATE_PATH_EU);
+              }
             else // do another check for miui
              {
               mCheck = TWFunc::Exec_With_Output(check_command);  // check for miui in update-binary             
