@@ -373,7 +373,7 @@
 			</text>
 
 			<listbox style="btn_list">
-				<placement x="0" y="%row5_3_y%" w="%screen_w%" h="%bl_h4%"/>
+				<placement x="0" y="%row5_3_y%" w="%screen_w%" h="%bl_h5%"/>
 				<listitem name="{@module_of_set}">
 					<condition var1="fileexists" var2="/FFiles/OF_backup_settings/OF_backup_settings.zip"/>
 					<icon res="bs_btn_archive"/>
