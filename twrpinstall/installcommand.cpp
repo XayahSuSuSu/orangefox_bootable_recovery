@@ -132,6 +132,16 @@ static int check_newer_ab_build(ZipArchiveHandle zip)
 
     std::vector<std::string> assertResults = android::base::Split(pkg_device, ",");
 
+    // Fox
+    bool has_fox_devices = false;
+    char fox_devices[PROPERTY_VALUE_MAX * 2];
+    property_get("ro.orangefox.target.devices", fox_devices, "");
+    std::vector<std::string> OrangeFox_Devices = android::base::Split(fox_devices, ",");
+    if (strlen(fox_devices) > 1) {
+       has_fox_devices = true;
+    }
+    // Fox
+
     bool deviceExists = false;
 
     for(const std::string& deviceAssert : assertResults)
@@ -141,6 +151,19 @@ static int check_newer_ab_build(ZipArchiveHandle zip)
             deviceExists = true;
             break;
         }
+        // Fox
+        else 
+        if (has_fox_devices) {
+           for(const std::string& FoxDevice_x : OrangeFox_Devices) {
+               std::string foxName = android::base::Trim(FoxDevice_x);
+               if (!foxName.empty() && !assertName.empty() && assertName == foxName) {
+            	   deviceExists = true;
+            	   printf("Package is for product %s. The selected OrangeFox target device is %s\n", pkg_device.c_str(), foxName.c_str());
+            	   break;
+               }
+           }
+        }
+        // Fox
     }
 
     if (!deviceExists) {

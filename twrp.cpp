@@ -382,7 +382,10 @@ int main(int argc, char **argv) {
   	property_set("ro.orangefox.boot", "1");
   	property_set("ro.orangefox.build", "orangefox");
   	property_set("ro.orangefox.version", FOX_VERSION);
-  
+  	#ifdef OF_TARGET_DEVICES
+  	property_set("ro.orangefox.target.devices", OF_TARGET_DEVICES);
+  	#endif
+    	
     	string fox_cfg = "/etc/fox.cfg";
     	if (!TWFunc::Path_Exists(fox_cfg))
     	    fox_cfg = "/system/etc/fox.cfg";
