@@ -350,6 +350,11 @@ ifeq ($(FOX_DYNAMIC_SAMSUNG_FIX),1)
     FOX_EXCLUDE_NANO_EDITOR := 1
 endif
 
+# samsung haptics
+ifeq ($(OF_USE_SAMSUNG_HAPTICS),1)
+    TW_USE_SAMSUNG_HAPTICS := true
+endif
+
 # nano
 ifeq ($(FOX_EXCLUDE_NANO_EDITOR),1)
     TW_EXCLUDE_NANO := true

@@ -18,6 +18,9 @@ ifeq ($(TW_SUPPORT_INPUT_1_2_HAPTICS),true)
 endif
 
 ifeq ($(TW_USE_SAMSUNG_HAPTICS),true)
+    ifeq ($(TW_SUPPORT_INPUT_1_2_HAPTICS),true)
+       $(error You cannot use both Samsung haptics and Qcom haptics at the same time. Quitting.)
+    endif
     LOCAL_CFLAGS += -DTW_USE_SAMSUNG_HAPTICS=1
 endif
 
