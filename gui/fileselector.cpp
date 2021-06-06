@@ -474,7 +474,7 @@ void GUIFileSelector::RenderItem(size_t itemindex, int yPos, bool selected)
 			if (mSelListEnabled) {
 				std::string list = DataManager::GetStrValue("of_batch_folders");
 				// list.find(text + "/") != string::npos
-				if (list.find("/" + text + "/") != string::npos || list..rfind(text + "/", 0) == 0) // prevents situation when 'Dxxx/' = 'xxx/'
+				if (list.find("/" + text + "/") != string::npos || list.rfind(text + "/", 0) == 0) // prevents situation when 'Dxxx/' = 'xxx/'
 					icon = mExSelectedIcon;
 				else
 					icon = mExUnselectedIcon;
@@ -488,7 +488,7 @@ void GUIFileSelector::RenderItem(size_t itemindex, int yPos, bool selected)
 		if (mSelListEnabled) {
 			std::string list = DataManager::GetStrValue("of_batch_files");
 			// list.find(text + "/") != string::npos
-			if (list.find("/" + text + "/") != string::npos || list..rfind(text + "/", 0) == 0) // prevents situation when 'Dxxx/' = 'xxx/'
+			if (list.find("/" + text + "/") != string::npos || list.rfind(text + "/", 0) == 0) // prevents situation when 'Dxxx/' = 'xxx/'
 				icon = mExSelectedIcon;
 			else
 				icon = mExUnselectedIcon;
