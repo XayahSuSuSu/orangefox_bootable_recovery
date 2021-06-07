@@ -4188,9 +4188,6 @@ void TWFunc::Deactivation_Process(void)
 	return;
      }
 
-  bool patched_verity = false;
-  bool patched_crypt = false;
-  
   // don't call this on first boot following fresh installation
   if (New_Fox_Installation != 1)
      {
@@ -4202,6 +4199,8 @@ void TWFunc::Deactivation_Process(void)
 
 // patch ROM's fstab
 #ifndef OF_USE_MAGISKBOOT
+  bool patched_verity = false;
+  bool patched_crypt = false;
   if ((DataManager::GetIntValue(FOX_DISABLE_FORCED_ENCRYPTION) == 1) || (Fox_Force_Deactivate_Process == 1))
      {
          patched_crypt = Patch_Forced_Encryption_In_System_Fstab();

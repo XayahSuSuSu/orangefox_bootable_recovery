@@ -968,6 +968,7 @@ void TWPartition::Apply_TW_Flag(const unsigned flag, const char* str, const bool
 					LOGINFO("FBE wrapped key enabled for %s\n", Mount_Point.c_str());
 				}
 			}
+			break;
 		case TWFLAG_FLASHIMG:
 			Can_Flash_Img = val;
 			break;
