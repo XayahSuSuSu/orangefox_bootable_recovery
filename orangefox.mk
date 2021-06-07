@@ -403,4 +403,9 @@ endif
 ifeq ($(OF_RUN_POST_FORMAT_PROCESS),1)
     LOCAL_CFLAGS += -DOF_RUN_POST_FORMAT_PROCESS='"1"'
 endif
+
+# turn some errors in mounting logical partitions into log entries only
+ifeq ($(OF_IGNORE_LOGICAL_MOUNT_ERRORS),1)
+    LOCAL_CFLAGS += -DOF_IGNORE_LOGICAL_MOUNT_ERRORS='"1"'
+endif
 #

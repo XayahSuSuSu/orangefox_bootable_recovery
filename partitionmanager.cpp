@@ -4299,8 +4299,11 @@ bool TWPartitionManager::Prepare_Super_Volume(TWPartition* twrpPart) {
 
     fstab.emplace_back(fstabEntry);
     if (!fs_mgr_update_logical_partition(&fstabEntry)) {
-        // this should be an error, not just a log entry
+        #ifdef OF_IGNORE_LOGICAL_MOUNT_ERRORS
+        LOGINFO("unable to update logical partition: %s\n", twrpPart->Get_Mount_Point().c_str());
+        #else
         LOGERR("unable to update logical partition: %s\n", twrpPart->Get_Mount_Point().c_str());
+        #endif
         return false;
     }
 
