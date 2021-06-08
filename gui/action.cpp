@@ -1851,10 +1851,8 @@ int GUIAction::partitionsd(std::string arg __unused)
 
   if (simulate)
     {
-      TWPartition *SDCard = PartitionManager.Find_Partition_By_Path(DataManager::GetCurrentPartPath());
       LOGINFO("DEBUG: Selected partition: %s\n", DataManager::GetCurrentPartPath().c_str());
       simulate_progress_bar();
-      if (SDCard) { } // avoid warnings
     }
   else
     {
