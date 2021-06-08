@@ -2750,13 +2750,13 @@ bool TWFunc::PackRepackImage_MagiskBoot(bool do_unpack, bool is_boot)
      }
  */
   TWPartition *Boot = PartitionManager.Find_Partition_By_Path("/boot");
-  TWPartition *Recovery = PartitionManager.Find_Partition_By_Path("/recovery");
 
 #if defined(AB_OTA_UPDATER) || defined(OF_AB_DEVICE)
   if (Boot != NULL)
     {
        tmpstr = Boot->Actual_Block_Device;
 #else 
+  TWPartition *Recovery = PartitionManager.Find_Partition_By_Path("/recovery");
   if (Boot != NULL && Recovery != NULL)
     {
       if (is_boot)
