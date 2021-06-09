@@ -186,6 +186,7 @@
 		<image name="add_image" filename="Default/Icons/image" retainaspect="1"/>
 		<image name="image_off" filename="Default/Icons/image_off" retainaspect="1"/>
 		<image name="logo_icon" filename="Default/Icons/logo" retainaspect="1"/>
+		<image name="user" filename="Default/Icons/user" retainaspect="1"/>
 		
 		<!-- Other -->
 		<image name="actionbar_show" filename="Default/Other/show" retainaspect="1"/>
