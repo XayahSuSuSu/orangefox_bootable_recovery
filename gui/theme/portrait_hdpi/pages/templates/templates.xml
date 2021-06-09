@@ -831,7 +831,7 @@
 
 			<text style="text_ab_subtitle">
 				<placement x="%center_x%" y="%centered_title_2%" placement="4"/>
-				<text>{@decrypt}</text>
+				<text>{@decrypt} %tw_crypto_user_id%</text>
 			</text>
 
 			<image>

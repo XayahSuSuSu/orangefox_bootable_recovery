@@ -345,6 +345,10 @@
 				<condition var1="of_decrypt_from_menu" var2="1"/>
 				<action function="page">advanced</action>
 			</action>
+			<action>
+				<condition var1="of_decrypt_from_menu" var2="2"/>
+				<action function="page">decrypt_users</action>
+			</action>
 		</page>
 
 		<page name="trydecrypt">
@@ -422,6 +426,41 @@
 			</text>
 
 			<template name="action_page_console_big"/>
+		</page>
+
+		<page name="decrypt_users">
+			<listbox style="btn_list">
+				<placement x="0" y="%ab_h%" w="%screen_w%" h="%bl_fullscreen_h%"/>
+				<icon selected="user" unselected="user" />
+				<data name="tw_crypto_user_id_list" />
+			</listbox>
+
+			<template name="base"/>
+
+            <text style="text_ab_title">
+				<placement x="%col1_x_indent%" y="%ab_bc_y%"/>
+				<text>{@decrypt_users}</text>
+			</text>
+
+			<action>
+				<condition var1="tw_crypto_user_id_list" op="modified"/>
+				<action function="set">of_decrypt_from_menu=2</action>
+				<action function="set">tw_crypto_password=</action>
+				<action function="set">tw_password_fail=0</action>
+				<action function="page">decrypt</action>
+			</action>
+
+			<template name="gestures"/>
+
+            <action>
+				<touch key="home"/>
+				<action function="page">main</action>
+			</action>
+
+			<action>
+				<touch key="back"/>
+				<action function="page">advanced</action>
+			</action>
 		</page>
 	</pages>
 </recovery>

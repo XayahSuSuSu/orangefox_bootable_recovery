@@ -158,6 +158,7 @@
 				<action function="set">tw_has_cancel=0</action>
 				<action function="set">tw_cancel_action=</action>
 				<action function="set">tw_cancel_param=</action>
+				<action function="set">tw_crypto_user_id=</action>
 				<action function="disableled"/>
 				<action function="page">%tw_clear_destination%</action>
 			</action>
