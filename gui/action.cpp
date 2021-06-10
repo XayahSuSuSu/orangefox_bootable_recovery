@@ -779,8 +779,18 @@ void GUIAction::sha512sum(char *string, char outputBuffer[129])
 
 int GUIAction::check_and_reload(std::string arg __unused)
 {
-  if (!DataManager::GetIntValue("of_decrypt_from_menu")) //int == 0
+  string mode = DataManager::GetStrValue("of_decrypt_from_menu");
+  if (mode == "0") // on startup
     return 0;
+
+  if (DataManager::GetStrValue("of_decrypt_from_menu") == "2") { // on FBE user decrypt
+    string user = DataManager::GetStrValue("tw_crypto_user_id");
+    if (user != "0") { // 
+      DataManager::SetValue("tw_file_location1", "/data/media/" + user);
+      gui_changePage("filemanagerlist");
+      return 0;
+    }
+  }
   
   if (TWFunc::Path_Exists(Fox_Home + "/.theme") || TWFunc::Path_Exists(Fox_Home + "/.navbar")) {
     PageManager::RequestReload();
