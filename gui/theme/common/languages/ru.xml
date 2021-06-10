@@ -253,7 +253,7 @@
 		<string name="unmount_btn">Размонтировать</string>
 		<string name="rb_system_btn">Система</string>
 		<string name="rb_poweroff_btn">Выключение</string>
-		<string name="rb_recovery_btn">Режим восстановления</string>
+		<string name="rb_recovery_btn">Рекавери</string>
 		<string name="rb_bootloader_btn">Загрузчик</string>
 		<string name="rb_download_btn">Режим загрузки</string>
 		<string name="rb_theme">Тема</string>

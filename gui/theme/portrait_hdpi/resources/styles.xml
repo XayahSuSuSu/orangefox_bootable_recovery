@@ -43,7 +43,7 @@
 		</style>
 
 		<style name="text_power_card">
-			<font resource="caption" color="#ffffff"/>
+			<font resource="caption" color="%text%"/>
 		</style>
 
 		<style name="text_ab_subtitle_orange">

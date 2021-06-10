@@ -245,6 +245,7 @@
 		<variable name="bl_h3" value="432"/>
 		<variable name="bl_h4" value="576"/>
 		<variable name="bl_h5" value="720"/>
+		<variable name="bl_h6" value="864"/>
 		
 		<variable name="bl_fullscreen_h" value="%screen_min_cut%-384"/>
 		<variable name="bl_files_h" value="%screen_min_cut%-600"/>

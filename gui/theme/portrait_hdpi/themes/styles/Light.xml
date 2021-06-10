@@ -92,10 +92,16 @@
 		<image name="link_icon" filename="Light/FileManager/link" retainaspect="1"/>
 		
 		<image name="search_bar" filename="Light/Controls/search" retainaspect="1"/>
+		<image name="power_card" filename="Light/Controls/power_card" retainaspect="1"/>
+		<image name="reboot_sys" filename="Light/Icons/reboot_sys" retainaspect="1"/>
+		<image name="reboot_power" filename="Light/Icons/reboot_power" retainaspect="1"/>
+		<image name="reboot_recovery" filename="Light/Icons/reboot_recovery" retainaspect="1"/>
 	</resources>
 	<variables>
 		<variable name="background" value="#ffffff"/>
 		
+		<variable name="power_hl" value="#E9E9E944"/>
+		<variable name="power_bg" value="#ffffff"/>
 		<variable name="highlight_color" value="#ffffff66"/>
 		<variable name="highlight_color_full" value="#E9E9E944"/>
 		<variable name="text" value="#202124"/>
