@@ -91,6 +91,7 @@
 		<image name="bs_btn_delete" filename="Default/Icons/bs_btn_delete" retainaspect="1"/>
 		<image name="bs_btn_rename" filename="Default/Icons/rename" retainaspect="1"/>
 		<image name="reboot_bootloader" filename="Default/Icons/reboot_bootloader" retainaspect="1"/>
+		<image name="reboot_fastboot" filename="Default/Icons/reboot_fastboot" retainaspect="1"/>
 		<image name="pass_classic" filename="Default/Icons/pass_classic" retainaspect="1"/>
 		<image name="pass_gesture" filename="Default/Icons/pass_gesture" retainaspect="1"/>
 		<image name="bs_btn_link" filename="Default/Icons/link" retainaspect="1"/>
