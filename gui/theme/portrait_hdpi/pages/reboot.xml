@@ -35,7 +35,7 @@
 				</listitem>
 				<listitem name="{@fastboot_button}">
 					<condition var1="tw_fastboot_mode" var2="1"/>
-					<icon res="reboot_bootloader"/>
+					<icon res="reboot_fastboot"/>
 					<action function="set">tw_action_param=fastboot</action>
 					<action function="page">rebootcheckoverlay</action>
 				</listitem>
