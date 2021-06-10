@@ -376,6 +376,7 @@
 		<string name="decrypt_user_success_fbe">User {1} Decrypted Successfully</string>
 		<string name="decrypt_user_fail_fbe">Failed to decrypt user {1}</string>
 		<string name="decrypt_data_user">Selected user</string>
+		<string name="data_users">Users</string>
 
 		<!-- Various console messages - these consist of user displayed messages, oftentimes errors -->
 		<string name="no_kernel_selinux">Kernel does not have support for reading SELinux contexts.</string>

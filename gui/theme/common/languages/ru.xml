@@ -880,12 +880,13 @@
 		<string name="backup_storage_warning">Резервные копии {1} не включают в себя файлы внутреннего хранилища.</string>
 		<string name="sha2_chk">Использовать SHA2</string>
 
-		<string name="decrypt_users">Расшифровка пользователей</string>
+		<string name="decrypt_users">Расшифровка пользователя</string>
 		<string name="backup_storage_undecrypt_warning">Резервная копия не будет включать файлы пользователя {1}, потому что он не расшифрован.</string>
 		<string name="decrypting_user_fbe">Попытка расшифровки FBE для пользователя {1}...</string>
 		<string name="decrypt_user_success_fbe">Пользователь {1} успешно расшифрован</string>
 		<string name="decrypt_user_fail_fbe">Ошибка расшифровки пользователя {1}</string>
 		<string name="decrypt_data_user">Выбранный пользователь</string>
+		<string name="data_users">Пользователи</string>
 		
 		<string name="install_remlatest">Убрать последний</string>
 		
