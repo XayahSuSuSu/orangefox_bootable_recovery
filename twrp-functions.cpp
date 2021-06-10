@@ -2207,6 +2207,7 @@ void TWFunc::Welcome_Message(void)
     gui_print("[Release]   : %s\n", FOX_BUILD);
     gui_print("[Codebase]  : %s\n", FOX_CURRENT_DEV_STR);
     gui_print("[Build date]: %s\n", DataManager::GetStrValue("FOX_BUILD_DATE_REAL").c_str());
+    gui_print("[Build sdk] : %s\n", Fox_Property_Get("ro.build.version.sdk").c_str());
     
     if (FOX_BUILD == "Unofficial")
       gui_print_color("warning", "[Build type]: Unofficial\n");
