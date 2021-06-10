@@ -96,8 +96,7 @@ GUIListBox::GUIListBox(xml_node<>* node) : GUIScrollList(node)
 					data.icon = mIconUnselected;
 				mListItems.push_back(data);
 			}
-		} else
-			CreateEncryptUsersList();//[f/d] TWRP realization has bad perfomance (imo)
+		}
 	} else
 		allowSelection = false;  // allows using listbox as a read-only list or menu
 
@@ -192,21 +191,21 @@ GUIListBox::~GUIListBox()
 {
 }
 
+//[f/d] this function is called only on update.
+//In TWRP it also called at init, but actually it's useless.
+//If you'll see empty users list, add fuction call to init
 void GUIListBox::CreateEncryptUsersList(void) {
-	if (mVariable != "tw_crypto_user_id_list") return;
-	LOGERR("Creating list\n");
 	mListItems.clear();
 	mVisibleItems.clear();
 	std::vector<users_struct>::iterator iter;
 	std::vector<users_struct>* Users_List = PartitionManager.Get_Users_List();
-	DataManager::GetValue("tw_crypto_user_id", currentValue);
 	unsigned int id = 0;
 	for (iter = Users_List->begin(); iter != Users_List->end(); iter++) {
 		if (!(*iter).isDecrypted) {
 			ListItem data;
 			data.displayName = (*iter).userName;
 			data.variableValue = (*iter).userId;
-			data.id = (*iter).type;
+			data.id = to_string((*iter).type);
 			data.action = NULL;
 			data.icon = mIconSelected;
 			data.selected = 0;
@@ -241,6 +240,10 @@ int GUIListBox::NotifyVarChange(const std::string& varName, const std::string& v
 
 	// Check to see if the variable that we are using to store the list selected value has been updated
 	if (varName == mVariable) {
+		if (mVariable == "tw_crypto_user_id_list" &&
+			DataManager::GetStrValue("tw_crypto_user_id_list") == "") //don't update on click 
+			CreateEncryptUsersList();
+
 		currentValue = value;
 		mUpdate = 1;
 	}
@@ -338,6 +341,7 @@ void GUIListBox::NotifySelect(size_t item_selected)
 	ListItem& item = mListItems[mVisibleItems[item_selected]];
 	
 	if (mVariable == "tw_crypto_user_id_list") {
+		DataManager::SetValue("tw_crypto_user_display", item.displayName);
 		DataManager::SetValue("tw_crypto_user_id", item.variableValue);
 		DataManager::SetValue("tw_crypto_pwtype", item.id);
 		DataManager::SetValue(mVariable, item.variableValue);

@@ -86,6 +86,7 @@
 		<variable name="tw_hidden_files" value="0" persist="1"/> 
 		<variable name="need_reboot" value="0" /> 
 		<variable name="fox_reboot_saveload_aromafm_check" value="0" /> 
+		<variable name="tw_crypto_user_id_list" value="init" /> <!-- requred to make list update -->
 		
 		<!-- Default values -->
 		<variable name="tw_hide_kb" value="0"/>
