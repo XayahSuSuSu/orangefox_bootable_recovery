@@ -39,6 +39,14 @@
 					<action function="set">tw_reload_fm=1</action>
 					<action function="page">filemanagerlist</action>
 				</listitem>
+				<listitem name="{@data_users}">
+					<icon res="user"/>
+					<condition var1="tw_is_fbe" var2="1"/>
+					<condition var1="fileexists" var2="/data/media"/>
+					<action function="set">tw_file_location1=/data/media</action>
+					<action function="set">tw_reload_fm=1</action>
+					<action function="page">filemanagerlist</action>
+				</listitem>
 				<listitem name="{@fm_books}">
 					<icon res="bs_btn_bookmark"/>
 					<action function="set">book_edit=0</action>
