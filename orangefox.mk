@@ -28,7 +28,7 @@ else
 endif
 
 ifeq ($(FOX_DEVICE_MODEL),)
-    DEVICE := $(subst omni_,,$(TARGET_PRODUCT))
+    DEVICE := $(subst twrp_,,$(TARGET_PRODUCT))
     LOCAL_CFLAGS += -DFOX_DEVICE_MODEL='"$(DEVICE)"'
 endif
 
