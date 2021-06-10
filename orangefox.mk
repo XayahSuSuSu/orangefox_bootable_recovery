@@ -18,8 +18,8 @@
 # 	Please maintain this if you use this script or any part of it
 #
 
-LOCAL_CFLAGS += -Wno-unused-parameter -Wno-unused-function -Wno-unused-variable -Wno-implicit-fallthrough
-LOCAL_CFLAGS += -Wno-format-extra-args
+#LOCAL_CFLAGS += -Wno-unused-parameter -Wno-unused-function -Wno-unused-variable -Wno-implicit-fallthrough
+#LOCAL_CFLAGS += -Wno-format-extra-args
 
 ifneq ($(FOX_VERSION),)
     LOCAL_CFLAGS += -DFOX_VERSION='"$(FOX_VERSION)"'
@@ -54,10 +54,6 @@ endif
 ifeq ($(OF_TWRP_COMPATIBILITY_MODE),1)
     LOCAL_CFLAGS += -DOF_TWRP_COMPATIBILITY_MODE='"1"'
     OF_DISABLE_MIUI_SPECIFIC_FEATURES := 1
-endif
-
-ifeq ($(OF_USE_LEGACY_CRYPTO),1)
-    LOCAL_CFLAGS += -DOF_USE_LEGACY_CRYPTO='"1"'
 endif
 
 ifeq ($(OF_SKIP_ORANGEFOX_PROCESS),1)
@@ -354,6 +350,11 @@ ifeq ($(FOX_DYNAMIC_SAMSUNG_FIX),1)
     FOX_EXCLUDE_NANO_EDITOR := 1
 endif
 
+# samsung haptics
+ifeq ($(OF_USE_SAMSUNG_HAPTICS),1)
+    TW_USE_SAMSUNG_HAPTICS := true
+endif
+
 # nano
 ifeq ($(FOX_EXCLUDE_NANO_EDITOR),1)
     TW_EXCLUDE_NANO := true
@@ -401,5 +402,10 @@ endif
 # post-format
 ifeq ($(OF_RUN_POST_FORMAT_PROCESS),1)
     LOCAL_CFLAGS += -DOF_RUN_POST_FORMAT_PROCESS='"1"'
+endif
+
+# turn some errors in mounting logical partitions into log entries only
+ifeq ($(OF_IGNORE_LOGICAL_MOUNT_ERRORS),1)
+    LOCAL_CFLAGS += -DOF_IGNORE_LOGICAL_MOUNT_ERRORS='"1"'
 endif
 #

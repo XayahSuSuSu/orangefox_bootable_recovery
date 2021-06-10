@@ -3549,7 +3549,6 @@ int TWPartitionManager::Run_OTA_Survival_Backup(bool adbbackup)
   string Backup_Name, backup_path, Backup_List, theSystem;
   unsigned long long total_bytes = 0, free_space = 0;
   TWPartition *storage = NULL;
-  std::vector < TWPartition * >::iterator subpart;
   struct tm *t;
   time_t seconds, total_start;
   size_t start_pos = 0, end_pos = 0;
@@ -4384,7 +4383,11 @@ bool TWPartitionManager::Prepare_Super_Volume(TWPartition* twrpPart) {
 
     fstab.emplace_back(fstabEntry);
     if (!fs_mgr_update_logical_partition(&fstabEntry)) {
+        #ifdef OF_IGNORE_LOGICAL_MOUNT_ERRORS
         LOGINFO("unable to update logical partition: %s\n", twrpPart->Get_Mount_Point().c_str());
+        #else
+        LOGERR("unable to update logical partition: %s\n", twrpPart->Get_Mount_Point().c_str());
+        #endif
         return false;
     }
 

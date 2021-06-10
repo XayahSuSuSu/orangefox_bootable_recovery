@@ -240,7 +240,7 @@ int twrpDigestDriver::Run_Digest() { //translate
 	DataManager::SetValue(TW_ACTION_BUSY, "1");
 	bool ret_val = 0;
 	int vector_size = PartFilenames.size();
-  	time_t seconds, total_start, total_stop;
+  	time_t total_start, total_stop;
 
     DataManager::SetValue("ui_progress", 0);
 

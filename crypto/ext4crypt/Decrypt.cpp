@@ -1210,6 +1210,7 @@ int Get_Password_Type(const userid_t user_id, std::string& filename) {
 			printf("password type: password\n");
 			printf("OrangeFox: Get_Password_Type(), crypto/ext4crypt/Decrypt.cpp\n");
 			return 1; // In OrangeFox this means password
+		}
 		return 0; // We'll try the default password
 #else
 		printf("Synthetic password support not present in TWRP\n");

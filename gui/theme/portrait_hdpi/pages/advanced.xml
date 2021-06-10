@@ -75,7 +75,7 @@
 					<action function="page">sideload</action>
 				</listitem>
 				<listitem name="{@fox_modules_hdr}">
-					<condition var1="fileexists" var2="/sdcard/Fox/FoxFiles"/>
+					<condition var1="fileexists" var2="/data/media/0"/>
 					<icon res="bs_btn_archive"/>
 					<action function="page">fox_modules</action>
 				</listitem>
@@ -86,7 +86,8 @@
 				</listitem>
 				<listitem name="{@reboot_btn}">
 					<icon res="bs_adv_reboot"/>
-					<action function="page">reboot</action>
+					<action function="set">tw_back=advanced</action>
+					<action function="overlay">reboot</action>
 				</listitem>
 				<listitem name="{@more}">
 					<condition var1="utils_show" op="!=" var2="1"/>
@@ -294,10 +295,10 @@
 				<action function="queueclear"/>
 				<action function="set">fox_m_author=DarthJabba9</action>
 				<action function="set">fox_m_name={@module_pass}</action>
-				<action function="set">tw_file=PassReset.zip</action>
-				<action function="set">tw_filename=/sdcard/Fox/FoxFiles/PassReset.zip</action>
+				<action function="set">tw_file=OF_DelPass.zip</action>
+				<action function="set">tw_filename=/FFiles/OF_DelPass/OF_DelPass.zip</action>
 				<action function="set">tw_filecheck=%tw_filename%</action>
-				<action function="set">tw_zip_location=/sdcard/Fox/FoxFiles</action>
+				<action function="set">tw_zip_location=/FFiles/OF_DelPass</action>
 				<action function="queuezip"/>
 				<action function="set">tw_notexistpage=fox_modules_confirm</action>
 				<action function="set">tw_existpage=fox_modules_confirm</action>
@@ -372,7 +373,22 @@
 			</text>
 
 			<listbox style="btn_list">
-				<placement x="0" y="%row5_3_y%" w="%screen_w%" h="%bl_h4%"/>
+				<placement x="0" y="%row5_3_y%" w="%screen_w%" h="%bl_h5%"/>
+				<listitem name="{@module_of_set}">
+					<condition var1="fileexists" var2="/FFiles/OF_backup_settings/OF_backup_settings.zip"/>
+					<icon res="bs_btn_archive"/>
+					<action function="queueclear"/>
+					<action function="set">fox_m_author=DarthJabba9</action>
+					<action function="set">fox_m_name={@module_of_set}</action>
+					<action function="set">tw_file=OF_backup_settings.zip</action>
+					<action function="set">tw_filename=/FFiles/OF_backup_settings/OF_backup_settings.zip</action>
+					<action function="set">tw_filecheck=%tw_filename%</action>
+					<action function="set">tw_zip_location=/FFiles/OF_backup_settings</action>
+					<action function="queuezip"/>
+					<action function="set">tw_notexistpage=fox_modules_confirm</action>
+					<action function="set">tw_existpage=fox_modules_confirm</action>
+					<action function="page">filecheck</action>
+				</listitem>
 				<listitem name="{@module_initd}">
 					<condition var1="fileexists" var2="/sdcard/Fox/FoxFiles/OF_initd.zip"/>
 					<icon res="bs_btn_archive"/>
@@ -635,6 +651,7 @@
 
 			<action>
 				<touch hkey="power"/>
+				<action function="set">tw_back=main</action>
 				<action function="overlay">reboot</action>
 			</action>
 			

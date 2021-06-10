@@ -103,6 +103,11 @@
 				<placement x="0" y="%nav_panel_y%" placement="2"/>
 				<image resource="nav_shadow"/>
 			</image>
+
+			<fill color="%linecolor%">
+				<condition var1="show_shadow" var2="2"/>
+				<placement x="0" y="%nav_panel_y%" w="1080" h="2" placement="2"/>
+			</fill>
 			
 			<slidervalue>
 				<condition var1="tw_has_brightnesss_file" var2="1"/>

@@ -82,7 +82,6 @@
 		<!-- Other... -->
 		<variable name="of_hide_data_hint" value="0" persist="1"/>
 		<variable name="of_hide_app_hint" value="0" persist="1"/>
-		<variable name="disable_no_os" value="0" persist="1"/>
 		<variable name="fm_auto_open" value="1" persist="1"/>
 		<variable name="tw_hidden_files" value="0" persist="1"/> 
 		<variable name="need_reboot" value="0" /> 
@@ -210,6 +209,11 @@
 		<!-- Debug -->
 		<variable name="dbg" value="page"/>
 		<variable name="dbg_b" value="main"/>
+
+		<!-- Power Menu -->
+		<variable name="pc_y" value="%cutout_w%+108"/>
+		<variable name="pc_icon_y" value="%cutout_w%+240"/>
+		<variable name="pc_text_y" value="%cutout_w%+320"/>
 		
 		<!-- Content placement -->
 		<variable name="col1_x" value="48"/>
@@ -231,6 +235,9 @@
 		<variable name="fm_search_num_h" value="%screen_min_cut%-1140"/>
 		<variable name="modern_storage_shadow_y" value="%cutout_w%+816"/>
 		<variable name="modern_storage_h" value="456"/>
+
+		<variable name="warn_center_y" value="%center_y%-40"/>
+		<variable name="warn_center2_y" value="%center_y%+40"/>
 		
 		<!-- button list height -->
 		<variable name="bl_h1" value="144"/>
@@ -334,6 +341,7 @@
 		<variable name="lb_l1" value="90"/>
 		<variable name="lb_l2" value="180"/>
 		<variable name="lb_l3" value="270"/>
+		<variable name="lb_l3_dynamic" value="%screen_min_cut%-1650"/>
 		<variable name="lb_l4" value="360"/>
 		<variable name="lb_l5" value="450"/>
 		<variable name="lb_l6" value="540"/>
@@ -360,6 +368,14 @@
 		<variable name="fileselector_spacing" value="0"/>
 		
 		<!-- Title / Title buttons -->
+		<variable name="search_files_h" value="%screen_min_cut%-674"/>
+		<variable name="search_files_y" value="360+%cutout_w%"/>
+		<variable name="search_bar_y" value="72+%cutout_w%"/>
+		<variable name="path_y" value="268+%cutout_w%"/>
+		<variable name="path_arrow_y" value="300+%cutout_w%"/>
+		<variable name="ab_search_y" value="168+%cutout_w%"/>
+		<variable name="ab_search_text_y" value="138+%cutout_w%"/>
+
 		<variable name="ab_bc_double_u_y" value="90+%cutout_w%"/>
 		<variable name="ab_bc_double_d_y" value="158+%cutout_w%"/>
 		<variable name="ab0_y" value="84+%cutout_w%"/>
@@ -406,6 +422,10 @@
 		<variable name="ab_menu_inst_5_text_y" value="%ab_menu_inst_5_y%-%ab_menu_text_offset%"/>
 		<variable name="ab_menu_inst_6_text_y" value="%ab_menu_inst_6_y%-%ab_menu_text_offset%"/>
 		
+		<!-- Bottom Warning -->
+		<variable name="row_warn_y" value="%screen_h%-380"/>
+		<variable name="row_warn2_y" value="%screen_h%-300"/>
+
 		<!-- Bottom buttons -->
 		<variable name="row_btn_bottom_y" value="%screen_h%-156"/>
 		<variable name="row_btn_y" value="%screen_h%-450"/>

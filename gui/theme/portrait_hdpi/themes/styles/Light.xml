@@ -90,6 +90,8 @@
 		<image name="block_icon" filename="Light/FileManager/block" retainaspect="1"/>
 		<image name="link_icon_small" filename="Light/FileManager/link_small" retainaspect="1"/>
 		<image name="link_icon" filename="Light/FileManager/link" retainaspect="1"/>
+		
+		<image name="search_bar" filename="Light/Controls/search" retainaspect="1"/>
 	</resources>
 	<variables>
 		<variable name="background" value="#ffffff"/>

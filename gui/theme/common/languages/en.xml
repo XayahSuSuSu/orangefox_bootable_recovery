@@ -840,6 +840,7 @@
 		<string name="module_uninstall">Uninstall</string>
 		<string name="remove_of_files">Remove OrangeFox files</string>
 		<string name="module_initd">Enable init.d support</string>
+		<string name="module_of_set">Backup OrangeFox Settings</string>
 		<string name="module_cam">Enable Camera2API</string>
 		<string name="module_pass">Remove password</string>
 		<string name="module_remove_survival">Remove all survival scripts</string>
@@ -978,8 +979,8 @@
 		<string name="symlink_file">Open real file</string>
 		
 		<!-- Files -->
-		<string name="files_show_hidden">Show hidden files in Files</string>
-		<string name="files_auto_open">Auto detect file type in Files</string>
+		<string name="files_show_hidden">Show hidden files</string>
+		<string name="files_auto_open">Auto detect file type</string>
 		<string name="file_read_error">Unable to open file!</string>
 		<string name="subs_wipe">Wipe Substratum Overlays</string>
 		<string name="sort_ex_all">All files</string>
@@ -1172,5 +1173,10 @@
 		<string name="rescue_party4">The reported problem is:</string>
 
 		<string name="restore_system_context">Unable to get default context for {1} -- Android may not boot.</string>
+		
+		<string name="batch_progress">Progress</string>
+		<string name="recovery_busy">Recovery is busy</string>
+		<string name="status_delimeter">Status bar delimiter</string>
+		<string name="status_delimeter_shadow">Shadow</string>
 	</resources>
 </language>
