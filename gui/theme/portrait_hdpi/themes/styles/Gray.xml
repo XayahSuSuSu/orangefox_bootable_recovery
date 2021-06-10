@@ -97,10 +97,16 @@
 		<image name="link_icon" filename="Default/FileManager/link" retainaspect="1"/>
 		
 		<image name="search_bar" filename="Default/Controls/search" retainaspect="1"/>
+		<image name="power_card" filename="Default/Controls/power_card" retainaspect="1"/>
+		<image name="reboot_sys" filename="Default/Icons/reboot_sys" retainaspect="1"/>
+		<image name="reboot_power" filename="Default/Icons/reboot_power" retainaspect="1"/>
+		<image name="reboot_recovery" filename="Default/Icons/reboot_recovery" retainaspect="1"/>
 	</resources>
 	<variables>
 		<variable name="background" value="#202124"/>
 		
+		<variable name="power_bg" value="#000000"/>
+		<variable name="power_hl" value="#1B1C1F"/>
 		<variable name="highlight_color" value="#20212466"/>
 		<variable name="highlight_color_full" value="#12121444"/>
 		<variable name="text" value="#FFFFFF"/>

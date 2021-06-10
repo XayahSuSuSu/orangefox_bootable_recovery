@@ -2,25 +2,25 @@
 <recovery>
 	<pages>
 		<page name="reboot">
-			<background color="#000000"/>
+			<background color="%power_bg%"/>
 			<button>
-				<fill color="#000000"/>
+				<fill color="%power_bg%"/>
 				<placement x="0" y="0" w="%screen_w%" h="%screen_h%"/>
 				<action function="key">back</action>
 			</button>
 			
-			<template name="keys"/>
 			<template name="statusbarinfo"/>
 
 			<action>
-				<action function="set">bslots_show=%auto_show_btns%%tw_has_boot_slots%</action>
+				<action function="set">bslots_show=%auto_show_btns%</action>
 			</action>
 			
 			<listbox style="btn_list">
 				<condition var1="tw_busy" op="!=" var2="1"/>
-				<background color="#000000"/>
-				<font resource="Secondary" spacing="%fileselector_spacing%" color="#ffffff"/>
-				<placement x="0" y="%row1_3a_y%" w="%screen_w%" h="%bl_h5%"/>
+				<background color="%power_bg%"/>
+				<highlight color="%power_hl%"/>
+				<font resource="Secondary" spacing="%fileselector_spacing%" color="%text%"/>
+				<placement x="0" y="%row1_3a_y%" w="%screen_w%" h="%bl_h6%"/>
 				<listitem name="{@rb_bootloader_btn}">
 					<condition var1="tw_reboot_bootloader" var2="1"/>
 					<icon res="reboot_bootloader"/>
@@ -47,41 +47,41 @@
 				</listitem>
 				<listitem name="{@slot_show}">
 					<condition var1="tw_has_boot_slots" var2="1"/>
-					<condition var1="bslots_show" op="!=" var2="11"/>
-					<condition var1="tw_back" var2="advanced"/>
+					<condition var1="bslots_show" op="!=" var2="1"/>
 					<icon res="utils"/>
-					<action function="set">bslots_show=11</action>
+					<action function="set">bslots_show=1</action>
 				</listitem>
-				<listitem name="{@hide}">
-					<condition var1="bslots_show" var2="11"/>
+				<listitem name="{@slot_show}">
+					<condition var1="bslots_show" var2="1"/>
 					<condition var1="auto_show_btns" op="!=" var2="1"/>
 					<icon res="hide"/>
+					<action function="set">bslots_show=0</action>
 					<action function="overlay"/>
 					<action function="overlay">reboot</action>
 				</listitem>
 				<listitem name="{@slot_switch_a}">
-					<condition var1="bslots_show" var2="11"/>
+					<condition var1="bslots_show" var2="1"/>
 					<condition var1="tw_active_slot" var2="B"/>
 					<icon res="a_off"/>
 					<action function="set">tw_action_param=A</action>
 					<action function="page">set_slot</action>
 				</listitem>
 				<listitem name="{@slot_active_a}">
-					<condition var1="bslots_show" var2="11"/>
+					<condition var1="bslots_show" var2="1"/>
 					<condition var1="tw_active_slot" var2="A"/>
 					<icon res="a_on"/>
 					<action function="set">tw_action_param=A</action>
 					<action function="page">set_slot</action>
 				</listitem>
 				<listitem name="{@slot_switch_b}">
-					<condition var1="bslots_show" var2="11"/>
+					<condition var1="bslots_show" var2="1"/>
 					<condition var1="tw_active_slot" var2="A"/>
 					<icon res="b_off"/>
 					<action function="set">tw_action_param=B</action>
 					<action function="page">set_slot</action>
 				</listitem>
 				<listitem name="{@slot_active_b}">
-					<condition var1="bslots_show" var2="11"/>
+					<condition var1="bslots_show" var2="1"/>
 					<condition var1="tw_active_slot" var2="B"/>
 					<icon res="b_on"/>
 					<action function="set">tw_action_param=B</action>
@@ -176,6 +176,10 @@
 				<placement x="%center_x%" y="%warn_center2_y%" placement="4"/>
 				<text>{@recovery_busy}</text>
 			</text>
+
+			<template name="keys"/>
+			<template name="navbar"/>
+			<template name="gestures"/>
 
 			<action>
 				<touch key="home"/>

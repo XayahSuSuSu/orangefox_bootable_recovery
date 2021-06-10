@@ -64,7 +64,6 @@
 		<image name="btn_raised_warn" filename="Default/Controls/btn_raised_warn"/>
 		<image name="checkbox_false" filename="Default/Controls/checkbox_false_d" retainaspect="1"/>
 		<image name="radio_false" filename="Default/Controls/radio_false_d" retainaspect="1"/>
-		<image name="power_card" filename="Default/Controls/power_card" retainaspect="1"/>
 		
 		<!-- Icons -->
 		<image name="bs_btn_open" filename="Default/Icons/bs_btn_open" retainaspect="1"/>
@@ -91,10 +90,7 @@
 		<image name="bs_btn_chmod" filename="Default/Icons/bs_btn_chmod" retainaspect="1"/>
 		<image name="bs_btn_delete" filename="Default/Icons/bs_btn_delete" retainaspect="1"/>
 		<image name="bs_btn_rename" filename="Default/Icons/rename" retainaspect="1"/>
-		<image name="reboot_sys" filename="Default/Icons/reboot_sys" retainaspect="1"/>
 		<image name="reboot_bootloader" filename="Default/Icons/reboot_bootloader" retainaspect="1"/>
-		<image name="reboot_power" filename="Default/Icons/reboot_power" retainaspect="1"/>
-		<image name="reboot_recovery" filename="Default/Icons/reboot_recovery" retainaspect="1"/>
 		<image name="pass_classic" filename="Default/Icons/pass_classic" retainaspect="1"/>
 		<image name="pass_gesture" filename="Default/Icons/pass_gesture" retainaspect="1"/>
 		<image name="bs_btn_link" filename="Default/Icons/link" retainaspect="1"/>
