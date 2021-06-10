@@ -1865,9 +1865,12 @@ void TWPartitionManager::Parse_Users() {
 
 			// Attempt to get name of user. Fallback to user ID if this fails.
 			char* userFile = PageManager::LoadFileToBuffer("/data/system/users/" + to_string(userId) + ".xml", NULL);
-			if (userFile == NULL) 
-				user.userName = to_string(userId);
-			else {
+			if (userFile == NULL) {
+				if (userId == 0)
+					user.userName = gui_parse_text("{@user_owner}");
+				else
+					user.userName = to_string(userId);
+			} else {
 				xml_document<> *userXml = new xml_document<>();
 				userXml->parse<0>(userFile);
 				xml_node<>* userNode = userXml->first_node("user");

@@ -16,6 +16,7 @@
 					<action function="overlay">dialog_app</action>
 				</listitem>
 				<listitem name="{@decrypt_data_btn}">
+					<condition var1="tw_is_fbe" op="!=" var2="1"/>
 					<condition var1="tw_is_encrypted" var2="1"/>
 					<condition var1="tw_is_decrypted" var2="0"/>
 					<icon res="bs_adv_frp"/>
@@ -30,8 +31,6 @@
 					<condition var1="tw_is_fbe" var2="1"/>
 					<condition var1="tw_all_users_decrypted" var2="0"/>
 					<icon res="bs_adv_frp"/>
-					<action function="set">tw_crypto_user_id_list=</action>
-					<action function="set">tw_crypto_user_id=</action>
 					<action function="page">decrypt_users</action>
 				</listitem>
 				<listitem name="{@hint_ffiles_missing}">
