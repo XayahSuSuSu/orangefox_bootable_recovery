@@ -42,32 +42,6 @@
 					<action function="set">ft_mm_found=0</action>
 					<action function="page">magisk_mount</action>
 				</listitem>
-				<listitem name="{@appmgr_title}">
-					<icon res="apps"/>
-					<action function="page">apps_load</action>
-				</listitem>
-				<listitem name="AromaFM">
-					<condition var1="aroma_help" op="!=" var2="1"/>
-					<condition var1="fileexists" var2="/sdcard/Fox/FoxFiles/AromaFM/AromaFM.zip"/>
-					<icon res="bs_adv_aroma"/>
-					<action function="set">aroma_help=1</action>
-				</listitem>
-				<listitem name="{@aroma_help}">
-					<condition var1="aroma_help" var2="1"/>
-					<icon res="bs_adv_aroma"/>
-					<action function="queueclear"/>
-					<action function="set">fox_install_built_in_zip=1</action>
-					<action function="set">tw_signed_zip_verify_tmp=%tw_signed_zip_verify%</action>
-					<action function="set">tw_signed_zip_verify=0</action>
-					<action function="set">fox_inject_after_zip_tmp=%fox_inject_after_zip%</action>
-					<action function="set">fox_inject_after_zip=0</action>
-					<action function="set">tw_screen_timeout_temp=%tw_screen_timeout_secs%</action>
-					<action function="set">tw_screen_timeout_secs=0</action>
-					<action function="set">tw_filename=/sdcard/Fox/FoxFiles/AromaFM/AromaFM.zip</action>
-					<action function="set">qcount_temp=1</action>
-					<action function="queuezip"/>
-					<action function="flash">aroma_busy</action>
-				</listitem>
 				<listitem name="{@adb_sideload_btn}">
 					<icon res="bs_adv_adb"/>
 					<action function="set">fox_adb=0</action>
@@ -153,6 +127,35 @@
 					<action function="set">tw_complete_text1={@fix_recovery_loop_complete}</action>
 					<action function="set">tw_slider_text={@swipe_to_confirm}</action>
 					<action function="page">confirm_action</action>
+				</listitem>
+				<listitem name="{@appmgr_title}">
+					<condition var1="utils_show" var2="1"/>
+					<icon res="apps"/>
+					<action function="page">apps_load</action>
+				</listitem>
+				<listitem name="AromaFM">
+					<condition var1="utils_show" var2="1"/>
+					<condition var1="aroma_help" op="!=" var2="1"/>
+					<condition var1="fileexists" var2="/sdcard/Fox/FoxFiles/AromaFM/AromaFM.zip"/>
+					<icon res="bs_adv_aroma"/>
+					<action function="set">aroma_help=1</action>
+				</listitem>
+				<listitem name="{@aroma_help}">
+					<condition var1="utils_show" var2="1"/>
+					<condition var1="aroma_help" var2="1"/>
+					<icon res="bs_adv_aroma"/>
+					<action function="queueclear"/>
+					<action function="set">fox_install_built_in_zip=1</action>
+					<action function="set">tw_signed_zip_verify_tmp=%tw_signed_zip_verify%</action>
+					<action function="set">tw_signed_zip_verify=0</action>
+					<action function="set">fox_inject_after_zip_tmp=%fox_inject_after_zip%</action>
+					<action function="set">fox_inject_after_zip=0</action>
+					<action function="set">tw_screen_timeout_temp=%tw_screen_timeout_secs%</action>
+					<action function="set">tw_screen_timeout_secs=0</action>
+					<action function="set">tw_filename=/sdcard/Fox/FoxFiles/AromaFM/AromaFM.zip</action>
+					<action function="set">qcount_temp=1</action>
+					<action function="queuezip"/>
+					<action function="flash">aroma_busy</action>
 				</listitem>
 			</listbox>
 
