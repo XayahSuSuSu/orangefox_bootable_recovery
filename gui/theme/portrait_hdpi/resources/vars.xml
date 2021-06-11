@@ -253,6 +253,8 @@
 		<variable name="input_btn_list_y" value="674+%cutout_w%"/>
 
 		<variable name="down_menu_btn_y" value="%screen_h%-576"/>
+		<variable name="down_menu_btn2_y" value="%screen_h%-432"/>
+		<variable name="down_menu_btn2_caption_y" value="%screen_h%-448"/>
 		<variable name="down_menu_y" value="%screen_h%-1008"/>
 		
 		<!-- chmod -->
