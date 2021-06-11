@@ -42,6 +42,8 @@
 #include <cctype>
 #include <algorithm>
 #include <ctime>
+#include <locale>
+#include <codecvt>
 #include <selinux/label.h>
 #include <android-base/properties.h>
 
@@ -1259,6 +1261,29 @@ int TWFunc::read_file(string fn, vector < string > &results)
     }
   LOGINFO("Cannot find file %s\n", fn.c_str());
   return -1;
+}
+
+int TWFunc::read_file(string fn, vector < wstring > &results)
+{
+  wifstream file;
+  wstring line;
+  file.open(fn.c_str(), ios::in);
+  if (file.is_open())
+    {
+      while (getline(file, line))
+	results.push_back(line);
+      file.close();
+      return 0;
+    }
+  LOGINFO("Cannot find file %s\n", fn.c_str());
+  return -1;
+}
+
+string TWFunc::wstr_to_str(wstring wstr) {
+  using convert_type = std::codecvt_utf8<wchar_t>;
+  std::wstring_convert<convert_type, wchar_t> converter;
+
+  return converter.to_bytes(wstr);
 }
 
 int TWFunc::read_file(string fn, uint64_t & results)

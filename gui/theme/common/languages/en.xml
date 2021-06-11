@@ -989,7 +989,10 @@
 		<!-- Files -->
 		<string name="files_show_hidden">Show hidden files</string>
 		<string name="files_auto_open">Auto detect file type</string>
+		<string name="file_read">Reading file: {1}</string>
 		<string name="file_read_error">Unable to open file!</string>
+		<string name="file_read_error_size">File is bigger than 1.5MB!</string>
+		<string name="file_read_error_bin">Can't read binary file!</string>
 		<string name="subs_wipe">Wipe Substratum Overlays</string>
 		<string name="sort_ex_all">All files</string>
 		<string name="sort_ex_img">IMG files</string>

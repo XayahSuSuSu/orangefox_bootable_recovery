@@ -216,6 +216,79 @@ void GUIListBox::CreateEncryptUsersList(void) {
 	}
 }
 
+//[f/d]
+void GUIListBox::ReadFileToList(const char* fileName) {
+	gui_msg(Msg(msg::kNormal, "file_read=Reading file: {1}")(fileName));
+	mListItems.clear();
+	mVisibleItems.clear();
+	SetVisibleListLocation(0);
+	string error = "Error";
+	std::vector<wstring> lines;
+
+	lines.push_back(L"");
+	
+	if (TWFunc::Get_File_Size(fileName) > 1572864) //1.5mb
+		error = gui_parse_text("{@file_read_error_size=File is bigger than 1.5MB!}");
+	else if (TWFunc::read_file(fileName, lines) == 0) {
+		if ((lines[0] + lines[1]).find('\0') != std::string::npos) // i
+			error = gui_parse_text("{@file_read_error_bin=Can't read binary file!}");
+		else {
+			lines.push_back(L"");
+			unsigned int vector_size = lines.size();
+			for (unsigned int i = 0; i < vector_size; i++) {
+				wstring line = lines[i];
+				size_t len = line.length();
+				
+				if (len <= 54) {
+					ListItem item;
+					item.displayName = TWFunc::wstr_to_str(line);
+					item.variableValue = "";
+					item.selected = 1;
+					item.action = NULL;
+					item.hasicon = false;
+
+					mListItems.push_back(item);
+					mVisibleItems.push_back(mListItems.size()-1);
+				} else {
+					size_t off = 0;
+					do {
+						ListItem item;
+						
+						item.displayName = TWFunc::wstr_to_str(line.substr(off, 54));
+						item.variableValue = "";
+						item.selected = 0;
+						item.action = NULL;
+						item.hasicon = false;
+
+						mListItems.push_back(item);
+						mVisibleItems.push_back(mListItems.size()-1);
+						off += 54;
+					} while (off < len);
+				}
+			}
+  			gui_msg("done=Done.");
+			return;
+		}
+	} else
+		error = gui_parse_text("{@file_read_error=Unable to open file!}");
+		
+	for (int i = 0; i < 2; i++)
+	{
+		ListItem item;
+		item.displayName = i == 1 ? error : "";
+		item.selected = 0;
+		item.action = NULL;
+		item.hasicon = false;
+		item.variableValue = "";
+		
+		mListItems.push_back(item);
+		mVisibleItems.push_back(mListItems.size()-1);
+	}
+	
+
+	gui_print_color("warning", "%s\n", error.c_str());
+}
+
 int GUIListBox::Update(void)
 {
 	if (!isConditionTrue())
@@ -243,6 +316,14 @@ int GUIListBox::NotifyVarChange(const std::string& varName, const std::string& v
 		if (mVariable == "tw_crypto_user_id_list" &&
 			DataManager::GetStrValue("tw_crypto_user_id_list") == "") //don't update on click 
 			CreateEncryptUsersList();
+
+		if (mVariable == "of_file_to_read" && currentValue != value) {
+			if (value == "") {
+				mListItems.clear(); //free memory or something
+				mVisibleItems.clear();
+			} else
+				ReadFileToList(value.c_str());
+		}
 
 		currentValue = value;
 		mUpdate = 1;
@@ -331,6 +412,7 @@ void GUIListBox::RenderItem(size_t itemindex, int yPos, bool selected)
 
 void GUIListBox::NotifySelect(size_t item_selected)
 {
+	if (mVariable == "of_file_to_read") return;
 	if (!isCheckList) {
 		// deselect all items, even invisible ones
 		for (size_t i = 0; i < mListItems.size(); i++) {
