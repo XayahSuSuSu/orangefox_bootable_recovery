@@ -2293,8 +2293,14 @@
 
 		<page name="cat_file">
 			<action>
-				<action function="terminalcommand">cat '%tw_filename1%'</action>
+				<action function="set">of_file_to_read=%tw_filename1%</action>
 			</action>
+
+			<listbox style="textbox">
+				<font resource="fixed" spacing="1" color="%text%"/>
+				<placement x="%col1_x%" y="%ab_ex_h%" w="%console_width%" h="%fileselector_terminal_height%"/>
+				<data name="of_file_to_read" />
+			</listbox>
 			
 			<template name="base_ex"/>
 			
@@ -2321,26 +2327,17 @@
 				<text>%tw_filename1%</text>
 			</text>
 
-			<console>
-				<placement x="%col1_x%" y="%console_y%" w="%console_width%" h="%console_action_height_fm%"/> 
-				<condition var1="use_fixed_font" var2="0"/>
-			</console>
-
-			<console>
-				<placement x="%col1_x%" y="%console_y%" w="%console_width%" h="%console_action_height_fm%"/> 
-				<condition var1="use_fixed_font" var2="1"/>
-				<font resource="fixed"/>
-			</console>
-
 			<template name="gestures"/>
 
 			<action>
 				<touch key="home"/>
+				<action function="set">of_file_to_read=</action>
 				<action function="page">main</action>
 			</action>
 
 			<action>
 				<touch key="back"/>
+				<action function="set">of_file_to_read=</action>
 				<action function="page">filemanagerlist</action>
 			</action>
 		</page>

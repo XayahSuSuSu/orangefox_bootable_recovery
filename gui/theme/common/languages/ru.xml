@@ -1023,7 +1023,10 @@
 		<!-- Files -->
 		<string name="files_show_hidden">Показывать скрытые файлы</string>
 		<string name="files_auto_open">Автооткрытие файлов</string>
+		<string name="file_read">Чтение файла: {1}</string>
 		<string name="file_read_error">Невозможно открыть файл!</string>
+		<string name="file_read_error_size">Файл больше 1.5MБ!</string>
+		<string name="file_read_error_bin">Невозможно прочитать бинарный файл!</string>
 		<string name="sort_ex_all">Все файлы</string>
 		<string name="sort_ex_img">IMG файлы</string>
 		<string name="sort_ex_zip">ZIP файлы</string>

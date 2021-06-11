@@ -737,6 +737,7 @@ public:
 	//  Return 0 if nothing to update, 1 on success and contiue, >1 if full render required, and <0 on error
 	virtual int Update(void);
 	virtual void CreateEncryptUsersList(void);
+	virtual void ReadFileToList(const char* fileName);
 
 	// NotifyVarChange - Notify of a variable change
 	virtual int NotifyVarChange(const std::string& varName, const std::string& value);
