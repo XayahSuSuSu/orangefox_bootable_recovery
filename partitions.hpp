@@ -454,6 +454,8 @@ private:
 	int mtp_write_fd;
 	pid_t tar_fork_pid;                                                       // PID of twrpTar fork
 	Backup_Method_enum Backup_Method;                                         // Method used for backup
+	std::string original_ramdisk_format;                                      // Ramdisk format of boot partition
+	std::string repacked_ramdisk_format;                                      // Ramdisk format of boot image to repack from
 	void Mark_User_Decrypted(int userID);                                     // Marks given user ID in Users_List as decrypted
 	void Check_Users_Decryption_Status();                                      // Checks to see if all users are decrypted
 

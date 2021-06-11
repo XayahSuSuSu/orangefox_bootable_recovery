@@ -698,6 +698,7 @@ void TWPartition::Setup_Data_Partition(bool Display_Error) {
 					Current_File_System = "emmc";
 					Setup_Image();
 					DataManager::SetValue(TW_CRYPTO_PWTYPE, cryptfs_get_password_type());
+					DataManager::SetValue("tw_crypto_pwtype_0", cryptfs_get_password_type());
 					DataManager::SetValue(TW_CRYPTO_PASSWORD, "");
 					DataManager::SetValue("tw_crypto_display", "");
 				} else {
@@ -708,7 +709,8 @@ void TWPartition::Setup_Data_Partition(bool Display_Error) {
 				Is_Decrypted = false;
 			}
 		} else if (Key_Directory.empty()) {
-			LOGERR("Primary block device '%s' for mount point '%s' is not present!\n", Primary_Block_Device.c_str(), Mount_Point.c_str());
+			LOGERR("Primary block device '%s' for mount point '%s' is not present!\n",
+			Primary_Block_Device.c_str(), Mount_Point.c_str());
 		}
 	} else {
 		Set_FBE_Status();
@@ -771,8 +773,8 @@ if (TWFunc::Path_Exists("/data/unencrypted/key/version")) {
 		LOGINFO("File Based Encryption is present\n");
 #ifdef TW_INCLUDE_FBE
 	#ifdef OF_SKIP_FBE_DECRYPTION
-		LOGINFO("Skip FBE decryption is triggered. I will not try to decrypt ...\n"); // TODO: perhaps this is no longer required?
-		return false;
+	    LOGINFO("Skip FBE decryption is triggered. I will not try to decrypt ...\n"); // TODO: perhaps this is no longer required?
+	    return false;
 	#endif
 	Is_FBE = true;
 	ExcludeAll(Mount_Point + "/convert_fbe");
@@ -792,7 +794,6 @@ if (TWFunc::Path_Exists("/data/unencrypted/key/version")) {
 	ExcludeAll(Mount_Point + "/cache");
 	ExcludeAll(Mount_Point + "/system/users/0");
 	ExcludeAll(Mount_Point + "/per_boot"); // removed each boot by init
-	
 	int retry_count = 3;
 	while (!Decrypt_DE() && --retry_count)
 		usleep(2000);
@@ -821,6 +822,7 @@ if (TWFunc::Path_Exists("/data/unencrypted/key/version")) {
 		}
 		TWPartition::Fox_Add_Backup_Exclusions();
 		DataManager::SetValue(TW_CRYPTO_PWTYPE, pwd_type);
+		DataManager::SetValue("tw_crypto_pwtype_0", pwd_type);
 		DataManager::SetValue(TW_CRYPTO_PASSWORD, "");
 		DataManager::SetValue("tw_crypto_display", "");
 		return true;
@@ -2715,6 +2717,22 @@ bool TWPartition::Backup_Tar(PartitionSettings *part_settings, pid_t *tar_fork_p
 	Full_FileName = part_settings->Backup_Folder + "/" + Backup_FileName;
 	if (Has_Data_Media)
 		gui_msg(Msg(msg::kWarning, "backup_storage_warning=Backups of {1} do not include any files in internal storage such as pictures or downloads.")(Display_Name));
+	if (Mount_Point == "/data" && DataManager::GetIntValue(TW_IS_FBE)) {
+		std::vector<users_struct>::iterator iter;
+		std::vector<users_struct>* userList = PartitionManager.Get_Users_List();
+		for (iter = userList->begin(); iter != userList->end(); iter++) {
+			if (!(*iter).isDecrypted && (*iter).userId != "0") {
+				gui_msg(Msg(msg::kWarning,
+				"backup_storage_undecrypt_warning=Backup will not include some files from user {1} "
+				"because the user is not decrypted.")((*iter).userId));
+				backup_exclusions.add_absolute_dir("/data/system_ce/" + (*iter).userId);
+				backup_exclusions.add_absolute_dir("/data/misc_ce/" + (*iter).userId);
+				backup_exclusions.add_absolute_dir("/data/vendor_ce/" + (*iter).userId);
+				backup_exclusions.add_absolute_dir("/data/media/" + (*iter).userId);
+				backup_exclusions.add_absolute_dir("/data/user/" + (*iter).userId);
+			}
+		}
+	}
 	tar.part_settings = part_settings;
 	tar.backup_exclusions = &backup_exclusions;
 	tar.setdir(Backup_Path);

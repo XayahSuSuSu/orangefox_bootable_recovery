@@ -116,6 +116,7 @@ using android::fs_mgr::Fstab;
 using android::fs_mgr::FstabEntry;
 
 extern bool datamedia;
+std::vector<users_struct> Users_List;
 
 TWPartitionManager::TWPartitionManager(void) {
 	mtp_was_enabled = false;
@@ -466,11 +467,12 @@ void TWPartitionManager::Decrypt_Data() {
 				}
 			} else {
 				DataManager::SetValue("TW_CRYPTO_TYPE", password_type);
-				// DataManager::SetValue("tw_crypto_pwtype_0", password_type);
+				DataManager::SetValue("tw_crypto_pwtype_0", password_type);
 			}
 		}
 	}
-	if (Decrypt_Data && (!Decrypt_Data->Is_Encrypted || Decrypt_Data->Is_Decrypted) && Decrypt_Data->Mount(false)) {
+	if (Decrypt_Data && (!Decrypt_Data->Is_Encrypted || Decrypt_Data->Is_Decrypted) &&
+	Decrypt_Data->Mount(false)) {
 		Decrypt_Adopted();
 	}
 #endif
@@ -1863,9 +1865,8 @@ void TWPartitionManager::Parse_Users() {
 
 			// Attempt to get name of user. Fallback to user ID if this fails.
 			char* userFile = PageManager::LoadFileToBuffer("/data/system/users/" + to_string(userId) + ".xml", NULL);
-			if (userFile == NULL) {
+			if (userFile == NULL) 
 				user.userName = to_string(userId);
-			}
 			else {
 				xml_document<> *userXml = new xml_document<>();
 				userXml->parse<0>(userFile);
@@ -1960,54 +1961,84 @@ int TWPartitionManager::Decrypt_Device(string Password, int user_id) {
   if (DataManager::GetIntValue(TW_IS_FBE))
     {
 #ifdef TW_INCLUDE_FBE
-      if (!Mount_By_Path("/data", true))	// /data has to be mounted for FBE
-	return -1;
-      int retry_count = 10;
-      while (!TWFunc::Path_Exists("/data/system/users/gatekeeper.password.key") && --retry_count)
-		usleep(2000);	// A small sleep is needed after mounting /data to ensure reliable decrypt... maybe because of DE?
-      int user_id = DataManager::GetIntValue("tw_decrypt_user_id");
-      gui_print("Attempting to decrypt FBE for user %i\n", user_id);
-      if (Decrypt_User(user_id, Password))
-	{
-	  gui_print("User %i Decrypted Successfully\n", user_id);
-	  property_set("twrp.all.users.decrypted", "true");
-	  Post_Decrypt("");
-	  return 0;
-	}
+		if (!Mount_By_Path("/data", true)) // /data has to be mounted for FBE
+			return -1;
+
+		bool user_need_decrypt = false;
+		std::vector<users_struct>::iterator iter;
+		for (iter = Users_List.begin(); iter != Users_List.end(); iter++) {
+			if (atoi((*iter).userId.c_str()) == user_id && !(*iter).isDecrypted) {
+				user_need_decrypt = true;
+			}
+		}
+		if (!user_need_decrypt) {
+			LOGINFO("User %d does not require decryption\n", user_id);
+			return 0;
+		}
+
+		int retry_count = 10;
+		while (!TWFunc::Path_Exists("/data/system/users/gatekeeper.password.key") && --retry_count)
+			usleep(2000); // A small sleep is needed after mounting /data to ensure reliable decrypt...maybe because of DE?
+		gui_msg(Msg("decrypting_user_fbe=Attempting to decrypt FBE for user {1}...")(user_id));
+		if (Decrypt_User(user_id, Password)) {
+			gui_msg(Msg("decrypt_user_success_fbe=User {1} Decrypted Successfully")(user_id));
+			Mark_User_Decrypted(user_id);
+			if (user_id == 0) {
+				// When decrypting user 0 also try all other users
+				std::vector<users_struct>::iterator iter;
+				for (iter = Users_List.begin(); iter != Users_List.end(); iter++) {
+					if ((*iter).userId == "0" || (*iter).isDecrypted)
+						continue;
+
+					int tmp_user_id = atoi((*iter).userId.c_str());
+					gui_msg(Msg("decrypting_user_fbe=Attempting to decrypt FBE for user {1}...")(tmp_user_id));
+					if (Decrypt_User(tmp_user_id, Password) ||
+					(Password != "!" && Decrypt_User(tmp_user_id, "!"))) { // "!" means default password
+						gui_msg(Msg("decrypt_user_success_fbe=User {1} Decrypted Successfully")(tmp_user_id));
+						Mark_User_Decrypted(tmp_user_id);
+					} else {
+						gui_msg(Msg("decrypt_user_fail_fbe=Failed to decrypt user {1}")(tmp_user_id));
+					}
+				}
+				Post_Decrypt("");
+			}
+
+			return 0;
+		} else {
+			gui_msg(Msg(msg::kError, "decrypt_user_fail_fbe=Failed to decrypt user {1}")(user_id));
+		}
 #else
       LOGERR("FBE support is not present\n");
 #endif
-      return -1;
-    }
+		return -1;
+	}
 
-  int pwret = -1;
-  pid_t pid = fork();
-  if (pid < 0)
-    {
-      LOGERR("fork failed\n");
-      return -1;
-    }
-  else if (pid == 0)
-    {
-      // Child process
-      char cPassword[255];
-      strcpy(cPassword, Password.c_str());
-      int ret = cryptfs_check_passwd(cPassword);
-      exit(ret);
-    }
-  else
-    {
-      // Parent
-      int status;
-      int decrypt_timeout = 30; // DJ9: original=30
-      #ifdef OF_REDUCE_DECRYPTION_TIMEOUT
-      decrypt_timeout = 20; // reduce the decryption timeout
-      #endif
-      if (TWFunc::Wait_For_Child_Timeout(pid, &status, "Decrypt", decrypt_timeout)) // DJ9
-	pwret = -1;
-      else
-	pwret = WEXITSTATUS(status) ? -1 : 0;
-    }
+	char isdecrypteddata[PROPERTY_VALUE_MAX];
+	property_get("twrp.decrypt.done", isdecrypteddata, "");
+	if (strcmp(isdecrypteddata, "true") == 0) {
+		LOGINFO("Data has no decryption required\n");
+		return 0;
+	}
+
+	int pwret = -1;
+	pid_t pid = fork();
+	if (pid < 0) {
+		LOGERR("fork failed\n");
+		return -1;
+	} else if (pid == 0) {
+		// Child process
+		char cPassword[255];
+		strcpy(cPassword, Password.c_str());
+		int ret = cryptfs_check_passwd(cPassword);
+		exit(ret);
+	} else {
+		// Parent
+		int status;
+		if (TWFunc::Wait_For_Child_Timeout(pid, &status, "Decrypt", 30))
+			pwret = -1;
+		else
+			pwret = WEXITSTATUS(status) ? -1 : 0;
+	}
 
 #ifdef TW_CRYPTO_USE_SYSTEM_VOLD
   if (pwret != 0)

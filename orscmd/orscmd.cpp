@@ -49,7 +49,7 @@ void print_usage(void) {
 	printf("  format data\n");	
 	printf("  sideload\n");
 	printf("  set <variable> [value]\n");
-	printf("  decrypt <password>\n");
+	printf("  decrypt <password> [USER ID]\n");
 	printf("  remountrw\n");
 	printf("  fixperms\n");
 	printf("  set_active [slot]\n");
