@@ -367,8 +367,13 @@ endif
 ifneq ($(TW_EXCLUDE_NANO), true)
     ifeq ($(wildcard external/nano/Android.mk),)
         $(warning Nano sources not found! You need to clone the sources.)
-        $(warning Please run: "git clone --depth=1 https://github.com/LineageOS/android_external_nano -b lineage-17.1 external/nano")
+        $(warning Please run: "git clone --depth=1 https://github.com/LineageOS/android_external_nano -b lineage-18.1 external/nano")
         $(error Nano sources not present; exiting)
+    endif
+    ifeq ($(wildcard external/libncurses/Android.mk),)
+        $(warning Libncurses not found! You need to clone the sources.)
+        $(warning Please run: "git clone --depth=1 https://github.com/LineageOS/android_external_libncurses -b lineage-18.1 external/libncurses")
+        $(error Libncurses sources not present; exiting)
     endif
 endif
 
@@ -376,7 +381,7 @@ endif
 ifeq ($(FOX_BUILD_BASH),1)
   ifeq ($(wildcard external/bash/Android.mk),)
         $(warning Bash sources not found! You need to clone the sources.)
-        $(warning Please run: "git clone --depth=1 https://github.com/LineageOS/android_external_bash -b lineage-17.1 external/bash")
+        $(warning Please run: "git clone --depth=1 https://github.com/LineageOS/android_external_bash -b lineage-18.1 external/bash")
         $(error Bash sources not present; exiting)
   endif
   RECOVERY_BINARY_SOURCE_FILES += $(TARGET_OUT_OPTIONAL_EXECUTABLES)/bash
