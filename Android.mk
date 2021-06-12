@@ -1,5 +1,8 @@
 # Copyright (C) 2007 The Android Open Source Project
 #
+# This file is part of the OrangeFox Recovery Project
+# Copyright (C) 2018-2021 The OrangeFox Recovery Project
+#
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
@@ -526,7 +529,29 @@ LOCAL_MODULE_TAGS := optional
 LOCAL_REQUIRED_MODULES := file_contexts.bin
 
 LOCAL_POST_INSTALL_CMD := \
-    $(hide) cp -f $(PRODUCT_OUT)/obj/ETC/file_contexts.bin_intermediates/file_contexts.concat.tmp $(TARGET_RECOVERY_ROOT_OUT)/file_contexts
+    $(hide) cp -f $(PRODUCT_OUT)/obj/ETC/file_contexts.bin_intermediates/file_contexts.concat.tmp $(TARGET_RECOVERY_ROOT_OUT)/file_contexts;
+
+# Darth9
+# copy the twres/ files if not being done otherwise
+ifeq ($(OF_MANUAL_COPY_TWRES),1)
+FOX_GUI_THEME_PATH := $(LOCAL_PATH)/gui/theme
+FOX_TWRP_THEME_LOC := $(FOX_GUI_THEME_PATH)/$(TW_THEME)
+FOX_TARGET_TWRES_PATH := $(TARGET_RECOVERY_ROOT_OUT)/twres/
+LOCAL_POST_INSTALL_CMD += \
+        mkdir -p $(FOX_TARGET_TWRES_PATH); \
+        mkdir -p $(TARGET_RECOVERY_ROOT_OUT)/twres/; \
+        cp -fr $(FOX_TWRP_THEME_LOC)/* $(FOX_TARGET_TWRES_PATH); \
+        cp -fr $(FOX_GUI_THEME_PATH)/common/* $(FOX_TARGET_TWRES_PATH);
+        ifeq ($(TW_EXTRA_LANGUAGES),true)
+    	   LOCAL_POST_INSTALL_CMD += \
+    	   cp -fr $(FOX_GUI_THEME_PATH)/extra-languages/fonts/ $(FOX_TARGET_TWRES_PATH); \
+    	   cp -fr $(FOX_GUI_THEME_PATH)/extra-languages/languages/ $(FOX_TARGET_TWRES_PATH);
+	endif
+    	LOCAL_POST_INSTALL_CMD += \
+        cp -fr $(FOX_TARGET_TWRES_PATH) $(TARGET_ROOT_OUT)/;
+endif
+#
+# Darth9
 
 include $(BUILD_PHONY_PACKAGE)
 
