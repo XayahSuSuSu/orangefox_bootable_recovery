@@ -466,11 +466,13 @@
 			</slidervalue>
 
 			<text style="caption">
+				<condition var1="no_green_led" op="!=" var2="1"/>
 				<placement x="%col1_x_caption%" y="%row4_2a_y%"/>
 				<text>{@fox_led_title}</text>
 			</text>
 
 			<listbox style="settingslist">
+				<condition var1="no_green_led" op="!=" var2="1"/>
 				<placement x="0" y="%row4_3a_y%" w="%screen_w%" h="%lb_l1%"/>
 				<listitem name="{@fox_use_green_led}">
 					<data variable="fox_led_color"/>
@@ -1130,6 +1132,7 @@
 			</image>
 
 			<button style="floating_btn">
+				<condition var1="disable_extra_about" op="!=" var2="1"/>
 				<condition var1="of_maintainer" op="&lt;=" var2="3"/>
 				<condition var1="of_maintainer" op="&gt;=" var2="1"/>
 				<placement x="%center_x%" y="%btn_float_center_y%" placement="4"/>
@@ -1147,6 +1150,7 @@
 			<!-- Credit button when maintair isn't OrangeFox developer -->
 
 			<button style="btn_about_credits">
+				<condition var1="disable_extra_about" op="!=" var2="1"/>
 				<condition var1="of_maintainer" op="!=" var2="3"/>
 				<condition var1="of_maintainer" op="!=" var2="2"/>
 				<condition var1="of_maintainer" op="!=" var2="1"/>

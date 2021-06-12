@@ -2,7 +2,7 @@
 	Copyright 2012 to 2016 bigbiff/Dees_Troy TeamWin
 	This file is part of TWRP/TeamWin Recovery Project.
 
-	Copyright (C) 2018-2020 OrangeFox Recovery Project
+	Copyright (C) 2018-2021 OrangeFox Recovery Project
 	This file is part of the OrangeFox Recovery Project.
 
 	TWRP is free software: you can redistribute it and/or modify
@@ -778,6 +778,29 @@ void DataManager::SetDefaultValues()
   #else
     mData.SetValue("of_no_miui_features", "0");
   #endif
+
+// =======
+#ifdef FOX_ENABLE_APP_MANAGER
+    mConst.SetValue("enable_app_manager", "1");
+#endif
+
+#ifdef OF_DISABLE_EXTRA_ABOUT_PAGE
+    mConst.SetValue("disable_extra_about", "1");
+#endif
+
+#ifdef OF_NO_SPLASH_CHANGE
+    mConst.SetValue("no_splash_change", "1");
+#endif
+
+#ifdef FOX_DELETE_MAGISK_ADDON
+    mConst.SetValue("no_magisk", "1");
+#endif
+
+// we only define this if it is turned off (set to zero)
+#ifdef OF_USE_GREEN_LED
+    mConst.SetValue("no_green_led", "1");
+#endif
+// =======
 
   #ifdef OF_SUPPORT_PRE_FLASH_SCRIPT
     mData.SetValue("FOX_PRE_FLASH_SCRIPT", "1");
