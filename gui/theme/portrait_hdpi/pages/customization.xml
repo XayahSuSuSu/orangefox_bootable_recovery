@@ -179,6 +179,7 @@
 					<action function="page">ext_custom_lock</action>
 				</listitem>
 				<listitem name="{@sph_sph}">
+					<condition var1="no_splash_change" op="!=" var2="1"/>
 					<icon res="boot_splash"/>
 					<action function="set">spl_logo_type=w</action>
 					<action function="set">spl_bg_color=#ED6F02</action>

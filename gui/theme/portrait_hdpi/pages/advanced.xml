@@ -47,7 +47,7 @@
 					<icon res="harddisk"/>
 					<action function="page">part_options</action>
 				</listitem>
-				<listitem name="Magisk Manager">
+				<listitem name="Magisk Manager"><condition var1="no_magisk" op="!=" var2="1"/>
 					<icon res="magisk"/>
 					<action function="set">ftls_running=1</action>
 					<action function="set">ft_mm_found=0</action>
@@ -139,10 +139,10 @@
 					<action function="set">tw_slider_text={@swipe_to_confirm}</action>
 					<action function="page">confirm_action</action>
 				</listitem>
+				<!-- cram the appmgr items onto no more than 2 lines, so as to not break existing scripts-->
 				<listitem name="{@appmgr_title}">
-					<condition var1="utils_show" var2="1"/>
-					<icon res="apps"/>
-					<action function="page">apps_load</action>
+					<condition var1="enable_app_manager" var2="1"/> <condition var1="utils_show" var2="1"/>
+					<icon res="apps"/> <action function="page">apps_load</action>
 				</listitem>
 				<listitem name="AromaFM">
 					<condition var1="utils_show" var2="1"/>
@@ -328,11 +328,13 @@
 			<!-- fox_modules_confirm located in install.xml -->
 
 			<text style="caption">
+				<!--condition var1="no_magisk" op="!=" var2="1"/-->
 				<placement x="%col1_x_caption%" y="%row1_1_y%"/>
 				<text>Magisk</text>
 			</text>
 
 			<listbox style="btn_list">
+				<!--condition var1="no_magisk" op="!=" var2="1"/-->
 				<placement x="0" y="%row1_2_y%" w="%screen_w%" h="%bl_h2%"/>
 				<listitem name="{@module_install} Magisk %magisk_ver%">
 					<icon res="bs_btn_archive"/>

@@ -414,6 +414,27 @@ ifeq ($(OF_IGNORE_LOGICAL_MOUNT_ERRORS),1)
     LOCAL_CFLAGS += -DOF_IGNORE_LOGICAL_MOUNT_ERRORS='"1"'
 endif
 
+# process these here instead of OrangeFox_R11.sh
+ifeq ($(FOX_ENABLE_APP_MANAGER),1)
+    LOCAL_CFLAGS += -DFOX_ENABLE_APP_MANAGER='"1"'
+endif
+
+ifeq ($(OF_DISABLE_EXTRA_ABOUT_PAGE),1)
+    LOCAL_CFLAGS += -DOF_DISABLE_EXTRA_ABOUT_PAGE='"1"'
+endif
+
+ifeq ($(OF_NO_SPLASH_CHANGE),1)
+    LOCAL_CFLAGS += -DOF_NO_SPLASH_CHANGE='"1"'
+endif
+
+ifeq ($(FOX_DELETE_MAGISK_ADDON),1)
+    LOCAL_CFLAGS += -DFOX_DELETE_MAGISK_ADDON='"1"'
+endif
+
+ifeq ($(OF_USE_GREEN_LED),0)
+    LOCAL_CFLAGS += -DOF_NO_GREEN_LED='"1"'
+endif
+#
 # ensure that the twres directory is copied to the recovery if it is otherwise not being done
 ifeq ($(OF_MANUAL_COPY_TWRES),1)
     LOCAL_CFLAGS += -DOF_MANUAL_COPY_TWRES='"1"'

@@ -779,6 +779,29 @@ void DataManager::SetDefaultValues()
     mData.SetValue("of_no_miui_features", "0");
   #endif
 
+// =======
+#ifdef FOX_ENABLE_APP_MANAGER
+    mConst.SetValue("enable_app_manager", "1");
+#endif
+
+#ifdef OF_DISABLE_EXTRA_ABOUT_PAGE
+    mConst.SetValue("disable_extra_about", "1");
+#endif
+
+#ifdef OF_NO_SPLASH_CHANGE
+    mConst.SetValue("no_splash_change", "1");
+#endif
+
+#ifdef FOX_DELETE_MAGISK_ADDON
+    mConst.SetValue("no_magisk", "1");
+#endif
+
+// we only define this if it is turned off (set to zero)
+#ifdef OF_NO_GREEN_LED
+    mConst.SetValue("no_green_led", "1");
+#endif
+// =======
+
   #ifdef OF_SUPPORT_PRE_FLASH_SCRIPT
     mData.SetValue("FOX_PRE_FLASH_SCRIPT", "1");
   #else
