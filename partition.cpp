@@ -775,7 +775,7 @@ if (TWFunc::Path_Exists("/data/unencrypted/key/version")) {
 		LOGINFO("File Based Encryption is present\n");
 #ifdef TW_INCLUDE_FBE
 	#ifdef OF_SKIP_FBE_DECRYPTION
-	    LOGINFO("Skip FBE decryption is triggered. I will not try to decrypt ...\n"); // TODO: perhaps this is no longer required?
+	    gui_print_color("warning", "Skip FBE decryption is triggered. I will not try to decrypt ...\n");
 	    return false;
 	#endif
 	Is_FBE = true;
@@ -806,7 +806,7 @@ if (TWFunc::Path_Exists("/data/unencrypted/key/version")) {
 		string filename;
 		int pwd_type = Get_Password_Type(0, filename);
 		if (pwd_type < 0) {
-			LOGERR("This TWRP does not have synthetic password decrypt support\n");
+			LOGERR("This build does not have synthetic password decrypt support\n");
 			pwd_type = 0;  // default password
 		}
 		PartitionManager.Parse_Users();  // after load_all_de_keys() to parse_users
