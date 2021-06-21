@@ -380,8 +380,9 @@ int main(int argc, char **argv) {
 
 	// Fox stuff
   	property_set("ro.orangefox.boot", "1");
-  	property_set("ro.orangefox.build", "orangefox");
   	property_set("ro.orangefox.version", FOX_VERSION);
+  	property_set("ro.orangefox.type", FOX_BUILD_TYPE);
+  	property_set("ro.orangefox.build", "orangefox");
   	#ifdef OF_TARGET_DEVICES
   	property_set("ro.orangefox.target.devices", OF_TARGET_DEVICES);
   	#endif
