@@ -3629,7 +3629,7 @@ int TWPartitionManager::Run_OTA_Survival_Backup(bool adbbackup)
     part_settings.Backup_Folder + "/" + Backup_Name;
 
   if (TWFunc::Has_Dynamic_Partitions()) 
-  	theSystem = "/super_image";
+  	theSystem = "/super";
   else
   	theSystem = "/system_image";
     
