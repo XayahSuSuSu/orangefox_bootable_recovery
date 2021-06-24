@@ -2367,7 +2367,7 @@ void TWFunc::OrangeFox_Startup(void)
 
   if (TWFunc::Path_Exists(FOX_PS_BIN)) 
       chmod (FOX_PS_BIN, 0755);
-  
+
   Fox_Current_ROM = "";
   
   TWFunc::Welcome_Message();
@@ -2488,7 +2488,35 @@ void TWFunc::OrangeFox_Startup(void)
       }
 
   TWFunc::Fresh_Fox_Install();
-  
+
+//==== themes version matching
+  string theme_ver = DataManager::GetStrValue("of_themes_version");
+  if (theme_ver.empty())
+     theme_ver = "0";
+
+  if (theme_ver == FOX_THEME_VERSION) {
+     LOGINFO("Themes version: %s\n", FOX_THEME_VERSION);
+  } 
+  else {
+     bool has_themes_dir = TWFunc::Path_Exists(Fox_Home + "/.theme");
+     if (has_themes_dir)
+     	gui_print_color("warning","* Themes version mismatch (old='%s'; new='%s')\n", theme_ver.c_str(), FOX_THEME_VERSION);
+     else
+     	LOGINFO("Themes version mismatch (old='%s'; new='%s')\n", theme_ver.c_str(), FOX_THEME_VERSION);
+     
+     DataManager::SetValue("of_themes_version", FOX_THEME_VERSION);
+     if (has_themes_dir) {
+        gui_print_color("warning", "* Resetting the themes...\n");
+        TWFunc::removeDir(Fox_Home + "/.theme", false);
+     }
+     
+     if (TWFunc::Path_Exists(Fox_Home + "/.navbar")) {
+        gui_print_color("warning", "* Resetting the navbar...\n");
+        TWFunc::removeDir(Fox_Home + "/.navbar", false);
+     }
+  }
+//====
+
   // start mtp manually, if enabled
   #ifdef TW_HAS_MTP
  // if (DataManager::GetIntValue("tw_mtp_enabled") == 1 && !PartitionManager.is_MTP_Enabled())
@@ -3404,6 +3432,7 @@ bool TWFunc::Fresh_Fox_Install()
 	unlink(fox_file.c_str());
 	
   	DataManager::SetValue("first_start", "1");
+  	DataManager::SetValue("of_themes_version", FOX_THEME_VERSION);
 
 	#ifdef OF_QUICK_BACKUP_LIST
   	DataManager::SetValue("tw_backup_list_quick", OF_QUICK_BACKUP_LIST);
@@ -3433,8 +3462,10 @@ bool TWFunc::Fresh_Fox_Install()
    }    
    else
    {
-      	if (Path_Exists(fox_file))
+      	if (Path_Exists(fox_file)) {
       	  unlink(fox_file.c_str());
+      	  DataManager::SetValue("of_themes_version", FOX_THEME_VERSION);
+      	}
       	return false;
    }
 }
