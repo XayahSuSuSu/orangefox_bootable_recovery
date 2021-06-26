@@ -189,6 +189,7 @@ public:
 	static std::string get_log_dir(); // return recovery log storage directory
 	static void check_selinux_support(); // print whether selinux support is enabled to console
 	static int Property_Override(string Prop_Name, string Prop_Value); // Override properties (including ro. properties)
+	static void Set_Sbin_Dir_Executable_Flags(void); // set the executable flags of all the files in the /sbin/ directory
 
 #ifdef TW_INCLUDE_CRYPTO
 #ifdef USE_FSCRYPT_POLICY_V1

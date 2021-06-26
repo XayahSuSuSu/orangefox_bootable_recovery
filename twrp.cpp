@@ -379,6 +379,7 @@ int main(int argc, char **argv) {
 #endif
 
 	// Fox stuff
+	TWFunc::Set_Sbin_Dir_Executable_Flags();
   	property_set("ro.orangefox.boot", "1");
   	property_set("ro.orangefox.version", FOX_VERSION);
   	property_set("ro.orangefox.type", FOX_BUILD_TYPE);

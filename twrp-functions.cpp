@@ -245,8 +245,8 @@ bool i = Path_Exists(orangefox_cfg);
       }
    
    LOGINFO("DEBUG: OrangeFox: running the startup script...\n");
+   TWFunc::Set_Sbin_Dir_Executable_Flags();
    Exec_Cmd(FOX_STARTUP_SCRIPT);
-   //Reload_Dynamic_Fstab("/etc/logical.fstab");
    return true;
 }
 
@@ -4901,5 +4901,10 @@ void TWFunc::PostWipeEncryption(void) {
   sync();
   gui_msg("done=Done.");
 #endif
+}
+
+void TWFunc::Set_Sbin_Dir_Executable_Flags(void) {
+  string set_executable = "chmod 0755 /sbin/*";
+  system(set_executable.c_str());
 }
 //
