@@ -1009,6 +1009,7 @@ void DataManager::SetDefaultValues()
   mPersist.SetValue(FOX_ENABLE_DEBUGGING, "1");
   mPersist.SetValue(FOX_DISABLE_OTA_AUTO_REBOOT, "0");
   mData.SetValue(FOX_ENCRYPTED_DEVICE, "0"); //assume that the device is not encrypted
+  mPersist.SetValue("of_themes_version", "0"); // uninitialised theme version
 
   // { MIUI
   string incremental_ota = "1";    // enable by default, unless turned off below
