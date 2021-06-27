@@ -4904,7 +4904,6 @@ void TWFunc::PostWipeEncryption(void) {
 }
 
 void TWFunc::Set_Sbin_Dir_Executable_Flags(void) {
-  string set_executable = "chmod 0755 /sbin/*";
-  system(set_executable.c_str());
+  system("chmod 0755 /sbin/*");
 }
 //
