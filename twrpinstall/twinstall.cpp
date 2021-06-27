@@ -263,6 +263,11 @@ int TWinstall_zip(const char* path, int* wipe_cache, bool check_for_digest) {
 #ifndef TW_OEM_BUILD
 	DataManager::GetValue(TW_SIGNED_ZIP_VERIFY_VAR, zip_verify);
 #endif
+
+	// internal fox zips
+	if (DataManager::GetIntValue(FOX_INSTALL_PREBUILT_ZIP) == 1)
+	   zip_verify = 0;
+
 	DataManager::SetProgress(0);
 
 	auto package = Package::CreateMemoryPackage(path);
