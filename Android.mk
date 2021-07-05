@@ -390,6 +390,7 @@ TWRP_REQUIRED_MODULES += \
     relink_libraries \
     relink_binaries \
     twrp_ramdisk \
+    bc \
     dump_image \
     erase_image \
     flash_image \
