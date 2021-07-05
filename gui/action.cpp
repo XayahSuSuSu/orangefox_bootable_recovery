@@ -486,6 +486,11 @@ int GUIAction::flash_zip(std::string filename, int *wipe_cache)
     }
   else
     {
+	char apex_enabled[PROPERTY_VALUE_MAX];
+	property_get("twrp.apex.flattened", apex_enabled, "");
+	if (strcmp(apex_enabled, "true") == 0) {
+			umount("/apex");
+	}
       ret_val = TWinstall_zip(filename.c_str(), wipe_cache);
       PartitionManager.Unlock_Block_Partitions();
 
