@@ -758,12 +758,6 @@ int GUIAction::passwordcheck(std::string arg __unused)
 
 void GUIAction::sha512sum(char *string, char outputBuffer[129])
 {
-    #ifdef OF_LEGACY_SHAR512
-    twrpSHA512 myshar;
-    myshar.update((const unsigned char *)string, strlen(string));
-    std::string s = myshar.return_digest_string();
-    strcpy(outputBuffer, s.c_str());
-    #else
     int i = 0;
     unsigned char hash[SHA512_DIGEST_LENGTH];
     SHA512_CTX sha512;
@@ -774,7 +768,6 @@ void GUIAction::sha512sum(char *string, char outputBuffer[129])
     {
         sprintf(outputBuffer + (i * 2), "%02x", hash[i]);
     }
-    #endif
     outputBuffer[64] = 0;
 }
 

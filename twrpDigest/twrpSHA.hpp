@@ -41,9 +41,7 @@ public:
 	twrpSHA512();                                            // Initialize the SHA512 digest for streaming activities only
 	void init();                                             // Initialize the SHA512 digest algorithm
 
-#ifndef OF_LEGACY_SHAR512
 protected:
-#endif
 	void update(const unsigned char* stream, size_t len);    // Update the SHA512 digest stream
 	void finalize();                                         // Finalize the SHA512 digest for computation
 	std::string return_digest_string();                      // Return the digest string computed to the callee
