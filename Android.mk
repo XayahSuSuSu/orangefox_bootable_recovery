@@ -552,6 +552,11 @@ LOCAL_POST_INSTALL_CMD += \
     	   cp -fr $(FOX_GUI_THEME_PATH)/extra-languages/fonts/ $(FOX_TARGET_TWRES_PATH); \
     	   cp -fr $(FOX_GUI_THEME_PATH)/extra-languages/languages/ $(FOX_TARGET_TWRES_PATH);
 	endif
+	ifneq ($(TW_EXCLUDE_NANO),true)
+    	   LOCAL_POST_INSTALL_CMD += \
+	   cp -rf $(TARGET_OUT_ETC)/nano $(TARGET_RECOVERY_ROOT_OUT)/system/etc/; \
+	   cp -rf external/libncurses/lib/terminfo $(TARGET_RECOVERY_ROOT_OUT)/system/etc/;
+	endif
     	LOCAL_POST_INSTALL_CMD += \
         cp -fr $(FOX_TARGET_TWRES_PATH) $(TARGET_ROOT_OUT)/;
 endif
