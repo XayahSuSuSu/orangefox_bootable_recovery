@@ -375,8 +375,9 @@ protected:
 	int setpassword(std::string arg);
 	int changeterminal(std::string arg);
 
+#ifdef FOX_USE_NANO_EDITOR
 	int editfile(std::string arg);
-
+#endif
 	// (originally) threaded actions
 	int fileexists(std::string arg);
 	int flash(std::string arg);
