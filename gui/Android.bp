@@ -9,7 +9,8 @@ bootstrap_go_package {
     srcs: [
         "libguitwrp_defaults.go",
         "../soong/copy.go",
-        "../soong/makevars.go"
+        "../soong/makevars.go",
+        "../orangefox_defaults.go"
     ],
     pluginFor: ["soong_build"]
 }

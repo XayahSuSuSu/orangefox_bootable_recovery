@@ -275,6 +275,11 @@ func libGuiDefaults(ctx android.LoadHookContext) {
 	i := globalIncludes(ctx)
 	p.Include_dirs = i
 	ctx.AppendProperties(p)
+	// Darth9
+	f := &props{}
+	f.Cflags = fox_globalFlags(ctx)
+	ctx.AppendProperties(f)
+	// Darth9
 	if copyTheme(ctx) == false {
 		os.Exit(-1)
 	}
