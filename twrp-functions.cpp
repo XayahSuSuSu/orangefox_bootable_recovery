@@ -2185,7 +2185,7 @@ int TWFunc::Check_MIUI_Treble(void)
        gui_print("* Display: %s\n", display_panel.c_str());
 
   // device name
-  gui_print("* Device:  %s\n", Fox_Current_Device.c_str());
+  gui_print("* Device:  %s (%s)\n", Fox_Current_Device.c_str(), TWFunc::Fox_Property_Get("ro.product.system.device").c_str());
 
   // installed ROM
   rom_desc = GetInstalledRom();
