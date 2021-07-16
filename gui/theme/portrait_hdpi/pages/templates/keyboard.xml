@@ -16,6 +16,20 @@
 				<image resource="nav_shadow"/>
 				<condition var1="show_shadow" var2="1"/>
 			</image>
+
+			<fill color="%linecolor%">
+				<condition var1="show_shadow" var2="2"/>
+				<condition var1="key_numbar" var2="1"/>
+				<condition var1="tw_hide_kb" var2="0"/>
+				<placement x="0" y="%keyboard_term_num_y%" w="1080" h="2"/>
+			</fill>
+			
+			<fill color="%linecolor%">
+				<condition var1="show_shadow" var2="2"/>
+				<condition var1="key_numbar" op="!=" var2="1"/>
+				<condition var1="tw_hide_kb" var2="0"/>
+				<placement x="0" y="%keyboard_terminal_y%" w="1080" h="2"/>
+			</fill>
 			
 			<keyboard>
 				<condition var1="key_numbar" op="!=" var2="1"/>
@@ -79,6 +93,20 @@
 				<image resource="nav_shadow"/>
 				<condition var1="show_shadow" var2="1"/>
 			</image>
+			
+			<fill color="%linecolor%">
+				<condition var1="show_shadow" var2="2"/>
+				<condition var1="key_numbar" var2="1"/>
+				<condition var1="tw_hide_kb" var2="0"/>
+				<placement x="0" y="%keyboard_num_y%" w="1080" h="2"/>
+			</fill>
+			
+			<fill color="%linecolor%">
+				<condition var1="show_shadow" var2="2"/>
+				<condition var1="key_numbar" op="!=" var2="1"/>
+				<condition var1="tw_hide_kb" var2="0"/>
+				<placement x="0" y="%keyboard_y%" w="1080" h="2"/>
+			</fill>
 			
 			<keyboard>
 				<condition var1="key_numbar" var2="1"/>
@@ -166,6 +194,12 @@
 				<image resource="nav_shadow"/>
 				<condition var1="show_shadow" var2="1"/>
 			</image>
+			
+			<fill color="%linecolor%">
+				<condition var1="show_shadow" var2="2"/>
+				<condition var1="tw_hide_kb" var2="0"/>
+				<placement x="0" y="%keyboard_y%" w="1080" h="2"/>
+			</fill>
 			
 			<keyboard>
 				<condition var1="tw_hide_kb" var2="0"/>

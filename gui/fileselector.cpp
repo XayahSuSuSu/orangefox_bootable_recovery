@@ -471,10 +471,14 @@ void GUIFileSelector::RenderItem(size_t itemindex, int yPos, bool selected)
 		} else {
 			if (allowDouble && doubleLine == 1)
 				secondLine = TWFunc::ConvertTime(mFolderList.at(itemindex).lastModified);
-			if (mSelListEnabled)
-				icon = DataManager::GetStrValue("of_batch_folders").find(text + "/") != string::npos
-				       ? mExSelectedIcon : mExUnselectedIcon;
-			else
+			if (mSelListEnabled) {
+				std::string list = DataManager::GetStrValue("of_batch_folders");
+				// list.find(text + "/") != string::npos
+				if (list.find("/" + text + "/") != string::npos || list.rfind(text + "/", 0) == 0) // prevents situation when 'Dxxx/' = 'xxx/'
+					icon = mExSelectedIcon;
+				else
+					icon = mExUnselectedIcon;
+			} else
 				icon = mFolderIcon;
 		}
 	} else {
@@ -482,8 +486,12 @@ void GUIFileSelector::RenderItem(size_t itemindex, int yPos, bool selected)
 		if (allowDouble && doubleLine == 1)
 			secondLine = TWFunc::ConvertTime(mFileList.at(fileindex).lastModified) + " · " + to_string(mFileList.at(fileindex).fileSize / 1048576) + gui_parse_text("{@mbyte}");
 		if (mSelListEnabled) {
-			icon = DataManager::GetStrValue("of_batch_files").find(text + "/") != string::npos
-				   ? mExSelectedIcon : mExUnselectedIcon;
+			std::string list = DataManager::GetStrValue("of_batch_files");
+			// list.find(text + "/") != string::npos
+			if (list.find("/" + text + "/") != string::npos || list.rfind(text + "/", 0) == 0) // prevents situation when 'Dxxx/' = 'xxx/'
+				icon = mExSelectedIcon;
+			else
+				icon = mExUnselectedIcon;
 		} else {
 			ext  = mFileList.at(fileindex).fileExt;
 			type = mFileList.at(fileindex).fileType;

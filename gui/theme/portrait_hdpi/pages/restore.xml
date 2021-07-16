@@ -11,6 +11,10 @@
 		</page>
 
 		<page name="restore_prep">
+			<action>
+				<action function="set">tw_hold=0</action>
+			</action>
+
 			<fileselector style="fileselector_b">
 				<condition var1="list_font" var2="1"/>
 				<condition var1="of_backup_empty" op="!=" var2="1"/>
@@ -21,6 +25,7 @@
 				<path name="tw_backups_folder_fm"/>
 				<data name="tw_restore"/>
 				<selection name="tw_restore_name"/>
+				<extra hold="tw_hold" double="1"/>
 			</fileselector>
 
 			<fileselector style="fileselector_s">
@@ -33,6 +38,7 @@
 				<path name="tw_backups_folder_fm"/>
 				<data name="tw_restore"/>
 				<selection name="tw_restore_name"/>
+				<extra hold="tw_hold" double="1"/>
 			</fileselector>
 
 			<template name="body_nav"/>
@@ -205,6 +211,12 @@
 				<condition var1="tw_storage_path" op="modified" />
 				<action function="set">of_show_storage_selection=0</action>
 				<action function="page">restore</action>
+			</action>
+
+			<action>
+				<condition var1="tw_hold" var2="1"/>
+				<action function="set">tw_file_location1=%tw_backups_folder_fm%</action>
+				<action function="page">filemanagerlist</action>
 			</action>
 
 			<action>

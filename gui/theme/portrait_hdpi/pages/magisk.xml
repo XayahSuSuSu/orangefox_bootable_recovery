@@ -294,7 +294,8 @@
 				<condition var1="tw_reboot_system" var2="1"/>
 				<placement x="%snackbar_button_x%" y="%snackbar_button_y%"/>
 				<text>{@mm_remove_reboot}</text>
-				<action function="page">reboot</action>
+				<action function="set">tw_back=main</action>
+				<action function="overlay">reboot</action>
 			</button>
 
 			<template name="gestures"/>

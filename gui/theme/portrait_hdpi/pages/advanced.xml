@@ -16,11 +16,22 @@
 					<action function="overlay">dialog_app</action>
 				</listitem>
 				<listitem name="{@decrypt_data_btn}">
+					<condition var1="tw_is_fbe" op="!=" var2="1"/>
 					<condition var1="tw_is_encrypted" var2="1"/>
 					<condition var1="tw_is_decrypted" var2="0"/>
 					<icon res="bs_adv_frp"/>
+					<action function="set">tw_crypto_user_id=0</action>
+					<action function="set">tw_crypto_password=</action>
+					<action function="set">tw_password_fail=0</action>
+					<action function="set">tw_crypto_pwtype=%tw_crypto_pwtype_0%</action>
 					<action function="set">of_decrypt_from_menu=1</action>
 					<action function="page">decrypt</action>
+				</listitem>
+				<listitem name="{@decrypt_users}">
+					<condition var1="tw_is_fbe" var2="1"/>
+					<condition var1="tw_all_users_decrypted" var2="0"/>
+					<icon res="bs_adv_frp"/>
+					<action function="page">decrypt_users</action>
 				</listitem>
 				<listitem name="{@hint_ffiles_missing}">
 					<condition var1="of_hide_data_hint" op="!=" var2="1"/>
@@ -36,37 +47,11 @@
 					<icon res="harddisk"/>
 					<action function="page">part_options</action>
 				</listitem>
-				<listitem name="Magisk Manager">
+				<listitem name="Magisk Manager"><condition var1="no_magisk" op="!=" var2="1"/>
 					<icon res="magisk"/>
 					<action function="set">ftls_running=1</action>
 					<action function="set">ft_mm_found=0</action>
 					<action function="page">magisk_mount</action>
-				</listitem>
-				<listitem name="{@appmgr_title}">
-					<icon res="apps"/>
-					<action function="page">apps_load</action>
-				</listitem>
-				<listitem name="AromaFM">
-					<condition var1="aroma_help" op="!=" var2="1"/>
-					<condition var1="fileexists" var2="/sdcard/Fox/FoxFiles/AromaFM/AromaFM.zip"/>
-					<icon res="bs_adv_aroma"/>
-					<action function="set">aroma_help=1</action>
-				</listitem>
-				<listitem name="{@aroma_help}">
-					<condition var1="aroma_help" var2="1"/>
-					<icon res="bs_adv_aroma"/>
-					<action function="queueclear"/>
-					<action function="set">fox_install_built_in_zip=1</action>
-					<action function="set">tw_signed_zip_verify_tmp=%tw_signed_zip_verify%</action>
-					<action function="set">tw_signed_zip_verify=0</action>
-					<action function="set">fox_inject_after_zip_tmp=%fox_inject_after_zip%</action>
-					<action function="set">fox_inject_after_zip=0</action>
-					<action function="set">tw_screen_timeout_temp=%tw_screen_timeout_secs%</action>
-					<action function="set">tw_screen_timeout_secs=0</action>
-					<action function="set">tw_filename=/sdcard/Fox/FoxFiles/AromaFM/AromaFM.zip</action>
-					<action function="set">qcount_temp=1</action>
-					<action function="queuezip"/>
-					<action function="flash">aroma_busy</action>
 				</listitem>
 				<listitem name="{@adb_sideload_btn}">
 					<icon res="bs_adv_adb"/>
@@ -75,7 +60,7 @@
 					<action function="page">sideload</action>
 				</listitem>
 				<listitem name="{@fox_modules_hdr}">
-					<condition var1="fileexists" var2="/sdcard/Fox/FoxFiles"/>
+					<condition var1="fileexists" var2="/data/media/0"/>
 					<icon res="bs_btn_archive"/>
 					<action function="page">fox_modules</action>
 				</listitem>
@@ -86,7 +71,8 @@
 				</listitem>
 				<listitem name="{@reboot_btn}">
 					<icon res="bs_adv_reboot"/>
-					<action function="page">reboot</action>
+					<action function="set">tw_back=advanced</action>
+					<action function="overlay">reboot</action>
 				</listitem>
 				<listitem name="{@more}">
 					<condition var1="utils_show" op="!=" var2="1"/>
@@ -152,6 +138,35 @@
 					<action function="set">tw_complete_text1={@fix_recovery_loop_complete}</action>
 					<action function="set">tw_slider_text={@swipe_to_confirm}</action>
 					<action function="page">confirm_action</action>
+				</listitem>
+				<!-- cram the appmgr items onto no more than 2 lines, so as to not break existing scripts-->
+				<listitem name="{@appmgr_title}">
+					<condition var1="enable_app_manager" var2="1"/> <condition var1="utils_show" var2="1"/>
+					<icon res="apps"/> <action function="page">apps_load</action>
+				</listitem>
+				<listitem name="AromaFM">
+					<condition var1="utils_show" var2="1"/>
+					<condition var1="aroma_help" op="!=" var2="1"/>
+					<condition var1="fileexists" var2="/sdcard/Fox/FoxFiles/AromaFM/AromaFM.zip"/>
+					<icon res="bs_adv_aroma"/>
+					<action function="set">aroma_help=1</action>
+				</listitem>
+				<listitem name="{@aroma_help}">
+					<condition var1="utils_show" var2="1"/>
+					<condition var1="aroma_help" var2="1"/>
+					<icon res="bs_adv_aroma"/>
+					<action function="queueclear"/>
+					<action function="set">fox_install_built_in_zip=1</action>
+					<action function="set">tw_signed_zip_verify_tmp=%tw_signed_zip_verify%</action>
+					<action function="set">tw_signed_zip_verify=0</action>
+					<action function="set">fox_inject_after_zip_tmp=%fox_inject_after_zip%</action>
+					<action function="set">fox_inject_after_zip=0</action>
+					<action function="set">tw_screen_timeout_temp=%tw_screen_timeout_secs%</action>
+					<action function="set">tw_screen_timeout_secs=0</action>
+					<action function="set">tw_filename=/sdcard/Fox/FoxFiles/AromaFM/AromaFM.zip</action>
+					<action function="set">qcount_temp=1</action>
+					<action function="queuezip"/>
+					<action function="flash">aroma_busy</action>
 				</listitem>
 			</listbox>
 
@@ -294,10 +309,10 @@
 				<action function="queueclear"/>
 				<action function="set">fox_m_author=DarthJabba9</action>
 				<action function="set">fox_m_name={@module_pass}</action>
-				<action function="set">tw_file=PassReset.zip</action>
-				<action function="set">tw_filename=/sdcard/Fox/FoxFiles/PassReset.zip</action>
+				<action function="set">tw_file=OF_DelPass.zip</action>
+				<action function="set">tw_filename=/FFiles/OF_DelPass/OF_DelPass.zip</action>
 				<action function="set">tw_filecheck=%tw_filename%</action>
-				<action function="set">tw_zip_location=/sdcard/Fox/FoxFiles</action>
+				<action function="set">tw_zip_location=/FFiles/OF_DelPass</action>
 				<action function="queuezip"/>
 				<action function="set">tw_notexistpage=fox_modules_confirm</action>
 				<action function="set">tw_existpage=fox_modules_confirm</action>
@@ -313,11 +328,13 @@
 			<!-- fox_modules_confirm located in install.xml -->
 
 			<text style="caption">
+				<!--condition var1="no_magisk" op="!=" var2="1"/-->
 				<placement x="%col1_x_caption%" y="%row1_1_y%"/>
 				<text>Magisk</text>
 			</text>
 
 			<listbox style="btn_list">
+				<!--condition var1="no_magisk" op="!=" var2="1"/-->
 				<placement x="0" y="%row1_2_y%" w="%screen_w%" h="%bl_h2%"/>
 				<listitem name="{@module_install} Magisk %magisk_ver%">
 					<icon res="bs_btn_archive"/>
@@ -372,7 +389,22 @@
 			</text>
 
 			<listbox style="btn_list">
-				<placement x="0" y="%row5_3_y%" w="%screen_w%" h="%bl_h4%"/>
+				<placement x="0" y="%row5_3_y%" w="%screen_w%" h="%bl_h5%"/>
+				<listitem name="{@module_of_set}">
+					<condition var1="fileexists" var2="/FFiles/OF_backup_settings/OF_backup_settings.zip"/>
+					<icon res="bs_btn_archive"/>
+					<action function="queueclear"/>
+					<action function="set">fox_m_author=DarthJabba9</action>
+					<action function="set">fox_m_name={@module_of_set}</action>
+					<action function="set">tw_file=OF_backup_settings.zip</action>
+					<action function="set">tw_filename=/FFiles/OF_backup_settings/OF_backup_settings.zip</action>
+					<action function="set">tw_filecheck=%tw_filename%</action>
+					<action function="set">tw_zip_location=/FFiles/OF_backup_settings</action>
+					<action function="queuezip"/>
+					<action function="set">tw_notexistpage=fox_modules_confirm</action>
+					<action function="set">tw_existpage=fox_modules_confirm</action>
+					<action function="page">filecheck</action>
+				</listitem>
 				<listitem name="{@module_initd}">
 					<condition var1="fileexists" var2="/sdcard/Fox/FoxFiles/OF_initd.zip"/>
 					<icon res="bs_btn_archive"/>
@@ -635,6 +667,7 @@
 
 			<action>
 				<touch hkey="power"/>
+				<action function="set">tw_back=main</action>
 				<action function="overlay">reboot</action>
 			</action>
 			

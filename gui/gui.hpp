@@ -28,6 +28,7 @@ void gui_warn(const char* text);
 void gui_err(const char* text);
 void gui_highlight(const char* text);
 void gui_msg(Message msg);
+void gui_err(Message msg);
 
 extern long mime;
 std::string gui_parse_text(std::string inText);

@@ -253,7 +253,7 @@
 		<string name="unmount_btn">Размонтировать</string>
 		<string name="rb_system_btn">Система</string>
 		<string name="rb_poweroff_btn">Выключение</string>
-		<string name="rb_recovery_btn">Режим восстановления</string>
+		<string name="rb_recovery_btn">Рекавери</string>
 		<string name="rb_bootloader_btn">Загрузчик</string>
 		<string name="rb_download_btn">Режим загрузки</string>
 		<string name="rb_theme">Тема</string>
@@ -879,6 +879,14 @@
 		<string name="unable_set_boot_slot">Ошибка изменения загрузочного слота {1}</string>
 		<string name="backup_storage_warning">Резервные копии {1} не включают в себя файлы внутреннего хранилища.</string>
 		<string name="sha2_chk">Использовать SHA2</string>
+
+		<string name="decrypt_users">Расшифровка пользователя</string>
+		<string name="backup_storage_undecrypt_warning">Резервная копия не будет включать файлы пользователя {1}, потому что он не расшифрован.</string>
+		<string name="decrypting_user_fbe">Попытка расшифровки FBE для пользователя {1}...</string>
+		<string name="decrypt_user_success_fbe">Пользователь {1} успешно расшифрован</string>
+		<string name="decrypt_user_fail_fbe">Ошибка расшифровки пользователя {1}</string>
+		<string name="decrypt_data_user">Выбранный пользователь</string>
+		<string name="data_users">Пользователи</string>
 		
 		<string name="install_remlatest">Убрать последний</string>
 		
@@ -901,6 +909,7 @@
 		<string name="module_uninstall">Удалить</string>
 		<string name="remove_of_files">Удалить файлы OrangeFox</string>
 		<string name="module_initd">Включить поддержку init.d</string>
+		<string name="module_of_set">Р.к. настроек OrangeFox</string>
 		<string name="module_cam">Включить поддержку Camera2API</string>
 		<string name="module_pass">Удалить пароль</string>
 		<string name="fox_files_not_exist_1">Файл не найден!</string>
@@ -1014,7 +1023,10 @@
 		<!-- Files -->
 		<string name="files_show_hidden">Показывать скрытые файлы</string>
 		<string name="files_auto_open">Автооткрытие файлов</string>
+		<string name="file_read">Чтение файла: {1}</string>
 		<string name="file_read_error">Невозможно открыть файл!</string>
+		<string name="file_read_error_size">Файл больше 1.5MБ!</string>
+		<string name="file_read_error_bin">Невозможно прочитать бинарный файл!</string>
 		<string name="sort_ex_all">Все файлы</string>
 		<string name="sort_ex_img">IMG файлы</string>
 		<string name="sort_ex_zip">ZIP файлы</string>
@@ -1267,5 +1279,11 @@
 		<string name="enable_fastboot">Включить Fastboot</string>
 		<string name="fastboot_console_msg">Вход в режим Fastboot...</string>
 		<string name="tap_to_show">Нажмите, чтобы показать</string>
+		
+		<string name="batch_progress">Выполнено</string>
+		<string name="recovery_busy">OrangeFox выполняет операцию</string>
+
+		<string name="status_delimeter">Разделитель заголовка</string>
+		<string name="status_delimeter_shadow">Тень</string>
 	</resources>
 </language>

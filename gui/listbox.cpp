@@ -26,6 +26,7 @@ extern "C" {
 #include "rapidxml.hpp"
 #include "objects.hpp"
 #include "../data.hpp"
+#include "../partitions.hpp"
 #include "pages.hpp"
 #include "../twrp-functions.hpp"
 
@@ -96,9 +97,8 @@ GUIListBox::GUIListBox(xml_node<>* node) : GUIScrollList(node)
 				mListItems.push_back(data);
 			}
 		}
-	}
-	else
-		allowSelection = false;		// allows using listbox as a read-only list or menu
+	} else
+		allowSelection = false;  // allows using listbox as a read-only list or menu
 
 	//[f/d] read file
 	child = FindNode(node, "read");
@@ -143,8 +143,7 @@ GUIListBox::GUIListBox(xml_node<>* node) : GUIScrollList(node)
 		ListItem item;
 
 		attr = child->first_attribute("name");
-		if (!attr)
-			continue;
+		if (!attr) continue;
 		// We will parse display names when we get page focus to ensure that translating takes place
 		item.displayName = attr->value();
 		if (requireReload)
@@ -153,8 +152,7 @@ GUIListBox::GUIListBox(xml_node<>* node) : GUIScrollList(node)
 		item.selected = (child->value() == currentValue);
 		item.action = NULL;
 		xml_node<>* action = child->first_node("action");
-		if (!action)
-			action = child->first_node("actions");
+		if (!action) action = child->first_node("actions");
 		if (action) {
 			item.action = new GUIAction(child);
 			allowSelection = true;
@@ -183,7 +181,7 @@ GUIListBox::GUIListBox(xml_node<>* node) : GUIScrollList(node)
 		LoadConditions(child, item.mConditions);
 
 		mListItems.push_back(item);
-		mVisibleItems.push_back(mListItems.size()-1);
+		mVisibleItems.push_back(mListItems.size() - 1);
 
 		child = child->next_sibling("listitem");
 	}
@@ -191,6 +189,104 @@ GUIListBox::GUIListBox(xml_node<>* node) : GUIScrollList(node)
 
 GUIListBox::~GUIListBox()
 {
+}
+
+//[f/d] this function is called only on update.
+//In TWRP it also called at init, but actually it's useless.
+//If you'll see empty users list, add fuction call to init
+void GUIListBox::CreateEncryptUsersList(void) {
+	mListItems.clear();
+	mVisibleItems.clear();
+	std::vector<users_struct>::iterator iter;
+	std::vector<users_struct>* Users_List = PartitionManager.Get_Users_List();
+	unsigned int id = 0;
+	for (iter = Users_List->begin(); iter != Users_List->end(); iter++) {
+		if (!(*iter).isDecrypted) {
+			ListItem data;
+			data.displayName = (*iter).userName;
+			data.variableValue = (*iter).userId;
+			data.id = to_string((*iter).type);
+			data.action = NULL;
+			data.icon = mIconSelected;
+			data.selected = 0;
+			mListItems.push_back(data);
+			mVisibleItems.push_back(id);
+		}
+		id++;
+	}
+}
+
+//[f/d]
+void GUIListBox::ReadFileToList(const char* fileName) {
+	gui_msg(Msg(msg::kNormal, "file_read=Reading file: {1}")(fileName));
+	mListItems.clear();
+	mVisibleItems.clear();
+	SetVisibleListLocation(0);
+	string error = "Error";
+	std::vector<wstring> lines;
+
+	lines.push_back(L"");
+	
+	if (TWFunc::Get_File_Size(fileName) > 1572864) //1.5mb
+		error = gui_parse_text("{@file_read_error_size=File is bigger than 1.5MB!}");
+	else if (TWFunc::read_file(fileName, lines) == 0) {
+		if ((lines[0] + lines[1]).find('\0') != std::string::npos) // i
+			error = gui_parse_text("{@file_read_error_bin=Can't read binary file!}");
+		else {
+			lines.push_back(L"");
+			unsigned int vector_size = lines.size();
+			for (unsigned int i = 0; i < vector_size; i++) {
+				wstring line = lines[i];
+				size_t len = line.length();
+				
+				if (len <= 54) {
+					ListItem item;
+					item.displayName = TWFunc::wstr_to_str(line);
+					item.variableValue = "";
+					item.selected = 1;
+					item.action = NULL;
+					item.hasicon = false;
+
+					mListItems.push_back(item);
+					mVisibleItems.push_back(mListItems.size()-1);
+				} else {
+					size_t off = 0;
+					do {
+						ListItem item;
+						
+						item.displayName = TWFunc::wstr_to_str(line.substr(off, 54));
+						item.variableValue = "";
+						item.selected = 0;
+						item.action = NULL;
+						item.hasicon = false;
+
+						mListItems.push_back(item);
+						mVisibleItems.push_back(mListItems.size()-1);
+						off += 54;
+					} while (off < len);
+				}
+			}
+  			gui_msg("done=Done.");
+			return;
+		}
+	} else
+		error = gui_parse_text("{@file_read_error=Unable to open file!}");
+		
+	for (int i = 0; i < 2; i++)
+	{
+		ListItem item;
+		item.displayName = i == 1 ? error : "";
+		item.selected = 0;
+		item.action = NULL;
+		item.hasicon = false;
+		item.variableValue = "";
+		
+		mListItems.push_back(item);
+		mVisibleItems.push_back(mListItems.size()-1);
+	}
+	
+
+	gui_print_color("warning", "%s\n", error.c_str());
 }
 
 int GUIListBox::Update(void)
@@ -217,6 +313,18 @@ int GUIListBox::NotifyVarChange(const std::string& varName, const std::string& v
 
 	// Check to see if the variable that we are using to store the list selected value has been updated
 	if (varName == mVariable) {
+		if (mVariable == "tw_crypto_user_id_list" &&
+			DataManager::GetStrValue("tw_crypto_user_id_list") == "") //don't update on click 
+			CreateEncryptUsersList();
+
+		if (mVariable == "of_file_to_read" && currentValue != value) {
+			if (value == "") {
+				mListItems.clear(); //free memory or something
+				mVisibleItems.clear();
+			} else
+				ReadFileToList(value.c_str());
+		}
+
 		currentValue = value;
 		mUpdate = 1;
 	}
@@ -304,6 +412,7 @@ void GUIListBox::RenderItem(size_t itemindex, int yPos, bool selected)
 
 void GUIListBox::NotifySelect(size_t item_selected)
 {
+	if (mVariable == "of_file_to_read") return;
 	if (!isCheckList) {
 		// deselect all items, even invisible ones
 		for (size_t i = 0; i < mListItems.size(); i++) {
@@ -312,8 +421,13 @@ void GUIListBox::NotifySelect(size_t item_selected)
 	}
 
 	ListItem& item = mListItems[mVisibleItems[item_selected]];
-
-	if (isCheckList) {
+	
+	if (mVariable == "tw_crypto_user_id_list") {
+		DataManager::SetValue("tw_crypto_user_display", item.displayName);
+		DataManager::SetValue("tw_crypto_user_id", item.variableValue);
+		DataManager::SetValue("tw_crypto_pwtype", item.id);
+		DataManager::SetValue(mVariable, item.variableValue);
+	} else if (isCheckList) {
 		int selected = 1 - item.selected;
 		item.selected = selected;
 		DataManager::SetValue(item.variableName, selected ? "1" : "0");

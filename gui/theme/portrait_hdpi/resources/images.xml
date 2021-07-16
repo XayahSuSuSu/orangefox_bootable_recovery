@@ -90,10 +90,8 @@
 		<image name="bs_btn_chmod" filename="Default/Icons/bs_btn_chmod" retainaspect="1"/>
 		<image name="bs_btn_delete" filename="Default/Icons/bs_btn_delete" retainaspect="1"/>
 		<image name="bs_btn_rename" filename="Default/Icons/rename" retainaspect="1"/>
-		<image name="reboot_sys" filename="Default/Icons/reboot_sys" retainaspect="1"/>
 		<image name="reboot_bootloader" filename="Default/Icons/reboot_bootloader" retainaspect="1"/>
-		<image name="reboot_power" filename="Default/Icons/reboot_power" retainaspect="1"/>
-		<image name="reboot_recovery" filename="Default/Icons/reboot_recovery" retainaspect="1"/>
+		<image name="reboot_fastboot" filename="Default/Icons/reboot_fastboot" retainaspect="1"/>
 		<image name="pass_classic" filename="Default/Icons/pass_classic" retainaspect="1"/>
 		<image name="pass_gesture" filename="Default/Icons/pass_gesture" retainaspect="1"/>
 		<image name="bs_btn_link" filename="Default/Icons/link" retainaspect="1"/>
@@ -188,6 +186,7 @@
 		<image name="add_image" filename="Default/Icons/image" retainaspect="1"/>
 		<image name="image_off" filename="Default/Icons/image_off" retainaspect="1"/>
 		<image name="logo_icon" filename="Default/Icons/logo" retainaspect="1"/>
+		<image name="user" filename="Default/Icons/user" retainaspect="1"/>
 		
 		<!-- Other -->
 		<image name="actionbar_show" filename="Default/Other/show" retainaspect="1"/>

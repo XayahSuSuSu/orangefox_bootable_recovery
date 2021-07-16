@@ -39,6 +39,14 @@
 					<action function="set">tw_reload_fm=1</action>
 					<action function="page">filemanagerlist</action>
 				</listitem>
+				<listitem name="{@data_users}">
+					<icon res="user"/>
+					<condition var1="tw_is_fbe" var2="1"/>
+					<condition var1="fileexists" var2="/data/media"/>
+					<action function="set">tw_file_location1=/data/media</action>
+					<action function="set">tw_reload_fm=1</action>
+					<action function="page">filemanagerlist</action>
+				</listitem>
 				<listitem name="{@fm_books}">
 					<icon res="bs_btn_bookmark"/>
 					<action function="set">book_edit=0</action>
@@ -888,6 +896,25 @@
 				<placement x="%col1_x_caption%" y="%row3_2a_y%"/>
 				<text>{@restore_dec_fail}</text>
 			</text>
+			
+			<text style="caption_hl">
+				<condition var1="of_decrypt_from_menu" var2="2"/>
+				<placement x="%col1_x_caption%" y="%row4_1_y%"/>
+				<text>{@decrypt_data_user}</text>
+			</text>
+			
+			<text style="text_body1">
+				<condition var1="of_decrypt_from_menu" var2="2"/>
+				<placement x="%col1_x_caption%" y="%row4_2_y%"/>
+				<text>%tw_crypto_user_display%</text>
+			</text>
+
+			<button style="menu_btn">
+				<condition var1="of_decrypt_from_menu" var2="2"/>
+				<placement x="%col1_x_caption%" y="%row4_1_y%" w="%input_w%" h="%mb_h_hide%"/>
+				<action function="set">tw_page_done=1</action>
+				<action function="page">decrypt_redirect</action>
+			</button>
 
 			<template name="gestures"/>
 			
@@ -922,6 +949,11 @@
 				<image resource="actionbar_shadow"/>
 				<placement x="0" y="%ab_ex_h%"/>
 			</image>
+			
+			<fill color="%linecolor%">
+				<condition var1="show_shadow" var2="2"/>
+				<placement x="0" y="%ab_ex_h%" w="1080" h="2"/>
+			</fill>
 			
 			<fill color="%title_solid_bg%">
 				<condition var1="darker_ui" var2="1"/>
@@ -995,104 +1027,6 @@
 				<restrict disable="1"/>
 				<text>%ft_inf_sha5%</text>
 			</input>
-		</template>
-
-		<template name="reboot_base">
-			<listbox style="btn_list">
-				<placement x="0" y="%ab_h%" w="%screen_w%" h="%bl_fullscreen_h%"/>
-				<listitem name="{@rb_system_btn}">
-					<condition var1="tw_reboot_system" var2="1"/>
-					<icon res="reboot_sys"/>
-					<action function="set">tw_action_param=system</action>
-					<action function="page">rebootcheck</action>
-				</listitem>
-				<listitem name="{@rb_recovery_btn}">
-					<condition var1="tw_reboot_recovery" var2="1"/>
-					<icon res="reboot_recovery"/>
-					<action function="set">tw_action_param=recovery</action>
-					<action function="page">rebootcheck</action>
-				</listitem>
-				<listitem name="{@rb_bootloader_btn}">
-					<condition var1="tw_reboot_bootloader" var2="1"/>
-					<icon res="reboot_bootloader"/>
-					<action function="set">tw_action_param=bootloader</action>
-					<action function="page">rebootcheck</action>
-				</listitem>
-				<listitem name="{@rb_download_btn}">
-					<condition var1="tw_download_mode" var2="1"/>
-					<icon res="reboot_bootloader"/>
-					<action function="set">tw_action_param=download</action>
-					<action function="page">rebootcheck</action>
-				</listitem>
-				<listitem name="{@fastboot_button}">
-					<condition var1="tw_fastboot_mode" var2="1"/>
-					<icon res="reboot_bootloader"/>
-					<action function="set">tw_action_param=fastboot</action>
-					<action function="page">rebootcheck</action>
-				</listitem>
-				<listitem name="EDL">
-					<condition var1="tw_edl_mode" var2="1"/>
-					<icon res="chip"/>
-					<action function="set">tw_action_param=edl</action>
-					<action function="page">rebootcheck</action>
-				</listitem>
-				<listitem name="{@rb_poweroff_btn}">
-					<condition var1="tw_reboot_poweroff" var2="1"/>
-					<icon res="reboot_power"/>
-					<action function="set">tw_action_param=poweroff</action>
-					<action function="page">rebootcheck</action>
-				</listitem>
-				<listitem name="{@slot_show}">
-					<condition var1="tw_has_boot_slots" var2="1"/>
-					<condition var1="bslots_show" op="!=" var2="11"/>
-					<condition var1="tw_back" var2="reboot"/>
-					<icon res="utils"/>
-					<action function="set">bslots_show=11</action>
-				</listitem>
-				<listitem name="{@hide}">
-					<condition var1="bslots_show" var2="11"/>
-					<condition var1="auto_show_btns" op="!=" var2="1"/>
-					<icon res="hide"/>
-					<action function="page">advanced</action>
-				</listitem>
-				<listitem name="{@slot_switch_a}">
-					<condition var1="bslots_show" var2="11"/>
-					<condition var1="tw_active_slot" var2="B"/>
-					<icon res="a_off"/>
-					<action function="set">tw_action_param=A</action>
-					<action function="page">set_slot</action>
-				</listitem>
-				<listitem name="{@slot_active_a}">
-					<condition var1="bslots_show" var2="11"/>
-					<condition var1="tw_active_slot" var2="A"/>
-					<icon res="a_on"/>
-					<action function="set">tw_action_param=A</action>
-					<action function="page">set_slot</action>
-				</listitem>
-				<listitem name="{@slot_switch_b}">
-					<condition var1="bslots_show" var2="11"/>
-					<condition var1="tw_active_slot" var2="A"/>
-					<icon res="b_off"/>
-					<action function="set">tw_action_param=B</action>
-					<action function="page">set_slot</action>
-				</listitem>
-				<listitem name="{@slot_active_b}">
-					<condition var1="bslots_show" var2="11"/>
-					<condition var1="tw_active_slot" var2="B"/>
-					<icon res="b_on"/>
-					<action function="set">tw_action_param=B</action>
-					<action function="page">set_slot</action>
-				</listitem>
-			</listbox>
-			
-			<template name="base"/>
-
-			<text style="text_ab_title">
-				<placement x="%col1_x_indent%" y="%ab_bc_y%"/>
-				<text>{@reboot_btn}</text>
-			</text>
-
-			<template name="gestures"/>
 		</template>
 	</templates>
 </recovery>

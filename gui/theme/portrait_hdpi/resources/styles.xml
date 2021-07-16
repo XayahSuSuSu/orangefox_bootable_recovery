@@ -42,6 +42,10 @@
 			<font resource="Secondary" color="%actbar_color%"/>
 		</style>
 
+		<style name="text_power_card">
+			<font resource="caption" color="%text%"/>
+		</style>
+
 		<style name="text_ab_subtitle_orange">
 			<font resource="Secondary" color="#ed6f02"/>
 		</style>
@@ -273,6 +277,9 @@
 			<dimensions lineh="%slidervalue_lineh%" linepadding="%slidervalue_padding%" sliderw="%slidervalue_sliderw%" sliderh="%slidervalue_sliderh%"/>
 		</style>
 
+		<style name="power_card">
+			<image resource="power_card"/>
+		</style>
 		<style name="actionbar">
 			<image resource="actionbar_btn" highlightresource="actionbar_btn_hl"/>
 		</style>

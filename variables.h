@@ -81,6 +81,7 @@ static int Fox_Current_ROM_IsMIUI = 0; // is the currently installed ROM a MIUI 
 #define FOX_SURVIVAL_FOLDER    Fox_Home.c_str()
 //#define FOX_UPDATE_BINARY  "META-INF/com/google/android/update-binary" // all zip installers must have this
 #define FOX_MIUI_UPDATE_PATH "META-INF/com/miui/miui_update" 	// standard MIUI ROMs have this
+#define FOX_MIUI_UPDATE_PATH_EU "META-INF/com/xiaomieu/xiaomieu.sh"  // Xiaomi.EU MIUI ROMs have this
 #define FOX_FORCE_DEACTIVATE_PROCESS "fox_force_deactivate_process"
 #define FOX_ZIP_INSTALLER_CODE "fox_zip_installer_code"
 #define FOX_ZIP_INSTALLER_TREBLE "fox_zip_installer_treble"
@@ -145,6 +146,7 @@ static int Fox_Current_ROM_IsMIUI = 0; // is the currently installed ROM a MIUI 
 #define FOX_METADATA_PRE_BUILD          "fox_pre_build"
 #define FOX_ENCRYPTED_DEVICE		"fox_encrypted_device"
 
+#define FOX_THEME_VERSION		"1.1"
 //
 #define TW_USE_COMPRESSION_VAR      	"tw_use_compression"
 #define TW_FILENAME                 	"tw_filename"

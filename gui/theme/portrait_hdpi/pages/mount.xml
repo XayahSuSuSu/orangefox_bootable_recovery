@@ -261,22 +261,32 @@
 			</text>
 
 			<image>
+				<condition var1="tw_password_fail" op="!=" var2="1"/>
 				<placement x="%col1_x%" y="%row2_1a_y%"/>
 				<image resource="icon_info"/>
 			</image>
 
+			<image>
+				<condition var1="tw_password_fail" var2="1"/>
+				<placement x="%col1_x%" y="%row2_1a_y%"/>
+				<image resource="icon_warning"/>
+			</image>
+
 			<text style="text_body2_hl">
+				<condition var1="tw_password_fail" op="!=" var2="1"/>
 				<placement x="%col1_x_indent%" y="%row2_1a_y%"/>
 				<text>{@encrypt_data_part}</text>
 			</text>
 
 			<text style="text_body2">
+				<condition var1="of_decrypt_from_menu" op="!=" var2="2"/>
 				<condition var1="tw_password_fail" op="!=" var2="1"/>
 				<placement x="%col1_x_indent%" y="%row2_3a_y%"/>
 				<text>{@decrypt_data_enter_note1a}</text>
 			</text>
 
 			<text style="text_body2">
+				<condition var1="of_decrypt_from_menu" op="!=" var2="2"/>
 				<condition var1="tw_password_fail" op="!=" var2="1"/>
 				<placement x="%col1_x_indent%" y="%row3_1a_y%"/>
 				<text>{@decrypt_data_enter_note2}</text>
@@ -284,15 +294,29 @@
 
 			<text style="text_body2_fail">
 				<condition var1="tw_password_fail" var2="1"/>
-				<placement x="%col1_x_indent%" y="%row2_3a_y%"/>
+				<placement x="%col1_x_indent%" y="%row2_1a_y%"/>
 				<text>{@decrypt_data_failed_pattern}</text>
 			</text>
-
-			<text style="text_body2">
-				<condition var1="tw_password_fail" var2="1"/>
-				<placement x="%col1_x_indent%" y="%row3_1a_y%"/>
-				<text>{@decrypt_try_again}</text>
+			
+			
+			<text style="caption_hl">
+				<condition var1="of_decrypt_from_menu" var2="2"/>
+				<placement x="%col1_x_caption%" y="%row2_3a_y%"/>
+				<text>{@decrypt_data_user}</text>
 			</text>
+			
+			<text style="text_body1">
+				<condition var1="of_decrypt_from_menu" var2="2"/>
+				<placement x="%col1_x_caption%" y="%row3_1a_y%"/>
+				<text>%tw_crypto_user_display%</text>
+			</text>
+
+			<button style="menu_btn">
+				<condition var1="of_decrypt_from_menu" var2="2"/>
+				<placement x="%col1_x_caption%" y="%row2_3a_y%" w="%input_w%" h="%mb_h_hide%"/>
+				<action function="set">tw_page_done=1</action>
+				<action function="page">decrypt_redirect</action>
+			</button>
 
 			<patternpassword>
 				<placement x="%pattern_x%" y="%row4_1a_y%" w="%pattern_size%" h="%pattern_size%"/>
@@ -345,6 +369,10 @@
 				<condition var1="of_decrypt_from_menu" var2="1"/>
 				<action function="page">advanced</action>
 			</action>
+			<action>
+				<condition var1="of_decrypt_from_menu" var2="2"/>
+				<action function="page">decrypt_users</action>
+			</action>
 		</page>
 
 		<page name="trydecrypt">
@@ -390,7 +418,7 @@
 				<action function="set">tw_page_done=1</action>
 				<!-- this function will correctly reload theme (or just back to menu)
 				     when user decrypting from menu -->
-				<action function="set">of_reload_back=advanced</action>
+				<action function="set">of_reload_back=filemanagerlist</action>
 				<action function="check_and_reload"/>
 
 				<!-- Old hotfix for reloading there
@@ -422,6 +450,51 @@
 			</text>
 
 			<template name="action_page_console_big"/>
+		</page>
+
+		<page name="decrypt_users">
+			<action>
+				<action function="set">tw_crypto_user_id_list=</action>
+				<action function="set">tw_crypto_user_id=</action>
+				<action function="set">tw_crypto_password=</action>
+				<action function="set">tw_password_fail=0</action>
+				<action function="page">decrypt_users2</action>
+			</action>
+		</page>
+
+		<page name="decrypt_users2">
+			<listbox style="btn_list">
+				<placement x="0" y="%ab_h%" w="%screen_w%" h="%bl_fullscreen_h%"/>
+				<icon selected="user" unselected="user" />
+				<data name="tw_crypto_user_id_list" />
+			</listbox>
+
+			<template name="base"/>
+
+            <text style="text_ab_title">
+				<placement x="%col1_x_indent%" y="%ab_bc_y%"/>
+				<text>{@decrypt_users}</text>
+			</text>
+
+			<action>
+				<condition var1="tw_crypto_user_id_list" op="modified"/>
+				<action function="set">of_decrypt_from_menu=2</action>
+				<action function="set">tw_crypto_password=</action>
+				<action function="set">tw_password_fail=0</action>
+				<action function="page">decrypt</action>
+			</action>
+
+			<template name="gestures"/>
+
+            <action>
+				<touch key="home"/>
+				<action function="page">main</action>
+			</action>
+
+			<action>
+				<touch key="back"/>
+				<action function="page">advanced</action>
+			</action>
 		</page>
 	</pages>
 </recovery>

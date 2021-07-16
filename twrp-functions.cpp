@@ -42,6 +42,8 @@
 #include <cctype>
 #include <algorithm>
 #include <ctime>
+#include <locale>
+#include <codecvt>
 #include <selinux/label.h>
 #include <android-base/properties.h>
 
@@ -1261,6 +1263,29 @@ int TWFunc::read_file(string fn, vector < string > &results)
   return -1;
 }
 
+int TWFunc::read_file(string fn, vector < wstring > &results)
+{
+  wifstream file;
+  wstring line;
+  file.open(fn.c_str(), ios::in);
+  if (file.is_open())
+    {
+      while (getline(file, line))
+	results.push_back(line);
+      file.close();
+      return 0;
+    }
+  LOGINFO("Cannot find file %s\n", fn.c_str());
+  return -1;
+}
+
+string TWFunc::wstr_to_str(wstring wstr) {
+  using convert_type = std::codecvt_utf8<wchar_t>;
+  std::wstring_convert<convert_type, wchar_t> converter;
+
+  return converter.to_bytes(wstr);
+}
+
 int TWFunc::read_file(string fn, uint64_t & results)
 {
   ifstream file;
@@ -1489,7 +1514,7 @@ void TWFunc::Fixup_Time_On_Boot(const string & time_paths)
             if ((stored_drift > 0) && (drift == 0)) // we only got drift from .foxs
                 {
            	  drift = stored_drift;
-           	  LOGINFO ("TWFunc::Fixup_Time: Using drift value (%lu) stored in .foxs\n", drift);
+           	  LOGINFO ("TWFunc::Fixup_Time: Using drift value (%llu) stored in .foxs\n", (unsigned long long)drift);
                 } 
             else 
             {   
@@ -1499,13 +1524,13 @@ void TWFunc::Fixup_Time_On_Boot(const string & time_paths)
                     {
                         store = 1; 
                     } 
-                    LOGINFO ("TWFunc::Fixup_Time: using drift value (%lu) stored in %s\n", drift, epoch_drift_file.c_str());
+                    LOGINFO ("TWFunc::Fixup_Time: using drift value (%llu) stored in %s\n", (unsigned long long)drift, epoch_drift_file.c_str());
               	 } 
               	 else // either both are 0, or stored_drift is 0
               	 {
               	    if (drift > 0) // then stored_drift must be 0
               	    {
-                        LOGINFO ("TWFunc::Fixup_Time: using drift value (%lu) stored in %s\n", drift, epoch_drift_file.c_str());              	    
+                        LOGINFO ("TWFunc::Fixup_Time: using drift value (%llu) stored in %s\n", (unsigned long long)drift, epoch_drift_file.c_str());
               	    	store = 1;
               	    }
               	 }             
@@ -1515,7 +1540,7 @@ void TWFunc::Fixup_Time_On_Boot(const string & time_paths)
            if (drift > 1369180500) // ignore drifts from earlier than Tuesday, May 21, 2013 11:55:00 PM
            { 
               offset += drift; 
-              LOGINFO ("TWFunc::Fixup_Time: Compensated for drift by %lu \n", drift);
+              LOGINFO ("TWFunc::Fixup_Time: Compensated for drift by %llu \n", (unsigned long long)drift);
               DataManager::SetValue("tw_qcom_ats_offset", (unsigned long long) offset, 1); // store this new offset
               
               if (store == 1) // we haven't already stored the drift in .foxs
@@ -2223,9 +2248,9 @@ int TWFunc::Check_MIUI_Treble(void)
 
   // is the device encrypted?
   if (StorageIsEncrypted())
-    {
-      gui_print("* Storage is encrypted\n");
-    }
+      gui_print_color("accent", "* Storage is encrypted\n");
+  else
+      gui_print_color("warning", "* Storage is not encrypted\n");
   
   // show display panel name, if we got one 
   if (!display_panel.empty())
@@ -2238,19 +2263,14 @@ int TWFunc::Check_MIUI_Treble(void)
   rom_desc = GetInstalledRom();
   if (!rom_desc.empty()) 
     {  
-  	string tmp = "(non-Treble)";
-
-        if (treble)
-           tmp = "(Treble)";
-  	
   	if (fox_is_miui_rom_installed == "1" || TWFunc::Fox_Property_Get("orangefox.miui.rom") == "1")
      	  {
   	     Fox_Current_ROM_IsMIUI = 1;
-  	     gui_print("* MIUI ROM %s", tmp.c_str());
+  	     gui_print("* MIUI ROM");
           } 
   	else
      	  {
-  	    gui_print("* Custom ROM %s", tmp.c_str());
+  	    gui_print("* Custom ROM");
      	  } 
         gui_print("* %s\n", rom_desc.c_str());
         
@@ -2279,9 +2299,11 @@ void TWFunc::Welcome_Message(void)
    if (Fox_Has_Welcomed > 0)
     return;
     gui_print("--------------------------\n");
-    gui_print("Welcome to OrangeFox Recovery!\n");
+    gui_print_color("green", "Welcome to OrangeFox Recovery!\n");
+    gui_print("[Platform]  : %s\n", DataManager::GetStrValue(FOX_COMPATIBILITY_DEVICE).c_str());
     gui_print("[Release]   : %s\n", FOX_BUILD);
-    gui_print("[Codebase]  : %s\n", FOX_CURRENT_DEV_STR);
+    gui_print("[Codebase]  : %s, %s\n", Fox_Property_Get("ro.build.version.sdk").c_str(), FOX_CURRENT_DEV_STR);
+    gui_print("[Build date]: %s\n", DataManager::GetStrValue("FOX_BUILD_DATE_REAL").c_str());
     
     if (FOX_BUILD == "Unofficial")
       gui_print_color("warning", "[Build type]: Unofficial\n");
@@ -2290,6 +2312,12 @@ void TWFunc::Welcome_Message(void)
 #ifdef FOX_ENABLE_LAB
     gui_print_color("error", "\n*** CONFIDENTIAL ALPHA. NOT FOR RELEASE!! ***\n\n");
 #endif
+
+    gui_print("\n");
+    gui_print_color("green", "OrangeFox websites:\n");
+    gui_print("[Downloads] : https://orangefox.download/\n");
+    gui_print("[Guides/FAQ]: https://wiki.orangefox.tech/guides/\n");
+    gui_print("[App]       : https://app.orangefox.tech/\n");
 
     #if defined(OF_DISABLE_MIUI_SPECIFIC_FEATURES) || defined(OF_TWRP_COMPATIBILITY_MODE)
     LOGINFO(" [MIUI-specific features not enabled]\n");
@@ -2339,7 +2367,7 @@ void TWFunc::OrangeFox_Startup(void)
 
   if (TWFunc::Path_Exists(FOX_PS_BIN)) 
       chmod (FOX_PS_BIN, 0755);
-  
+
   Fox_Current_ROM = "";
   
   TWFunc::Welcome_Message();
@@ -2460,7 +2488,35 @@ void TWFunc::OrangeFox_Startup(void)
       }
 
   TWFunc::Fresh_Fox_Install();
-  
+
+//==== themes version matching
+  string theme_ver = DataManager::GetStrValue("of_themes_version");
+  if (theme_ver.empty())
+     theme_ver = "0";
+
+  if (theme_ver == FOX_THEME_VERSION) {
+     LOGINFO("Themes version: %s\n", FOX_THEME_VERSION);
+  } 
+  else {
+     bool has_themes_dir = TWFunc::Path_Exists(Fox_Home + "/.theme");
+     if (has_themes_dir)
+     	gui_print_color("warning","* Themes version mismatch (old='%s'; new='%s')\n", theme_ver.c_str(), FOX_THEME_VERSION);
+     else
+     	LOGINFO("Themes version mismatch (old='%s'; new='%s')\n", theme_ver.c_str(), FOX_THEME_VERSION);
+     
+     DataManager::SetValue("of_themes_version", FOX_THEME_VERSION);
+     if (has_themes_dir) {
+        gui_print_color("warning", "* Resetting the themes...\n");
+        TWFunc::removeDir(Fox_Home + "/.theme", false);
+     }
+     
+     if (TWFunc::Path_Exists(Fox_Home + "/.navbar")) {
+        gui_print_color("warning", "* Resetting the navbar...\n");
+        TWFunc::removeDir(Fox_Home + "/.navbar", false);
+     }
+  }
+//====
+
   // start mtp manually, if enabled
   #ifdef TW_HAS_MTP
  // if (DataManager::GetIntValue("tw_mtp_enabled") == 1 && !PartitionManager.is_MTP_Enabled())
@@ -2747,13 +2803,13 @@ bool TWFunc::PackRepackImage_MagiskBoot(bool do_unpack, bool is_boot)
      }
  */
   TWPartition *Boot = PartitionManager.Find_Partition_By_Path("/boot");
-  TWPartition *Recovery = PartitionManager.Find_Partition_By_Path("/recovery");
 
 #if defined(AB_OTA_UPDATER) || defined(OF_AB_DEVICE)
   if (Boot != NULL)
     {
        tmpstr = Boot->Actual_Block_Device;
 #else 
+  TWPartition *Recovery = PartitionManager.Find_Partition_By_Path("/recovery");
   if (Boot != NULL && Recovery != NULL)
     {
       if (is_boot)
@@ -3376,6 +3432,7 @@ bool TWFunc::Fresh_Fox_Install()
 	unlink(fox_file.c_str());
 	
   	DataManager::SetValue("first_start", "1");
+  	DataManager::SetValue("of_themes_version", FOX_THEME_VERSION);
 
 	#ifdef OF_QUICK_BACKUP_LIST
   	DataManager::SetValue("tw_backup_list_quick", OF_QUICK_BACKUP_LIST);
@@ -3405,8 +3462,10 @@ bool TWFunc::Fresh_Fox_Install()
    }    
    else
    {
-      	if (Path_Exists(fox_file))
+      	if (Path_Exists(fox_file)) {
       	  unlink(fox_file.c_str());
+      	  DataManager::SetValue("of_themes_version", FOX_THEME_VERSION);
+      	}
       	return false;
    }
 }
@@ -4185,9 +4244,6 @@ void TWFunc::Deactivation_Process(void)
 	return;
      }
 
-  bool patched_verity = false;
-  bool patched_crypt = false;
-  
   // don't call this on first boot following fresh installation
   if (New_Fox_Installation != 1)
      {
@@ -4199,6 +4255,8 @@ void TWFunc::Deactivation_Process(void)
 
 // patch ROM's fstab
 #ifndef OF_USE_MAGISKBOOT
+  bool patched_verity = false;
+  bool patched_crypt = false;
   if ((DataManager::GetIntValue(FOX_DISABLE_FORCED_ENCRYPTION) == 1) || (Fox_Force_Deactivate_Process == 1))
      {
          patched_crypt = Patch_Forced_Encryption_In_System_Fstab();
@@ -4864,11 +4922,14 @@ void TWFunc::Mapper_to_BootDevice(void) {
     	#endif
 
 	if (Has_Dynamic_Partitions()) {
- 		#ifdef DYNAMIC_PARTITIONS_LIST_FOR_SYMLINK
- 		printf("=> Linking dynamic partitions (%s)\n", DYNAMIC_PARTITIONS_LIST_FOR_SYMLINK);
+ 		#ifdef BOARD_SUPER_PARTITION_PARTITION_LIST
+ 		string list = BOARD_SUPER_PARTITION_PARTITION_LIST;
+ 		string delim = ",";
+  		std::vector <std::string> partitions = TWFunc::Split_String(list, delim);
+ 		printf("=> Linking dynamic partitions (%s)\n", list.c_str());
   		string src, dest, dest2;
-  		std::vector <std::string> partitions = TWFunc::Split_String(DYNAMIC_PARTITIONS_LIST_FOR_SYMLINK, " ");
 		for (auto&& part : partitions) {
+		        part = lowercase(trim(part));
    		   	src = "/dev/block/mapper/" + part;
    		   	dest = "/dev/block/by-name/" + part;
    		   	dest2 = "/dev/block/bootdevice/by-name/" + part;
@@ -4883,21 +4944,19 @@ void TWFunc::Mapper_to_BootDevice(void) {
 
 void TWFunc::PostWipeEncryption(void) {
 #ifdef OF_RUN_POST_FORMAT_PROCESS
-  gui_print("Recreating /data/media/0...\n");
+  gui_print("I: Recreating /data/media/0...\n");
   sleep(1);
   TWFunc::Recursive_Mkdir("/data/media/0", false);
   TWFunc::Recursive_Mkdir("/data/media/0/Fox/logs", false);
+
+  gui_print("I: Copying recovery.log...\n");
   TWFunc::copy_file("/tmp/recovery.log", "/data/media/0/Fox/logs/lastrecoverylog.log", 0644);
-
-  TWFunc::Recursive_Mkdir("/sdcard/Fox/logs", false);
-  TWFunc::copy_file("/tmp/recovery.log", "/sdcard/Fox/logs/lastrecoverylog.log", 0644);
-
   sleep(1);
 
+  gui_print("I: Binding the internal storage...\n");
   string cmd = "/system/bin/mount";
   if (!TWFunc::Path_Exists(cmd))
      cmd = "/sbin/mount";
-
   cmd = cmd + " -o bind /data/media/0 /sdcard";
   TWFunc::Exec_Cmd(cmd);
   sleep(1);
