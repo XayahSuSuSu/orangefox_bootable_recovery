@@ -27,6 +27,12 @@ else
     LOCAL_CFLAGS += -DFOX_VERSION='"Unofficial"'
 endif
 
+ifeq ($(FOX_VARIANT),)
+    LOCAL_CFLAGS += -DFOX_VARIANT='"default"'
+else
+    LOCAL_CFLAGS += -DFOX_VARIANT='"$(FOX_VARIANT)"'
+endif
+
 ifeq ($(FOX_DEVICE_MODEL),)
     DEVICE := $(subst twrp_,,$(TARGET_PRODUCT))
     LOCAL_CFLAGS += -DFOX_DEVICE_MODEL='"$(DEVICE)"'

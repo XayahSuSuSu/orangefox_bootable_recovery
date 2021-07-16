@@ -2230,6 +2230,7 @@ void TWFunc::Welcome_Message(void)
     gui_print_color("green", "Welcome to OrangeFox Recovery!\n");
     gui_print("[Platform]  : %s\n", DataManager::GetStrValue(FOX_COMPATIBILITY_DEVICE).c_str());
     gui_print("[Release]   : %s\n", FOX_BUILD);
+    gui_print("[Variant]   : %s\n", FOX_VARIANT);
     gui_print("[Codebase]  : %s, %s\n", Fox_Property_Get("ro.build.version.sdk").c_str(), FOX_CURRENT_DEV_STR);
     gui_print("[Build date]: %s\n", DataManager::GetStrValue("FOX_BUILD_DATE_REAL").c_str());
     

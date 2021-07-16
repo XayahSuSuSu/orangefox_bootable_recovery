@@ -383,6 +383,7 @@ int main(int argc, char **argv) {
   	property_set("ro.orangefox.boot", "1");
   	property_set("ro.orangefox.version", FOX_VERSION);
   	property_set("ro.orangefox.type", FOX_BUILD_TYPE);
+  	property_set("ro.orangefox.variant", FOX_VARIANT);
   	property_set("ro.orangefox.build", "orangefox");
   	#ifdef OF_TARGET_DEVICES
   	property_set("ro.orangefox.target.devices", OF_TARGET_DEVICES);
@@ -407,8 +408,8 @@ int main(int argc, char **argv) {
   	TWFunc::Reset_Clock();
 
   	DataManager::GetValue(FOX_COMPATIBILITY_DEVICE, Fox_Current_Device);
-  	printf("Starting OrangeFox Recovery %s [core: %s] (built on %s for %s [dev_ver: %s]; pid %d)\n",
-  		FOX_BUILD, FOX_MAIN_VERSION_STR, fox_build_date.c_str(), Fox_Current_Device.c_str(), FOX_CURRENT_DEV_STR, getpid());
+  	printf("Starting OrangeFox Recovery %s [%s, core: %s] (built on %s for %s [dev_ver: %s]; pid %d)\n",
+  		FOX_BUILD, FOX_VARIANT, FOX_MAIN_VERSION_STR, fox_build_date.c_str(), Fox_Current_Device.c_str(), FOX_CURRENT_DEV_STR, getpid());
 
 	// refresh the specific device codename if we have a generic unified codename
 	TWFunc::Fox_Set_Current_Device_CodeName();
