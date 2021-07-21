@@ -719,6 +719,7 @@ void DataManager::SetDefaultValues()
   mConst.SetValue(TW_VERSION_VAR, FOX_VERSION);
   mConst.SetValue(OF_MAINTAINER_STR, OF_MAINTAINER);
   mConst.SetValue(BUILD_TYPE_STR, FOX_BUILD_TYPE);
+  mConst.SetValue("fox_branch", FOX_BRANCH);
 
   #ifdef OF_SUPPORT_OZIP_DECRYPTION
     mConst.SetValue("of_support_ozip_decryption", "1");
@@ -731,9 +732,9 @@ void DataManager::SetDefaultValues()
 
   //[f/d] UI Vars
   #ifdef FOX_USE_NANO_EDITOR
-	  mConst.SetValue("fox_use_nano_editor", "1");
+  	mConst.SetValue("fox_use_nano_editor", "1");
   #else
-    mConst.SetValue("fox_use_nano_editor", "0");
+    	mConst.SetValue("fox_use_nano_editor", "0");
   #endif
 
   int of_status_placement = (atoi(OF_STATUS_H) / 2) - 28;

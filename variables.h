@@ -23,7 +23,7 @@
 
 #define FOX_RECOVERY_NAME	"OrangeFox"
 #define FOX_MAIN_VERSION_STR    "R11.1"
-
+#define FOX_BRANCH		"11"
 #define TW_VERSION_STR 		FOX_VERSION
 #define BUILD_TYPE_STR 		FOX_BUILD_TYPE
 
