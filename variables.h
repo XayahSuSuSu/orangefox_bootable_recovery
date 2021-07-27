@@ -146,7 +146,6 @@ static int Fox_Current_ROM_IsMIUI = 0; // is the currently installed ROM a MIUI 
 #define FOX_METADATA_PRE_BUILD          "fox_pre_build"
 #define FOX_ENCRYPTED_DEVICE		"fox_encrypted_device"
 
-#define FOX_THEME_VERSION		"1.1"
 //
 #define TW_USE_COMPRESSION_VAR      	"tw_use_compression"
 #define TW_FILENAME                 	"tw_filename"
