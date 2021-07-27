@@ -300,11 +300,15 @@ void TWFunc::Run_Before_Reboot(void)
        }
 
     //[f/d] release info json for app
-    string Fox_Current_Device = DataManager::GetStrValue(FOX_COMPATIBILITY_DEVICE);
-    string build_date = DataManager::GetStrValue("FOX_BUILD_DATE_REAL");
-    TWFunc::write_to_file(Fox_Logs_Dir + "/releaseinfo.json", "{\"codename\":\""+Fox_Current_Device+
-      "\", \"type\":\""+ FOX_BUILD_TYPE +"\",\"version\":\""+ FOX_BUILD +"\",\"commit\":\""+
-      FOX_CURRENT_DEV_STR+"\",\"date\":\""+build_date+"\"}");
+    TWFunc::write_to_file(Fox_Logs_Dir + "/releaseinfo.json",
+"{\"json_ver\":\"2\",\"codename\":\"" + DataManager::GetStrValue(FOX_COMPATIBILITY_DEVICE) +
+                     "\",\"type\":\"" + FOX_BUILD_TYPE                                     +
+                  "\",\"version\":\"" + FOX_BUILD                                          +
+                   "\",\"commit\":\"" + FOX_CURRENT_DEV_STR                                +
+                     "\",\"date\":\"" + DataManager::GetStrValue("FOX_BUILD_DATE_REAL")    +
+                   "\",\"branch\":\"" + FOX_BRANCH                                         +
+                  "\",\"variant\":\"" + FOX_VARIANT                                        +
+               "\",\"release_id\":\"" + TWFunc::System_Property_Get("ro.build.id")         + "\"}");
     
     copy_file("/tmp/recovery.log", Fox_Logs_Dir + "/lastrecoverylog.log", 0644);
 
