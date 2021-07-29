@@ -365,6 +365,7 @@ out:
 
 void set_partition_data(const char* block_device, const char* key_location, const char* fs)
 {
+  SLOGE("set_partition_data key: %s\n", key_location);
   strcpy(key_fname, key_location);
   strcpy(real_blkdev, block_device);
   strcpy(file_system, fs);
@@ -814,6 +815,7 @@ const char *cryptfs_get_crypto_name() {
 
 static int get_crypt_ftr_info(char **metadata_fname, off64_t *off)
 {
+  SLOGE("Current metadata_fname: %s\n", *metadata_fname);
   static int cached_data = 0;
   static off64_t cached_off = 0;
   static char cached_metadata_fname[PROPERTY_VALUE_MAX] = "";
@@ -879,9 +881,10 @@ static int get_crypt_ftr_and_key(struct crypt_mnt_ftr *crypt_ftr)
     return -1;
   }
   if (fname[0] != '/') {
-    SLOGE("Unexpected value for crypto key location\n");
+    SLOGE("Unexpected value for crypto key location. [%s]\n", fname);
     return -1;
   }
+
   if ( (fd = open(fname, O_RDWR|O_CLOEXEC)) < 0) {
     SLOGE("Cannot open footer file %s for get\n", fname);
     return -1;

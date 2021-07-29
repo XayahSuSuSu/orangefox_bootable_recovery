@@ -274,6 +274,7 @@ static KeymasterOperation begin(Keymaster& keymaster, const std::string& dir,
         }
         if (opHandle.errorCode() != km::ErrorCode::KEY_REQUIRES_UPGRADE) return opHandle;
         LOG(DEBUG) << "Upgrading key: " << dir;
+    LOG(INFO) << "kmkey: " << kmKey;
         std::string newKey;
         if (!keymaster.upgradeKey(kmKey, keyParams, &newKey)) return KeymasterOperation();
         // auto newKeyPath = dir + "/" + kFn_keymaster_key_blob_upgraded;

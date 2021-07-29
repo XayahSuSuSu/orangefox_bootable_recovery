@@ -1189,5 +1189,8 @@
 		<string name="recovery_busy">Recovery is busy</string>
 		<string name="status_delimeter">Status bar delimiter</string>
 		<string name="status_delimeter_shadow">Shadow</string>
+
+        <string name="isnt_avb">This boot file isn't avb.</string>
+        <string name="aleady_anti_avb">This boot file is aleady anti avb boot. </string>
 	</resources>
 </language>

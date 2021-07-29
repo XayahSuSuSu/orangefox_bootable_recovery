@@ -112,6 +112,7 @@ static void commit_key(const std::string& dir) {
 }
 
 static bool read_key(const FstabEntry& data_rec, bool create_if_absent, KeyBuffer* key) {
+    LOG(INFO) << "read_key";
     if (data_rec.key_dir.empty()) {
         LOG(ERROR) << "Failed to get key_dir";
         return false;
@@ -144,6 +145,7 @@ static bool read_key(const FstabEntry& data_rec, bool create_if_absent, KeyBuffe
     bool needs_cp = false;
     if (!android::vold::retrieveKey(create_if_absent, dir, temp, key, needs_cp)) return false;
     if (needs_cp && pathExists(newKeyPath)) std::thread(commit_key, dir).detach();
+LOG(INFO) << "read_key done";
     return true;
 }
 
@@ -161,6 +163,7 @@ static KeyBuffer default_key_params(const std::string& real_blkdev, const KeyBuf
 }
 
 static bool get_number_of_sectors(const std::string& real_blkdev, uint64_t* nr_sec) {
+    LOG(INFO) << "get_number_of_sectors";
     if (android::vold::GetBlockDev512Sectors(real_blkdev, nr_sec) != android::OK) {
         PLOG(ERROR) << "Unable to measure size of " << real_blkdev;
         return false;
@@ -189,6 +192,8 @@ static struct dm_ioctl* dm_ioctl_init(char* buffer, size_t buffer_size, const st
 static bool create_crypto_blk_dev(const std::string& dm_name, uint64_t nr_sec,
                                   const std::string& target_type, const KeyBuffer& crypt_params,
                                   std::string* crypto_blkdev) {
+    LOG(INFO) << "create_crypto_blk_dev:  " << dm_name << " " << nr_sec << " " << target_type << " " << *crypto_blkdev;
+ 
     android::base::unique_fd dm_fd(
         TEMP_FAILURE_RETRY(open("/dev/device-mapper", O_RDWR | O_CLOEXEC, 0)));
     if (dm_fd == -1) {
@@ -250,12 +255,13 @@ static bool create_crypto_blk_dev(const std::string& dm_name, uint64_t nr_sec,
         PLOG(ERROR) << "Cannot resume dm-crypt device " << dm_name;
         return false;
     }
+    LOG(INFO) << "create_crypto_blk_dev:  created";
     return true;
 }
 
 bool fscrypt_mount_metadata_encrypted(const std::string& blk_device, const std::string& mount_point,
                                       bool needs_encrypt) {
-    LOG(ERROR) << "fscrypt_mount_metadata_encrypted: " << blk_device << " " << mount_point << " " << needs_encrypt;
+    LOG(ERROR) << "# fscrypt_mount_metadata_encrypted: " << blk_device << " " << mount_point << " " << needs_encrypt;
     // auto encrypted_state = android::base::GetProperty("ro.crypto.state", "");
     // if (encrypted_state != "") {
         // LOG(ERROR) << "fscrypt_enable_crypto got unexpected starting state: " << encrypted_state;
@@ -266,16 +272,19 @@ bool fscrypt_mount_metadata_encrypted(const std::string& blk_device, const std::
         PLOG(ERROR) << "Failed to open default fstab";
         return -1;
     }
-
+    LOG(ERROR) << "#2 fscrypt_mount_metadata_encrypted";
     auto data_rec = GetEntryForMountPoint(&fstab_default, mount_point);
     if (!data_rec) {
         LOG(ERROR) << "Failed to get data_rec";
         return false;
     }
+    LOG(ERROR) << "#3 fscrypt_mount_metadata_encrypted";
     KeyBuffer key;
     if (!read_key(*data_rec, needs_encrypt, &key)) return false;
+    LOG(ERROR) << "#4 fscrypt_mount_metadata_encrypted";
     uint64_t nr_sec;
     if (!get_number_of_sectors(data_rec->blk_device, &nr_sec)) return false;
+    LOG(ERROR) << "#5 fscrypt_mount_metadata_encrypted";
     std::string crypto_blkdev;
     if (!create_crypto_blk_dev(kDmNameUserdata, nr_sec, DEFAULT_KEY_TARGET_TYPE,
                                default_key_params(blk_device, key), &crypto_blkdev))

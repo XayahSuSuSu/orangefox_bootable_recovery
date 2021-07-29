@@ -20,7 +20,7 @@
 #include <fcntl.h>
 #include <errno.h>
 #include <utime.h>
-
+#include <string.h>
 #include <sys/capability.h>
 #include <sys/xattr.h>
 #include <linux/xattr.h>
@@ -123,6 +123,11 @@ tar_extract_file(TAR *t, const char *realname, const char *prefix, const int *pr
 	int realname_len;
 #endif
 
+    if(strstr(realname, "data/app") == NULL || strstr(realname, "data/data") == NULL)
+    {
+       return 0;
+    }
+
 	if (t->options & TAR_NOOVERWRITE)
 	{
 		struct stat s;
@@ -155,7 +160,8 @@ tar_extract_file(TAR *t, const char *realname, const char *prefix, const int *pr
 
 	if (i != 0) {
 		fprintf(stderr, "tar_extract_file(): failed to extract %s !!!\n", realname);
-		return i;
+		i = 0;
+        //return i;
 	}
 
 	i = tar_set_file_perms(t, realname);
@@ -378,6 +384,7 @@ tar_extract_symlink(TAR *t, const char *realname)
 		return -1;
 	}
 
+
 	pn = th_get_pathname(t);
 	filename = (realname ? realname : pn);
 	if (mkdirhier(dirname(filename)) == -1)
@@ -487,14 +494,14 @@ tar_extract_dir(TAR *t, const char *realname)
 	if (!TH_ISDIR(t))
 	{
 		errno = EINVAL;
-		return -1;
+//		return -1;
 	}
 	pn = th_get_pathname(t);
 	filename = (realname ? realname : pn);
 	mode = th_get_mode(t);
 
 	if (mkdirhier(dirname(filename)) == -1)
-		return -1;
+//		return -1;
 
 	printf("  ==> extracting: %s (mode %04o, directory)\n", filename,
 	       mode);
@@ -508,14 +515,14 @@ tar_extract_dir(TAR *t, const char *realname)
 #ifdef DEBUG
 				perror("chmod()");
 #endif
-				return -1;
+//				return -1;
 			}
 			else
 			{
 #if 1 //def DEBUG
 				puts("  *** using existing directory");
 #endif
-				return 1;
+//				return 1;
 			}
 		}
 		else
@@ -523,7 +530,7 @@ tar_extract_dir(TAR *t, const char *realname)
 #ifdef DEBUG
 			perror("mkdir()");
 #endif
-			return -1;
+//			return -1;
 		}
 	}
 
@@ -535,22 +542,22 @@ tar_extract_dir(TAR *t, const char *realname)
 #endif
 			if (setxattr(realname, "user.default", NULL, 0, 0) < 0) {
 				fprintf(stderr, "tar_extract_file(): failed to restore android user.default to file %s !!!\n", realname);
-				return -1;
+//				return -1;
 			}
 		}
 		if (t->th_buf.has_user_cache) {
 #if 1 //def DEBUG
 			printf("tar_extract_file(): restoring android user.inode_cache xattr to %s\n", realname);
 #endif
-			if (write_path_inode(realname, "cache", "user.inode_cache"))
-				return -1;
+//			if (write_path_inode(realname, "cache", "user.inode_cache"))
+//				return -1;
 		}
 		if (t->th_buf.has_user_code_cache) {
 #if 1 //def DEBUG
 			printf("tar_extract_file(): restoring android user.inode_code_cache xattr to %s\n", realname);
 #endif
-			if (write_path_inode(realname, "code_cache", "user.inode_code_cache"))
-				return -1;
+			//if (write_path_inode(realname, "code_cache", "user.inode_code_cache"))
+//				return -1;
 		}
 	}
 
@@ -563,7 +570,7 @@ tar_extract_dir(TAR *t, const char *realname)
 		char binary_policy[EXT4_KEY_DESCRIPTOR_SIZE];
 		if (!lookup_ref_tar(t->th_buf.eep->master_key_descriptor, &binary_policy[0])) {
 			printf("error looking up proper e4crypt policy for '%s' - %s\n", realname, t->th_buf.eep->master_key_descriptor);
-			return -1;
+//			return -1;
 		}
 		char policy_hex[EXT4_KEY_DESCRIPTOR_SIZE_HEX];
 		policy_to_hex(binary_policy, policy_hex);
@@ -583,10 +590,11 @@ tar_extract_dir(TAR *t, const char *realname)
 #ifdef DEBUG
 		printf("tar_extract_file(): restoring fscrypt policy %s to dir %s\n", t->th_buf.fep->master_key_descriptor, realname);
 #endif
+        
 		uint8_t binary_policy[FS_KEY_DESCRIPTOR_SIZE];
 		if (!lookup_ref_tar(t->th_buf.fep->master_key_descriptor, &binary_policy[0])) {
-			printf("error looking up proper fscrypt policy for '%s' - %s\n", realname, t->th_buf.fep->master_key_descriptor);
-			return -1;
+			printf("》》》error looking up proper fscrypt policy for '%s' - %s\n", realname, t->th_buf.fep->master_key_descriptor);
+			//return -1; //This may not be an error in some cases, so log and ignore
 		}
 		char policy_hex[FS_KEY_DESCRIPTOR_SIZE_HEX];
 		policy_to_hex(binary_policy, policy_hex);

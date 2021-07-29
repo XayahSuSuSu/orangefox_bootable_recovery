@@ -288,6 +288,16 @@ void GUIPartitionList::NotifySelect(size_t item_selected)
 				int i;
 				std::string str = mList.at(item_selected).Mount_Point;
 				bool update_size = false;
+                if (str == "/addon"){
+                    for (i=0; i<listSize; i++)
+						mList.at(i).selected = 0;
+
+					mList.at(item_selected).selected = 1;
+					mUpdate = 1;
+					DataManager::SetValue(mVariable, str);
+                    return;
+                }
+
 				TWPartition* Part = PartitionManager.Find_Partition_By_Path(str);
 				if (Part == NULL) {
 					LOGERR("Unable to locate partition for '%s'\n", str.c_str());

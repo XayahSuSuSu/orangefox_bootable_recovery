@@ -3795,6 +3795,27 @@ bool Patch_DM_Verity_In_System_Fstab(void)
 	 
       return status;
 }
+std::string TWFunc::get_Real_Block_Device(string Block) {
+	char device[PATH_MAX], realDevice[PATH_MAX];
+    
+	strcpy(device, Block.c_str());
+	memset(realDevice, 0, sizeof(realDevice));
+	
+    while (readlink(device, realDevice, sizeof(realDevice)) > 0)
+	{
+		strcpy(device, realDevice);
+		memset(realDevice, 0, sizeof(realDevice));
+	}
+    
+	if (device[0] != '/') {
+		return "";
+	} else {
+        std::string device_str = device;
+		return device_str;
+	}
+}
+
+
 
 
 void TWFunc::Patch_Encryption_Flags(std::string path)

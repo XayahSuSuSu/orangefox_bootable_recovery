@@ -60,4 +60,8 @@ ifeq ($(TW_LIBTAR_DEBUG),true)
     LOCAL_CFLAGS += -DTW_LIBTAR_DEBUG
 endif
 
+ifeq ($(TW_LIBTAR_DEBUG2),true)
+    LOCAL_CFLAGS += -DTW_LIBTAR_DEBUG
+endif
+
 include $(BUILD_STATIC_LIBRARY)

@@ -61,7 +61,8 @@ extern "C"
 #ifdef _EVENT_LOGGING
 #define LOGEVENT(...) LOGERR(__VA_ARGS__)
 #else
-#define LOGEVENT(...) do {} while (0)
+//std::ofstream log("/tmp_event.log", std::ios_base::app | std::ios_base::out);
+#define LOGEVENT(...)  printf("I:" __VA_ARGS__)
 #endif
 
 using namespace rapidxml;

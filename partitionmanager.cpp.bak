@@ -2,9 +2,6 @@
 	Copyright 2014 to 2020 TeamWin
 	This file is part of TWRP/TeamWin Recovery Project.
 
-	Copyright (C) 2018-2021 OrangeFox Recovery Project
-	This file is part of the OrangeFox Recovery Project.
-
 	TWRP is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
 	the Free Software Foundation, either version 3 of the License, or
@@ -290,16 +287,12 @@ int TWPartitionManager::Process_Fstab(string Fstab_Filename, bool Display_Error)
 			andsec_partition = (*iter);
 		else
 			(*iter)->Has_Android_Secure = false;
+
 		if (Is_Super_Partition(TWFunc::Remove_Beginning_Slash((*iter)->Get_Mount_Point()).c_str()))
 			Prepare_Super_Volume((*iter));
 	}
 //TWFunc::Update_Log_File();
 
-string Command = "resetprop ro.bootimage.build.date.utc 1546335651";
-TWFunc::Exec_Cmd(Command, false);
-Command = "resetprop ro.build.date.utc 1546335651";
-TWFunc::Exec_Cmd(Command, false);
-                   
 //TWFunc::Exec_Cmd("cp /tmp/recovery.log /cache/rec3.log && echo '' > search_media_dir");
 	//Setup Apex before decryption
 	TWPartition* sys = PartitionManager.Find_Partition_By_Path(PartitionManager.Get_Android_Root_Path());
@@ -313,7 +306,7 @@ TWFunc::Exec_Cmd(Command, false);
                 if (TWFunc::Path_Exists("/vendor/build.prop")) {
                     LOGINFO("Loading stock fingerprint key..\n");
                     string Command = "resetprop ro.build.fingerprint $(cat /vendor/build.prop | grep 'ro.vendor.build.fingerprint' | cut -d'=' -f2 | tail -1)";
-                    if (TWFunc::Exec_Cmd(Command, false) == 0){
+                    if (TWFunc::Exec_Cmd(Command) == 0){
                
                 		TWFunc::Exec_Cmd("getprop ro.build.fingerprint ", false);
                 	}
@@ -394,7 +387,6 @@ TWFunc::Update_Log_File();
 	DataManager::SetValue("tw_active_slot", Get_Active_Slot_Display());
 #endif
 	setup_uevent();
-
 	return true;
 }
 
@@ -431,7 +423,6 @@ void TWPartitionManager::Decrypt_Data() {
 	#ifdef TW_INCLUDE_CRYPTO
 	TWPartition* Decrypt_Data = Find_Partition_By_Path("/data");
 	if (Decrypt_Data && Decrypt_Data->Is_Encrypted && !Decrypt_Data->Is_Decrypted) {
-		DataManager::SetValue(FOX_ENCRYPTED_DEVICE, "1");
 		property_set("ro.crypto.state", "encrypted");
 		if (!Decrypt_Data->Key_Directory.empty() && Mount_By_Path(Decrypt_Data->Key_Directory, false)) {
 		property_set("ro.crypto.type", "file");
@@ -473,7 +464,7 @@ void TWPartitionManager::Decrypt_Data() {
 				LOGINFO("Unable to decrypt metadata encryption\n");
 			}
 #else
-			LOGERR("Metadata FBE decrypt support not present in this build\n");
+			LOGERR("Metadata FBE decrypt support not present in this TWRP\n");
 #endif
 		}
 		if (Decrypt_Data->Is_FBE) {
@@ -509,10 +500,10 @@ void TWPartitionManager::Decrypt_Data() {
 #endif
 }
 
-void TWPartitionManager::Setup_Settings_Storage_Partition(TWPartition * Part) {
-  DataManager::SetValue("tw_settings_path", Part->Storage_Path);
-  DataManager::SetValue("tw_storage_path", Part->Storage_Path);
-  LOGINFO("Settings storage is '%s'\n", Part->Storage_Path.c_str());
+void TWPartitionManager::Setup_Settings_Storage_Partition(TWPartition* Part) {
+	DataManager::SetValue("tw_settings_path", Part->Storage_Path);
+	DataManager::SetValue("tw_storage_path", Part->Storage_Path);
+	LOGINFO("Settings storage is '%s'\n", Part->Storage_Path.c_str());
 }
 
 void TWPartitionManager::Setup_Android_Secure_Location(TWPartition* Part) {
@@ -523,34 +514,11 @@ void TWPartitionManager::Setup_Android_Secure_Location(TWPartition* Part) {
 }
 
 void TWPartitionManager::Output_Partition_Logging(void) {
-  std::vector < TWPartition * >::iterator iter;
-  if (Get_Super_Status())
-  	TWFunc::Fox_Property_Set("orangefox.super.partition", "true");
-  else
-  	TWFunc::Fox_Property_Set("orangefox.super.partition", "false");
+	std::vector<TWPartition*>::iterator iter;
 
-  printf("\n\nPartition Logs:\n");
-  TWPartition* Part;
-  for (iter = Partitions.begin(); iter != Partitions.end(); iter++) {
-       	Output_Partition((*iter));
-       	Part = *iter;
-       	if (Part->Mount_Point == "/vendor") {
-	   TWFunc::Fox_Property_Set("orangefox.vendor.mount_point", Part->Mount_Point);
-	   TWFunc::Fox_Property_Set("orangefox.vendor.block_device", Part->Actual_Block_Device);
-	}
-	else if (Part->Mount_Point == "/product") {
-	   TWFunc::Fox_Property_Set("orangefox.product.mount_point", Part->Mount_Point);
-	   TWFunc::Fox_Property_Set("orangefox.product.block_device", Part->Actual_Block_Device);
-	}
-	else if (Part->Mount_Point == Get_Android_Root_Path()) {
-	   TWFunc::Fox_Property_Set("orangefox.system.mount_point", Part->Mount_Point);
-	   TWFunc::Fox_Property_Set("orangefox.system.block_device", Part->Actual_Block_Device);
-	}
-	else if (Part->Mount_Point == "/super") {
-	   TWFunc::Fox_Property_Set("orangefox.super.mount_point", Part->Mount_Point);
-	   TWFunc::Fox_Property_Set("orangefox.super.block_device", Part->Actual_Block_Device);
-	}
-    }
+	printf("\n\nPartition Logs:\n");
+	for (iter = Partitions.begin(); iter != Partitions.end(); iter++)
+		Output_Partition((*iter));
 }
 
 void TWPartitionManager::Output_Partition(TWPartition* Part) {
@@ -669,11 +637,6 @@ int TWPartitionManager::Mount_By_Path(string Path, bool Display_Error) {
 	if (Local_Path == "/tmp" || Local_Path == "/")
 		return true;
 
-  	#ifdef OF_DEVICE_WITHOUT_PERSIST
-  	if (Local_Path == "/persist")
-      		return false;
-  	#endif
-
 	// Iterate through all partitions
 	for (iter = Partitions.begin(); iter != Partitions.end(); iter++) {
 		if ((*iter)->Mount_Point == Local_Path || (!(*iter)->Symlink_Mount_Point.empty() && (*iter)->Symlink_Mount_Point == Local_Path)) {
@@ -688,8 +651,7 @@ int TWPartitionManager::Mount_By_Path(string Path, bool Display_Error) {
 	} else if (Display_Error) {
 		gui_msg(Msg(msg::kError, "unable_find_part_path=Unable to find partition for path '{1}'")(Local_Path));
 	} else {
-      		if (Local_Path != "/etc") // don't spam us about "/etc", since it will always exist
-			LOGINFO("Mount: Unable to find partition for path '%s'\n", Local_Path.c_str());
+		LOGINFO("Mount: Unable to find partition for path '%s'\n", Local_Path.c_str());
 	}
 	return false;
 }
@@ -699,11 +661,6 @@ int TWPartitionManager::UnMount_By_Path(string Path, bool Display_Error) {
 	int ret = false;
 	bool found = false;
 	string Local_Path = TWFunc::Get_Root_Path(Path);
-
-  	#ifdef OF_DEVICE_WITHOUT_PERSIST
-  	if (Local_Path == "/persist")
-      		return false;
-  	#endif
 
 	// Iterate through all partitions
 	for (iter = Partitions.begin(); iter != Partitions.end(); iter++) {
@@ -747,17 +704,12 @@ int TWPartitionManager::Mount_Current_Storage(bool Display_Error) {
 }
 
 int TWPartitionManager::Mount_Settings_Storage(bool Display_Error) {
-  return Mount_By_Path(DataManager::GetSettingsStoragePath(), Display_Error);
+	return Mount_By_Path(DataManager::GetSettingsStoragePath(), Display_Error);
 }
 
 TWPartition* TWPartitionManager::Find_Partition_By_Path(const string& Path) {
 	std::vector<TWPartition*>::iterator iter;
 	string Local_Path = TWFunc::Get_Root_Path(Path);
-
-  	#ifdef OF_DEVICE_WITHOUT_PERSIST
-  	if (Local_Path == "/persist")
-      		return NULL;
-  	#endif
 
 	if (Local_Path == "/system")
 		Local_Path = Get_Android_Root_Path();
@@ -795,35 +747,25 @@ int TWPartitionManager::Check_Backup_Name(const std::string& Backup_Name, bool D
 		return -2;
 	}
 
-  // Check each character
-  strncpy(backup_name, Backup_Name.c_str(), copy_size);
-  if (copy_size == 1 && strncmp(backup_name, "0", 1) == 0)
-    return 0;			// A "0" (zero) means to use the current timestamp for the backup name
-  for (index = 0; index < copy_size; index++)
-    {
-      cur_char = (int) backup_name[index];
-      if (cur_char == 32 || (cur_char >= 48 && cur_char <= 57)
-	  || (cur_char >= 65 && cur_char <= 91) || cur_char == 93
-	  || cur_char == 95 || (cur_char >= 97 && cur_char <= 123)
-	  || cur_char == 125 || cur_char == 45 || cur_char == 46)
-	{
-	  // These are valid characters
-	  // Numbers
-	  // Upper case letters
-	  // Lower case letters
-	  // Space
-	  // and -_.{}[]
+	// Check each character
+	strncpy(backup_name, Backup_Name.c_str(), copy_size);
+	if (copy_size == 1 && strncmp(backup_name, "0", 1) == 0)
+		return 0; // A "0" (zero) means to use the current timestamp for the backup name
+	for (index=0; index<copy_size; index++) {
+		cur_char = (int)backup_name[index];
+		if (cur_char == 32 || (cur_char >= 48 && cur_char <= 57) || (cur_char >= 65 && cur_char <= 91) || cur_char == 93 || cur_char == 95 || (cur_char >= 97 && cur_char <= 123) || cur_char == 125 || cur_char == 45 || cur_char == 46) {
+			// These are valid characters
+			// Numbers
+			// Upper case letters
+			// Lower case letters
+			// Space
+			// and -_.{}[]
+		} else {
+			if (Display_Error)
+				gui_msg(Msg(msg::kError, "backup_name_invalid=Backup name '{1}' contains invalid character: '{1}'")(Backup_Name)((char)cur_char));
+			return -3;
+		}
 	}
-      else
-	{
-	  if (Display_Error)
-	    gui_msg(Msg
-		    (msg::kError,
-		     "backup_name_invalid=Backup name '{1}' contains invalid character: '{1}'")
-		    (Backup_Name) ((char) cur_char));
-	  return -3;
-	}
-    }
 
 	if (Must_Be_Unique) {
 		// Check to make sure that a backup with this name doesn't already exist
@@ -1121,18 +1063,6 @@ int TWPartitionManager::Run_Backup(bool adbbackup) {
 		backup_path = Backup_List.substr(start_pos, end_pos - start_pos);
 		part_settings.Part = Find_Partition_By_Path(backup_path);
 		if (part_settings.Part != NULL) {
-// DJ9 20/08/2018 { - check for someone trying to back up internal storage onto internal storage
-      		if ((strstr(backup_path.c_str(), "/storage")) || (strstr(backup_path.c_str(), "/data/media/0")))
-        	{ 
-          	   if (strstr(part_settings.Backup_Folder.c_str(), "data/media/0"))
-             		{
-                	   gui_err("fox_internal_fatal_i1=OrangeFox: FATAL ERROR! You cannot backup Internal Storage onto itself!");
-                	   gui_err("fox_internal_fatal_i2=You MUST change the backup destination to MicroSD/USB-OTG.");
-                	   return false;
-             		} 
-             		   else gui_msg("fox_internal_q1=OrangeFox - Internal Storage - take care!");
-        	}
-// DJ9 20/08/2018 }
 			if (!Backup_Partition(&part_settings))
 				return false;
 		} else {
@@ -1201,7 +1131,6 @@ int TWPartitionManager::Run_Backup(bool adbbackup) {
 	}
 	part_settings.adbbackup = false;
 	DataManager::SetValue("tw_enable_adb_backup", 0);
-  	DataManager::SetValue("fox_show_digest_btn", skip_digest);
 
 	return true;
 }
@@ -1292,10 +1221,6 @@ int TWPartitionManager::Run_Restore(const string& Restore_Name) {
 
 				string Full_Filename = part_settings.Backup_Folder + "/" + part_settings.Part->Backup_FileName;
 
-				if (tw_get_default_metadata(Get_Android_Root_Path().c_str()) != 0) {
-					gui_msg(Msg(msg::kWarning, "restore_system_context=Unable to get default context for {1} -- Android may not boot.")(Get_Android_Root_Path()));
-				}
-
 				if (check_digest > 0 && !twrpDigestDriver::Check_Digest(Full_Filename))
 					return false;
 				part_settings.partition_count++;
@@ -1351,7 +1276,6 @@ int TWPartitionManager::Run_Restore(const string& Restore_Name) {
 		}
 	}
 	TWFunc::GUI_Operation_Text(TW_UPDATE_SYSTEM_DETAILS_TEXT, gui_parse_text("{@updating_system_details}"));
-	tw_set_default_metadata(Get_Android_Root_Path().c_str());
 	UnMount_By_Path(Get_Android_Root_Path(), false);
 	Update_System_Details();
 	UnMount_Main_Partitions();
@@ -1761,21 +1685,15 @@ int TWPartitionManager::Resize_By_Path(string Path, bool Display_Error) {
 void TWPartitionManager::Update_System_Details(void) {
 	std::vector<TWPartition*>::iterator iter;
 	int data_size = 0;
-  	#ifdef OF_REPORT_HARMLESS_MOUNT_ISSUES
-  	bool reporter = true;
-  	#else
-  	bool reporter = false;
-  	#endif
 
-  	if (DataManager::GetIntValue(FOX_RUN_SURVIVAL_BACKUP) != 1)
-		gui_msg("update_part_details=Updating partition details...");
+	gui_msg("update_part_details=Updating partition details...");
 	for (iter = Partitions.begin(); iter != Partitions.end(); iter++) {
-		(*iter)->Update_Size(reporter);
+		(*iter)->Update_Size(true);
 		if ((*iter)->Can_Be_Mounted) {
 			if ((*iter)->Mount_Point == Get_Android_Root_Path()) {
 				int backup_display_size = (int)((*iter)->Backup_Size / 1048576LLU);
 				DataManager::SetValue(TW_BACKUP_SYSTEM_SIZE, backup_display_size);
-				//TWFunc::Is_TWRP_App_In_System();
+				TWFunc::Is_TWRP_App_In_System();
 			} else if ((*iter)->Mount_Point == "/data" || (*iter)->Mount_Point == "/datadata") {
 				data_size += (int)((*iter)->Backup_Size / 1048576LLU);
 			} else if ((*iter)->Mount_Point == "/cache") {
@@ -1829,8 +1747,7 @@ void TWPartitionManager::Update_System_Details(void) {
 			}
 		}
 	}
-  	if (DataManager::GetIntValue(FOX_RUN_SURVIVAL_BACKUP) != 1)
-		gui_msg("update_part_details_done=...done");
+	gui_msg("update_part_details_done=...done");
 	DataManager::SetValue(TW_BACKUP_DATA_SIZE, data_size);
 	string current_storage_path = DataManager::GetCurrentStoragePath();
 	TWPartition* FreeStorage = Find_Partition_By_Path(current_storage_path);
@@ -1897,18 +1814,18 @@ void TWPartitionManager::Parse_Users() {
 
 			// Attempt to get name of user. Fallback to user ID if this fails.
 			char* userFile = PageManager::LoadFileToBuffer("/data/system/users/" + to_string(userId) + ".xml", NULL);
-			if (userFile == NULL)
-				user.userName = userId == 0 ? "Owner (0)" : to_string(userId);
+			if (userFile == NULL) 
+				user.userName = to_string(userId);
 			else {
 				xml_document<> *userXml = new xml_document<>();
 				userXml->parse<0>(userFile);
 				xml_node<>* userNode = userXml->first_node("user");
 				if (userNode == nullptr) {
-					user.userName = userId == 0 ? "Owner (0)" : to_string(userId);
+					user.userName = to_string(userId);
 				} else {
 					xml_node<>* nameNode = userNode->first_node("name");
 					if (nameNode == nullptr)
-						user.userName = userId == 0 ? "Owner (0)" : to_string(userId);
+						user.userName = to_string(userId);
 					else {
 						string userName = nameNode->value();
 						user.userName = userName + " (" + to_string(userId) + ")";
@@ -1970,28 +1887,23 @@ void TWPartitionManager::Check_Users_Decryption_Status() {
 
 int TWPartitionManager::Decrypt_Device(string Password, int user_id) {
 #ifdef TW_INCLUDE_CRYPTO
-  char crypto_state[PROPERTY_VALUE_MAX], crypto_blkdev[PROPERTY_VALUE_MAX];
-  std::vector < TWPartition * >::iterator iter;
+	char crypto_state[PROPERTY_VALUE_MAX], crypto_blkdev[PROPERTY_VALUE_MAX];
+	std::vector<TWPartition*>::iterator iter;
 
-  // Mount any partitions that need to be mounted for decrypt
-  for (iter = Partitions.begin(); iter != Partitions.end(); iter++)
-    {
-      if ((*iter)->Mount_To_Decrypt)
-	{
-	  (*iter)->Mount(true);
+	// Mount any partitions that need to be mounted for decrypt
+	for (iter = Partitions.begin(); iter != Partitions.end(); iter++) {
+		if ((*iter)->Mount_To_Decrypt) {
+			(*iter)->Mount(true);
+		}
 	}
-    }
+	property_set("twrp.mount_to_decrypt", "1");
 
-  property_set("orangefox.mount_to_decrypt", "1");
-  property_get("ro.crypto.state", crypto_state, "error");
-  if (strcmp(crypto_state, "error") == 0) {
-	Set_FDE_Encrypt_Status();
-        // Sleep for a bit so that services can start if needed
-        sleep(1);
-    }
+	property_get("ro.crypto.state", crypto_state, "error");
+	if (strcmp(crypto_state, "error") == 0) {
+		Set_FDE_Encrypt_Status();
+	}
 
-  if (DataManager::GetIntValue(TW_IS_FBE))
-    {
+	if (DataManager::GetIntValue(TW_IS_FBE)) {
 #ifdef TW_INCLUDE_FBE
 		if (!Mount_By_Path("/data", true)) // /data has to be mounted for FBE
 			return -1;
@@ -2040,7 +1952,7 @@ int TWPartitionManager::Decrypt_Device(string Password, int user_id) {
 			gui_msg(Msg(msg::kError, "decrypt_user_fail_fbe=Failed to decrypt user {1}")(user_id));
 		}
 #else
-      LOGERR("FBE support is not present\n");
+		LOGERR("FBE support is not present\n");
 #endif
 		return -1;
 	}
@@ -2073,62 +1985,46 @@ int TWPartitionManager::Decrypt_Device(string Password, int user_id) {
 	}
 
 #ifdef TW_CRYPTO_USE_SYSTEM_VOLD
-  if (pwret != 0)
-    {
-      pwret = vold_decrypt(Password);
-      switch (pwret)
-	{
-	case VD_SUCCESS:
-	  break;
-	case VD_ERR_MISSING_VDC:
-	  gui_msg(Msg
-		  (msg::kError,
-		   "decrypt_data_vold_os_missing=Missing files needed for vold decrypt: {1}")
-		  ("/system/bin/vdc"));
-	  break;
-	case VD_ERR_MISSING_VOLD:
-	  gui_msg(Msg
-		  (msg::kError,
-		   "decrypt_data_vold_os_missing=Missing files needed for vold decrypt: {1}")
-		  ("/system/bin/vold"));
-	  break;
+	if (pwret != 0) {
+		pwret = vold_decrypt(Password);
+		switch (pwret) {
+			case VD_SUCCESS:
+				break;
+			case VD_ERR_MISSING_VDC:
+				gui_msg(Msg(msg::kError, "decrypt_data_vold_os_missing=Missing files needed for vold decrypt: {1}")("/system/bin/vdc"));
+				break;
+			case VD_ERR_MISSING_VOLD:
+				gui_msg(Msg(msg::kError, "decrypt_data_vold_os_missing=Missing files needed for vold decrypt: {1}")("/system/bin/vold"));
+				break;
+		}
 	}
-    }
 #endif // TW_CRYPTO_USE_SYSTEM_VOLD
 
-  // Unmount any partitions that were needed for decrypt
-  for (iter = Partitions.begin(); iter != Partitions.end(); iter++)
-    {
-      if ((*iter)->Mount_To_Decrypt)
-	{
-	  (*iter)->UnMount(false);
+	// Unmount any partitions that were needed for decrypt
+	for (iter = Partitions.begin(); iter != Partitions.end(); iter++) {
+		if ((*iter)->Mount_To_Decrypt) {
+			(*iter)->UnMount(false);
+		}
 	}
-    }
+	property_set("twrp.mount_to_decrypt", "0");
 
-  property_set("orangefox.mount_to_decrypt", "0");
+	if (pwret != 0) {
+		gui_err("fail_decrypt=Failed to decrypt data.");
+		return -1;
+	}
 
-  if (pwret != 0)
-    {
-      gui_err("fail_decrypt=Failed to decrypt data.");
-      return -1;
-    }
-
-  property_get("ro.crypto.fs_crypto_blkdev", crypto_blkdev, "error");
-  if (strcmp(crypto_blkdev, "error") == 0)
-    {
-      LOGERR("Error retrieving decrypted data block device.\n");
-    }
-  else
-    {
-      Post_Decrypt(crypto_blkdev);
-    }
-  return 0;
+	property_get("ro.crypto.fs_crypto_blkdev", crypto_blkdev, "error");
+	if (strcmp(crypto_blkdev, "error") == 0) {
+		LOGERR("Error retrieving decrypted data block device.\n");
+	} else {
+		Post_Decrypt(crypto_blkdev);
+	}
+	return 0;
 #else
-  gui_err
-    ("no_crypto_support=No crypto support was compiled into this build.");
-  return -1;
+	gui_err("no_crypto_support=No crypto support was compiled into this build.");
+	return -1;
 #endif
-  return 1;
+	return 1;
 }
 
 int TWPartitionManager::Fix_Contexts(void) {
@@ -2304,303 +2200,216 @@ void TWPartitionManager::UnMount_Main_Partitions(void) {
 		Partition->UnMount(true);
 }
 
-int TWPartitionManager::Partition_SDCard(void)
-{
-  char temp[255];
-  string Storage_Path, Command, Device, fat_str, ext_str, start_loc, end_loc,
-    ext_format, sd_path, tmpdevice;
-  int ext, swap, total_size = 0, fat_size;
+int TWPartitionManager::Partition_SDCard(void) {
+	char temp[255];
+	string Storage_Path, Command, Device, fat_str, ext_str, start_loc, end_loc, ext_format, sd_path, tmpdevice;
+	int ext, swap, total_size = 0, fat_size;
 
-  gui_msg("start_partition_sd=Partitioning SD Card...");
+	gui_msg("start_partition_sd=Partitioning SD Card...");
 
-  // Locate and validate device to partition
-  TWPartition *SDCard =
-    Find_Partition_By_Path(DataManager::GetCurrentPartPath());
+	// Locate and validate device to partition
+	TWPartition* SDCard = Find_Partition_By_Path(DataManager::GetCurrentStoragePath());
 
-  if (SDCard->Is_Adopted_Storage)
-    SDCard->Revert_Adopted();
+	if (SDCard->Is_Adopted_Storage)
+		SDCard->Revert_Adopted();
 
-  if (SDCard == NULL || !SDCard->Removable || SDCard->Has_Data_Media)
-    {
-      gui_err("partition_sd_locate=Unable to locate device to partition.");
-      return false;
-    }
-
-  // Unmount everything
-  if (!SDCard->UnMount(true))
-    return false;
-  TWPartition *SDext = Find_Partition_By_Path("/sd-ext");
-  if (SDext != NULL)
-    {
-      if (!SDext->UnMount(true))
-	return false;
-    }
-  char *swappath = getenv("SWAPPATH");
-  if (swappath != NULL)
-    {
-      LOGINFO("Unmounting swap at '%s'\n", swappath);
-      umount(swappath);
-    }
-
-  // Determine block device
-  if (SDCard->Alternate_Block_Device.empty())
-    {
-      SDCard->Find_Actual_Block_Device();
-      Device = SDCard->Actual_Block_Device;
-      // Just use the root block device
-      Device.resize(strlen("/dev/block/mmcblkX"));
-    }
-  else
-    {
-      Device = SDCard->Alternate_Block_Device;
-    }
-
-  // Find the size of the block device:
-  total_size =
-    (int) (TWFunc::IOCTL_Get_Block_Size(Device.c_str()) / (1048576));
-
-  DataManager::GetValue("tw_sdext_size", ext);
-  DataManager::GetValue("tw_swap_size", swap);
-  DataManager::GetValue("tw_sdpart_file_system", ext_format);
-  fat_size = total_size - ext - swap;
-  LOGINFO
-    ("sd card mount point %s block device is '%s', sdcard size is: %iMB, fat size: %iMB, ext size: %iMB, ext system: '%s', swap size: %iMB\n",
-     DataManager::GetCurrentPartPath().c_str(), Device.c_str(), total_size,
-     fat_size, ext, ext_format.c_str(), swap);
-
-  // Determine partition sizes
-  if (swap == 0 && ext == 0)
-    {
-      fat_str = "-0";
-    }
-  else
-    {
-      memset(temp, 0, sizeof(temp));
-      sprintf(temp, "%i", fat_size);
-      fat_str = temp;
-      fat_str += "MB";
-    }
-  if (swap == 0)
-    {
-      ext_str = "-0";
-    }
-  else
-    {
-      memset(temp, 0, sizeof(temp));
-      sprintf(temp, "%i", ext);
-      ext_str = "+";
-      ext_str += temp;
-      ext_str += "MB";
-    }
-
-  if (ext + swap > total_size)
-    {
-      gui_err("ext_swap_size=EXT + Swap size is larger than sdcard size.");
-      return false;
-    }
-
-  gui_msg("remove_part_table=Removing partition table...");
-  Command = "sgdisk --zap-all " + Device;
-  LOGINFO("Command is: '%s'\n", Command.c_str());
-  if (TWFunc::Exec_Cmd(Command) != 0)
-    {
-      gui_err("unable_rm_part=Unable to remove partition table.");
-      Update_System_Details();
-      return false;
-    }
-  gui_msg(Msg("create_part=Creating {1} partition...") ("FAT32"));
-  Command =
-    "sgdisk  --new=0:0:" + fat_str +
-    " --change-name=0:\"Microsoft basic data\" --typecode=0:EBD0A0A2-B9E5-4433-87C0-68B6B72699C7 "
-    + Device;
-  LOGINFO("Command is: '%s'\n", Command.c_str());
-  if (TWFunc::Exec_Cmd(Command) != 0)
-    {
-      gui_msg(Msg
-	      (msg::kError,
-	       "unable_to_create_part=Unable to create {1} partition.")
-	      ("FAT32"));
-      return false;
-    }
-  if (ext > 0)
-    {
-      gui_msg(Msg("create_part=Creating {1} partition...") ("EXT"));
-      Command =
-	"sgdisk --new=0:0:" + ext_str +
-	" --change-name=0:\"Linux filesystem\" " + Device;
-      LOGINFO("Command is: '%s'\n", Command.c_str());
-      if (TWFunc::Exec_Cmd(Command) != 0)
-	{
-	  gui_msg(Msg
-		  (msg::kError,
-		   "unable_to_create_part=Unable to create {1} partition.")
-		  ("EXT"));
-	  Update_System_Details();
-	  return false;
+	if (SDCard == NULL || !SDCard->Removable || SDCard->Has_Data_Media) {
+		gui_err("partition_sd_locate=Unable to locate device to partition.");
+		return false;
 	}
-    }
-  if (swap > 0)
-    {
-      gui_msg(Msg("create_part=Creating {1} partition...") ("swap"));
-      Command =
-	"sgdisk --new=0:0:-0 --change-name=0:\"Linux swap\" --typecode=0:0657FD6D-A4AB-43C4-84E5-0933C84B4F4F "
-	+ Device;
-      LOGINFO("Command is: '%s'\n", Command.c_str());
-      if (TWFunc::Exec_Cmd(Command) != 0)
-	{
-	  gui_msg(Msg
-		  (msg::kError,
-		   "unable_to_create_part=Unable to create {1} partition.")
-		  ("swap"));
-	  Update_System_Details();
-	  return false;
+
+	// Unmount everything
+	if (!SDCard->UnMount(true))
+		return false;
+	TWPartition* SDext = Find_Partition_By_Path("/sd-ext");
+	if (SDext != NULL) {
+		if (!SDext->UnMount(true))
+			return false;
 	}
-    }
-
-  // Convert GPT to MBR
-  Command = "sgdisk --gpttombr " + Device;
-  if (TWFunc::Exec_Cmd(Command) != 0)
-    LOGINFO("Failed to covert partition GPT to MBR\n");
-
-  // Tell the kernel to rescan the partition table
-  int fd = open(Device.c_str(), O_RDONLY);
-  ioctl(fd, BLKRRPART, 0);
-  close(fd);
-
-  string format_device = Device;
-  if (Device.substr(0, 17) == "/dev/block/mmcblk")
-    format_device += "p";
-
-  // Format new partitions to proper file system
-  if (fat_size > 0)
-    {
-      Command = "mkfs.fat " + format_device + "1";
-      TWFunc::Exec_Cmd(Command);
-    }
-  if (ext > 0)
-    {
-      if (SDext == NULL)
-	{
-	  Command =
-	    "mke2fs -t " + ext_format + " -m 0 " + format_device + "2";
-	  gui_msg(Msg("format_sdext_as=Formatting sd-ext as {1}...")
-		  (ext_format));
-	  LOGINFO("Formatting sd-ext after partitioning, command: '%s'\n",
-		  Command.c_str());
-	  TWFunc::Exec_Cmd(Command);
+	char* swappath = getenv("SWAPPATH");
+	if (swappath != NULL) {
+		LOGINFO("Unmounting swap at '%s'\n", swappath);
+		umount(swappath);
 	}
-      else
-	{
-	  SDext->Wipe(ext_format);
+
+	// Determine block device
+	if (SDCard->Alternate_Block_Device.empty()) {
+		SDCard->Find_Actual_Block_Device();
+		Device = SDCard->Actual_Block_Device;
+		// Just use the root block device
+		Device.resize(strlen("/dev/block/mmcblkX"));
+	} else {
+		Device = SDCard->Alternate_Block_Device;
 	}
-    }
-  if (swap > 0)
-    {
-      Command = "mkswap " + format_device;
-      if (ext > 0)
-	Command += "3";
-      else
-	Command += "2";
-      TWFunc::Exec_Cmd(Command);
-    }
 
-  // recreate TWRP folder and rewrite settings - these will be gone after sdcard is partitioned
-  if (SDCard->Mount(true))
-    {
-      string TWRP_Folder = SDCard->Mount_Point + "/Fox";
-      mkdir(TWRP_Folder.c_str(), 0777);
-      DataManager::Flush();
-    }
+	// Find the size of the block device:
+	total_size = (int)(TWFunc::IOCTL_Get_Block_Size(Device.c_str()) / (1048576));
 
-  Update_System_Details();
-  gui_msg("part_complete=Partitioning complete.");
-  return true;
+	DataManager::GetValue("tw_sdext_size", ext);
+	DataManager::GetValue("tw_swap_size", swap);
+	DataManager::GetValue("tw_sdpart_file_system", ext_format);
+	fat_size = total_size - ext - swap;
+	LOGINFO("sd card mount point %s block device is '%s', sdcard size is: %iMB, fat size: %iMB, ext size: %iMB, ext system: '%s', swap size: %iMB\n", DataManager::GetCurrentStoragePath().c_str(), Device.c_str(), total_size, fat_size, ext, ext_format.c_str(), swap);
+
+	// Determine partition sizes
+	if (swap == 0 && ext == 0) {
+		fat_str = "-0";
+	} else {
+		memset(temp, 0, sizeof(temp));
+		sprintf(temp, "%i", fat_size);
+		fat_str = temp;
+		fat_str += "MB";
+	}
+	if (swap == 0) {
+		ext_str = "-0";
+	} else {
+		memset(temp, 0, sizeof(temp));
+		sprintf(temp, "%i", ext);
+		ext_str = "+";
+		ext_str += temp;
+		ext_str += "MB";
+	}
+
+	if (ext + swap > total_size) {
+		gui_err("ext_swap_size=EXT + Swap size is larger than sdcard size.");
+		return false;
+	}
+
+	gui_msg("remove_part_table=Removing partition table...");
+	Command = "sgdisk --zap-all " + Device;
+	LOGINFO("Command is: '%s'\n", Command.c_str());
+	if (TWFunc::Exec_Cmd(Command) != 0) {
+		gui_err("unable_rm_part=Unable to remove partition table.");
+		Update_System_Details();
+		return false;
+	}
+	gui_msg(Msg("create_part=Creating {1} partition...")("FAT32"));
+	Command = "sgdisk  --new=0:0:" + fat_str + " --change-name=0:\"Microsoft basic data\" --typecode=0:EBD0A0A2-B9E5-4433-87C0-68B6B72699C7 " + Device;
+	LOGINFO("Command is: '%s'\n", Command.c_str());
+	if (TWFunc::Exec_Cmd(Command) != 0) {
+		gui_msg(Msg(msg::kError, "unable_to_create_part=Unable to create {1} partition.")("FAT32"));
+		return false;
+	}
+	if (ext > 0) {
+		gui_msg(Msg("create_part=Creating {1} partition...")("EXT"));
+		Command = "sgdisk --new=0:0:" + ext_str + " --change-name=0:\"Linux filesystem\" " + Device;
+		LOGINFO("Command is: '%s'\n", Command.c_str());
+		if (TWFunc::Exec_Cmd(Command) != 0) {
+			gui_msg(Msg(msg::kError, "unable_to_create_part=Unable to create {1} partition.")("EXT"));
+			Update_System_Details();
+			return false;
+		}
+	}
+	if (swap > 0) {
+		gui_msg(Msg("create_part=Creating {1} partition...")("swap"));
+		Command = "sgdisk --new=0:0:-0 --change-name=0:\"Linux swap\" --typecode=0:0657FD6D-A4AB-43C4-84E5-0933C84B4F4F " + Device;
+		LOGINFO("Command is: '%s'\n", Command.c_str());
+		if (TWFunc::Exec_Cmd(Command) != 0) {
+			gui_msg(Msg(msg::kError, "unable_to_create_part=Unable to create {1} partition.")("swap"));
+			Update_System_Details();
+			return false;
+		}
+	}
+
+	// Convert GPT to MBR
+	Command = "sgdisk --gpttombr " + Device;
+	if (TWFunc::Exec_Cmd(Command) != 0)
+		LOGINFO("Failed to covert partition GPT to MBR\n");
+
+	// Tell the kernel to rescan the partition table
+	int fd = open(Device.c_str(), O_RDONLY);
+	ioctl(fd, BLKRRPART, 0);
+	close(fd);
+
+	string format_device = Device;
+	if (Device.substr(0, 17) == "/dev/block/mmcblk")
+		format_device += "p";
+
+	// Format new partitions to proper file system
+	if (fat_size > 0) {
+		Command = "mkfs.fat " + format_device + "1";
+		TWFunc::Exec_Cmd(Command);
+	}
+	if (ext > 0) {
+		if (SDext == NULL) {
+			Command = "mke2fs -t " + ext_format + " -m 0 " + format_device + "2";
+			gui_msg(Msg("format_sdext_as=Formatting sd-ext as {1}...")(ext_format));
+			LOGINFO("Formatting sd-ext after partitioning, command: '%s'\n", Command.c_str());
+			TWFunc::Exec_Cmd(Command);
+		} else {
+			SDext->Wipe(ext_format);
+		}
+	}
+	if (swap > 0) {
+		Command = "mkswap " + format_device;
+		if (ext > 0)
+			Command += "3";
+		else
+			Command += "2";
+		TWFunc::Exec_Cmd(Command);
+	}
+
+	// recreate TWRP folder and rewrite settings - these will be gone after sdcard is partitioned
+	if (SDCard->Mount(true)) {
+		string TWRP_Folder = SDCard->Mount_Point + "/TWRP";
+		mkdir(TWRP_Folder.c_str(), 0777);
+		DataManager::Flush();
+	}
+
+	Update_System_Details();
+	gui_msg("part_complete=Partitioning complete.");
+	return true;
 }
 
-void TWPartitionManager::Get_Partition_List(string ListType,
-					    std::vector < PartitionList >
-					    *Partition_List)
-{
-  std::vector < TWPartition * >::iterator iter;
-  if (ListType == "mount")
-    {
-      for (iter = Partitions.begin(); iter != Partitions.end(); iter++)
-	{
-	  if ((*iter)->Can_Be_Mounted)
-	    {
-	      struct PartitionList part;
-	      part.Display_Name = (*iter)->Display_Name;
-	      part.Mount_Point = (*iter)->Mount_Point;
-	      part.selected = (*iter)->Is_Mounted();
-	      Partition_List->push_back(part);
-	    }
-	}
-    }
-  else if (ListType == "part_option")
-    {
-      for (iter = Partitions.begin(); iter != Partitions.end(); iter++)
-	{
-	  if ((*iter)->Wipe_Available_in_GUI && !(*iter)->Is_SubPartition)
-	    {
-	      struct PartitionList part;
-	      part.Display_Name = (*iter)->Display_Name;
-	      part.Mount_Point = (*iter)->Mount_Point;
-	      part.selected = 0;
-	      Partition_List->push_back(part);
-	    }
-	}
-
-    }
-    else if (ListType == "storage")
-    {
-      char free_space[255];
-      string Current_Storage = DataManager::GetCurrentStoragePath();
-      for (iter = Partitions.begin(); iter != Partitions.end(); iter++)
-	{
-	  if ((*iter)->Is_Storage)
-	    {
-	      struct PartitionList part;
-	      sprintf(free_space, "%llu", (*iter)->Free / 1024 / 1024);
-	      part.Display_Name = (*iter)->Storage_Name + " (";
-	      part.Display_Name += free_space;
-		  part.Display_Name += gui_parse_text("{@mbyte}");
-		  part.Display_Name += ")";
-	      part.Mount_Point = (*iter)->Storage_Path;
-	      if ((*iter)->Storage_Path == Current_Storage)
-		part.selected = 1;
-	      else
-		part.selected = 0;
-	      Partition_List->push_back(part);
-	    }
-	}
-    }
-  else if (ListType == "backup")
-    {
-      char backup_size[255];
-      unsigned long long Backup_Size;
-      for (iter = Partitions.begin(); iter != Partitions.end(); iter++)
-	{
-	  if (((*iter)->Can_Be_Backed_Up || (((*iter)->Can_Be_Adv_Backed_Up) && (DataManager::GetIntValue("fox_adv_backup") != 0 ))) && !(*iter)->Is_SubPartition
-	      && (*iter)->Is_Present)
-	    {
-	      struct PartitionList part;
-	      Backup_Size = (*iter)->Backup_Size;
-	      if ((*iter)->Has_SubPartition)
-		{
-		  std::vector < TWPartition * >::iterator subpart;
+void TWPartitionManager::Get_Partition_List(string ListType, std::vector<PartitionList> *Partition_List) {
+	std::vector<TWPartition*>::iterator iter;
+	if (ListType == "mount") {
+		for (iter = Partitions.begin(); iter != Partitions.end(); iter++) {
+			if ((*iter)->Can_Be_Mounted) {
+				struct PartitionList part;
+				part.Display_Name = (*iter)->Display_Name;
+				part.Mount_Point = (*iter)->Mount_Point;
+				part.selected = (*iter)->Is_Mounted();
+				Partition_List->push_back(part);
+			}
+		}
+	} else if (ListType == "storage") {
+		char free_space[255];
+		string Current_Storage = DataManager::GetCurrentStoragePath();
+		for (iter = Partitions.begin(); iter != Partitions.end(); iter++) {
+			if ((*iter)->Is_Storage) {
+				struct PartitionList part;
+				sprintf(free_space, "%llu", (*iter)->Free / 1024 / 1024);
+				part.Display_Name = (*iter)->Storage_Name + " (";
+				part.Display_Name += free_space;
+				part.Display_Name += "MB)";
+				part.Mount_Point = (*iter)->Storage_Path;
+				if ((*iter)->Storage_Path == Current_Storage)
+					part.selected = 1;
+				else
+					part.selected = 0;
+				Partition_List->push_back(part);
+			}
+		}
+	} else if (ListType == "backup") {
+		char backup_size[255];
+		unsigned long long Backup_Size;
+		for (iter = Partitions.begin(); iter != Partitions.end(); iter++) {
+			if ((*iter)->Can_Be_Backed_Up && !(*iter)->Is_SubPartition && (*iter)->Is_Present) {
+				struct PartitionList part;
+				Backup_Size = (*iter)->Backup_Size;
+				if ((*iter)->Has_SubPartition) {
+					std::vector<TWPartition*>::iterator subpart;
 
 					for (subpart = Partitions.begin(); subpart != Partitions.end(); subpart++) {
-						if ((*subpart)->Is_SubPartition && ((*subpart)->Can_Be_Backed_Up || ((*subpart)->Can_Be_Adv_Backed_Up && DataManager::GetIntValue("fox_adv_backup") != 0 )) && (*subpart)->Is_Present && (*subpart)->SubPartition_Of == (*iter)->Mount_Point)
+						if ((*subpart)->Is_SubPartition && (*subpart)->Can_Be_Backed_Up && (*subpart)->Is_Present && (*subpart)->SubPartition_Of == (*iter)->Mount_Point)
 							Backup_Size += (*subpart)->Backup_Size;
 					}
 				}
-				part.PartitionSize = Backup_Size;
-				part.isFiles = (*iter)->Backup_Method == BM_FILES ? true : false;
-				sprintf(backup_size, Backup_Size % 1048576 == 0 ? "%.0lf" : "%.2lf", (double)Backup_Size / 1048576);
+				sprintf(backup_size, "%llu", Backup_Size / 1024 / 1024);
 				part.Display_Name = (*iter)->Backup_Display_Name + " (";
 				part.Display_Name += backup_size;
-				part.Display_Name += gui_parse_text("{@mbyte}");
-				part.Display_Name += ")";
+				part.Display_Name += "MB)";
 				part.Mount_Point = (*iter)->Backup_Path;
 				part.selected = 0;
 				Partition_List->push_back(part);
@@ -2701,7 +2510,7 @@ void TWPartitionManager::Get_Partition_List(string ListType,
 }
 
 int TWPartitionManager::Fstab_Processed(void) {
-  return Partitions.size();
+	return Partitions.size();
 }
 
 void TWPartitionManager::Output_Storage_Fstab(void) {
@@ -3061,97 +2870,50 @@ bool TWPartitionManager::Flash_Image(string& path, string& filename) {
 	return true;
 }
 
-
-void TWPartitionManager::Translate_Partition(const char *path,
-					     const char *resource_name,
-					     const char *default_value)
-{
-  TWPartition *part = PartitionManager.Find_Partition_By_Path(path);
-  if (part)
-    {
-      if (part->Is_Adopted_Storage)
-	{
-	  part->Display_Name =
-	    part->Display_Name + " - " + gui_lookup("data", "Data");
-	  part->Backup_Display_Name = part->Display_Name;
-	  part->Storage_Name =
-	    part->Storage_Name + " - " + gui_lookup("adopted_storage",
-						    "Adopted Storage");
+void TWPartitionManager::Translate_Partition(const char* path, const char* resource_name, const char* default_value) {
+	TWPartition* part = PartitionManager.Find_Partition_By_Path(path);
+	if (part) {
+		if (part->Is_Adopted_Storage) {
+			part->Display_Name = part->Display_Name + " - " + gui_lookup("data", "Data");
+			part->Backup_Display_Name = part->Display_Name;
+			part->Storage_Name = part->Storage_Name + " - " + gui_lookup("adopted_storage", "Adopted Storage");
+		} else {
+			part->Display_Name = gui_lookup(resource_name, default_value);
+			part->Backup_Display_Name = part->Display_Name;
+		}
 	}
-      else
-	{
-	  part->Display_Name = gui_lookup(resource_name, default_value);
-	  part->Backup_Display_Name = part->Display_Name;
-	}
-    }
 }
 
-void TWPartitionManager::Translate_Partition(const char *path,
-					     const char *resource_name,
-					     const char *default_value,
-					     const char
-					     *storage_resource_name,
-					     const char
-					     *storage_default_value)
-{
-  TWPartition *part = PartitionManager.Find_Partition_By_Path(path);
-  if (part)
-    {
-      if (part->Is_Adopted_Storage)
-	{
-	  part->Backup_Display_Name =
-	    part->Display_Name + " - " + gui_lookup("data_backup",
-						    "Data (excl. storage)");
-	  part->Display_Name =
-	    part->Display_Name + " - " + gui_lookup("data", "Data");
-	  part->Storage_Name =
-	    part->Storage_Name + " - " + gui_lookup("adopted_storage",
-						    "Adopted Storage");
+void TWPartitionManager::Translate_Partition(const char* path, const char* resource_name, const char* default_value, const char* storage_resource_name, const char* storage_default_value) {
+	TWPartition* part = PartitionManager.Find_Partition_By_Path(path);
+	if (part) {
+		if (part->Is_Adopted_Storage) {
+			part->Backup_Display_Name = part->Display_Name + " - " + gui_lookup("data_backup", "Data (excl. storage)");
+			part->Display_Name = part->Display_Name + " - " + gui_lookup("data", "Data");
+			part->Storage_Name = part->Storage_Name + " - " + gui_lookup("adopted_storage", "Adopted Storage");
+		} else {
+			part->Display_Name = gui_lookup(resource_name, default_value);
+			part->Backup_Display_Name = part->Display_Name;
+			if (part->Is_Storage)
+				part->Storage_Name = gui_lookup(storage_resource_name, storage_default_value);
+		}
 	}
-      else
-	{
-	  part->Display_Name = gui_lookup(resource_name, default_value);
-	  part->Backup_Display_Name = part->Display_Name;
-	  if (part->Is_Storage)
-	    part->Storage_Name =
-	      gui_lookup(storage_resource_name, storage_default_value);
-	}
-    }
 }
 
-void TWPartitionManager::Translate_Partition(const char *path,
-					     const char *resource_name,
-					     const char *default_value,
-					     const char
-					     *storage_resource_name,
-					     const char
-					     *storage_default_value,
-					     const char *backup_name,
-					     const char *backup_default)
-{
-  TWPartition *part = PartitionManager.Find_Partition_By_Path(path);
-  if (part)
-    {
-      if (part->Is_Adopted_Storage)
-	{
-	  part->Backup_Display_Name =
-	    part->Display_Name + " - " + gui_lookup(backup_name,
-						    backup_default);
-	  part->Display_Name =
-	    part->Display_Name + " - " + gui_lookup("data", "Data");
-	  part->Storage_Name =
-	    part->Storage_Name + " - " + gui_lookup("adopted_storage",
-						    "Adopted Storage");
+void TWPartitionManager::Translate_Partition(const char* path, const char* resource_name, const char* default_value, const char* storage_resource_name, const char* storage_default_value, const char* backup_name, const char* backup_default) {
+	TWPartition* part = PartitionManager.Find_Partition_By_Path(path);
+	if (part) {
+		if (part->Is_Adopted_Storage) {
+			part->Backup_Display_Name = part->Display_Name + " - " + gui_lookup(backup_name, backup_default);
+			part->Display_Name = part->Display_Name + " - " + gui_lookup("data", "Data");
+			part->Storage_Name = part->Storage_Name + " - " + gui_lookup("adopted_storage", "Adopted Storage");
+		} else {
+			part->Display_Name = gui_lookup(resource_name, default_value);
+			part->Backup_Display_Name = gui_lookup(backup_name, backup_default);
+			if (part->Is_Storage)
+				part->Storage_Name = gui_lookup(storage_resource_name, storage_default_value);
+		}
 	}
-      else
-	{
-	  part->Display_Name = gui_lookup(resource_name, default_value);
-	  part->Backup_Display_Name = gui_lookup(backup_name, backup_default);
-	  if (part->Is_Storage)
-	    part->Storage_Name =
-	      gui_lookup(storage_resource_name, storage_default_value);
-	}
-    }
 }
 
 void TWPartitionManager::Translate_Partition_Display_Names() {
@@ -3193,139 +2955,92 @@ void TWPartitionManager::Translate_Partition_Display_Names() {
 	DataManager::SetBackupFolder();
 }
 
-bool TWPartitionManager::Decrypt_Adopted()
-{
+bool TWPartitionManager::Decrypt_Adopted() {
 #ifdef TW_INCLUDE_CRYPTO
-  bool ret = false;
-  if (!Mount_By_Path("/data", false))
-    {
-      LOGERR("Cannot decrypt adopted storage because /data will not mount\n");
-      return false;
-    }
-  LOGINFO("Decrypt adopted storage starting\n");
-  char *xmlFile =
-    PageManager::LoadFileToBuffer("/data/system/storage.xml", NULL);
-  xml_document <> *doc = NULL;
-  xml_node <> *volumes = NULL;
-  string Primary_Storage_UUID = "";
-  if (xmlFile != NULL)
-    {
-      LOGINFO("successfully loaded storage.xml\n");
-      doc = new xml_document <> ();
-      doc->parse < 0 > (xmlFile);
-      volumes = doc->first_node("volumes");
-      if (volumes)
-	{
-	  xml_attribute <> *psuuid =
-	    volumes->first_attribute("primaryStorageUuid");
-	  if (psuuid)
-	    {
-	      Primary_Storage_UUID = psuuid->value();
-	    }
+	bool ret = false;
+	if (!Mount_By_Path("/data", false)) {
+		LOGERR("Cannot decrypt adopted storage because /data will not mount\n");
+		return false;
 	}
-    }
-  else
-    {
-      LOGINFO("No /data/system/storage.xml for adopted storage\n");
-      return false;
-    }
-  std::vector < TWPartition * >::iterator adopt;
-  for (adopt = Partitions.begin(); adopt != Partitions.end(); adopt++)
-    {
-
-	if ((*adopt)->Removable && !(*adopt)->Is_Present && (*adopt)->Adopted_Mount_Delay > 0) {
-			// On some devices, the external mmc driver takes some time
-			// to recognize the card, in which case the "actual block device"
-			// would not have been found yet. We wait the specified delay
-			// and then try again.
-			LOGINFO("Sleeping %d seconds for adopted storage.\n", (*adopt)->Adopted_Mount_Delay);
-			sleep((*adopt)->Adopted_Mount_Delay);
-			(*adopt)->Find_Actual_Block_Device();
-	}
-
-      if ((*adopt)->Removable && (*adopt)->Is_Present)
-	{
-	  if ((*adopt)->Decrypt_Adopted() == 0)
-	    {
-	      ret = true;
-	      if (volumes)
-		{
-		  xml_node <> *volume = volumes->first_node("volume");
-		  while (volume)
-		    {
-		      xml_attribute <> *guid =
-			volume->first_attribute("partGuid");
-		      if (guid)
-			{
-			  string GUID = (*adopt)->Adopted_GUID.c_str();
-			  GUID.insert(8, "-");
-			  GUID.insert(13, "-");
-			  GUID.insert(18, "-");
-			  GUID.insert(23, "-");
-
-			  if (strcasecmp(GUID.c_str(), guid->value()) == 0)
-			    {
-			      xml_attribute <> *attr =
-				volume->first_attribute("nickname");
-			      if (attr && attr->value()
-				  && strlen(attr->value()) > 0)
-				{
-				  (*adopt)->Storage_Name = attr->value();
-				  (*adopt)->Display_Name =
-				    (*adopt)->Storage_Name;
-				  (*adopt)->Backup_Display_Name =
-				    (*adopt)->Storage_Name;
-				  LOGINFO
-				    ("storage name from storage.xml is '%s'\n",
-				     attr->value());
-				}
-			      attr = volume->first_attribute("fsUuid");
-			      if (attr && !Primary_Storage_UUID.empty()
-				  && strcmp(Primary_Storage_UUID.c_str(),
-					    attr->value()) == 0)
-				{
-				  TWPartition *Dat =
-				    Find_Partition_By_Path("/data");
-				  if (Dat)
-				    {
-				      LOGINFO
-					("Internal storage is found on adopted storage '%s'\n",
-					 (*adopt)->Display_Name.c_str());
-				      LOGINFO
-					("Changing '%s' to point to '%s'\n",
-					 Dat->Symlink_Mount_Point.c_str(),
-					 (*adopt)->Storage_Path.c_str());
-				      (*adopt)->Symlink_Mount_Point =
-					Dat->Symlink_Mount_Point;
-				      Dat->Symlink_Mount_Point = "";
-				      // Toggle mounts to ensure that the symlink mount point (probably /sdcard) is mounted to the right location
-				      Dat->UnMount(false);
-				      Dat->Mount(false);
-				      (*adopt)->UnMount(false);
-				      (*adopt)->Mount(false);
-				    }
-				}
-			      break;
-			    }
+	LOGINFO("Decrypt adopted storage starting\n");
+	char* xmlFile = PageManager::LoadFileToBuffer("/data/system/storage.xml", NULL);
+	xml_document<> *doc = NULL;
+	xml_node<>* volumes = NULL;
+	string Primary_Storage_UUID = "";
+	if (xmlFile != NULL) {
+		LOGINFO("successfully loaded storage.xml\n");
+		doc = new xml_document<>();
+		doc->parse<0>(xmlFile);
+		volumes = doc->first_node("volumes");
+		if (volumes) {
+			xml_attribute<>* psuuid = volumes->first_attribute("primaryStorageUuid");
+			if (psuuid) {
+				Primary_Storage_UUID = psuuid->value();
 			}
-		      volume = volume->next_sibling("volume");
-		    }
 		}
-	      Update_System_Details();
-	      Output_Partition((*adopt));
-	    }
+	} else {
+		LOGINFO("No /data/system/storage.xml for adopted storage\n");
+		return false;
 	}
-    }
-  if (xmlFile)
-    {
-      doc->clear();
-      delete doc;
-      free(xmlFile);
-    }
-  return ret;
+	std::vector<TWPartition*>::iterator adopt;
+	for (adopt = Partitions.begin(); adopt != Partitions.end(); adopt++) {
+		if ((*adopt)->Removable && (*adopt)->Is_Present) {
+			if ((*adopt)->Decrypt_Adopted() == 0) {
+				ret = true;
+				if (volumes) {
+					xml_node<>* volume = volumes->first_node("volume");
+					while (volume) {
+						xml_attribute<>* guid = volume->first_attribute("partGuid");
+						if (guid) {
+							string GUID = (*adopt)->Adopted_GUID.c_str();
+							GUID.insert(8, "-");
+							GUID.insert(13, "-");
+							GUID.insert(18, "-");
+							GUID.insert(23, "-");
+
+							if (strcasecmp(GUID.c_str(), guid->value()) == 0) {
+								xml_attribute<>* attr = volume->first_attribute("nickname");
+								if (attr && attr->value() && strlen(attr->value()) > 0) {
+									(*adopt)->Storage_Name = attr->value();
+									(*adopt)->Display_Name = (*adopt)->Storage_Name;
+									(*adopt)->Backup_Display_Name = (*adopt)->Storage_Name;
+									LOGINFO("storage name from storage.xml is '%s'\n", attr->value());
+								}
+								attr = volume->first_attribute("fsUuid");
+								if (attr && !Primary_Storage_UUID.empty() && strcmp(Primary_Storage_UUID.c_str(), attr->value()) == 0) {
+									TWPartition* Dat = Find_Partition_By_Path("/data");
+									if (Dat) {
+										LOGINFO("Internal storage is found on adopted storage '%s'\n", (*adopt)->Display_Name.c_str());
+										LOGINFO("Changing '%s' to point to '%s'\n", Dat->Symlink_Mount_Point.c_str(), (*adopt)->Storage_Path.c_str());
+										(*adopt)->Symlink_Mount_Point = Dat->Symlink_Mount_Point;
+										Dat->Symlink_Mount_Point = "";
+										// Toggle mounts to ensure that the symlink mount point (probably /sdcard) is mounted to the right location
+										Dat->UnMount(false);
+										Dat->Mount(false);
+										(*adopt)->UnMount(false);
+										(*adopt)->Mount(false);
+									}
+								}
+								break;
+							}
+						}
+						volume = volume->next_sibling("volume");
+					}
+				}
+				Update_System_Details();
+				Output_Partition((*adopt));
+			}
+		}
+	}
+	if (xmlFile) {
+		doc->clear();
+		delete doc;
+		free(xmlFile);
+	}
+	return ret;
 #else
-  LOGINFO("Decrypt_Adopted: no crypto support\n");
-  return false;
+	LOGINFO("Decrypt_Adopted: no crypto support\n");
+	return false;
 #endif
 }
 
@@ -3376,14 +3091,6 @@ void TWPartitionManager::Set_Active_Slot(const string& Slot) {
 	if (Fstab_Processed())
 		Update_System_Details();
 }
-
-string TWPartitionManager::Get_Internal_Storage_Path() {
-   std::string s = getenv("EXTERNAL_STORAGE");
-   if (s == "") 
-        s = "/sdcard";
-  return s;
-}
-
 string TWPartitionManager::Get_Active_Slot_Suffix() {
 	if (Active_Slot_Display == "A")
 		return "_a";
@@ -3522,8 +3229,7 @@ void TWPartitionManager::read_uevent() {
 
 	int len = recv(uevent_pfd.fd, buf, sizeof(buf), MSG_DONTWAIT);
 	if (len == -1) {
-      		// remove this message (already noted as TWRP issue #1294)
-		// LOGINFO("recv error on uevent\n");
+		LOGINFO("recv error on uevent\n");
 		return;
 	}
 	/*int i = 0; // Print all uevent output for test /debug
@@ -3599,825 +3305,11 @@ void TWPartitionManager::Coldboot() {
 		Coldboot_Scan(&sysfs_entries, "/sys/block", 0);
 }
 
-int TWPartitionManager::Run_OTA_Survival_Backup(bool adbbackup)
-{
-#ifdef OF_VANILLA_BUILD
-   LOGINFO("- OrangeFox: DEBUG: skipping the OTA_BAK process...\n");
-   return 0;
-#endif
-
-  PartitionSettings part_settings;
-  int partition_count = 0, disable_free_space_check = 0, skip_digest = 1;
-  int gui_adb_backup;
-  string Backup_Name, backup_path, Backup_List, theSystem;
-  unsigned long long total_bytes = 0, free_space = 0;
-  TWPartition *storage = NULL;
-  struct tm *t;
-  time_t seconds, total_start;
-  size_t start_pos = 0, end_pos = 0;
-  stop_backup.set_value(0);
-  seconds = time(0);
-  t = localtime(&seconds);
-
-  part_settings.img_bytes_remaining = 0;
-  part_settings.file_bytes_remaining = 0;
-  part_settings.img_time = 0;
-  part_settings.file_time = 0;
-  part_settings.img_bytes = 0;
-  part_settings.file_bytes = 0;
-  part_settings.PM_Method = PM_BACKUP;
-  bool DoSystemOnOTA = (DataManager::GetIntValue(FOX_DO_SYSTEM_ON_OTA) != 0);
-
-  TWPartition *orangefox = Get_Default_Storage_Partition();
-  if (orangefox)
-    DataManager::SetValue("tw_storage_path", orangefox->Storage_Path);
-  else
-    DataManager::SetValue("tw_storage_path", "/");
-
-  DataManager::GetValue("tw_enable_adb_backup", gui_adb_backup);
-  if (gui_adb_backup == true)
-    adbbackup = true;
-
-  part_settings.adbbackup = adbbackup;
-  time(&total_start);
-
-  Update_System_Details_OTA_Survival();
-
-  if (!Mount_Current_Storage(true))
-    return false;
-
-
-  if (skip_digest == 0)
-    part_settings.generate_digest = true;
-  else
-    part_settings.generate_digest = false;
-
-  DataManager::GetValue(FOX_SURVIVAL_FOLDER_VAR, part_settings.Backup_Folder);
-  DataManager::GetValue(FOX_SURVIVAL_BACKUP_NAME, Backup_Name);
-
-  part_settings.Backup_Folder =
-    part_settings.Backup_Folder + "/" + Backup_Name;
-
-  if (TWFunc::Has_Dynamic_Partitions()) 
-  	theSystem = "/super";
-  else
-  	theSystem = "/system_image";
-    
-  TWPartition *sys_image = PartitionManager.Find_Partition_By_Path(theSystem);
-
-  if (TWFunc::Has_Dynamic_Partitions()) 
-  {
-  	#ifdef OF_INCREMENTAL_OTA_BACKUP_SUPER
-  	if (DoSystemOnOTA && sys_image != NULL)
-       		Backup_List += theSystem + ";" + "/boot;";
-  	else
-       		Backup_List += "/boot;";
-	#else
-       		Backup_List += "/boot;";
-	#endif
-  } 
-  else 
-  {
-  	#ifdef OF_NO_MIUI_OTA_VENDOR_BACKUP
-    	// (old Xiaomi devices) - we are not going to backup vendor_image/vendor
-  	#else
-  	TWPartition *vend_image = PartitionManager.Find_Partition_By_Path("/vendor_image");
-     	if (vend_image != NULL)
-        	Backup_List += "/vendor_image;";
-     	else
-        	Backup_List += "/vendor;";
-  	#endif
-
-  	if (DoSystemOnOTA && sys_image != NULL)
-       		Backup_List += theSystem + ";" + "/boot;";
-  	else if (DoSystemOnOTA)
-       		Backup_List += "/system;/boot;";
-  	else
-       		Backup_List += "/boot;";
-  }
-
-  if (!Backup_List.empty())
-    {
-      end_pos = Backup_List.find(";", start_pos);
-      while (end_pos != string::npos && start_pos < Backup_List.size())
-	{
-	  backup_path = Backup_List.substr(start_pos, end_pos - start_pos);
-	  part_settings.Part = Find_Partition_By_Path(backup_path);
-	  if (part_settings.Part != NULL)
-	    {
-	      partition_count++;
-	      if (part_settings.Part->Backup_Method == BM_FILES)
-		part_settings.file_bytes += part_settings.Part->Backup_Size;
-	      else
-		part_settings.img_bytes += part_settings.Part->Backup_Size;
-	      if (part_settings.Part->Has_SubPartition)
-		{
-		  std::vector < TWPartition * >::iterator subpart;
-
-		  for (subpart = Partitions.begin();
-		       subpart != Partitions.end(); subpart++)
-		    {
-		      if ((*subpart)->Can_Be_Backed_Up
-			  && (*subpart)->Is_Present
-			  && (*subpart)->Is_SubPartition
-			  && (*subpart)->SubPartition_Of ==
-			  part_settings.Part->Mount_Point)
-			{
-			  partition_count++;
-			  if ((*subpart)->Backup_Method == BM_FILES)
-			    part_settings.file_bytes +=
-			      (*subpart)->Backup_Size;
-			  else
-			    part_settings.img_bytes +=
-			      (*subpart)->Backup_Size;
-			}
-		    }
-		}
-	    }
-	  else
-	    {
-	      gui_msg(Msg
-		      (msg::kError,
-		       "unable_to_locate_partition=Unable to locate '{1}' partition for backup calculations.")
-		      (backup_path));
-	    }
-	  start_pos = end_pos + 1;
-	  end_pos = Backup_List.find(";", start_pos);
-	}
-    }
-
-  if (partition_count == 0)
-    {
-      gui_msg("no_partition_selected=No partitions selected for backup.");
-      return false;
-    }
-  if (adbbackup)
-    {
-      if (twadbbu::Write_ADB_Stream_Header(partition_count) == false)
-	{
-	  return false;
-	}
-    }
-  total_bytes = part_settings.file_bytes + part_settings.img_bytes;
-  ProgressTracking progress(total_bytes);
-  part_settings.progress = &progress;
-
-  storage = Find_Partition_By_Path(DataManager::GetCurrentStoragePath());
-  if (storage != NULL)
-    {
-      free_space = storage->Free;
-    }
-  else
-    {
-      gui_err("unable_locate_storage=Unable to locate storage device.");
-      return false;
-    }
-
-  if (adbbackup)
-    disable_free_space_check = true;
-
-  if (DoSystemOnOTA)
-    {
-      if (!disable_free_space_check)
-	{
-	  if (free_space - (1500 * 1024 * 1024) < total_bytes)
-	    {
-	      gui_err
-		("fox_no_space_ota_survival=Not enough free space on internal storage for creating the OTA survival.");
-	      return false;
-	    }
-	}
-    }
-  else
-    {
-      if (!disable_free_space_check)
-	{
-	  if (free_space - (100 * 1024 * 1024) < total_bytes)
-	    {
-	      gui_err
-		("fox_no_space_ota_survival=Not enough free space on internal storage for creating the OTA survival.");
-	      return false;
-	    }
-	}
-    }
-  part_settings.img_bytes_remaining = part_settings.img_bytes;
-  part_settings.file_bytes_remaining = part_settings.file_bytes;
-
-
-  if (!TWFunc::Recursive_Mkdir(part_settings.Backup_Folder))
-    {
-      gui_err("fail_backup_folder=Failed to make backup folder.");
-      return false;
-    }
-
-  DataManager::SetProgress(0.0);
-
-  start_pos = 0;
-  end_pos = Backup_List.find(";", start_pos);
-  while (end_pos != string::npos && start_pos < Backup_List.size())
-    {
-      if (stop_backup.get_value() != 0)
-	return -1;
-      backup_path = Backup_List.substr(start_pos, end_pos - start_pos);
-      part_settings.Part = Find_Partition_By_Path(backup_path);
-      if (part_settings.Part != NULL)
-	{
-	  if (!Backup_Partition(&part_settings))
-	    return false;
-	}
-      else
-	{
-	  gui_msg(Msg
-		  (msg::kError,
-		   "unable_to_locate_partition=Unable to locate '{1}' partition for backup calculations.")
-		  (backup_path));
-	}
-      start_pos = end_pos + 1;
-      end_pos = Backup_List.find(";", start_pos);
-    }
-
-  // Average BPS
-  if (part_settings.img_time == 0)
-    part_settings.img_time = 1;
-  if (part_settings.file_time == 0)
-    part_settings.file_time = 1;
-  int img_bps = (int) part_settings.img_bytes / (int) part_settings.img_time;
-  unsigned long long file_bps =
-    part_settings.file_bytes / (int) part_settings.file_time;
-
-  uint64_t actual_backup_size;
-  if (!adbbackup)
-    {
-      TWExclude twe;
-      actual_backup_size = twe.Get_Folder_Size(part_settings.Backup_Folder);
-    }
-  else
-    actual_backup_size = part_settings.file_bytes + part_settings.img_bytes;
-  actual_backup_size /= (1024LLU * 1024LLU);
-
-  int prev_img_bps = 0, use_compression = 0;
-  unsigned long long prev_file_bps = 0;
-  DataManager::GetValue(TW_BACKUP_AVG_IMG_RATE, prev_img_bps);
-  img_bps += (prev_img_bps * 4);
-  img_bps /= 5;
-
-  DataManager::GetValue(TW_USE_COMPRESSION_VAR, use_compression);
-  if (use_compression)
-    DataManager::GetValue(TW_BACKUP_AVG_FILE_COMP_RATE, prev_file_bps);
-  else
-    DataManager::GetValue(TW_BACKUP_AVG_FILE_RATE, prev_file_bps);
-  file_bps += (prev_file_bps * 4);
-  file_bps /= 5;
-
-  DataManager::SetValue(TW_BACKUP_AVG_IMG_RATE, img_bps);
-  if (use_compression)
-    DataManager::SetValue(TW_BACKUP_AVG_FILE_COMP_RATE, file_bps);
-  else
-    DataManager::SetValue(TW_BACKUP_AVG_FILE_RATE, file_bps);
-
-  Update_System_Details_OTA_Survival();
-  UnMount_Main_Partitions();
-  if (part_settings.adbbackup)
-    {
-      if (twadbbu::Write_ADB_Stream_Trailer() == false)
-	{
-	  return false;
-	}
-    }
-  part_settings.adbbackup = false;
-  DataManager::SetValue("tw_enable_adb_backup", 0);
-
-  return true;
-}
-
-bool TWPartitionManager::Flash_Repacked_Image(string & path,
-					      string & filename,
-					      bool recovery)
-{
-  int partition_count = 0;
-  TWPartition *flash_part = NULL;
-  string Flash_List;
-  if (!recovery)
-    Flash_List = "/recovery;";
-  else
-    Flash_List = "/boot;";
-  string flash_path, full_filename;
-  size_t start_pos = 0, end_pos = 0;
-
-  full_filename = path + "/" + filename;
-
-  if (!TWFunc::Path_Exists(full_filename))
-    {
-      if (!Mount_By_Path(full_filename, true))
-	{
-	  return false;
-	}
-      if (!TWFunc::Path_Exists(full_filename))
-	{
-	  return false;
-	}
-    }
-
-  PartitionSettings part_settings;
-  part_settings.Backup_Folder = path;
-  unsigned long long total_bytes = TWFunc::Get_File_Size(full_filename);
-  ProgressTracking progress(total_bytes);
-  part_settings.progress = &progress;
-  part_settings.adbbackup = false;
-  part_settings.PM_Method = PM_RESTORE;
-
-  if (!Flash_List.empty())
-    {
-      end_pos = Flash_List.find(";", start_pos);
-      while (end_pos != string::npos && start_pos < Flash_List.size())
-	{
-	  flash_path = Flash_List.substr(start_pos, end_pos - start_pos);
-	  flash_part = Find_Partition_By_Path(flash_path);
-	  if (flash_part != NULL)
-	    {
-	      partition_count++;
-	      if (partition_count > 1)
-		{
-		  gui_err
-		    ("too_many_flash=Too many partitions selected for flashing.");
-		  return false;
-		}
-	    }
-	  else
-	    {
-	      gui_msg(Msg
-		      (msg::kError,
-		       "flash_unable_locate=Unable to locate '{1}' partition for flashing.")
-		      (flash_path));
-	      return false;
-	    }
-	  start_pos = end_pos + 1;
-	  end_pos = Flash_List.find(";", start_pos);
-	}
-    }
-
-  if (partition_count == 0)
-    {
-      gui_err("no_part_flash=No partitions selected for flashing.");
-      return false;
-    }
-
-  if (flash_part)
-    {
-      flash_part->Backup_FileName = filename;
-      if (!flash_part->Flash_Image(&part_settings))
-	return false;
-    }
-  else
-    {
-      gui_err("invalid_flash=Invalid flash partition specified.");
-      return false;
-    }
-  return true;
-}
-
-int TWPartitionManager::Run_OTA_Survival_Restore(const string & Restore_Name)
-{
-#ifdef OF_VANILLA_BUILD
-   LOGINFO("- OrangeFox: DEBUG: skipping the OTA_RES process...\n");
-   return 0;
-#endif
-  PartitionSettings part_settings;
-  int check_digest = 0;
-
-  time_t rStart, rStop;
-  time(&rStart);
-  string Restore_List, restore_path;
-  size_t start_pos = 0, end_pos;
-
-  part_settings.Backup_Folder = Restore_Name;
-  part_settings.Part = NULL;
-  part_settings.partition_count = 0;
-  part_settings.total_restore_size = 0;
-  part_settings.adbbackup = false;
-  part_settings.PM_Method = PM_RESTORE;
-
-  TWPartition *orangefox = Get_Default_Storage_Partition();
-  if (orangefox)
-    DataManager::SetValue("tw_storage_path", orangefox->Storage_Path);
-  else
-    DataManager::SetValue("tw_storage_path", "/");
-
-  DataManager::GetValue("tw_restore_list", Restore_List);
-
-  if (!Mount_Current_Storage(true))
-    return false;
-
-  if (!Restore_List.empty())
-    {
-      end_pos = Restore_List.find(";", start_pos);
-      while (end_pos != string::npos && start_pos < Restore_List.size())
-	{
-	  restore_path = Restore_List.substr(start_pos, end_pos - start_pos);
-	  part_settings.Part = Find_Partition_By_Path(restore_path);
-	  if (part_settings.Part != NULL)
-	    {
-	      if (part_settings.Part->Mount_Read_Only)
-		return false;
-
-	      string Full_Filename =
-		part_settings.Backup_Folder + "/" +
-		part_settings.Part->Backup_FileName;
-
-	      if (check_digest > 0
-		  && !twrpDigestDriver::Check_Digest(Full_Filename))
-		return false;
-	      part_settings.partition_count++;
-	      part_settings.total_restore_size +=
-		part_settings.Part->Get_Restore_Size(&part_settings);
-	      if (part_settings.Part->Has_SubPartition)
-		{
-		  TWPartition *parentPart = part_settings.Part;
-		  std::vector < TWPartition * >::iterator subpart;
-
-		  for (subpart = Partitions.begin();
-		       subpart != Partitions.end(); subpart++)
-		    {
-		      part_settings.Part = *subpart;
-		      if ((*subpart)->Is_SubPartition
-			  && (*subpart)->SubPartition_Of ==
-			  parentPart->Mount_Point)
-			{
-			  if (check_digest > 0
-			      && !twrpDigestDriver::
-			      Check_Digest(Full_Filename))
-			    return false;
-			  part_settings.total_restore_size +=
-			    (*subpart)->Get_Restore_Size(&part_settings);
-			}
-		    }
-		}
-	    }
-	  else
-	    {
-	      gui_msg(Msg
-		      (msg::kError,
-		       "restore_unable_locate=Unable to locate '{1}' partition for restoring.")
-		      (restore_path));
-	    }
-	  start_pos = end_pos + 1;
-	  end_pos = Restore_List.find(";", start_pos);
-	}
-    }
-
-  if (part_settings.partition_count == 0)
-    {
-      gui_err("no_part_restore=No partitions selected for restore.");
-      return false;
-    }
-
-  DataManager::SetProgress(0.0);
-  ProgressTracking progress(part_settings.total_restore_size);
-  part_settings.progress = &progress;
-
-  start_pos = 0;
-  if (!Restore_List.empty())
-    {
-      end_pos = Restore_List.find(";", start_pos);
-      while (end_pos != string::npos && start_pos < Restore_List.size())
-	{
-	  restore_path = Restore_List.substr(start_pos, end_pos - start_pos);
-
-	  part_settings.Part = Find_Partition_By_Path(restore_path);
-	  if (part_settings.Part != NULL)
-	    {
-	      part_settings.partition_count++;
-	      if (!Restore_Partition(&part_settings))
-		return false;
-	    }
-	  else
-	    {
-	      gui_msg(Msg
-		      (msg::kError,
-		       "restore_unable_locate=Unable to locate '{1}' partition for restoring.")
-		      (restore_path));
-	    }
-	  start_pos = end_pos + 1;
-	  end_pos = Restore_List.find(";", start_pos);
-	}
-    }
-  UnMount_By_Path(Get_Android_Root_Path(), false);
-  Update_System_Details_OTA_Survival();
-  UnMount_Main_Partitions();
-  time(&rStop);
-  DataManager::SetValue("tw_file_progress", "");
-
-  return true;
-}
-
-
-void TWPartitionManager::Update_System_Details_OTA_Survival(void)
-{
-  std::vector < TWPartition * >::iterator iter;
-  int data_size = 0;
-  #ifdef OF_REPORT_HARMLESS_MOUNT_ISSUES
-  bool reporter = true;
-  #else
-  bool reporter = false;
-  #endif
-
-  for (iter = Partitions.begin(); iter != Partitions.end(); iter++)
-    {
-      (*iter)->Update_Size(reporter);
-      if ((*iter)->Can_Be_Mounted)
-	{
-	  if ((*iter)->Mount_Point == Get_Android_Root_Path())
-	    {
-	      int backup_display_size =
-		(int) ((*iter)->Backup_Size / 1048576LLU);
-	      DataManager::SetValue(TW_BACKUP_SYSTEM_SIZE,
-				    backup_display_size);
-	    }
-	  else if ((*iter)->Mount_Point == "/data"
-		   || (*iter)->Mount_Point == "/datadata")
-	    {
-	      data_size += (int) ((*iter)->Backup_Size / 1048576LLU);
-	    }
-	  else if ((*iter)->Mount_Point == "/cache")
-	    {
-	      int backup_display_size =
-		(int) ((*iter)->Backup_Size / 1048576LLU);
-	      DataManager::SetValue(TW_BACKUP_CACHE_SIZE,
-				    backup_display_size);
-	    }
-	  else if ((*iter)->Mount_Point == "/sd-ext")
-	    {
-	      int backup_display_size =
-		(int) ((*iter)->Backup_Size / 1048576LLU);
-	      DataManager::SetValue(TW_BACKUP_SDEXT_SIZE,
-				    backup_display_size);
-	      if ((*iter)->Backup_Size == 0)
-		{
-		  DataManager::SetValue(TW_HAS_SDEXT_PARTITION, 0);
-		  DataManager::SetValue(TW_BACKUP_SDEXT_VAR, 0);
-		}
-	      else
-		DataManager::SetValue(TW_HAS_SDEXT_PARTITION, 1);
-	    }
-	  else if ((*iter)->Has_Android_Secure)
-	    {
-	      int backup_display_size =
-		(int) ((*iter)->Backup_Size / 1048576LLU);
-	      DataManager::SetValue(TW_BACKUP_ANDSEC_SIZE,
-				    backup_display_size);
-	      if ((*iter)->Backup_Size == 0)
-		{
-		  DataManager::SetValue(TW_HAS_ANDROID_SECURE, 0);
-		  DataManager::SetValue(TW_BACKUP_ANDSEC_VAR, 0);
-		}
-	      else
-		DataManager::SetValue(TW_HAS_ANDROID_SECURE, 1);
-	    }
-	  else if ((*iter)->Mount_Point == "/boot")
-	    {
-	      int backup_display_size =
-		(int) ((*iter)->Backup_Size / 1048576LLU);
-	      DataManager::SetValue(TW_BACKUP_BOOT_SIZE, backup_display_size);
-	      if ((*iter)->Backup_Size == 0)
-		{
-		  DataManager::SetValue("tw_has_boot_partition", 0);
-		  DataManager::SetValue(TW_BACKUP_BOOT_VAR, 0);
-		}
-	      else
-		DataManager::SetValue("tw_has_boot_partition", 1);
-	    }
-	}
-      else
-	{
-	  // Handle unmountable partitions in case we reset defaults
-	  if ((*iter)->Mount_Point == "/boot")
-	    {
-	      int backup_display_size =
-		(int) ((*iter)->Backup_Size / 1048576LLU);
-	      DataManager::SetValue(TW_BACKUP_BOOT_SIZE, backup_display_size);
-	      if ((*iter)->Backup_Size == 0)
-		{
-		  DataManager::SetValue(TW_HAS_BOOT_PARTITION, 0);
-		  DataManager::SetValue(TW_BACKUP_BOOT_VAR, 0);
-		}
-	      else
-		DataManager::SetValue(TW_HAS_BOOT_PARTITION, 1);
-	    }
-	  else if ((*iter)->Mount_Point == "/recovery")
-	    {
-	      int backup_display_size =
-		(int) ((*iter)->Backup_Size / 1048576LLU);
-	      DataManager::SetValue(TW_BACKUP_RECOVERY_SIZE,
-				    backup_display_size);
-	      if ((*iter)->Backup_Size == 0)
-		{
-		  DataManager::SetValue(TW_HAS_RECOVERY_PARTITION, 0);
-		  DataManager::SetValue(TW_BACKUP_RECOVERY_VAR, 0);
-		}
-	      else
-		DataManager::SetValue(TW_HAS_RECOVERY_PARTITION, 1);
-	    }
-	  else if ((*iter)->Mount_Point == "/data")
-	    {
-	      data_size += (int) ((*iter)->Backup_Size / 1048576LLU);
-	    }
-	}
-    }
-  DataManager::SetValue(TW_BACKUP_DATA_SIZE, data_size);
-  string current_storage_path = DataManager::GetCurrentStoragePath();
-  TWPartition *FreeStorage = Find_Partition_By_Path(current_storage_path);
-  if (FreeStorage != NULL)
-    {
-      // Attempt to mount storage
-      if (!FreeStorage->Mount(false))
-	{
-	  gui_msg(Msg
-		  (msg::kError,
-		   "unable_to_mount_storage=Unable to mount storage"));
-	  DataManager::SetValue(TW_STORAGE_FREE_SIZE, 0);
-	}
-      else
-	{
-	  DataManager::SetValue(TW_STORAGE_FREE_SIZE,
-				(int) (FreeStorage->Free / 1048576LLU));
-	}
-    }
-  else
-    {
-      LOGINFO("Unable to find storage partition '%s'.\n",
-	      current_storage_path.c_str());
-    }
-  if (!Write_Fstab())
-    LOGERR("Error creating fstab\n");
-  return;
-}
-
-bool TWPartitionManager::Storage_Is_Encrypted(void)
-{
-  // FBE only
-  if (TWFunc::Path_Exists("/data/unencrypted/key/version") || DataManager::GetIntValue(TW_IS_FBE) == 1)
- 	return true;
-
-  // Generic
-  if (DataManager::GetIntValue(FOX_ENCRYPTED_DEVICE) == 1)
- 	return true;
-
-  // FDE
-  string res = "";
-  string cmd = "cat /proc/mounts | grep /data | grep dm-";
-  TWFunc::Exec_Cmd(cmd, res);
-  //gui_print("RESULT of command:\n|%s|\n is |%s|\n", cmd.c_str(), res.c_str());
-  if (res.empty())
-     return false;
-  else
-     return true;
-/*
-  TWPartition *Part = Find_Partition_By_Path("/data");
-  return (Part && Part->Is_Encrypted && !Part->Is_Decrypted);
-*/
-}
-
 bool TWPartitionManager::Prepare_Empty_Folder(const std::string& Folder) {
 	if (TWFunc::Path_Exists(Folder))
 		TWFunc::removeDir(Folder, false);
 	return TWFunc::Recursive_Mkdir(Folder);
 }
-
-bool TWPartitionManager::Prepare_Repack(TWPartition* Part, const std::string& Temp_Folder_Destination, const bool Create_Backup, const std::string& Backup_Name) {
-	if (!Part) {
-		LOGERR("Partition was null!\n");
-		return false;
-	}
-	if (!Prepare_Empty_Folder(Temp_Folder_Destination))
-		return false;
-	std::string target_image = Temp_Folder_Destination + "boot.img";
-	PartitionSettings part_settings;
-	part_settings.Part = Part;
-	if (Create_Backup) {
-		if (Check_Backup_Name(Backup_Name, true, false) != 0)
-			return false;
-		DataManager::GetValue(TW_BACKUPS_FOLDER_VAR, part_settings.Backup_Folder);
-		part_settings.Backup_Folder = part_settings.Backup_Folder + "/" + TWFunc::Get_Current_Date() + " " + Backup_Name + "/";
-		if (!TWFunc::Recursive_Mkdir(part_settings.Backup_Folder))
-			return false;
-	} else
-		part_settings.Backup_Folder = Temp_Folder_Destination;
-	part_settings.adbbackup = false;
-	part_settings.generate_digest = false;
-	part_settings.generate_md5 = false;
-	part_settings.PM_Method = PM_BACKUP;
-	part_settings.progress = NULL;
-	pid_t not_a_pid = 0;
-	if (!Part->Backup(&part_settings, &not_a_pid))
-		return false;
-	std::string backed_up_image = part_settings.Backup_Folder;
-	backed_up_image += Part->Backup_FileName;
-	target_image = Temp_Folder_Destination + "boot.img";
-	if (Create_Backup) {
-		std::string source = part_settings.Backup_Folder + Part->Backup_FileName;
-		if (TWFunc::copy_file(source, target_image, 0644) != 0) {
-			LOGERR("Failed to copy backup file '%s' to temp folder target '%s'\n", source.c_str(), target_image.c_str());
-			return false;
-		}
-	} else {
-		if (rename(backed_up_image.c_str(), target_image.c_str()) != 0) {
-			LOGERR("Failed to rename '%s' to '%s'\n", backed_up_image.c_str(), target_image.c_str());
-			return false;
-		}
-	}
-	return Prepare_Repack(target_image, Temp_Folder_Destination, false, false);
-}
-
-bool TWPartitionManager::Prepare_Repack(const std::string& Source_Path, const std::string& Temp_Folder_Destination, const bool Copy_Source, const bool Create_Destination) {
-	std::string magiskboot = TWFunc::Get_MagiskBoot();
-	if (Create_Destination) {
-		if (!Prepare_Empty_Folder(Temp_Folder_Destination))
-			return false;
-	}
-	if (Copy_Source) {
-		std::string destination = Temp_Folder_Destination + "/boot.img";
-		if (TWFunc::copy_file(Source_Path, destination, 0644))
-			return false;
-	}
-	std::string command = "cd " + Temp_Folder_Destination + " && " + magiskboot + " unpack -h '" + Source_Path +"'";
-	if (TWFunc::Exec_Cmd(command) != 0) {
-		LOGINFO("Error unpacking %s!\n", Source_Path.c_str());
-		gui_msg(Msg(msg::kError, "unpack_error=Error unpacking image."));
-		return false;
-	}
-	return true;
-}
-
-bool TWPartitionManager::Repack_Images(const std::string& Target_Image, const struct Repack_Options_struct& Repack_Options) {
-	std::string magiskboot = TWFunc::Get_MagiskBoot();
-	if (!TWFunc::Path_Exists(magiskboot)) {
-		LOGERR("Image repacking tool not present in this TWRP build!");
-		return false;
-	}
-	DataManager::SetProgress(0);
-	TWPartition* part = PartitionManager.Find_Partition_By_Path("/boot");
-	if (part)
-		gui_msg(Msg("unpacking_image=Unpacking {1}...")(part->Display_Name));
-	else {
-		gui_msg(Msg(msg::kError, "unable_to_locate=Unable to locate {1}.")("/boot"));
-		return false;
-	}
-	if (!PartitionManager.Prepare_Repack(part, REPACK_ORIG_DIR, Repack_Options.Backup_First, gui_lookup("repack", "Repack")))
-		return false;
-	DataManager::SetProgress(.25);
-	gui_msg(Msg("unpacking_image=Unpacking {1}...")(Target_Image));
-	if (!PartitionManager.Prepare_Repack(Target_Image, REPACK_NEW_DIR, true))
-		return false;
-	DataManager::SetProgress(.5);
-	gui_msg(Msg("repacking_image=Repacking {1}...")(part->Display_Name));
-	std::string path = REPACK_NEW_DIR;
-	if (Repack_Options.Type == REPLACE_KERNEL) {
-		// When we replace the kernel, what we really do is copy the boot partition ramdisk into the new image's folder
-		if (TWFunc::copy_file(REPACK_ORIG_DIR "ramdisk.cpio", REPACK_NEW_DIR "ramdisk.cpio", 0644)) {
-			LOGERR("Failed to copy ramdisk\n");
-			return false;
-		}
-	} else if (Repack_Options.Type == REPLACE_RAMDISK) {
-		// Repack the ramdisk
-		if (TWFunc::copy_file(REPACK_NEW_DIR "ramdisk.cpio", REPACK_ORIG_DIR "ramdisk.cpio", 0644)) {
-			LOGERR("Failed to copy ramdisk\n");
-			return false;
-		}
-		path = REPACK_ORIG_DIR;
-	} else {
-		LOGERR("Invalid repacking options specified\n");
-		return false;
-	}
-	if (Repack_Options.Disable_Verity)
-		LOGERR("Disabling verity is not implemented yet\n");
-	if (Repack_Options.Disable_Force_Encrypt)
-		LOGERR("Disabling force encrypt is not implemented yet\n");
-	std::string command = "cd " + path + " && " + magiskboot + " repack " + path + "boot.img";
-	if (TWFunc::Exec_Cmd(command) != 0) {
-		gui_msg(Msg(msg::kError, "repack_error=Error repacking image."));
-		return false;
-	}
-	DataManager::SetProgress(.75);
-	std::string file = "new-boot.img";
-	DataManager::SetValue("tw_flash_partition", "/boot;");
-	if (!PartitionManager.Flash_Image(path, file)) {
-		LOGINFO("Error flashing new image\n");
-		return false;
-	}
-	DataManager::SetProgress(1);
-	TWFunc::removeDir(REPACK_ORIG_DIR, false);
-	TWFunc::removeDir(REPACK_NEW_DIR, false);
-	return true;
-}
-
-#ifdef TW_HAS_MTP
-bool TWPartitionManager::is_MTP_Enabled(void) {
-  if (mtppid)
-     return true;
-  else
-     return false;
-}
-#endif
 
 bool TWPartitionManager::Prepare_Super_Volume(TWPartition* twrpPart) {
     Fstab fstab;
@@ -4446,11 +3338,7 @@ bool TWPartitionManager::Prepare_Super_Volume(TWPartition* twrpPart) {
 
     fstab.emplace_back(fstabEntry);
     if (!fs_mgr_update_logical_partition(&fstabEntry)) {
-        #ifdef OF_IGNORE_LOGICAL_MOUNT_ERRORS
-        LOGINFO("unable to update logical partition: %s\n", twrpPart->Get_Mount_Point().c_str());
-        #else
         LOGERR("unable to update logical partition: %s\n", twrpPart->Get_Mount_Point().c_str());
-        #endif
         return false;
     }
 
@@ -4515,8 +3403,8 @@ void TWPartitionManager::Setup_Super_Partition() {
 	superPartition->Mount_Point = "/super";
 	superPartition->Actual_Block_Device = superPart;
 	superPartition->Alternate_Block_Device = superPart;
-#ifdef BOARD_SUPER_PARTITION_PARTITION_LIST
-	superPartition->Backup_Display_Name = "Super (" BOARD_SUPER_PARTITION_PARTITION_LIST ")";
+#ifdef BOARD_DYNAMIC_PARTITIONS_PARTITION_LIST
+	superPartition->Backup_Display_Name = "Super (" BOARD_DYNAMIC_PARTITIONS_PARTITION_LIST ")";
 #else
 	superPartition->Backup_Display_Name = "Super";
 #endif
@@ -4590,7 +3478,6 @@ void TWPartitionManager::Unlock_Block_Partitions() {
 		while ((de = readdir(d)) != NULL) {
 			if (de->d_type == DT_BLK) {
 				std::string block_device = block_path + de->d_name;
-				// LOGINFO("block_Device: %s\n", block_device.c_str()); // DJ9 - creates too much noise in the log
 				if ((fd = open(block_device.c_str(), O_RDONLY | O_CLOEXEC)) < 0) {
 					LOGERR("unable to open block device %s: %s\n", block_device.c_str(), strerror(errno));
 					continue;
@@ -4605,4 +3492,3 @@ void TWPartitionManager::Unlock_Block_Partitions() {
 		closedir(d);
 	}
 }
-//*
