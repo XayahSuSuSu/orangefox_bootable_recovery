@@ -794,6 +794,7 @@ if (TWFunc::Path_Exists("/data/unencrypted/key/version")) {
 	ExcludeAll(Mount_Point + "/cache");
 	ExcludeAll(Mount_Point + "/system/users/0");
 	ExcludeAll(Mount_Point + "/per_boot"); // removed each boot by init
+	ExcludeAll(Mount_Point + "/gsi"); // cow devices
 	int retry_count = 3;
 	while (!Decrypt_DE() && --retry_count)
 		usleep(2000);
