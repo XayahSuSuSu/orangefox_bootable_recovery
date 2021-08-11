@@ -781,10 +781,12 @@ void DataManager::SetDefaultValues()
   #endif
 
 // =======
+/*
 #ifdef FOX_ENABLE_APP_MANAGER
     mConst.SetValue("enable_app_manager", "1");
-#endif
 
+#endif
+*/
 #ifdef OF_DISABLE_EXTRA_ABOUT_PAGE
     mConst.SetValue("disable_extra_about", "1");
 #endif
