@@ -412,7 +412,7 @@ endif
 
 # post-format
 ifeq ($(OF_RUN_POST_FORMAT_PROCESS),1)
-    LOCAL_CFLAGS += -DOF_RUN_POST_FORMAT_PROCESS='"1"'
+    $(warning Do not use "OF_RUN_POST_FORMAT_PROCESS" with Android-11 builds. It will not be processed.)
 endif
 
 # turn some errors in mounting logical partitions into log entries only
