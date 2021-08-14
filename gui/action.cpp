@@ -54,6 +54,7 @@
 #include "../twrpDigestDriver.hpp"
 
 #include "../orangefox.hpp"
+#include "../twrpinstall/include/twinstall/install.h"
 
 extern "C" {
 #include "../twcommon.h"

@@ -24,8 +24,6 @@
 #ifndef ORANGEFOX_HPP
 #define ORANGEFOX_HPP
 
-#include "install/include/install/install.h"
-
 #define OTA_CORRUPT "INSTALL_CORRUPT"
 #define OTA_ERROR "INSTALL_ERROR"
 #define OTA_VERIFY_FAIL "INSTALL_VERIFY_FAILURE"
