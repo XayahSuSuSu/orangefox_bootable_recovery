@@ -572,6 +572,7 @@ ifeq ($(FOX_BUILD_BASH),1)
 	LOCAL_POST_INSTALL_CMD += \
     	 	mkdir -p $(TARGET_RECOVERY_ROOT_OUT)/system/etc/bash/; \
 		cp -rf external/bash/etc/* $(TARGET_RECOVERY_ROOT_OUT)/system/etc/bash/; \
+		cp -rf external/libncurses/lib/terminfo $(TARGET_RECOVERY_ROOT_OUT)/system/etc/; \
         	sed -i 's/ro.lineage.device/ro.product.device/' $(TARGET_RECOVERY_ROOT_OUT)/system/etc/bash/bashrc; \
         	sed -i '/export TERM/d' $(TARGET_RECOVERY_ROOT_OUT)/system/etc/bash/bashrc; \
         	mkdir -p $(TARGET_RECOVERY_ROOT_OUT)/sbin/; \
