@@ -391,7 +391,8 @@ ifeq ($(FOX_BUILD_BASH),1)
         $(error Bash sources not present; exiting)
   endif
   RECOVERY_BINARY_SOURCE_FILES += $(TARGET_OUT_OPTIONAL_EXECUTABLES)/bash
-  TWRP_REQUIRED_MODULES += bash
+  RECOVERY_LIBRARY_SOURCE_FILES += $(TARGET_OUT_SHARED_LIBRARIES)/libncurses.so
+  TWRP_REQUIRED_MODULES += bash libncurses
 
   TWRP_REQUIRED_MODULES += \
     bash_fox
