@@ -1254,7 +1254,7 @@ void DataManager::SetDefaultValues()
   mConst.SetValue("tw_has_mtp", "0");
   mConst.SetValue("tw_mtp_enabled", "0");
 #endif
-  mPersist.SetValue("tw_mount_system_ro", "2");
+  mPersist.SetValue("tw_mount_system_ro", "0");
   mPersist.SetValue("tw_never_show_system_ro_page", "0");
   mPersist.SetValue("tw_language", EXPAND(TW_DEFAULT_LANGUAGE));
   LOGINFO("LANG: %s\n", EXPAND(TW_DEFAULT_LANGUAGE));
