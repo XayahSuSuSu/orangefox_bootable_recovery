@@ -4866,30 +4866,12 @@ bool TWFunc::Has_Dynamic_Partitions(void) {
 	return (Fox_Property_Get("ro.boot.dynamic_partitions") == "true");
 }
 
-void TWFunc::Mapper_to_BootDevice(void) {
-    	#if defined(AB_OTA_UPDATER) || defined(OF_AB_DEVICE)
-    	return;
-    	#endif
+void TWFunc::Mapper_to_BootDevice(const std::string block_device, const std::string partition_name) {
+	LOGINFO("Symlinking %s => /dev/block/bootdevice/by-name/%s \n", block_device.c_str(), partition_name.c_str());
+	symlink(block_device.c_str(), ("/dev/block/bootdevice/by-name/" + partition_name).c_str());
 
-	if (Has_Dynamic_Partitions()) {
- 		#ifdef BOARD_SUPER_PARTITION_PARTITION_LIST
- 		string list = BOARD_SUPER_PARTITION_PARTITION_LIST;
- 		string delim = ",";
-  		std::vector <std::string> partitions = TWFunc::Split_String(list, delim);
- 		printf("=> Linking dynamic partitions (%s)\n", list.c_str());
-  		string src, dest, dest2;
-		for (auto&& part : partitions) {
-		        part = lowercase(trim(part));
-   		   	src = "/dev/block/mapper/" + part;
-   		   	dest = "/dev/block/by-name/" + part;
-   		   	dest2 = "/dev/block/bootdevice/by-name/" + part;
- 			LOGINFO("=> Symlink %s => %s\n", src.c_str(), dest.c_str());
-		   	symlink(src.c_str(), dest.c_str());
- 			LOGINFO("=> Symlink %s => %s\n", src.c_str(), dest2.c_str());
-		   	symlink(src.c_str(), dest2.c_str());
-		}
-		#endif
-	}
+	LOGINFO("Symlinking %s => /dev/block/by-name/%s \n", block_device.c_str(), partition_name.c_str());
+	symlink(block_device.c_str(), ("/dev/block/by-name/" + partition_name).c_str());
 }
 
 void TWFunc::PostWipeEncryption(void) {

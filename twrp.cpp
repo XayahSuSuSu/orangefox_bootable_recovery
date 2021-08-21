@@ -417,9 +417,6 @@ int main(int argc, char **argv) {
 	// Load default values to set DataManager constants and handle ifdefs
 	DataManager::SetDefaultValues();
 
-	// Symlink mapper to bootdevice if we have dynamic partitions
-	TWFunc::Mapper_to_BootDevice();
-
 	// start the UI
 	printf("Starting the UI...\n");
 	gui_init();

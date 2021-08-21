@@ -4437,6 +4437,9 @@ bool TWPartitionManager::Prepare_Super_Volume(TWPartition* twrpPart) {
 	twrpPart->Change_Mount_Read_Only(true);
 	twrpPart->Set_Can_Be_Backed_Up(false);
 	twrpPart->Set_Can_Be_Wiped(false);
+
+	TWFunc::Mapper_to_BootDevice(fstabEntry.blk_device, bare_partition_name);
+
     return true;
 }
 
