@@ -542,6 +542,11 @@ int GUIAction::flash_zip(std::string filename, int *wipe_cache)
           if (Fox_Zip_Installer_Code == 23) LOGINFO("OrangeFox: installed Treble (MIUI) ROM and OTA_BAK: %s\n",filename.c_str());
           else
              LOGINFO("OrangeFox: installed Custom ROM: %s\n",filename.c_str());
+
+          if (Fox_Zip_Installer_Code == 2 || Fox_Zip_Installer_Code == 3 || Fox_Zip_Installer_Code == 22 || Fox_Zip_Installer_Code == 23)
+          	TWFunc::Fox_Property_Set("orangefox.fresh.miui.install", "1");
+          else
+          	TWFunc::Fox_Property_Set("orangefox.fresh.miui.install", "0");
           
           TWFunc::Dump_Current_Settings();
         }
