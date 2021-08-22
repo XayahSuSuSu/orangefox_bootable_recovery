@@ -2,7 +2,7 @@
 	Copyright 2012 to 2016 bigbiff/Dees_Troy TeamWin
 	This file is part of TWRP/TeamWin Recovery Project.
 
-	Copyright (C) 2018-2020 OrangeFox Recovery Project
+	Copyright (C) 2018-2021 OrangeFox Recovery Project
 	This file is part of the OrangeFox Recovery Project.
 
 	TWRP is free software: you can redistribute it and/or modify
@@ -1084,6 +1084,7 @@ void DataManager::SetDefaultValues()
   mConst.SetValue(FOX_TMP_SCRIPT_DIR, Fox_tmp_dir);
   mConst.SetValue(FOX_COMPATIBILITY_DEVICE, FOX_DEVICE);
   mData.SetValue("found_fox_overwriting_rom", 0);
+  mData.SetValue("fox_dfe_formatted", "0"); // whether data has been formatted with disable forced encryption enabled
 
   // End of the OrangeFox variables
 

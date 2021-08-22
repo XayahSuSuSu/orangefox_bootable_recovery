@@ -179,7 +179,7 @@ static bool Treble_Is_Running(void)
 /* Return whether the device's storage is encrypted */
 static bool StorageIsEncrypted(void)
 {
-  return (PartitionManager.Storage_Is_Encrypted());
+  return (PartitionManager.Storage_Is_Encrypted() && DataManager::GetStrValue("fox_dfe_formatted") != "1");
 }
 
 std::string strReturnCurrentTime()
@@ -4875,26 +4875,41 @@ void TWFunc::Mapper_to_BootDevice(const std::string block_device, const std::str
 }
 
 void TWFunc::PostWipeEncryption(void) {
-#ifdef OF_RUN_POST_FORMAT_PROCESS
-  gui_print("I: Recreating /data/media/0...\n");
-  sleep(1);
-  TWFunc::Recursive_Mkdir("/data/media/0", false);
-  TWFunc::Recursive_Mkdir("/data/media/0/Fox/logs", false);
+  // only run this if we are disabling forced encryption - otherwise, it will mess up the Android 11 encryption
+  DataManager::SetValue("fox_dfe_formatted", "0");
+  if (DataManager::GetIntValue(FOX_DISABLE_FORCED_ENCRYPTION) == 1) {
 
-  gui_print("I: Copying recovery.log...\n");
-  TWFunc::copy_file("/tmp/recovery.log", "/data/media/0/Fox/logs/lastrecoverylog.log", 0644);
-  sleep(1);
+      // don't run this if we just installed MIUI
+      if (TWFunc::Fox_Property_Get("orangefox.fresh.miui.install") == "1") {
+         gui_print_color("warning", "\n- Fresh MIUI ROM installation! Not running disable-forced-encryption.\n\n");
+         return;
+      }
 
-  gui_print("I: Binding the internal storage...\n");
-  string cmd = "/system/bin/mount";
-  if (!TWFunc::Path_Exists(cmd))
-     cmd = "/sbin/mount";
-  cmd = cmd + " -o bind /data/media/0 /sdcard";
-  TWFunc::Exec_Cmd(cmd);
-  sleep(1);
-  sync();
-  gui_msg("done=Done.");
-#endif
+      DataManager::SetValue("fox_dfe_formatted", "1");
+      gui_print("I: Recreating /data/media/0...\n");
+      sleep(1);
+      TWFunc::Recursive_Mkdir("/data/media/0", false);
+      TWFunc::Recursive_Mkdir("/data/media/0/Fox/logs", false);
+
+      gui_print("I: Copying recovery.log...\n");
+      TWFunc::copy_file("/tmp/recovery.log", "/data/media/0/Fox/logs/lastrecoverylog.log", 0644);
+      sleep(1);
+
+      gui_print("I: Binding the internal storage...\n");
+      string cmd = "/system/bin/mount";
+      if (!TWFunc::Path_Exists(cmd))
+         cmd = "/sbin/mount";
+      cmd = cmd + " -o bind /data/media/0 /sdcard";
+      TWFunc::Exec_Cmd(cmd);
+
+      sleep(1);
+      sync();
+      gui_msg("done=Done.");
+
+      if (TWFunc::MIUI_Is_Running()) {
+         gui_print_color("warning", "\n- Note: if you go on to flash a MIUI ROM now, then you *must* format data afterwards.\n\n");
+      }
+  }
 }
 
 void TWFunc::Set_Sbin_Dir_Executable_Flags(void) {
