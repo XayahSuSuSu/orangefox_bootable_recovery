@@ -411,11 +411,6 @@ ifneq ($(OF_ENABLE_USB_STORAGE),1)
     TW_NO_USB_STORAGE := true
 endif
 
-# post-format
-ifeq ($(OF_RUN_POST_FORMAT_PROCESS),1)
-    $(warning Do not use "OF_RUN_POST_FORMAT_PROCESS" with Android-11 builds. It will not be processed.)
-endif
-
 # turn some errors in mounting logical partitions into log entries only
 ifeq ($(OF_IGNORE_LOGICAL_MOUNT_ERRORS),1)
     LOCAL_CFLAGS += -DOF_IGNORE_LOGICAL_MOUNT_ERRORS='"1"'
