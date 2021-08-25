@@ -150,10 +150,10 @@ void ActionThread::threadActions(GUIAction * act)
        {
 	  if (act->mActions[0].mFunction == "adb")
       	      LOGINFO
-      	      ("Another threaded action is already running -- not running %lu actions starting with '%s'\n", act->mActions.size(), act->mActions[0].mFunction.c_str());
+      	      ("Another threaded action is already running -- not running %lu actions starting with '%s'\n", (unsigned long)act->mActions.size(), act->mActions[0].mFunction.c_str());
 	  else
       	      LOGERR
-	      ("Another threaded action is already running -- not running %lu actions starting with '%s'\n", act->mActions.size(), act->mActions[0].mFunction.c_str());
+	      ("Another threaded action is already running -- not running %lu actions starting with '%s'\n", (unsigned long)act->mActions.size(), act->mActions[0].mFunction.c_str());
        }
     }
   else
