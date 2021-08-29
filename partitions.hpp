@@ -353,7 +353,6 @@ public:
 	int Run_OTA_Survival_Backup(bool adbbackup);                              // Create backup for OTA survival in the internal storage
     int Run_OTA_Survival_Restore(const string& Restore_Name);                 // Restore OTA survival
  	bool Prepare_All_Super_Volumes();										  // Prepare all known super volumes from super partition
-	bool Is_Super_Partition(const char* fstab_line);						  // Checks if partition entry is a super partition
    
      bool Prepare_Super_Volume(TWPartition* twrpPart);					  	  // Prepare logical super partition volume for mounting
 	std::string Get_Super_Partition();										  // Get Super Partition block device path
@@ -464,6 +463,7 @@ private:
 	std::vector<TWPartition*> Partitions;                                     // Vector list of all partitions
 	string Active_Slot_Display;                                               // Current Active Slot (A or B) for display purposes
 	std::vector<users_struct> Users_List;                                     // List of FBE users
+	std::vector<std::string> Super_Partition_List;                            // Display value for super partitions
 };
 
 extern TWPartitionManager PartitionManager;
