@@ -2,6 +2,9 @@
 	Copyright 2014 to 2017 TeamWin
 	This file is part of TWRP/TeamWin Recovery Project.
 
+	Copyright (C) 2018-2021 OrangeFox Recovery Project
+	This file is part of the OrangeFox Recovery Project.
+
 	TWRP is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
 	the Free Software Foundation, either version 3 of the License, or
@@ -160,7 +163,7 @@ public:
 	bool Update_Size(bool Display_Error);                                     // Updates size information
 	void Recreate_Media_Folder();                                             // Recreates the /data/media folder
 
-	bool Flash_Image(PartitionSettings *part_settings);                                        // Flashes an image to the partition
+	bool Flash_Image(PartitionSettings *part_settings);                       // Flashes an image to the partition
 	void Change_Mount_Read_Only(bool new_value);                              // Changes Mount_Read_Only to new_value
 	bool Is_Read_Only();                                                      // Check if system is read-only in TWRP
 	int Check_Lifetime_Writes();
@@ -174,9 +177,9 @@ public:
 	std::string Get_Display_Name();                                           // Get the display name in the gui for the partition
 	bool Is_SlotSelect();                                                     // Return whether the partition is a slot partition or not
 	bool Get_Super_Status();						  // Returns true if partition is a super volume mounted partitions
-	string Get_Mount_Point();												  // Return Mount_Point or directory the current partition is mounted on
-	void Set_Can_Be_Backed_Up(bool val);									  // Update whether the partition can be backed up or not
-	void Set_Can_Be_Wiped(bool val);										  // Update whether the partition can be wiped or not
+	string Get_Mount_Point();						  // Return Mount_Point or directory the current partition is mounted on
+	void Set_Can_Be_Backed_Up(bool val);					  // Update whether the partition can be backed up or not
+	void Set_Can_Be_Wiped(bool val);					  // Update whether the partition can be wiped or not
 
 public:
 	string Current_File_System;                                               // Current file system
@@ -192,10 +195,10 @@ public:
 protected:
 	bool Has_Data_Media;                                                      // Indicates presence of /data/media, may affect wiping and backup methods
 	void Setup_Data_Media();                                                  // Sets up a partition as a /data/media emulated storage partition
-	void Set_Block_Device(std::string block_device);						  // Allow super partition setup to change block device
+	void Set_Block_Device(std::string block_device);			  // Allow super partition setup to change block device
 private:
 	bool Process_Fstab_Line(const char *fstab_line, bool Display_Error, std::map<string, Flags_Map> *twrp_flags); // Processes a fstab line
-	void Set_FBE_Status();													  // Set FBE status of partition
+	void Set_FBE_Status();							  // Set FBE status of partition
 
 	void Setup_Data_Partition(bool Display_Error);                            // Setup data partition after fstab processed
 	void Setup_Cache_Partition(bool Display_Error);                           // Setup cache partition after fstab processed
@@ -313,7 +316,7 @@ private:
 	};
 
 	std::vector<partition_fs_flags_struct> fs_flags;                          // This vector stores mount flags and options for different file systems for the same partition
-	bool Is_Super;															  // States whether partition should be loaded from the super partition
+	bool Is_Super;								  // States whether partition should be loaded from the super partition
 
 friend class TWPartitionManager;
 friend class DataManager;
@@ -338,7 +341,7 @@ public:
 public:
 	int Process_Fstab(string Fstab_Filename, bool Display_Error);             // Parses the fstab and populates the partitions
 	int Write_Fstab();                                                        // Creates /etc/fstab file that's used by the command line for mount commands
-	void Decrypt_Data();													  // Decrypt Data if enabled
+	void Decrypt_Data();							  // Decrypt Data if enabled
 	void Output_Partition_Logging();                                          // Outputs partition information to the log
 	void Output_Partition(TWPartition* Part);                                 // Outputs partition details to the log
 	int Mount_By_Path(string Path, bool Display_Error);                       // Mounts partition based on path (e.g. /system)
@@ -351,17 +354,17 @@ public:
 	int Check_Backup_Name(const std::string& Backup_Name, bool Display_Error, bool Must_Be_Unique); // Checks the current backup name to ensure that it is valid and optionally that a backup with that name doesn't already exist
 	int Run_Backup(bool adbbackup);                                           // Initiates a backup in the current storage
 	int Run_OTA_Survival_Backup(bool adbbackup);                              // Create backup for OTA survival in the internal storage
-    int Run_OTA_Survival_Restore(const string& Restore_Name);                 // Restore OTA survival
- 	bool Prepare_All_Super_Volumes();										  // Prepare all known super volumes from super partition
+    int Run_OTA_Survival_Restore(const string& Restore_Name);                 	  // Restore OTA survival
+ 	bool Prepare_All_Super_Volumes();					  // Prepare all known super volumes from super partition
    
-     bool Prepare_Super_Volume(TWPartition* twrpPart);					  	  // Prepare logical super partition volume for mounting
-	std::string Get_Super_Partition();										  // Get Super Partition block device path
-	void Setup_Super_Devices();												  // Setup logical dm devices on super partition
-	bool Get_Super_Status();												  // Return whether device has a super partition
-	void Setup_Super_Partition();											  // Setup the super partition for backup and restore
+     bool Prepare_Super_Volume(TWPartition* twrpPart);				  // Prepare logical super partition volume for mounting
+	std::string Get_Super_Partition();					  // Get Super Partition block device path
+	void Setup_Super_Devices();						  // Setup logical dm devices on super partition
+	bool Get_Super_Status();						  // Return whether device has a super partition
+	void Setup_Super_Partition();						  // Setup the super partition for backup and restore
 	bool Recreate_Logs_Dir();                                                 // Recreate TWRP_AB_LOGS_DIR after wipe
 	std::vector<users_struct>* Get_Users_List();                              // Returns pointer to list of users
-    int Run_Restore(const string& Restore_Name);                              // Restores a backup
+    int Run_Restore(const string& Restore_Name);                              	  // Restores a backup
 	bool Write_ADB_Stream_Header(uint64_t partition_count);                   // Write ADB header over twrpbu FIFO
 	bool Write_ADB_Stream_Trailer();                                          // Write ADB trailer over twrpbu FIFO
 	void Set_Restore_Files(string Restore_Name);                              // Used to gather a list of available backup partitions for the user to select for a restore
@@ -377,7 +380,7 @@ public:
 	int Repair_By_Path(string Path, bool Display_Error);                      // Repairs a partition based on path
 	int Resize_By_Path(string Path, bool Display_Error);                      // Resizes a partition based on path
 	void Update_System_Details();                                             // Updates fstab, file systems, sizes, etc.
-	void Update_System_Details_OTA_Survival();                                             // Updates fstab, file systems, sizes, etc.
+	void Update_System_Details_OTA_Survival();                                // Updates fstab, file systems, sizes, etc.
 	int Decrypt_Device(string Password, int user_id = 0);                     // Attempt to decrypt any encrypted partitions
 	void Parse_Users();                                                       // Parse FBE users
 	int usb_storage_enable(void);                                             // Enable USB storage mode
@@ -435,7 +438,7 @@ public:
 	void Unlock_Block_Partitions();                                           // Unlock all block devices after update_engine runs
 
 #ifdef TW_HAS_MTP
-	bool is_MTP_Enabled(void);						// returns whether MTP is already enabled
+	bool is_MTP_Enabled(void);						  // returns whether MTP is already enabled
 #endif
 private:
 	void Setup_Settings_Storage_Partition(TWPartition* Part);                 // Sets up settings storage
