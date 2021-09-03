@@ -94,7 +94,7 @@ std::string twrpRepacker::Unpack_Image(const std::string& Source_Path, const std
 		if (TWFunc::copy_file(Source_Path, destination, 0644))
 			return std::string();
 	}
-	std::string command = "cd " + Temp_Folder_Destination + " && " + TWFunc::Get_MagiskBoot() + " unpack -h ";
+	std::string command = "cd " + Temp_Folder_Destination + " && " + TWFunc::Get_MagiskBoot() + " unpack -h -n ";
 	command = command + "'" + Source_Path +"'";
 
 	std::string magisk_unpack_output;
