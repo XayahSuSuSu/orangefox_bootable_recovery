@@ -31,10 +31,6 @@
 #include "partitions.hpp"
 #endif
 
-#ifdef HAVE_EXT4_CRYPT
-# include "crypto/ext4crypt/ext4crypt_tar.h"
-#endif
-
 #ifdef USE_FSCRYPT
 #include "fscrypt_policy.h"
 #endif
