@@ -36,6 +36,8 @@
 #include <pwd.h>
 #include <zlib.h>
 #include <sstream>
+#include <android-base/properties.h>
+#include <libsnapshot/snapshot.h>
 
 #include "cutils/properties.h"
 #include "libblkid/include/blkid.h"
@@ -2140,6 +2142,10 @@ bool TWPartition::Wipe_Encryption() {
 #ifndef TW_OEM_BUILD
 		gui_msg("format_data_msg=You may need to reboot recovery to be able to use /data again.");
 #endif
+		if (Is_FBE) {
+			gui_msg(Msg(msg::kWarning, "data_media_fbe_msg=OrangeFox will not recreate /data/media on an FBE device. Please reboot into your rom to create /data/media."));
+		}
+
 		ret = true;
 		if (!Key_Directory.empty())
 			ret = PartitionManager.Wipe_By_Path(Key_Directory);
@@ -2554,46 +2560,6 @@ bool TWPartition::Wipe_Data_Without_Wiping_Media() {
 		gui_msg("done=Done.");
 	return ret;
 #endif // ifdef TW_OEM_BUILD
-}
-
-bool TWPartition::Recreate_Logs_Dir() {
-#ifdef TW_INCLUDE_FBE
-	struct passwd pd;
-	struct passwd *pwdptr = &pd;
-	struct passwd *tempPd;
-	char pwdBuf[512];
-	int uid = 0, gid = 0;
-
-	if ((getpwnam_r("system", pwdptr, pwdBuf, sizeof(pwdBuf), &tempPd)) != 0) {
-		LOGERR("unable to get system user id\n");
-		return false;
-	} else {
-		struct group grp;
-		struct group *grpptr = &grp;
-		struct group *tempGrp;
-		char grpBuf[512];
-
-		if ((getgrnam_r("cache", grpptr, grpBuf, sizeof(grpBuf), &tempGrp)) != 0) {
-			LOGERR("unable to get cache group id\n");
-			return false;
-		} else {
-			uid = pd.pw_uid;
-			gid = grp.gr_gid;
-			std::string abLogsRecoveryDir(DATA_LOGS_DIR);
-			abLogsRecoveryDir += "/recovery/";
-
-			if (!TWFunc::Create_Dir_Recursive(abLogsRecoveryDir, S_IRWXU | S_IRWXG | S_IWGRP | S_IXGRP, uid, gid)) {
-				LOGERR("Unable to recreate %s\n", abLogsRecoveryDir.c_str());
-				return false;
-			}
-			if (setfilecon(abLogsRecoveryDir.c_str(), "u:object_r:cache_file:s0") != 0) {
-				LOGERR("Unable to set contexts for %s\n", abLogsRecoveryDir.c_str());
-				return false;
-			}
-		}
-	}
-#endif
-	return true;
 }
 
 bool TWPartition::Wipe_Data_Without_Wiping_Media_Func(const string& parent __unused) {
@@ -3629,5 +3595,24 @@ string TWPartition::Get_Mount_Point() {
 	return Mount_Point;
 }
 
+bool TWPartition::Check_Pending_Merges() {
+	auto sm = android::snapshot::SnapshotManager::NewForFirstStageMount();
+	if (!sm) {
+		LOGERR("Unable to call snapshot manager\n");
+		return false;
+	}
 
+	auto callback = [&]() -> void {
+		double progress;
+		sm->GetUpdateState(&progress);
+		LOGINFO("waiting for merge to complete: %.2f\n", progress);
+	};
+
+	LOGINFO("checking for merges\n");
+	if (!sm->HandleImminentDataWipe(callback)) {
+		LOGERR("Unable to check merge status\n");
+		return false;
+	}
+	return true;
+}
 //* 

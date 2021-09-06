@@ -196,6 +196,8 @@ protected:
 	bool Has_Data_Media;                                                      // Indicates presence of /data/media, may affect wiping and backup methods
 	void Setup_Data_Media();                                                  // Sets up a partition as a /data/media emulated storage partition
 	void Set_Block_Device(std::string block_device);			  // Allow super partition setup to change block device
+	bool Check_Pending_Merges();                                              // Check and run pending merges on data for VAB devices
+
 private:
 	bool Process_Fstab_Line(const char *fstab_line, bool Display_Error, std::map<string, Flags_Map> *twrp_flags); // Processes a fstab line
 	void Set_FBE_Status();							  // Set FBE status of partition
@@ -227,7 +229,6 @@ private:
 	bool Wipe_F2FS();                                                         // Uses mkfs.f2fs to wipe
 	bool Wipe_NTFS();                                                         // Uses mkntfs to wipe
 	bool Wipe_Data_Without_Wiping_Media();                                    // Uses rm -rf to wipe but does not wipe /data/media
-	bool Recreate_Logs_Dir();                                                 // Recreate TWRP_AB_LOGS_DIR after wipe
 	void Wipe_Crypto_Key();                                                   // Wipe crypto key from either footer or block device
 	bool Wipe_Data_Without_Wiping_Media_Func(const string& parent);           // Uses rm -rf to wipe but does not wipe /data/media
 	bool Backup_Tar(PartitionSettings *part_settings, pid_t *tar_fork_pid);   // Backs up using tar for file systems
@@ -354,17 +355,19 @@ public:
 	int Check_Backup_Name(const std::string& Backup_Name, bool Display_Error, bool Must_Be_Unique); // Checks the current backup name to ensure that it is valid and optionally that a backup with that name doesn't already exist
 	int Run_Backup(bool adbbackup);                                           // Initiates a backup in the current storage
 	int Run_OTA_Survival_Backup(bool adbbackup);                              // Create backup for OTA survival in the internal storage
-    int Run_OTA_Survival_Restore(const string& Restore_Name);                 	  // Restore OTA survival
+    	int Run_OTA_Survival_Restore(const string& Restore_Name);                 	  // Restore OTA survival
  	bool Prepare_All_Super_Volumes();					  // Prepare all known super volumes from super partition
+
+	std::string Get_Bare_Partition_Name(std::string Mount_Point);
    
-     bool Prepare_Super_Volume(TWPartition* twrpPart);				  // Prepare logical super partition volume for mounting
+     	bool Prepare_Super_Volume(TWPartition* twrpPart);				  // Prepare logical super partition volume for mounting
 	std::string Get_Super_Partition();					  // Get Super Partition block device path
 	void Setup_Super_Devices();						  // Setup logical dm devices on super partition
 	bool Get_Super_Status();						  // Return whether device has a super partition
 	void Setup_Super_Partition();						  // Setup the super partition for backup and restore
 	bool Recreate_Logs_Dir();                                                 // Recreate TWRP_AB_LOGS_DIR after wipe
 	std::vector<users_struct>* Get_Users_List();                              // Returns pointer to list of users
-    int Run_Restore(const string& Restore_Name);                              	  // Restores a backup
+    	int Run_Restore(const string& Restore_Name);                              	  // Restores a backup
 	bool Write_ADB_Stream_Header(uint64_t partition_count);                   // Write ADB header over twrpbu FIFO
 	bool Write_ADB_Stream_Trailer();                                          // Write ADB trailer over twrpbu FIFO
 	void Set_Restore_Files(string Restore_Name);                              // Used to gather a list of available backup partitions for the user to select for a restore
@@ -436,6 +439,7 @@ public:
 
 	int Set_FDE_Encrypt_Status();                                             // Sets encryption state for FDE devices (ro.crypto.state and ro.crypto.type)
 	void Unlock_Block_Partitions();                                           // Unlock all block devices after update_engine runs
+	bool Unmap_Super_Devices();                                               // Unmap super devices in TWRP
 
 #ifdef TW_HAS_MTP
 	bool is_MTP_Enabled(void);						  // returns whether MTP is already enabled
