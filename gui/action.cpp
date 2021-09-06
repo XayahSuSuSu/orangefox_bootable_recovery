@@ -237,7 +237,8 @@ GUIAction::GUIAction(xml_node <> *node):GUIObject(node)
       ADD_ACTION(togglebacklight);
       ADD_ACTION(enableadb);
       ADD_ACTION(enablefastboot);
-		  ADD_ACTION(changeterminal);
+      ADD_ACTION(changeterminal);
+      ADD_ACTION(unmapsuperdevices);
       ADD_ACTION(disableled);
       ADD_ACTION(flashlight);
 
@@ -281,6 +282,7 @@ GUIAction::GUIAction(xml_node <> *node):GUIObject(node)
       ADD_ACTION(twcmd);
       ADD_ACTION(setbootslot);
       ADD_ACTION(repackimage);
+      ADD_ACTION(reflashtwrp);
       ADD_ACTION(fixabrecoverybootloop);
       ADD_ACTION(adb);
       ADD_ACTION(wlfw);
@@ -2734,6 +2736,24 @@ exit:
 	return 0;
 }
 
+int GUIAction::reflashtwrp(std::string arg __unused)
+{
+	int op_status = 1;
+	twrpRepacker repacker;
+
+	operation_start("Repack Image");
+	if (!simulate)
+	{
+		if (!repacker.Flash_Current_Twrp())
+		goto exit;
+	} else
+		simulate_progress_bar();
+	op_status = 0;
+exit:
+	operation_end(op_status);
+	return 0;
+}
+
 int GUIAction::fixabrecoverybootloop(std::string arg __unused)
 {
 	int op_status = 1;
@@ -2920,6 +2940,23 @@ int GUIAction::enablefastboot(std::string arg __unused) {
 	return 0;
 }
 
+
+int GUIAction::unmapsuperdevices(std::string arg __unused) {
+	int op_status = 1;
+
+	operation_start("Remove Super Devices");
+	if (simulate) {
+		simulate_progress_bar();
+	} else {
+		if (PartitionManager.Unmap_Super_Devices()) {
+			op_status = 0;
+		}
+	}
+
+	operation_end(op_status);
+	return 0;
+}
+
 #ifdef FOX_USE_NANO_EDITOR
 int GUIAction::editfile(std::string arg) {
 	if (term != NULL) {
@@ -2965,3 +3002,4 @@ int GUIAction::changeterminal(std::string arg) {
 		gui_changePage("terminal");
 	return 0;
 }
+

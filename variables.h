@@ -300,4 +300,6 @@ static int Fox_Current_ROM_IsMIUI = 0; // is the currently installed ROM a MIUI 
 #define UPDATER_SCRIPT  "META-INF/com/google/android/updater-script"
 #define AROMA_CONFIG "META-INF/com/google/android/aroma-config"
 #define TW_IS_SUPER                 "tw_is_super"
+#define TW_AUTO_REFLASHTWRP_VAR     "tw_auto_reflashtwrp"
+
 #endif  // _VARIABLES_HEADER_

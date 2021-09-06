@@ -374,6 +374,7 @@ protected:
 	int passwordcheck(std::string arg);
 	int setpassword(std::string arg);
 	int changeterminal(std::string arg);
+	int unmapsuperdevices(std::string arg);
 
 #ifdef FOX_USE_NANO_EDITOR
 	int editfile(std::string arg);
@@ -428,6 +429,7 @@ protected:
 	int calldeactivateprocess(std::string arg);
 	int disable_replace(std::string arg);
 	int repackimage(std::string arg);
+	int reflashtwrp(std::string arg);
 	int fixabrecoverybootloop(std::string arg);
 	int ftls(std::string arg);
 
