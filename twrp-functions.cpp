@@ -1123,8 +1123,8 @@ int TWFunc::copy_file(string src, string dst, int mode) {
 		LOGINFO("Unable to find source file %s\n", src.c_str());
 		return -1;
 	}
-	std::ifstream srcfile(src, ios::binary);
-	std::ofstream dstfile(dst, ios::binary);
+	std::ifstream srcfile(src.c_str(), ios::binary);
+	std::ofstream dstfile(dst.c_str(), ios::binary);
 	dstfile << srcfile.rdbuf();
 	if (!dstfile.bad()) {
 		LOGINFO("Copied file %s to %s\n", src.c_str(), dst.c_str());
