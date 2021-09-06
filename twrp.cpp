@@ -80,6 +80,7 @@ static void Decrypt_Page(bool SkipDecryption, bool datamedia) {
 	if (DataManager::GetIntValue(TW_IS_ENCRYPTED) != 0) {
 		if (SkipDecryption) {
 			LOGINFO("Skipping decryption\n");
+			PartitionManager.Update_System_Details();
 		} else if (DataManager::GetIntValue(TW_CRYPTO_PWTYPE) != 0) {
 			DataManager::SetValue(FOX_ENCRYPTED_DEVICE, "1");
 			LOGINFO("Is encrypted, do decrypt page first\n");
@@ -100,6 +101,7 @@ static void Decrypt_Page(bool SkipDecryption, bool datamedia) {
 			}
 		}
 	} else if (datamedia) {
+		PartitionManager.Update_System_Details();
 		TWFunc::check_selinux_support();
 		if (tw_get_default_metadata(DataManager::GetSettingsStoragePath().c_str()) != 0) {
 			LOGINFO("Failed to get default contexts and file mode for storage files.\n");
