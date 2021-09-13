@@ -3998,6 +3998,9 @@ int TWPartitionManager::Run_OTA_Survival_Restore(const string & Restore_Name)
   if (!Mount_Current_Storage(true))
     return false;
 
+  // unlock partitions before MIUI OTA restore
+  Unlock_Block_Partitions();
+  //
   if (!Restore_List.empty())
     {
       end_pos = Restore_List.find(";", start_pos);
