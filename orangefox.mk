@@ -427,8 +427,8 @@ endif
 
 # new magiskboot - disable the splash change menu automatically
 ifeq ($(OF_USE_NEW_MAGISKBOOT),1)
-    LOCAL_CFLAGS += -DOF_NO_SPLASH_CHANGE='"1"'
     LOCAL_CFLAGS += -DOF_USE_NEW_MAGISKBOOT='"1"'
+    #LOCAL_CFLAGS += -DOF_NO_SPLASH_CHANGE='"1"'
 endif
 
 ifeq ($(OF_NO_SPLASH_CHANGE),1)

@@ -2867,6 +2867,9 @@ bool TWFunc::PackRepackImage_MagiskBoot(bool do_unpack, bool is_boot)
 	        AppendLineToFile (cmd_script2, "LOGINFO \"- Repacking boot/recovery image ...\"");
 	        AppendLineToFile (cmd_script2, magiskboot_sbin + " repack \"" + tmpstr + "\" > /dev/null 2>&1");
 	        AppendLineToFile (cmd_script2, "[ $? == 0 ] && LOGINFO \"- Succeeded.\" || abort \"- Repacking of image failed.\"");
+	        #ifdef OF_USE_NEW_MAGISKBOOT
+	        AppendLineToFile (cmd_script2, magiskboot_sbin + " hexpatch new-boot.img 0000000300000000617662746f6f6c 0000000000000000617662746f6f6c > /dev/null 2>&1");
+	        #endif
 	        AppendLineToFile (cmd_script2, "LOGINFO \"- Flashing repacked image ...\"");
 	        #if defined(AB_OTA_UPDATER) || defined(OF_AB_DEVICE)
 	        AppendLineToFile (cmd_script2, "dd if=new-boot.img of=" + tmpstr + " > /dev/null 2>&1");
