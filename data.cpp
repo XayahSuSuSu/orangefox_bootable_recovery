@@ -780,6 +780,12 @@ void DataManager::SetDefaultValues()
     mData.SetValue("of_no_miui_features", "0");
   #endif
 
+  #if defined(BOARD_USES_RECOVERY_AS_BOOT) && defined(BOARD_BUILD_SYSTEM_ROOT_IMAGE)
+    mConst.SetValue("tw_uses_initramfs", "1");
+  #else
+    mConst.SetValue("tw_uses_initramfs", "0");
+  #endif
+
 // =======
 /*
 #ifdef FOX_ENABLE_APP_MANAGER
