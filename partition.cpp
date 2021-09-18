@@ -2214,8 +2214,6 @@ bool TWPartition::Wipe_EXTFS(string File_System) {
 		gui_msg(Msg(msg::kError, "unable_to_wipe=Unable to wipe {1}.")(Display_Name));
 		return false;
 	}
-	if (!UnMount(true))
-		return false;
 
 	/**
 	 * On decrypted devices, IOCTL_Get_Block_Size calculates size on device mapper,
@@ -3439,7 +3437,6 @@ int TWPartition::Decrypt_Adopted() {
 					PartitionManager.Remove_Partition_By_Path("/sd-ext");
 				}
 				Setup_Data_Media();
-				Recreate_Media_Folder();
 				Wipe_Available_in_GUI = true;
 				Wipe_During_Factory_Reset = true;
 				Can_Be_Backed_Up = true;
