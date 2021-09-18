@@ -335,11 +335,6 @@ int OpenRecoveryScript::run_script_file(void) {
 			#endif
 			} else if (strcmp(command, "remountrw") == 0) {
 				ret_val = remountrw();
-			#ifdef AB_OTA_UPDATER
-			} else if (strcmp(command, "flashcurrentfox") == 0) {
-				twrpRepacker repacker;
-				ret_val = repacker.Flash_Current_Twrp();
-			#endif
 			} else if (strcmp(command, "mount") == 0) {
 				// Mount
 				DataManager::SetValue("tw_action_text2", gui_parse_text("{@mounting}"));
