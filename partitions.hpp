@@ -299,7 +299,6 @@ private:
 	string Mount_Options;                                                     // File system options from recovery.fstab
 	unsigned long Format_Block_Size;                                          // Block size for formatting
 	bool Ignore_Blkid;                                                        // Ignore blkid results due to superblocks lying to us on certain devices / partitions
-	bool Retain_Layout_Version;                                               // Retains the .layout_version file during a wipe (needed on devices like Sony Xperia T where /data and /data/media are separate partitions)
 	bool Can_Flash_Img;                                                       // Indicates if this partition can have images flashed to it via the GUI
 	bool Mount_Read_Only;                                                     // Only mount this partition as read-only
 	bool Is_Adopted_Storage;                                                  // Indicates that this partition is for adopted storage (android_expand)
