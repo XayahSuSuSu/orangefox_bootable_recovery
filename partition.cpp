@@ -1781,7 +1781,7 @@ bool TWPartition::Wipe(string New_File_System) {
 			LOGERR("Unable to wipe '%s' -- unknown file system '%s'\n", Mount_Point.c_str(), New_File_System.c_str());
 			return false;
 		}
-		update_crypt = false;
+		update_crypt = wiped;
 	}
 
 	if (wiped) {
