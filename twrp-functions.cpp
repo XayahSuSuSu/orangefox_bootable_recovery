@@ -2199,7 +2199,7 @@ int TWFunc::Check_MIUI_Treble(void)
        gui_print("* Display: %s\n", display_panel.c_str());
 
   // device name
-  gui_print("* Device:  %s (%s)\n", Fox_Current_Device.c_str(), TWFunc::Fox_Property_Get("ro.product.system.device").c_str());
+  gui_print("* Device:  %s (%s)\n", TWFunc::Fox_Property_Get("ro.product.device").c_str(), TWFunc::Fox_Property_Get("ro.product.system.device").c_str());
 
   // installed ROM
   rom_desc = GetInstalledRom();
@@ -2274,12 +2274,19 @@ void TWFunc::Fox_Set_Current_Device_CodeName(void)
 {
   string tmp01 = TWFunc::Fox_Property_Get("ro.product.device");
   string currdev = DataManager::GetStrValue(FOX_COMPATIBILITY_DEVICE);
-  if (!tmp01.empty() && tmp01 != currdev) {
+  string tmp02 = TWFunc::File_Property_Get ("/etc/fox.cfg", "FOX_CURRENT_DEVICE");
+
+  if (!tmp02.empty()) {
+    Fox_Current_Device = tmp02;
+    //TWFunc::Fox_Property_Set("ro.product.device", tmp02);
+  }
+  else if (!tmp01.empty() && tmp01 != currdev) {
      Fox_Current_Device = tmp01;
   }
   else Fox_Current_Device = currdev;
 
   DataManager::SetValue(FOX_COMPATIBILITY_DEVICE, Fox_Current_Device);
+  TWFunc::Fox_Property_Set("ro.product.device", Fox_Current_Device);
 }
 
 void TWFunc::OrangeFox_Startup(void)
