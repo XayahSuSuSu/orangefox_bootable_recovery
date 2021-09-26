@@ -2274,7 +2274,7 @@ void TWFunc::Fox_Set_Current_Device_CodeName(void)
 {
   string tmp01 = TWFunc::Fox_Property_Get("ro.product.device");
   string currdev = DataManager::GetStrValue(FOX_COMPATIBILITY_DEVICE);
-  string tmp02 = TWFunc::File_Property_Get ("/etc/fox.cfg", "FOX_CURRENT_DEVICE");
+  string tmp02 = TWFunc::File_Property_Get (Fox_Cfg, "FOX_CURRENT_DEVICE");
 
   if (!tmp02.empty()) {
     Fox_Current_Device = tmp02;
@@ -4592,7 +4592,7 @@ void TWFunc::Dump_Current_Settings(void)
 
 void TWFunc::Reset_Clock(void)
 {
-   string fox_build_date_utc = TWFunc::File_Property_Get ("/etc/fox.cfg", "ro.build.date.utc_fox");
+   string fox_build_date_utc = TWFunc::File_Property_Get (Fox_Cfg, "ro.build.date.utc_fox");
    if (!fox_build_date_utc.empty())
       {
         TWFunc::Exec_With_Output("date -s \"@" + fox_build_date_utc + "\" > /dev/null");
