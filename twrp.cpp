@@ -392,9 +392,9 @@ int main(int argc, char **argv) {
   	property_set("ro.orangefox.target.devices", OF_TARGET_DEVICES);
   	#endif
     	
-    	string fox_cfg = "/etc/fox.cfg";
+    	string fox_cfg = Fox_Cfg;
     	if (!TWFunc::Path_Exists(fox_cfg))
-    	    fox_cfg = "/system/etc/fox.cfg";
+    	    fox_cfg = "/system" + Fox_Cfg;
   	string fox_build_date = TWFunc::File_Property_Get (fox_cfg, "FOX_BUILD_DATE");
   	if (fox_build_date == "") {
         	fox_build_date = TWFunc::File_Property_Get ("/default.prop", "ro.bootimage.build.date");
