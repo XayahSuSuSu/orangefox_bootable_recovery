@@ -1305,6 +1305,7 @@ int TWPartitionManager::Run_Restore(const string& Restore_Name) {
 	part_settings.progress = &progress;
 
 	start_pos = 0;
+	Unlock_Block_Partitions();
 	if (!Restore_List.empty()) {
 		end_pos = Restore_List.find(";", start_pos);
 		while (end_pos != string::npos && start_pos < Restore_List.size()) {
