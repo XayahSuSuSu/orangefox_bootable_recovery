@@ -2420,6 +2420,11 @@ bool TWPartition::Wipe_F2FS() {
 	if (!UnMount(true))
 		return false;
 
+	/*
+	* This function now supports casefolding and project id quota.
+	* Your device tree should include this:
+		$(call inherit-product, $(SRC_TARGET_DIR)/product/emulated_storage.mk)
+	*/
 	if (TWFunc::Path_Exists("/system/bin/mkfs.f2fs"))
 		f2fs_command = "/system/bin/mkfs.f2fs";
 	else if (TWFunc::Path_Exists("/system/bin/make_f2fs"))
