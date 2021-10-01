@@ -801,7 +801,7 @@ if (TWFunc::Path_Exists("/data/unencrypted/key/version")) {
 				ExcludeAll(Mount_Point + "/system/users/" + (*iter).userId + "/locksettings.db-wal");
 			}
 		}
-		TWPartition::Fox_Add_Backup_Exclusions();
+		//TWPartition::Fox_Add_Backup_Exclusions();
 		DataManager::SetValue(TW_CRYPTO_PWTYPE, pwd_type);
 		DataManager::SetValue("tw_crypto_pwtype_0", pwd_type);
 		DataManager::SetValue(TW_CRYPTO_PASSWORD, "");
@@ -3500,18 +3500,15 @@ string TWPartition::Get_Backup_Name() {
 
 void TWPartition::Fox_Add_Backup_Exclusions() {
 #if defined(TW_INCLUDE_FBE) && defined(OF_SKIP_MULTIUSER_FOLDERS_BACKUP)
-  if (DataManager::GetIntValue(TW_IS_FBE) == 1) 
-    {
-	const int num = 3;
-	int Users[num] = {10,11,999};
-	int i;
+  if (DataManager::GetIntValue(TW_IS_FBE) == 1) {
+	std::vector<users_struct>::iterator iter;
+	std::vector<users_struct>* userList = PartitionManager.Get_Users_List();
 	string user;
-	for (i=0; i < num; i++)
-	  {
-   	     user = TWFunc::to_string(Users[i]);
-   	     if (TWFunc::Path_Exists("/data/media/" + user) || TWFunc::Path_Exists("/data/user/" + user)) 
-   	      {
-   	   	//LOGINFO("- Avoiding parallel/dual apps/multi-user backup issues for user %i\n", Users[i]);
+	for (iter = userList->begin(); iter != userList->end(); iter++) {
+	  if (atoi((*iter).userId.c_str()) != 0) {
+	     user = (*iter).userId;
+   	     if (TWFunc::Path_Exists("/data/media/" + user) || TWFunc::Path_Exists("/data/user/" + user)) {
+   	   	LOGINFO("- Avoiding parallel-apps/dual-apps/multi-user backup issues for user %s\n", user.c_str());
    	   	backup_exclusions.add_absolute_dir("/data/media/" + user);
    	   	backup_exclusions.add_absolute_dir("/data/user/" + user);
    	   	backup_exclusions.add_absolute_dir("/data/misc/user/" + user);
@@ -3531,9 +3528,9 @@ void TWPartition::Fox_Add_Backup_Exclusions() {
 		// system/users/x
    	   	backup_exclusions.add_absolute_dir("/data/system/users/" + user);
    	     }
-   	     //else LOGINFO("- User %i does not exist ...\n", Users[i]);
-	 }
-    }
+	  }
+	}
+  }
  #endif
 }
 
