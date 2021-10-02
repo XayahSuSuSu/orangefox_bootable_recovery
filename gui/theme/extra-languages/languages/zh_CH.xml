@@ -1056,5 +1056,11 @@
 		<string name="addon_dtbo_patch_tip2">** 仅适用于MIUI **</string>
 		<string name="addon_dtbo_patch_doing">修补中...</string>
 		<string name="addon_dtbo_patch_finished">修补完成</string>
+
+		<string name="install_magisk">安装Magisk V23.0</string>
+		<string name="addon_magisk_ask">你是否要安装Magisk v23.0?</string>
+		<string name="addon_magisk_tip">这将会获取Root权限</string>
+		<string name="addon_magisk_doing">安装Magisk中...</string>
+		<string name="addon_magisk_finished">安装Magisk完成</string>
 	</resources>
 </language>

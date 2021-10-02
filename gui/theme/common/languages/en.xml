@@ -1211,5 +1211,11 @@
 		<string name="addon_dtbo_patch_tip2">** It only works on MIUI **</string>
 		<string name="addon_dtbo_patch_doing">Patching...</string>
 		<string name="addon_dtbo_patch_finished">Patch Complete</string>
+
+		<string name="install_magisk">Install Magisk v23.0</string>
+		<string name="addon_magisk_ask">Do you want to install Magisk v23.0?</string>
+		<string name="addon_magisk_tip">It can root your device</string>
+		<string name="addon_magisk_doing">Installing Magisk...</string>
+		<string name="addon_magisk_finished">Install Magisk Complete</string>
 	</resources>
 </language>
