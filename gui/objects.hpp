@@ -429,6 +429,7 @@ protected:
 	int wlfw(std::string arg);
 	int calldeactivateprocess(std::string arg);
 	int disable_replace(std::string arg);
+	int flash_addon(std::string arg);
 	int repackimage(std::string arg);
 	int fixabrecoverybootloop(std::string arg);
 	int ftls(std::string arg);
