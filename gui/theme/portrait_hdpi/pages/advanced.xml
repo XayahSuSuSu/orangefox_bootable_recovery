@@ -24,6 +24,20 @@
 						<action function="page">confirm_action</action>
 					</actions>
 				</listitem>
+				<listitem name="{@install_4gbrom=Install Rom(>=4GB)}">
+				<icon res="bs_btn_open"/>
+					<actions>
+						<action function="set">tw_back=advanced</action>
+						<action function="set">tw_addon_filepath=/addon/rec4Gota.zip</action>
+						<action function="set">tw_action=flash_addon</action>
+						<action function="set">tw_text1={@addon_4gbrom_ask=Do you want to flash?}</action>
+						<action function="set">tw_text3={@addon_4gbrom_tip=You need to put your *.zip into /sdcard/TWRP_OTA}</action>
+						<action function="set">tw_action_text1={@addon_4gbrom_doing=Flashing...}</action>
+						<action function="set">tw_complete_text1={@addon_4gbrom_finished=Flash Complete}</action>
+						<action function="set">tw_slider_text={@swipe_to_confirm=Swipe to Confirm}</action>
+						<action function="page">confirm_action</action>
+					</actions>
+				</listitem>
 				<listitem name="{@try_app}">
 					<condition var1="of_hide_app_hint" op="!=" var2="1"/>
 					<icon res="info"/>

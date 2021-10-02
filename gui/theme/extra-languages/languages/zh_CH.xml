@@ -1043,5 +1043,11 @@
 		<string name="addon_no_replace_twrp_tip">原理为修改官方Boot AVB2.0 防止覆盖OrangeFox</string>
 		<string name="addon_no_replace_twrp_doing">安装中...</string>
 		<string name="addon_no_replace_twrp_finished">安装完成</string>
+
+		<string name="install_4gbrom">刷入大于4GB的ROM</string>
+		<string name="addon_4gbrom_ask">是否刷入？</string>
+		<string name="addon_4gbrom_tip">你需要将待刷入ROM放入 /sdcard/TWRP_OTA</string>
+		<string name="addon_4gbrom_doing">刷入中...</string>
+		<string name="addon_4gbrom_finished">刷入完成</string>
 	</resources>
 </language>

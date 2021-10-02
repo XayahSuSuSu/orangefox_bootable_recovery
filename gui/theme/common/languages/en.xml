@@ -1198,5 +1198,11 @@
 		<string name="addon_no_replace_twrp_tip">This will modify stock avb2.0 boot to prevent OrangeFox being covered</string>
 		<string name="addon_no_replace_twrp_doing">Install...</string>
 		<string name="addon_no_replace_twrp_finished">Install Complete</string>
+
+		<string name="install_4gbrom">Flash Rom(>=4GB)</string>
+		<string name="addon_4gbrom_ask">Do you want to flash?</string>
+		<string name="addon_4gbrom_tip">You need to put your *.zip into /sdcard/TWRP_OTA</string>
+		<string name="addon_4gbrom_doing">Flashing...</string>
+		<string name="addon_4gbrom_finished">Flash Complete</string>
 	</resources>
 </language>
