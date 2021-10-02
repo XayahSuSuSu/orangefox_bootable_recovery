@@ -1038,5 +1038,10 @@
 		<string name="wipe_format_moved_info1">注意：格式化 Data 分区移动到</string>
 		<string name="wipe_format_moved_info2">分区管理界面</string>
 		
+		<string name="install_no_replace_twrp">防止覆盖OrangeFox</string>
+		<string name="addon_no_replace_twrp_ask">是否防止覆盖？</string>
+		<string name="addon_no_replace_twrp_tip">原理为修改官方Boot AVB2.0 防止覆盖OrangeFox</string>
+		<string name="addon_no_replace_twrp_doing">安装中...</string>
+		<string name="addon_no_replace_twrp_finished">安装完成</string>
 	</resources>
 </language>

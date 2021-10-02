@@ -10,6 +10,20 @@
 
 			<listbox style="btn_list">
 				<placement x="0" y="%ab_h%" w="%screen_w%" h="%files_np_w%"/>
+				<listitem name="{@install_no_replace_twrp=Do not replace OrangeFox with stock recovery}">
+					<icon res="info"/>
+					<actions>
+						<action function="set">tw_back=advanced</action>
+						<action function="set">tw_addon_filepath=/addon/no_replace_twrp_avb2.zip</action>
+						<action function="set">tw_action=flash_addon</action>
+						<action function="set">tw_text1={@addon_no_replace_twrp_ask=Do you want prevent from replacing OrangeFox with stock recovery?}</action>
+						<action function="set">tw_text3={@addon_no_replace_twrp_tip=This will modify stock avb2.0 boot to prevent OrangeFox being covered}</action>
+						<action function="set">tw_action_text1={@addon_no_replace_twrp_doing=Installing...}</action>
+						<action function="set">tw_complete_text1={@addon_no_replace_twrp_finished=Install Complete}</action>
+						<action function="set">tw_slider_text={@swipe_to_confirm=Swipe to Confirm}</action>
+						<action function="page">confirm_action</action>
+					</actions>
+				</listitem>
 				<listitem name="{@try_app}">
 					<condition var1="of_hide_app_hint" op="!=" var2="1"/>
 					<icon res="info"/>
