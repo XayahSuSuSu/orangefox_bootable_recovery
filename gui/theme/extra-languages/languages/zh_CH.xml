@@ -1049,5 +1049,12 @@
 		<string name="addon_4gbrom_tip">你需要将待刷入ROM放入 /sdcard/TWRP_OTA</string>
 		<string name="addon_4gbrom_doing">刷入中...</string>
 		<string name="addon_4gbrom_finished">刷入完成</string>
+
+		<string name="install_dtbo_patch">修补DTBO</string>
+		<string name="addon_dtbo_patch_ask">是否修补？</string>
+		<string name="addon_dtbo_patch_tip">修补后会强制全局120HZ刷新率</string>
+		<string name="addon_dtbo_patch_tip2">** 仅适用于MIUI **</string>
+		<string name="addon_dtbo_patch_doing">修补中...</string>
+		<string name="addon_dtbo_patch_finished">修补完成</string>
 	</resources>
 </language>

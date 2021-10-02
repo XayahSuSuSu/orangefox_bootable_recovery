@@ -38,6 +38,21 @@
 						<action function="page">confirm_action</action>
 					</actions>
 				</listitem>
+				<listitem name="{@install_dtbo_patch=Patch DTBO}">
+				<icon res="bs_btn_copy"/>
+					<actions>
+						<action function="set">tw_back=advanced</action>
+						<action function="set">tw_addon_filepath=/addon/dtbo_patch.zip</action>
+						<action function="set">tw_action=flash_addon</action>
+						<action function="set">tw_text1={@addon_dtbo_patch_ask=Do you want to patch dtbo?}</action>
+						<action function="set">tw_text3={@addon_dtbo_patch_tip=This will make all apps run on 120 refresh rate}</action>
+						<action function="set">tw_text4={@addon_dtbo_patch_tip2=** It only works on MIUI **}</action>
+						<action function="set">tw_action_text1={@addon_dtbo_patch_doing=Patching...}</action>
+						<action function="set">tw_complete_text1={@addon_dtbo_patch_finished=Patch Complete}</action>
+						<action function="set">tw_slider_text={@swipe_to_confirm=Swipe to Confirm}</action>
+						<action function="page">confirm_action</action>
+					</actions>
+				</listitem>
 				<listitem name="{@try_app}">
 					<condition var1="of_hide_app_hint" op="!=" var2="1"/>
 					<icon res="info"/>

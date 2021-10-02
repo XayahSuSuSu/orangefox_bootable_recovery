@@ -1204,5 +1204,12 @@
 		<string name="addon_4gbrom_tip">You need to put your *.zip into /sdcard/TWRP_OTA</string>
 		<string name="addon_4gbrom_doing">Flashing...</string>
 		<string name="addon_4gbrom_finished">Flash Complete</string>
+
+		<string name="install_dtbo_patch">Patch DTBO</string>
+		<string name="addon_dtbo_patch_ask">Do you want to patch dtbo?</string>
+		<string name="addon_dtbo_patch_tip">This will make all apps run on 120 refresh rate</string>
+		<string name="addon_dtbo_patch_tip2">** It only works on MIUI **</string>
+		<string name="addon_dtbo_patch_doing">Patching...</string>
+		<string name="addon_dtbo_patch_finished">Patch Complete</string>
 	</resources>
 </language>
