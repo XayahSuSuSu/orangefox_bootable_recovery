@@ -46,6 +46,11 @@
 				<font resource="recovery" color="#ffffff"/>
 				<text>Recovery</text>
 			</text>
+			<text style="menu_text">
+				<placement x="540" y="2270" placement="4"/>
+				<font resource="recovery" color="#ffffff"/>
+				<text>It takes a long time to decrypt data...</text>
+			</text>
 		</page>
 	</pages>
 </recovery>
