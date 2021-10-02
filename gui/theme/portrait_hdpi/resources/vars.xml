@@ -323,7 +323,7 @@
 		<variable name="card_img4_y" value="1512+%cutout_w%"/>
 		
 		<variable name="card_txt_x" value="300"/>
-		<variable name="card_img_x" value="72"/>
+		<variable name="card_img_x" value="69"/>
 		
 		<variable name="btn_float_center_y" value="%screen_h%-294"/>
 		
