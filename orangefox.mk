@@ -77,17 +77,33 @@ else
     LOCAL_CFLAGS += -DFOX_BUILD_TYPE='"Unofficial"'
 endif
 
-ifeq ($(OF_USE_MAGISKBOOT),1)
-    LOCAL_CFLAGS += -DOF_USE_MAGISKBOOT='"1"'
+# magiskboot vars
+ifeq ($(OF_FORCE_MAGISKBOOT_BOOT_PATCH_MIUI),1)
+    LOCAL_CFLAGS += -DOF_FORCE_MAGISKBOOT_BOOT_PATCH_MIUI='"1"'
+    OF_USE_MAGISKBOOT := 1
+endif
+
+# fix repack bug in magiskboot 23+
+ifeq ($(OF_NEW_MAGISKBOOT_FORCE_AVB_VERIFY),1)
+    LOCAL_CFLAGS += -DOF_NEW_MAGISKBOOT_FORCE_AVB_VERIFY='"1"'
+    OF_USE_MAGISKBOOT := 1
+    OF_USE_NEW_MAGISKBOOT := 1
+    OF_USE_MAGISKBOOT_FOR_ALL_PATCHES := 1
+endif
+
+# new magiskboot (magiskboot 23+)
+ifeq ($(OF_USE_NEW_MAGISKBOOT),1)
+    LOCAL_CFLAGS += -DOF_USE_NEW_MAGISKBOOT='"1"'
+    OF_USE_MAGISKBOOT := 1
 endif
 
 ifeq ($(OF_USE_MAGISKBOOT_FOR_ALL_PATCHES),1)
     LOCAL_CFLAGS += -DOF_USE_MAGISKBOOT_FOR_ALL_PATCHES='"1"'
-    LOCAL_CFLAGS += -DOF_USE_MAGISKBOOT='"1"'
+    OF_USE_MAGISKBOOT := 1
 endif
 
-ifeq ($(OF_FORCE_MAGISKBOOT_BOOT_PATCH_MIUI),1)
-    LOCAL_CFLAGS += -DOF_FORCE_MAGISKBOOT_BOOT_PATCH_MIUI='"1"'
+ifeq ($(OF_USE_MAGISKBOOT),1)
+    LOCAL_CFLAGS += -DOF_USE_MAGISKBOOT='"1"'
 endif
 
 ifeq ($(OF_NO_MIUI_PATCH_WARNING),1)
@@ -421,12 +437,6 @@ ifeq ($(OF_DISABLE_EXTRA_ABOUT_PAGE),1)
     LOCAL_CFLAGS += -DOF_DISABLE_EXTRA_ABOUT_PAGE='"1"'
 endif
 
-# new magiskboot - disable the splash change menu automatically
-ifeq ($(OF_USE_NEW_MAGISKBOOT),1)
-    LOCAL_CFLAGS += -DOF_USE_NEW_MAGISKBOOT='"1"'
-    #LOCAL_CFLAGS += -DOF_NO_SPLASH_CHANGE='"1"'
-endif
-
 ifeq ($(OF_NO_SPLASH_CHANGE),1)
     LOCAL_CFLAGS += -DOF_NO_SPLASH_CHANGE='"1"'
 endif
@@ -438,7 +448,7 @@ endif
 ifeq ($(OF_USE_GREEN_LED),0)
     LOCAL_CFLAGS += -DOF_NO_GREEN_LED='"1"'
 endif
-#
+
 # ensure that the twres directory is copied to the recovery if it is otherwise not being done
 ifeq ($(OF_MANUAL_COPY_TWRES),1)
     LOCAL_CFLAGS += -DOF_MANUAL_COPY_TWRES='"1"'

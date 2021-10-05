@@ -185,10 +185,18 @@ static bool StorageIsEncrypted(void)
 /* whether intervention is needed to fix magiskboot repack bug on A-only */
 static bool Magiskboot_Repack_Needs_Fixing()
 {
-   #if defined(OF_USE_NEW_MAGISKBOOT) && !defined(OF_NEW_BOOT_HEADER) && !defined(BOARD_USES_RECOVERY_AS_BOOT) && !defined(AB_OTA_UPDATER) && !defined(OF_AB_DEVICE)
-   return true;
+   #if !defined(OF_USE_NEW_MAGISKBOOT)
+      return false;
+   #endif
+   
+   #ifdef OF_NEW_MAGISKBOOT_FORCE_AVB_VERIFY
+      return true;
+   #endif
+
+   #if !defined(BOARD_USES_RECOVERY_AS_BOOT) && !defined(AB_OTA_UPDATER) && !defined(OF_AB_DEVICE)
+      return true;
    #else
-   return false;
+      return false;
    #endif
 }
 
