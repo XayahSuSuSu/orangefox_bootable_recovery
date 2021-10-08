@@ -433,8 +433,8 @@ public:
 	void close_uevent();                                                      // Closes the uevent netlink socket
 	void Add_Partition(TWPartition* Part);                                    // Adds a new partition to the Partitions vector
 	bool Storage_Is_Encrypted(void);				  	  // Returns whether the device is encrypted
-
-	int Set_FDE_Encrypt_Status();                                             // Sets encryption state for FDE devices (ro.crypto.state and ro.crypto.type)
+	void Set_Crypto_State();                                                  // Sets encryption state for devices (ro.crypto.state)
+	int Set_Crypto_Type(const char* crypto_type);                             // Sets encryption type for FDE (block) and FBE (file) devices (ro.crypto.type)
 	void Unlock_Block_Partitions();                                           // Unlock all block devices after update_engine runs
 	bool Unmap_Super_Devices();                                               // Unmap super devices in TWRP
 
