@@ -960,10 +960,15 @@ void DataManager::SetDefaultValues()
 	printf("TW_HAS_EDL_MODE := true\n");
 	mConst.SetValue(TW_EDL_MODE, "1");
 #endif
+
 #ifdef PRODUCT_USE_DYNAMIC_PARTITIONS
 	printf("PRODUCT_USE_DYNAMIC_PARTITIONS := true\n");
 	mConst.SetValue(TW_FASTBOOT_MODE, "1");
+	mData.SetValue(TW_IS_SUPER, "1");
+#else
+  	mData.SetValue(TW_IS_SUPER, "0");
 #endif
+
 #ifdef TW_INCLUDE_CRYPTO
   mConst.SetValue(TW_HAS_CRYPTO, "1");
   printf("TW_INCLUDE_CRYPTO := true\n");
@@ -1121,7 +1126,6 @@ void DataManager::SetDefaultValues()
   mData.SetValue("tw_background_thread_running", "0");
   mData.SetValue(TW_RESTORE_FILE_DATE, "0");
   mPersist.SetValue("tw_military_time", "1");
-  mData.SetValue(TW_IS_SUPER, "0");
   mPersist.SetValue(TW_UNMOUNT_VENDOR, "1");
 #ifdef AB_OTA_UPDATER
 	mPersist.SetValue(TW_UNMOUNT_SYSTEM, "0");

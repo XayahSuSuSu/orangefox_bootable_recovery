@@ -495,10 +495,13 @@ void TWPartitionManager::Setup_Android_Secure_Location(TWPartition* Part) {
 
 void TWPartitionManager::Output_Partition_Logging(void) {
   std::vector < TWPartition * >::iterator iter;
-  if (Get_Super_Status())
+  if (Get_Super_Status()) {
   	TWFunc::Fox_Property_Set("orangefox.super.partition", "true");
-  else
+  	DataManager::SetValue(TW_IS_SUPER, "1");
+  }
+  else {
   	TWFunc::Fox_Property_Set("orangefox.super.partition", "false");
+  }
 
   printf("\n\nPartition Logs:\n");
   TWPartition* Part;
