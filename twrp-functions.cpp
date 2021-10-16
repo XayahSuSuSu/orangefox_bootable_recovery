@@ -4496,6 +4496,8 @@ int TWFunc::Get_Android_SDK_Version(void)
 {
 int sdkver = 21;
 string sdkverstr = TWFunc::System_Property_Get("ro.build.version.sdk");
+ if (sdkverstr.empty())
+    sdkverstr = TWFunc::System_Property_Get("ro.system.build.version.sdk");
  if (!sdkverstr.empty())
    {
       sdkver = atoi(sdkverstr.c_str());
