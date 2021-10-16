@@ -1,5 +1,5 @@
 /*
-	Copyright 2012 to 2016 bigbiff/Dees_Troy TeamWin
+	Copyright 2012 to 2021 TeamWin
 	This file is part of TWRP/TeamWin Recovery Project.
 
 	Copyright (C) 2018-2021 OrangeFox Recovery Project
@@ -1152,7 +1152,11 @@ void DataManager::SetDefaultValues()
   mData.SetValue("tw_sleep_total", "5");
   mData.SetValue("tw_sleep", "5");
   mData.SetValue("tw_enable_fastboot", "0");
-
+  if (android::base::GetBoolProperty("ro.virtual_ab.enabled", false))
+	mConst.SetValue("tw_virtual_ab.enabled", "1");
+  else
+  	mConst.SetValue("tw_virtual_ab.enabled", "0");
+  
   // Brightness handling
   string findbright;
 #ifdef TW_BRIGHTNESS_PATH
