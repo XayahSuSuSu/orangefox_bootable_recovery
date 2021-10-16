@@ -476,4 +476,10 @@ endif
 ifeq ($(BOARD_USES_RECOVERY_AS_BOOT),true)
     LOCAL_CFLAGS += -DBOARD_USES_RECOVERY_AS_BOOT='"true"'
 endif
+
+# whether to skip trying to decrypt adopted storage in unencrypted AOSP A12
+# (hopefully temporary - until AOSP 12 ROMs fix their storage.xml)
+ifeq ($(OF_SKIP_DECRYPTED_ADOPTED_STORAGE),1)
+    LOCAL_CFLAGS += -DOF_SKIP_DECRYPTED_ADOPTED_STORAGE='"1"'
+endif
 #
