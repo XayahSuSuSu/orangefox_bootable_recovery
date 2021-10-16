@@ -1,5 +1,4 @@
 recovery_only(`
-  # Allow recovery to set permissive mode
   permissive recovery;
   permissive init;
   permissive logd;
@@ -8,4 +7,5 @@ recovery_only(`
   allow kernel unlabeled:file rw_file_perms;
   allow kernel tmpfs:file { read };
   allow kernel recovery:fd { use };
+  allow vendor_init rootfs:dir read;
 ')
