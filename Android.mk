@@ -113,6 +113,7 @@ LOCAL_C_INCLUDES += \
     bionic \
     system/extras \
     system/core/adb \
+    system/core/libmodprobe/include \
     system/core/libsparse \
     external/zlib \
     system/core/libziparchive/include \
