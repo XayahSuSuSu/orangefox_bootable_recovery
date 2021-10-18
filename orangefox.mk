@@ -428,11 +428,6 @@ ifeq ($(OF_IGNORE_LOGICAL_MOUNT_ERRORS),1)
     LOCAL_CFLAGS += -DOF_IGNORE_LOGICAL_MOUNT_ERRORS='"1"'
 endif
 
-# process these here instead of OrangeFox_R11.sh
-#ifeq ($(FOX_ENABLE_APP_MANAGER),1)
-#    LOCAL_CFLAGS += -DFOX_ENABLE_APP_MANAGER='"1"'
-#endif
-
 ifeq ($(OF_DISABLE_EXTRA_ABOUT_PAGE),1)
     LOCAL_CFLAGS += -DOF_DISABLE_EXTRA_ABOUT_PAGE='"1"'
 endif
