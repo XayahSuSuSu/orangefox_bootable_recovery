@@ -2216,11 +2216,11 @@ int TWFunc::Check_MIUI_Treble(void)
   	if (fox_is_miui_rom_installed == "1" || TWFunc::Fox_Property_Get("orangefox.miui.rom") == "1")
      	  {
   	     Fox_Current_ROM_IsMIUI = 1;
-  	     gui_print("* MIUI ROM");
+  	     gui_print("* MIUI ROM (SDK: %i)", Get_Android_SDK_Version());
           } 
   	else
      	  {
-  	    gui_print("* Custom ROM");
+  	    gui_print("* Custom ROM (SDK: %i)", Get_Android_SDK_Version());
      	  } 
         gui_print("* %s\n", rom_desc.c_str());
         
