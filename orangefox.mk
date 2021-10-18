@@ -454,11 +454,6 @@ ifeq ($(OF_MANUAL_COPY_TWRES),1)
     LOCAL_CFLAGS += -DOF_MANUAL_COPY_TWRES='"1"'
 endif
 
-# old SAR
-ifeq ($(BOARD_BUILD_SYSTEM_ROOT_IMAGE), true)
-    LOCAL_CFLAGS += -DBOARD_BUILD_SYSTEM_ROOT_IMAGE='"true"'
-endif
-
 # new (v3, v4, etc) boot headers
 ifneq ($(BOARD_BOOT_HEADER_VERSION),)
     LOCAL_CFLAGS += -DBOARD_BOOT_HEADER_VERSION='"$(BOARD_BOOT_HEADER_VERSION)"'
@@ -470,11 +465,6 @@ ifeq ($(BOARD_BOOT_HEADER_VERSION),3)
     LOCAL_CFLAGS += -DOF_NEW_BOOT_HEADER='"1"'
 else ifeq ($(BOARD_BOOT_HEADER_VERSION),4)
     LOCAL_CFLAGS += -DOF_NEW_BOOT_HEADER='"1"'
-endif
-
-# VAB device?
-ifeq ($(BOARD_USES_RECOVERY_AS_BOOT),true)
-    LOCAL_CFLAGS += -DBOARD_USES_RECOVERY_AS_BOOT='"true"'
 endif
 
 # whether to skip trying to decrypt adopted storage in unencrypted AOSP A12
