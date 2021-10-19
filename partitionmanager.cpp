@@ -3209,7 +3209,7 @@ bool TWPartitionManager::Decrypt_Adopted()
   #ifdef OF_SKIP_DECRYPTED_ADOPTED_STORAGE
   if (!PartitionManager.Storage_Is_Encrypted()) {
       if (TWFunc::Get_Android_SDK_Version() > 30) {
-         gui_print_color("accent", "Android 12: cannot decrypt adopted storage until AOSP 12 ROMs fix their storage.xml ...\n");
+         LOGINFO("Android 12: skip adopted storage decryption until AOSP 12 ROMs stop creating a binary storage.xml.\n");
          return false;
       }
   }
