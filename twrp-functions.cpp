@@ -1133,29 +1133,29 @@ int TWFunc::removeDir(const string path, bool skipParent)
   return r;
 }
 
-int TWFunc::copy_file(string src, string dst, int mode) {
-	PartitionManager.Mount_By_Path(src, false);
-	PartitionManager.Mount_By_Path(dst, false);
-
+int TWFunc::copy_file(string src, string dst, int mode, bool mount_paths) {
+	if (mount_paths) {
+		PartitionManager.Mount_By_Path(src, false);
+		PartitionManager.Mount_By_Path(dst, false);
+	}
 	if (!Path_Exists(src)) {
-		LOGINFO("Unable to find source file %s\n", src.c_str());
+		LOGINFO("Path %s does not exist. Unable to copy file to %s\n", src.c_str(), dst.c_str());
 		return -1;
 	}
 	std::ifstream srcfile(src.c_str(), ios::binary);
 	std::ofstream dstfile(dst.c_str(), ios::binary);
 	dstfile << srcfile.rdbuf();
-	if (!dstfile.bad()) {
-		LOGINFO("Copied file %s to %s\n", src.c_str(), dst.c_str());
-	}
-	else {
+	if (dstfile.bad()) {
 		LOGINFO("Unable to copy file %s to %s\n", src.c_str(), dst.c_str());
 		return -1;
 	}
 
 	srcfile.close();
 	dstfile.close();
-	if (chmod(dst.c_str(), mode) != 0)
+	if (chmod(dst.c_str(), mode) != 0) {
+		LOGERR("Unable to chmod file: %s. Error: %s\n", dst.c_str(), strerror(errno));
 		return -1;
+	}
 	return 0;
 }
 
@@ -1252,18 +1252,30 @@ int TWFunc::read_file(string fn, uint64_t & results)
   return -1;
 }
 
-int TWFunc::write_to_file(const string & fn, const string & line)
-{
-  FILE *file;
-  file = fopen(fn.c_str(), "w");
-  if (file != NULL)
-    {
-      fwrite(line.c_str(), line.size(), 1, file);
-      fclose(file);
-      return 0;
-    }
-  LOGINFO("Cannot find file %s\n", fn.c_str());
-  return -1;
+bool TWFunc::write_to_file(const string& fn, const string& line) {
+	FILE *file;
+	file = fopen(fn.c_str(), "w");
+	if (file != NULL) {
+		fwrite(line.c_str(), line.size(), 1, file);
+		fclose(file);
+		return true;
+	}
+	LOGINFO("Cannot find file %s\n", fn.c_str());
+	return false;
+}
+
+bool TWFunc::write_to_file(const string& fn, const std::vector<string> lines) {
+	FILE *file;
+	file = fopen(fn.c_str(), "a+");
+	if (file != NULL) {
+		for (auto&& line: lines) {
+			fwrite(line.c_str(), line.size(), 1, file);
+			fwrite("\n", sizeof(char), 1, file);
+		}
+		fclose(file);
+		return true;
+	}
+	return false;
 }
 
 bool TWFunc::Try_Decrypting_Backup(string Restore_Path, string Password) {

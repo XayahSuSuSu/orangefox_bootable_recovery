@@ -120,12 +120,13 @@ public:
 	static int tw_reboot(RebootCommand command);                            // Prepares the device for rebooting
 	static void check_and_run_script(const char* script_file, const char* display_name); // checks for the existence of a script, chmods it to 755, then runs it
 	static int removeDir(const string path, bool removeParent); //recursively remove a directory
-	static int copy_file(string src, string dst, int mode); //copy file from src to dst with mode permissions
+	static int copy_file(string src, string dst, int mode, bool mount_paths=true); //copy file from src to dst with mode permissions
 	static unsigned int Get_D_Type_From_Stat(string Path);                      // Returns a dirent dt_type value using stat instead of dirent
 	static int read_file(string fn, vector<string>& results); //read from file
 	static int read_file(string fn, string& results); //read from file
 	static int read_file(string fn, uint64_t& results); //read from file
-	static int write_to_file(const string& fn, const string& line);             //write to file
+	static bool write_to_file(const string& fn, const string& line);             //write to file
+	static bool write_to_file(const string& fn, const std::vector<string> lines); // write vector of strings line by line with newlines
 	static bool Try_Decrypting_Backup(string Restore_Path, string Password); // true for success, false for failed to decrypt
 	static string System_Property_Get(string Prop_Name);                // Returns value of Prop_Name from reading /system/build.prop
 	static string System_Property_Get(string Prop_Name, TWPartitionManager &PartitionManager, string Mount_Point);                // Returns value of Prop_Name from reading /system/build.prop	
