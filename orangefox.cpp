@@ -865,9 +865,22 @@ int Fox_Prepare_Update_Binary(const char *path, ZipArchiveHandle Zip)
 	      	  {
 		    string atmp_ota = "/sdcard1/Fox/OTA/boot.emmc.win";
 		    if (TWFunc::Path_Exists(atmp_ota)) {
-		    	Boot_File = atmp_ota;
-		    	ota_location_folder = "/sdcard1/Fox/OTA";
-		    	gui_print("- OTA backup found in /sdcard1/Fox/OTA/ - trying that instead.\n");
+		        // found on /sdcard1/Fox/OTA/ - try to copy it to /sdcard/Fox/OTA/
+		        if (!TWFunc::Path_Exists("/sdcard/Fox/OTA"))
+		           TWFunc::Recursive_Mkdir("/sdcard/Fox/OTA/", false);
+
+		        if (TWFunc::copy_file(atmp_ota, Boot_File, 0644) == 0) {
+		    	    gui_print("- OTA backup found in /sdcard1/Fox/OTA/ - copied it to /sdcard/Fox/OTA/ ...\n");
+		    	    #ifdef OF_INCREMENTAL_OTA_BACKUP_SUPER
+		    	    if (TWFunc::Path_Exists("/sdcard1/Fox/OTA/super.emmc.win") && !TWFunc::Path_Exists("/sdcard/Fox/OTA/super.emmc.win")) {
+		    	   	TWFunc::copy_file("/sdcard1/Fox/OTA/super.emmc.win", "/sdcard/Fox/OTA/super.emmc.win", 0644);
+		    	    }
+		    	    #endif
+		        } else { // copy did not succeed - use the /sdcard1/ location
+		    	   Boot_File = atmp_ota;
+		    	   ota_location_folder = "/sdcard1/Fox/OTA";
+		    	   gui_print("- OTA backup found in /sdcard1/Fox/OTA/ - trying that instead.\n");
+		    	}
 		    }
 	      	}
 	      }
