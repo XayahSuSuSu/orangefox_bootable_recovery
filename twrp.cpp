@@ -167,7 +167,7 @@ static void process_recovery_mode(twrpAdbBuFifo* adb_bu_fifo, bool skip_decrypti
 		LOGERR("Failing out of recovery due to problem with fstab.\n");
 		return;
 	}
-//	PartitionManager.Output_Partition_Logging();
+	PartitionManager.Output_Partition_Logging(); // Darth9, 20211020 - don't move this from here
 
 #ifdef TW_LOAD_VENDOR_MODULES
 	bool fastboot_mode = cmdline.find("twrpfastboot=1") != std::string::npos;
@@ -234,7 +234,6 @@ static void process_recovery_mode(twrpAdbBuFifo* adb_bu_fifo, bool skip_decrypti
 #endif
 
 	Decrypt_Page(skip_decryption, datamedia);
-	PartitionManager.Output_Partition_Logging();
 
 	// Fixup the RTC clock on devices which require it
 	if (crash_counter == 0)
