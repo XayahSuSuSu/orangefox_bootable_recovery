@@ -65,6 +65,7 @@ LOCAL_SRC_FILES := \
     find_file.cpp \
     infomanager.cpp \
     data.cpp \
+    kernel_module_loader.cpp \
     partition.cpp \
     partitionmanager.cpp \
     progresstracking.cpp \
@@ -304,6 +305,9 @@ ifeq ($(TW_INCLUDE_L_CRYPTO), true)
 endif
 ifneq ($(TW_ADDITIONAL_APEX_FILES),)
     LOCAL_CFLAGS += -DTW_ADDITIONAL_APEX_FILES=$(TW_ADDITIONAL_APEX_FILES)
+endif
+ifneq ($(TW_LOAD_VENDOR_MODULES),)
+    LOCAL_CFLAGS += -DTW_LOAD_VENDOR_MODULES=$(TW_LOAD_VENDOR_MODULES)
 endif
 ifeq ($(TW_INCLUDE_CRYPTO), true)
     LOCAL_CFLAGS += -DTW_INCLUDE_CRYPTO -DUSE_FSCRYPT -Wno-macro-redefined
