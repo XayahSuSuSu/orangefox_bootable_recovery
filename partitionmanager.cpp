@@ -499,38 +499,45 @@ void TWPartitionManager::Setup_Android_Secure_Location(TWPartition* Part) {
 		Part->Setup_AndSec();
 }
 
-void TWPartitionManager::Output_Partition_Logging(void) {
-  std::vector < TWPartition * >::iterator iter;
-  if (Get_Super_Status()) {
-  	TWFunc::Fox_Property_Set("orangefox.super.partition", "true");
-  	DataManager::SetValue(TW_IS_SUPER, "1");
-  }
-  else {
-  	TWFunc::Fox_Property_Set("orangefox.super.partition", "false");
-  }
+void TWPartitionManager::Fox_Set_Dynamic_Partition_Props() {
+  	if (Get_Super_Status()) {
+  		TWFunc::Fox_Property_Set("orangefox.super.partition", "true");
+  		DataManager::SetValue(TW_IS_SUPER, "1");
+  	}
+  	else {
+  		TWFunc::Fox_Property_Set("orangefox.super.partition", "false");
+  	}
 
-  printf("\n\nPartition Logs:\n");
-  TWPartition* Part;
-  for (iter = Partitions.begin(); iter != Partitions.end(); iter++) {
-       	Output_Partition((*iter));
-       	Part = *iter;
-       	if (Part->Mount_Point == "/vendor") {
-	   TWFunc::Fox_Property_Set("orangefox.vendor.mount_point", Part->Mount_Point);
-	   TWFunc::Fox_Property_Set("orangefox.vendor.block_device", Part->Actual_Block_Device);
-	}
-	else if (Part->Mount_Point == "/product") {
-	   TWFunc::Fox_Property_Set("orangefox.product.mount_point", Part->Mount_Point);
-	   TWFunc::Fox_Property_Set("orangefox.product.block_device", Part->Actual_Block_Device);
-	}
-	else if (Part->Mount_Point == Get_Android_Root_Path()) {
-	   TWFunc::Fox_Property_Set("orangefox.system.mount_point", Part->Mount_Point);
-	   TWFunc::Fox_Property_Set("orangefox.system.block_device", Part->Actual_Block_Device);
-	}
-	else if (Part->Mount_Point == "/super") {
-	   TWFunc::Fox_Property_Set("orangefox.super.mount_point", Part->Mount_Point);
-	   TWFunc::Fox_Property_Set("orangefox.super.block_device", Part->Actual_Block_Device);
-	}
-    }
+  	TWPartition* Part;
+  	std::vector < TWPartition * >::iterator iter;
+  	for (iter = Partitions.begin(); iter != Partitions.end(); iter++) {
+       		//Output_Partition((*iter));
+       		Part = *iter;
+       		if (Part->Mount_Point == "/vendor") {
+		   TWFunc::Fox_Property_Set("orangefox.vendor.mount_point", Part->Mount_Point);
+		   TWFunc::Fox_Property_Set("orangefox.vendor.block_device", Part->Actual_Block_Device);
+		}
+		else if (Part->Mount_Point == "/product") {
+		   TWFunc::Fox_Property_Set("orangefox.product.mount_point", Part->Mount_Point);
+		   TWFunc::Fox_Property_Set("orangefox.product.block_device", Part->Actual_Block_Device);
+		}
+		else if (Part->Mount_Point == Get_Android_Root_Path()) {
+		   TWFunc::Fox_Property_Set("orangefox.system.mount_point", Part->Mount_Point);
+		   TWFunc::Fox_Property_Set("orangefox.system.block_device", Part->Actual_Block_Device);
+		}
+		else if (Part->Mount_Point == "/super") {
+		   TWFunc::Fox_Property_Set("orangefox.super.mount_point", Part->Mount_Point);
+		   TWFunc::Fox_Property_Set("orangefox.super.block_device", Part->Actual_Block_Device);
+		}
+    	}
+}
+
+void TWPartitionManager::Output_Partition_Logging(void) {
+	std::vector<TWPartition*>::iterator iter;
+
+	printf("\n\nPartition Logs:\n");
+	for (iter = Partitions.begin(); iter != Partitions.end(); iter++)
+		Output_Partition((*iter));
 }
 
 void TWPartitionManager::Output_Partition(TWPartition* Part) {

@@ -356,7 +356,8 @@ public:
 	int Check_Backup_Name(const std::string& Backup_Name, bool Display_Error, bool Must_Be_Unique); // Checks the current backup name to ensure that it is valid and optionally that a backup with that name doesn't already exist
 	int Run_Backup(bool adbbackup);                                           // Initiates a backup in the current storage
 	int Run_OTA_Survival_Backup(bool adbbackup);                              // Create backup for OTA survival in the internal storage
-    	int Run_OTA_Survival_Restore(const string& Restore_Name);                 	  // Restore OTA survival
+    	int Run_OTA_Survival_Restore(const string& Restore_Name);                 // Restore OTA survival
+    	void Fox_Set_Dynamic_Partition_Props();					  // Set the OrangeFox dynamic partitions props
  	bool Prepare_All_Super_Volumes();					  // Prepare all known super volumes from super partition
 
 	std::string Get_Bare_Partition_Name(std::string Mount_Point);

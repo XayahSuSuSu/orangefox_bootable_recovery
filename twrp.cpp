@@ -90,9 +90,6 @@ static void Decrypt_Page(bool SkipDecryption, bool datamedia) {
 			if (gui_startPage("decrypt", 1, 1) != 0) {
 				LOGERR("Failed to start decrypt GUI page.\n");
 			} else {
-				// Check for and load custom theme if present
-				TWFunc::check_selinux_support();
-				gui_loadCustomResources();
 				// OrangeFox - make note of this decryption
 				DataManager::SetValue("OTA_decrypted", "1");
 				#ifdef FOX_OLD_DECRYPT_RELOAD
@@ -167,7 +164,9 @@ static void process_recovery_mode(twrpAdbBuFifo* adb_bu_fifo, bool skip_decrypti
 		LOGERR("Failing out of recovery due to problem with fstab.\n");
 		return;
 	}
-	PartitionManager.Output_Partition_Logging(); // Darth9, 20211020 - don't move this from here
+
+	// Set the props for OrangeFox dynamic partitions
+	PartitionManager.Fox_Set_Dynamic_Partition_Props(); // don't move this from here!
 
 #ifdef TW_LOAD_VENDOR_MODULES
 	bool fastboot_mode = cmdline.find("twrpfastboot=1") != std::string::npos;
@@ -234,6 +233,11 @@ static void process_recovery_mode(twrpAdbBuFifo* adb_bu_fifo, bool skip_decrypti
 #endif
 
 	Decrypt_Page(skip_decryption, datamedia);
+
+	// Check for and load custom theme if present
+	TWFunc::check_selinux_support();
+	gui_loadCustomResources();
+	PartitionManager.Output_Partition_Logging();
 
 	// Fixup the RTC clock on devices which require it
 	if (crash_counter == 0)
