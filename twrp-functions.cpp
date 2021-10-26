@@ -2156,6 +2156,21 @@ void TWFunc::Write_MIUI_Install_Status(std::string install_status,
     }
 }
 
+std::string sdknum_to_text(int sdk) {
+#define sdk_asize 13
+   int sdk_num[sdk_asize] = {21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33};
+   string sdk_string[sdk_asize] = {"5.0","5.1","6.0","7.0","7.1","8.0","8.1","9","10","11","12","13","14"};
+   int i;
+   string s = "11"; // default
+   for (i = 0; i < sdk_asize; i++) {
+	if (sdk == sdk_num[i]) {
+		s = sdk_string[i];
+		break;
+	}
+   }
+   return "Android " + s;
+}
+
 /* read cfg file to confirm treble/miui */
 int TWFunc::Check_MIUI_Treble(void)
 {
@@ -2228,12 +2243,12 @@ int TWFunc::Check_MIUI_Treble(void)
   	if (fox_is_miui_rom_installed == "1" || TWFunc::Fox_Property_Get("orangefox.miui.rom") == "1")
      	  {
   	     Fox_Current_ROM_IsMIUI = 1;
-  	     gui_print("* MIUI ROM (SDK: %i)", Get_Android_SDK_Version());
+  	     gui_print("* MIUI ROM (SDK:%i, %s)", Get_Android_SDK_Version(), sdknum_to_text(Get_Android_SDK_Version()).c_str());
           } 
   	else
      	  {
-  	    gui_print("* Custom ROM (SDK: %i)", Get_Android_SDK_Version());
-     	  } 
+   	     gui_print("* Custom ROM (SDK:%i, %s)", Get_Android_SDK_Version(), sdknum_to_text(Get_Android_SDK_Version()).c_str());
+    	  }
         gui_print("* %s\n", rom_desc.c_str());
         
         if (!incr_version.empty())
