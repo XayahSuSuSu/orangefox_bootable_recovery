@@ -774,6 +774,9 @@ void DataManager::SetDefaultValues()
 
   mConst.SetValue("fox_build_type1", FOX_BUILD_TYPE);
 
+  // dispense with the "Create Digest" button (it is only for the 9.0 branch)
+  mConst.SetValue("fox_show_digest_btn", "0");
+
   #if defined(OF_DISABLE_MIUI_SPECIFIC_FEATURES) || defined(OF_TWRP_COMPATIBILITY_MODE)
     mData.SetValue("of_no_miui_features", "1");
   #else

@@ -1188,8 +1188,6 @@ int TWPartitionManager::Run_Backup(bool adbbackup) {
 	}
 	part_settings.adbbackup = false;
 	DataManager::SetValue("tw_enable_adb_backup", 0);
-  	DataManager::SetValue("fox_show_digest_btn", skip_digest);
-
 	return true;
 }
 
