@@ -3218,11 +3218,15 @@ bool TWPartitionManager::Decrypt_Adopted()
     }
 
   #ifdef OF_SKIP_DECRYPTED_ADOPTED_STORAGE
-  if (!PartitionManager.Storage_Is_Encrypted()) {
-      if (TWFunc::Get_Android_SDK_Version() > 30) {
-         LOGINFO("Android 12: skip adopted storage decryption until AOSP 12 ROMs stop creating a binary storage.xml.\n");
+  string path = "/data/system/storage.xml";
+  if (TWFunc::Get_Android_SDK_Version() > 30 && TWFunc::Path_Exists(path)) {
+      // check for certain markers indicating that it is not a binary file
+      bool isText = TWFunc::CheckWord(path, "<?xml version=") && TWFunc::CheckWord(path, "?>")
+      && (TWFunc::CheckWord(path, "userFlags=") || TWFunc::CheckWord(path, "createdMillis=") || TWFunc::CheckWord(path, "lastSeenMillis="));
+      if (!isText) {
+         LOGINFO("Android 12: storage.xml is binary. Skipping adopted storage decryption until AOSP 12 ROMs stop creating a binary storage.xml.\n");
          return false;
-      }
+      } else LOGINFO("Android 12: storage.xml is not in binary format. Proceeding...\n");
   }
   #endif
 
