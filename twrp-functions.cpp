@@ -4982,4 +4982,18 @@ void TWFunc::PostWipeEncryption(void) {
 void TWFunc::Set_Sbin_Dir_Executable_Flags(void) {
   system("chmod 0755 /sbin/*");
 }
+
+bool TWFunc::IsBinaryXML(const std::string filename) {
+  const uint32_t binary_xml_signature = 0x584241;
+  int fd = open(filename.c_str(), O_RDONLY);
+  if (fd >= 0) {
+  	uint32_t i;
+     	read(fd, &i, sizeof(uint32_t));
+     	close(fd);
+      	if (i == binary_xml_signature)
+          return true;
+  }
+  return false;
+}
+
 //
