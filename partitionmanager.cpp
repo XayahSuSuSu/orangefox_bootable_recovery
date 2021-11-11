@@ -1914,22 +1914,30 @@ void TWPartitionManager::Parse_Users() {
 			user.userId = to_string(userId);
 
 			// Attempt to get name of user. Fallback to user ID if this fails.
-			char* userFile = PageManager::LoadFileToBuffer("/data/system/users/" + to_string(userId) + ".xml", NULL);
-			if (userFile == NULL)
-				user.userName = userId == 0 ? "Owner (0)" : to_string(userId);
+			std::string path = "/data/system/users/" + to_string(userId) + ".xml";
+			if (TWFunc::Get_Android_SDK_Version() > 30 && TWFunc::Path_Exists(path)) {
+				if(TWFunc::IsBinaryXML(path))
+					user.userName = to_string(userId);
+			}
 			else {
-				xml_document<> *userXml = new xml_document<>();
-				userXml->parse<0>(userFile);
-				xml_node<>* userNode = userXml->first_node("user");
-				if (userNode == nullptr) {
-					user.userName = userId == 0 ? "Owner (0)" : to_string(userId);
-				} else {
-					xml_node<>* nameNode = userNode->first_node("name");
-					if (nameNode == nullptr)
-						user.userName = userId == 0 ? "Owner (0)" : to_string(userId);
-					else {
-						string userName = nameNode->value();
-						user.userName = userName + " (" + to_string(userId) + ")";
+				char* userFile = PageManager::LoadFileToBuffer(path, NULL);
+				if (userFile == NULL) {
+					user.userName = to_string(userId);
+				}
+				else {
+					xml_document<> *userXml = new xml_document<>();
+					userXml->parse<0>(userFile);
+					xml_node<>* userNode = userXml->first_node("user");
+					if (userNode == nullptr) {
+						user.userName = to_string(userId);
+					} else {
+						xml_node<>* nameNode = userNode->first_node("name");
+						if (nameNode == nullptr)
+							user.userName = to_string(userId);
+						else {
+							string userName = nameNode->value();
+							user.userName = userName + " (" + to_string(userId) + ")";
+						}
 					}
 				}
 			}
