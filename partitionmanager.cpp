@@ -3225,19 +3225,17 @@ bool TWPartitionManager::Decrypt_Adopted()
       return false;
     }
 
-  #ifdef OF_SKIP_DECRYPTED_ADOPTED_STORAGE
   string path = "/data/system/storage.xml";
   if (TWFunc::Get_Android_SDK_Version() > 30 && TWFunc::Path_Exists(path)) {
       if (TWFunc::IsBinaryXML(path)) {
-         LOGINFO("Android 12: storage.xml is binary. Skipping adopted storage decryption until AOSP 12 ROMs stop creating a binary storage.xml.\n");
+         LOGINFO("Android 12: storage.xml is binary. Skipping adopted storage decryption.\n");
          return false;
       } else LOGINFO("Android 12: storage.xml is not in binary format. Proceeding...\n");
   }
-  #endif
 
   LOGINFO("Decrypt adopted storage starting\n");
   char *xmlFile =
-    PageManager::LoadFileToBuffer("/data/system/storage.xml", NULL);
+    PageManager::LoadFileToBuffer(path, NULL);
   xml_document <> *doc = NULL;
   xml_node <> *volumes = NULL;
   string Primary_Storage_UUID = "";
