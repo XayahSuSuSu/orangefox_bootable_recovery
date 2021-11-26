@@ -2450,7 +2450,8 @@ void TWFunc::OrangeFox_Startup(void)
       DataManager::SetValue("fox_resource_dir", FFiles_dir.c_str());
       if (TWFunc::Path_Exists(Fox_sdcard_aroma_cfg)) // is there a backup CFG file on /sdcard/Fox/?
 	{
-	  TWFunc::copy_file(Fox_sdcard_aroma_cfg, Fox_aroma_cfg, 0644);
+	  if (TWFunc::Path_Exists(Fox_Home_Files + "/AromaFM"))
+	     TWFunc::copy_file(Fox_sdcard_aroma_cfg, Fox_aroma_cfg, 0644);
 	}
       else
 	{
