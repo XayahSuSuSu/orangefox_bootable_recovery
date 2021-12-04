@@ -1,3 +1,3 @@
 [submodule "gui/theme"]
 	path = gui/theme
-	url = git@gitlab.com:OrangeFox/bootable/theme.git
+	url = git@gitlab.com:OrangeFox/misc/theme.git
