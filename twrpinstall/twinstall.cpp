@@ -82,7 +82,7 @@ static int Install_Theme(const char* path, ZipArchiveHandle Zip) {
 	return INSTALL_CORRUPT;
 #else
 	std::string binary_name("ui.xml");
-	ZipEntry binary_entry;
+	ZipEntry64 binary_entry;
 	if (FindEntry(Zip, binary_name, &binary_entry) != 0) {
 		return INSTALL_CORRUPT;
 	}
@@ -114,7 +114,7 @@ static int Prepare_Update_Binary(const char *path, ZipArchiveHandle Zip) {
 	std::vector<string>::iterator arch;
 	std::string base_name = UPDATE_BINARY_NAME;
 	base_name += "-";
-	ZipEntry binary_entry;
+	ZipEntry64 binary_entry;
 	std::string update_binary_string(UPDATE_BINARY_NAME);
 	if (FindEntry(Zip, update_binary_string, &binary_entry) != 0) {
 		for (arch = split.begin(); arch != split.end(); arch++) {
@@ -148,7 +148,7 @@ static int Prepare_Update_Binary(const char *path, ZipArchiveHandle Zip) {
 
 	// If exists, extract file_contexts from the zip file
 	std::string file_contexts("file_contexts");
-	ZipEntry file_contexts_entry;
+	ZipEntry64 file_contexts_entry;
 	if (FindEntry(Zip, file_contexts, &file_contexts_entry) != 0) {
 		LOGINFO("Zip does not contain SELinux file_contexts file in its root.\n");
 	} else {
@@ -395,7 +395,7 @@ int TWinstall_zip(const char *path, int *wipe_cache, bool check_for_digest)
   time(&start);
  
   std::string update_binary_name(UPDATE_BINARY_NAME);
-  ZipEntry update_binary_entry;
+  ZipEntry64 update_binary_entry;
   if (FindEntry(Zip, update_binary_name, &update_binary_entry) == 0) {
 		LOGINFO("Update binary zip\n");
 		// Additionally verify the compatibility of the package.
@@ -409,7 +409,7 @@ int TWinstall_zip(const char *path, int *wipe_cache, bool check_for_digest)
 		}
 	} else {
 		std::string ab_binary_name(AB_OTA);
-		ZipEntry ab_binary_entry;
+		ZipEntry64 ab_binary_entry;
 		if (FindEntry(Zip, ab_binary_name, &ab_binary_entry) == 0) {
 			LOGINFO("AB zip\n");
 			gui_msg(Msg(msg::kHighlight, "flash_ab_inactive=Flashing A/B zip to inactive slot: {1}")(PartitionManager.Get_Active_Slot_Display()=="A"?"B":"A"));
@@ -440,7 +440,7 @@ int TWinstall_zip(const char *path, int *wipe_cache, bool check_for_digest)
 
 		} else {
 			std::string binary_name("ui.xml");
-			ZipEntry binary_entry;
+			ZipEntry64 binary_entry;
 			if (FindEntry(Zip, binary_name, &binary_entry) != 0) {
 				LOGINFO("OrangeFox theme zip\n");
 				ret_val = Install_Theme(path, Zip);
