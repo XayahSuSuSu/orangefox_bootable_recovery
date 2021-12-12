@@ -1,12 +1,10 @@
 LOCAL_PATH:= $(call my-dir)
-
 include $(CLEAR_VARS)
 
 LOCAL_MODULE := libtwrpdigest
 LOCAL_MODULE_TAGS := optional
 LOCAL_CFLAGS = -fno-strict-aliasing
 LOCAL_C_INCLUDES := external/openssl/include bionic
-LOCAL_C_INCLUDES += external/boringssl/src/include
 
 LOCAL_SRC_FILES = \
         twrpDigest.cpp \

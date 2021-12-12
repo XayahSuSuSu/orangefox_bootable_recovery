@@ -182,22 +182,22 @@ static bool StorageIsEncrypted(void)
   return (PartitionManager.Storage_Is_Encrypted() && DataManager::GetStrValue("fox_dfe_formatted") != "1");
 }
 
-/* whether intervention is needed to fix magiskboot repack bug on A-only */
+/* whether intervention is needed to fix magiskboot repack bug (for A-only recovery images);
+ returns:
+ 	true  = it needs to be fixed
+ 	false = no fixing is needed 
+*/
 static bool Magiskboot_Repack_Needs_Fixing()
 {
-   #if !defined(OF_USE_NEW_MAGISKBOOT)
-      return false;
-   #endif
-   
-   #ifdef OF_NEW_MAGISKBOOT_FORCE_AVB_VERIFY
+   #if !defined(BOARD_USES_RECOVERY_AS_BOOT) && !defined(AB_OTA_UPDATER) && !defined(OF_AB_DEVICE) && !defined(OF_VIRTUAL_AB_DEVICE)
       return true;
    #endif
 
-   #if !defined(BOARD_USES_RECOVERY_AS_BOOT) && !defined(AB_OTA_UPDATER) && !defined(OF_AB_DEVICE)
+   #if defined(OF_NEW_MAGISKBOOT_FORCE_AVB_VERIFY) || defined(OF_USE_NEW_MAGISKBOOT)
       return true;
-   #else
-      return false;
    #endif
+
+   return false;
 }
 
 std::string strReturnCurrentTime()
@@ -2450,7 +2450,8 @@ void TWFunc::OrangeFox_Startup(void)
       DataManager::SetValue("fox_resource_dir", FFiles_dir.c_str());
       if (TWFunc::Path_Exists(Fox_sdcard_aroma_cfg)) // is there a backup CFG file on /sdcard/Fox/?
 	{
-	  TWFunc::copy_file(Fox_sdcard_aroma_cfg, Fox_aroma_cfg, 0644);
+	  if (TWFunc::Path_Exists(Fox_Home_Files + "/AromaFM"))
+	     TWFunc::copy_file(Fox_sdcard_aroma_cfg, Fox_aroma_cfg, 0644);
 	}
       else
 	{

@@ -77,6 +77,14 @@ else
     LOCAL_CFLAGS += -DFOX_BUILD_TYPE='"Unofficial"'
 endif
 
+# virtual AB
+ifeq ($(OF_VIRTUAL_AB_DEVICE),1)
+    LOCAL_CFLAGS += -DOF_VIRTUAL_AB_DEVICE='"1"'
+    OF_AB_DEVICE := 1
+    OF_USE_MAGISKBOOT_FOR_ALL_PATCHES := 1
+    OF_USE_NEW_MAGISKBOOT := 1
+endif
+
 # magiskboot vars
 ifeq ($(OF_FORCE_MAGISKBOOT_BOOT_PATCH_MIUI),1)
     LOCAL_CFLAGS += -DOF_FORCE_MAGISKBOOT_BOOT_PATCH_MIUI='"1"'
@@ -461,4 +469,17 @@ ifeq ($(BOARD_BOOT_HEADER_VERSION),3)
 else ifeq ($(BOARD_BOOT_HEADER_VERSION),4)
     LOCAL_CFLAGS += -DOF_NEW_BOOT_HEADER='"1"'
 endif
+
+# lptools; disable by default; enable with OF_ENABLE_LPTOOLS=1
+ifeq ($(OF_ENABLE_LPTOOLS),)
+    TW_EXCLUDE_LPTOOLS := true
+else
+    ifeq ($(wildcard external/lptools/Android.bp),)
+        $(warning lptools sources not found! You need to run "repo sync" to clone the sources.)
+        $(warning You can also run: "git clone https://github.com/phhusson/vendor_lptools external/lptools")
+        $(error lptools sources not present; exiting)
+    endif
+endif
+
+
 #

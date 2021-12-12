@@ -55,7 +55,7 @@ static int parse_build_number(std::string str) {
 
 bool read_metadata_from_package(ZipArchiveHandle zip, std::string* meta_data) {
     std::string binary_name(METADATA_PATH);
-    ZipEntry binary_entry;
+    ZipEntry64 binary_entry;
     if (FindEntry(zip, binary_name, &binary_entry) == 0) {
         long size = binary_entry.uncompressed_length;
         if (size <= 0)
@@ -66,7 +66,6 @@ bool read_metadata_from_package(ZipArchiveHandle zip, std::string* meta_data) {
                                   size);
         if (ret != 0) {
             printf("Failed to read metadata in update package.\n");
-            CloseArchive(zip);
             return false;
         }
         return true;
@@ -225,7 +224,7 @@ abupdate_binary_command(const char* path, int retry_count __unused,
     // the RAW payload offset in the zip file.
     // if (!Zip->EntryExists(AB_OTA_PAYLOAD_PROPERTIES)) {
 	std::string binary_name(AB_OTA_PAYLOAD_PROPERTIES);
-    ZipEntry binary_entry;
+    ZipEntry64 binary_entry;
     if (FindEntry(Zip, binary_name, &binary_entry) != 0) {
         printf("Can't find %s\n", AB_OTA_PAYLOAD_PROPERTIES);
         return INSTALL_CORRUPT;
@@ -236,12 +235,11 @@ abupdate_binary_command(const char* path, int retry_count __unused,
                                   binary_entry.uncompressed_length);
     if (extract_ret != 0) {
         printf("Can't extract %s\n", AB_OTA_PAYLOAD_PROPERTIES);
-        CloseArchive(Zip);
         return false;
     }
 
     std::string ab_ota_payload(AB_OTA_PAYLOAD);
-    ZipEntry ab_ota_payload_entry;
+    ZipEntry64 ab_ota_payload_entry;
     if (FindEntry(Zip, ab_ota_payload, &ab_ota_payload_entry) != 0) {
         printf("Can't find %s\n", AB_OTA_PAYLOAD);
         return INSTALL_CORRUPT;
@@ -302,7 +300,7 @@ bool verify_package_compatibility(ZipArchiveHandle zw) {
 
   static constexpr const char* COMPATIBILITY_ZIP_ENTRY = "compatibility.zip";
   std::string compatibility_entry_name(COMPATIBILITY_ZIP_ENTRY);
-  ZipEntry compatibility_entry;
+  ZipEntry64 compatibility_entry;
   if (FindEntry(zw, compatibility_entry_name, &compatibility_entry) != 0) {
     printf("Package doesn't contain %s entry\n", COMPATIBILITY_ZIP_ENTRY);
     return true;
@@ -327,7 +325,7 @@ bool verify_package_compatibility(ZipArchiveHandle zw) {
 
   // Iterate all the entries inside COMPATIBILITY_ZIP_ENTRY and read the contents.
   void* cookie;
-  ret = StartIteration(zip_handle, &cookie, nullptr, nullptr);
+  ret = StartIteration(zip_handle, &cookie);
   if (ret != 0) {
     printf("Failed to start iterating zip entries: %s\n", ErrorCodeString(ret));
     CloseArchive(zip_handle);
@@ -336,7 +334,7 @@ bool verify_package_compatibility(ZipArchiveHandle zw) {
   std::unique_ptr<void, decltype(&EndIteration)> guard(cookie, EndIteration);
 
   std::vector<std::string> compatibility_info;
-  ZipEntry info_entry;
+  ZipEntry64 info_entry;
   std::string info_name;
   while (Next(cookie, &info_entry, &info_name) == 0) {
     std::string content(info_entry.uncompressed_length, '\0');

@@ -56,7 +56,6 @@
 #include "orscmd/orscmd.h"
 #include "twinstall.h"
 #include "twinstall/adb_install.h"
-#include "../twrpRepacker.hpp"
 extern "C" {
 	#include "gui/gui.h"
 	#include "cutils/properties.h"

@@ -1069,7 +1069,6 @@ void DataManager::SetDefaultValues()
   mPersist.SetValue(FOX_NO_OS_SEARCH_ENGINE, "1");
   mPersist.SetValue(FOX_STATUSBAR_ON_LOCK, "1");
   mPersist.SetValue(FOX_LED_COLOR, "0");
-  mPersist.SetValue(FOX_BALANCE_CHECK, "0");
   mPersist.SetValue(FOX_FSYNC_CHECK, "0");
   mPersist.SetValue(FOX_T2W_CHECK, "0");
   mPersist.SetValue(FOX_MAIN_SURVIVAL_TRIGGER, "META-INF/com/miui/miui_update");
@@ -1077,6 +1076,7 @@ void DataManager::SetDefaultValues()
   mPersist.SetValue(FOX_FORCE_FAST_CHARGE_CHECK, "0");
   mPersist.SetValue(FOX_POWERSAVE_CHECK, "0");
   mPersist.SetValue(FOX_PERFORMANCE_CHECK, "0");
+  mPersist.SetValue(FOX_BALANCE_CHECK, "1");
 
 #ifdef OF_USE_LOCKSCREEN_BUTTON
   mPersist.SetValue("lock_btn", "1");
