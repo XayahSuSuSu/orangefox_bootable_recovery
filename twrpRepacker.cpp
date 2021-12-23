@@ -282,11 +282,14 @@ if (!TWFunc::Path_Exists("/ramdisk-files.txt")) {
 		Repack_Options.Disable_Force_Encrypt = false;
 		Repack_Options.Type = REPLACE_RAMDISK_UNPACKED;
 		Repack_Options.Backup_First = DataManager::GetIntValue("tw_repack_backup_first") != 0;
+		#ifdef OF_FORCE_CHECK_RAMDISK_CHECKSUM
+		// this is not defined - we are simply disabling this check without deleting the code
 		std::string verifyfiles = "cd / && sha256sum --status -c ramdisk-files.sha256sum";
 		if (TWFunc::Exec_Cmd(verifyfiles) != 0) {
 		gui_msg(Msg(msg::kError, "modified_ramdisk_error=ramdisk files have been modified, unable to create ramdisk to flash, fastboot boot twrp and try this option again or use the Install Recovery Ramdisk option."));
 			return false;
 		}
+		#endif
 		std::string command = "cd / && /system/bin/cpio -H newc -o < ramdisk-files.txt > /tmp/currentramdisk.cpio && /system/bin/gzip -f /tmp/currentramdisk.cpio";
 		if (TWFunc::Exec_Cmd(command) != 0) {
 			gui_msg(Msg(msg::kError, "create_ramdisk_error=failed to create ramdisk to flash."));
