@@ -173,8 +173,6 @@ public:
 	static void Patch_AVB20(bool silent); // patch avb 2.0 with a script using magisk
 	static void UseSystemFingerprint(void); // use the system (ROM) fingerprint
 
-	static void Run_Pre_Flash_Protocol(bool forceit); // run any pre_flash protocol
-	static void Run_Post_Flash_Protocol(void); // run any post_flash protocol
 	static bool Has_System_Root(void); // is this a system-as-root device?
 	static int Rename_File(std::string oldname, std::string newname); // rename a file, using std strings
 	static bool MIUI_ROM_SetProperty(const int code); // Are we running a MIUI ROM (old or freshly installed) - set fox property

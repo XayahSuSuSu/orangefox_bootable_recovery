@@ -4473,42 +4473,6 @@ std::string magiskboot = TWFunc::Get_MagiskBoot();
    return res;
 }
 
-void TWFunc::Run_Pre_Flash_Protocol(bool forceit)
-{
-#ifdef OF_SUPPORT_PRE_FLASH_SCRIPT
-  // don't run this for ROMs (unless forced)
-  if ((forceit == true) || (DataManager::GetIntValue(FOX_ZIP_INSTALLER_CODE) == 0))
-    {
-      // don't run this for built-in zips
-      if ((forceit == true) || (DataManager::GetIntValue(FOX_INSTALL_PREBUILT_ZIP) != 1))
-        {
-          string pre_runner = "/sbin/fox_pre_flash";
-          if (TWFunc::Path_Exists(pre_runner))
-	   {
-	      TWFunc::Exec_Cmd(pre_runner.c_str());
-	      DataManager::SetValue("FOX_PRE_FLASH_SCRIPT", "2");
-	   }
-        }
-    }
-#endif
-}
-
-void TWFunc::Run_Post_Flash_Protocol(void)
-{
-#ifdef OF_SUPPORT_PRE_FLASH_SCRIPT
-    string pre_runner = "/sbin/fox_pre_flash";
-    if (TWFunc::Path_Exists(pre_runner))
-      {
-         if (DataManager::GetIntValue("FOX_PRE_FLASH_SCRIPT") == 2)
-            {
-	       pre_runner = "/sbin/fox_pre_flash --unmount";
-	       TWFunc::Exec_Cmd(pre_runner.c_str());
-	       DataManager::SetValue("FOX_PRE_FLASH_SCRIPT", "1");
-	    }
-      }
-#endif
-}
-
 bool TWFunc::MIUI_Is_Running(void)
 {
    if (Fox_Current_ROM_IsMIUI == 1 || TWFunc::JustInstalledMiui() || TWFunc::Fox_Property_Get("orangefox.miui.rom") == "1")
