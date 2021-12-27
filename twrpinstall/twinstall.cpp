@@ -283,6 +283,7 @@ static int Run_Update_Binary(const char *path, int* wipe_cache, zip_type ztype) 
 int TWinstall_zip(const char *path, int *wipe_cache, bool check_for_digest)
 {
   int ret_val, zip_verify = 1, unmount_system = 1, reflashtwrp = 0, unmount_vendor = 1;
+  bool run_rom_scripts = false;
 
   if (strcmp(path, "error") == 0)
     {
@@ -406,18 +407,13 @@ int TWinstall_zip(const char *path, int *wipe_cache, bool check_for_digest)
 			ret_val = Prepare_Update_Binary(path, Zip);
 			if (ret_val == INSTALL_SUCCESS) {
 				usleep(32);
-				bool run_rom_scripts = ((DataManager::GetIntValue(FOX_ZIP_INSTALLER_CODE) != 0) // only run after flashing a ROM
+				run_rom_scripts = ((DataManager::GetIntValue(FOX_ZIP_INSTALLER_CODE) != 0) // only run after flashing a ROM
 	  			&& (DataManager::GetIntValue(FOX_INSTALL_PREBUILT_ZIP) != 1)); // don't run for built-in zips
 
 	  			if (run_rom_scripts)
 	  				TWFunc::RunFoxScript(FOX_PRE_ROM_FLASH_SCRIPT);
 
 				ret_val = Run_Update_Binary(path, wipe_cache, UPDATE_BINARY_ZIP_TYPE);
-
-	        		usleep(32);
-
-	  			if (run_rom_scripts)
-	  				TWFunc::RunFoxScript(FOX_POST_ROM_FLASH_SCRIPT);
 			}
 		}
 	} else {
@@ -434,14 +430,13 @@ int TWinstall_zip(const char *path, int *wipe_cache, bool check_for_digest)
 			TWFunc::copy_file("/system/bin/sh", "/tmp/sh", 0755);
 			mount("/tmp/sh", "/system/bin/sh", "auto", MS_BIND, NULL);
 
+			run_rom_scripts = true;
 			usleep(32);
 			TWFunc::RunFoxScript(FOX_PRE_ROM_FLASH_SCRIPT);
 
 			ret_val = Run_Update_Binary(path, wipe_cache, AB_OTA_ZIP_TYPE);
 
-			usleep(32);
-			TWFunc::RunFoxScript(FOX_POST_ROM_FLASH_SCRIPT);
-			usleep(32);
+			DataManager::SetValue(FOX_ZIP_INSTALLER_CODE, 1); // mark as custom ROM install
 
 			umount("/system/bin/sh");
 			unlink("/tmp/sh");
@@ -459,7 +454,6 @@ int TWinstall_zip(const char *path, int *wipe_cache, bool check_for_digest)
 			twrpRepacker repacker;
 			repacker.Flash_Current_Twrp();
 			}
-
 		} else {
 			std::string binary_name("ui.xml");
 			ZipEntry64 binary_entry;
@@ -535,6 +529,11 @@ int TWinstall_zip(const char *path, int *wipe_cache, bool check_for_digest)
    {
       usleep(16);
       TWFunc::Check_OrangeFox_Overwrite_FromROM(false, path);
+   }
+
+   if (run_rom_scripts) {
+   	usleep(32);
+   	TWFunc::RunFoxScript(FOX_POST_ROM_FLASH_SCRIPT);
    }
 
   return ret_val;
