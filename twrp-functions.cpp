@@ -265,6 +265,16 @@ bool i = Path_Exists(orangefox_cfg);
    LOGINFO("DEBUG: OrangeFox: running the startup script...\n");
    TWFunc::Set_Sbin_Dir_Executable_Flags();
    Exec_Cmd(FOX_STARTUP_SCRIPT);
+
+   // set the incremental version to the ROM's
+   if (TWFunc::Path_Exists(orangefox_cfg)) {
+  	string incr_version = TWFunc::File_Property_Get (orangefox_cfg, "INCREMENTAL_VERSION");
+  	if (!incr_version.empty()) {
+  	   LOGINFO("- Using the ROM's incremental version (%s)\n", incr_version.c_str());
+  	   TWFunc::Fox_Property_Set("ro.build.version.incremental", incr_version);
+  	}
+    }
+
    return true;
 }
 
