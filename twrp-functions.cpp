@@ -2241,10 +2241,26 @@ int TWFunc::Check_MIUI_Treble(void)
   
   // show display panel name, if we got one 
   if (!display_panel.empty())
-       gui_print("* Display: %s\n", display_panel.c_str());
+       gui_print("* Display:    %s\n", display_panel.c_str());
 
   // device name
-  gui_print("* Device:  %s (%s)\n", TWFunc::Fox_Property_Get("ro.product.device").c_str(), TWFunc::Fox_Property_Get("ro.product.system.device").c_str());
+       gui_print("* Device:     %s (%s)\n", TWFunc::Fox_Property_Get("ro.product.device").c_str(), TWFunc::Fox_Property_Get("ro.product.system.device").c_str());
+
+  // Dynamic partitions
+  string tmp = Fox_Property_Get("orangefox.super.partition");
+  if (tmp == "true")
+       gui_print("* Dynamic:    yes\n");
+  else
+       gui_print("* Dynamic:    no\n");
+
+  // A/B
+  tmp = Fox_Property_Get("ro.boot.slot_suffix");
+  if (!tmp.empty()) {
+       gui_print("* Boot slot:  %s\n", tmp.c_str());
+       // Virtual A/B
+       if (Fox_Property_Get("ro.virtual_ab.enabled") == "true")
+       gui_print("* Virtual_AB: yes\n");
+   }
 
   // installed ROM
   rom_desc = GetInstalledRom();
