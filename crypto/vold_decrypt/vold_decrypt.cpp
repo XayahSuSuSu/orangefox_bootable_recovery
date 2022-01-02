@@ -780,6 +780,7 @@ void Set_Needed_Properties(void) {
 	property_set("vendor.sys.listeners.registered", "false");
 }
 
+#ifdef TW_INCLUDE_LIBRESETPROP // Patch_Level_Overrides
 void Update_Patch_Level(void) {
 	// On Oreo and above, keymaster requires Android version & patch level to match installed system
 	string sdkverstr = TWFunc::System_Property_Get("ro.build.version.sdk");
@@ -901,6 +902,7 @@ void Revert_Patch_Level(void) {
 		return;
 	}
 }
+#endif // Patch_Level_Overrides
 
 static unsigned int get_blkdev_size(int fd) {
 	unsigned long nr_sec;
@@ -1283,9 +1285,9 @@ int Vold_Decrypt_Core(const string& Password) {
 	Symlink_Firmware_Files(is_vendor_symlinked, is_firmware_symlinked);
 
 	Set_Needed_Properties();
-//#ifdef TW_INCLUDE_LIBRESETPROP
+#ifdef TW_INCLUDE_LIBRESETPROP
 	Update_Patch_Level();
-//#endif
+#endif
 
 	// Start services needed for vold decrypt
 	LOGINFO("Starting services...\n");
@@ -1350,9 +1352,9 @@ int Vold_Decrypt_Core(const string& Password) {
 		LOGINFO("Failed to start vold\n");
 		res = VD_ERR_VOLD_FAILED_TO_START;
 	}
-//#ifdef TW_INCLUDE_LIBRESETPROP
+#ifdef TW_INCLUDE_LIBRESETPROP
 	Revert_Patch_Level();
-//#endif
+#endif
 	// Stop services needed for vold decrypt so /system can be unmounted
 	LOGINFO("Stopping services...\n");
 	Stop_Service("sys_vold");
