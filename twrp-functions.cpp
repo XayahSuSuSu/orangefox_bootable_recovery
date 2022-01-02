@@ -2,7 +2,7 @@
 	Copyright 2012 bigbiff/Dees_Troy TeamWin
 	This file is part of TWRP/TeamWin Recovery Project.
 
-	Copyright (C) 2018-2021 OrangeFox Recovery Project
+	Copyright (C) 2018-2022 OrangeFox Recovery Project
 	This file is part of the OrangeFox Recovery Project.
 
 	TWRP is free software: you can redistribute it and/or modify
@@ -72,7 +72,7 @@ extern "C"
 }
 
 #ifdef TW_INCLUDE_LIBRESETPROP
-    #include <resetprop.h>
+    #include <resetprop.hpp>
 #endif
 
 struct selabel_handle *selinux_handle;
