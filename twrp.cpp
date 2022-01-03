@@ -142,6 +142,11 @@ static void process_fastbootd_mode() {
 static void process_recovery_mode(twrpAdbBuFifo* adb_bu_fifo, bool skip_decryption) {
 	char crash_prop_val[PROPERTY_VALUE_MAX];
 	int crash_counter;
+	std::string cmdline;
+	if (TWFunc::read_file("/proc/cmdline", cmdline) != 0) {
+		LOGINFO("Unable to read cmdline for fastboot mode\n");
+	}
+
 	property_get("orangefox.crash_counter", crash_prop_val, "-1");
 	crash_counter = atoi(crash_prop_val) + 1;
 	snprintf(crash_prop_val, sizeof(crash_prop_val), "%d", crash_counter);
