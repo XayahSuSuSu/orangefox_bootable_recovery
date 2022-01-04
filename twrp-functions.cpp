@@ -4408,7 +4408,7 @@ void TWFunc::Deactivation_Process(void)
 
 void TWFunc::Patch_AVB20(bool silent)
 {
-#if defined(OF_PATCH_AVB20) && !defined(OF_SKIP_ORANGEFOX_PROCESS) && !defined(OF_VANILLA_BUILD)
+#if defined(OF_PATCH_AVB20) && !defined(OF_SKIP_ORANGEFOX_PROCESS) && !defined(OF_VANILLA_BUILD) && !defined(OF_AB_DEVICE) && !defined(AB_OTA_UPDATER)
 std::string zipname = FFiles_dir + "/OF_avb20/OF_avb20.zip";
 int res=0, wipe_cache=0;
 std::string magiskboot = TWFunc::Get_MagiskBoot();
