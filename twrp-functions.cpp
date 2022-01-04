@@ -4939,27 +4939,16 @@ void TWFunc::Mapper_to_BootDevice(const std::string block_device, const std::str
 }
 
 void TWFunc::PostWipeEncryption(void) {
-#ifdef OF_RUN_POST_FORMAT_PROCESS
-  DataManager::SetValue("fox_dfe_formatted", "0");
-  bool create_data_media = 
-  #ifdef OF_FORCE_CREATE_DATA_MEDIA_ON_FORMAT
-  true;
-  #else
-  (DataManager::GetIntValue(FOX_DISABLE_FORCED_ENCRYPTION) == 1);
-  #endif
-
-  // only run this if we are disabling forced encryption, or if we are forcing it (it can mess up Android 11+ encryption of the internal storage)
-  if (create_data_media) {
+  // only run this if we are disabling forced encryption
+  if (DataManager::GetIntValue(FOX_DISABLE_FORCED_ENCRYPTION) == 1) {
 
       // don't run this if we just installed MIUI
-      if (DataManager::GetIntValue(FOX_DISABLE_FORCED_ENCRYPTION) == 1 && TWFunc::Fox_Property_Get("orangefox.fresh.miui.install") == "1") {
+      if (TWFunc::Fox_Property_Get("orangefox.fresh.miui.install") == "1") {
          gui_print_color("warning", "\n- Fresh MIUI ROM installation! Not running disable-forced-encryption.\n\n");
          return;
       }
 
-      if (DataManager::GetIntValue(FOX_DISABLE_FORCED_ENCRYPTION) == 1)
-      	DataManager::SetValue("fox_dfe_formatted", "1");
-
+      DataManager::SetValue("fox_dfe_formatted", "1");
       gui_print("I: Recreating /data/media/0...\n");
       sleep(1);
       TWFunc::Recursive_Mkdir("/data/media/0", false);
@@ -4984,7 +4973,6 @@ void TWFunc::PostWipeEncryption(void) {
          gui_print_color("warning", "\n- Note: if you go on to flash a MIUI ROM now, then you *must* format data afterwards.\n\n");
       }
   }
-#endif
 }
 
 void TWFunc::Set_Sbin_Dir_Executable_Flags(void) {

@@ -476,15 +476,4 @@ else
         $(error lptools sources not present; exiting)
     endif
 endif
-
-# post-format
-ifeq ($(OF_FORCE_CREATE_DATA_MEDIA_ON_FORMAT),1)
-   OF_RUN_POST_FORMAT_PROCESS := 1
-   LOCAL_CFLAGS += -DOF_FORCE_CREATE_DATA_MEDIA_ON_FORMAT='"1"'
-endif
-
-ifeq ($(OF_RUN_POST_FORMAT_PROCESS),1)
-    $(warning "OF_RUN_POST_FORMAT_PROCESS" is deprecated. It causes issues with Android 11+ encryption of the internal storage)
-    LOCAL_CFLAGS += -DOF_RUN_POST_FORMAT_PROCESS='"1"'
-endif
 #
