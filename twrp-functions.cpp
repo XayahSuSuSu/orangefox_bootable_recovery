@@ -4520,14 +4520,19 @@ int TWFunc::Rename_File(std::string oldname, std::string newname)
 
 int TWFunc::Get_Android_SDK_Version(void)
 {
-int sdkver = 21;
+int sdkver = 29;
 string sdkverstr = TWFunc::System_Property_Get("ro.build.version.sdk");
+
  if (sdkverstr.empty())
     sdkverstr = TWFunc::System_Property_Get("ro.system.build.version.sdk");
- if (!sdkverstr.empty())
-   {
+
+ if (sdkverstr.empty())
+    sdkverstr = TWFunc::Fox_Property_Get("orangefox.rom.sdk");
+
+ if (!sdkverstr.empty()) {
       sdkver = atoi(sdkverstr.c_str());
-   }
+  }
+
  return sdkver;
 }
 
