@@ -4956,7 +4956,7 @@ void TWFunc::PostWipeEncryption(void) {
 
       // don't run this if we just installed MIUI
       if (TWFunc::Fox_Property_Get("orangefox.fresh.miui.install") == "1") {
-         gui_print_color("warning", "\n- Fresh MIUI ROM installation! Not running disable-forced-encryption.\n\n");
+         gui_print_color("warning", "\n- Fresh MIUI ROM installation! Not creating /data/media/\n\n");
          return;
       }
 
