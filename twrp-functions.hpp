@@ -129,7 +129,7 @@ public:
 	static bool write_to_file(const string& fn, const std::vector<string> lines); // write vector of strings line by line with newlines
 	static bool Try_Decrypting_Backup(string Restore_Path, string Password); // true for success, false for failed to decrypt
 	static string System_Property_Get(string Prop_Name);                // Returns value of Prop_Name from reading /system/build.prop
-	static string System_Property_Get(string Prop_Name, TWPartitionManager &PartitionManager, string Mount_Point);                // Returns value of Prop_Name from reading /system/build.prop	
+	static string System_Property_Get(string Prop_Name, TWPartitionManager &PartitionManager, string Mount_Point, string prop_file_name);     // Returns value of Prop_Name from reading provided prop file
   	static bool CheckWord(std::string filename, std::string search); // Check if the word exist in the txt file and then return true or false 
 	static string File_Property_Get(string File_Path, string Prop_Name);                // Returns specified property value from the file
 	static string Get_Current_Date(void);                               // Returns the current date in ccyy-m-dd--hh-nn-ss format
