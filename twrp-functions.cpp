@@ -4443,12 +4443,17 @@ int TWFunc::Patch_DMVerity_ForcedEncryption_Magisk(void)
 std::string keepdmverity, keepforcedencryption;
 std::string zipname = FFiles_dir + "/OF_verity_crypt/OF_verity_crypt.zip";
 int res=0, wipe_cache=0;
-std::string magiskboot = TWFunc::Get_MagiskBoot();
+
+  #if defined(AB_OTA_UPDATER) || defined(OF_AB_DEVICE)
+  gui_print_color("warning", "A/B device - skipping the disable forced-encryption patches.\n");
+  return 0;
+  #endif
 
   if (DataManager::GetIntValue(FOX_DISABLE_FORCED_ENCRYPTION) != 1 
    && DataManager::GetIntValue(FOX_DISABLE_DM_VERITY) != 1)
      return 0;
 
+  std::string magiskboot = TWFunc::Get_MagiskBoot();
   if (!TWFunc::Path_Exists(magiskboot))
      {
         gui_print("ERROR - cannot find magiskboot\n");
