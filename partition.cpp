@@ -2,7 +2,7 @@
 	Copyright 2013 to 2021 TeamWin
 	This file is part of TWRP/TeamWin Recovery Project.
 
-	Copyright (C) 2018-2021 OrangeFox Recovery Project
+	Copyright (C) 2018-2022 OrangeFox Recovery Project
 	This file is part of the OrangeFox Recovery Project.
 	
 	TWRP is free software: you can redistribute it and/or modify
@@ -759,6 +759,14 @@ if (TWFunc::Path_Exists("/data/unencrypted/key/version")) {
 	#ifdef OF_SKIP_FBE_DECRYPTION
 	    gui_print_color("warning", "Skip FBE decryption is triggered. I will not try to decrypt...\n");
 	    return false;
+	#endif
+	#ifdef OF_SKIP_FBE_DECRYPTION_SDKVERSION
+	    int current=TWFunc::Get_Android_SDK_Version();
+	    int avoid=atoi(OF_SKIP_FBE_DECRYPTION_SDKVERSION);
+	    if (current >= avoid) {
+	       gui_print_color("warning", "Skip FBE decryption for SDK %i (%s) or higher...\n\n", avoid, TWFunc::sdknum_to_text(avoid).c_str());
+	       return false;
+	    }
 	#endif
 	Is_FBE = true;
 	ExcludeAll(Mount_Point + "/convert_fbe");

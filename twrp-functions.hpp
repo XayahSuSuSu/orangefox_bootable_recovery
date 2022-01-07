@@ -2,7 +2,7 @@
 	Copyright 2012 bigbiff/Dees_Troy TeamWin
 	This file is part of TWRP/TeamWin Recovery Project.
 
-  	Copyright (C) 2018-2020 OrangeFox Recovery Project
+  	Copyright (C) 2018-2022 OrangeFox Recovery Project
  	This file is part of the OrangeFox Recovery Project
  
 	TWRP is free software: you can redistribute it and/or modify
@@ -221,7 +221,7 @@ public:
 	static int string_to_int(string String, int def_value);
 	static long string_to_long(string String, long def_value);
 	static uint64_t string_to_long(string String, uint64_t def_value);
-
+	static string sdknum_to_text(int sdk);
 	static string Check_For_TwrpFolder();
 
 private:
