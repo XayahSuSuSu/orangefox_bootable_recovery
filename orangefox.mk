@@ -18,8 +18,8 @@
 # 	Please maintain this if you use this script or any part of it
 #
 
-#LOCAL_CFLAGS += -Wno-unused-parameter -Wno-unused-function -Wno-unused-variable -Wno-implicit-fallthrough
-#LOCAL_CFLAGS += -Wno-format-extra-args
+LOCAL_CFLAGS += -Wno-unused-parameter -Wno-unused-function -Wno-unused-variable
+#LOCAL_CFLAGS += -Wno-implicit-fallthrough -Wno-format-extra-args
 
 ifneq ($(FOX_VERSION),)
     LOCAL_CFLAGS += -DFOX_VERSION='"$(FOX_VERSION)"'
