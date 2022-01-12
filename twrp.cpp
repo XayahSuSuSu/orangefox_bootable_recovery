@@ -200,7 +200,7 @@ static void process_recovery_mode(twrpAdbBuFifo* adb_bu_fifo, bool skip_decrypti
 			}
 			other_prop = android::base::Trim(other_prop);
 			current_prop = android::base::Trim(current_prop);
-			string sys_val = TWFunc::System_Property_Get(other_prop, PartitionManager, PartitionManager.Get_Android_Root_Path().c_str());
+			string sys_val = TWFunc::System_Property_Get(other_prop, PartitionManager, PartitionManager.Get_Android_Root_Path().c_str(), "build.prop");
 			if (!sys_val.empty()) {
 				LOGINFO("Overriding %s with value: \"%s\" from system property %s\n", current_prop.c_str(), sys_val.c_str(), other_prop.c_str());
 				int error = TWFunc::Property_Override(current_prop, sys_val);
