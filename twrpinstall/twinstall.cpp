@@ -2,7 +2,7 @@
 	Copyright 2012 to 2017 bigbiff/Dees_Troy TeamWin
 	This file is part of TWRP/TeamWin Recovery Project.
 
-	Copyright (C) 2018-2021 OrangeFox Recovery Project
+	Copyright (C) 2018-2022 OrangeFox Recovery Project
 	This file is part of the OrangeFox Recovery Project.
 
 	TWRP is free software: you can redistribute it and/or modify
@@ -457,7 +457,7 @@ int TWinstall_zip(const char *path, int *wipe_cache, bool check_for_digest)
 		} else {
 			std::string binary_name("ui.xml");
 			ZipEntry64 binary_entry;
-			if (FindEntry(Zip, binary_name, &binary_entry) != 0) {
+			if (FindEntry(Zip, binary_name, &binary_entry) == 0) {
 				LOGINFO("OrangeFox theme zip\n");
 				ret_val = Install_Theme(path, Zip);
 			} else {
