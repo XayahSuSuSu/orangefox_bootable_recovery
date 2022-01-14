@@ -4641,11 +4641,13 @@ void TWFunc::Dump_Current_Settings(void)
 
 void TWFunc::Reset_Clock(void)
 {
+#ifdef QCOM_RTC_FIX
    string fox_build_date_utc = TWFunc::File_Property_Get (Fox_Cfg, "ro.build.date.utc_fox");
    if (!fox_build_date_utc.empty())
       {
         TWFunc::Exec_With_Output("date -s \"@" + fox_build_date_utc + "\" > /dev/null");
       }
+#endif
 }
 
 bool TWFunc::Check_OrangeFox_Overwrite_FromROM(bool WarnUser, const std::string name)
