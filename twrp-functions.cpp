@@ -46,6 +46,8 @@
 #include <codecvt>
 #include <selinux/label.h>
 #include <android-base/properties.h>
+#include <thread>
+#include <android-base/chrono_utils.h>
 
 #include "twrp-functions.hpp"
 #include "twcommon.h"
@@ -798,6 +800,30 @@ int32_t TWFunc::timespec_diff_ms(timespec & start, timespec & end)
 {
   return ((end.tv_sec * 1000) + end.tv_nsec / 1000000) -
     ((start.tv_sec * 1000) + start.tv_nsec / 1000000);
+}
+
+bool TWFunc::Wait_For_File(const string& path, std::chrono::nanoseconds timeout) {
+    android::base::Timer t;
+    while (t.duration() < timeout) {
+        struct stat sb;
+        if (stat(path.c_str(), &sb) != -1) {
+            return true;
+        }
+        std::this_thread::sleep_for(10ms);
+    }
+	return false;
+}
+
+bool TWFunc::Wait_For_Battery(std::chrono::nanoseconds timeout) {
+	std::string battery_path;
+#ifdef TW_CUSTOM_BATTERY_PATH
+	battery_path = EXPAND(TW_CUSTOM_BATTERY_PATH);
+#else
+	battery_path = "/sys/class/power_supply/battery";
+#endif
+	if (!battery_path.empty()) return TWFunc::Wait_For_File(battery_path, timeout);
+
+	return false;
 }
 
 #ifndef BUILD_TWRPTAR_MAIN
