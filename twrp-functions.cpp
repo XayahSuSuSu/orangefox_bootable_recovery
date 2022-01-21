@@ -1507,7 +1507,20 @@ void TWFunc::Fixup_Time_On_Boot(const string & time_paths)
 	 if (TWFunc::read_file (epoch_drift_file, drift) != 0) // read from epoch drift file
 	 	drift = 0;
 	 #endif
-	 
+
+	#ifdef TW_QCOM_ATS_OFFSET
+	 if (drift == 0)
+	   {
+		drift = (uint64_t) TW_QCOM_ATS_OFFSET / 1000;
+		LOGINFO("TWFunc::Fixup_Time: retrieving drift value from TW_QCOM_ATS_OFFSET (%llu)\n", (unsigned long long) drift);
+	 	#ifndef OF_DEVICE_WITHOUT_PERSIST
+	 	// save to drift file if the file doesn't exist
+	 	if (!TWFunc::Path_Exists(epoch_drift_file))
+	 	     TWFunc::write_to_file(epoch_drift_file, to_string(drift));
+	 	#endif
+	   }
+	#endif
+
 	 // what have we succeeded in reading?
          if ((drift > 0) || (stored_drift > 0)) 
          {
