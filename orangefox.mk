@@ -239,6 +239,14 @@ ifeq ($(OF_KEEP_DM_VERITY_FORCED_ENCRYPTION),1)
     OF_KEEP_FORCED_ENCRYPTION := 1
 endif
 
+ifneq ($(TARGET_OTA_ASSERT_DEVICE),)
+ifeq ($(OF_TARGET_DEVICES),)
+    LOCAL_CFLAGS += -DOF_TARGET_DEVICES='"$(TARGET_OTA_ASSERT_DEVICE)"'
+else
+    $(error You cannot use both "TARGET_OTA_ASSERT_DEVICE" and "OF_TARGET_DEVICES" at the same time. Quitting)
+endif
+endif
+
 ifneq ($(OF_TARGET_DEVICES),)
     LOCAL_CFLAGS += -DOF_TARGET_DEVICES='"$(OF_TARGET_DEVICES)"'
 endif
