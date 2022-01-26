@@ -134,9 +134,13 @@ static void process_fastbootd_mode() {
 #endif
 
 		gui_msg(Msg("fastboot_console_msg=Entered Fastboot mode..."));
+		property_set("ro.orangefox.fastbootd", "1");
+		TWFunc::RunFoxScript("/system/bin/runatboot.sh");
+		TWFunc::RunFoxScript("/system/bin/postrecoveryboot.sh");
 		if (gui_startPage("fastboot", 1, 1) != 0) {
 			LOGERR("Failed to start fastbootd page.\n");
 		}
+		property_set("ro.orangefox.fastbootd", "0");
 }
 
 static void process_recovery_mode(twrpAdbBuFifo* adb_bu_fifo, bool skip_decryption) {
