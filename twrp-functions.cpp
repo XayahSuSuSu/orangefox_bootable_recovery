@@ -110,7 +110,7 @@ static bool Is_AB_Device()
 /* Get the display ID of the installed ROM */
 static string GetInstalledRom(void)
 {
-   if (Fox_Current_ROM != "")
+   if (!Fox_Current_ROM.empty())
     {
       return Fox_Current_ROM;
     }
@@ -118,10 +118,6 @@ static string GetInstalledRom(void)
    string s = TWFunc::System_Property_Get ("ro.build.display.id");
    if (s.empty())
    {
-      string prop1 = PartitionManager.Get_Android_Root_Path() + "/build.prop";
-      string prop2 = PartitionManager.Get_Android_Root_Path() + "/system/build.prop";
-      if ((!TWFunc::Path_Exists(prop1)) && (!TWFunc::Path_Exists(prop2)))
-         return s;
       s = TWFunc::System_Property_Get ("ro.build.id");
       if (s.empty())
          s = TWFunc::System_Property_Get ("ro.build.flavor");
