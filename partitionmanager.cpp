@@ -3223,6 +3223,15 @@ void TWPartitionManager::Translate_Partition_Display_Names() {
 bool TWPartitionManager::Decrypt_Adopted()
 {
 #ifdef TW_INCLUDE_CRYPTO
+
+  int SDK = TWFunc::Get_Android_SDK_Version();
+  #if defined(OF_SKIP_DECRYPTED_ADOPTED_STORAGE)
+    if (SDK > 30) {
+  	   LOGINFO("Decrypt_Adopted: skipping adopted storage decryption on Android 12+\n");
+  	   return false;
+     }
+  #endif
+
   bool ret = false;
   if (!Mount_By_Path("/data", false))
     {
@@ -3231,11 +3240,13 @@ bool TWPartitionManager::Decrypt_Adopted()
     }
 
   string path = "/data/system/storage.xml";
-  if (TWFunc::Get_Android_SDK_Version() > 30 && TWFunc::Path_Exists(path)) {
-      if (TWFunc::IsBinaryXML(path)) {
-         LOGINFO("Android 12: storage.xml is binary. Skipping adopted storage decryption.\n");
-         return false;
-      } else LOGINFO("Android 12: storage.xml is not in binary format. Proceeding...\n");
+  if (SDK > 30 && TWFunc::Path_Exists(path)) {
+      	if (TWFunc::IsBinaryXML(path)) {
+         	LOGINFO("Android 12+: '%s' is binary. Skipping adopted storage decryption.\n", path.c_str());
+         	return false;
+      	}
+      	else
+      		LOGINFO("Android 12+: '%s' is not in binary format. Proceeding...\n", path.c_str());
   }
 
   LOGINFO("Decrypt adopted storage starting\n");
@@ -3246,7 +3257,7 @@ bool TWPartitionManager::Decrypt_Adopted()
   string Primary_Storage_UUID = "";
   if (xmlFile != NULL)
     {
-      LOGINFO("successfully loaded storage.xml\n");
+      LOGINFO("successfully loaded %s\n", path.c_str());
       doc = new xml_document <> ();
       doc->parse < 0 > (xmlFile);
       volumes = doc->first_node("volumes");
@@ -3262,7 +3273,7 @@ bool TWPartitionManager::Decrypt_Adopted()
     }
   else
     {
-      LOGINFO("No /data/system/storage.xml for adopted storage\n");
+      LOGINFO("No %s for adopted storage\n", path.c_str());
       return false;
     }
   std::vector < TWPartition * >::iterator adopt;

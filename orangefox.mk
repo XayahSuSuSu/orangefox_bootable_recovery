@@ -477,4 +477,9 @@ else
         $(error lptools sources not present; exiting)
     endif
 endif
+
+# adopted storage
+ifeq ($(OF_SKIP_DECRYPTED_ADOPTED_STORAGE),1)
+    LOCAL_CFLAGS += -DOF_SKIP_DECRYPTED_ADOPTED_STORAGE='"1"'
+endif
 #
