@@ -48,22 +48,17 @@ ifeq ($(OF_FORCE_MAGISKBOOT_BOOT_PATCH_MIUI),1)
     LOCAL_CFLAGS += -DOF_FORCE_MAGISKBOOT_BOOT_PATCH_MIUI='"1"'
 endif
 
-# force fix repack bug in magiskboot 23+
-ifeq ($(OF_NEW_MAGISKBOOT_FORCE_AVB_VERIFY),1)
-    LOCAL_CFLAGS += -DOF_NEW_MAGISKBOOT_FORCE_AVB_VERIFY='"1"'
-    OF_USE_NEW_MAGISKBOOT := 1
-endif
-
 # virtual AB
 ifeq ($(OF_VIRTUAL_AB_DEVICE),1)
     LOCAL_CFLAGS += -DOF_VIRTUAL_AB_DEVICE='"1"'
     OF_AB_DEVICE := 1
-    OF_USE_NEW_MAGISKBOOT := 1
+#    OF_PATCH_VBMETA_FLAG := 1
 endif
 
-# (magiskboot 23+)
-ifeq ($(OF_USE_NEW_MAGISKBOOT),1)
-    LOCAL_CFLAGS += -DOF_USE_NEW_MAGISKBOOT='"1"'
+# enable vbmeta patch in magiskboot 24+
+ifeq ($(OF_PATCH_VBMETA_FLAG),1)
+    LOCAL_CFLAGS += -DOF_PATCH_VBMETA_FLAG='"1"'
+    $(warning Do not use "OF_PATCH_VBMETA_FLAG" unless you are sure that it is needed!)
 endif
 
 ifeq ($(OF_VANILLA_BUILD),1)
@@ -454,13 +449,14 @@ ifeq ($(OF_MANUAL_COPY_TWRES),1)
     LOCAL_CFLAGS += -DOF_MANUAL_COPY_TWRES='"1"'
 endif
 
-# new (v3, v4, etc) boot headers
+# boot headers
 ifneq ($(BOARD_BOOT_HEADER_VERSION),)
     LOCAL_CFLAGS += -DBOARD_BOOT_HEADER_VERSION='"$(BOARD_BOOT_HEADER_VERSION)"'
 else
     LOCAL_CFLAGS += -DBOARD_BOOT_HEADER_VERSION='"0"'
 endif
 
+# new boot headers (v3, v4, etc)
 ifeq ($(BOARD_BOOT_HEADER_VERSION),3)
     LOCAL_CFLAGS += -DOF_NEW_BOOT_HEADER='"1"'
 else ifeq ($(BOARD_BOOT_HEADER_VERSION),4)

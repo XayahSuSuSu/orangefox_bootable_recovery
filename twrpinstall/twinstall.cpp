@@ -394,7 +394,12 @@ int TWinstall_zip(const char *path, int *wipe_cache, bool check_for_digest)
 
   time_t start, stop;
   time(&start);
- 
+
+  if (TWFunc::Magiskboot_Repack_Patch_VBMeta())
+  	setenv("PATCHVBMETAFLAG", "true", 1);
+  else
+  	setenv("PATCHVBMETAFLAG", "false", 1);
+
   std::string update_binary_name(UPDATE_BINARY_NAME);
   ZipEntry64 update_binary_entry;
   if (FindEntry(Zip, update_binary_name, &update_binary_entry) == 0) {

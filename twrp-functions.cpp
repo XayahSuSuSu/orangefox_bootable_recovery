@@ -180,24 +180,6 @@ static bool StorageIsEncrypted(void)
   return (PartitionManager.Storage_Is_Encrypted() && DataManager::GetStrValue("fox_dfe_formatted") != "1");
 }
 
-/* whether intervention is needed to fix magiskboot repack bug (for A-only recovery images);
- returns:
- 	true  = it needs to be fixed
- 	false = no fixing is needed 
-*/
-static bool Magiskboot_Repack_Needs_Fixing()
-{
-   #if !defined(BOARD_USES_RECOVERY_AS_BOOT) && !defined(AB_OTA_UPDATER) && !defined(OF_AB_DEVICE) && !defined(OF_VIRTUAL_AB_DEVICE)
-      return true;
-   #endif
-
-   #if defined(OF_NEW_MAGISKBOOT_FORCE_AVB_VERIFY) || defined(OF_USE_NEW_MAGISKBOOT)
-      return true;
-   #endif
-
-   return false;
-}
-
 std::string strReturnCurrentTime()
 {
   time_t rawtime;
@@ -2947,7 +2929,13 @@ bool TWFunc::PackRepackImage_MagiskBoot(bool do_unpack, bool is_boot)
 		          }
 		      	else
 		             keepforcedencryption = "true";
-		        		
+
+	        	// magiskboot 24+ whether to force-patch vbmebta
+	        	if (Magiskboot_Repack_Patch_VBMeta())
+	           	     AppendLineToFile (cmd_script, "export PATCHVBMETAFLAG=true");
+	        	else
+	           	    AppendLineToFile (cmd_script, "export PATCHVBMETAFLAG=false");
+
 	              AppendLineToFile (cmd_script, "cp -af ramdisk.cpio ramdisk.cpio.orig");
 	              AppendLineToFile (cmd_script, "LOGINFO \"- Patching ramdisk (verity/encryption) ...\"");
 	              AppendLineToFile (cmd_script, magiskboot_sbin + " cpio ramdisk.cpio \"patch " + keepdmverity + keepforcedencryption + "\" > /dev/null 2>&1");
@@ -3000,14 +2988,22 @@ bool TWFunc::PackRepackImage_MagiskBoot(bool do_unpack, bool is_boot)
 	        AppendLineToFile (cmd_script2, "find | cpio -o -H newc > \"" + tmp_cpio + "\"");
 	        AppendLineToFile (cmd_script2, "[ $? == 0 ] && LOGINFO \"- Succeeded.\" || abort \"- Archiving of ramdisk.cpio failed.\"");
 	        AppendLineToFile (cmd_script2, cd_dir + Fox_tmp_dir);
+
+	        // magiskboot 24+ whether to force-patch vbmebta
+	        if (Magiskboot_Repack_Patch_VBMeta())
+	           AppendLineToFile (cmd_script2, "export PATCHVBMETAFLAG=true");
+	        else
+	           AppendLineToFile (cmd_script2, "export PATCHVBMETAFLAG=false");
+
 	        AppendLineToFile (cmd_script2, "LOGINFO \"- Repacking boot/recovery image ...\"");
 	        AppendLineToFile (cmd_script2, magiskboot_sbin + " repack \"" + tmpstr + "\" > /dev/null 2>&1");
 	        AppendLineToFile (cmd_script2, "[ $? == 0 ] && LOGINFO \"- Succeeded.\" || abort \"- Repacking of image failed.\"");
 
+	        /*
 	        // work around problems with the new magiskboot on A-only devices - patch the AVBv2 footer
-	        if (Magiskboot_Repack_Needs_Fixing() && is_boot == false)
+	        if (Magiskboot_Repack_Patch_VBMeta() && is_boot == false)
 	           AppendLineToFile (cmd_script2, magiskboot_sbin + " hexpatch new-boot.img 0000000300000000617662746f6f6c 0000000000000000617662746f6f6c > /dev/null 2>&1");
-
+		*/
 	        AppendLineToFile (cmd_script2, "LOGINFO \"- Flashing repacked image ...\"");
 	        #if defined(AB_OTA_UPDATER) || defined(OF_AB_DEVICE)
 	        AppendLineToFile (cmd_script2, "dd if=new-boot.img of=" + tmpstr + " > /dev/null 2>&1");
@@ -4461,6 +4457,12 @@ void TWFunc::Patch_AVB20(bool silent)
 std::string zipname = FFiles_dir + "/OF_avb20/OF_avb20.zip";
 int res=0, wipe_cache=0;
 std::string magiskboot = TWFunc::Get_MagiskBoot();
+
+  if (DataManager::GetIntValue(FOX_ADVANCED_STOCK_REPLACE) != 1) {
+        gui_print("- NOTE: you have disabled the stock recovery deactivation feature.\n- Your ROM's recovery will now probably overwrite OrangeFox!\n");
+  	return;
+  }
+
   if (!TWFunc::Path_Exists(magiskboot))
      {
         gui_print("ERROR - cannot find magiskboot\n");
@@ -4491,6 +4493,7 @@ int TWFunc::Patch_DMVerity_ForcedEncryption_Magisk(void)
 {
 std::string keepdmverity, keepforcedencryption;
 std::string zipname = FFiles_dir + "/OF_verity_crypt/OF_verity_crypt.zip";
+std::string patchvbmeta = "false";
 int res=0, wipe_cache=0;
 
   #if defined(AB_OTA_UPDATER) || defined(OF_AB_DEVICE)
@@ -4532,8 +4535,13 @@ int res=0, wipe_cache=0;
    else	
 	keepforcedencryption = "true";
 
+   if (Magiskboot_Repack_Patch_VBMeta()) {
+     	patchvbmeta = "true";
+   }
+
    setenv("KEEP_VERITY", keepdmverity.c_str(), 1);
    setenv("KEEP_FORCEENCRYPT", keepforcedencryption.c_str(), 1);
+   setenv("PATCHVBMETAFLAG", patchvbmeta.c_str(), 1);
    DataManager::SetValue(FOX_INSTALL_PREBUILT_ZIP, "1");
 
    // see whether we have just installed a MIUI ROM or a custom ROM
@@ -4548,6 +4556,7 @@ int res=0, wipe_cache=0;
 
    setenv ("KEEP_VERITY", "", 1);
    setenv ("KEEP_FORCEENCRYPT", "", 1);
+   setenv ("PATCHVBMETAFLAG", "false", 1);
    DataManager::SetValue(FOX_INSTALL_PREBUILT_ZIP, "0");
 
    return res;
@@ -5051,6 +5060,21 @@ bool TWFunc::IsBinaryXML(const std::string filename) {
           return true;
   }
   return false;
+}
+
+/* for magiskboot 24+
+   whether magiskboot repack should patch vbmeta
+   returns:
+ 	true  = it should be patched
+ 	false = no patching is needed
+*/
+bool TWFunc::Magiskboot_Repack_Patch_VBMeta()
+{
+   #if defined(OF_PATCH_VBMETA_FLAG)
+   return true;
+   #else
+   return false;
+   #endif
 }
 
 //
