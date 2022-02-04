@@ -2290,7 +2290,9 @@ int TWFunc::Check_MIUI_Treble(void)
        gui_print("* Boot slot:  %s\n", tmp.c_str());
        // Virtual A/B
        if (Fox_Property_Get("ro.virtual_ab.enabled") == "true")
-       gui_print("* Virtual_AB: yes\n");
+	gui_print("* Virtual_AB: yes\n");
+       else
+	gui_print("* Virtual_AB: no\n");
    }
 
   // installed ROM
