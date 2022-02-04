@@ -2,7 +2,7 @@
 	Copyright 2012 to 2021 TeamWin
 	This file is part of TWRP/TeamWin Recovery Project.
 
-	Copyright (C) 2018-2021 OrangeFox Recovery Project
+	Copyright (C) 2018-2022 OrangeFox Recovery Project
 	This file is part of the OrangeFox Recovery Project.
 
 	TWRP is free software: you can redistribute it and/or modify
@@ -720,6 +720,18 @@ void DataManager::SetDefaultValues()
   mConst.SetValue(OF_MAINTAINER_STR, OF_MAINTAINER);
   mConst.SetValue(BUILD_TYPE_STR, FOX_BUILD_TYPE);
   mConst.SetValue("fox_branch", FOX_BRANCH);
+
+  #ifdef OF_VIRTUAL_AB_DEVICE
+  mConst.SetValue("fox_vab_device", "1");
+  #else
+  mConst.SetValue("fox_vab_device", "0");
+  #endif
+
+  #ifdef PRODUCT_USE_DYNAMIC_PARTITIONS
+  mConst.SetValue("fox_dynamic_device", "1");
+  #else
+  mConst.SetValue("fox_dynamic_device", "0");
+  #endif
 
   #ifdef OF_SUPPORT_OZIP_DECRYPTION
     mConst.SetValue("of_support_ozip_decryption", "1");
