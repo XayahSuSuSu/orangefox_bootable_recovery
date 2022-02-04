@@ -4981,6 +4981,16 @@ bool TWFunc::Has_Dynamic_Partitions(void) {
 	return (Fox_Property_Get("ro.boot.dynamic_partitions") == "true");
 }
 
+bool TWFunc::Has_Virtual_AB_Partitions(void) {
+	if (Fox_Property_Get("ro.virtual_ab.enabled") == "true")
+	   return true;
+	#ifdef OF_VIRTUAL_AB_DEVICE
+	   return true;
+	#else
+	   return false;
+	#endif
+}
+
 void TWFunc::Mapper_to_BootDevice(const std::string block_device, const std::string partition_name) {
 	LOGINFO("Symlinking %s => /dev/block/bootdevice/by-name/%s \n", block_device.c_str(), partition_name.c_str());
 	symlink(block_device.c_str(), ("/dev/block/bootdevice/by-name/" + partition_name).c_str());

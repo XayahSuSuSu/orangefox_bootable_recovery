@@ -721,11 +721,10 @@ void DataManager::SetDefaultValues()
   mConst.SetValue(BUILD_TYPE_STR, FOX_BUILD_TYPE);
   mConst.SetValue("fox_branch", FOX_BRANCH);
 
-  #ifdef OF_VIRTUAL_AB_DEVICE
-  mConst.SetValue("fox_vab_device", "1");
-  #else
-  mConst.SetValue("fox_vab_device", "0");
-  #endif
+  if (TWFunc::Has_Virtual_AB_Partitions())
+  	mConst.SetValue("fox_vab_device", "1");
+  else
+  	mConst.SetValue("fox_vab_device", "0");
 
   #ifdef PRODUCT_USE_DYNAMIC_PARTITIONS
   mConst.SetValue("fox_dynamic_device", "1");
@@ -1172,7 +1171,7 @@ void DataManager::SetDefaultValues()
 	mConst.SetValue("tw_virtual_ab.enabled", "1");
   else
   	mConst.SetValue("tw_virtual_ab.enabled", "0");
-  
+
   // Brightness handling
   string findbright;
 #ifdef TW_BRIGHTNESS_PATH

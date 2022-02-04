@@ -163,6 +163,7 @@ public:
 	static string Fox_Property_Get(string Prop_Name); // get a recovery property that would be returned by getprop
 	static bool Fox_Property_Set(const std::string Prop_Name, const std::string Value); // set a recovery property that would be set by setprop
 	static bool Has_Dynamic_Partitions(void); // does the device have dynamic partitions?
+	static bool Has_Virtual_AB_Partitions(void); // does the device have virtual A/B partitions?
 	static void Mapper_to_BootDevice(const std::string block_device, const std::string partition_name); // provide symlinks to /dev/mapper/* for dynamic partitions
 	static void Fox_Set_Current_Device_CodeName(void); // set and save the current device codename (esp. where the product.device is different from a unified codename)
 
