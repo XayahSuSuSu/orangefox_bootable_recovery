@@ -2930,12 +2930,6 @@ bool TWFunc::PackRepackImage_MagiskBoot(bool do_unpack, bool is_boot)
 		      	else
 		             keepforcedencryption = "true";
 
-	        	// magiskboot 24+ whether to force-patch vbmebta
-	        	if (Magiskboot_Repack_Patch_VBMeta())
-	           	     AppendLineToFile (cmd_script, "export PATCHVBMETAFLAG=true");
-	        	else
-	           	    AppendLineToFile (cmd_script, "export PATCHVBMETAFLAG=false");
-
 	              AppendLineToFile (cmd_script, "cp -af ramdisk.cpio ramdisk.cpio.orig");
 	              AppendLineToFile (cmd_script, "LOGINFO \"- Patching ramdisk (verity/encryption) ...\"");
 	              AppendLineToFile (cmd_script, magiskboot_sbin + " cpio ramdisk.cpio \"patch " + keepdmverity + keepforcedencryption + "\" > /dev/null 2>&1");
@@ -2988,12 +2982,6 @@ bool TWFunc::PackRepackImage_MagiskBoot(bool do_unpack, bool is_boot)
 	        AppendLineToFile (cmd_script2, "find | cpio -o -H newc > \"" + tmp_cpio + "\"");
 	        AppendLineToFile (cmd_script2, "[ $? == 0 ] && LOGINFO \"- Succeeded.\" || abort \"- Archiving of ramdisk.cpio failed.\"");
 	        AppendLineToFile (cmd_script2, cd_dir + Fox_tmp_dir);
-
-	        // magiskboot 24+ whether to force-patch vbmebta
-	        if (Magiskboot_Repack_Patch_VBMeta())
-	           AppendLineToFile (cmd_script2, "export PATCHVBMETAFLAG=true");
-	        else
-	           AppendLineToFile (cmd_script2, "export PATCHVBMETAFLAG=false");
 
 	        AppendLineToFile (cmd_script2, "LOGINFO \"- Repacking boot/recovery image ...\"");
 	        AppendLineToFile (cmd_script2, magiskboot_sbin + " repack \"" + tmpstr + "\" > /dev/null 2>&1");
@@ -4493,7 +4481,6 @@ int TWFunc::Patch_DMVerity_ForcedEncryption_Magisk(void)
 {
 std::string keepdmverity, keepforcedencryption;
 std::string zipname = FFiles_dir + "/OF_verity_crypt/OF_verity_crypt.zip";
-std::string patchvbmeta = "false";
 int res=0, wipe_cache=0;
 
   #if defined(AB_OTA_UPDATER) || defined(OF_AB_DEVICE)
@@ -4535,13 +4522,8 @@ int res=0, wipe_cache=0;
    else	
 	keepforcedencryption = "true";
 
-   if (Magiskboot_Repack_Patch_VBMeta()) {
-     	patchvbmeta = "true";
-   }
-
    setenv("KEEP_VERITY", keepdmverity.c_str(), 1);
    setenv("KEEP_FORCEENCRYPT", keepforcedencryption.c_str(), 1);
-   setenv("PATCHVBMETAFLAG", patchvbmeta.c_str(), 1);
    DataManager::SetValue(FOX_INSTALL_PREBUILT_ZIP, "1");
 
    // see whether we have just installed a MIUI ROM or a custom ROM
@@ -4556,7 +4538,6 @@ int res=0, wipe_cache=0;
 
    setenv ("KEEP_VERITY", "", 1);
    setenv ("KEEP_FORCEENCRYPT", "", 1);
-   setenv ("PATCHVBMETAFLAG", "false", 1);
    DataManager::SetValue(FOX_INSTALL_PREBUILT_ZIP, "0");
 
    return res;

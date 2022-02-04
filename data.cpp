@@ -737,6 +737,13 @@ void DataManager::SetDefaultValues()
     mConst.SetValue("of_support_ozip_decryption", "1");
   #endif
 
+  // magiskboot 24+ whether to force-patch vbmebta
+  #if defined(OF_PATCH_VBMETA_FLAG)
+  setenv("PATCHVBMETAFLAG", "true", 1);
+  #else
+  setenv("PATCHVBMETAFLAG", "false", 1);
+  #endif
+
   mPersist.SetValue("of_average_img", "42");
   mPersist.SetValue("of_average_file", "30");
   mPersist.SetValue("of_average_ext_img", "15");
