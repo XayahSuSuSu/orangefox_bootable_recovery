@@ -2146,8 +2146,11 @@ bool TWPartition::Wipe_Encryption() {
 		gui_msg("format_data_msg=You may need to reboot recovery to be able to use /data again.");
 #endif
 		if (Is_FBE) {
-		    if (DataManager::GetIntValue(FOX_DISABLE_FORCED_ENCRYPTION) != 1)
+		    if (DataManager::GetIntValue(FOX_DISABLE_FORCED_ENCRYPTION) != 1) {
+		    	#ifndef OF_FORCE_CREATE_DATA_MEDIA_ON_FORMAT
 			gui_msg(Msg(msg::kWarning, "data_media_fbe_msg=OrangeFox will not recreate /data/media on an FBE device. Please reboot into your rom to create /data/media."));
+			#endif
+		    }
 		} else {
 			if (Has_Data_Media && !Symlink_Mount_Point.empty()) {
 				if (Mount(false))

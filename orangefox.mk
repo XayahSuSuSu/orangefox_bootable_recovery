@@ -478,4 +478,15 @@ endif
 ifeq ($(OF_SKIP_DECRYPTED_ADOPTED_STORAGE),1)
     LOCAL_CFLAGS += -DOF_SKIP_DECRYPTED_ADOPTED_STORAGE='"1"'
 endif
+
+# post-format
+ifeq ($(OF_FORCE_CREATE_DATA_MEDIA_ON_FORMAT),1)
+   OF_RUN_POST_FORMAT_PROCESS := 1
+   LOCAL_CFLAGS += -DOF_FORCE_CREATE_DATA_MEDIA_ON_FORMAT='"1"'
+endif
+
+ifeq ($(OF_RUN_POST_FORMAT_PROCESS),1)
+    $(warning "OF_RUN_POST_FORMAT_PROCESS" is deprecated. Its impact is reversed on booting to system)
+    LOCAL_CFLAGS += -DOF_RUN_POST_FORMAT_PROCESS='"1"'
+endif
 #
