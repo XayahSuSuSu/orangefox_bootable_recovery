@@ -483,10 +483,11 @@ endif
 ifeq ($(OF_FORCE_CREATE_DATA_MEDIA_ON_FORMAT),1)
    OF_RUN_POST_FORMAT_PROCESS := 1
    LOCAL_CFLAGS += -DOF_FORCE_CREATE_DATA_MEDIA_ON_FORMAT='"1"'
+   $(warning The use of "OF_FORCE_CREATE_DATA_MEDIA_ON_FORMAT" is not recommended. It causes issues with Android 11+ encryption.)
+   $(warning You should only use this if the device will remain decrypted. You have been warned!)
 endif
 
 ifeq ($(OF_RUN_POST_FORMAT_PROCESS),1)
-    $(warning "OF_RUN_POST_FORMAT_PROCESS" is deprecated. Its impact is reversed on booting to system)
     LOCAL_CFLAGS += -DOF_RUN_POST_FORMAT_PROCESS='"1"'
 endif
 #
