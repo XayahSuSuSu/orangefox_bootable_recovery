@@ -2,7 +2,7 @@
 	Copyright 2014 to 2021 TeamWin
 	This file is part of TWRP/TeamWin Recovery Project.
 
-	Copyright (C) 2018-2021 OrangeFox Recovery Project
+	Copyright (C) 2018-2022 OrangeFox Recovery Project
 	This file is part of the OrangeFox Recovery Project.
 
 	TWRP is free software: you can redistribute it and/or modify
@@ -422,10 +422,13 @@ void TWPartitionManager::Decrypt_Data() {
 	#ifdef TW_INCLUDE_CRYPTO
 	TWPartition* Decrypt_Data = Find_Partition_By_Path("/data");
 	if (Decrypt_Data && Decrypt_Data->Is_Encrypted && !Decrypt_Data->Is_Decrypted) {
-		DataManager::SetValue(FOX_ENCRYPTED_DEVICE, "1");
 		Set_Crypto_State();
-		if (!Decrypt_Data->Key_Directory.empty() && Mount_By_Path(Decrypt_Data->Key_Directory, false)) {
-		Set_Crypto_Type("file");
+		TWPartition* Key_Directory_Partition = Find_Partition_By_Path(Decrypt_Data->Key_Directory);
+		if (Key_Directory_Partition != nullptr)
+			if (!Key_Directory_Partition->Is_Mounted())
+				Mount_By_Path(Decrypt_Data->Key_Directory, false);
+		if (!Decrypt_Data->Key_Directory.empty()) {
+			Set_Crypto_Type("file");
 #ifdef TW_INCLUDE_FBE_METADATA_DECRYPT
 #ifdef USE_FSCRYPT
 			if (fscrypt_mount_metadata_encrypted(Decrypt_Data->Actual_Block_Device, Decrypt_Data->Mount_Point, false)) {
@@ -480,8 +483,7 @@ void TWPartitionManager::Decrypt_Data() {
 			}
 		}
 	}
-	if (Decrypt_Data && (!Decrypt_Data->Is_Encrypted || Decrypt_Data->Is_Decrypted) &&
-	Decrypt_Data->Mount(false)) {
+	if (Decrypt_Data && (!Decrypt_Data->Is_Encrypted || Decrypt_Data->Is_Decrypted)) {
 		Decrypt_Adopted();
 	}
 #endif
@@ -599,6 +601,8 @@ void TWPartitionManager::Output_Partition(TWPartition* Part) {
 		printf("SlotSelect ");
 	if (Part->Mount_Read_Only)
 		printf("Mount_Read_Only ");
+	if (Part->Is_Super)
+		printf("Is_Super ");
 	printf("\n");
 	if (!Part->SubPartition_Of.empty())
 		printf("   SubPartition_Of: %s\n", Part->SubPartition_Of.c_str());
@@ -1344,6 +1348,9 @@ int TWPartitionManager::Run_Restore(const string& Restore_Name) {
 	UnMount_Main_Partitions();
 	time(&rStop);
 	gui_msg(Msg(msg::kHighlight, "restore_completed=[RESTORE COMPLETED IN {1} SECONDS]")((int)difftime(rStop,rStart)));
+	TWPartition* Decrypt_Data = Find_Partition_By_Path("/data");
+	if (Decrypt_Data && Decrypt_Data->Is_Encrypted)
+		gui_print_color("warning", "It is recommended to reboot Android once after first boot.");
 	DataManager::SetValue("tw_file_progress", "");
 
 	return true;
@@ -1894,8 +1901,10 @@ void TWPartitionManager::Post_Decrypt(const string& Block_Device) {
 		}
 		Update_System_Details();
 		Output_Partition(dat);
+		if (!android::base::StartsWith(dat->Actual_Block_Device, "/dev/block/mmcblk")) {
 		if (!dat->Bind_Mount(false))
 			LOGERR("Unable to bind mount /sdcard to %s\n", dat->Storage_Path.c_str());
+		}
 	} else
 		LOGERR("Unable to locate data partition.\n");
 }
@@ -2205,7 +2214,7 @@ int TWPartitionManager::Open_Lun_File(string Partition_Path, string Lun_File) {
 	if (!Part->UnMount(true) || !Part->Is_Present)
 		return false;
 
-	if (TWFunc::write_to_file(Lun_File, Part->Actual_Block_Device)) {
+	if (!TWFunc::write_to_file(Lun_File, Part->Actual_Block_Device)) {
 		LOGERR("Unable to write to ums lunfile '%s': (%s)\n", Lun_File.c_str(), strerror(errno));
 		return false;
 	}

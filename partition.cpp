@@ -676,8 +676,6 @@ void TWPartition::Setup_Data_Partition(bool Display_Error) {
 	UnMount(false);
 
 #ifdef TW_INCLUDE_CRYPTO
-	if (datamedia)
-		Setup_Data_Media();
 	Can_Be_Encrypted = true;
 	char crypto_blkdev[255];
 	property_get("ro.crypto.fs_crypto_blkdev", crypto_blkdev, "error");
@@ -685,6 +683,8 @@ void TWPartition::Setup_Data_Partition(bool Display_Error) {
 		Set_FBE_Status();
 		Decrypted_Block_Device = crypto_blkdev;
 		LOGINFO("Data already decrypted, new block device: '%s'\n", crypto_blkdev);
+		if (datamedia)
+			Setup_Data_Media();
 		DataManager::SetValue(TW_IS_ENCRYPTED, 0);
 		DataManager::SetValue(FOX_ENCRYPTED_DEVICE, "1");
 	} else if (!Mount(false)) {
@@ -702,6 +702,8 @@ void TWPartition::Setup_Data_Partition(bool Display_Error) {
 					DataManager::SetValue("tw_crypto_pwtype_0", cryptfs_get_password_type());
 					DataManager::SetValue(TW_CRYPTO_PASSWORD, "");
 					DataManager::SetValue("tw_crypto_display", "");
+					if (datamedia)
+						Setup_Data_Media();
 				} else {
 					gui_err("mount_data_footer=Could not mount /data and unable to find crypto footer.");
 				}
@@ -726,6 +728,8 @@ void TWPartition::Setup_Data_Partition(bool Display_Error) {
 				LOGERR("Unable to decrypt FBE device\n");
 		} else {
 			DataManager::SetValue(TW_IS_ENCRYPTED, 0);
+			if (datamedia)
+				Setup_Data_Media();
 		}
 	}
 	if (datamedia && (!Is_Encrypted || (Is_Encrypted && Is_Decrypted))) {
@@ -1254,7 +1258,8 @@ void TWPartition::Setup_Data_Media() {
 			Make_Dir("/sdcard", false);
 			Symlink_Mount_Point = "/sdcard";
 		}
-		if (Mount(false) && TWFunc::Path_Exists(Mount_Point + "/media/0")) {
+		Mount(false); 
+		if (TWFunc::Path_Exists(Mount_Point + "/media/0")) {
 			Storage_Path = Mount_Point + "/media/0";
 			Symlink_Path = Storage_Path;
 			DataManager::SetValue(TW_INTERNAL_PATH, Mount_Point + "/media/0");
@@ -1549,7 +1554,7 @@ bool TWPartition::Mount(bool Display_Error) {
 
 	// Check the current file system before mounting
 	Check_FS_Type();
-	if (Current_File_System == "exfat" && TWFunc::Path_Exists("system/bin/exfat-fuse")) {
+	if (Current_File_System == "exfat" && TWFunc::Path_Exists("/system/bin/exfat-fuse")) {
 		string cmd = "/system/bin/exfat-fuse -o big_writes,max_read=131072,max_write=131072 " + Actual_Block_Device + " " + Mount_Point;
 		LOGINFO("cmd: %s\n", cmd.c_str());
 		string result;
@@ -1808,7 +1813,7 @@ bool TWPartition::Wipe(string New_File_System) {
 			LOGERR("Unable to wipe '%s' -- unknown file system '%s'\n", Mount_Point.c_str(), New_File_System.c_str());
 			return false;
 		}
-		update_crypt = wiped;
+		update_crypt = false;
 	}
 
 	if (wiped) {
@@ -2403,10 +2408,10 @@ bool TWPartition::Wipe_FAT() {
 bool TWPartition::Wipe_EXFAT() {
 	string command;
 
-	if (TWFunc::Path_Exists("/system/bin/mkexfatfs")) {
-		if (!UnMount(true))
-			return false;
+	if (!UnMount(true))
+		return false;
 
+	if (TWFunc::Path_Exists("/system/bin/mkexfatfs")) {
 		gui_msg(Msg("formatting_using=Formatting {1} using {2}...")(Display_Name)("mkexfatfs"));
 		Find_Actual_Block_Device();
 		command = "mkexfatfs " + Actual_Block_Device;
