@@ -71,12 +71,24 @@ uint64_t TWExclude::Get_Folder_Size(const string& Path) {
 		return 0;
 	}
 
+	static uint64_t i = 0;
 	while ((de = readdir(d)) != NULL) {
 		FullPath = Path + "/";
 		FullPath += de->d_name;
 		if (lstat(FullPath.c_str(), &st)) {
-			gui_msg(Msg(msg::kError, "error_opening_strerr=Error opening: '{1}' ({2})")(FullPath)(strerror(errno)));
-			LOGINFO("Real error: Unable to stat '%s'\n", FullPath.c_str());
+
+			// DJ9: avoid continued spamming of the log screen after a few reports
+			if (i < 10) // eventually stop increasing the count
+			   i++;
+
+			if (i < 4) {
+			   gui_msg(Msg(msg::kError, "error_opening_strerr=Error opening: '{1}' ({2})")(FullPath)(strerror(errno)));
+			   LOGINFO("Real error: Unable to stat '%s'\n", FullPath.c_str());
+			}
+
+			if (i == 7) // ok, the errors continue - so, inform the user
+			   LOGERR("Persistent read errors! There are many more errors. Look in /tmp/recovery.log\n\n");
+
 			continue;
 		}
 		if ((st.st_mode & S_IFDIR) && !check_skip_dirs(FullPath) && de->d_type != DT_SOCK) {
