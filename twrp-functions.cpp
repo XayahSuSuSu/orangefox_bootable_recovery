@@ -2200,7 +2200,7 @@ string TWFunc::sdknum_to_text(int sdk) {
 //define sdk_asize 15
 const int sdk_asize=15;
    int sdk_num[sdk_asize] = {21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35};
-   string sdk_string[sdk_asize] = {"5.0","5.1","6.0","7.0","7.1","8.0","8.1","9","10","11","12","13","14","15","16"};
+   string sdk_string[sdk_asize] = {"5.0","5.1","6.0","7.0","7.1","8.0","8.1","9","10","11","12","12L","13","14","15"};
    int i;
    string s = "11"; // default
    for (i = 0; i < sdk_asize; i++) {
