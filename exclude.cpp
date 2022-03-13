@@ -87,7 +87,7 @@ uint64_t TWExclude::Get_Folder_Size(const string& Path) {
 			}
 
 			if (i == 7) // ok, the errors continue - so, inform the user
-			   LOGERR("Persistent read errors! There are many more errors. Look in /tmp/recovery.log\n\n");
+			   LOGERR("** Persistent read errors! **\nDecryption has probably failed!\n\n");
 
 			continue;
 		}
