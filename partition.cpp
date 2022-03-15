@@ -774,7 +774,7 @@ if (TWFunc::Path_Exists("/data/unencrypted/key/version")) {
 	    int current=TWFunc::Get_Android_SDK_Version();
 	    int avoid=atoi(OF_SKIP_FBE_DECRYPTION_SDKVERSION);
 	    if (current >= avoid) {
-	       gui_print_color("warning", "Skip FBE decryption for SDK %i (%s) or higher...\n\n", avoid, TWFunc::sdknum_to_text(avoid).c_str());
+	       gui_print_color("warning", "Skip FBE decryption for SDK %i (%s) or higher.\n\nThe device will NOT be decrypted...\n\n", avoid, TWFunc::sdknum_to_text(avoid).c_str());
 	       return false;
 	    }
 	#endif
