@@ -1449,200 +1449,107 @@ int TWFunc::Property_Override(string Prop_Name, string Prop_Value) {
 #endif
 }
 
-void TWFunc::Fixup_Time_On_Boot(const string & time_paths)
+void TWFunc::Fixup_Time_On_Boot(const string& time_paths)
 {
 #ifdef QCOM_RTC_FIX
-  static bool fixed = false;
-  
-  if (fixed) // i.e., we have sorted out the date/time issue properly
-   {
-    return;
-   }
+	static bool fixed = false;
+	if (fixed)
+		return;
 
-  LOGINFO("TWFunc::Fixup_Time: Pre-fix date and time: %s\n", TWFunc::Get_Current_Date().c_str());
-  
-  struct timeval tv;
-  uint64_t offset = 0;
-  uint64_t drift = 0;
-  int store = 0;
-  unsigned long long stored_drift = 0;
-  const uint64_t min_offset = 1585559739; // minimum offset = Mon Mar 30 10:15:39 BST 2020
-  std::string sepoch = "/sys/class/rtc/rtc0/since_epoch";
+	LOGINFO("TWFunc::Fixup_Time: Pre-fix date and time: %s\n", TWFunc::Get_Current_Date().c_str());
 
-  if (TWFunc::read_file(sepoch, offset) == 0)
-    {
+	struct timeval tv;
+	uint64_t offset = 0;
+	std::string sepoch = "/sys/class/rtc/rtc0/since_epoch";
 
-      LOGINFO("TWFunc::Fixup_Time: Setting time offset from file %s\n", sepoch.c_str());
+	if (TWFunc::read_file(sepoch, offset) == 0) {
 
-      // DJ9
-      if (offset < 1261440000) // bad RTC (less than 41 years since epoch!)
-      {  
-	 // try to correct 	 
-	 if (DataManager::GetValue("fox_epoch_drift", stored_drift) < 0) // read from .foxs
-	 	stored_drift = 0;
-	 
-	 #ifndef OF_DEVICE_WITHOUT_PERSIST
-	 if (TWFunc::read_file (epoch_drift_file, drift) != 0) // read from epoch drift file
-	 	drift = 0;
-	 #endif
+		LOGINFO("TWFunc::Fixup_Time: Setting time offset from file %s\n", sepoch.c_str());
 
-	#ifdef TW_QCOM_ATS_OFFSET
-	 if (drift == 0)
-	   {
-		drift = (uint64_t) TW_QCOM_ATS_OFFSET / 1000;
-		LOGINFO("TWFunc::Fixup_Time: retrieving drift value from TW_QCOM_ATS_OFFSET (%llu)\n", (unsigned long long) drift);
-	 	#ifndef OF_DEVICE_WITHOUT_PERSIST
-	 	// save to drift file if the file doesn't exist
-	 	if (!TWFunc::Path_Exists(epoch_drift_file))
-	 	     TWFunc::write_to_file(epoch_drift_file, to_string(drift));
-	 	#endif
-	   }
-	#endif
+		tv.tv_sec = offset;
+		tv.tv_usec = 0;
+		settimeofday(&tv, NULL);
 
-	 // what have we succeeded in reading?
-         if ((drift > 0) || (stored_drift > 0)) 
-         {
-            if ((stored_drift > 0) && (drift == 0)) // we only got drift from .foxs
-                {
-           	  drift = stored_drift;
-           	  LOGINFO ("TWFunc::Fixup_Time: Using drift value (%llu) stored in .foxs\n", (unsigned long long)drift);
-                } 
-            else 
-            {   
-           	 if ((stored_drift > 0) && (drift > 0)) // we got two values
-              	 {
-                    if (stored_drift != drift) // let drift override stored_drift, and save drift
-                    {
-                        store = 1; 
-                    } 
-                    LOGINFO ("TWFunc::Fixup_Time: using drift value (%llu) stored in %s\n", (unsigned long long)drift, epoch_drift_file.c_str());
-              	 } 
-              	 else // either both are 0, or stored_drift is 0
-              	 {
-              	    if (drift > 0) // then stored_drift must be 0
-              	    {
-                        LOGINFO ("TWFunc::Fixup_Time: using drift value (%llu) stored in %s\n", (unsigned long long)drift, epoch_drift_file.c_str());
-              	    	store = 1;
-              	    }
-              	 }             
-             }
-             
-	   // now see if we have a sensible value            
-           if (drift > 1369180500) // ignore drifts from earlier than Tuesday, May 21, 2013 11:55:00 PM
-           { 
-              offset += drift; 
-              LOGINFO ("TWFunc::Fixup_Time: Compensated for drift by %llu \n", (unsigned long long)drift);
-              DataManager::SetValue("tw_qcom_ats_offset", (unsigned long long) offset, 1); // store this new offset
-              
-              if (store == 1) // we haven't already stored the drift in .foxs
-              	DataManager::SetValue("fox_epoch_drift", (unsigned long long) drift, 1); // store the drift value
-           }
-           
-         } // if (drift > 0) || (stored_drift > 0)
-      }	// if offset
-      // DJ9
-      
-      tv.tv_sec = offset;
-      tv.tv_usec = 0;
-      settimeofday(&tv, NULL);
-      gettimeofday(&tv, NULL);
-      
-      offset = tv.tv_sec;  // this and the next line to get rid of warnings
-      if (offset > min_offset)
-	{
-	  LOGINFO("TWFunc::Fixup_Time: Date and time corrected: %s\n", TWFunc::Get_Current_Date().c_str());
-	  fixed = true;
-	  return;
-	} 
-	else 
-	{
-      	  LOGINFO("TWFunc::Fixup_Time: Wrong date and time epoch in %s\n", sepoch.c_str());
-	}
-    }
-  else
-    {
-      LOGINFO("TWFunc::Fixup_Time: opening %s failed\n", sepoch.c_str());
-    }
+		gettimeofday(&tv, NULL);
 
-  LOGINFO("TWFunc::Fixup_Time: will attempt to use the ats files now.\n");
+		if (tv.tv_sec > 1517600000) { // Anything older then 2 Feb 2018 19:33:20 GMT will do nicely thank you ;)
 
-  // Devices with Qualcomm Snapdragon 800 do some shenanigans with RTC.
-  // They never set it, it just ticks forward from 1970-01-01 00:00,
-  // and then they have files /data/system/time/ats_* with 64bit offset
-  // in miliseconds which, when added to the RTC, gives the correct time.
-  // So, the time is: (offset_from_ats + value_from_RTC)
-  // There are multiple ats files, they are for different systems? Bases?
-  // Like, ats_1 is for modem and ats_2 is for TOD (time of day?).
-  // Look at file time_genoff.h in CodeAurora, qcom-opensource/time-services
+			LOGINFO("TWFunc::Fixup_Time: Date and time corrected: %s\n", TWFunc::Get_Current_Date().c_str());
+			fixed = true;
+			return;
 
-  std::vector < std::string > paths;	// space separated list of paths
-  if (time_paths.empty())
-    {
-      paths = Split_String("/data/system/time/ /data/time/ /data/vendor/time/", " ");
-      if (!PartitionManager.Mount_By_Path("/data", false))
-	return;
-    }
-  else
-    {
-      // When specific path(s) are used, Fixup_Time needs those
-      // partitions to already be mounted!
-      paths = Split_String(time_paths, " ");
-    }
+		}
 
-  FILE *f;
-  offset = 0;
-  struct dirent *dt;
-  std::string ats_path;
+	} else {
 
-  // Prefer ats_2, it seems to be the one we want according to logcat on hammerhead
-  // - it is the one for ATS_TOD (time of day?).
-  // However, I never saw a device where the offset differs between ats files.
-  for (size_t i = 0; i < paths.size(); ++i)
-    {
-      DIR *d = opendir(paths[i].c_str());
-      if (!d)
-	continue;
+		LOGINFO("TWFunc::Fixup_Time: opening %s failed\n", sepoch.c_str());
 
-      while ((dt = readdir(d)))
-	{
-	  if (dt->d_type != DT_REG || strncmp(dt->d_name, "ats_", 4) != 0)
-	    continue;
-
-	  if (ats_path.empty() || strcmp(dt->d_name, "ats_2") == 0)
-	    ats_path = paths[i] + dt->d_name;
 	}
 
-      closedir(d);
-    }
+	LOGINFO("TWFunc::Fixup_Time: will attempt to use the ats files now.\n");
 
-  if (ats_path.empty())
-    {
-      LOGINFO("TWFunc::Fixup_Time: no ats files found, leaving untouched!\n");
-    }
-  else if ((f = fopen(ats_path.c_str(), "r")) == NULL)
-    {
-      LOGINFO("TWFunc::Fixup_Time: failed to open file %s\n",
-	      ats_path.c_str());
-    }
-  else if (fread(&offset, sizeof(offset), 1, f) != 1)
-    {
-      LOGINFO("TWFunc::Fixup_Time: failed load uint64 from file %s\n",
-	      ats_path.c_str());
-      fclose(f);
-    }
-  else
-    {
-      fclose(f);
+	// Devices with Qualcomm Snapdragon 800 do some shenanigans with RTC.
+	// They never set it, it just ticks forward from 1970-01-01 00:00,
+	// and then they have files /data/system/time/ats_* with 64bit offset
+	// in miliseconds which, when added to the RTC, gives the correct time.
+	// So, the time is: (offset_from_ats + value_from_RTC)
+	// There are multiple ats files, they are for different systems? Bases?
+	// Like, ats_1 is for modem and ats_2 is for TOD (time of day?).
+	// Look at file time_genoff.h in CodeAurora, qcom-opensource/time-services
 
-      LOGINFO
-	("TWFunc::Fixup_Time: Setting time offset from file %s, offset %llu\n",
-	 ats_path.c_str(), (unsigned long long) offset);
-      DataManager::SetValue("tw_qcom_ats_offset", (unsigned long long) offset, 1);
-      fixed = true;
-    }
+	std::vector<std::string> paths; // space separated list of paths
+	if (time_paths.empty()) {
+		paths = Split_String("/data/system/time/ /data/time/ /data/vendor/time/", " ");
+		if (!PartitionManager.Mount_By_Path("/data", false))
+			return;
+	} else {
+		// When specific path(s) are used, Fixup_Time needs those
+		// partitions to already be mounted!
+		paths = Split_String(time_paths, " ");
+	}
 
-  if (!fixed)
-    {
+	FILE *f;
+	offset = 0;
+	struct dirent *dt;
+	std::string ats_path;
+
+	// Prefer ats_2, it seems to be the one we want according to logcat on hammerhead
+	// - it is the one for ATS_TOD (time of day?).
+	// However, I never saw a device where the offset differs between ats files.
+	for (size_t i = 0; i < paths.size(); ++i)
+	{
+		DIR *d = opendir(paths[i].c_str());
+		if (!d)
+			continue;
+
+		while ((dt = readdir(d)))
+		{
+			if (dt->d_type != DT_REG || strncmp(dt->d_name, "ats_", 4) != 0)
+				continue;
+
+			if (ats_path.empty() || strcmp(dt->d_name, "ats_2") == 0)
+				ats_path = paths[i] + dt->d_name;
+		}
+
+		closedir(d);
+	}
+
+	if (ats_path.empty()) {
+		LOGINFO("TWFunc::Fixup_Time: no ats files found, leaving untouched!\n");
+	} else if ((f = fopen(ats_path.c_str(), "r")) == NULL) {
+		LOGINFO("TWFunc::Fixup_Time: failed to open file %s\n", ats_path.c_str());
+	} else if (fread(&offset, sizeof(offset), 1, f) != 1) {
+		LOGINFO("TWFunc::Fixup_Time: failed load uint64 from file %s\n", ats_path.c_str());
+		fclose(f);
+	} else {
+		fclose(f);
+
+		LOGINFO("TWFunc::Fixup_Time: Setting time offset from file %s, offset %llu\n", ats_path.c_str(), (unsigned long long) offset);
+		DataManager::SetValue("tw_qcom_ats_offset", (unsigned long long) offset, 1);
+		fixed = true;
+	}
+
+	if (!fixed) {
 #ifdef TW_QCOM_ATS_OFFSET
 		// Offset is the difference between the current time and the time since_epoch
 		// To calculate the offset in Android, the following expression (from a root shell) can be used:
@@ -1653,59 +1560,36 @@ void TWFunc::Fixup_Time_On_Boot(const string & time_paths)
 		DataManager::SetValue("tw_qcom_ats_offset", (unsigned long long) offset, 1);
 		LOGINFO("TWFunc::Fixup_Time: Setting time offset from TW_QCOM_ATS_OFFSET, offset %llu\n", (unsigned long long) offset);
 #else
-      // Failed to get offset from ats file, check twrp settings
-      unsigned long long value;
-      if (DataManager::GetValue("tw_qcom_ats_offset", value) < 0)
-	{
-	  return;
-	}
-      else
-	{
-	  // Do not consider the settings file as a definitive answer, keep fixed=false so next run will try ats files again
-	  offset = (uint64_t) value;
-	  LOGINFO
-	    ("TWFunc::Fixup_Time: Setting time offset from twrp setting file, offset %llu\n",
-	     (unsigned long long) offset);
-	        tv.tv_sec = offset;
-      		tv.tv_usec = 0;
-      		settimeofday(&tv, NULL);
-      		gettimeofday(&tv, NULL);
-      		return;
-	}
+		// Failed to get offset from ats file, check twrp settings
+		unsigned long long value;
+		if (DataManager::GetValue("tw_qcom_ats_offset", value) < 0) {
+			return;
+		} else {
+			offset = (uint64_t) value;
+			LOGINFO("TWFunc::Fixup_Time: Setting time offset from twrp setting file, offset %llu\n", (unsigned long long) offset);
+			// Do not consider the settings file as a definitive answer, keep fixed=false so next run will try ats files again
+		}
 #endif
-    }
+	}
 
-  gettimeofday(&tv, NULL);
+	gettimeofday(&tv, NULL);
 
-  tv.tv_sec += offset / 1000;
-  
+	tv.tv_sec += offset/1000;
 #ifdef TW_CLOCK_OFFSET
 // Some devices are even quirkier and have ats files that are offset from the actual time
 	tv.tv_sec = tv.tv_sec + TW_CLOCK_OFFSET;
 #endif
-  
-  tv.tv_usec += (offset % 1000) * 1000;
+	tv.tv_usec += (offset%1000)*1000;
 
-  while (tv.tv_usec >= 1000000)
-    {
-      ++tv.tv_sec;
-      tv.tv_usec -= 1000000;
-    }
+	while (tv.tv_usec >= 1000000)
+	{
+		++tv.tv_sec;
+		tv.tv_usec -= 1000000;
+	}
 
-  settimeofday(&tv, NULL);
+	settimeofday(&tv, NULL);
 
-// last check for sensible offset
-    if (offset < min_offset) // let's try something else 
-    {
-      LOGINFO("TWFunc::Fixup_Time: trying for the last time!\n");
-      tv.tv_sec = min_offset;
-      tv.tv_usec = 0;   
-      settimeofday(&tv, NULL);
-      gettimeofday(&tv, NULL);
-    }
-//
-
-  LOGINFO("TWFunc::Fixup_Time: Date and time corrected: %s\n", TWFunc::Get_Current_Date().c_str());
+	LOGINFO("TWFunc::Fixup_Time: Date and time corrected: %s\n", TWFunc::Get_Current_Date().c_str());
 #endif
 }
 
