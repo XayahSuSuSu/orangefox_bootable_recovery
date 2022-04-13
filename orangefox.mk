@@ -490,4 +490,9 @@ endif
 ifeq ($(OF_RUN_POST_FORMAT_PROCESS),1)
     LOCAL_CFLAGS += -DOF_RUN_POST_FORMAT_PROCESS='"1"'
 endif
+
+# bind-unmount /sdcard before data repair/format (currently applies only to f2fs
+ifeq ($(OF_UNBIND_SDCARD_F2FS),1)
+    LOCAL_CFLAGS += -DOF_UNBIND_SDCARD_F2FS='"1"'
+endif
 #
