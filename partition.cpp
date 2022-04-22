@@ -1963,7 +1963,8 @@ bool TWPartition::Repair() {
 		if (Mount_Point == "/data") {
 			LOGINFO("OrangeFox: bind-unmounting /sdcard before f2fs data repair...\n");
 			usleep(32768);
-			TWFunc::Exec_Cmd("umount /sdcard");
+			string nul;
+			TWFunc::Exec_Cmd("umount /sdcard", nul);
 			usleep(32768);
 		}
 		#endif
@@ -2555,7 +2556,8 @@ bool TWPartition::Wipe_F2FS() {
 		if (Mount_Point == "/data") {
 			LOGINFO("OrangeFox: bind-unmounting /sdcard before f2fs data format...\n");
 			usleep(32768);
-			TWFunc::Exec_Cmd("umount /sdcard");
+			string nul;
+			TWFunc::Exec_Cmd("umount /sdcard", nul);
 			usleep(32768);
 		}
 	#endif
