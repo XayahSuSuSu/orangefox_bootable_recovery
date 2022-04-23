@@ -1853,7 +1853,10 @@ void TWPartitionManager::Update_System_Details(void) {
 	if (FreeStorage != NULL) {
 		// Attempt to mount storage
 		if (!FreeStorage->Mount(false)) {
-			gui_msg(Msg(msg::kWarning, "unable_to_mount_storage=Unable to mount storage"));
+			if (current_storage_path == "/usb_otg")
+				LOGINFO("Unable to mount storage ('%s')\n", current_storage_path.c_str());
+			else
+				gui_msg(Msg(msg::kWarning, "unable_to_mount_storage=Unable to mount storage"));
 			DataManager::SetValue(TW_STORAGE_FREE_SIZE, 0);
 		} else {
 			DataManager::SetValue(TW_STORAGE_FREE_SIZE, (int)(FreeStorage->Free / 1048576LLU));
