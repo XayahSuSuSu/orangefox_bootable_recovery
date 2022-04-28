@@ -724,8 +724,11 @@ void TWPartition::Setup_Data_Partition(bool Display_Error) {
 		char crypto_state[255];
 		property_get("ro.crypto.state", crypto_state, "error");
 		if (!Decrypt_FBE_DE() && strcmp(crypto_state, "error") != 0) {
-			if (is_device_fbe == 1)
+			if (is_device_fbe == 1) {
+			     // check whether the device is encrypted, and, if so, report decryption failure
+			     if (PartitionManager.Storage_Is_Encrypted() && DataManager::GetStrValue("fox_dfe_formatted") != "1")
 				LOGERR("Unable to decrypt FBE device\n");
+			}
 		} else {
 			DataManager::SetValue(TW_IS_ENCRYPTED, 0);
 			if (datamedia)
