@@ -1,6 +1,8 @@
 /*
  * Copyright (C) 2007 The Android Open Source Project
  *
+ * Copyright (C) 2020-2022 The OrangeFox Recovery Project
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -128,13 +130,13 @@ static int check_newer_ab_build(ZipArchiveHandle zip)
     property_get("ro.product.name", propname, "");
     const std::string& pkg_device = metadata["pre-device"];
 
-    std::vector<std::string> assertResults = android::base::Split(pkg_device, ",");
+    std::vector<std::string> assertResults = android::base::Split(pkg_device, "[,|]");
 
     // Fox
     bool has_fox_devices = false;
     char fox_devices[PROPERTY_VALUE_MAX * 2];
     property_get("ro.orangefox.target.devices", fox_devices, "");
-    std::vector<std::string> OrangeFox_Devices = android::base::Split(fox_devices, ",");
+    std::vector<std::string> OrangeFox_Devices = android::base::Split(fox_devices, "[,|]");
     if (strlen(fox_devices) > 1) {
        has_fox_devices = true;
     }
