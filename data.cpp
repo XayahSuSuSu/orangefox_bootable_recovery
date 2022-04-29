@@ -801,6 +801,12 @@ void DataManager::SetDefaultValues()
     mData.SetValue("of_no_miui_features", "0");
   #endif
 
+  #if defined(OF_AB_DEVICE) || defined(AB_OTA_UPDATER)
+    mData.SetValue("of_ab_device", "1");
+  #else
+    mData.SetValue("of_ab_device", "0");
+  #endif
+
   #if defined(BOARD_USES_RECOVERY_AS_BOOT) && defined(BOARD_BUILD_SYSTEM_ROOT_IMAGE)
     mConst.SetValue("tw_uses_initramfs", "1");
   #else
