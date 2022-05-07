@@ -52,7 +52,7 @@ endif
 ifeq ($(OF_VIRTUAL_AB_DEVICE),1)
     LOCAL_CFLAGS += -DOF_VIRTUAL_AB_DEVICE='"1"'
     OF_AB_DEVICE := 1
-#    OF_PATCH_VBMETA_FLAG := 1
+    OF_VANILLA_BUILD := 1
 endif
 
 # enable vbmeta patch in magiskboot 24+
