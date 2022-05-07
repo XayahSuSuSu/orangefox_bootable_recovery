@@ -457,11 +457,18 @@ else
     LOCAL_CFLAGS += -DBOARD_BOOT_HEADER_VERSION='"0"'
 endif
 
-# new boot headers (v3, v4, etc)
+# new boot headers (v3, v4, 5, etc)
 ifeq ($(BOARD_BOOT_HEADER_VERSION),3)
-    LOCAL_CFLAGS += -DOF_NEW_BOOT_HEADER='"1"'
+    OF_NEW_BOOT_HEADER := 1
 else ifeq ($(BOARD_BOOT_HEADER_VERSION),4)
+    OF_NEW_BOOT_HEADER := 1
+else ifeq ($(BOARD_BOOT_HEADER_VERSION),5)
+    OF_NEW_BOOT_HEADER := 1
+endif
+
+ifeq ($(OF_NEW_BOOT_HEADER),1)
     LOCAL_CFLAGS += -DOF_NEW_BOOT_HEADER='"1"'
+#    OF_PATCH_VBMETA_FLAG := 1
 endif
 
 # lptools; disable by default; enable with OF_ENABLE_LPTOOLS=1
