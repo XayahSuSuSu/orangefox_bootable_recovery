@@ -336,8 +336,8 @@ ifeq ($(OF_USE_LOCKSCREEN_BUTTON),1)
 endif
 
 ifeq ($(FOX_USE_LZMA_COMPRESSION),1)
-    ifeq ($(LZMA_RAMDISK_TARGETS),)
-    LZMA_RAMDISK_TARGETS := recovery
+    ifeq ($(BOARD_RAMDISK_USE_LZMA),)
+    	BOARD_RAMDISK_USE_LZMA := true
     endif
 endif
 
