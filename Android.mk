@@ -1,7 +1,7 @@
 # Copyright (C) 2007 The Android Open Source Project
 #
 # This file is part of the OrangeFox Recovery Project
-# Copyright (C) 2018-2021 The OrangeFox Recovery Project
+# Copyright (C) 2018-2022 The OrangeFox Recovery Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -330,6 +330,9 @@ ifeq ($(TW_INCLUDE_CRYPTO), true)
         LOCAL_STATIC_LIBRARIES += libvolddecrypt
     endif
     endif
+    ifeq ($(LEGACY_HW_DISK_ENCRYPTION), true)
+       LOCAL_CFLAGS += -DLEGACY_HW_DISK_ENCRYPTION
+    endif
 endif
 WITH_CRYPTO_UTILS := \
     $(if $(wildcard system/core/libcrypto_utils/android_pubkey.c),true)
@@ -527,7 +530,7 @@ ifeq ($(TW_INCLUDE_NTFS_3G),true)
         mkfs.ntfs
 endif
 ifeq ($(TARGET_USERIMAGES_USE_F2FS), true)
-    TWRP_REQUIRED_MODULES += sload.f2fs \
+    TWRP_REQUIRED_MODULES += sload_f2fs \
         libfs_mgr \
         fs_mgr \
         libinit
