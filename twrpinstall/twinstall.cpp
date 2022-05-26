@@ -411,6 +411,7 @@ int TWinstall_zip(const char *path, int *wipe_cache, bool check_for_digest)
 	  			&& (DataManager::GetIntValue(FOX_INSTALL_PREBUILT_ZIP) != 1)); // don't run for built-in zips
 
 	  			if (run_rom_scripts)
+	  				usleep(4096);
 	  				TWFunc::RunFoxScript(FOX_PRE_ROM_FLASH_SCRIPT);
 
 				ret_val = Run_Update_Binary(path, wipe_cache, UPDATE_BINARY_ZIP_TYPE);
