@@ -164,8 +164,17 @@ bool MtpServer::hasStorage(MtpStorageID id) {
 
 void MtpServer::run() {
 	if (mHandle->start(mPtp)) {
-		MTPE("Failed to start usb driver!");
+		MTPE("Failed to start usb driver!\n");
 		mHandle->close();
+        int controlFd = open(FFS_MTP_EP0, O_RDWR);
+        bool ffs_ok = access(FFS_MTP_EP0, W_OK) == 0;
+        if (ffs_ok) {
+            bool aio_compat = android::base::GetBoolProperty("sys.usb.ffs.aio_compat", false);
+            mHandle = aio_compat ? new MtpFfsCompatHandle(controlFd) : new MtpFfsHandle(controlFd);
+            mHandle->writeDescriptors(mPtp);
+        } else {
+            mHandle = new MtpDevHandle(controlFd);
+        }
 		return;
 	}
 
@@ -288,7 +297,7 @@ void MtpServer::sendEvent(MtpEventCode code, uint32_t param1) {
 		mEvent.setEventCode(code);
 		mEvent.setTransactionID(mRequest.getTransactionID());
 		mEvent.setParameter(1, param1);
-		if (mEvent.write(mHandle) && errno != EBUSY)
+		if (mEvent.write(mHandle))
 			MTPE("Mtp send event failed: %s\n", strerror(errno));
 	}
 }
