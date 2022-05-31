@@ -4951,6 +4951,50 @@ bool TWFunc::IsBinaryXML(const std::string filename) {
   return false;
 }
 
+bool TWFunc::Check_Xml_Format(const std::string filename) {
+	if (TWFunc::IsBinaryXML(filename))
+		return false; // ABX xml format; needs conversion to plain xml
+	else
+		return true; // standard text mode xml format
+}
+
+// return true=successful conversion (return the name of the converted file in "result");
+// return false=an error happened (leave "result" alone)
+bool TWFunc::abx_to_xml(const std::string path, std::string &result) {
+	bool res = false;
+	std::string script = "/etc/python/scripts/ccl_abx.py";
+
+	std::string python = "/system/bin/python";
+	if (!Path_Exists(python))
+		python = "/sbin/python";
+
+	if (!TWFunc::Path_Exists(path) || !TWFunc::Path_Exists(python) || !TWFunc::Path_Exists(script))
+		return res;
+
+	std::string fname = TWFunc::Get_Filename(path);
+	std::string tmp = "/tmp/converted_xml";
+	if (!TWFunc::Path_Exists(tmp)) {
+		if (mkdir(tmp.c_str(), 0777) != 0)
+			tmp = "/tmp";
+	}
+	std::string tmp_path = tmp + "/" + fname;
+	std::string cmd = python + " " + script + " " + path + " -mr >" + tmp_path;
+	if (TWFunc::Exec_Cmd (cmd, false) == 0 && TWFunc::Path_Exists(tmp_path)) {
+		res = true;
+		result = tmp_path;
+	}
+	return res;
+}
+
+// return the full path to the converted string, or empty string on error
+std::string TWFunc::abx_to_xml_string(const std::string path) {
+std::string res = path;
+  if (abx_to_xml(path, res))
+	return res;
+  else
+	return "";
+}
+
 /* for magiskboot 24+
    whether magiskboot repack should patch vbmeta
    returns:

@@ -206,6 +206,9 @@ public:
 	static int read_file(string fn, vector < wstring > &results);
 	static string wstr_to_str(wstring str);
 	static bool IsBinaryXML(const std::string filename); // return whether the file is a binary XML file
+	static bool Check_Xml_Format(const std::string filename); // Return whether a xml is in plain xml or ABX format
+	static bool abx_to_xml(const std::string path, std::string &result); // could we convert abx to xml (if so, return the full path to the converted file)
+	static std::string abx_to_xml_string(const std::string path); // convert abx to xml and return the full path to the converted or empty string on error
 
 	// string functions
 	static string lowercase(const string src); /* convert string to lowercase */
