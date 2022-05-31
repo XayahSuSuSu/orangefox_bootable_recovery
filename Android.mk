@@ -312,6 +312,9 @@ endif
 ifneq ($(TW_LOAD_VENDOR_MODULES),)
     LOCAL_CFLAGS += -DTW_LOAD_VENDOR_MODULES=$(TW_LOAD_VENDOR_MODULES)
 endif
+ifneq ($(TW_EXCLUDE_PYTHON),true)
+    TWRP_REQUIRED_MODULES += python3_twrp
+endif
 ifeq ($(TW_INCLUDE_CRYPTO), true)
     LOCAL_CFLAGS += -DTW_INCLUDE_CRYPTO -DUSE_FSCRYPT -Wno-macro-redefined
     LOCAL_SHARED_LIBRARIES += libcryptfsfde
