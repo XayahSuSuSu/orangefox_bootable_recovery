@@ -313,7 +313,7 @@ ifneq ($(TW_LOAD_VENDOR_MODULES),)
     LOCAL_STATIC_LIBRARIES += libmodprobe
     LOCAL_CFLAGS += -DTW_LOAD_VENDOR_MODULES=$(TW_LOAD_VENDOR_MODULES)
 endif
-ifneq ($(TW_EXCLUDE_PYTHON),true)
+ifeq ($(TW_INCLUDE_PYTHON),true)
     TWRP_REQUIRED_MODULES += python3_twrp
 endif
 ifeq ($(TW_INCLUDE_CRYPTO), true)
