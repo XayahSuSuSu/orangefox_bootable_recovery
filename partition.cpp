@@ -2136,9 +2136,24 @@ bool TWPartition::Decrypt(string Password) {
 	return 1;
 }
 
+bool fox_print_storage_binder_message() {
+#if !defined(OF_FORCE_CREATE_DATA_MEDIA_ON_FORMAT) && defined(OF_PRINT_BIND_INTERNAL_MESSAGE)
+string src = "/FFiles/OF_bind_internal/OF_bind_internal.zip";
+string dest = "/tmp/OF_bind_internal.zip";
+  if (!TWFunc::Path_Exists(dest))
+	TWFunc::copy_file(src, dest, 0644);
+  if (TWFunc::Path_Exists(dest)) {
+  	gui_print_color("warning", "\nIf you want the internal storage to remain decrypted, flash '%s' now!\n\n", dest.c_str());
+  	return true;
+  }
+#endif
+return false;
+}
+
 bool TWPartition::Wipe_Encryption() {
 	bool Save_Data_Media = Has_Data_Media;
 	bool ret = false;
+	bool printed_message = false;
 	BasePartition* base_partition = make_partition();
 
 	if (!base_partition->PreWipeEncryption())
@@ -2169,11 +2184,14 @@ bool TWPartition::Wipe_Encryption() {
 		DataManager::SetValue(TW_IS_ENCRYPTED, 0);
 #ifndef TW_OEM_BUILD
 		gui_msg("format_data_msg=You may need to reboot recovery to be able to use /data again.");
+		printed_message = fox_print_storage_binder_message();
 #endif
 		if (Is_FBE) {
 		    if (DataManager::GetIntValue(FOX_DISABLE_FORCED_ENCRYPTION) != 1) {
 		    	#ifndef OF_FORCE_CREATE_DATA_MEDIA_ON_FORMAT
 			gui_msg(Msg(msg::kWarning, "data_media_fbe_msg=OrangeFox will not recreate /data/media on an FBE device. Please reboot into your rom to create /data/media."));
+			if (!printed_message)
+				printed_message = fox_print_storage_binder_message();
 			#endif
 		    }
 		} else {
