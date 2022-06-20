@@ -2,7 +2,7 @@
 	Copyright 2003 to 2017 TeamWin
 	This file is part of TWRP/TeamWin Recovery Project.
 
-	Copyright (C) 2018-2021 OrangeFox Recovery Project
+	Copyright (C) 2018-2022 OrangeFox Recovery Project
 	This file is part of the OrangeFox Recovery Project.
 
 	TWRP is free software: you can redistribute it and/or modify
@@ -722,7 +722,7 @@ int OpenRecoveryScript::Run_OpenRecoveryScript_Action() {
        		  { 
  		     usleep(1000000); // sleep for 1 second
           	     op_status = 0;
-		     gui_msg("of_ota_reboot_disabled=OTA update completed. You disabled auto-reboot. Returning control to you.\n");
+		     gui_msg(Msg(msg::kWarning, "of_ota_reboot_disabled=OTA update completed. You disabled auto-reboot. Returning control to you.\n"));
           	     DataManager::SetValue("tw_page_done", 1);
        		  }
        		else
