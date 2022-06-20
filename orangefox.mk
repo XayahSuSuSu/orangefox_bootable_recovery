@@ -509,7 +509,8 @@ ifeq ($(OF_UNBIND_SDCARD_F2FS),1)
 endif
 
 # print a message about flashing OF_bind_internal.zip after formatting?
-ifeq ($(OF_PRINT_BIND_INTERNAL_MESSAGE),1)
-    LOCAL_CFLAGS += -DOF_PRINT_BIND_INTERNAL_MESSAGE='"1"'
-endif
+# ignore this setting now
+#ifeq ($(OF_PRINT_BIND_INTERNAL_MESSAGE),1)
+#    LOCAL_CFLAGS += -DOF_PRINT_BIND_INTERNAL_MESSAGE='"1"'
+#endif
 #
