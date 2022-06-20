@@ -54,6 +54,7 @@ cc_library_shared {
         "liblog",
         "libbase",
         "libsync",
-	"libbinder_ndk"    ],
+	"libbinder_ndk"
+    ],
     static_libs: ["libpixelflinger_twrp"]
 }
