@@ -31,9 +31,6 @@
 #include "font_10x18.h"
 #endif
 
-#ifndef MSM_BSP
-#include "graphics_adf.h"
-#endif
 #include "graphics_drm.h"
 #include "graphics_fbdev.h"
 #include "minui/minui.h"
@@ -618,7 +615,7 @@ int gr_init() {
            ret);
   }
 
-  auto backend = std::unique_ptr<MinuiBackend>{ std::make_unique<MinuiBackendAdf>() };
+  auto backend = std::unique_ptr<MinuiBackend>{ std::make_unique<MinuiBackendDrm>() };
   gr_draw = backend->Init();
 
 #ifdef MSM_BSP
