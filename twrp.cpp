@@ -2,7 +2,7 @@
 	Copyright 2012-2020 TeamWin
 	This file is part of TWRP/TeamWin Recovery Project.
 
-	Copyright (C) 2018-2021 OrangeFox Recovery Project
+	Copyright (C) 2018-2022 OrangeFox Recovery Project
 	This file is part of the OrangeFox Recovery Project.
 
 	TWRP is free software: you can redistribute it and/or modify
@@ -68,6 +68,11 @@ extern "C" {
 extern "C" {
 #include "minadbd21/adb.h"
 }
+#endif
+
+#ifdef TW_INCLUDE_CRYPTO
+#include "FsCrypt.h"
+#include "Decrypt.h"
 #endif
 
 //extern int adb_server_main(int is_daemon, int server_port, int /* reply_fd */);
@@ -246,6 +251,9 @@ static void process_recovery_mode(twrpAdbBuFifo* adb_bu_fifo, bool skip_decrypti
   	property_set("orangefox.adb.status", "0");
 #endif
 
+#ifdef TW_INCLUDE_CRYPTO
+	android::keystore::copySqliteDb();
+#endif
 	Decrypt_Page(skip_decryption, datamedia);
 
 	// Check for and load custom theme if present
@@ -361,6 +369,9 @@ static void reboot() {
 	TWFunc::Update_Log_File();
 	string Reboot_Arg;
 
+#ifdef TW_INCLUDE_CRYPTO
+	fscrypt_lock_user_key(0);
+#endif
 	DataManager::GetValue("tw_reboot_arg", Reboot_Arg);
 	if (Reboot_Arg == "recovery")
 		TWFunc::tw_reboot(rb_recovery);

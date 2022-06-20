@@ -83,7 +83,7 @@ else
     LOCAL_CFLAGS += -DTW_EXCLUDE_APEX
 endif
 
-LOCAL_STATIC_LIBRARIES += libavb libtwrpinstall libminadbd_services libinit libsnapshot_nobinder
+LOCAL_STATIC_LIBRARIES += libavb libtwrpinstall libminadbd_services libinit libsnapshot_nobinder update_metadata-protos
 LOCAL_SHARED_LIBRARIES += libfs_mgr libhardware android.hardware.boot@1.0 android.hardware.boot@1.1 libprotobuf-cpp-lite liblp libutils libhidlbase
 
 LOCAL_C_INCLUDES += \
@@ -95,7 +95,8 @@ LOCAL_C_INCLUDES += \
     system/gsid/include/ \
     system/core/init/ \
     system/extras/ext4_utils/include \
-    $(LOCAL_PATH)/twinstall/include
+    $(LOCAL_PATH)/twinstall/include \
+    system/vold
 
 ifneq ($(TARGET_RECOVERY_REBOOT_SRC),)
   LOCAL_SRC_FILES += $(TARGET_RECOVERY_REBOOT_SRC)
@@ -112,10 +113,11 @@ LOCAL_CLANG := true
 LOCAL_C_INCLUDES += \
     bionic \
     system/extras \
-    system/core/adb \
+    packages/modules/adb \
     system/core/libsparse \
+    system/vold \
     external/zlib \
-    system/core/libziparchive/include \
+    system/libziparchive/include \
     external/freetype/include \
     external/boringssl/include \
     external/libcxx/include \
@@ -133,10 +135,10 @@ LOCAL_C_INCLUDES += \
     $(LOCAL_PATH)/minuitwrp/include \
     $(LOCAL_PATH)/twinstall/include
 
-LOCAL_STATIC_LIBRARIES += libguitwrp
+LOCAL_STATIC_LIBRARIES += libguitwrp libvold
 LOCAL_SHARED_LIBRARIES += libz libc libcutils libstdc++ libtar libblkid libminuitwrp libmtdutils libtwadbbu 
 LOCAL_SHARED_LIBRARIES += libbootloader_message libcrecovery libtwrpdigest libc++ libaosprecovery libcrypto libbase 
-LOCAL_SHARED_LIBRARIES += libziparchive libselinux libdl_android.bootstrap
+LOCAL_SHARED_LIBRARIES += libziparchive libselinux libdl_android.bootstrap android.security.authorization-ndk_platform
 
 ifneq ($(wildcard system/core/libsparse/Android.mk),)
 LOCAL_SHARED_LIBRARIES += libsparse
@@ -150,11 +152,12 @@ ifeq ($(TW_OEM_BUILD),true)
     TW_USE_TOOLBOX := true
     TW_EXCLUDE_MTP := true
     TW_EXCLUDE_TZDATA := true
+    TW_EXCLUDE_NANO := true
+    TW_EXCLUDE_BASH := true
 endif
 
 ifeq ($(AB_OTA_UPDATER),true)
     LOCAL_CFLAGS += -DAB_OTA_UPDATER=1
-    LOCAL_SHARED_LIBRARIES += libhardware android.hardware.boot@1.0 android.hardware.boot@1.1
     TWRP_REQUIRED_MODULES += libhardware android.hardware.boot@1.0-service android.hardware.boot@1.0-service.rc \
     android.hardware.boot@1.1-service android.hardware.boot@1.1-service.rc android.hardware.boot@1.1.xml
 endif
@@ -166,8 +169,8 @@ ifeq ($(PRODUCT_USE_DYNAMIC_PARTITIONS),true)
     ifeq ($(TW_EXCLUDE_LPDUMP),)
         TWRP_REQUIRED_MODULES += lpdump lpdumpd.rc
     endif
-    ifeq ($(TW_EXCLUDE_LPTOOLS),)
-        TWRP_REQUIRED_MODULES += lptools
+    ifneq ($(TW_SYSTEM_BUILD_PROP_ADDITIONAL_PATHS),)
+    	LOCAL_CFLAGS += -DTW_SYSTEM_BUILD_PROP_ADDITIONAL_PATHS='"$(TW_SYSTEM_BUILD_PROP_ADDITIONAL_PATHS)"'
     endif
 endif
 
@@ -298,12 +301,6 @@ endif
 ifeq ($(TW_NO_HAPTICS), true)
     LOCAL_CFLAGS += -DTW_NO_HAPTICS
 endif
-ifeq ($(TW_INCLUDE_JB_CRYPTO), true)
-    TW_INCLUDE_CRYPTO := true
-endif
-ifeq ($(TW_INCLUDE_L_CRYPTO), true)
-    TW_INCLUDE_CRYPTO := true
-endif
 ifneq ($(TW_ADDITIONAL_APEX_FILES),)
     LOCAL_CFLAGS += -DTW_ADDITIONAL_APEX_FILES=$(TW_ADDITIONAL_APEX_FILES)
 endif
@@ -313,24 +310,33 @@ ifneq ($(TW_LOAD_VENDOR_MODULES),)
     LOCAL_STATIC_LIBRARIES += libmodprobe
     LOCAL_CFLAGS += -DTW_LOAD_VENDOR_MODULES=$(TW_LOAD_VENDOR_MODULES)
 endif
-ifeq ($(TW_INCLUDE_PYTHON),true)
-    ifeq ($(wildcard external/python3/Android.mk),)
-        $(warning Python3 repo not found! You need to clone the repo.)
-        $(warning Please clone https://github.com/CaptainThrowback/android_external_python3.git into external/python3)
-        $(error Python3 repo not present; exiting)
-    endif
+ifneq ($(TW_EXCLUDE_PYTHON),true)
     TWRP_REQUIRED_MODULES += python3_twrp
 endif
 ifeq ($(TW_INCLUDE_CRYPTO), true)
     LOCAL_CFLAGS += -DTW_INCLUDE_CRYPTO -DUSE_FSCRYPT -Wno-macro-redefined
-    LOCAL_SHARED_LIBRARIES += libcryptfsfde
-    LOCAL_SHARED_LIBRARIES += libgpt_twrp libstatssocket.recovery
+    LOCAL_SHARED_LIBRARIES += libgpt_twrp
     LOCAL_C_INCLUDES += external/boringssl/src/include bootable/recovery/crypto
-    LOCAL_C_INCLUDES += $(commands_TWRP_local_path)/crypto/fscrypt
     TW_INCLUDE_CRYPTO_FBE := true
     LOCAL_CFLAGS += -DTW_INCLUDE_FBE
-    LOCAL_SHARED_LIBRARIES += libtwrpfscrypt android.frameworks.stats@1.0 android.hardware.authsecret@1.0 \
-        android.hardware.oemlock@1.0
+    LOCAL_SHARED_LIBRARIES += android.frameworks.stats@1.0 android.hardware.authsecret@1.0 \
+        android.hardware.oemlock@1.0 libf2fs_sparseblock libbinder libbinder_ndk \
+        libandroidicu.recovery \
+        android.hardware.gatekeeper@1.0 \
+        android.hardware.weaver@1.0 \
+        android.frameworks.stats@1.0 \
+        android.security.maintenance-ndk_platform \
+        android.system.keystore2-V1-ndk_platform \
+        libkeyutils \
+        liblog \
+        libsqlite.recovery \
+        libkeystoreinfo.recovery \
+        libgatekeeper_aidl \
+        libcppbor_external \
+        libcppcose_rkp
+
+    LOCAL_STATIC_LIBRARIES += libkeymint_support
+
     LOCAL_CFLAGS += -DTW_INCLUDE_FBE_METADATA_DECRYPT
     ifneq ($(TW_CRYPTO_USE_SYSTEM_VOLD),)
     ifneq ($(TW_CRYPTO_USE_SYSTEM_VOLD),false)
@@ -408,10 +414,19 @@ ifneq ($(TW_OVERRIDE_SYSTEM_PROPS),)
     TW_INCLUDE_LIBRESETPROP := true
     LOCAL_CFLAGS += -DTW_OVERRIDE_SYSTEM_PROPS=$(TW_OVERRIDE_SYSTEM_PROPS)
 endif
+ifneq ($(TW_OVERRIDE_PROPS_ADDITIONAL_PARTITIONS),)
+    LOCAL_CFLAGS += -DTW_OVERRIDE_PROPS_ADDITIONAL_PARTITIONS='"$(TW_OVERRIDE_PROPS_ADDITIONAL_PARTITIONS)"'
+endif
 ifneq ($(TW_INCLUDE_LIBRESETPROP),)
     LOCAL_SHARED_LIBRARIES += libresetprop
     LOCAL_C_INCLUDES += external/magisk-prebuilt/include
     LOCAL_CFLAGS += -DTW_INCLUDE_LIBRESETPROP
+endif
+ifeq ($(TW_EXCLUDE_NANO), true)
+    LOCAL_CFLAGS += -DTW_EXCLUDE_NANO
+endif
+ifneq ($(TARGET_OTA_ASSERT_DEVICE),)
+    LOCAL_CFLAGS += -DTARGET_OTA_ASSERT_DEVICE='"$(TARGET_OTA_ASSERT_DEVICE)"'
 endif
 
 LOCAL_C_INCLUDES += system/vold \
@@ -446,11 +461,26 @@ TWRP_REQUIRED_MODULES += \
     minadbd \
     twrpbu \
     adbd_system_api_recovery \
-    libsync.recovery
+    adbd_system_api_recovery \
+    libsync.recovery \
+    libandroidicu.recovery
 
 ifneq ($(TW_EXCLUDE_TZDATA), true)
 TWRP_REQUIRED_MODULES += \
     tzdata_twrp
+endif
+
+ifneq ($(TW_EXCLUDE_NANO), true)
+TWRP_REQUIRED_MODULES += \
+    nano_twrp \
+    nano.rc
+endif
+
+ifneq ($(TW_EXCLUDE_BASH), true)
+    ifneq ($(wildcard external/bash/.),)
+    TWRP_REQUIRED_MODULES += \
+        bash_twrp
+    endif
 endif
 
 ifeq ($(TW_INCLUDE_REPACKTOOLS), true)
@@ -473,7 +503,11 @@ ifneq ($(TW_INCLUDE_CRYPTO),)
 TWRP_REQUIRED_MODULES += \
     vold_prepare_subdirs \
     task_recovery_profiles.json \
-    fscryptpolicyget
+    fscryptpolicyget.recovery \
+    android.system.keystore2-service.xml \
+    keystore2.rc \
+    plat_keystore2_key_contexts
+
     ifneq ($(TW_INCLUDE_CRYPTO_FBE),)
     TWRP_REQUIRED_MODULES += \
         plat_service_contexts \
@@ -498,7 +532,7 @@ endif
 ifeq ($(BOARD_HAS_NO_REAL_SDCARD),)
     TWRP_REQUIRED_MODULES += sgdisk
 endif
-ifneq ($(TW_EXCLUDE_ENCRYPTED_BACKUPS),)
+ifneq ($(TW_EXCLUDE_ENCRYPTED_BACKUPS), true)
     TWRP_REQUIRED_MODULES += openaes openaes_license
 endif
 ifeq ($(TW_INCLUDE_DUMLOCK), true)
@@ -541,6 +575,7 @@ ifeq ($(TARGET_USERIMAGES_USE_F2FS), true)
     TWRP_REQUIRED_MODULES += sload_f2fs \
         libfs_mgr \
         fs_mgr \
+        liblz4 \
         libinit
 endif
 
@@ -555,6 +590,12 @@ ifeq ($(BOARD_CACHEIMAGE_PARTITION_SIZE),)
 endif
 
 LOCAL_REQUIRED_MODULES += $(TWRP_REQUIRED_MODULES)
+
+#TW_THEME_VERSION := $(shell grep TW_THEME_VERSION bootable/recovery/variables.h | cut -d ' ' -f 3)
+
+LOCAL_POST_INSTALL_CMD += \
+    sed -i "s/{themeversion}/$(TW_THEME_VERSION)/" $(TARGET_RECOVERY_ROOT_OUT)/twres/splash.xml; \
+    sed -i "s/{themeversion}/$(TW_THEME_VERSION)/" $(TARGET_RECOVERY_ROOT_OUT)/twres/ui.xml;
 
 include $(BUILD_EXECUTABLE)
 
@@ -659,7 +700,7 @@ LOCAL_STATIC_LIBRARIES := \
     libotautil \
     libvintf \
     libcrypto_utils \
-    libcrypto \
+    libcrypto_static \
     libbase \
     libziparchive \
 
@@ -701,11 +742,8 @@ ifneq ($(TW_OZIP_DECRYPT_KEY),)
 endif
 
 ifeq ($(TW_INCLUDE_CRYPTO), true)
-    include $(commands_TWRP_local_path)/crypto/fde/Android.mk
+    # include $(commands_TWRP_local_path)/crypto/fde/Android.mk
     include $(commands_TWRP_local_path)/crypto/scrypt/Android.mk
-    ifeq ($(TW_INCLUDE_CRYPTO_FBE), true)
-        include $(commands_TWRP_local_path)/crypto/fscrypt/Android.mk
-    endif
     ifneq ($(TW_CRYPTO_USE_SYSTEM_VOLD),)
     ifneq ($(TW_CRYPTO_USE_SYSTEM_VOLD),false)
         include $(commands_TWRP_local_path)/crypto/vold_decrypt/Android.mk

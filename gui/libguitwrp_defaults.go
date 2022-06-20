@@ -246,9 +246,9 @@ func globalSrcs(ctx android.BaseContext) []string {
 func globalIncludes(ctx android.BaseContext) []string {
 	var includes []string
 
-	if getMakeVars(ctx, "TW_INCLUDE_CRYPTO") != "" {
-		includes = append(includes, "bootable/recovery/crypto/fscrypt")
-	}
+//	if getMakeVars(ctx, "TW_INCLUDE_CRYPTO") != "" {
+//		includes = append(includes, "bootable/recovery/crypto/fscrypt")
+//	}
 	includes = append(includes, "bootable/recovery/crypto/include")
 	return includes
 }
