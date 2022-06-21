@@ -311,6 +311,11 @@ ifneq ($(TW_LOAD_VENDOR_MODULES),)
     LOCAL_CFLAGS += -DTW_LOAD_VENDOR_MODULES=$(TW_LOAD_VENDOR_MODULES)
 endif
 ifneq ($(TW_EXCLUDE_PYTHON),true)
+    ifeq ($(wildcard external/python3/Android.mk),)
+        $(warning Python3 repo not found! You need to clone the repo.)
+        $(warning Please clone https://github.com/TeamWin/android_external_python3.git into external/python3)
+        $(error Python3 repo not present; exiting)
+    endif
     TWRP_REQUIRED_MODULES += python3_twrp
 endif
 ifeq ($(TW_INCLUDE_CRYPTO), true)
