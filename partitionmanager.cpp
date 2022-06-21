@@ -4496,7 +4496,6 @@ void TWPartitionManager::Setup_Super_Partition() {
 	superPartition->Setup_Image();
 	Add_Partition(superPartition);
 	PartitionManager.Output_Partition(superPartition);
-	Update_System_Details();
 }
 
 bool TWPartitionManager::Get_Super_Status() {
