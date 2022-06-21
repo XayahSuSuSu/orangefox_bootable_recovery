@@ -370,7 +370,7 @@ static void reboot() {
 	string Reboot_Arg;
 
 #ifdef TW_INCLUDE_CRYPTO
-	fscrypt_lock_user_key(0);
+//	fscrypt_lock_user_key(0);
 #endif
 	DataManager::GetValue("tw_reboot_arg", Reboot_Arg);
 	if (Reboot_Arg == "recovery")
