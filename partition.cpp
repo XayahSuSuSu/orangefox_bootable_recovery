@@ -2144,14 +2144,8 @@ bool TWPartition::Wipe_Encryption() {
 	}
 
 #ifdef TW_INCLUDE_CRYPTO
-	if (!UnMount(true)) {
-		if (Mount_Point == "/data") {
-			gui_print_color("error", "The data format has failed.\n");
-			gui_print_color("warning",
-			"Please *wipe* data, then reboot OrangeFox, and *format* data again (or, reboot to bootloader and run 'fastboot -w' to format data).\n");
-		}
+	if (!UnMount(true))
 		return false;
-	}
 	if (Is_Decrypted && !Decrypted_Block_Device.empty()) {
 		if (delete_crypto_blk_dev((char*)("userdata")) != 0) {
 			LOGERR("Error deleting crypto block device, continuing anyway.\n");
