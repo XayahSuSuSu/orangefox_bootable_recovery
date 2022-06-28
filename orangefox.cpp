@@ -318,7 +318,7 @@ bool zip_EntryExists(ZipArchive Zip, const string& filename)
 bool zip_EntryExists(ZipArchiveHandle Zip, const string& filename) 
 {
   std::string_view zip_string(filename.c_str());
-  ZipEntry file_entry;
+  ZipEntry64 file_entry;
   if (FindEntry(Zip, zip_string, &file_entry) != 0)
 	return false;
   return true;
@@ -352,7 +352,7 @@ bool zip_ExtractEntry(ZipArchiveHandle Zip, const string& source_file, const str
 	}
 #else
 	std::string_view zip_string(source_file.c_str());
-	ZipEntry file_entry;
+	ZipEntry64 file_entry;
 
 	if (FindEntry(Zip, zip_string, &file_entry) != 0) {
 		close(fd); // ??
