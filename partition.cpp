@@ -676,6 +676,10 @@ void TWPartition::Setup_Data_Partition(bool Display_Error) {
 	UnMount(false);
 
 #ifdef TW_INCLUDE_CRYPTO
+	#ifdef OF_FIX_DECRYPTION_ON_DATA_MEDIA
+	if (datamedia)
+		Setup_Data_Media();
+	#endif
 	Can_Be_Encrypted = true;
 	char crypto_blkdev[255];
 	property_get("ro.crypto.fs_crypto_blkdev", crypto_blkdev, "error");
@@ -683,8 +687,10 @@ void TWPartition::Setup_Data_Partition(bool Display_Error) {
 		Set_FBE_Status();
 		Decrypted_Block_Device = crypto_blkdev;
 		LOGINFO("Data already decrypted, new block device: '%s'\n", crypto_blkdev);
+		#ifndef OF_FIX_DECRYPTION_ON_DATA_MEDIA
 		if (datamedia)
 			Setup_Data_Media();
+		#endif
 		DataManager::SetValue(TW_IS_ENCRYPTED, 0);
 		DataManager::SetValue(FOX_ENCRYPTED_DEVICE, "1");
 	} else if (!Mount(false)) {
@@ -712,8 +718,10 @@ void TWPartition::Setup_Data_Partition(bool Display_Error) {
 			}
 		} else {
 			DataManager::SetValue(TW_IS_ENCRYPTED, 0);
+			#ifndef OF_FIX_DECRYPTION_ON_DATA_MEDIA
 			if (datamedia)
 				Setup_Data_Media();
+			#endif
 		}
 	}
 	if (datamedia && (!Is_Encrypted || (Is_Encrypted && Is_Decrypted))) {
@@ -1242,8 +1250,12 @@ void TWPartition::Setup_Data_Media() {
 			Make_Dir("/sdcard", false);
 			Symlink_Mount_Point = "/sdcard";
 		}
-		Mount(false); 
+		Mount(false);
+		#ifdef OF_FIX_DECRYPTION_ON_DATA_MEDIA
+		if (Mount(false) && TWFunc::Path_Exists(Mount_Point + "/media/0")) {
+		#else
 		if (TWFunc::Path_Exists(Mount_Point + "/media/0")) {
+		#endif
 			Storage_Path = Mount_Point + "/media/0";
 			Symlink_Path = Storage_Path;
 			DataManager::SetValue(TW_INTERNAL_PATH, Mount_Point + "/media/0");
