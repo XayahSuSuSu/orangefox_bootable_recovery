@@ -3011,6 +3011,7 @@ int GUIAction::changeterminal(std::string arg) {
 	}
 	if (term != NULL && !arg.empty()) {
 		DataManager::SetValue("tw_terminal_location", arg);
+		gui_changePage("terminal"); // this seems to be needed
 		if (term->status()) {
 			for (uint8_t iter = 0; iter < cmd.size(); iter++)
 				term->NotifyCharInput(cmd.at(iter));
