@@ -513,6 +513,10 @@ ifeq ($(OF_FIX_DECRYPTION_ON_DATA_MEDIA),1)
     LOCAL_CFLAGS += -DOF_FIX_DECRYPTION_ON_DATA_MEDIA='"1"'
 endif
 
+ifneq ($(OF_DYNAMIC_FULL_SIZE),)
+    LOCAL_CFLAGS += -DOF_DYNAMIC_FULL_SIZE='"$(OF_DYNAMIC_FULL_SIZE)"'
+endif
+
 # print a message about flashing OF_bind_internal.zip after formatting?
 # ignore this setting now
 #ifeq ($(OF_PRINT_BIND_INTERNAL_MESSAGE),1)
