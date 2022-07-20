@@ -4864,7 +4864,7 @@ bool TWFunc::Fox_Property_Set(const std::string Prop_Name, const std::string Val
 }
 
 bool TWFunc::Has_Dynamic_Partitions(void) {
-	return (Fox_Property_Get("ro.boot.dynamic_partitions") == "true");
+	return (Fox_Property_Get("ro.boot.dynamic_partitions") == "true" || DataManager::GetIntValue("fox_dynamic_device") == 1);
 }
 
 bool TWFunc::Has_Virtual_AB_Partitions(void) {
