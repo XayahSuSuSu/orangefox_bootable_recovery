@@ -726,12 +726,6 @@ void DataManager::SetDefaultValues()
   else
   	mConst.SetValue("fox_vab_device", "0");
 
-  #ifdef PRODUCT_USE_DYNAMIC_PARTITIONS
-  mConst.SetValue("fox_dynamic_device", "1");
-  #else
-  mConst.SetValue("fox_dynamic_device", "0");
-  #endif
-
   #ifdef OF_SUPPORT_OZIP_DECRYPTION
     mConst.SetValue("of_support_ozip_decryption", "1");
   #endif
@@ -990,8 +984,12 @@ void DataManager::SetDefaultValues()
 	printf("PRODUCT_USE_DYNAMIC_PARTITIONS := true\n");
 	mConst.SetValue(TW_FASTBOOT_MODE, "1");
 	mData.SetValue(TW_IS_SUPER, "1");
+	mConst.SetValue("fox_dynamic_device", "1");
+	TWFunc::Fox_Property_Set("orangefox.super.partition", "true");
 #else
   	mData.SetValue(TW_IS_SUPER, "0");
+  	mConst.SetValue("fox_dynamic_device", "0");
+  	TWFunc::Fox_Property_Set("orangefox.super.partition", "false");
 #endif
 
 #ifdef TW_INCLUDE_CRYPTO
