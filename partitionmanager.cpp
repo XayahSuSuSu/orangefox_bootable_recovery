@@ -4593,12 +4593,15 @@ bool TWPartitionManager::Unmap_Super_Devices() {
 	twrpApex apex;
 	apex.Unmount();
 #endif
+	LOGINFO("Unmap_Super_Devices\n");
 	for (auto iter = Partitions.begin(); iter != Partitions.end();) {
 		LOGINFO("Checking partition: %s\n", (*iter)->Get_Mount_Point().c_str());
 		if ((*iter)->Is_Super) {
 			TWPartition *part = *iter;
 			std::string bare_partition_name = Get_Bare_Partition_Name((*iter)->Get_Mount_Point());
-			std::string blk_device_partition = bare_partition_name + PartitionManager.Get_Active_Slot_Suffix();
+			std::string blk_device_partition = bare_partition_name;
+			if (DataManager::GetIntValue("of_ab_device") == 1)
+				blk_device_partition.append(PartitionManager.Get_Active_Slot_Suffix());
 			(*iter)->UnMount(false);
 			LOGINFO("removing dynamic partition: %s\n", blk_device_partition.c_str());
 			destroyed = DestroyLogicalPartition(blk_device_partition);
