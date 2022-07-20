@@ -508,9 +508,11 @@ void TWPartitionManager::Fox_Set_Dynamic_Partition_Props() {
   	if (Get_Super_Status()) {
   		TWFunc::Fox_Property_Set("orangefox.super.partition", "true");
   		DataManager::SetValue(TW_IS_SUPER, "1");
+  		DataManager::SetValue("fox_dynamic_device", "1");
   	}
   	else {
   		TWFunc::Fox_Property_Set("orangefox.super.partition", "false");
+  		DataManager::SetValue("fox_dynamic_device", "0");
   	}
 
   	TWPartition* Part;
