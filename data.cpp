@@ -992,6 +992,10 @@ void DataManager::SetDefaultValues()
   	TWFunc::Fox_Property_Set("orangefox.super.partition", "false");
 #endif
 
+#ifdef OF_VENDOR_BOOT_RECOVERY
+  	TWFunc::Fox_Property_Set("orangefox.vendor_boot.recovery", "true");
+#endif
+
 #ifdef TW_INCLUDE_CRYPTO
   mConst.SetValue(TW_HAS_CRYPTO, "1");
   printf("TW_INCLUDE_CRYPTO := true\n");

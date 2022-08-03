@@ -503,6 +503,10 @@ ifeq ($(OF_RUN_POST_FORMAT_PROCESS),1)
     LOCAL_CFLAGS += -DOF_RUN_POST_FORMAT_PROCESS='"1"'
 endif
 
+ifneq ($(OF_DYNAMIC_FULL_SIZE),)
+    LOCAL_CFLAGS += -DOF_DYNAMIC_FULL_SIZE='"$(OF_DYNAMIC_FULL_SIZE)"'
+endif
+
 # bind-unmount /sdcard before data repair/format (currently applies only to f2fs)
 ifeq ($(OF_UNBIND_SDCARD_F2FS),1)
     LOCAL_CFLAGS += -DOF_UNBIND_SDCARD_F2FS='"1"'
@@ -513,8 +517,9 @@ ifeq ($(OF_FIX_DECRYPTION_ON_DATA_MEDIA),1)
     LOCAL_CFLAGS += -DOF_FIX_DECRYPTION_ON_DATA_MEDIA='"1"'
 endif
 
-ifneq ($(OF_DYNAMIC_FULL_SIZE),)
-    LOCAL_CFLAGS += -DOF_DYNAMIC_FULL_SIZE='"$(OF_DYNAMIC_FULL_SIZE)"'
+# vendor_boot recovery
+ifeq ($(OF_VENDOR_BOOT_RECOVERY),1)
+    LOCAL_CFLAGS += -DOF_VENDOR_BOOT_RECOVERY='"1"'
 endif
 
 # print a message about flashing OF_bind_internal.zip after formatting?
