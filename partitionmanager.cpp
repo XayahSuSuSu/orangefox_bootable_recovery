@@ -3280,12 +3280,6 @@ bool TWPartitionManager::Decrypt_Adopted()
   string path = "/data/system/storage.xml";
   if (SDK > 30 && TWFunc::Path_Exists(path)) {
       	if(!TWFunc::Check_Xml_Format(path)) {
-         	/*
-         	string newpath = TWFunc::abx_to_xml_string(path);
-         	if (!newpath.empty()) {
-         		path = newpath;
-         	}
-         	*/
          	string oldpath = path;
          	if (TWFunc::abx_to_xml(path, path)) {
          		LOGINFO("Android 12+: '%s' has been converted into plain text xml (%s).\n", oldpath.c_str(), path.c_str());
