@@ -4968,7 +4968,6 @@ bool TWFunc::abx_to_xml(const std::string path, std::string &result) {
 
 	std::ifstream infile(path);
 	if (!infile.is_open())
-		// TODO: handle error: failed to open file
 		return false;
 
 	std::string fname = TWFunc::Get_Filename(path);
@@ -4979,12 +4978,21 @@ bool TWFunc::abx_to_xml(const std::string path, std::string &result) {
 	}
 	std::string tmp_path = tmp + "/" + fname;
 	std::ofstream outfile(tmp_path);
+	if (!outfile.is_open()) {
+		LOGINFO("Error. The abx conversion of %s has failed.\n", path.c_str());
+		infile.close();
+		return res;
+	}
 
 	AbxToXml r(infile, outfile);
 	if (r.run() && TWFunc::Path_Exists(tmp_path)) {
 		res = true;
 		result = tmp_path;
 	}
+
+	infile.close();
+	outfile.close();
+
 	return res;
 }
 
