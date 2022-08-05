@@ -50,6 +50,7 @@
 #include <android-base/chrono_utils.h>
 
 #include "twrp-functions.hpp"
+#include "abx-functions.hpp"
 #include "twcommon.h"
 #include "gui/gui.hpp"
 #ifndef BUILD_TWRPTAR_MAIN
@@ -4962,14 +4963,13 @@ bool TWFunc::Check_Xml_Format(const std::string filename) {
 // return false=an error happened (leave "result" alone)
 bool TWFunc::abx_to_xml(const std::string path, std::string &result) {
 	bool res = false;
-	std::string script = "/etc/python/scripts/ccl_abx.py";
-
-	std::string python = "/system/bin/python";
-	if (!Path_Exists(python))
-		python = "/sbin/python";
-
-	if (!TWFunc::Path_Exists(path) || !TWFunc::Path_Exists(python) || !TWFunc::Path_Exists(script))
+	if (!TWFunc::Path_Exists(path))
 		return res;
+
+	std::ifstream infile(path);
+	if (!infile.is_open())
+		// TODO: handle error: failed to open file
+		return false;
 
 	std::string fname = TWFunc::Get_Filename(path);
 	std::string tmp = "/tmp/converted_xml";
@@ -4978,8 +4978,10 @@ bool TWFunc::abx_to_xml(const std::string path, std::string &result) {
 			tmp = "/tmp";
 	}
 	std::string tmp_path = tmp + "/" + fname;
-	std::string cmd = python + " " + script + " " + path + " -mr >" + tmp_path;
-	if (TWFunc::Exec_Cmd (cmd, false) == 0 && TWFunc::Path_Exists(tmp_path)) {
+	std::ofstream outfile(tmp_path);
+
+	AbxToXml r(infile, outfile);
+	if (r.run() && TWFunc::Path_Exists(tmp_path)) {
 		res = true;
 		result = tmp_path;
 	}
