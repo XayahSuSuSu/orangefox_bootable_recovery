@@ -190,16 +190,6 @@ public:
 	static int Property_Override(string Prop_Name, string Prop_Value); // Override properties (including ro. properties)
 	static void Set_Sbin_Dir_Executable_Flags(void); // set the executable flags of all the files in the /sbin/ directory
 
-#ifdef TW_INCLUDE_CRYPTO
-#ifdef USE_FSCRYPT_POLICY_V1
-	static bool Get_Encryption_Policy(struct fscrypt_policy_v1 &policy, std::string path); // return encryption policy for path
-	static bool Set_Encryption_Policy(std::string path, struct fscrypt_policy_v1 &policy); // set encryption policy for path
-#else
-	static bool Get_Encryption_Policy(struct fscrypt_policy_v2 &policy, std::string path); // return encryption policy for path
-	static bool Set_Encryption_Policy(std::string path, struct fscrypt_policy_v2 &policy); // set encryption policy for path
-#endif
-#endif
-
 	static void CreateNewFile(string file_path); // create a new (text) file
 	static void AppendLineToFile(string file_path, string line); // append a line to a text file
 	static void PostWipeEncryption(void); // run after formatting data to recreate /data/media/0/ + /sdcard/Fox/logs/ automatically
