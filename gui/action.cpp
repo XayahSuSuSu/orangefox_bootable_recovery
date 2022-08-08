@@ -1262,8 +1262,7 @@ int GUIAction::checkpartitionlist(std::string arg)
 	{
 	  part_path = List.substr(start_pos, end_pos - start_pos);
 	  LOGINFO("checkpartitionlist part_path '%s'\n", part_path.c_str());
-	  if (part_path == "/and-sec" || part_path == "DALVIK"
-	      || part_path == "INTERNAL" || part_path == "SUBSTRATUM")
+	  if (part_path == "/and-sec" || part_path == "DALVIK" || part_path == "INTERNAL")
 	    {
 	      // Do nothing
 	    }
