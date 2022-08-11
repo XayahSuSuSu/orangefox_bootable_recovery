@@ -522,6 +522,11 @@ ifeq ($(OF_VENDOR_BOOT_RECOVERY),1)
     LOCAL_CFLAGS += -DOF_VENDOR_BOOT_RECOVERY='"1"'
 endif
 
+# deal with new error ('NO KERNEL CONFIG') when using a prebuilt kernel
+ifeq ($(OF_FORCE_PREBUILT_KERNEL),1)
+    TARGET_NO_KERNEL_OVERRIDE := true
+endif
+
 # print a message about flashing OF_bind_internal.zip after formatting?
 # ignore this setting now
 #ifeq ($(OF_PRINT_BIND_INTERNAL_MESSAGE),1)
