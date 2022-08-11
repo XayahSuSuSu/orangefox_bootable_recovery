@@ -524,7 +524,8 @@ endif
 
 # deal with new error ('NO KERNEL CONFIG') when using a prebuilt kernel
 ifeq ($(OF_FORCE_PREBUILT_KERNEL),1)
-    TARGET_NO_KERNEL_OVERRIDE := true
+    TARGET_FORCE_PREBUILT_KERNEL := true
+    TARGET_KERNEL_SOURCE :=
 endif
 
 # print a message about flashing OF_bind_internal.zip after formatting?
