@@ -3239,7 +3239,8 @@ void TWPartitionManager::Translate_Partition_Display_Names() {
 	}
 	Translate_Partition("/external_sd", "microsd", "Micro SDCard", "microsd", "Micro SDCard", "data_backup", "Data (excl. storage)");
 	Translate_Partition("/external_sdcard", "microsd", "Micro SDCard", "microsd", "Micro SDCard", "data_backup", "Data (excl. storage)");
-	Translate_Partition("/usb-otg", "usbotg", "USB OTG", "usbotg", "USB OTG");
+	Translate_Partition("/sdcard1", "microsd", "Micro SDCard", "microsd", "Micro SDCard", "data_backup", "Data (excl. storage)");
+	Translate_Partition("/usb-otg", "usbotg", "USB OTG", "usbotg", "USB OTG", "usb_otg", "USB Storage");
 	Translate_Partition("/sd-ext", "sdext", "SD-EXT");
 
 	// Android secure is a special case
