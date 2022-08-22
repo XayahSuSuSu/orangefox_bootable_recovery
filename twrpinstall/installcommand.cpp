@@ -135,7 +135,7 @@ static int check_newer_ab_build(ZipArchiveHandle zip)
     // Fox
     bool has_fox_devices = false;
     char fox_devices[PROPERTY_VALUE_MAX * 2];
-    property_get("ro.orangefox.target.devices", fox_devices, "");
+    property_get("ro.twrp.target.devices", fox_devices, "");
     std::vector<std::string> OrangeFox_Devices = android::base::Split(fox_devices, "[,|]");
     if (strlen(fox_devices) > 1) {
        has_fox_devices = true;
