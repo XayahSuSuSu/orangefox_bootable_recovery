@@ -528,6 +528,12 @@ ifeq ($(OF_FORCE_PREBUILT_KERNEL),1)
     TARGET_KERNEL_SOURCE :=
 endif
 
+# automatically deal with new error ('NO KERNEL CONFIG') when using a prebuilt kernel
+# partially revert vendor_twrp commit 9d4bb8e
+ifneq ($(TARGET_PREBUILT_KERNEL),)
+    TARGET_KERNEL_SOURCE :=
+endif
+
 # print a message about flashing OF_bind_internal.zip after formatting?
 # ignore this setting now
 #ifeq ($(OF_PRINT_BIND_INTERNAL_MESSAGE),1)
