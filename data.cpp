@@ -1116,6 +1116,12 @@ void DataManager::SetDefaultValues()
   mData.SetValue("found_fox_overwriting_rom", 0);
   mData.SetValue("fox_dfe_formatted", "0"); // whether data has been formatted with disable forced encryption enabled
 
+  // the canonical current device
+  mConst.SetValue("fox_product_device", TWFunc::Fox_Property_Get("ro.product.device"));
+
+  // whether we are processing any asserts
+  mData.SetValue("fox_processing_asserts", "0");
+
   // End of the OrangeFox variables
 
   mPersist.SetValue(TW_INSTALL_REBOOT_VAR, "0");

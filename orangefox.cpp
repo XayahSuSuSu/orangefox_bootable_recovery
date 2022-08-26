@@ -1,5 +1,5 @@
 /*
-	Copyright (C) 2020-2021 OrangeFox Recovery Project
+	Copyright (C) 2020-2022 OrangeFox Recovery Project
 	This file is part of the OrangeFox Recovery Project.
 	
 	OrangeFox is free software: you can redistribute it and/or modify
@@ -76,44 +76,42 @@ bool ors_is_active()
 }
 
 
-string Fox_CheckForAsserts(void)
+string Fox_CheckForAsserts(ZipArchiveHandle Zip)
 {
 string ret = "";
 #ifdef OF_TARGET_DEVICES
-string device;
-  device = TWFunc::get_assert_device(FOX_TMP_PATH);
-  if (device.empty())
+string devices = TWFunc::get_assert_device_zip(FOX_TMP_PATH, Zip);
+  if (devices.empty())
        return ret;
 
-  string tmpstr = TWFunc::Exec_With_Output ("getprop ro.product.device");
-  usleep(128000);
+  string tmpstr = TWFunc::Fox_Property_Get("ro.product.device");
+ 
+  if (tmpstr.empty())
+	tmpstr = DataManager::GetStrValue("fox_product_device");
 
-  if (tmpstr.empty() || tmpstr == "EXEC_ERROR!")
-   	tmpstr = Fox_Current_Device;
-
-  if (device == tmpstr)
+  if (devices == tmpstr)
        return ret;
 
-  LOGINFO("AssertDevice=[%s] and CurrentDevice=[%s]\n", device.c_str(), tmpstr.c_str());
+  LOGINFO("AssertDevice=[%s] and CurrentDevice=[%s]\n", devices.c_str(), tmpstr.c_str());
+  std::vector<std::string> assertResults = TWFunc::Split_String(devices, ",");
   std::vector <std::string> devs = TWFunc::Split_String(OF_TARGET_DEVICES, ",");
-  
-  string temp = "";   
-  for (size_t i = 0; i < devs.size(); ++i)
-    {
-   	usleep(4096);
-   	temp = TWFunc::removechar(devs[i], ' ');
-   	// make sure we are not processing the current device
-   	if (tmpstr != temp)
-   	   {
-   	      if (device == temp)
-   	      	{
-		  LOGINFO("Found AssertDevice [%s] at OF_TARGET_DEVICES # %i\n", temp.c_str(), (int)i);
-   	      	  return temp;
-   	    	}
-   	  }
-    } // for i
-#endif
 
+  for (const std::string& deviceAssert : assertResults) {
+        std::string assertName = TWFunc::trim(deviceAssert);
+        if (!assertName.empty() && assertName == tmpstr) {
+            return ret;
+        }
+        // target_devices
+        else {
+           for(const std::string& FoxDevice_x : devs) {
+               std::string FoxName = TWFunc::trim(FoxDevice_x);
+               if (!FoxName.empty() && !assertName.empty() && assertName == FoxName) {
+            	   return FoxName;
+               }
+           }
+        }
+    }
+#endif
   return ret;
 }
 
@@ -135,7 +133,8 @@ void Fox_ProcessAsserts(string assert_device)
          if (TWFunc::Fox_Property_Set("ro.product.device", assert_device))
            {
        	     //gui_print_color("warning",
-       	     LOGINFO("\nDevice name temporarily switched to \"%s\" until OrangeFox is rebooted.\n\n", assert_device.c_str());
+       	     LOGINFO("\nDevice name temporarily switched to \"%s\".\n\n", assert_device.c_str());
+       	     DataManager::SetValue("fox_processing_asserts", "1");
        	     usleep (64000);
            }
        }
@@ -556,7 +555,7 @@ int Fox_Prepare_Update_Binary(const char *path, ZipArchiveHandle Zip)
 	                  TWFunc::Check_OrangeFox_Overwrite_FromROM(true, path);
 	             }
 		} 
-	      assert_device = Fox_CheckForAsserts();
+	      assert_device = Fox_CheckForAsserts(Zip);
 	      unlink(FOX_TMP_PATH);	      
 	    } 
 	} 

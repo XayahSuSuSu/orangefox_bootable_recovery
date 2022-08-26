@@ -416,6 +416,12 @@ int TWinstall_zip(const char *path, int *wipe_cache, bool check_for_digest)
 	  			}
 
 				ret_val = Run_Update_Binary(path, wipe_cache, UPDATE_BINARY_ZIP_TYPE);
+
+				if (DataManager::GetIntValue("fox_processing_asserts") != 0) {
+					TWFunc::Fox_Property_Set("ro.product.device", DataManager::GetStrValue("fox_product_device"));
+					DataManager::SetValue("fox_processing_asserts", "0");
+					LOGINFO("\nDevice code name restored\n");
+				}
 			}
 		}
 	} else {

@@ -212,6 +212,7 @@ public:
 	static string DeleteAfter(const string Str, const string marker); /* Delete all characters after "marker" from a string */
 	static string find_phrase(string filename, string search); /* search for a phrase within a text file, and return the contents of the first line that has it */
 	static string get_assert_device(const string filename); /* find out which device an "assert" with an ro.product.device statement wants */
+	static string get_assert_device_zip(const string filename, const ZipArchiveHandle Zip); /* find out the device asserts in a zip installer */
 	static string removechar(const string src, const char chars); /* delete all occurrences of a char from a string */
 
 	/* convert string to number, with default value in case of error */

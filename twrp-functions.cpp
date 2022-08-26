@@ -50,6 +50,7 @@
 #include <android-base/chrono_utils.h>
 
 #include "twrp-functions.hpp"
+#include "orangefox.hpp"
 #include "abx-functions.hpp"
 #include "twcommon.h"
 #include "gui/gui.hpp"
@@ -4683,6 +4684,24 @@ string temp = find_phrase(filename, "ro.product.device");
    str = removechar(str, ' ');		// remove spaces
 
    return str;
+}
+
+string TWFunc::get_assert_device_zip(const string filename, const ZipArchiveHandle Zip) {
+string metadata_sg_path = "META-INF/com/android/metadata";
+const string take_out_metadata = "/tmp/zip_tmp_metadata";
+
+   // META-INF/com/android/metadata is not in zip, or we can't extract it
+   if (!zip_EntryExists(Zip, metadata_sg_path) || !zip_ExtractEntry(Zip, metadata_sg_path, take_out_metadata, 0644))
+   	return TWFunc::get_assert_device(filename);
+
+   // look for "pre-device"
+   string metadata_devices = TWFunc::File_Property_Get(take_out_metadata, "pre-device");
+   unlink(take_out_metadata.c_str());
+
+   if (metadata_devices.empty()) {
+   	return TWFunc::get_assert_device(filename);   
+   }
+   return metadata_devices;
 }
 
 string TWFunc::removechar(const string src, const char chars)
