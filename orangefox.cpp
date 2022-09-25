@@ -57,6 +57,8 @@
 #include "gui/pages.hpp"
 #include "gui/blanktimer.hpp"
 #include "orangefox.hpp"
+#include "twrpRepacker.hpp"
+
 // #include "legacy_property_service.h"
 
 #include "twinstall.h"
@@ -952,7 +954,31 @@ void Fox_Post_Zip_Install(const int result)
     	 TWFunc::MIUI_ROM_SetProperty(Fox_Zip_Installer_Code);
      	 TWFunc::RunFoxScript("/sbin/afterromflash.sh");
          usleep(16384);
-         
+
+	//---- Virtual A/B: compensate for ROM installers that still use legacy methods for flashing, instead of payload.bin/update_engine ----//
+	#if defined(OF_VIRTUAL_AB_DEVICE)
+	/*
+	* check for MIUI ROM installers, currently the only ones that do this
+	* Really, this fix should not be needed, but some custom MIUI ROM installers fail to use the standard flashing method for A/B devices
+	* (ie, with payload.bin/update_engine) meaning that we have to intervene here to fix problems created by their non-standard methods
+	*/
+	if (Fox_Zip_Installer_Code == 2 || Fox_Zip_Installer_Code == 3 || Fox_Zip_Installer_Code == 22 || Fox_Zip_Installer_Code == 23) {
+		gui_warn("mount_vab_partitions=Devices on super may not mount until rebooting recovery.");
+		gui_warn("flash_ab_reboot=To flash additional zips, please reboot recovery to switch to the updated slot.");
+
+		int reflashtwrp = 0;
+		DataManager::GetValue(TW_AUTO_REFLASHTWRP_VAR, reflashtwrp);
+		if (reflashtwrp) {
+			gui_print_color("warning", "\n\nOrangeFox: this MIUI ROM installer is NOT using the update_engine! Attempting to compensate... \n");
+			gui_print_color("warning", "\nOrangeFox: reflashing OrangeFox ...\n");
+
+			twrpRepacker repacker;
+			repacker.Flash_Current_Twrp();
+		}
+	}
+	#endif
+	//---- Virtual A/B compensations ---- //
+
          //
          PartitionManager.Update_System_Details();
      }
