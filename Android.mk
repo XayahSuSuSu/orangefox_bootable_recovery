@@ -138,7 +138,7 @@ LOCAL_C_INCLUDES += \
 LOCAL_STATIC_LIBRARIES += libguitwrp libvold
 LOCAL_SHARED_LIBRARIES += libz libc libcutils libstdc++ libtar libblkid libminuitwrp libmtdutils libtwadbbu 
 LOCAL_SHARED_LIBRARIES += libbootloader_message libcrecovery libtwrpdigest libc++ libaosprecovery libcrypto libbase 
-LOCAL_SHARED_LIBRARIES += libziparchive libselinux libdl_android.bootstrap android.security.authorization-ndk_platform
+LOCAL_SHARED_LIBRARIES += libziparchive libselinux libdl_android.bootstrap
 
 ifneq ($(wildcard system/core/libsparse/Android.mk),)
 LOCAL_SHARED_LIBRARIES += libsparse
