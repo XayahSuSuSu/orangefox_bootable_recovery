@@ -2333,6 +2333,15 @@ bool TWPartition::Wipe_EXTFS(string File_System) {
 	string size_str = dout;
 	string Command;
 
+	#ifdef OF_UNBIND_SDCARD_F2FS
+	if (Mount_Point == "/data") {
+		LOGINFO("OrangeFox: trying to unmount %s (again) before extFS data format...\n", Display_Name.c_str());
+		usleep(32768);
+		TWFunc::Exec_Cmd("umount " + Actual_Block_Device + " > /dev/null 2>&1", false);
+		usleep(32768);
+	}
+	#endif
+
 	gui_msg(Msg("formatting_using=Formatting {1} using {2}...")(Display_Name)("mke2fs"));
 
 	// Execute mke2fs to create empty ext4 filesystem
