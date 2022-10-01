@@ -552,7 +552,7 @@ bool TWPartition::Process_Fstab_Line(const char *fstab_line, bool Display_Error,
 			Removable = true;
 			Wipe_Available_in_GUI = true;
 #else
-		if (Mount_Point == "/sdcard" || Mount_Point == "/external_sd" || Mount_Point == "/external_sdcard") {
+		if (Mount_Point == "/sdcard" || Mount_Point == "/external_sd" || Mount_Point == "/external_sdcard" || Mount_Point == "/sdcard1") {
 			Is_Storage = true;
 			Removable = true;
 			Wipe_Available_in_GUI = true;
