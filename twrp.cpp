@@ -415,7 +415,7 @@ static bool Fox_CheckReload_Themes() {
      if ((TWFunc::Fox_Property_Get("dev.mnt.blk.data") == "dm-0") ||
 	(TWFunc::Fox_Property_Get("dev.mnt.blk.sdcard") == "dm-0") ||
 	(TWFunc::Fox_Property_Get("ro.crypto.fs_crypto_blkdev") == "/dev/block/dm-0") ||
-	(TWFunc::Fox_Property_Get("ro.crypto.state") == "encrypted" && TWFunc::Fox_Property_Get("[ro.crypto.type") == "block"))
+	(TWFunc::Fox_Property_Get("ro.crypto.state") == "encrypted" && TWFunc::Fox_Property_Get("ro.crypto.type") == "block"))
      found = true;
    }
 
