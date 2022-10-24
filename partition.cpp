@@ -2563,6 +2563,7 @@ bool TWPartition::Wipe_F2FS() {
 	bool NeedPreserveFooter = true;
 	bool needs_casefold = false;
   	bool needs_projid = false;
+	bool needs_compression = false;
 
 	Find_Actual_Block_Device();
 	if (!Is_Present) {
@@ -2572,7 +2573,8 @@ bool TWPartition::Wipe_F2FS() {
 	}
 
 	needs_casefold = android::base::GetBoolProperty("external_storage.casefold.enabled", false);
-    	needs_projid = android::base::GetBoolProperty("external_storage.projid.enabled", false);
+	needs_projid = android::base::GetBoolProperty("external_storage.projid.enabled", false);
+	needs_compression = android::base::GetBoolProperty("external_storage.compression.enabled", false);
 
 	unsigned long long dev_sz = TWFunc::IOCTL_Get_Block_Size(Actual_Block_Device.c_str());
 	if (!dev_sz)
@@ -2584,8 +2586,12 @@ bool TWPartition::Wipe_F2FS() {
 	char dev_sz_str[48];
 	sprintf(dev_sz_str, "%llu", (dev_sz / 4096));
 
-	if(needs_projid)
+	if(needs_projid && needs_compression)
+		f2fs_command += " -O compression,project_quota,extra_attr";
+	else if(needs_projid)
 		f2fs_command += " -O project_quota,extra_attr";
+	else if(needs_compression)
+		f2fs_command += " -O compression,extra_attr";
 
 	if(needs_casefold)
 		f2fs_command += " -O casefold -C utf8";
